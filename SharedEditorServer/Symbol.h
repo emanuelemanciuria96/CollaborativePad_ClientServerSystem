@@ -18,7 +18,8 @@ private:
     std::vector<qint32> _pos;
 
 public:
-    Symbol(QChar ch, qint32 id, qint32 cnt): _ch(ch),_symId(id,cnt){}
+    Symbol(QChar ch, qint32 id, qint32 cnt,std::vector<qint32> &pos):
+        _ch(ch),_symId(id,cnt),_pos(pos){}
     bool operator==(Symbol s){
         return _symId == s._symId;
     }

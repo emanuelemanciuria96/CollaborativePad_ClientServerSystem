@@ -40,6 +40,16 @@ void ServerThread::run()
         return;
     }
 
+    /**
+     * queste 4 righe sono una prova di scambio di siteID, il primo valore ( 1 )
+     * serve semplicemente ad indicare al client che si tratta di una comunicazione
+     * del siteID
+     */
+    QDataStream out;
+    out.setDevice(socket);
+    out.setVersion(QDataStream::Qt_5_5);
+    out<<1<<5;
+
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()),Qt::DirectConnection );
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     std::cout<<"Client connected!"<<std::endl;
@@ -83,7 +93,6 @@ void ServerThread::readyRead()
     qint32 p;
     std::vector<qint32> pos;
 
-    std::cout<<std::this_thread::get_id()<<std::endl;
     qDebug()<<"Receving message";
 
     in.setDevice(this->socket);
@@ -95,7 +104,7 @@ void ServerThread::readyRead()
         pos.push_back(p);
     }
 
-    Symbol sym(ch,siteIdS,count);
+    Symbol sym(ch,siteIdS,count,pos);
     if( action == insertion ){
         int i = 0;
         std::unique_lock ul(*sym_mutex);

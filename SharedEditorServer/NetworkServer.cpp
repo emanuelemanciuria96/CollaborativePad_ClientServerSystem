@@ -140,7 +140,7 @@ void NetworkServer::process(const Message &m) {
 void NetworkServer::to_string() {
     QString str;
 
-    std::for_each(_symbols.begin()+1,_symbols.end()-1,
+    std::for_each(_symbols.begin(),_symbols.end(),
                   [&str](Symbol s){
                       str += s.getValue();
                   });
@@ -159,7 +159,6 @@ void NetworkServer::recvMessage() {
     qint32 p;
     std::vector<qint32> pos;
 
-    std::cout<<std::this_thread::get_id()<<std::endl;
     qDebug()<<"Receving message";
 
     in.setDevice(this->socket);
@@ -171,7 +170,7 @@ void NetworkServer::recvMessage() {
         pos.push_back(p);
     }
 
-    Symbol s(ch, siteIdS, count);
+    Symbol s(ch, siteIdS, count,pos);
     s.setPos(pos);
     Message msg(action == 0 ? insertion : removal, siteIdM, s);
     this->process(msg);
@@ -200,7 +199,7 @@ void NetworkServer::sendMessage(Message& msg) {
 
 void NetworkServer::deleteSocket() {
     this->socket->deleteLater();
-    this->_symbols.erase(this->_symbols.begin()+1, this->_symbols.end()-1);
+    this->_symbols.erase(this->_symbols.begin(), this->_symbols.end());
     std::cout << "Client Disconnected!" << std::endl;
 }
 
