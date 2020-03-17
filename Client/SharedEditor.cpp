@@ -13,6 +13,7 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
     _siteId=-1;                             //inizialmente -1 per fare in modo che alla ricezione
     _siteId = this->connectToServer();      //del vero siteId da parte del server la recvMessage() ritorni subito
     _counter = 0;
+
     //creo due delimitatori, servono a gestire l'inserimento
     //in coda, in testa o in mezzo al testo allo stesso
     //e identico modo! quando faccio il localInsert, pero',
@@ -117,8 +118,20 @@ void SharedEditor::to_string() {
 
 qint32 SharedEditor::connectToServer() {
     this->socket->connectToHost(QHostAddress::LocalHost, 1234);
-    if(this->socket->waitForConnected(3000)) {
-        QAbstractSocket::connect(this->socket, &QIODevice::readyRead, this, &SharedEditor::recvMessage);  //ogni volta che arriva un dato sul socket la recvMessage() viene invocata
+    if(this->socket->waitForConnected(1000)) {
+        if(socket->waitForReadyRead(1000)) {          //non ho ancora collegato il segnale readyRead a recvMessage, quindi
+            QDataStream in;                                 //leggo sul socket in modo bloccante (per 3000 ms)
+            in.setDevice(this->socket);
+            in.setVersion(QDataStream::Qt_5_5);
+            qint32 type;
+            in>>type;
+            in >> _siteId;                                  //ricevo il SiteId
+            std::cout<<"SiteId: "<<_siteId<<std::endl;
+            QAbstractSocket::connect(this->socket, &QIODevice::readyRead, this, &SharedEditor::recvMessage);  //ogni volta che arriva un dato sul socket la recvMessage() viene invocata
+        }
+        else{
+            std::cout << "Not connected: " << socket->errorString().toStdString() << std::endl;
+        }
     }
     else{
         std::cout << "Not connected: " << socket->errorString().toStdString() << std::endl;
@@ -141,14 +154,6 @@ void SharedEditor::recvMessage() {
 
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
-
-    qint32 type;
-    in>>type;
-    if(_siteId == -1) {
-        in >> _siteId;
-        std::cout<<_siteId<<" dioporco"<<std::endl;
-        return;
-    }
 
     in >> siteIdM >> action >> ch >> siteIdS >> count >> num;      //riceve sul socket un oggetto Message serializzato
     for(int i=0; i<num; i++){                                      //che viene passato alla process()
@@ -175,7 +180,6 @@ void SharedEditor::sendMessage(Message& msg) {
     out << msg.getSiteId() << (qint32) (msg.getAction() == insertion ? 0 : 1) << msg.getSymbol().getValue() << msg.getSymbol().getSymId().getSiteId() << msg.getSymbol().getSymId().getCount() << num;
     for(auto i : msg.getSymbol().getPos())
         out << (qint32) i;                                      //invia al server un oggetto Message serializzato sul socket
-    this->socket->write(block);
-    this->socket->waitForBytesWritten(3000);
+    this->socket->waitForBytesWritten(-1);
 }
 

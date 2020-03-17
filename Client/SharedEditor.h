@@ -6,9 +6,11 @@
 #define ES3_PROJ_SHAREDEDITOR_H
 
 #include <iostream>
-#include "Symbol.h"
+#include "Packet/Symbols/Symbol.h"
 #include <vector>
-#include "Message.h"
+#include "Packet/DataPacket.h"
+#include "Packet/Payload.h"
+#include "Packet/Message.h"
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QtCore/QDataStream>

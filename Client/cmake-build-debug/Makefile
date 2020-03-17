@@ -162,32 +162,140 @@ Client_autogen/mocs_compilation.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.s
 .PHONY : Client_autogen/mocs_compilation.cpp.s
 
-Message.obj: Message.cpp.obj
+Packet/DataPacket.obj: Packet/DataPacket.cpp.obj
 
-.PHONY : Message.obj
+.PHONY : Packet/DataPacket.obj
 
 # target to build an object file
-Message.cpp.obj:
-	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Message.cpp.obj
-.PHONY : Message.cpp.obj
+Packet/DataPacket.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj
+.PHONY : Packet/DataPacket.cpp.obj
 
-Message.i: Message.cpp.i
+Packet/DataPacket.i: Packet/DataPacket.cpp.i
 
-.PHONY : Message.i
+.PHONY : Packet/DataPacket.i
 
 # target to preprocess a source file
-Message.cpp.i:
-	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Message.cpp.i
-.PHONY : Message.cpp.i
+Packet/DataPacket.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/DataPacket.cpp.i
+.PHONY : Packet/DataPacket.cpp.i
 
-Message.s: Message.cpp.s
+Packet/DataPacket.s: Packet/DataPacket.cpp.s
 
-.PHONY : Message.s
+.PHONY : Packet/DataPacket.s
 
 # target to generate assembly for a file
-Message.cpp.s:
-	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Message.cpp.s
-.PHONY : Message.cpp.s
+Packet/DataPacket.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/DataPacket.cpp.s
+.PHONY : Packet/DataPacket.cpp.s
+
+Packet/LoginInfo.obj: Packet/LoginInfo.cpp.obj
+
+.PHONY : Packet/LoginInfo.obj
+
+# target to build an object file
+Packet/LoginInfo.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj
+.PHONY : Packet/LoginInfo.cpp.obj
+
+Packet/LoginInfo.i: Packet/LoginInfo.cpp.i
+
+.PHONY : Packet/LoginInfo.i
+
+# target to preprocess a source file
+Packet/LoginInfo.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/LoginInfo.cpp.i
+.PHONY : Packet/LoginInfo.cpp.i
+
+Packet/LoginInfo.s: Packet/LoginInfo.cpp.s
+
+.PHONY : Packet/LoginInfo.s
+
+# target to generate assembly for a file
+Packet/LoginInfo.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/LoginInfo.cpp.s
+.PHONY : Packet/LoginInfo.cpp.s
+
+Packet/Message.obj: Packet/Message.cpp.obj
+
+.PHONY : Packet/Message.obj
+
+# target to build an object file
+Packet/Message.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Message.cpp.obj
+.PHONY : Packet/Message.cpp.obj
+
+Packet/Message.i: Packet/Message.cpp.i
+
+.PHONY : Packet/Message.i
+
+# target to preprocess a source file
+Packet/Message.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Message.cpp.i
+.PHONY : Packet/Message.cpp.i
+
+Packet/Message.s: Packet/Message.cpp.s
+
+.PHONY : Packet/Message.s
+
+# target to generate assembly for a file
+Packet/Message.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Message.cpp.s
+.PHONY : Packet/Message.cpp.s
+
+Packet/Payload.obj: Packet/Payload.cpp.obj
+
+.PHONY : Packet/Payload.obj
+
+# target to build an object file
+Packet/Payload.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Payload.cpp.obj
+.PHONY : Packet/Payload.cpp.obj
+
+Packet/Payload.i: Packet/Payload.cpp.i
+
+.PHONY : Packet/Payload.i
+
+# target to preprocess a source file
+Packet/Payload.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Payload.cpp.i
+.PHONY : Packet/Payload.cpp.i
+
+Packet/Payload.s: Packet/Payload.cpp.s
+
+.PHONY : Packet/Payload.s
+
+# target to generate assembly for a file
+Packet/Payload.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Payload.cpp.s
+.PHONY : Packet/Payload.cpp.s
+
+Packet/Symbols/Symbol.obj: Packet/Symbols/Symbol.cpp.obj
+
+.PHONY : Packet/Symbols/Symbol.obj
+
+# target to build an object file
+Packet/Symbols/Symbol.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj
+.PHONY : Packet/Symbols/Symbol.cpp.obj
+
+Packet/Symbols/Symbol.i: Packet/Symbols/Symbol.cpp.i
+
+.PHONY : Packet/Symbols/Symbol.i
+
+# target to preprocess a source file
+Packet/Symbols/Symbol.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.i
+.PHONY : Packet/Symbols/Symbol.cpp.i
+
+Packet/Symbols/Symbol.s: Packet/Symbols/Symbol.cpp.s
+
+.PHONY : Packet/Symbols/Symbol.s
+
+# target to generate assembly for a file
+Packet/Symbols/Symbol.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.s
+.PHONY : Packet/Symbols/Symbol.cpp.s
 
 SharedEditor.obj: SharedEditor.cpp.obj
 
@@ -215,33 +323,6 @@ SharedEditor.s: SharedEditor.cpp.s
 SharedEditor.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/SharedEditor.cpp.s
 .PHONY : SharedEditor.cpp.s
-
-Symbol.obj: Symbol.cpp.obj
-
-.PHONY : Symbol.obj
-
-# target to build an object file
-Symbol.cpp.obj:
-	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Symbol.cpp.obj
-.PHONY : Symbol.cpp.obj
-
-Symbol.i: Symbol.cpp.i
-
-.PHONY : Symbol.i
-
-# target to preprocess a source file
-Symbol.cpp.i:
-	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Symbol.cpp.i
-.PHONY : Symbol.cpp.i
-
-Symbol.s: Symbol.cpp.s
-
-.PHONY : Symbol.s
-
-# target to generate assembly for a file
-Symbol.cpp.s:
-	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Symbol.cpp.s
-.PHONY : Symbol.cpp.s
 
 main.obj: main.cpp.obj
 
@@ -283,15 +364,24 @@ help:
 	@echo ... Client_autogen/mocs_compilation.obj
 	@echo ... Client_autogen/mocs_compilation.i
 	@echo ... Client_autogen/mocs_compilation.s
-	@echo ... Message.obj
-	@echo ... Message.i
-	@echo ... Message.s
+	@echo ... Packet/DataPacket.obj
+	@echo ... Packet/DataPacket.i
+	@echo ... Packet/DataPacket.s
+	@echo ... Packet/LoginInfo.obj
+	@echo ... Packet/LoginInfo.i
+	@echo ... Packet/LoginInfo.s
+	@echo ... Packet/Message.obj
+	@echo ... Packet/Message.i
+	@echo ... Packet/Message.s
+	@echo ... Packet/Payload.obj
+	@echo ... Packet/Payload.i
+	@echo ... Packet/Payload.s
+	@echo ... Packet/Symbols/Symbol.obj
+	@echo ... Packet/Symbols/Symbol.i
+	@echo ... Packet/Symbols/Symbol.s
 	@echo ... SharedEditor.obj
 	@echo ... SharedEditor.i
 	@echo ... SharedEditor.s
-	@echo ... Symbol.obj
-	@echo ... Symbol.i
-	@echo ... Symbol.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

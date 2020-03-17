@@ -1178,17 +1178,69 @@ QtGui/qkeysequence.h
 QtGui/qevent.h
 -
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Message.cpp
-Message.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Message.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/DataPacket.cpp
+DataPacket.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/DataPacket.h
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Message.h
-Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Symbol.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/DataPacket.h
+QtGlobal
+-
+memory
+-
+Payload.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Payload.h
+
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/LoginInfo.cpp
+LoginInfo.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/LoginInfo.h
+
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/LoginInfo.h
+QtGlobal
+-
+QtCore/QString
+-
+Payload.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Payload.h
+
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Message.cpp
+Message.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Message.h
+Message.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Message.h
+
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Message.h
+Payload.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Payload.h
+Symbols/Symbol.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Symbols/Symbol.h
 vector
 -
 QtGlobal
 -
+
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Payload.cpp
+Payload.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Payload.h
+
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Payload.h
+QtGlobal
+-
+
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Symbols/SymId.h
+
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Symbols/Symbol.cpp
+Symbol.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Symbols/Symbol.h
+
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Symbols/Symbol.h
+vector
+-
+QtGlobal
+-
+QChar
+-
+SymId.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Symbols/SymId.h
 
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/SharedEditor.cpp
 SharedEditor.h
@@ -1203,12 +1255,16 @@ thread
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/SharedEditor.h
 iostream
 -
-Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Symbol.h
+Packet/Symbols/Symbol.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Symbols/Symbol.h
 vector
 -
-Message.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Message.h
+Packet/DataPacket.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/DataPacket.h
+Packet/Payload.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Payload.h
+Packet/Message.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Message.h
 QTcpServer
 -
 QTcpSocket
@@ -1219,24 +1275,6 @@ QAbstractSocket
 -
 QString
 -
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/SymId.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Symbol.cpp
-Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Symbol.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Symbol.h
-vector
--
-QtGlobal
--
-QChar
--
-SymId.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/SymId.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp
 
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/main.cpp
 QtWidgets/QApplication

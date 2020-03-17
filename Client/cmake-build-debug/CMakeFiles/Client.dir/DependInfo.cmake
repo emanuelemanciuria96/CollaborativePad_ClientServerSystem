@@ -5,9 +5,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Message.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/Client.dir/Message.cpp.obj"
+  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/DataPacket.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj"
+  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/LoginInfo.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj"
+  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Message.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Message.cpp.obj"
+  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Payload.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Payload.cpp.obj"
+  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Symbols/Symbol.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj"
   "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/SharedEditor.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Symbol.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/Client.dir/Symbol.cpp.obj"
   "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/main.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

@@ -118,25 +118,43 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Message.cpp">
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/DataPacket.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Message.h">
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/DataPacket.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/LoginInfo.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/LoginInfo.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Message.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Message.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Payload.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Payload.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Symbols/SymId.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Symbols/Symbol.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Packet/Symbols/Symbol.h">
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/SharedEditor.cpp">
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/SharedEditor.h">
-			<Option target="Client"/>
-		</Unit>
-		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/SymId.h">
-			<Option target="Client"/>
-		</Unit>
-		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Symbol.cpp">
-			<Option target="Client"/>
-		</Unit>
-		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/Symbol.h">
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp">
