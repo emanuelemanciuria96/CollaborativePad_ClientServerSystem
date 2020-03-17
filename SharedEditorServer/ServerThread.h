@@ -10,7 +10,7 @@
 #include <QTcpSocket>
 #include <QtCore/QMutex>
 #include "NetworkServer.h"
-#include "Symbol.h"
+#include "Packet/Symbols/Symbol.h"
 
 
 class ServerThread : public QThread{
@@ -25,7 +25,7 @@ signals:
     void error(QTcpSocket::SocketError socketerror);    //slot che gestisce questo segnale da implementare
 
 public slots:
-    void readyRead();
+    void recvMessage();
     void disconnected();
 
 private:

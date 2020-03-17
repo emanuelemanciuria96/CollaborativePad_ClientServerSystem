@@ -42,10 +42,10 @@ RM = "D:\Program Files (x86)\CLion 2019.2.1\bin\cmake\win\bin\cmake.exe" -E remo
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\laboratori\progetto\SharedEditorServer"
+CMAKE_SOURCE_DIR = "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\laboratori\progetto\SharedEditorServer\cmake-build-debug"
+CMAKE_BINARY_DIR = "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer\cmake-build-debug"
 
 # Utility rule file for SharedEditorServer_autogen.
 
@@ -53,8 +53,8 @@ CMAKE_BINARY_DIR = "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\labor
 include CMakeFiles/SharedEditorServer_autogen.dir/progress.make
 
 CMakeFiles/SharedEditorServer_autogen:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir="D:\poliTO\magistrale\Programmazione di Sistema\Malnati\laboratori\progetto\SharedEditorServer\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target SharedEditorServer"
-	"D:\Program Files (x86)\CLion 2019.2.1\bin\cmake\win\bin\cmake.exe" -E cmake_autogen "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/AutogenInfo.cmake" Debug
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir="D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target SharedEditorServer"
+	"D:\Program Files (x86)\CLion 2019.2.1\bin\cmake\win\bin\cmake.exe" -E cmake_autogen "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/AutogenInfo.cmake" Debug
 
 SharedEditorServer_autogen: CMakeFiles/SharedEditorServer_autogen
 SharedEditorServer_autogen: CMakeFiles/SharedEditorServer_autogen.dir/build.make
@@ -71,6 +71,6 @@ CMakeFiles/SharedEditorServer_autogen.dir/clean:
 .PHONY : CMakeFiles/SharedEditorServer_autogen.dir/clean
 
 CMakeFiles/SharedEditorServer_autogen.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\laboratori\progetto\SharedEditorServer" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\laboratori\progetto\SharedEditorServer" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\laboratori\progetto\SharedEditorServer\cmake-build-debug" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\laboratori\progetto\SharedEditorServer\cmake-build-debug" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\laboratori\progetto\SharedEditorServer\cmake-build-debug\CMakeFiles\SharedEditorServer_autogen.dir\DependInfo.cmake" --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer\cmake-build-debug" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer\cmake-build-debug" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer\cmake-build-debug\CMakeFiles\SharedEditorServer_autogen.dir\DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/SharedEditorServer_autogen.dir/depend
 

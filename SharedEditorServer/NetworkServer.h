@@ -13,9 +13,10 @@
 #include <QTcpSocket>
 #include <QDataStream>
 #include <thread>
-#include "Message.h"
-#include "Symbol.h"
+#include "Packet/Symbols/Symbol.h"
 #include "ServerThread.h"
+#include "Packet/DataPacket.h"
+#include "Packet/Message.h"
 
 class NetworkServer : public QTcpServer
 {
@@ -24,19 +25,8 @@ public:
     explicit NetworkServer(QObject *parent = 0);
     NetworkServer(const NetworkServer& ns) = delete;
     void startServer();
-    void sendMessage(Message& m);
-    //void localInsert(qint32 index, QChar value);
-    //void localErase( qint32 index );
-    void process( const Message& m);
     void to_string();
 
-public slots:
-    void recvMessage();
-    void deleteSocket();
-    void testServer(){}
-
-    signals:
-    void startTest();
 
 private:
     qint32 _counter;

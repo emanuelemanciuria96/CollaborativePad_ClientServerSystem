@@ -48,13 +48,13 @@ void ServerThread::run()
     QDataStream out;
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
-    out<<1<<5;
+    out<<DataPacket::login<<5;
 
-    connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()),Qt::DirectConnection );
+    QAbstractSocket::connect(this->socket, &QIODevice::readyRead, this, &ServerThread::recvMessage);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-    std::cout<<"Client connected!"<<std::endl;
+    std::cout<<"readyRead signal set!"<<std::endl;
 
-    exec(); //per far rimanere attivo il thread
+    exec(); //loop degli eventi attivato qui
 }
 
 /** da modificare nella funzione readyRead:
@@ -79,7 +79,7 @@ void ServerThread::run()
  *        potenzialmente molto lungo.
  **/
 
-void ServerThread::readyRead()
+void ServerThread::recvMessage()
 {
     std::cout<<std::this_thread::get_id()<<" reading from socket "<<this->socketDescriptor<<std::endl;
 
@@ -144,7 +144,7 @@ void ServerThread::sendMessage(Message& msg, QTcpSocket *skt) {
     for(auto i : msg.getSymbol().getPos())
         out << (qint32) i;
     skt->write(block);
-    skt->waitForBytesWritten(3000);
+    skt->waitForBytesWritten(-1);
 }
 
 void ServerThread::disconnected()

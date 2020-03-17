@@ -17,5 +17,6 @@ list(APPEND LIBRARIES
         Qt5::Charts
         Qt5::Network)
 list(REMOVE_DUPLICATES LIBRARIES)
-add_executable(SharedEditorServer main.cpp NetworkServer.cpp NetworkServer.h Symbol.cpp Symbol.h SymId.cpp SymId.h Message.cpp Message.h ServerThread.cpp ServerThread.h)
+add_executable(SharedEditorServer main.cpp NetworkServer.cpp NetworkServer.h Packet/Symbols/Symbol.cpp Packet/Symbols/Symbol.h Packet/Symbols/SymId.cpp Packet/Symbols/SymId.h ServerThread.cpp ServerThread.h
+        Packet/Message.cpp Packet/Message.h Packet/DataPacket.cpp Packet/DataPacket.h Packet/Payload.cpp Packet/Payload.h Packet/LoginInfo.cpp Packet/LoginInfo.h)
 target_link_libraries(SharedEditorServer ${LIBRARIES})

@@ -1196,25 +1196,27 @@ QtGui/qkeysequence.h
 QtGui/qevent.h
 -
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/Message.cpp
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/Message.cpp
 Message.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/Message.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/Message.h
+Message.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/Message.h
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/Message.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/Message.h
 Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/Symbol.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/Symbol.h
 vector
 -
 QtGlobal
 -
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/NetworkServer.cpp
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/NetworkServer.cpp
 NetworkServer.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/NetworkServer.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/NetworkServer.h
 QApplication
 -
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/NetworkServer.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/NetworkServer.h
 iostream
 -
 QObject
@@ -1230,13 +1232,13 @@ QDataStream
 thread
 -
 Message.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/Message.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/Message.h
 Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/Symbol.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/Symbol.h
 ServerThread.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/ServerThread.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/ServerThread.h
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/ServerThread.cpp
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/ServerThread.cpp
 iostream
 -
 utility
@@ -1244,9 +1246,9 @@ utility
 QtCore/QDataStream
 -
 ServerThread.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/ServerThread.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/ServerThread.h
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/ServerThread.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/ServerThread.h
 QThread
 -
 QTcpSocket
@@ -1254,23 +1256,15 @@ QTcpSocket
 QtCore/QMutex
 -
 NetworkServer.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/NetworkServer.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/NetworkServer.h
 Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/Symbol.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/Symbol.h
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/SymId.cpp
-SymId.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/SymId.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/SymId.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/SymId.h
 QtGlobal
 -
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/Symbol.cpp
-Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/Symbol.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/Symbol.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/Symbol.h
 vector
 -
 QtGlobal
@@ -1278,33 +1272,33 @@ QtGlobal
 QChar
 -
 SymId.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/SymId.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/SymId.h
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_NetworkServer.cpp
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_NetworkServer.cpp
 ../../../NetworkServer.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/NetworkServer.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/NetworkServer.h
 QtCore/qbytearray.h
 -
 QtCore/qmetatype.h
 -
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_ServerThread.cpp
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_ServerThread.cpp
 ../../../ServerThread.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/ServerThread.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/ServerThread.h
 QtCore/qbytearray.h
 -
 QtCore/qmetatype.h
 -
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/mocs_compilation.cpp
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/mocs_compilation.cpp
 EWIEGA46WW/moc_NetworkServer.cpp
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_NetworkServer.cpp
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_NetworkServer.cpp
 EWIEGA46WW/moc_ServerThread.cpp
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_ServerThread.cpp
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_ServerThread.cpp
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/main.cpp
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/main.cpp
 QApplication
 -
 NetworkServer.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/laboratori/progetto/SharedEditorServer/NetworkServer.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/SharedEditorServer/NetworkServer.h
 
