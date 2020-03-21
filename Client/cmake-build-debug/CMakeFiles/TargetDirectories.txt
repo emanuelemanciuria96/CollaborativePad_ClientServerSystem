@@ -1,4 +1,4 @@
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/Client.dir
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/modifiche_progetto/Client/cmake-build-debug/CMakeFiles/Client_autogen.dir
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client_autogen.dir
