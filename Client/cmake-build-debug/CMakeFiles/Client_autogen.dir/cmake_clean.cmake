@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "Client_autogen"
+  "CMakeFiles/Client_autogen.dir/AutogenOldSettings.txt"
   "CMakeFiles/Client_autogen"
   "Client_autogen/mocs_compilation.cpp"
 )

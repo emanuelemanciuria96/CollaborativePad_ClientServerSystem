@@ -11,6 +11,7 @@
 #include <QtCore/QMutex>
 #include "NetworkServer.h"
 #include "Packet/Symbols/Symbol.h"
+#include "Packet/Message.h"
 
 
 class ServerThread : public QThread{

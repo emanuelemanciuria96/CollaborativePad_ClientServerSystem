@@ -47,10 +47,10 @@ RM = "D:\Program Files (x86)\CLion 2019.2.1\bin\cmake\win\bin\cmake.exe" -E remo
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer"
+CMAKE_SOURCE_DIR = "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer\cmake-build-debug"
+CMAKE_BINARY_DIR = "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer\cmake-build-debug"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,9 +79,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer\cmake-build-debug\CMakeFiles" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer\cmake-build-debug\CMakeFiles\progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer\cmake-build-debug\CMakeFiles" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer\cmake-build-debug\CMakeFiles\progress.marks"
 	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\modifiche_progetto\SharedEditorServer\cmake-build-debug\CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer\cmake-build-debug\CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -135,87 +135,6 @@ SharedEditorServer_autogen/fast:
 	$(MAKE) -f CMakeFiles\SharedEditorServer_autogen.dir\build.make CMakeFiles/SharedEditorServer_autogen.dir/build
 .PHONY : SharedEditorServer_autogen/fast
 
-DataPacket.obj: DataPacket.cpp.obj
-
-.PHONY : DataPacket.obj
-
-# target to build an object file
-DataPacket.cpp.obj:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/DataPacket.cpp.obj
-.PHONY : DataPacket.cpp.obj
-
-DataPacket.i: DataPacket.cpp.i
-
-.PHONY : DataPacket.i
-
-# target to preprocess a source file
-DataPacket.cpp.i:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/DataPacket.cpp.i
-.PHONY : DataPacket.cpp.i
-
-DataPacket.s: DataPacket.cpp.s
-
-.PHONY : DataPacket.s
-
-# target to generate assembly for a file
-DataPacket.cpp.s:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/DataPacket.cpp.s
-.PHONY : DataPacket.cpp.s
-
-LoginInfo.obj: LoginInfo.cpp.obj
-
-.PHONY : LoginInfo.obj
-
-# target to build an object file
-LoginInfo.cpp.obj:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/LoginInfo.cpp.obj
-.PHONY : LoginInfo.cpp.obj
-
-LoginInfo.i: LoginInfo.cpp.i
-
-.PHONY : LoginInfo.i
-
-# target to preprocess a source file
-LoginInfo.cpp.i:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/LoginInfo.cpp.i
-.PHONY : LoginInfo.cpp.i
-
-LoginInfo.s: LoginInfo.cpp.s
-
-.PHONY : LoginInfo.s
-
-# target to generate assembly for a file
-LoginInfo.cpp.s:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/LoginInfo.cpp.s
-.PHONY : LoginInfo.cpp.s
-
-Message.obj: Message.cpp.obj
-
-.PHONY : Message.obj
-
-# target to build an object file
-Message.cpp.obj:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Message.cpp.obj
-.PHONY : Message.cpp.obj
-
-Message.i: Message.cpp.i
-
-.PHONY : Message.i
-
-# target to preprocess a source file
-Message.cpp.i:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Message.cpp.i
-.PHONY : Message.cpp.i
-
-Message.s: Message.cpp.s
-
-.PHONY : Message.s
-
-# target to generate assembly for a file
-Message.cpp.s:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Message.cpp.s
-.PHONY : Message.cpp.s
-
 NetworkServer.obj: NetworkServer.cpp.obj
 
 .PHONY : NetworkServer.obj
@@ -243,32 +162,167 @@ NetworkServer.cpp.s:
 	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.s
 .PHONY : NetworkServer.cpp.s
 
-Payload.obj: Payload.cpp.obj
+Packet/DataPacket.obj: Packet/DataPacket.cpp.obj
 
-.PHONY : Payload.obj
+.PHONY : Packet/DataPacket.obj
 
 # target to build an object file
-Payload.cpp.obj:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Payload.cpp.obj
-.PHONY : Payload.cpp.obj
+Packet/DataPacket.cpp.obj:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.obj
+.PHONY : Packet/DataPacket.cpp.obj
 
-Payload.i: Payload.cpp.i
+Packet/DataPacket.i: Packet/DataPacket.cpp.i
 
-.PHONY : Payload.i
+.PHONY : Packet/DataPacket.i
 
 # target to preprocess a source file
-Payload.cpp.i:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Payload.cpp.i
-.PHONY : Payload.cpp.i
+Packet/DataPacket.cpp.i:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.i
+.PHONY : Packet/DataPacket.cpp.i
 
-Payload.s: Payload.cpp.s
+Packet/DataPacket.s: Packet/DataPacket.cpp.s
 
-.PHONY : Payload.s
+.PHONY : Packet/DataPacket.s
 
 # target to generate assembly for a file
-Payload.cpp.s:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Payload.cpp.s
-.PHONY : Payload.cpp.s
+Packet/DataPacket.cpp.s:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.s
+.PHONY : Packet/DataPacket.cpp.s
+
+Packet/LoginInfo.obj: Packet/LoginInfo.cpp.obj
+
+.PHONY : Packet/LoginInfo.obj
+
+# target to build an object file
+Packet/LoginInfo.cpp.obj:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.obj
+.PHONY : Packet/LoginInfo.cpp.obj
+
+Packet/LoginInfo.i: Packet/LoginInfo.cpp.i
+
+.PHONY : Packet/LoginInfo.i
+
+# target to preprocess a source file
+Packet/LoginInfo.cpp.i:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.i
+.PHONY : Packet/LoginInfo.cpp.i
+
+Packet/LoginInfo.s: Packet/LoginInfo.cpp.s
+
+.PHONY : Packet/LoginInfo.s
+
+# target to generate assembly for a file
+Packet/LoginInfo.cpp.s:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.s
+.PHONY : Packet/LoginInfo.cpp.s
+
+Packet/Message.obj: Packet/Message.cpp.obj
+
+.PHONY : Packet/Message.obj
+
+# target to build an object file
+Packet/Message.cpp.obj:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Message.cpp.obj
+.PHONY : Packet/Message.cpp.obj
+
+Packet/Message.i: Packet/Message.cpp.i
+
+.PHONY : Packet/Message.i
+
+# target to preprocess a source file
+Packet/Message.cpp.i:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Message.cpp.i
+.PHONY : Packet/Message.cpp.i
+
+Packet/Message.s: Packet/Message.cpp.s
+
+.PHONY : Packet/Message.s
+
+# target to generate assembly for a file
+Packet/Message.cpp.s:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Message.cpp.s
+.PHONY : Packet/Message.cpp.s
+
+Packet/Payload.obj: Packet/Payload.cpp.obj
+
+.PHONY : Packet/Payload.obj
+
+# target to build an object file
+Packet/Payload.cpp.obj:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Payload.cpp.obj
+.PHONY : Packet/Payload.cpp.obj
+
+Packet/Payload.i: Packet/Payload.cpp.i
+
+.PHONY : Packet/Payload.i
+
+# target to preprocess a source file
+Packet/Payload.cpp.i:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Payload.cpp.i
+.PHONY : Packet/Payload.cpp.i
+
+Packet/Payload.s: Packet/Payload.cpp.s
+
+.PHONY : Packet/Payload.s
+
+# target to generate assembly for a file
+Packet/Payload.cpp.s:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Payload.cpp.s
+.PHONY : Packet/Payload.cpp.s
+
+Packet/Symbols/SymId.obj: Packet/Symbols/SymId.cpp.obj
+
+.PHONY : Packet/Symbols/SymId.obj
+
+# target to build an object file
+Packet/Symbols/SymId.cpp.obj:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Symbols/SymId.cpp.obj
+.PHONY : Packet/Symbols/SymId.cpp.obj
+
+Packet/Symbols/SymId.i: Packet/Symbols/SymId.cpp.i
+
+.PHONY : Packet/Symbols/SymId.i
+
+# target to preprocess a source file
+Packet/Symbols/SymId.cpp.i:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Symbols/SymId.cpp.i
+.PHONY : Packet/Symbols/SymId.cpp.i
+
+Packet/Symbols/SymId.s: Packet/Symbols/SymId.cpp.s
+
+.PHONY : Packet/Symbols/SymId.s
+
+# target to generate assembly for a file
+Packet/Symbols/SymId.cpp.s:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Symbols/SymId.cpp.s
+.PHONY : Packet/Symbols/SymId.cpp.s
+
+Packet/Symbols/Symbol.obj: Packet/Symbols/Symbol.cpp.obj
+
+.PHONY : Packet/Symbols/Symbol.obj
+
+# target to build an object file
+Packet/Symbols/Symbol.cpp.obj:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Symbols/Symbol.cpp.obj
+.PHONY : Packet/Symbols/Symbol.cpp.obj
+
+Packet/Symbols/Symbol.i: Packet/Symbols/Symbol.cpp.i
+
+.PHONY : Packet/Symbols/Symbol.i
+
+# target to preprocess a source file
+Packet/Symbols/Symbol.cpp.i:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Symbols/Symbol.cpp.i
+.PHONY : Packet/Symbols/Symbol.cpp.i
+
+Packet/Symbols/Symbol.s: Packet/Symbols/Symbol.cpp.s
+
+.PHONY : Packet/Symbols/Symbol.s
+
+# target to generate assembly for a file
+Packet/Symbols/Symbol.cpp.s:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Symbols/Symbol.cpp.s
+.PHONY : Packet/Symbols/Symbol.cpp.s
 
 ServerThread.obj: ServerThread.cpp.obj
 
@@ -324,60 +378,6 @@ SharedEditorServer_autogen/mocs_compilation.cpp.s:
 	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/SharedEditorServer_autogen/mocs_compilation.cpp.s
 .PHONY : SharedEditorServer_autogen/mocs_compilation.cpp.s
 
-SymId.obj: SymId.cpp.obj
-
-.PHONY : SymId.obj
-
-# target to build an object file
-SymId.cpp.obj:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/SymId.cpp.obj
-.PHONY : SymId.cpp.obj
-
-SymId.i: SymId.cpp.i
-
-.PHONY : SymId.i
-
-# target to preprocess a source file
-SymId.cpp.i:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/SymId.cpp.i
-.PHONY : SymId.cpp.i
-
-SymId.s: SymId.cpp.s
-
-.PHONY : SymId.s
-
-# target to generate assembly for a file
-SymId.cpp.s:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/SymId.cpp.s
-.PHONY : SymId.cpp.s
-
-Symbol.obj: Symbol.cpp.obj
-
-.PHONY : Symbol.obj
-
-# target to build an object file
-Symbol.cpp.obj:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Symbol.cpp.obj
-.PHONY : Symbol.cpp.obj
-
-Symbol.i: Symbol.cpp.i
-
-.PHONY : Symbol.i
-
-# target to preprocess a source file
-Symbol.cpp.i:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Symbol.cpp.i
-.PHONY : Symbol.cpp.i
-
-Symbol.s: Symbol.cpp.s
-
-.PHONY : Symbol.s
-
-# target to generate assembly for a file
-Symbol.cpp.s:
-	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Symbol.cpp.s
-.PHONY : Symbol.cpp.s
-
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -415,33 +415,33 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... SharedEditorServer_autogen
-	@echo ... DataPacket.obj
-	@echo ... DataPacket.i
-	@echo ... DataPacket.s
-	@echo ... LoginInfo.obj
-	@echo ... LoginInfo.i
-	@echo ... LoginInfo.s
-	@echo ... Message.obj
-	@echo ... Message.i
-	@echo ... Message.s
 	@echo ... NetworkServer.obj
 	@echo ... NetworkServer.i
 	@echo ... NetworkServer.s
-	@echo ... Payload.obj
-	@echo ... Payload.i
-	@echo ... Payload.s
+	@echo ... Packet/DataPacket.obj
+	@echo ... Packet/DataPacket.i
+	@echo ... Packet/DataPacket.s
+	@echo ... Packet/LoginInfo.obj
+	@echo ... Packet/LoginInfo.i
+	@echo ... Packet/LoginInfo.s
+	@echo ... Packet/Message.obj
+	@echo ... Packet/Message.i
+	@echo ... Packet/Message.s
+	@echo ... Packet/Payload.obj
+	@echo ... Packet/Payload.i
+	@echo ... Packet/Payload.s
+	@echo ... Packet/Symbols/SymId.obj
+	@echo ... Packet/Symbols/SymId.i
+	@echo ... Packet/Symbols/SymId.s
+	@echo ... Packet/Symbols/Symbol.obj
+	@echo ... Packet/Symbols/Symbol.i
+	@echo ... Packet/Symbols/Symbol.s
 	@echo ... ServerThread.obj
 	@echo ... ServerThread.i
 	@echo ... ServerThread.s
 	@echo ... SharedEditorServer_autogen/mocs_compilation.obj
 	@echo ... SharedEditorServer_autogen/mocs_compilation.i
 	@echo ... SharedEditorServer_autogen/mocs_compilation.s
-	@echo ... SymId.obj
-	@echo ... SymId.i
-	@echo ... SymId.s
-	@echo ... Symbol.obj
-	@echo ... Symbol.i
-	@echo ... Symbol.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
