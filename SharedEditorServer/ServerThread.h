@@ -17,7 +17,7 @@ class ServerThread : public QThread{
 Q_OBJECT
 
 public:
-    explicit ServerThread(qintptr socketDescriptor, std::mutex *sym_mutex, std::vector<Symbol> *symbols,
+    ServerThread(qintptr socketDescriptor, std::mutex *sym_mutex, std::vector<Symbol> *symbols,
                           std::mutex *skt_mutex,std::vector<QTcpSocket*> *sockets ,QObject *parent =0);
     void run() override;
 

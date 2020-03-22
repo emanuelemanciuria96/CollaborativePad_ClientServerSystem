@@ -135,6 +135,33 @@ SharedEditorServer_autogen/fast:
 	$(MAKE) -f CMakeFiles\SharedEditorServer_autogen.dir\build.make CMakeFiles/SharedEditorServer_autogen.dir/build
 .PHONY : SharedEditorServer_autogen/fast
 
+MessageHandler.obj: MessageHandler.cpp.obj
+
+.PHONY : MessageHandler.obj
+
+# target to build an object file
+MessageHandler.cpp.obj:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj
+.PHONY : MessageHandler.cpp.obj
+
+MessageHandler.i: MessageHandler.cpp.i
+
+.PHONY : MessageHandler.i
+
+# target to preprocess a source file
+MessageHandler.cpp.i:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.i
+.PHONY : MessageHandler.cpp.i
+
+MessageHandler.s: MessageHandler.cpp.s
+
+.PHONY : MessageHandler.s
+
+# target to generate assembly for a file
+MessageHandler.cpp.s:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.s
+.PHONY : MessageHandler.cpp.s
+
 NetworkServer.obj: NetworkServer.cpp.obj
 
 .PHONY : NetworkServer.obj
@@ -415,6 +442,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... SharedEditorServer_autogen
+	@echo ... MessageHandler.obj
+	@echo ... MessageHandler.i
+	@echo ... MessageHandler.s
 	@echo ... NetworkServer.obj
 	@echo ... NetworkServer.i
 	@echo ... NetworkServer.s

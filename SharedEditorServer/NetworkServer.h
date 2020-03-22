@@ -29,12 +29,14 @@ public:
 
 
 private:
+    std::thread messages_hendler;
     qint32 _counter;
     QTcpSocket *socket;
+    std::vector<Symbol> _symbols;
 
     /* strutture condivise fra tutti i thread */
     std::mutex sym_mutex;                // struttura per il salvataggio del testo e relativo mutex
-    std::vector<Symbol> _symbols;
+    std::queue<Message> _messages;
     std::mutex skt_mutex;
     std::vector<QTcpSocket*> _sockets;
 

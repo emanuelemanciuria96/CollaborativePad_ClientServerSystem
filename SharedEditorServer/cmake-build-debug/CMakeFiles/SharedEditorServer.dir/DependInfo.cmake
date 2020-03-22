@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj"
   "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.obj"
   "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.obj"
   "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/LoginInfo.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.obj"

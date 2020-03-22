@@ -118,6 +118,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.cpp">
+			<Option target="SharedEditorServer"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.h">
+			<Option target="SharedEditorServer"/>
+		</Unit>
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.cpp">
 			<Option target="SharedEditorServer"/>
 		</Unit>
