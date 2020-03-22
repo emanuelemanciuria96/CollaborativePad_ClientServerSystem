@@ -175,9 +175,6 @@ void SharedEditor::sendMessage(Message& msg) {
     QDataStream out(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-
-    //EMANUELE MANCIURIA
-
     qint32 num=msg.getSymbol().getPos().size();
 
     out << msg.getSiteId() << (qint32) (msg.getAction() == insertion ? 0 : 1) << msg.getSymbol().getValue() << msg.getSymbol().getSymId().getSiteId() << msg.getSymbol().getSymId().getCount() << num;
