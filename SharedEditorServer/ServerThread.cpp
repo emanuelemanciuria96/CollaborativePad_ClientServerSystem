@@ -91,7 +91,7 @@ void ServerThread::recvMessage()
     quint32  count;
     qint32 num;
     qint32 p;
-    std::vector<qint32> pos;
+    std::vector<quint32> pos;
 
     qDebug()<<"Receving message";
 
@@ -128,11 +128,17 @@ void ServerThread::recvMessage()
         _symbols->erase(_symbols->begin()+i);
     }
 
-    Message m((action_t)action,siteIdM,sym);
+    /** nota: mentre la scrittura del file locale può essere una azione asincrona, la comunicazione
+     * agli altri utenti di ciò che sta avvenendo non può per due motivi:
+     * 1. è più urgente che i client sappiano cosa gli altri client stiano facendo piuttosto
+     *    che sapere che quello che è stato scritto sia realmente stato salvato oppure no
+     * 2. la comunicazione agli altri socket è probabilmente più rapida della scrittura
+     *    su file.
+    **/
     std::unique_lock ul(*skt_mutex);
     for( auto skt: *_sockets){
         if ( skt != socket ){
-            sendMessage(m,skt);
+            sendMessage(msg,skt);
         }
     }
 
