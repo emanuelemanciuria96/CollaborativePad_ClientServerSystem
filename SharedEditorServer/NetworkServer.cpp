@@ -19,6 +19,8 @@ void NetworkServer::startServer() {
         qDebug() << "NetworkServer started!";
     }
 
+    msgHandler = MessageHandler();
+
 }
 
 void NetworkServer::incomingConnection(qintptr socketDesc)
@@ -28,7 +30,7 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
     std::cout<<std::this_thread::get_id()<<std::endl;
     qDebug()<< "Creating Thread";
 
-    ServerThread *thread = new ServerThread(socketDesc,&sym_mutex,&_symbols,&skt_mutex,&_sockets,this);
+    ServerThread *thread = new ServerThread(socketDesc,&msgHandler,&sym_mutex,&_symbols,&skt_mutex,&_sockets,this);
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     thread->start();
 
@@ -53,6 +55,10 @@ void generateNewPosition( std::vector<qint32>& prev, std::vector<qint32>& next, 
     }
     newPos.insert(newPos.begin(),pos);
 
+}
+
+void NetworkServer::localInsert(Message m) {
+    std::cout<<"localInsert invoked"<<std::endl;
 }
 
 void NetworkServer::to_string() {

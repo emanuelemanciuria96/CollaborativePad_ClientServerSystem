@@ -11,13 +11,14 @@
 #include <QtCore/QMutex>
 #include "NetworkServer.h"
 #include "Packet/Symbols/Symbol.h"
-
+#include "Packet/Message.h"
+#include "MessageHandler.h"
 
 class ServerThread : public QThread{
 Q_OBJECT
 
 public:
-    ServerThread(qintptr socketDescriptor, std::mutex *sym_mutex, std::vector<Symbol> *symbols,
+    explicit ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,std::mutex *sym_mutex, std::vector<Symbol> *symbols,
                           std::mutex *skt_mutex,std::vector<QTcpSocket*> *sockets ,QObject *parent =0);
     void run() override;
 
@@ -32,6 +33,7 @@ private:
     QTcpSocket *socket;
     qintptr socketDescriptor;
 
+    MessageHandler *msgHandler;
     std::mutex *skt_mutex;
     std::vector<QTcpSocket*> *_sockets;
     std::vector<Symbol> *_symbols;

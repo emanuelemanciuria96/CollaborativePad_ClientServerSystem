@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ServerThread_t {
     QByteArrayData data[7];
-    char stringdata0[79];
+    char stringdata0[81];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,12 +36,12 @@ QT_MOC_LITERAL(1, 13, 5), // "error"
 QT_MOC_LITERAL(2, 19, 0), // ""
 QT_MOC_LITERAL(3, 20, 23), // "QTcpSocket::SocketError"
 QT_MOC_LITERAL(4, 44, 11), // "socketerror"
-QT_MOC_LITERAL(5, 56, 9), // "readyRead"
-QT_MOC_LITERAL(6, 66, 12) // "disconnected"
+QT_MOC_LITERAL(5, 56, 11), // "recvMessage"
+QT_MOC_LITERAL(6, 68, 12) // "disconnected"
 
     },
     "ServerThread\0error\0\0QTcpSocket::SocketError\0"
-    "socketerror\0readyRead\0disconnected"
+    "socketerror\0recvMessage\0disconnected"
 };
 #undef QT_MOC_LITERAL
 
@@ -82,7 +82,7 @@ void ServerThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->error((*reinterpret_cast< QTcpSocket::SocketError(*)>(_a[1]))); break;
-        case 1: _t->readyRead(); break;
+        case 1: _t->recvMessage(); break;
         case 2: _t->disconnected(); break;
         default: ;
         }

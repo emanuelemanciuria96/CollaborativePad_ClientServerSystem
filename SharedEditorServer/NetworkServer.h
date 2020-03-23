@@ -18,8 +18,7 @@
 #include "Packet/DataPacket.h"
 #include "Packet/Message.h"
 
-class NetworkServer : public QTcpServer
-{
+class NetworkServer: public QTcpServer{
 Q_OBJECT
 public:
     explicit NetworkServer(QObject *parent = 0);
@@ -27,16 +26,18 @@ public:
     void startServer();
     void to_string();
 
+    static void localInsert(Message m);
+    static void localErase(Message m);
+
 
 private:
-    std::thread messages_hendler;
     qint32 _counter;
     QTcpSocket *socket;
     std::vector<Symbol> _symbols;
+    MessageHandler msgHandler;
 
     /* strutture condivise fra tutti i thread */
     std::mutex sym_mutex;                // struttura per il salvataggio del testo e relativo mutex
-    std::queue<Message> _messages;
     std::mutex skt_mutex;
     std::vector<QTcpSocket*> _sockets;
 

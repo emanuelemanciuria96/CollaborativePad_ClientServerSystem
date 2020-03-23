@@ -21,7 +21,7 @@
  *  in ogni caso tutti i puntatori che servono, ma in maniera sicura,
  *  utilizzando smartptr
  **/
-ServerThread::ServerThread(qintptr socketDescriptor, std::mutex *sym_mutex, std::vector<Symbol> *symbols,
+ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler, std::mutex *sym_mutex, std::vector<Symbol> *symbols,
                            std::mutex *skt_mutex, std::vector<QTcpSocket*> *sockets,QObject *parent):QThread(parent){
     this->skt_mutex = skt_mutex;
     this->_sockets = sockets;
@@ -88,7 +88,7 @@ void ServerThread::recvMessage()
     qint32 action;
     QChar ch;
     qint32 siteIdS;
-    qint32  count;
+    quint32  count;
     qint32 num;
     qint32 p;
     std::vector<qint32> pos;
@@ -99,13 +99,18 @@ void ServerThread::recvMessage()
     in.setVersion(QDataStream::Qt_5_5);
 
     in >> siteIdM >> action >> ch >> siteIdS >> count >> num; //il protocollo scelto per il passaggio della posizione richiede
-    for(int i=0; i<num; i++){                                 //la lettura di un valore ad indicarne la lunghezza di pos
+    for(int i=0; i<num; i++){                                 //la lettura di un valore ad indicare la lunghezza di pos
         in >> p;
         pos.push_back(p);
     }
 
     Symbol sym(ch,siteIdS,count,pos);
+    Message msg((action_t)action,siteIdM,sym);
     if( action == insertion ){
+
+        msgHandler->submit(NetworkServer::localInsert,msg);
+
+
         int i = 0;
         std::unique_lock ul(*sym_mutex);
         for (auto s: *_symbols)   //algoritmo lineare, migliorabile
