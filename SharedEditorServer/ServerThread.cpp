@@ -28,6 +28,7 @@ ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,
     this->sym_mutex = sym_mutex;
     this->_symbols = symbols;
     this->socketDescriptor = socketDescriptor;
+    this->msgHandler = msgHandler;
 }
 
 void ServerThread::run()
