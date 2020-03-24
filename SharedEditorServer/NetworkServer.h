@@ -13,6 +13,7 @@
 #include <QTcpSocket>
 #include <QDataStream>
 #include <thread>
+#include <shared_mutex>
 #include "Packet/Symbols/Symbol.h"
 #include "ServerThread.h"
 #include "Packet/DataPacket.h"
@@ -38,7 +39,7 @@ private:
 
     /* strutture condivise fra tutti i thread */
     std::mutex sym_mutex;                // struttura per il salvataggio del testo e relativo mutex
-    std::mutex skt_mutex;
+    std::shared_mutex skt_mutex;
     std::vector<QTcpSocket*> _sockets;
 
 

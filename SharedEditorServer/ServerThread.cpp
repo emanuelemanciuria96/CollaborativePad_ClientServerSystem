@@ -22,7 +22,7 @@
  *  utilizzando smartptr
  **/
 ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler, std::mutex *sym_mutex, std::vector<Symbol> *symbols,
-                           std::mutex *skt_mutex, std::vector<QTcpSocket*> *sockets,QObject *parent):QThread(parent){
+                           std::shared_mutex *skt_mutex, std::vector<QTcpSocket*> *sockets,QObject *parent):QThread(parent){
     this->skt_mutex = skt_mutex;
     this->_sockets = sockets;
     this->sym_mutex = sym_mutex;
@@ -135,8 +135,14 @@ void ServerThread::recvMessage()
      *    che sapere che quello che è stato scritto sia realmente stato salvato oppure no
      * 2. la comunicazione agli altri socket è probabilmente più rapida della scrittura
      *    su file.
+     * inoltre in questo caso potrebbe essere utile uno shared_lock piuttosto che un lock in
+     * mutua esclusione, questo perchè (verosimilmente) le azioni che richiedono l'accesso al
+     * vettore di socket in scrittura saranno più rari e richiedono tempistiche molto più lunghe
+     * (la scrittura su questo vettore avviene solo dopo la connessione di un client). Molto più
+     * frequenti sono, invece, gli accessi in lettura; e non permettere ad un thread di leggere da
+     * questo vettore quando un altro sta leggendo, è poco efficiente
     **/
-    std::unique_lock ul(*skt_mutex);
+    std::shared_lock sl(*skt_mutex);
     for( auto skt: *_sockets){
         if ( skt != socket ){
             sendMessage(msg,skt);
