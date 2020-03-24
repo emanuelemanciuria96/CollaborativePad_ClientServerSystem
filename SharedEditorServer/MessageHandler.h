@@ -9,6 +9,8 @@
 #include "Packet/Message.h"
 #include <functional>
 #include <queue>
+#include <mutex>
+#include <condition_variable>
 
 /**
  * l'oggetto MessageHandler mi permette di gestire in maniera
@@ -28,9 +30,18 @@ class MessageHandler {
 private:
     std::thread looper;
     std::queue<std::pair<std::function<void(Message)>,Message>> _queue;
+    std::mutex mtx;
+    std::condition_variable cv;
+    bool finished;
+
+    void startLooper();
 public:
+    MessageHandler():finished(false){
+        looper = std::move(std::thread(&MessageHandler::startLooper,this));
+    }
     void submit(std::function<void(Message)> f,Message msg);
 };
+
 
 
 #endif //SHAREDEDITORSERVER_MESSAGEHANDLER_H

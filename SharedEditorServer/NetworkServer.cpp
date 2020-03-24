@@ -4,7 +4,7 @@
 #include "NetworkServer.h"
 #include <QApplication>
 
-
+std::vector<Symbol> NetworkServer::_symbles;
 
 NetworkServer::NetworkServer(QObject *parent) : QTcpServer(parent){}
 
@@ -19,7 +19,7 @@ void NetworkServer::startServer() {
         qDebug() << "NetworkServer started!";
     }
 
-    msgHandler = MessageHandler();
+    msgHandler = std::make_shared<MessageHandler>();
 
 }
 
@@ -30,7 +30,7 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
     std::cout<<std::this_thread::get_id()<<std::endl;
     qDebug()<< "Creating Thread";
 
-    ServerThread *thread = new ServerThread(socketDesc,&msgHandler,&sym_mutex,&_symbols,&skt_mutex,&_sockets,this);
+    ServerThread *thread = new ServerThread(socketDesc,msgHandler.get(),&skt_mutex,&_sockets,this);
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     thread->start();
 
@@ -57,14 +57,32 @@ void generateNewPosition( std::vector<qint32>& prev, std::vector<qint32>& next, 
 
 }
 
+
 void NetworkServer::localInsert(Message m) {
-    std::cout<<"localInsert invoked"<<std::endl;
+    std::cout<<"localErase invoked"<<std::endl;
+    int i = 0;
+   // std::unique_lock ul(sym_mutex);
+    for (auto s: _symbles)   //algoritmo lineare, migliorabile
+        if (!(s < (_symbles)[i]))
+            i++;
+
+    _symbles.insert(_symbles.begin() + i, m.getSymbol());
+}
+
+void NetworkServer::localErase(Message m) {
+    std::cout<<"localErase invoked"<<std::endl;
+    int i = 0;
+   // std::unique_lock ul(sym_mutex);
+    for( auto s: _symbles) //algoritmo lineare anche qui, migliorabile (penso che nella libreria STL ci possa essere già qualcosa di implementato)
+        if( !(s==(_symbles)[i]) )
+            i++;
+    _symbles.erase(_symbles.begin()+i);
 }
 
 void NetworkServer::to_string() {
     QString str;
 
-    std::for_each(_symbols.begin(),_symbols.end(),
+    std::for_each(_symbles.begin(),_symbles.end(),
                   [&str](Symbol s){
                       str += s.getValue();
                   });

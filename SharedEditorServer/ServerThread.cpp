@@ -6,8 +6,7 @@
 #include <utility>
 #include <QtCore/QDataStream>
 #include "ServerThread.h"
-
-
+#include "NetworkServer.h"
 
 /**
  *  per quanto riguarda la classe ServerThread
@@ -21,12 +20,10 @@
  *  in ogni caso tutti i puntatori che servono, ma in maniera sicura,
  *  utilizzando smartptr
  **/
-ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler, std::mutex *sym_mutex, std::vector<Symbol> *symbols,
-                           std::shared_mutex *skt_mutex, std::vector<QTcpSocket*> *sockets,QObject *parent):QThread(parent){
+ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,std::shared_mutex *skt_mutex,
+                            std::vector<QTcpSocket*> *sockets,QObject *parent):QThread(parent){
     this->skt_mutex = skt_mutex;
     this->_sockets = sockets;
-    this->sym_mutex = sym_mutex;
-    this->_symbols = symbols;
     this->socketDescriptor = socketDescriptor;
     this->msgHandler = msgHandler;
 }
@@ -39,6 +36,11 @@ void ServerThread::run()
     {
         emit error (socket->error());         //da gestire
         return;
+    }
+
+    {
+        std::unique_lock ul(*skt_mutex);
+        _sockets->push_back(socket);
     }
 
     /**
@@ -108,25 +110,10 @@ void ServerThread::recvMessage()
     Symbol sym(ch,siteIdS,count,pos);
     Message msg((action_t)action,siteIdM,sym);
     if( action == insertion ){
-
         msgHandler->submit(NetworkServer::localInsert,msg);
-
-
-        int i = 0;
-        std::unique_lock ul(*sym_mutex);
-        for (auto s: *_symbols)   //algoritmo lineare, migliorabile
-            if (!(s < (*_symbols)[i]))
-                i++;
-
-        _symbols->insert(_symbols->begin() + i, sym);
     }
     else{
-        int i = 0;
-        std::unique_lock ul(*sym_mutex);
-        for( auto s: *_symbols) //algoritmo lineare anche qui, migliorabile (penso che nella libreria STL ci possa essere già qualcosa di implementato)
-            if( !(s==(*_symbols)[i]) )
-                i++;
-        _symbols->erase(_symbols->begin()+i);
+        msgHandler->submit(NetworkServer::localErase,msg);
     }
 
     /** nota: mentre la scrittura del file locale può essere una azione asincrona, la comunicazione
@@ -142,10 +129,12 @@ void ServerThread::recvMessage()
      * frequenti sono, invece, gli accessi in lettura; e non permettere ad un thread di leggere da
      * questo vettore quando un altro sta leggendo, è poco efficiente
     **/
-    std::shared_lock sl(*skt_mutex);
-    for( auto skt: *_sockets){
-        if ( skt != socket ){
-            sendMessage(msg,skt);
+    {
+        std::shared_lock sl(*skt_mutex);
+        for (auto skt: *_sockets) {
+            if (skt != socket) {
+                sendMessage(msg, skt);
+            }
         }
     }
 

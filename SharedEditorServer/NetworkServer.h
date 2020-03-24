@@ -18,6 +18,7 @@
 #include "ServerThread.h"
 #include "Packet/DataPacket.h"
 #include "Packet/Message.h"
+#include "MessageHandler.h"
 
 class NetworkServer: public QTcpServer{
 Q_OBJECT
@@ -30,15 +31,13 @@ public:
     static void localInsert(Message m);
     static void localErase(Message m);
 
-
 private:
     qint32 _counter;
     QTcpSocket *socket;
-    std::vector<Symbol> _symbols;
-    MessageHandler msgHandler;
-
+    std::shared_ptr<MessageHandler> msgHandler;
+    static std::vector<Symbol> _symbles;    // struttura per il salvataggio del testo
+    // static std::mutex sym_mutex;  per ora questo mutex non serve: ci accede un solo thread, che è quello creato in MessageHandler
     /* strutture condivise fra tutti i thread */
-    std::mutex sym_mutex;                // struttura per il salvataggio del testo e relativo mutex
     std::shared_mutex skt_mutex;
     std::vector<QTcpSocket*> _sockets;
 
