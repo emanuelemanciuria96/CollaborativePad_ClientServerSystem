@@ -53,7 +53,7 @@ void ServerThread::run()
     out.setVersion(QDataStream::Qt_5_5);
     out<<DataPacket::login<<5;
 
-    QAbstractSocket::connect(this->socket, &QIODevice::readyRead, this, &ServerThread::recvMessage);
+    connect(socket, SIGNAL(readyRead()), this, SLOT(recvMessage()),Qt::DirectConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     std::cout<<"readyRead signal set!"<<std::endl;
 
@@ -84,7 +84,7 @@ void ServerThread::run()
 
 void ServerThread::recvMessage()
 {
-    std::cout<<std::this_thread::get_id()<<" reading from socket "<<this->socketDescriptor<<std::endl;
+    std::cout<<"thread "<<std::this_thread::get_id()<<" reading from socket "<<this->socketDescriptor<<std::endl;
 
     QDataStream in;
     qint32 siteIdM;
@@ -138,19 +138,18 @@ void ServerThread::recvMessage()
         }
     }
 
-    ((NetworkServer*)this->parent())->to_string();
 }
 
 void ServerThread::sendMessage(Message& msg, QTcpSocket *skt) {
-    QByteArray block;
-    QDataStream out(&block, QIODevice::WriteOnly);
-    qint32 num=msg.getSymbol().getPos().size();
+    QDataStream out;
+    out.setDevice(skt);
     out.setVersion(QDataStream::Qt_5_5);
+
+    qint32 num=msg.getSymbol().getPos().size();
 
     out << msg.getSiteId() << (qint32)msg.getAction() << msg.getSymbol().getValue() << msg.getSymbol().getSymId().getSiteId() << msg.getSymbol().getSymId().getCount() << num;
     for(auto i : msg.getSymbol().getPos())
         out << (qint32) i;
-    skt->write(block);
     skt->waitForBytesWritten(-1);
 }
 

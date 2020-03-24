@@ -150,7 +150,7 @@ CMAKE_OBJCOPY:FILEPATH=D:/Program Files (x86)/mingw-w64/x86_64-8.1.0-posix-seh-r
 CMAKE_OBJDUMP:FILEPATH=D:/Program Files (x86)/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/objdump.exe
 
 //No help, variable specified on the command line.
-CMAKE_PREFIX_PATH:UNINITIALIZED=C:/Qt/5.12.5/mingw73_64/lib/cmake
+CMAKE_PREFIX_PATH:UNINITIALIZED=C:\Qt\5.12.5\mingw73_64\lib\cmake
 
 //Value Computed by CMake
 CMAKE_PROJECT_DESCRIPTION:STATIC=

@@ -27,7 +27,7 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
 {
 
     qDebug() << "Client connected!";
-    std::cout<<std::this_thread::get_id()<<std::endl;
+    std::cout<<"thread "<<std::this_thread::get_id()<<std::endl;
     qDebug()<< "Creating Thread";
 
     ServerThread *thread = new ServerThread(socketDesc,msgHandler.get(),&skt_mutex,&_sockets,this);
@@ -59,7 +59,7 @@ void generateNewPosition( std::vector<qint32>& prev, std::vector<qint32>& next, 
 
 
 void NetworkServer::localInsert(Message m) {
-    std::cout<<"localErase invoked"<<std::endl;
+    std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localInsert"<<std::endl;
     int i = 0;
    // std::unique_lock ul(sym_mutex);
     for (auto s: _symbles)   //algoritmo lineare, migliorabile
@@ -67,16 +67,20 @@ void NetworkServer::localInsert(Message m) {
             i++;
 
     _symbles.insert(_symbles.begin() + i, m.getSymbol());
+
+    to_string();
 }
 
 void NetworkServer::localErase(Message m) {
-    std::cout<<"localErase invoked"<<std::endl;
+    std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
     int i = 0;
    // std::unique_lock ul(sym_mutex);
     for( auto s: _symbles) //algoritmo lineare anche qui, migliorabile (penso che nella libreria STL ci possa essere già qualcosa di implementato)
         if( !(s==(_symbles)[i]) )
             i++;
     _symbles.erase(_symbles.begin()+i);
+
+    to_string();
 }
 
 void NetworkServer::to_string() {

@@ -26,7 +26,7 @@ public:
     explicit NetworkServer(QObject *parent = 0);
     NetworkServer(const NetworkServer& ns) = delete;
     void startServer();
-    void to_string();
+    static void to_string();
 
     static void localInsert(Message m);
     static void localErase(Message m);
