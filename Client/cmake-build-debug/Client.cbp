@@ -118,6 +118,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/LoginDialog.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/LoginDialog.h">
+			<Option target="Client"/>
+		</Unit>
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.cpp">
 			<Option target="Client"/>
 		</Unit>

@@ -162,6 +162,33 @@ Client_autogen/mocs_compilation.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.s
 .PHONY : Client_autogen/mocs_compilation.cpp.s
 
+LoginDialog.obj: LoginDialog.cpp.obj
+
+.PHONY : LoginDialog.obj
+
+# target to build an object file
+LoginDialog.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/LoginDialog.cpp.obj
+.PHONY : LoginDialog.cpp.obj
+
+LoginDialog.i: LoginDialog.cpp.i
+
+.PHONY : LoginDialog.i
+
+# target to preprocess a source file
+LoginDialog.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/LoginDialog.cpp.i
+.PHONY : LoginDialog.cpp.i
+
+LoginDialog.s: LoginDialog.cpp.s
+
+.PHONY : LoginDialog.s
+
+# target to generate assembly for a file
+LoginDialog.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/LoginDialog.cpp.s
+.PHONY : LoginDialog.cpp.s
+
 Packet/DataPacket.obj: Packet/DataPacket.cpp.obj
 
 .PHONY : Packet/DataPacket.obj
@@ -364,6 +391,9 @@ help:
 	@echo ... Client_autogen/mocs_compilation.obj
 	@echo ... Client_autogen/mocs_compilation.i
 	@echo ... Client_autogen/mocs_compilation.s
+	@echo ... LoginDialog.obj
+	@echo ... LoginDialog.i
+	@echo ... LoginDialog.s
 	@echo ... Packet/DataPacket.obj
 	@echo ... Packet/DataPacket.i
 	@echo ... Packet/DataPacket.s

@@ -1,4 +1,0 @@
-"D:\Program Files (x86)\CLion 2019.2.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH=C:\Qt\5.12.5\mingw73_64\lib\cmake -G "CodeBlocks - MinGW Makefiles" "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer"
--- Configuring done
--- Generating done
--- Build files have been written to: D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug

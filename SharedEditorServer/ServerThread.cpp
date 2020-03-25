@@ -55,6 +55,7 @@ void ServerThread::run()
     out.setVersion(QDataStream::Qt_5_5);
     out<<DataPacket::login<<5;
 
+
     connect(socket, SIGNAL(readyRead()), this, SLOT(recvMessage()),Qt::DirectConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     std::cout<<"readyRead signal set!"<<std::endl;
@@ -150,6 +151,7 @@ void ServerThread::sendMessage(Message& msg, QTcpSocket *skt,std::mutex* mtx) {
     out.setVersion(QDataStream::Qt_5_5);
 
     qint32 num=msg.getSymbol().getPos().size();
+
 
     {
         std::lock_guard lg(*mtx);
