@@ -4,9 +4,11 @@
 #include "NetworkServer.h"
 #include <QApplication>
 
+std::vector<Symbol> NetworkServer::_symbles;
 
-
-NetworkServer::NetworkServer(QObject *parent) : QTcpServer(parent){}
+NetworkServer::NetworkServer(QObject *parent) : QTcpServer(parent){
+    msgHandler = std::make_shared<MessageHandler>();
+}
 
 void NetworkServer::startServer() {
 
@@ -25,10 +27,10 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
 {
 
     qDebug() << "Client connected!";
-    std::cout<<std::this_thread::get_id()<<std::endl;
+    std::cout<<"thread "<<std::this_thread::get_id()<<std::endl;
     qDebug()<< "Creating Thread";
 
-    ServerThread *thread = new ServerThread(socketDesc,&sym_mutex,&_symbols,&skt_mutex,&_sockets,this);
+    ServerThread *thread = new ServerThread(socketDesc,msgHandler.get(),this);
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     thread->start();
 
@@ -55,10 +57,36 @@ void generateNewPosition( std::vector<qint32>& prev, std::vector<qint32>& next, 
 
 }
 
+
+void NetworkServer::localInsert(Message m) {
+    std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localInsert"<<std::endl;
+    int i = 0;
+   // std::unique_lock ul(sym_mutex);
+    for (auto s: _symbles)   //algoritmo lineare, migliorabile
+        if (!(s < (_symbles)[i]))
+            i++;
+
+    _symbles.insert(_symbles.begin() + i, m.getSymbol());
+
+    to_string();
+}
+
+void NetworkServer::localErase(Message m) {
+    std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
+    int i = 0;
+   // std::unique_lock ul(sym_mutex);
+    for( auto s: _symbles) //algoritmo lineare anche qui, migliorabile (penso che nella libreria STL ci possa essere già qualcosa di implementato)
+        if( !(s==(_symbles)[i]) )
+            i++;
+    _symbles.erase(_symbles.begin()+i);
+
+    to_string();
+}
+
 void NetworkServer::to_string() {
     QString str;
 
-    std::for_each(_symbols.begin(),_symbols.end(),
+    std::for_each(_symbles.begin(),_symbles.end(),
                   [&str](Symbol s){
                       str += s.getValue();
                   });

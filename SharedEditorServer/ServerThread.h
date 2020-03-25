@@ -9,17 +9,17 @@
 #include <QThread>
 #include <QTcpSocket>
 #include <QtCore/QMutex>
+#include <shared_mutex>
 #include "NetworkServer.h"
 #include "Packet/Symbols/Symbol.h"
 #include "Packet/Message.h"
-
+#include "MessageHandler.h"
 
 class ServerThread : public QThread{
 Q_OBJECT
 
 public:
-    explicit ServerThread(qintptr socketDescriptor, std::mutex *sym_mutex, std::vector<Symbol> *symbols,
-                          std::mutex *skt_mutex,std::vector<QTcpSocket*> *sockets ,QObject *parent =0);
+    explicit ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent =0);
     void run() override;
 
 signals:
@@ -33,12 +33,11 @@ private:
     QTcpSocket *socket;
     qintptr socketDescriptor;
 
-    std::mutex *skt_mutex;
-    std::vector<QTcpSocket*> *_sockets;
-    std::vector<Symbol> *_symbols;
-    std::mutex *sym_mutex;
+    MessageHandler *msgHandler;
+    static std::shared_mutex skt_mutex;
+    static std::vector<std::pair<QTcpSocket*,std::mutex*>> _sockets;
 
-    void sendMessage(Message& msg, QTcpSocket *skt);
+    void sendMessage(Message& msg, QTcpSocket *skt, std::mutex *mtx);
 
 };
 

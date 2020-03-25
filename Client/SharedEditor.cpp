@@ -172,14 +172,16 @@ void SharedEditor::recvMessage() {
 }                                                //sul socket, in questo modo svuoto la coda richiamando la recvMessage()
 
 void SharedEditor::sendMessage(Message& msg) {
-    QDataStream out(socket);
+
+    QDataStream out;
+    out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
     qint32 num=msg.getSymbol().getPos().size();
-
-    out << msg.getSiteId() << (qint32) (msg.getAction() == insertion ? 0 : 1) << msg.getSymbol().getValue() << msg.getSymbol().getSymId().getSiteId() << msg.getSymbol().getSymId().getCount() << num;
+    
+    out << msg.getSiteId() << (qint32)msg.getAction() << msg.getSymbol().getValue() << msg.getSymbol().getSymId().getSiteId() << msg.getSymbol().getSymId().getCount() << num;
     for(auto i : msg.getSymbol().getPos())
-        out << (qint32) i;                                      //invia al server un oggetto Message serializzato sul socket
-    this->socket->waitForBytesWritten(-1);
+        out << (qint32) i;
+    socket->waitForBytesWritten(-1);
 }
 

@@ -6,8 +6,7 @@
 #include <utility>
 #include <QtCore/QDataStream>
 #include "ServerThread.h"
-
-
+#include "NetworkServer.h"
 
 /**
  *  per quanto riguarda la classe ServerThread
@@ -21,13 +20,14 @@
  *  in ogni caso tutti i puntatori che servono, ma in maniera sicura,
  *  utilizzando smartptr
  **/
-ServerThread::ServerThread(qintptr socketDescriptor, std::mutex *sym_mutex, std::vector<Symbol> *symbols,
-                           std::mutex *skt_mutex, std::vector<QTcpSocket*> *sockets,QObject *parent):QThread(parent){
-    this->skt_mutex = skt_mutex;
-    this->_sockets = sockets;
-    this->sym_mutex = sym_mutex;
-    this->_symbols = symbols;
+
+std::shared_mutex ServerThread::skt_mutex;  // questo è lo shared mutex per la struttura "_sockets"
+std::vector<std::pair<QTcpSocket*,std::mutex*>> ServerThread::_sockets; //qui ci sono dei mutex esclisivi per ogni socket
+/// PER ORA USO IL VETTORE PER TESTARE IL FUNZIONAMENTO, POI INSERIRO' LA MAPPA (IL VETTORE SO USARLO BENE, LA MAPPA ANCORA NO)
+
+ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent):QThread(parent){
     this->socketDescriptor = socketDescriptor;
+    this->msgHandler = msgHandler;
 }
 
 void ServerThread::run()
@@ -40,6 +40,11 @@ void ServerThread::run()
         return;
     }
 
+    {
+        std::lock_guard lg(skt_mutex);
+        _sockets.emplace_back(socket,new std::mutex());
+    }
+
     /**
      * queste 4 righe sono una prova di scambio di siteID, il primo valore ( 1 )
      * serve semplicemente ad indicare al client che si tratta di una comunicazione
@@ -50,7 +55,8 @@ void ServerThread::run()
     out.setVersion(QDataStream::Qt_5_5);
     out<<DataPacket::login<<5;
 
-    connect(socket, SIGNAL(readyRead()), this, SLOT(recvMessage()));
+
+    connect(socket, SIGNAL(readyRead()), this, SLOT(recvMessage()),Qt::DirectConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     std::cout<<"readyRead signal set!"<<std::endl;
 
@@ -81,17 +87,17 @@ void ServerThread::run()
 
 void ServerThread::recvMessage()
 {
-    std::cout<<std::this_thread::get_id()<<" reading from socket "<<this->socketDescriptor<<std::endl;
+    std::cout<<"thread "<<std::this_thread::get_id()<<" reading from socket "<<this->socketDescriptor<<std::endl;
 
     QDataStream in;
     qint32 siteIdM;
     qint32 action;
     QChar ch;
     qint32 siteIdS;
-    qint32  count;
+    quint32  count;
     qint32 num;
     qint32 p;
-    std::vector<qint32> pos;
+    std::vector<quint32> pos;
 
     qDebug()<<"Receving message";
 
@@ -99,56 +105,79 @@ void ServerThread::recvMessage()
     in.setVersion(QDataStream::Qt_5_5);
 
     in >> siteIdM >> action >> ch >> siteIdS >> count >> num; //il protocollo scelto per il passaggio della posizione richiede
-    for(int i=0; i<num; i++){                                 //la lettura di un valore ad indicarne la lunghezza di pos
+    for(int i=0; i<num; i++){                                 //la lettura di un valore ad indicare la lunghezza di pos
         in >> p;
         pos.push_back(p);
     }
 
     Symbol sym(ch,siteIdS,count,pos);
+    Message msg((action_t)action,siteIdM,sym);
     if( action == insertion ){
-        int i = 0;
-        std::unique_lock ul(*sym_mutex);
-        for (auto s: *_symbols)   //algoritmo lineare, migliorabile
-            if (!(s < (*_symbols)[i]))
-                i++;
-
-        _symbols->insert(_symbols->begin() + i, sym);
+        msgHandler->submit(NetworkServer::localInsert,msg);
     }
     else{
-        int i = 0;
-        std::unique_lock ul(*sym_mutex);
-        for( auto s: *_symbols) //algoritmo lineare anche qui, migliorabile (penso che nella libreria STL ci possa essere già qualcosa di implementato)
-            if( !(s==(*_symbols)[i]) )
-                i++;
-        _symbols->erase(_symbols->begin()+i);
+        msgHandler->submit(NetworkServer::localErase,msg);
     }
 
-    Message m((action_t)action,siteIdM,sym);
-    std::unique_lock ul(*skt_mutex);
-    for( auto skt: *_sockets){
-        if ( skt != socket ){
-            sendMessage(m,skt);
+    /** nota: mentre la scrittura del file locale può essere una azione asincrona, la comunicazione
+     * agli altri utenti di ciò che sta avvenendo non può per due motivi:
+     * 1. è più urgente che i client sappiano cosa gli altri client stiano facendo piuttosto
+     *    che sapere che quello che è stato scritto sia realmente stato salvato oppure no
+     * 2. la comunicazione agli altri socket è probabilmente più rapida della scrittura
+     *    su file.
+     * inoltre in questo caso potrebbe essere utile uno shared_lock piuttosto che un lock in
+     * mutua esclusione, questo perchè (verosimilmente) le azioni che richiedono l'accesso al
+     * vettore di socket in scrittura saranno più rari e richiedono tempistiche molto più lunghe
+     * (la scrittura su questo vettore avviene solo dopo la connessione di un client). Molto più
+     * frequenti sono, invece, gli accessi in lettura; e non permettere ad un thread di leggere da
+     * questo vettore quando un altro sta leggendo, è poco efficiente
+    **/
+
+    std::shared_lock sl(skt_mutex);
+    for (auto skt: _sockets) {
+        sl.unlock();
+        if (skt.first != socket) {
+            sendMessage(msg, skt.first, skt.second);
         }
+        sl.lock();
     }
 
-    ((NetworkServer*)this->parent())->to_string();
+
 }
 
-void ServerThread::sendMessage(Message& msg, QTcpSocket *skt) {
+void ServerThread::sendMessage(Message& msg, QTcpSocket *skt,std::mutex* mtx) {
     QDataStream out;
-    out.setDevice(socket);
+    out.setDevice(skt);
     out.setVersion(QDataStream::Qt_5_5);
 
     qint32 num=msg.getSymbol().getPos().size();
 
-    out << msg.getSiteId() << (qint32)msg.getAction() << msg.getSymbol().getValue() << msg.getSymbol().getSymId().getSiteId() << msg.getSymbol().getSymId().getCount() << num;
-    for(auto i : msg.getSymbol().getPos())
-        out << (qint32) i;
-    skt->waitForBytesWritten(-1);
+
+    {
+        std::lock_guard lg(*mtx);
+        out << msg.getSiteId() << (qint32)msg.getAction() << msg.getSymbol().getValue() << msg.getSymbol().getSymId().getSiteId() << msg.getSymbol().getSymId().getCount() << num;
+        for(auto i : msg.getSymbol().getPos())
+            out << (qint32) i;
+        skt->waitForBytesWritten(-1);
+    }
 }
 
 void ServerThread::disconnected()
 {
+    int i = 0;
+    {
+        std::shared_lock sl(skt_mutex);
+        for (auto skt:_sockets) {
+            if (skt.first == socket) break;
+            i++;
+        }
+    }
+
+    {
+        std::lock_guard lg(skt_mutex);
+        _sockets.erase(_sockets.begin()+i);
+    }
+
     socket->deleteLater();
     std::cout<<"Client disconnected!"<<std::endl;
     exit(0);
