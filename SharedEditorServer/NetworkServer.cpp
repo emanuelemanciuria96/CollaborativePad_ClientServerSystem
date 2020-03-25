@@ -6,7 +6,9 @@
 
 std::vector<Symbol> NetworkServer::_symbles;
 
-NetworkServer::NetworkServer(QObject *parent) : QTcpServer(parent){}
+NetworkServer::NetworkServer(QObject *parent) : QTcpServer(parent){
+    msgHandler = std::make_shared<MessageHandler>();
+}
 
 void NetworkServer::startServer() {
 
@@ -18,8 +20,6 @@ void NetworkServer::startServer() {
     {
         qDebug() << "NetworkServer started!";
     }
-
-    msgHandler = std::make_shared<MessageHandler>();
 
 }
 

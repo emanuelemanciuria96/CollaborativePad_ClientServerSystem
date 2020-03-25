@@ -30,14 +30,14 @@ public slots:
     void disconnected();
 
 private:
-    QTcpSocket *socket{};
+    QTcpSocket *socket;
     qintptr socketDescriptor;
 
     MessageHandler *msgHandler;
     static std::shared_mutex skt_mutex;
-    static std::vector<QTcpSocket*> _sockets;
+    static std::vector<std::pair<QTcpSocket*,std::mutex*>> _sockets;
 
-    void sendMessage(Message& msg, QTcpSocket *skt);
+    void sendMessage(Message& msg, QTcpSocket *skt, std::mutex *mtx);
 
 };
 

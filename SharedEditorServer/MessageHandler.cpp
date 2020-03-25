@@ -32,6 +32,7 @@ MessageHandler::~MessageHandler() {
     {
         std::unique_lock ul(mtx);
         finished = true;
+        cv.notify_one();
     }
     if(looper.joinable())
         looper.join();

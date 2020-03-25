@@ -21,8 +21,9 @@
  *  utilizzando smartptr
  **/
 
-std::shared_mutex ServerThread::skt_mutex;
-std::vector<QTcpSocket*> ServerThread::_sockets;
+std::shared_mutex ServerThread::skt_mutex;  // questo è lo shared mutex per la struttura "_sockets"
+std::vector<std::pair<QTcpSocket*,std::mutex*>> ServerThread::_sockets; //qui ci sono dei mutex esclisivi per ogni socket
+/// PER ORA USO IL VETTORE PER TESTARE IL FUNZIONAMENTO, POI INSERIRO' LA MAPPA (IL VETTORE SO USARLO BENE, LA MAPPA ANCORA NO)
 
 ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent):QThread(parent){
     this->socketDescriptor = socketDescriptor;
@@ -40,8 +41,8 @@ void ServerThread::run()
     }
 
     {
-        std::unique_lock ul(skt_mutex);
-        _sockets.push_back(socket);
+        std::lock_guard lg(skt_mutex);
+        _sockets.emplace_back(socket,new std::mutex());
     }
 
     /**
@@ -130,32 +131,51 @@ void ServerThread::recvMessage()
      * frequenti sono, invece, gli accessi in lettura; e non permettere ad un thread di leggere da
      * questo vettore quando un altro sta leggendo, è poco efficiente
     **/
-    {
-        std::shared_lock sl(skt_mutex);
-        for (auto skt: _sockets) {
-            if (skt != socket) {
-                sendMessage(msg, skt);
-            }
+
+    std::shared_lock sl(skt_mutex);
+    for (auto skt: _sockets) {
+        sl.unlock();
+        if (skt.first != socket) {
+            sendMessage(msg, skt.first, skt.second);
         }
+        sl.lock();
     }
+
 
 }
 
-void ServerThread::sendMessage(Message& msg, QTcpSocket *skt) {
+void ServerThread::sendMessage(Message& msg, QTcpSocket *skt,std::mutex* mtx) {
     QDataStream out;
     out.setDevice(skt);
     out.setVersion(QDataStream::Qt_5_5);
 
     qint32 num=msg.getSymbol().getPos().size();
 
-    out << msg.getSiteId() << (qint32)msg.getAction() << msg.getSymbol().getValue() << msg.getSymbol().getSymId().getSiteId() << msg.getSymbol().getSymId().getCount() << num;
-    for(auto i : msg.getSymbol().getPos())
-        out << (qint32) i;
-    skt->waitForBytesWritten(-1);
+    {
+        std::lock_guard lg(*mtx);
+        out << msg.getSiteId() << (qint32)msg.getAction() << msg.getSymbol().getValue() << msg.getSymbol().getSymId().getSiteId() << msg.getSymbol().getSymId().getCount() << num;
+        for(auto i : msg.getSymbol().getPos())
+            out << (qint32) i;
+        skt->waitForBytesWritten(-1);
+    }
 }
 
 void ServerThread::disconnected()
 {
+    int i = 0;
+    {
+        std::shared_lock sl(skt_mutex);
+        for (auto skt:_sockets) {
+            if (skt.first == socket) break;
+            i++;
+        }
+    }
+
+    {
+        std::lock_guard lg(skt_mutex);
+        _sockets.erase(_sockets.begin()+i);
+    }
+
     socket->deleteLater();
     std::cout<<"Client disconnected!"<<std::endl;
     exit(0);
