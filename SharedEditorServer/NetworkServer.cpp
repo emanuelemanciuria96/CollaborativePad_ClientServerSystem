@@ -30,7 +30,7 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
     std::cout<<"thread "<<std::this_thread::get_id()<<std::endl;
     qDebug()<< "Creating Thread";
 
-    ServerThread *thread = new ServerThread(socketDesc,msgHandler.get(),&skt_mutex,&_sockets,this);
+    ServerThread *thread = new ServerThread(socketDesc,msgHandler.get(),this);
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     thread->start();
 

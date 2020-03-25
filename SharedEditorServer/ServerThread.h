@@ -19,8 +19,7 @@ class ServerThread : public QThread{
 Q_OBJECT
 
 public:
-    explicit ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,std::shared_mutex *skt_mutex,
-                          std::vector<QTcpSocket*> *sockets ,QObject *parent =0);
+    explicit ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent =0);
     void run() override;
 
 signals:
@@ -31,12 +30,12 @@ public slots:
     void disconnected();
 
 private:
-    QTcpSocket *socket;
+    QTcpSocket *socket{};
     qintptr socketDescriptor;
 
     MessageHandler *msgHandler;
-    std::shared_mutex *skt_mutex;
-    std::vector<QTcpSocket*> *_sockets;
+    static std::shared_mutex skt_mutex;
+    static std::vector<QTcpSocket*> _sockets;
 
     void sendMessage(Message& msg, QTcpSocket *skt);
 

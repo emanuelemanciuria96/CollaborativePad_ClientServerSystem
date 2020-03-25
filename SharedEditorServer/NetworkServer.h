@@ -32,15 +32,9 @@ public:
     static void localErase(Message m);
 
 private:
-    qint32 _counter;
-    QTcpSocket *socket;
     std::shared_ptr<MessageHandler> msgHandler;
     static std::vector<Symbol> _symbles;    // struttura per il salvataggio del testo
     // static std::mutex sym_mutex;  per ora questo mutex non serve: ci accede un solo thread, che è quello creato in MessageHandler
-    /* strutture condivise fra tutti i thread */
-    std::shared_mutex skt_mutex;
-    std::vector<QTcpSocket*> _sockets;
-
 
 protected:
     void incomingConnection(qintptr socketDesc) Q_DECL_OVERRIDE;

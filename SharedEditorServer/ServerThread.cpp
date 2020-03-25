@@ -20,10 +20,11 @@
  *  in ogni caso tutti i puntatori che servono, ma in maniera sicura,
  *  utilizzando smartptr
  **/
-ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,std::shared_mutex *skt_mutex,
-                            std::vector<QTcpSocket*> *sockets,QObject *parent):QThread(parent){
-    this->skt_mutex = skt_mutex;
-    this->_sockets = sockets;
+
+std::shared_mutex ServerThread::skt_mutex;
+std::vector<QTcpSocket*> ServerThread::_sockets;
+
+ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent):QThread(parent){
     this->socketDescriptor = socketDescriptor;
     this->msgHandler = msgHandler;
 }
@@ -39,8 +40,8 @@ void ServerThread::run()
     }
 
     {
-        std::unique_lock ul(*skt_mutex);
-        _sockets->push_back(socket);
+        std::unique_lock ul(skt_mutex);
+        _sockets.push_back(socket);
     }
 
     /**
@@ -130,8 +131,8 @@ void ServerThread::recvMessage()
      * questo vettore quando un altro sta leggendo, è poco efficiente
     **/
     {
-        std::shared_lock sl(*skt_mutex);
-        for (auto skt: *_sockets) {
+        std::shared_lock sl(skt_mutex);
+        for (auto skt: _sockets) {
             if (skt != socket) {
                 sendMessage(msg, skt);
             }

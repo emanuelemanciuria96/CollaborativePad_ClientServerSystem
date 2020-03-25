@@ -39,7 +39,8 @@ public:
     MessageHandler():finished(false){
         looper = std::move(std::thread(&MessageHandler::startLooper,this));
     }
-    void submit(std::function<void(Message)> f,Message msg);
+    void submit(std::function<void(Message)> f,Message& msg);
+    ~MessageHandler();
 };
 
 

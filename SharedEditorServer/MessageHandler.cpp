@@ -21,9 +21,18 @@ void MessageHandler::startLooper() {
     }
 }
 
-void MessageHandler::submit(std::function<void(Message)> f, Message msg) {
+void MessageHandler::submit(std::function<void(Message)> f, Message& msg) {
     std::unique_lock ul(mtx);
     if(!finished)
         _queue.push(std::make_pair(f,msg));
     cv.notify_one();
+}
+
+MessageHandler::~MessageHandler() {
+    {
+        std::unique_lock ul(mtx);
+        finished = true;
+    }
+    if(looper.joinable())
+        looper.join();
 }
