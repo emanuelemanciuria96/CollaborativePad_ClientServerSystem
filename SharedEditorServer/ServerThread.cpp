@@ -173,7 +173,7 @@ void ServerThread::disconnected()
         }
     }
 
-    {
+    if(i<_sockets.size()){
         std::lock_guard lg(skt_mutex);
         _sockets.erase(_sockets.begin()+i);
     }
