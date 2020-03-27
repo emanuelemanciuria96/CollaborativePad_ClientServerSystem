@@ -25,10 +25,16 @@ private:
     qint32 _counter;
     QTcpSocket *socket;
     qint32 connectToServer();
+    void sendPacket(DataPacket& packet);
+    bool isLogged;
 
 private slots:
     void recvMessage();
-    void sendMessage(Message& m);
+    void sendMessage(DataPacket& packet);
+    void recvPacket();
+
+public slots:
+    void login(QString& username, QString& password);
 
 public:
     explicit SharedEditor(QObject *parent = 0);

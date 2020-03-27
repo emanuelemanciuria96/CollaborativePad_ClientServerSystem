@@ -10,6 +10,18 @@
 class Payload {
 protected:
     qint32 _siteID;
+    virtual void function() {
+        //empty function
+    }
+public:
+    qint32 getSiteId() const {
+        return _siteID;
+    }
+
+    void setSiteId(qint32 siteId) {
+        _siteID = siteId;
+    }
+
 public:
     Payload(qint32 siteID):_siteID(siteID){}
 };

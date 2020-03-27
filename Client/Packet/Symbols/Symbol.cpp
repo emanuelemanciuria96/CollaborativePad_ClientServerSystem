@@ -1,5 +1,5 @@
 //
-// Created by Emanuele on 25/08/2019.
+// Created by muska on 15/10/2019.
 //
 
 #include "Symbol.h"

@@ -13,10 +13,25 @@ class LoginInfo: public Payload {
 private:
     QString _user;
     QString _password;
+    qint32 _type;
+
 public:
-    LoginInfo(qint32 siteId):Payload(siteId){}
-    void setUser(QString user){ _user = user; }
-    void setPassword(QString password){ _password = password; }
+    LoginInfo(qint32 siteId, qint32 type = -1, QString user = "", QString password = "");
+
+    QString &getUser();
+    void setUser(QString user);
+    QString &getPassword();
+    void setPassword(QString password);
+    qint32 getType();
+    void setType(qint32 type);
+
+    enum Constants
+    {
+        login_request = 200,
+        signup_request = 201,
+        login_error = 400,
+        login_ok = 100,
+    };
 };
 
 

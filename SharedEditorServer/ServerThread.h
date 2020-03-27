@@ -5,7 +5,7 @@
 #ifndef ES3_PROJ_NETWORKSERVER_SERVERTHREAD_H
 #define ES3_PROJ_NETWORKSERVER_SERVERTHREAD_H
 
-
+#include "Packet/DataPacket.h"
 #include <QThread>
 #include <QTcpSocket>
 #include <QtCore/QMutex>
@@ -13,6 +13,7 @@
 #include "NetworkServer.h"
 #include "Packet/Symbols/Symbol.h"
 #include "Packet/Message.h"
+#include "Packet/LoginInfo.h"
 #include "MessageHandler.h"
 
 class ServerThread : public QThread{
@@ -26,7 +27,8 @@ signals:
     void error(QTcpSocket::SocketError socketerror);    //slot che gestisce questo segnale da implementare
 
 public slots:
-    void recvMessage();
+    void recvPacket();
+    void recvMessage(DataPacket& packet);
     void disconnected();
 
 private:
@@ -37,8 +39,13 @@ private:
     static std::shared_mutex skt_mutex;
     static std::vector<std::pair<QTcpSocket*,std::mutex*>> _sockets;
 
-    void sendMessage(Message& msg, QTcpSocket *skt, std::mutex *mtx);
-
+    void sendMessage(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx);
+    void sendPacket(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx = nullptr);
+    bool isLogged;
+    qint32 login(DataPacket& packet);
+    LoginInfo loadLoginJson(std::string dir);
+    void saveFileJson(std::string dir,std::vector<Symbol> _symbols);
+    std::vector<Symbol> loadFileJson(std::string dir);
 };
 
 

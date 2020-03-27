@@ -3,6 +3,7 @@
 //
 
 #include "SharedEditor.h"
+#include "Packet/LoginInfo.h"
 #include <vector>
 #include <algorithm>
 #include <thread>
@@ -10,24 +11,23 @@
 SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
     this->socket=new QTcpSocket(this);
-    _siteId=-1;                             //inizialmente -1 per fare in modo che alla ricezione
-    _siteId = this->connectToServer();      //del vero siteId da parte del server la recvMessage() ritorni subito
+    _siteId=-1;
+    this->connectToServer();
     _counter = 0;
+    this->isLogged = false;
 
     //creo due delimitatori, servono a gestire l'inserimento
     //in coda, in testa o in mezzo al testo allo stesso
     //e identico modo! quando faccio il localInsert, pero',
     //devo ricordare di avere 2 valori in piu'
-    Symbol s('0',-1,-1);
-    _symbols.push_back(s);
-    _symbols.push_back(s);
-    std::vector<qint32> v = {0};
-    _symbols[0].setPos(v);
+    std::vector<quint32> v = {0};
     v = {INT_MAX};
-    _symbols[1].setPos(v);
+    Symbol s('0',-1,-1, v);
+    _symbols.push_back(s);
+    _symbols.push_back(s);
 }
 
-void generateNewPosition( std::vector<qint32>& prev, std::vector<qint32>& next, std::vector<qint32>& newPos, qint32 depth = 0 ){
+void generateNewPosition( std::vector<quint32>& prev, std::vector<quint32>& next, std::vector<quint32>& newPos, qint32 depth = 0 ){
 
     qint32 pos;
     if ( depth >= prev.size() ){
@@ -53,16 +53,18 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
     }
 
     index++;
-    Symbol s(value,_siteId,_counter++);
-    std::vector<qint32> prev = _symbols[index-1].getPos();
-    std::vector<qint32> next = _symbols[index].getPos();
-    std::vector<qint32> newPos;
+    std::vector<quint32> newPos;
+    Symbol s(value,_siteId,_counter++,newPos);
+    std::vector<quint32> prev = _symbols[index-1].getPos();
+    std::vector<quint32> next = _symbols[index].getPos();
     generateNewPosition(prev,next,newPos);
-    s.setPos(newPos);
     _symbols.insert(_symbols.begin()+index,s);
 
-    Message m{insertion,_siteId,s};
-    sendMessage(m);
+    DataPacket packet(_siteId, -1, DataPacket::textTyping);
+    packet.getPayload() = std::make_shared<Message>(Message(insertion,_siteId,s));
+    //Message m{insertion,_siteId,s};
+
+    sendPacket(packet);
     this->to_string();
 }
 
@@ -75,8 +77,11 @@ void SharedEditor::localErase(qint32 index) {
     Symbol s = _symbols[index];
     _symbols.erase(_symbols.begin()+index);
 
-    Message m{removal,_siteId,s};
-    sendMessage(m);
+    DataPacket packet(_siteId, -1, DataPacket::textTyping);
+    packet.getPayload() = std::make_shared<Message>(Message(insertion,_siteId,s));
+    //Message m{removal,_siteId,s};
+
+    sendPacket(packet);
     this->to_string();
 }
 
@@ -119,25 +124,60 @@ void SharedEditor::to_string() {
 qint32 SharedEditor::connectToServer() {
     this->socket->connectToHost(QHostAddress::LocalHost, 1234);
     if(this->socket->waitForConnected(1000)) {
-        if(socket->waitForReadyRead(1000)) {          //non ho ancora collegato il segnale readyRead a recvMessage, quindi
-            QDataStream in;                                 //leggo sul socket in modo bloccante (per 3000 ms)
-            in.setDevice(this->socket);
-            in.setVersion(QDataStream::Qt_5_5);
-            qint32 type;
-            in>>type;
-            in >> _siteId;                                  //ricevo il SiteId
-            std::cout<<"SiteId: "<<_siteId<<std::endl;
-            QAbstractSocket::connect(this->socket, &QIODevice::readyRead, this, &SharedEditor::recvMessage);  //ogni volta che arriva un dato sul socket la recvMessage() viene invocata
-        }
-        else{
-            std::cout << "Not connected: " << socket->errorString().toStdString() << std::endl;
-        }
+        QAbstractSocket::connect(this->socket, &QIODevice::readyRead, this, &SharedEditor::recvPacket);  //ogni volta che arriva un dato sul socket la recvMessage() viene invocata
+        std::cout << "Connected!" << std::endl;
+        return 1;
     }
     else{
         std::cout << "Not connected: " << socket->errorString().toStdString() << std::endl;
     }
 
     return -1;
+}
+
+void SharedEditor::recvPacket() {
+    QDataStream in;
+    qint32 source;
+    quint32 errcode;
+    quint32 type_of_data;
+
+    qDebug() << "Receving packet";
+
+    in.setDevice(this->socket);
+    in.setVersion(QDataStream::Qt_5_5);
+
+    in >> source >> errcode >> type_of_data;
+    DataPacket packet(source, errcode, type_of_data);
+
+    switch (type_of_data) {
+        case (DataPacket::login): {
+            quint32 siteId;
+            qint32 type;
+            QString user;
+            QString password;
+
+            in >> siteId >> type >> user >> password;
+
+            if(type == LoginInfo::login_ok) {
+                _siteId = siteId;
+                std::cout << "client successfully logged!" << std::endl;
+            } else {
+                std::cout << "client not logged!" << std::endl;
+            }
+
+            break;
+        }
+
+        case (DataPacket::textTyping): {
+            recvMessage();
+            break;
+        }
+
+        default: {
+            std::cout << "Coglione c'è un errore" << std::endl;
+            break;
+        }
+    }
 }
 
 void SharedEditor::recvMessage() {
@@ -150,7 +190,7 @@ void SharedEditor::recvMessage() {
     qint32  count;
     qint32 num;
     qint32 p;
-    std::vector<qint32> pos;
+    std::vector<quint32> pos;
 
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
@@ -161,8 +201,7 @@ void SharedEditor::recvMessage() {
         pos.push_back(p);
     }
 
-    Symbol s(ch, siteIdS, count);
-    s.setPos(pos);
+    Symbol s(ch, siteIdS, count, pos);
     Message msg(action == 0 ? insertion : removal, siteIdM, s);
     this->process(msg);
     this->to_string();
@@ -171,17 +210,48 @@ void SharedEditor::recvMessage() {
         emit socket->readyRead();                //a processare i segnali readyRead() e i dati rimangono accodati
 }                                                //sul socket, in questo modo svuoto la coda richiamando la recvMessage()
 
-void SharedEditor::sendMessage(Message& msg) {
+void SharedEditor::sendPacket(DataPacket& packet){
+    switch(packet.getTypeOfData()){
+        case (DataPacket::login): {
+            auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
+            QDataStream out;
+            out.setDevice(socket);
+            out.setVersion(QDataStream::Qt_5_5);
 
+            out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+            out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
+            socket->waitForBytesWritten(-1);
+            break;
+        }
+
+        case (DataPacket::textTyping): {
+            sendMessage(packet);
+            break;
+        }
+
+        default: {
+            std::cout<<"Coglione c'è un errore"<<std::endl;
+        }
+    }
+};
+
+void SharedEditor::sendMessage(DataPacket& packet) {
+    auto ptr = std::dynamic_pointer_cast<Message>(packet.getPayload());
     QDataStream out;
+    qint32 num=ptr->getSymbol().getPos().size();
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    qint32 num=msg.getSymbol().getPos().size();
-    
-    out << msg.getSiteId() << (qint32)msg.getAction() << msg.getSymbol().getValue() << msg.getSymbol().getSymId().getSiteId() << msg.getSymbol().getSymId().getCount() << num;
-    for(auto i : msg.getSymbol().getPos())
+    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    out << ptr->getSiteId() << (qint32)ptr->getAction() << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId() << ptr->getSymbol().getSymId().getCount() << num;
+    for(auto i : ptr->getSymbol().getPos())
         out << (qint32) i;
     socket->waitForBytesWritten(-1);
 }
 
+void SharedEditor::login(QString& username, QString& password) {
+    std::cout << "sending user=" << username.toStdString() << " and password=" << password.toStdString() << std::endl;
+    DataPacket packet(-1, -1, DataPacket::login);
+    packet.getPayload() = std::make_shared<LoginInfo>(LoginInfo(-1, LoginInfo::login_request, std::move(username), std::move(password)));
+    sendPacket(packet);
+}
