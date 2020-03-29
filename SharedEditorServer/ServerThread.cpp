@@ -92,7 +92,7 @@ void ServerThread::recvPacket()
     in.setVersion(QDataStream::Qt_5_5);
 
     in >> source >> errcode >> type_of_data;
-    DataPacket packet(source, errcode, type_of_data);
+    DataPacket packet(source, errcode, (DataPacket::data_t)type_of_data);
 
     switch (type_of_data){
         case (DataPacket::login): {
@@ -104,7 +104,7 @@ void ServerThread::recvPacket()
             in >> siteId >> type >> user >> password;
 
             if(type == LoginInfo::login_request && !isLogged) {
-                packet.getPayload() = std::make_shared<LoginInfo>(LoginInfo(-1, type, std::move(user), std::move(password)));
+                packet.setPayload( std::make_shared<LoginInfo>( -1, type, user, password));
                 if (login(packet) != -1) {
                     std::cout << "client successfully logged!" << std::endl;
                     isLogged = true;                                               //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
