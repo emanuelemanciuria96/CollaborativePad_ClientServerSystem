@@ -33,19 +33,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = "C:\Program Files\JetBrains\CLion 2019.3.4\bin\cmake\win\bin\cmake.exe"
+CMAKE_COMMAND = "C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe"
 
 # The command to remove a file.
-RM = "C:\Program Files\JetBrains\CLion 2019.3.4\bin\cmake\win\bin\cmake.exe" -E remove -f
+RM = "C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Muska\CLionProjects\Client
+CMAKE_SOURCE_DIR = C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Muska\CLionProjects\Client\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Client.dir/depend.make
@@ -59,128 +59,142 @@ include CMakeFiles/Client.dir/flags.make
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: CMakeFiles/Client.dir/flags.make
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: Client_autogen/mocs_compilation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Muska\CLionProjects\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\Client_autogen\mocs_compilation.cpp.obj -c C:\Users\Muska\CLionProjects\Client\cmake-build-debug\Client_autogen\mocs_compilation.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\Client_autogen\mocs_compilation.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\Client_autogen\mocs_compilation.cpp
 
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.i"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Muska\CLionProjects\Client\cmake-build-debug\Client_autogen\mocs_compilation.cpp > CMakeFiles\Client.dir\Client_autogen\mocs_compilation.cpp.i
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\Client_autogen\mocs_compilation.cpp > CMakeFiles\Client.dir\Client_autogen\mocs_compilation.cpp.i
 
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.s"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Muska\CLionProjects\Client\cmake-build-debug\Client_autogen\mocs_compilation.cpp -o CMakeFiles\Client.dir\Client_autogen\mocs_compilation.cpp.s
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\Client_autogen\mocs_compilation.cpp -o CMakeFiles\Client.dir\Client_autogen\mocs_compilation.cpp.s
 
 CMakeFiles/Client.dir/main.cpp.obj: CMakeFiles/Client.dir/flags.make
 CMakeFiles/Client.dir/main.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
 CMakeFiles/Client.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Muska\CLionProjects\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Client.dir/main.cpp.obj"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\main.cpp.obj -c C:\Users\Muska\CLionProjects\Client\main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Client.dir/main.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\main.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\main.cpp
 
 CMakeFiles/Client.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/main.cpp.i"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Muska\CLionProjects\Client\main.cpp > CMakeFiles\Client.dir\main.cpp.i
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\main.cpp > CMakeFiles\Client.dir\main.cpp.i
 
 CMakeFiles/Client.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/main.cpp.s"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Muska\CLionProjects\Client\main.cpp -o CMakeFiles\Client.dir\main.cpp.s
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\main.cpp -o CMakeFiles\Client.dir\main.cpp.s
 
 CMakeFiles/Client.dir/Packet/Message.cpp.obj: CMakeFiles/Client.dir/flags.make
 CMakeFiles/Client.dir/Packet/Message.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
 CMakeFiles/Client.dir/Packet/Message.cpp.obj: ../Packet/Message.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Muska\CLionProjects\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Client.dir/Packet/Message.cpp.obj"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\Packet\Message.cpp.obj -c C:\Users\Muska\CLionProjects\Client\Packet\Message.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Client.dir/Packet/Message.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\Packet\Message.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\Message.cpp
 
 CMakeFiles/Client.dir/Packet/Message.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/Packet/Message.cpp.i"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Muska\CLionProjects\Client\Packet\Message.cpp > CMakeFiles\Client.dir\Packet\Message.cpp.i
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\Message.cpp > CMakeFiles\Client.dir\Packet\Message.cpp.i
 
 CMakeFiles/Client.dir/Packet/Message.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/Packet/Message.cpp.s"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Muska\CLionProjects\Client\Packet\Message.cpp -o CMakeFiles\Client.dir\Packet\Message.cpp.s
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\Message.cpp -o CMakeFiles\Client.dir\Packet\Message.cpp.s
 
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: CMakeFiles/Client.dir/flags.make
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../SharedEditor.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Muska\CLionProjects\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Client.dir/SharedEditor.cpp.obj"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\SharedEditor.cpp.obj -c C:\Users\Muska\CLionProjects\Client\SharedEditor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Client.dir/SharedEditor.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\SharedEditor.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\SharedEditor.cpp
 
 CMakeFiles/Client.dir/SharedEditor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/SharedEditor.cpp.i"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Muska\CLionProjects\Client\SharedEditor.cpp > CMakeFiles\Client.dir\SharedEditor.cpp.i
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\SharedEditor.cpp > CMakeFiles\Client.dir\SharedEditor.cpp.i
 
 CMakeFiles/Client.dir/SharedEditor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/SharedEditor.cpp.s"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Muska\CLionProjects\Client\SharedEditor.cpp -o CMakeFiles\Client.dir\SharedEditor.cpp.s
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\SharedEditor.cpp -o CMakeFiles\Client.dir\SharedEditor.cpp.s
 
 CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj: CMakeFiles/Client.dir/flags.make
 CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
 CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj: ../Packet/Symbols/Symbol.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Muska\CLionProjects\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\Packet\Symbols\Symbol.cpp.obj -c C:\Users\Muska\CLionProjects\Client\Packet\Symbols\Symbol.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\Packet\Symbols\Symbol.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\Symbols\Symbol.cpp
 
 CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.i"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Muska\CLionProjects\Client\Packet\Symbols\Symbol.cpp > CMakeFiles\Client.dir\Packet\Symbols\Symbol.cpp.i
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\Symbols\Symbol.cpp > CMakeFiles\Client.dir\Packet\Symbols\Symbol.cpp.i
 
 CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.s"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Muska\CLionProjects\Client\Packet\Symbols\Symbol.cpp -o CMakeFiles\Client.dir\Packet\Symbols\Symbol.cpp.s
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\Symbols\Symbol.cpp -o CMakeFiles\Client.dir\Packet\Symbols\Symbol.cpp.s
 
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: CMakeFiles/Client.dir/flags.make
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: ../Packet/LoginInfo.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Muska\CLionProjects\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\Packet\LoginInfo.cpp.obj -c C:\Users\Muska\CLionProjects\Client\Packet\LoginInfo.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\Packet\LoginInfo.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\LoginInfo.cpp
 
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/Packet/LoginInfo.cpp.i"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Muska\CLionProjects\Client\Packet\LoginInfo.cpp > CMakeFiles\Client.dir\Packet\LoginInfo.cpp.i
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\LoginInfo.cpp > CMakeFiles\Client.dir\Packet\LoginInfo.cpp.i
 
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/Packet/LoginInfo.cpp.s"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Muska\CLionProjects\Client\Packet\LoginInfo.cpp -o CMakeFiles\Client.dir\Packet\LoginInfo.cpp.s
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\LoginInfo.cpp -o CMakeFiles\Client.dir\Packet\LoginInfo.cpp.s
 
 CMakeFiles/Client.dir/Packet/Payload.cpp.obj: CMakeFiles/Client.dir/flags.make
 CMakeFiles/Client.dir/Packet/Payload.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
 CMakeFiles/Client.dir/Packet/Payload.cpp.obj: ../Packet/Payload.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Muska\CLionProjects\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Client.dir/Packet/Payload.cpp.obj"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\Packet\Payload.cpp.obj -c C:\Users\Muska\CLionProjects\Client\Packet\Payload.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Client.dir/Packet/Payload.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\Packet\Payload.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\Payload.cpp
 
 CMakeFiles/Client.dir/Packet/Payload.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/Packet/Payload.cpp.i"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Muska\CLionProjects\Client\Packet\Payload.cpp > CMakeFiles\Client.dir\Packet\Payload.cpp.i
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\Payload.cpp > CMakeFiles\Client.dir\Packet\Payload.cpp.i
 
 CMakeFiles/Client.dir/Packet/Payload.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/Packet/Payload.cpp.s"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Muska\CLionProjects\Client\Packet\Payload.cpp -o CMakeFiles\Client.dir\Packet\Payload.cpp.s
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\Payload.cpp -o CMakeFiles\Client.dir\Packet\Payload.cpp.s
 
 CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj: CMakeFiles/Client.dir/flags.make
 CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
 CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj: ../Packet/DataPacket.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Muska\CLionProjects\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\Packet\DataPacket.cpp.obj -c C:\Users\Muska\CLionProjects\Client\Packet\DataPacket.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\Packet\DataPacket.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\DataPacket.cpp
 
 CMakeFiles/Client.dir/Packet/DataPacket.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/Packet/DataPacket.cpp.i"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Muska\CLionProjects\Client\Packet\DataPacket.cpp > CMakeFiles\Client.dir\Packet\DataPacket.cpp.i
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\DataPacket.cpp > CMakeFiles\Client.dir\Packet\DataPacket.cpp.i
 
 CMakeFiles/Client.dir/Packet/DataPacket.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/Packet/DataPacket.cpp.s"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Muska\CLionProjects\Client\Packet\DataPacket.cpp -o CMakeFiles\Client.dir\Packet\DataPacket.cpp.s
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\Packet\DataPacket.cpp -o CMakeFiles\Client.dir\Packet\DataPacket.cpp.s
 
 CMakeFiles/Client.dir/LoginDialog.cpp.obj: CMakeFiles/Client.dir/flags.make
 CMakeFiles/Client.dir/LoginDialog.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
 CMakeFiles/Client.dir/LoginDialog.cpp.obj: ../LoginDialog.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Muska\CLionProjects\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Client.dir/LoginDialog.cpp.obj"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\LoginDialog.cpp.obj -c C:\Users\Muska\CLionProjects\Client\LoginDialog.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Client.dir/LoginDialog.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\LoginDialog.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\LoginDialog.cpp
 
 CMakeFiles/Client.dir/LoginDialog.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/LoginDialog.cpp.i"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Muska\CLionProjects\Client\LoginDialog.cpp > CMakeFiles\Client.dir\LoginDialog.cpp.i
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\LoginDialog.cpp > CMakeFiles\Client.dir\LoginDialog.cpp.i
 
 CMakeFiles/Client.dir/LoginDialog.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/LoginDialog.cpp.s"
-	C:\Qt\Tools\mingw730_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Muska\CLionProjects\Client\LoginDialog.cpp -o CMakeFiles\Client.dir\LoginDialog.cpp.s
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\LoginDialog.cpp -o CMakeFiles\Client.dir\LoginDialog.cpp.s
+
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: CMakeFiles/Client.dir/flags.make
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../EditorGUI.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Client.dir/EditorGUI.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\EditorGUI.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\EditorGUI.cpp
+
+CMakeFiles/Client.dir/EditorGUI.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/EditorGUI.cpp.i"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\EditorGUI.cpp > CMakeFiles\Client.dir\EditorGUI.cpp.i
+
+CMakeFiles/Client.dir/EditorGUI.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/EditorGUI.cpp.s"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\EditorGUI.cpp -o CMakeFiles\Client.dir\EditorGUI.cpp.s
 
 # Object files for target Client
 Client_OBJECTS = \
@@ -192,7 +206,8 @@ Client_OBJECTS = \
 "CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj" \
 "CMakeFiles/Client.dir/Packet/Payload.cpp.obj" \
 "CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj" \
-"CMakeFiles/Client.dir/LoginDialog.cpp.obj"
+"CMakeFiles/Client.dir/LoginDialog.cpp.obj" \
+"CMakeFiles/Client.dir/EditorGUI.cpp.obj"
 
 # External object files for target Client
 Client_EXTERNAL_OBJECTS =
@@ -206,16 +221,17 @@ Client.exe: CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj
 Client.exe: CMakeFiles/Client.dir/Packet/Payload.cpp.obj
 Client.exe: CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj
 Client.exe: CMakeFiles/Client.dir/LoginDialog.cpp.obj
+Client.exe: CMakeFiles/Client.dir/EditorGUI.cpp.obj
 Client.exe: CMakeFiles/Client.dir/build.make
-Client.exe: C:/Qt/5.14.1/mingw73_64/lib/libQt5Charts.a
-Client.exe: C:/Qt/5.14.1/mingw73_64/lib/libQt5Network.a
-Client.exe: C:/Qt/5.14.1/mingw73_64/lib/libQt5Widgets.a
-Client.exe: C:/Qt/5.14.1/mingw73_64/lib/libQt5Gui.a
-Client.exe: C:/Qt/5.14.1/mingw73_64/lib/libQt5Core.a
+Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Chartsd.a
+Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Networkd.a
+Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Widgetsd.a
+Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Guid.a
+Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Cored.a
 Client.exe: CMakeFiles/Client.dir/linklibs.rsp
 Client.exe: CMakeFiles/Client.dir/objects1.rsp
 Client.exe: CMakeFiles/Client.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Muska\CLionProjects\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable Client.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable Client.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Client.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -228,6 +244,6 @@ CMakeFiles/Client.dir/clean:
 .PHONY : CMakeFiles/Client.dir/clean
 
 CMakeFiles/Client.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Muska\CLionProjects\Client C:\Users\Muska\CLionProjects\Client C:\Users\Muska\CLionProjects\Client\cmake-build-debug C:\Users\Muska\CLionProjects\Client\cmake-build-debug C:\Users\Muska\CLionProjects\Client\cmake-build-debug\CMakeFiles\Client.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles\Client.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Client.dir/depend
 

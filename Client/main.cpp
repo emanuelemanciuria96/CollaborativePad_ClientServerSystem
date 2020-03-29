@@ -2,18 +2,19 @@
 #include <thread>
 #include "SharedEditor.h"
 #include "LoginDialog.h"
-#include <QMainWindow>
 #include <winsock2.h>
+#include "EditorGUI.h"
 
 int main(int argc, char **argv) {
     QApplication app(argc, argv);
-    QMainWindow mainWindow;
-    auto loginDialog = new LoginDialog(&mainWindow);
+    auto mainWindow = new EditorGUI();
+    auto loginDialog = new LoginDialog(mainWindow);
+
 
     SharedEditor ed;  //connessione al server effettuata direttamente nel costruttore
 
     QObject::connect(loginDialog, &LoginDialog::acceptLogin, &ed, &SharedEditor::login);
-    mainWindow.show();              //inserisci user = ciao e password = suca se vuoi che funzioni tutto
+    mainWindow->show();              //inserisci user = ciao e password = suca se vuoi che funzioni tutto
     loginDialog->exec();
 
     int i=0;
