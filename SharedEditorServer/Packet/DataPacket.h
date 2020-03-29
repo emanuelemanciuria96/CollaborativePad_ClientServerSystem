@@ -24,7 +24,7 @@ public:
     void setErrcode(quint32 errcode);
     quint32 getTypeOfData() const;
     void setTypeOfData(quint32 typeOfData);
-    std::shared_ptr<Payload> &getPayload();
+    std::shared_ptr<Payload>& getPayload();
 
     enum Constants
     {

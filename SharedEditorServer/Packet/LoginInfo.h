@@ -18,20 +18,21 @@ private:
 public:
     LoginInfo(qint32 siteId = -1, qint32 type = -1, const QString user = "", const QString password = "");
 
-    QString &getUser();
-    void setUser(QString user);
-    QString &getPassword();
-    void setPassword(QString password);
-    qint32 getType();
-    void setType(qint32 type);
-
-    enum Constants
+    typedef enum Constants
     {
         login_request = 200,
         signup_request = 201,
         login_error = 400,
         login_ok = 100,
-    };
+    } type_t;
+
+    QString &getUser();
+    void setUser(QString user);
+    QString &getPassword();
+    void setPassword(QString password);
+    qint32 getType();
+    void setType(type_t type);
+
 };
 
 

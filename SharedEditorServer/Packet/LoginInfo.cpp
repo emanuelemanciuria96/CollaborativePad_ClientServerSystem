@@ -29,6 +29,6 @@ qint32 LoginInfo::getType() {
     return _type;
 }
 
-void LoginInfo::setType(qint32 type) {
+void LoginInfo::setType(type_t type) {
     _type = type;
 }

@@ -1,4 +1,4 @@
-C:/Users/Muska/CLionProjects/SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir
-C:/Users/Muska/CLionProjects/SharedEditorServer/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Muska/CLionProjects/SharedEditorServer/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/Muska/CLionProjects/SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir

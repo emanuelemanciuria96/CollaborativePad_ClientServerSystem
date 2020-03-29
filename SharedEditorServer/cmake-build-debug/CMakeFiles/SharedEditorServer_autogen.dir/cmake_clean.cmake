@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "SharedEditorServer_autogen"
+  "CMakeFiles/SharedEditorServer_autogen.dir/AutogenOldSettings.txt"
   "CMakeFiles/SharedEditorServer_autogen"
   "SharedEditorServer_autogen/mocs_compilation.cpp"
 )

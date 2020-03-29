@@ -32,6 +32,6 @@ void DataPacket::setTypeOfData(quint32 typeOfData) {
     type_of_data = typeOfData;
 }
 
-std::shared_ptr<Payload> &DataPacket::getPayload(){
+std::shared_ptr<Payload>& DataPacket::getPayload(){
     return payload;
 }

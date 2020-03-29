@@ -155,11 +155,11 @@ void ServerThread::recvMessage(DataPacket& packet)
 
     if(isLogged) {                                          //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
         Symbol sym(ch, siteIdS, count, pos);            //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
-        packet.getPayload() = std::make_shared<Message>(Message((action_t) action, siteIdM, sym));
+        packet.getPayload() = std::make_shared<Message>(Message((Message::action_t) action, siteIdM, sym));
         auto msg = *std::dynamic_pointer_cast<Message>(packet.getPayload());
 
         //Message msg((action_t) action, siteIdM, sym);
-        if (action == insertion) {
+        if (action == Message::insertion) {
             msgHandler->submit(NetworkServer::localInsert, msg);
         } else {
             msgHandler->submit(NetworkServer::localErase, msg);
@@ -238,13 +238,13 @@ qint32 ServerThread::login(DataPacket& packet) {
     auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
     LoginInfo logData = loadLoginJson(ptr->getUser().toStdString()+".json");
     if(ptr->getUser() == logData.getUser() && ptr->getPassword() == logData.getPassword()) {
-        ptr->setType((quint32) LoginInfo::login_ok);
+        ptr->setType( LoginInfo::login_ok);
         ptr->setSiteId(5);
         ptr->setUser("");
         ptr->setPassword("");
         return 5;
     } else {
-        ptr->setType((quint32) LoginInfo::login_error);
+        ptr->setType( LoginInfo::login_error);
         ptr->setSiteId(-1);
         ptr->setUser("");
         ptr->setPassword("");
