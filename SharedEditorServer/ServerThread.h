@@ -46,8 +46,6 @@ private:
     void sendLoginInfo(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx = nullptr);
 
     bool isLogged;
-    qint32 login(DataPacket& packet);
-    LoginInfo loadLoginJson(std::string dir);
 
     void saveFileJson(std::string dir,std::vector<Symbol> _symbols);
     std::vector<Symbol> loadFileJson(std::string dir);

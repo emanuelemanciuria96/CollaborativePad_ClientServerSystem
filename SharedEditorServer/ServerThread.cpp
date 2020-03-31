@@ -45,7 +45,7 @@ void ServerThread::run()
     }
 
     connect(socket, SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
-    connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+    //connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     std::cout<<"readyRead signal set!"<<std::endl;
 
     exec(); //loop degli eventi attivato qui
@@ -100,8 +100,9 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
     in >> siteId >> type >> user >> password;
 
     if(type == LoginInfo::login_request && !isLogged) {
-        packet.setPayload( std::make_shared<LoginInfo>( -1, type, user, password));
-        if (login(packet) != -1) {
+        auto shr = std::make_shared<LoginInfo>( -1, type, user, password);
+        packet.setPayload(shr);
+        if (shr.get()->login() != -1) {
             std::cout << "client successfully logged!" << std::endl;
             isLogged = true;                                               //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
             sendPacket(packet, this->socket);                           //non fa nulla, non risponde con messaggi di errore
@@ -141,7 +142,7 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
 
     if(isLogged) {                                          //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
         Symbol sym(ch, siteIdS, count, pos);            //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
-        packet.getPayload() = std::make_shared<Message>(Message((Message::action_t) action, siteIdM, sym));
+        packet.setPayload( std::make_shared<Message>(Message((Message::action_t) action, siteIdM, sym)) );
         auto msg = *std::dynamic_pointer_cast<Message>(packet.getPayload());
 
         //Message msg((action_t) action, siteIdM, sym);
@@ -180,7 +181,7 @@ void ServerThread::sendPacket(DataPacket& packet, QTcpSocket *skt, std::mutex *m
     switch(packet.getTypeOfData()){
         case (DataPacket::login): {
            sendLoginInfo(packet,skt);
-            break;
+           break;
         }
 
         case (DataPacket::textTyping): {
@@ -224,52 +225,21 @@ void ServerThread::sendMessage(DataPacket& packet, QTcpSocket *skt,std::mutex* m
     }
 }
 
-qint32 ServerThread::login(DataPacket& packet) {
-    auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
-    LoginInfo logData = loadLoginJson(ptr->getUser().toStdString()+".json");
-    if(ptr->getUser() == logData.getUser() && ptr->getPassword() == logData.getPassword()) {
-        ptr->setType( LoginInfo::login_ok);
-        ptr->setSiteId(5);
-        ptr->setUser("");
-        ptr->setPassword("");
-        return 5;
-    } else {
-        ptr->setType( LoginInfo::login_error);
-        ptr->setSiteId(-1);
-        ptr->setUser("");
-        ptr->setPassword("");
-        return -1;
-    }
-}
-
-LoginInfo ServerThread::loadLoginJson(std::string dir){
-    std::ifstream file_input(dir);
-    Json::Reader reader;
-    Json::Value root;
-    reader.parse(file_input, root);
-
-    QString user = QString::fromStdString(root["user"].asString());
-    QString password = QString::fromStdString(root["password"].asString());
-    LoginInfo data(-1, -1, std::move(user), std::move(password));
-
-    return data;
-}
-
 void ServerThread::saveFileJson(std::string dir,std::vector<Symbol> _symbols){//vector<symbol> to json
     std::ofstream file_id;
     file_id.open(dir);
     Json::Value event;
     int index=0;
-    for(auto itr=_symbols.begin(); itr != _symbols.end(); ++itr) {
+    for(auto itr:_symbols) {
         event[index]["index"] = index;
-        event[index]["char"] = QString((*itr).getValue()).toStdString();
-        event[index]["symId"]["siteId"] = (*itr).getSymId().getSiteId();
-        event[index]["symId"]["count"] = (*itr).getSymId().getCount();
+        event[index]["char"] = QString(itr.getValue()).toStdString();
+        event[index]["symId"]["siteId"] = itr.getSymId().getSiteId();
+        event[index]["symId"]["count"] = itr.getSymId().getCount();
 
         Json::Value vec(Json::arrayValue);
 
-        for(int i=0; i<(*itr).getPos().size();i++){
-            vec.append(Json::Value((*itr).getPos()[i]));
+        for(int i=0; i<itr.getPos().size();i++){
+            vec.append(Json::Value(itr.getPos()[i]));
         }
         event[index]["pos"]=vec;
 

@@ -92,6 +92,7 @@ CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj: ../Packet/Payload.h
 CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj: ../Packet/Symbols/SymId.h
 CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj: ../Packet/Symbols/Symbol.h
 CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj: ../ServerThread.h
+CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj: ../json/json.h
 
 CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
 CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QDataStream
@@ -229,6 +230,7 @@ CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.obj: ../Packet/Payload.h
 CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.obj: ../Packet/Symbols/SymId.h
 CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.obj: ../Packet/Symbols/Symbol.h
 CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.obj: ../ServerThread.h
+CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.obj: ../json/json.h
 
 CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
 CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
@@ -267,6 +269,7 @@ CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.obj: ../Packet/DataPacke
 CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.obj: ../Packet/DataPacket.h
 CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.obj: ../Packet/Payload.h
+CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.obj: ../json/json.h
 
 CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
 CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
@@ -304,6 +307,7 @@ CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73
 CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.obj: ../Packet/LoginInfo.cpp
 CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.obj: ../Packet/Payload.h
+CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.obj: ../json/json.h
 
 CMakeFiles/SharedEditorServer.dir/Packet/Message.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
 CMakeFiles/SharedEditorServer.dir/Packet/Message.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
@@ -599,6 +603,7 @@ CMakeFiles/SharedEditorServer.dir/SharedEditorServer_autogen/mocs_compilation.cp
 CMakeFiles/SharedEditorServer.dir/SharedEditorServer_autogen/mocs_compilation.cpp.obj: SharedEditorServer_autogen/EWIEGA46WW/moc_NetworkServer.cpp
 CMakeFiles/SharedEditorServer.dir/SharedEditorServer_autogen/mocs_compilation.cpp.obj: SharedEditorServer_autogen/EWIEGA46WW/moc_ServerThread.cpp
 CMakeFiles/SharedEditorServer.dir/SharedEditorServer_autogen/mocs_compilation.cpp.obj: SharedEditorServer_autogen/mocs_compilation.cpp
+CMakeFiles/SharedEditorServer.dir/SharedEditorServer_autogen/mocs_compilation.cpp.obj: ../json/json.h
 
 CMakeFiles/SharedEditorServer.dir/jsoncpp.cpp.obj: ../json/json.h
 CMakeFiles/SharedEditorServer.dir/jsoncpp.cpp.obj: ../jsoncpp.cpp
@@ -738,5 +743,6 @@ CMakeFiles/SharedEditorServer.dir/main.cpp.obj: ../Packet/Payload.h
 CMakeFiles/SharedEditorServer.dir/main.cpp.obj: ../Packet/Symbols/SymId.h
 CMakeFiles/SharedEditorServer.dir/main.cpp.obj: ../Packet/Symbols/Symbol.h
 CMakeFiles/SharedEditorServer.dir/main.cpp.obj: ../ServerThread.h
+CMakeFiles/SharedEditorServer.dir/main.cpp.obj: ../json/json.h
 CMakeFiles/SharedEditorServer.dir/main.cpp.obj: ../main.cpp
 
