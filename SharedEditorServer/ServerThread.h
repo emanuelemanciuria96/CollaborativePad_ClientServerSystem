@@ -28,7 +28,7 @@ signals:
 
 public slots:
     void recvPacket();
-    void recvMessage(DataPacket& packet);
+
     void disconnected();
 
 private:
@@ -39,8 +39,11 @@ private:
     static std::shared_mutex skt_mutex;
     static std::vector<std::pair<QTcpSocket*,std::mutex*>> _sockets;
 
-    void sendMessage(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx);
+    void recvLoginInfo(DataPacket& packet, QDataStream& in);
+    void recvMessage(DataPacket& packet,QDataStream& in);
     void sendPacket(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx = nullptr);
+    void sendMessage(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx);
+    void sendLoginInfo(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx = nullptr);
 
     bool isLogged;
     qint32 login(DataPacket& packet);

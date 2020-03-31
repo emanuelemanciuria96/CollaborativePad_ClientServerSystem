@@ -44,10 +44,6 @@ void ServerThread::run()
         return;
     }
 
-    {
-        std::lock_guard lg(skt_mutex);
-        _sockets.emplace_back(socket,new std::mutex());
-    }
     connect(socket, SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     std::cout<<"readyRead signal set!"<<std::endl;
@@ -55,31 +51,15 @@ void ServerThread::run()
     exec(); //loop degli eventi attivato qui
 }
 
-/** da modificare nella funzione readyRead:
- *      - per ogni casistica di "action" sarebbe preferibile inserire
- *        una chiamata a funzione per alleggerire la lettura del codice
- *      - sarebbe preferibile utilizzare una ricerca dicotomica sulla
+/** da modificare nella funzione recvMessage:
  *        posizione (chiave di ordinamento del vettore) oppure, qualora
  *        possibile, cercare un contenitore dell'STL che sia adatto alla
  *        ricerca (che implementi già algoritmi di ricerca ottimi)
- *      - probabilmente, in implementazioni future, sarebbe meglio
- *        che il thread che parla con il client gestisca solamente
- *        i messaggi, senza interferire con la scrittura del vettore
- *        dei simboli. L'idea è quella di far inserire a questo thread
- *        il messaggio ricevuto in una coda di messaggi (quindi O(1))
- *        e lasciare l'inserimento ( potenzialmente O(log(n)) ) ad un
- *        "terzo" thread che avrà il solo compito di svuotare la coda
- *        e gestirsi il vettore di simboli. A livello computazionale questa soluzione
- *        è molto più leggera, dal momento che un singolo thread tiene
- *        occupata una sola struttura (la coda) per un tempo molto breve,
- *        l'implementazine attuale, invece, prevede che il thread mantenga
- *        occupata la struttura del testo ( _symbols ) per un tempo
- *        potenzialmente molto lungo.
  **/
 
 void ServerThread::recvPacket()
 {
-    std::cout<<std::this_thread::get_id()<<" reading from socket "<<this->socketDescriptor<<std::endl;
+    std::cout<<"Thread "<<std::this_thread::get_id()<<" reading from socket "<<this->socketDescriptor<<std::endl;
 
     QDataStream in;
     qint32 source;
@@ -96,29 +76,12 @@ void ServerThread::recvPacket()
 
     switch (type_of_data){
         case (DataPacket::login): {
-            quint32 siteId;
-            qint32 type;
-            QString user;
-            QString password;
-
-            in >> siteId >> type >> user >> password;
-
-            if(type == LoginInfo::login_request && !isLogged) {
-                packet.setPayload( std::make_shared<LoginInfo>( -1, type, user, password));
-                if (login(packet) != -1) {
-                    std::cout << "client successfully logged!" << std::endl;
-                    isLogged = true;                                               //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
-                    sendPacket(packet, this->socket);                           //non fa nulla, non risponde con messaggi di errore
-                } else
-                    std::cout << "client not logged!" << std::endl;
-                    sendPacket(packet, this->socket);
-            }
-
+            recvLoginInfo(packet,in);
             break;
         }
 
         case (DataPacket::textTyping): {
-            recvMessage(packet);
+            recvMessage(packet,in);
             break;
         }
 
@@ -128,11 +91,34 @@ void ServerThread::recvPacket()
     }
 }
 
-void ServerThread::recvMessage(DataPacket& packet)
+void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
+    quint32 siteId;
+    qint32 type;
+    QString user;
+    QString password;
+
+    in >> siteId >> type >> user >> password;
+
+    if(type == LoginInfo::login_request && !isLogged) {
+        packet.setPayload( std::make_shared<LoginInfo>( -1, type, user, password));
+        if (login(packet) != -1) {
+            std::cout << "client successfully logged!" << std::endl;
+            isLogged = true;                                               //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
+            sendPacket(packet, this->socket);                           //non fa nulla, non risponde con messaggi di errore
+            {
+                std::lock_guard lg(skt_mutex);
+                _sockets.emplace_back(this->socket,new std::mutex());
+            }
+        } else
+            std::cout << "client not logged!" << std::endl;
+        sendPacket(packet, this->socket);
+    }
+}
+
+void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
 {
     std::cout<<"thread "<<std::this_thread::get_id()<<" reading from socket "<<this->socketDescriptor<<std::endl;
 
-    QDataStream in;
     qint32 siteIdM;
     qint32 action;
     QChar ch;
@@ -193,14 +179,7 @@ void ServerThread::recvMessage(DataPacket& packet)
 void ServerThread::sendPacket(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx){
     switch(packet.getTypeOfData()){
         case (DataPacket::login): {
-            auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
-            QDataStream out;
-            out.setDevice(skt);
-            out.setVersion(QDataStream::Qt_5_5);
-
-            out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
-            out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
-            skt->waitForBytesWritten(-1);
+           sendLoginInfo(packet,skt);
             break;
         }
 
@@ -213,6 +192,17 @@ void ServerThread::sendPacket(DataPacket& packet, QTcpSocket *skt, std::mutex *m
             std::cout<<"Coglione c'è un errore"<<std::endl;
         }
     }
+}
+
+void ServerThread::sendLoginInfo(DataPacket &packet, QTcpSocket *skt, std::mutex *mtx) {
+    auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
+    QDataStream out;
+    out.setDevice(skt);
+    out.setVersion(QDataStream::Qt_5_5);
+
+    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
+    skt->waitForBytesWritten(-1);
 }
 
 void ServerThread::sendMessage(DataPacket& packet, QTcpSocket *skt,std::mutex* mtx) {
@@ -250,27 +240,6 @@ qint32 ServerThread::login(DataPacket& packet) {
         ptr->setPassword("");
         return -1;
     }
-}
-
-void ServerThread::disconnected()
-{
-    int i = 0;
-    {
-        std::shared_lock sl(skt_mutex);
-        for (auto skt:_sockets) {
-            if (skt.first == socket) break;
-            i++;
-        }
-    }
-
-    if(i<_sockets.size()){
-        std::lock_guard lg(skt_mutex);
-        _sockets.erase(_sockets.begin()+i);
-    }
-
-    socket->deleteLater();
-    std::cout<<"Client disconnected!"<<std::endl;
-    exit(0);
 }
 
 LoginInfo ServerThread::loadLoginJson(std::string dir){
@@ -335,3 +304,25 @@ std::vector<Symbol> ServerThread::loadFileJson(std::string dir){//json to vector
     }
     return _symbols;
 }
+
+void ServerThread::disconnected()
+{
+    int i = 0;
+    {
+        std::shared_lock sl(skt_mutex);
+        for (auto skt:_sockets) {
+            if (skt.first == socket) break;
+            i++;
+        }
+    }
+
+    if(i<_sockets.size()){
+        std::lock_guard lg(skt_mutex);
+        _sockets.erase(_sockets.begin()+i);
+    }
+
+    socket->deleteLater();
+    std::cout<<"Client disconnected!"<<std::endl;
+    exit(0);
+}
+

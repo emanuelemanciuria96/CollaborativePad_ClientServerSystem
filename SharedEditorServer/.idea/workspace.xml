@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="SharedEditorServer" targetName="SharedEditorServer" />
       <config projectName="SharedEditorServer" targetName="SharedEditorServer_autogen" />
+      <config projectName="SharedEditorServer" targetName="SharedEditorServer" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -13,15 +13,68 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f99682-d6ce-4504-8c62-a805d677c99c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/3.15.3/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/3.15.3/CMakeCXXCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/3.15.3/CMakeRCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/3.15.3/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdCXX/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/CMakeRuleHashes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/CMakeRuleHashes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Message.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Message.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Payload.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Payload.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/includes_CXX.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/includes_CXX.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/linklibs.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/linklibs.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client.dir/objects.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenOldSettings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenOldSettings.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/ParseCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/Client.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/Client.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/Client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/Client.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/Client_autogen/moc_predefs.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/Client_autogen/moc_predefs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/cmake-build-debug/cmake_install.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packet/DataPacket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Packet/DataPacket.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packet/DataPacket.h" beforeDir="false" afterPath="$PROJECT_DIR$/Packet/DataPacket.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packet/Message.h" beforeDir="false" afterPath="$PROJECT_DIR$/Packet/Message.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ServerThread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ServerThread.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/AutogenInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/AutogenInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerThread.h" beforeDir="false" afterPath="$PROJECT_DIR$/ServerThread.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/SharedEditorServer.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/SharedEditorServer.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_NetworkServer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_NetworkServer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_ServerThread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_ServerThread.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/SharedEditorServer_autogen/moc_predefs.h" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/SharedEditorServer_autogen/moc_predefs.h" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,6 +100,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Client" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -108,8 +162,17 @@
       <workItem from="1585303503387" duration="7495000" />
       <workItem from="1585315267025" duration="1425000" />
       <workItem from="1585394462212" duration="6556000" />
-      <workItem from="1585483562658" duration="4218000" />
+      <workItem from="1585483562658" duration="5022000" />
+      <workItem from="1585663073257" duration="6909000" />
     </task>
+    <task id="LOCAL-00001" summary="classe Command e gestione filesystem">
+      <created>1585502865550</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1585502865550</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,6 +190,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="classe Command e gestione filesystem" />
+    <option name="LAST_COMMIT_MESSAGE" value="classe Command e gestione filesystem" />
   </component>
   <component name="WindowStateProjectService">
     <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1585311119949">

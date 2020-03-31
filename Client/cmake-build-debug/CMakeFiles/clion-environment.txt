@@ -1,4 +1,4 @@
-ToolSet: w64 6.0 (local)@C:\Qt\Tools\mingw730_64
+ToolSet: w64 6.0 (local)@D:\Program Files (x86)\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64
 Options: 
 
-Options:-DCMAKE_PREFIX_PATH=C:\Qt\5.14.1\mingw73_64\lib\cmake
+Options:-DCMAKE_PREFIX_PATH=C:\Qt\5.12.5\mingw73_64\lib\cmake
