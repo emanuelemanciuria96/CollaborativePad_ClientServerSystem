@@ -13,10 +13,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04cd708d-e74e-4476-8c5c-a9f18ec4ecf9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/Packet/LoginInfo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/Packet/LoginInfo.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/Packet/LoginInfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/Packet/LoginInfo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer.exe" afterDir="false" />
@@ -100,7 +100,7 @@
       <workItem from="1585301639097" duration="1037000" />
       <workItem from="1585303476626" duration="4473000" />
       <workItem from="1585663948457" duration="189000" />
-      <workItem from="1585677269523" duration="257000" />
+      <workItem from="1585677269523" duration="703000" />
     </task>
     <servers />
   </component>

@@ -15,13 +15,8 @@
     <list default="true" id="26f99682-d6ce-4504-8c62-a805d677c99c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../Client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packet/LoginInfo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Packet/LoginInfo.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packet/LoginInfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Packet/LoginInfo.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ServerThread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ServerThread.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServerThread.h" beforeDir="false" afterPath="$PROJECT_DIR$/ServerThread.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/SharedEditorServer.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/SharedEditorServer.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_ServerThread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_ServerThread.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -110,7 +105,7 @@
       <workItem from="1585315267025" duration="1425000" />
       <workItem from="1585394462212" duration="6556000" />
       <workItem from="1585483562658" duration="5022000" />
-      <workItem from="1585663073257" duration="9761000" />
+      <workItem from="1585663073257" duration="10826000" />
     </task>
     <task id="LOCAL-00001" summary="classe Command e gestione filesystem">
       <created>1585502865550</created>
@@ -126,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585674809182</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="classe Command e gestione filesystem">
+      <created>1585677929913</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1585677929913</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
