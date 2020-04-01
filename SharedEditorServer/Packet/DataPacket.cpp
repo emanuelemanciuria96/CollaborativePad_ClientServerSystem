@@ -5,15 +5,15 @@
 #include "DataPacket.h"
 #include "LoginInfo.h"
 
-DataPacket::DataPacket(qint32 source, quint32 errcode, quint32 typeOfData)
-        : source(source), errcode(errcode), type_of_data(typeOfData) {}
+DataPacket::DataPacket(qint32 source, quint32 errcode, data_t typeOfData, Payload* pl)
+        : source(source), errcode(errcode), type_of_data(typeOfData),payload(pl) {}
 
 qint32 DataPacket::getSource() const {
     return source;
 }
 
 void DataPacket::setSource(qint32 source) {
-    DataPacket::source = source;
+    this->source = source;
 }
 
 quint32 DataPacket::getErrcode() const {
@@ -21,17 +21,23 @@ quint32 DataPacket::getErrcode() const {
 }
 
 void DataPacket::setErrcode(quint32 errcode) {
-    DataPacket::errcode = errcode;
+    this->errcode = errcode;
 }
 
 quint32 DataPacket::getTypeOfData() const {
     return type_of_data;
 }
 
-void DataPacket::setTypeOfData(quint32 typeOfData) {
-    type_of_data = typeOfData;
+void DataPacket::setTypeOfData(data_t typeOfData) {
+    this->type_of_data = typeOfData;
 }
 
-std::shared_ptr<Payload>& DataPacket::getPayload(){
+std::shared_ptr<Payload> DataPacket::getPayload(){
     return payload;
 }
+
+void DataPacket::setPayload(std::shared_ptr<Payload> pl) {
+    payload = pl;
+}
+
+

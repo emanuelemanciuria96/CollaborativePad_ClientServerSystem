@@ -16,6 +16,7 @@ class Message: public Payload {
 
 public:
     typedef enum {insertion,removal} action_t;
+
     Message(action_t action,qint32 siteId,Symbol& sym):
             _action(action), Payload(siteId), _sym(sym){}
     qint32 getSiteId(){ return _siteID; }

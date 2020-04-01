@@ -8,6 +8,8 @@
 #include <QtGlobal>
 #include <QtCore/QString>
 #include "Payload.h"
+#include <fstream>
+#include "../json/json.h"
 
 class LoginInfo: public Payload {
 private:
@@ -32,6 +34,9 @@ public:
     void setPassword(QString password);
     qint32 getType();
     void setType(type_t type);
+
+    qint32 login();
+    LoginInfo loadLoginJson(std::string dir);
 
 };
 
