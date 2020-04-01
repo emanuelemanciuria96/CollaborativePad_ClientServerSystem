@@ -85,6 +85,11 @@ void ServerThread::recvPacket()
             break;
         }
 
+        case (DataPacket::command): {
+            recvCommand(packet,in);
+            break;
+        }
+
         default: {
             std::cout<<"Coglione c'è un errore"<<std::endl;
         }
@@ -131,9 +136,6 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
 
     qDebug()<<"Receving message";
 
-    in.setDevice(this->socket);
-    in.setVersion(QDataStream::Qt_5_5);
-
     in >> siteIdM >> action >> ch >> siteIdS >> count >> num; //il protocollo scelto per il passaggio della posizione richiede
     for(int i=0; i<num; i++){                                 //la lettura di un valore ad indicare la lunghezza di pos
         in >> p;
@@ -142,7 +144,7 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
 
     if(isLogged) {                                          //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
         Symbol sym(ch, siteIdS, count, pos);            //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
-        packet.setPayload( std::make_shared<Message>(Message((Message::action_t) action, siteIdM, sym)) );
+        packet.setPayload( std::make_shared<Message>((Message::action_t) action, siteIdM, sym) );
         auto msg = *std::dynamic_pointer_cast<Message>(packet.getPayload());
 
         //Message msg((action_t) action, siteIdM, sym);
@@ -177,6 +179,18 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
     }
 }
 
+
+void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
+    qint32 siteId;
+    quint32 cmd;
+    QString arg1;
+    QString arg2;
+
+    in >> siteId >> cmd >> arg1 >> arg2;
+    packet.setPayload( std::make_shared<Command>(siteId,(Command::cmd_t)cmd,arg1,arg2));
+
+}
+
 void ServerThread::sendPacket(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx){
     switch(packet.getTypeOfData()){
         case (DataPacket::login): {
@@ -186,6 +200,11 @@ void ServerThread::sendPacket(DataPacket& packet, QTcpSocket *skt, std::mutex *m
 
         case (DataPacket::textTyping): {
             sendMessage(packet, skt, mtx);
+            break;
+        }
+
+        case (DataPacket::command): {
+
             break;
         }
 

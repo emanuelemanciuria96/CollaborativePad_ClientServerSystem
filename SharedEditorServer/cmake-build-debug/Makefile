@@ -189,6 +189,33 @@ NetworkServer.cpp.s:
 	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.s
 .PHONY : NetworkServer.cpp.s
 
+Packet/Command.obj: Packet/Command.cpp.obj
+
+.PHONY : Packet/Command.obj
+
+# target to build an object file
+Packet/Command.cpp.obj:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Command.cpp.obj
+.PHONY : Packet/Command.cpp.obj
+
+Packet/Command.i: Packet/Command.cpp.i
+
+.PHONY : Packet/Command.i
+
+# target to preprocess a source file
+Packet/Command.cpp.i:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Command.cpp.i
+.PHONY : Packet/Command.cpp.i
+
+Packet/Command.s: Packet/Command.cpp.s
+
+.PHONY : Packet/Command.s
+
+# target to generate assembly for a file
+Packet/Command.cpp.s:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Command.cpp.s
+.PHONY : Packet/Command.cpp.s
+
 Packet/DataPacket.obj: Packet/DataPacket.cpp.obj
 
 .PHONY : Packet/DataPacket.obj
@@ -475,6 +502,9 @@ help:
 	@echo ... NetworkServer.obj
 	@echo ... NetworkServer.i
 	@echo ... NetworkServer.s
+	@echo ... Packet/Command.obj
+	@echo ... Packet/Command.i
+	@echo ... Packet/Command.s
 	@echo ... Packet/DataPacket.obj
 	@echo ... Packet/DataPacket.i
 	@echo ... Packet/DataPacket.s

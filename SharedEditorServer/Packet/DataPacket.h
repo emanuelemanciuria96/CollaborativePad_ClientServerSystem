@@ -15,7 +15,7 @@ public:
     {
         textTyping = 0,
         login = 1,
-        idResponse = 2,
+        command = 2,
     }data_t;
 
     DataPacket(qint32 source, quint32 errcode, data_t typeOfData,Payload* pl= nullptr);

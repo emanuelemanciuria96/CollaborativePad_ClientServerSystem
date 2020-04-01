@@ -14,7 +14,9 @@
 #include "Packet/Symbols/Symbol.h"
 #include "Packet/Message.h"
 #include "Packet/LoginInfo.h"
+#include "Packet/Command.h"
 #include "MessageHandler.h"
+
 
 class ServerThread : public QThread{
 Q_OBJECT
@@ -41,9 +43,12 @@ private:
 
     void recvLoginInfo(DataPacket& packet, QDataStream& in);
     void recvMessage(DataPacket& packet,QDataStream& in);
+    void recvCommand(DataPacket& packet,QDataStream& in);
+
     void sendPacket(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx = nullptr);
-    void sendMessage(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx);
     void sendLoginInfo(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx = nullptr);
+    void sendMessage(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx);
+
 
     bool isLogged;
 
