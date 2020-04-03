@@ -11,32 +11,23 @@
 #include "Packet/LoginInfo.h"
 #include "json/json.h"
 
-/**
- *  per quanto riguarda la classe ServerThread
- *  preferirei non avere questa infinità di parametri da passare
- *  ad ogni creazione. Inoltre non sono troppo convinto di voler
- *  usare tutti questi puntatori, potrebbero portare a fare qualche
- *  danno nella gestione della memoria. Una possibile soluzione
- *  sarebbe salvarsi direttamente il parent ed accedere ad i suoi
- *  campi attraverso metodi di tipo get/set ma equivale praticamente
- *  ad impostare come pubbliche tutte queste struttutre. Oppure salvarsi
- *  in ogni caso tutti i puntatori che servono, ma in maniera sicura,
- *  utilizzando smartptr
- **/
-
 std::shared_mutex ServerThread::skt_mutex;  // questo è lo shared mutex per la struttura "_sockets"
-std::vector<std::pair<QTcpSocket*,std::mutex*>> ServerThread::_sockets; //qui ci sono dei mutex esclisivi per ogni socket
+std::vector<std::pair<Socket*,std::mutex*>> ServerThread::_sockets; //qui ci sono dei mutex esclisivi per ogni socket
 /// PER ORA USO IL VETTORE PER TESTARE IL FUNZIONAMENTO, POI INSERIRO' LA MAPPA (IL VETTORE SO USARLO BENE, LA MAPPA ANCORA NO)
 
 ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent):QThread(parent){
     this->socketDescriptor = socketDescriptor;
-    this->msgHandler = msgHandler;
+    this->msgHandler = std::shared_ptr<MessageHandler>(msgHandler);
     this->isLogged = false;
 }
 
 void ServerThread::run()
 {
-    socket = new QTcpSocket();
+
+    std::cout<<"ServerThread::run line 27, thread "<<std::this_thread::get_id()<<std::endl;
+
+    socket = new Socket();
+    socket->moveToThread(this);
 
     if ( !socket->setSocketDescriptor(this->socketDescriptor) )   //setto il descriptor del socket
     {
@@ -44,9 +35,9 @@ void ServerThread::run()
         return;
     }
 
+    connect(socket,&Socket::sendMessage,this,&ServerThread::sendPacket,Qt::QueuedConnection);
     connect(socket, SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-    std::cout<<"readyRead signal set!"<<std::endl;
 
     exec(); //loop degli eventi attivato qui
 }
@@ -110,20 +101,19 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
         if (shr.get()->login() != -1) {
             std::cout << "client successfully logged!" << std::endl;
             isLogged = true;                                               //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
-            sendPacket(packet, this->socket);                           //non fa nulla, non risponde con messaggi di errore
+            sendPacket(packet);                           //non fa nulla, non risponde con messaggi di errore
             {
                 std::lock_guard lg(skt_mutex);
                 _sockets.emplace_back(this->socket,new std::mutex());
             }
         } else
             std::cout << "client not logged!" << std::endl;
-        sendPacket(packet, this->socket);
+        sendPacket(packet);
     }
 }
 
 void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
 {
-    std::cout<<"thread "<<std::this_thread::get_id()<<" reading from socket "<<this->socketDescriptor<<std::endl;
 
     qint32 siteIdM;
     qint32 action;
@@ -172,7 +162,8 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
         for (auto skt: _sockets) {
             sl.unlock();
             if (skt.first != socket) {
-                sendPacket(packet, skt.first, skt.second);
+                int id = qMetaTypeId<DataPacket>();
+                emit skt.first->sendMessage(packet,skt.second);
             }
             sl.lock();
         }
@@ -191,15 +182,18 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
 }
 
-void ServerThread::sendPacket(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx){
+void ServerThread::sendPacket(DataPacket packet, std::mutex *mtx){
+
+    std::cout<<"thread "<<std::this_thread::get_id()<<" sending packet to "<<this->socketDescriptor<<std::endl;
+
     switch(packet.getTypeOfData()){
         case (DataPacket::login): {
-           sendLoginInfo(packet,skt);
+           sendLoginInfo(packet,mtx);
            break;
         }
 
         case (DataPacket::textTyping): {
-            sendMessage(packet, skt, mtx);
+            sendMessage(packet, mtx);
             break;
         }
 
@@ -214,20 +208,21 @@ void ServerThread::sendPacket(DataPacket& packet, QTcpSocket *skt, std::mutex *m
     }
 }
 
-void ServerThread::sendLoginInfo(DataPacket &packet, QTcpSocket *skt, std::mutex *mtx) {
+void ServerThread::sendLoginInfo(DataPacket &packet, std::mutex *mtx) {
     auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
     QDataStream out;
-    out.setDevice(skt);
+    out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
     out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
-    skt->waitForBytesWritten(-1);
+    socket->waitForBytesWritten(-1);
 }
 
-void ServerThread::sendMessage(DataPacket& packet, QTcpSocket *skt,std::mutex* mtx) {
+void ServerThread::sendMessage(DataPacket& packet,std::mutex* mtx){
+
     QDataStream out;
-    out.setDevice(skt);
+    out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
     auto msg = std::dynamic_pointer_cast<Message>(packet.getPayload());
@@ -240,7 +235,7 @@ void ServerThread::sendMessage(DataPacket& packet, QTcpSocket *skt,std::mutex* m
         out << msg->getSiteId() << (qint32)msg->getAction() << msg->getSymbol().getValue() << msg->getSymbol().getSymId().getSiteId() << msg->getSymbol().getSymId().getCount() << num;
         for(auto i : msg->getSymbol().getPos())
             out << (qint32) i;
-        skt->waitForBytesWritten(-1);
+        socket->waitForBytesWritten(-1);
     }
 }
 

@@ -16,6 +16,7 @@
 #include "Packet/LoginInfo.h"
 #include "Packet/Command.h"
 #include "MessageHandler.h"
+#include "Socket.h"
 
 
 class ServerThread : public QThread{
@@ -30,24 +31,22 @@ signals:
 
 public slots:
     void recvPacket();
-
+    void sendPacket(DataPacket packet, std::mutex *mtx = nullptr);
     void disconnected();
 
 private:
-    QTcpSocket *socket;
+    Socket *socket;
     qintptr socketDescriptor;
-
-    MessageHandler *msgHandler;
+    std::shared_ptr<MessageHandler> msgHandler;
     static std::shared_mutex skt_mutex;
-    static std::vector<std::pair<QTcpSocket*,std::mutex*>> _sockets;
+    static std::vector<std::pair<Socket*,std::mutex*>> _sockets;
 
     void recvLoginInfo(DataPacket& packet, QDataStream& in);
     void recvMessage(DataPacket& packet,QDataStream& in);
     void recvCommand(DataPacket& packet,QDataStream& in);
 
-    void sendPacket(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx = nullptr);
-    void sendLoginInfo(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx = nullptr);
-    void sendMessage(DataPacket& packet, QTcpSocket *skt, std::mutex *mtx);
+    void sendLoginInfo(DataPacket& packet, std::mutex *mtx = nullptr);
+    void sendMessage(DataPacket& packet, std::mutex *mtx);
 
 
     bool isLogged;

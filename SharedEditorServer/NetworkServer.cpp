@@ -27,11 +27,14 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
 {
 
     qDebug() << "Client connected!";
-    std::cout<<"thread "<<std::this_thread::get_id()<<std::endl;
+    std::cout<<"NetworkServer::incomingConnection line 30, thread "<<std::this_thread::get_id()<<std::endl;
     qDebug()<< "Creating Thread";
 
-    ServerThread *thread = new ServerThread(socketDesc,msgHandler.get(),this);
+    ServerThread *thread = new ServerThread(socketDesc,msgHandler.get());
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+
+    thread->moveToThread(thread);
+
     thread->start();
 
 }

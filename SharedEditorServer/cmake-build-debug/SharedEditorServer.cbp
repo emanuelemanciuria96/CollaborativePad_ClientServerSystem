@@ -178,6 +178,9 @@
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/ServerThread.h">
 			<Option target="SharedEditorServer"/>
 		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Socket.h">
+			<Option target="SharedEditorServer"/>
+		</Unit>
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/mocs_compilation.cpp">
 			<Option target="SharedEditorServer"/>
 		</Unit>
