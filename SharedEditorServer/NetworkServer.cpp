@@ -104,6 +104,6 @@ void NetworkServer::to_string() {
 }
 
 void NetworkServer::deleteThread(QPointer<QThread> th) {
-    ServerThread* thread = static_cast<ServerThread*>(th.data());
+    auto thread = dynamic_cast<ServerThread*>(th.data());
     thread->deleteLater();
 }
