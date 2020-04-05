@@ -19,6 +19,7 @@
 #include "Packet/DataPacket.h"
 #include "Packet/Message.h"
 #include "MessageHandler.h"
+#include <QtCore/QPointer>
 
 class NetworkServer: public QTcpServer{
 Q_OBJECT
@@ -30,6 +31,9 @@ public:
 
     static void localInsert(Message m);
     static void localErase(Message m);
+
+public slots:
+    void deleteThread(QPointer<QThread> th);
 
 private:
     std::shared_ptr<MessageHandler> msgHandler;

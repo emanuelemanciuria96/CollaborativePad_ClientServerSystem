@@ -28,6 +28,7 @@ public:
 
 signals:
     void error(QTcpSocket::SocketError socketerror);    //slot che gestisce questo segnale da implementare
+    void deleteMe(QPointer<QThread> th);
 
 public slots:
     void recvPacket();

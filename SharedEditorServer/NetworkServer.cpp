@@ -4,6 +4,7 @@
 #include "NetworkServer.h"
 #include <QApplication>
 
+
 std::vector<Symbol> NetworkServer::_symbles;
 
 NetworkServer::NetworkServer(QObject *parent) : QTcpServer(parent){
@@ -31,7 +32,13 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
     qDebug()<< "Creating Thread";
 
     ServerThread *thread = new ServerThread(socketDesc,msgHandler.get());
-    connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+
+    connect(thread,&ServerThread::deleteMe,this,&NetworkServer::deleteThread);
+    connect(thread, &ServerThread::finished,
+            [thread](){
+                QPointer<QThread> th(thread);
+                emit thread->deleteMe(th);
+            });
 
     thread->moveToThread(thread);
 
@@ -94,4 +101,9 @@ void NetworkServer::to_string() {
                       str += s.getValue();
                   });
     std::cout<<"Local editor: "<<str.toStdString()<<std::endl;
+}
+
+void NetworkServer::deleteThread(QPointer<QThread> th) {
+    ServerThread* thread = static_cast<ServerThread*>(th.data());
+    thread->deleteLater();
 }
