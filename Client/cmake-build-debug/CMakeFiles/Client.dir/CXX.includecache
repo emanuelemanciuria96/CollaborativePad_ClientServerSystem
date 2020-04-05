@@ -796,6 +796,10 @@ C:/Qt/5.13.1/mingw73_64/include/QtGui/QScreen
 qscreen.h
 C:/Qt/5.13.1/mingw73_64/include/QtGui/qscreen.h
 
+C:/Qt/5.13.1/mingw73_64/include/QtGui/QTextDocument
+qtextdocument.h
+C:/Qt/5.13.1/mingw73_64/include/QtGui/qtextdocument.h
+
 C:/Qt/5.13.1/mingw73_64/include/QtGui/QTransform
 qtransform.h
 C:/Qt/5.13.1/mingw73_64/include/QtGui/qtransform.h
@@ -1584,10 +1588,6 @@ QtGui/qkeysequence.h
 QtGui/qevent.h
 -
 
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.cpp
-EditorGUI.h
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.h
-
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.h
 QGuiApplication
 -
@@ -1621,6 +1621,10 @@ QtCore/QTextStream
 -
 QFileInfo
 -
+QTextDocument
+-
+SharedEditor.h
+C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SharedEditor.h
 
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.h
 QDialog
@@ -1636,6 +1640,10 @@ QGridLayout
 QPushButton
 -
 QDebug
+-
+QGuiApplication
+-
+QScreen
 -
 
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
@@ -1697,32 +1705,6 @@ QAbstractSocket
 -
 QString
 -
-
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp
-memory
--
-../../../EditorGUI.h
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.h
-QtCore/qbytearray.h
--
-QtCore/qmetatype.h
--
-
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp
-memory
--
-../../../LoginDialog.h
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.h
-QtCore/qbytearray.h
--
-QtCore/qmetatype.h
--
-
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp
-EWIEGA46WW/moc_EditorGUI.cpp
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp
-EWIEGA46WW/moc_LoginDialog.cpp
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp
 
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/main.cpp
 QtWidgets/QApplication

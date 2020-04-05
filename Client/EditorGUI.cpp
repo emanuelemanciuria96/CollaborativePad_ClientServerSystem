@@ -2,14 +2,12 @@
 // Created by Windows on 25/03/2020.
 //
 
-
-
-
 #include "EditorGUI.h"
 
-EditorGUI::EditorGUI(QWidget *parent) : QMainWindow(parent) {
-   setUpGUI();
-   setWindowTitle(QCoreApplication::applicationName());
+EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QMainWindow(parent){
+    setModel(model);
+    setUpGUI();
+    setWindowTitle(QCoreApplication::applicationName());
 }
 
 
@@ -35,8 +33,11 @@ void EditorGUI::setUpGUI() {
 //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
-    load("./file.txt");
 
+    connect(textEdit->document(), SIGNAL(contentsChange(int, int, int)), this, SLOT(contentsChange(int,int,int)));
+
+//    load("./file.txt");
+    updateSymbols();
 
 }
 
@@ -65,6 +66,11 @@ bool EditorGUI::load(const QString &f) {
     return true;
 }
 
+
+void EditorGUI::updateSymbols() {
+    textEdit->setText(model->to_string());
+}
+
 void EditorGUI::setupEditActions() {
     //TODO
 }
@@ -89,4 +95,24 @@ void EditorGUI::setCurrentFileName(const QString &filename) {
 
     setWindowTitle(showName + " - " + QCoreApplication::applicationName());
     setWindowModified(false);
+}
+
+void EditorGUI::setModel(SharedEditor *model) {
+    this->model = model;
+}
+
+void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
+    int i=0;
+    if(charsRemoved > 0){  //sono stati cancellati dei caratteri
+        std::cout << "Cancellazione carattere" << std::endl;
+        for(i=0; i<charsRemoved; i++){
+            model->localErase(pos+i);
+        }
+    }
+    if(charsAdded > 0){  //sono stati aggiunti caratteri
+        std::cout << "Inserimento carattere" << std::endl;
+        for(i=0; i<charsAdded; i++){
+            model->localInsert(pos+i, textEdit->document()->characterAt(pos+i));
+        }
+    }
 }

@@ -65,7 +65,8 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
     //Message m{insertion,_siteId,s};
 
     sendPacket(packet);
-    this->to_string();
+//    this->to_string();
+
 }
 
 void SharedEditor::localErase(qint32 index) {
@@ -78,7 +79,7 @@ void SharedEditor::localErase(qint32 index) {
     _symbols.erase(_symbols.begin()+index);
 
     DataPacket packet(_siteId, -1, DataPacket::textTyping);
-    packet.getPayload() = std::make_shared<Message>(Message(insertion,_siteId,s));
+    packet.getPayload() = std::make_shared<Message>(Message(removal,_siteId,s));
     //Message m{removal,_siteId,s};
 
     sendPacket(packet);
@@ -95,6 +96,7 @@ void SharedEditor::process(const Message &m) {
             else break;
 
         _symbols.insert(_symbols.begin()+pos,m.getSymbol());
+        emit symbolsChanged();
     }
     else if ( removal == m.getAction() ) {
         qint32 pos = -1;
@@ -105,20 +107,23 @@ void SharedEditor::process(const Message &m) {
                 break;
         }
 
-        if( pos != -1)
-            _symbols.erase(_symbols.begin()+pos);
+        if( pos != -1) {
+            _symbols.erase(_symbols.begin() + pos);
+            emit symbolsChanged();
+        }
     }
 
 }
 
-void SharedEditor::to_string() {
+QString SharedEditor::to_string() {
     QString str;
 
     std::for_each(_symbols.begin()+1,_symbols.end()-1,
                   [&str](Symbol s){
                       str += s.getValue();
                   });
-    std::cout<<"Local editor: "<<str.toStdString()<<std::endl;
+//    std::cout<<"Local editor: "<<str.toStdString()<<std::endl;
+    return str;
 }
 
 qint32 SharedEditor::connectToServer() {
@@ -204,7 +209,8 @@ void SharedEditor::recvMessage() {
     Symbol s(ch, siteIdS, count, pos);
     Message msg(action == 0 ? insertion : removal, siteIdM, s);
     this->process(msg);
-    this->to_string();
+//    this->to_string();
+    emit symbolsChanged();
 
     if(this->socket->bytesAvailable()>0)         //se arrivano dati troppo velocemente la recvMessage() non fa in tempo
         emit socket->readyRead();                //a processare i segnali readyRead() e i dati rimangono accodati
@@ -255,3 +261,4 @@ void SharedEditor::login(QString& username, QString& password) {
     packet.getPayload() = std::make_shared<LoginInfo>(LoginInfo(-1, LoginInfo::login_request, std::move(username), std::move(password)));
     sendPacket(packet);
 }
+

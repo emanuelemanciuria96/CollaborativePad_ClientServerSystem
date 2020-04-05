@@ -242,6 +242,25 @@ qint32 ServerThread::login(DataPacket& packet) {
         ptr->setSiteId(5);
         ptr->setUser("");
         ptr->setPassword("");
+
+//        QString str = "ciaost";
+//        qint32 _counter = 0;hb8u
+//        for(int i=1;i<7;i++){
+//            std::vector<quint32> newPos;
+//            Symbol s(str[i-1],10,_counter++,newPos);
+////            std::vector<quint32> prev = _symbols[i-1].getPos();
+////            std::vector<quint32> next = _symbols[i].getPos();
+////            generateNewPosition(prev,next,newPos);
+////            _symbols.insert(_symbols.begin()+i,s);
+//
+//            DataPacket packet(10, -1, DataPacket::textTyping);
+//            packet.getPayload() = std::make_shared<Message>(Message(Message::insertion,10,s));
+////            Message m{insertion,_siteId,s};
+//            std::mutex m = _sockets.
+//           sendMessage(packet,socket,_sockets->(socket));
+////            sendPacket(packet);
+//        }
+
         return 5;
     } else {
         ptr->setType( LoginInfo::login_error);
@@ -250,6 +269,8 @@ qint32 ServerThread::login(DataPacket& packet) {
         ptr->setPassword("");
         return -1;
     }
+
+
 }
 
 void ServerThread::disconnected()
