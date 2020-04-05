@@ -26,16 +26,19 @@ private:
     qint32 _counter;
     QTcpSocket *socket;
     qint32 connectToServer();
+    void recvMessage(QDataStream& in);
+    void sendMessage(DataPacket& packet);
     void sendPacket(DataPacket& packet);
+    void sendLoginInfo(DataPacket& packet);
+    void recvLoginInfo(QDataStream& in);
     bool isLogged;
 
 private slots:
-    void recvMessage();
-    void sendMessage(DataPacket& packet);
+
     void recvPacket();
 
 public slots:
-    void login(QString& username, QString& password);
+    void loginSlot(QString& username, QString& password);
 signals:
     void symbolsChanged();
 public:

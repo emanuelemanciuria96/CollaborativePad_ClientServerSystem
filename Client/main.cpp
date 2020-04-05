@@ -11,11 +11,12 @@ int main(int argc, char **argv) {
     auto mainWindow = new EditorGUI(&ed);
     auto loginDialog = new LoginDialog(mainWindow);
 
-    QObject::connect(loginDialog, &LoginDialog::acceptLogin, &ed, &SharedEditor::login);
+    QObject::connect(loginDialog, &LoginDialog::acceptLogin, &ed, &SharedEditor::loginSlot);
     QObject::connect(&ed, &SharedEditor::symbolsChanged, mainWindow, &EditorGUI::updateSymbols);
 
-    mainWindow->show();              //inserisci user = ciao e password = suca se vuoi che funzioni tutto
     loginDialog->exec();
+    mainWindow->show();              //inserisci user = ciao e password = suca se vuoi che funzioni tutto
+
 
 
 //    QString s = "DAJEEEE";

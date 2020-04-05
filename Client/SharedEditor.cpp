@@ -61,7 +61,7 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
     _symbols.insert(_symbols.begin()+index,s);
 
     DataPacket packet(_siteId, -1, DataPacket::textTyping);
-    packet.getPayload() = std::make_shared<Message>(Message(insertion,_siteId,s));
+    packet.setPayload(std::make_shared<Message>(Message(insertion,_siteId,s)));
     //Message m{insertion,_siteId,s};
 
     sendPacket(packet);
@@ -79,7 +79,7 @@ void SharedEditor::localErase(qint32 index) {
     _symbols.erase(_symbols.begin()+index);
 
     DataPacket packet(_siteId, -1, DataPacket::textTyping);
-    packet.getPayload() = std::make_shared<Message>(Message(removal,_siteId,s));
+    packet.setPayload(std::make_shared<Message>(Message(removal,_siteId,s)));
     //Message m{removal,_siteId,s};
 
     sendPacket(packet);
@@ -152,29 +152,16 @@ void SharedEditor::recvPacket() {
     in.setVersion(QDataStream::Qt_5_5);
 
     in >> source >> errcode >> type_of_data;
-    DataPacket packet(source, errcode, type_of_data);
+    DataPacket packet(source, errcode, (DataPacket::data_t)type_of_data);
 
     switch (type_of_data) {
         case (DataPacket::login): {
-            quint32 siteId;
-            qint32 type;
-            QString user;
-            QString password;
-
-            in >> siteId >> type >> user >> password;
-
-            if(type == LoginInfo::login_ok) {
-                _siteId = siteId;
-                std::cout << "client successfully logged!" << std::endl;
-            } else {
-                std::cout << "client not logged!" << std::endl;
-            }
-
+            recvLoginInfo(in);
             break;
         }
 
         case (DataPacket::textTyping): {
-            recvMessage();
+            recvMessage(in);
             break;
         }
 
@@ -185,9 +172,8 @@ void SharedEditor::recvPacket() {
     }
 }
 
-void SharedEditor::recvMessage() {
+void SharedEditor::recvMessage(QDataStream& in) {
 
-    QDataStream in;
     qint32 siteIdM;
     qint32 action;
     QChar ch;
@@ -219,14 +205,7 @@ void SharedEditor::recvMessage() {
 void SharedEditor::sendPacket(DataPacket& packet){
     switch(packet.getTypeOfData()){
         case (DataPacket::login): {
-            auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
-            QDataStream out;
-            out.setDevice(socket);
-            out.setVersion(QDataStream::Qt_5_5);
-
-            out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
-            out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
-            socket->waitForBytesWritten(-1);
+            sendLoginInfo(packet);
             break;
         }
 
@@ -239,7 +218,7 @@ void SharedEditor::sendPacket(DataPacket& packet){
             std::cout<<"Coglione c'è un errore"<<std::endl;
         }
     }
-};
+}
 
 void SharedEditor::sendMessage(DataPacket& packet) {
     auto ptr = std::dynamic_pointer_cast<Message>(packet.getPayload());
@@ -255,10 +234,38 @@ void SharedEditor::sendMessage(DataPacket& packet) {
     socket->waitForBytesWritten(-1);
 }
 
-void SharedEditor::login(QString& username, QString& password) {
+void SharedEditor::sendLoginInfo(DataPacket& packet){
+    QDataStream out;
+    auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
+    out.setDevice(socket);
+    out.setVersion(QDataStream::Qt_5_5);
+
+    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
+    socket->waitForBytesWritten(-1);
+}
+
+void SharedEditor::recvLoginInfo(QDataStream& in){
+    quint32 siteId;
+    qint32 type;
+    QString user;
+    QString password;
+
+    in >> siteId >> type >> user >> password;
+
+    if(type == LoginInfo::login_ok) {
+        _siteId = siteId;
+        std::cout << "client successfully logged!" << std::endl;
+        isLogged = true;
+    } else {
+        std::cout << "client not logged!" << std::endl;
+    }
+}
+
+void SharedEditor::loginSlot(QString& username, QString& password) {
     std::cout << "sending user=" << username.toStdString() << " and password=" << password.toStdString() << std::endl;
     DataPacket packet(-1, -1, DataPacket::login);
-    packet.getPayload() = std::make_shared<LoginInfo>(LoginInfo(-1, LoginInfo::login_request, std::move(username), std::move(password)));
+    packet.setPayload(std::make_shared<LoginInfo>(LoginInfo(-1, LoginInfo::login_request, std::move(username), std::move(password))));
     sendPacket(packet);
 }
 
