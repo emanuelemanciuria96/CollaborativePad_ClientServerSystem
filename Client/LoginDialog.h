@@ -13,6 +13,8 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QDebug>
+#include <QGuiApplication>
+#include <QScreen>
 
 class LoginDialog: public QDialog {
     Q_OBJECT

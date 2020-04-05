@@ -19,6 +19,7 @@
 
 
 class SharedEditor: public QObject {
+Q_OBJECT
 private:
     qint32 _siteId;
     std::vector<Symbol> _symbols;
@@ -35,13 +36,14 @@ private slots:
 
 public slots:
     void login(QString& username, QString& password);
-
+signals:
+    void symbolsChanged();
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );
     void localErase( qint32 index );
     void process( const Message& m);
-    void to_string();
+    QString to_string();
 
 };
 

@@ -48,6 +48,10 @@ void LoginDialog::setUpGUI() {
     formGridLayout->addWidget(editPassword,1,1);
     formGridLayout->addWidget(buttons,2,0,1,2);
 
+    //imposto la grandezza della finestra
+    auto size = QGuiApplication::primaryScreen()->size();
+    this->resize(size.width()*0.1,size.height()*0.1);
+
     setLayout(formGridLayout);
 }
 

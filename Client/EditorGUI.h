@@ -21,24 +21,37 @@
 #include <iostream>
 #include <QtCore/QTextStream>
 #include <QFileInfo>
+#include <QTextDocument>
+#include "SharedEditor.h"
 
 class EditorGUI: public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit EditorGUI(QWidget *parent = nullptr);
+    EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
+    void setModel(SharedEditor *model);
+private slots:
+    void contentsChange(int pos, int charsRemoved, int charsAdded);
+
+public slots:
+    void updateSymbols();
+
+signals:
 
 private:
     QStatusBar* statusBar;
     QTextEdit* textEdit;
     QToolBar* toolBar;
     QString fileName;
+    SharedEditor* model;
+
     void setUpGUI();
     void setupFileActions();
     void setupEditActions();
     void setupTextActions();
     void setCurrentFileName(const QString &filename);
     bool load(const QString &f);
+
 };
 
 

@@ -3,6 +3,8 @@
 
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QArgument
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QChar
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QDataStream
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QDebug
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QFile
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QFileInfo
@@ -11,8 +13,10 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QRect
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QSize
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QSizeF
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QString
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QTextCodec
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QTextStream
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QtGlobal
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qalgorithms.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qarraydata.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic.h
@@ -91,6 +95,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qversiontagging.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QGuiApplication
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QScreen
+ C:/Qt/5.13.1/mingw73_64/include/QtGui/QTextDocument
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QTransform
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qbrush.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qcolor.h
@@ -127,6 +132,15 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qvector2d.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qwindowdefs.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qwindowdefs_win.h
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/QAbstractSocket
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/QTcpServer
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/QTcpSocket
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/qabstractsocket.h
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/qhostaddress.h
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/qtcpserver.h
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/qtcpsocket.h
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/qtnetwork-config.h
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/qtnetworkglobal.h
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/QDesktopWidget
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/QDialog
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/QDialogButtonBox
@@ -167,11 +181,20 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qwidget.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Message.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SharedEditor.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp
 CMakeFiles/Client.dir/EditorGUI.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QArgument
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QChar
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QDataStream
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QFile
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QFileInfo
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QList
@@ -179,8 +202,10 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QRect
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QSize
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QSizeF
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QString
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QTextCodec
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QTextStream
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QtGlobal
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qalgorithms.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qarraydata.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic.h
@@ -259,6 +284,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qversiontagging.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QGuiApplication
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QScreen
+ C:/Qt/5.13.1/mingw73_64/include/QtGui/QTextDocument
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QTransform
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qbrush.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qcolor.h
@@ -295,6 +321,15 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qvector2d.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qwindowdefs.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qwindowdefs_win.h
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/QAbstractSocket
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/QTcpServer
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/QTcpSocket
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/qabstractsocket.h
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/qhostaddress.h
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/qtcpserver.h
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/qtcpsocket.h
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/qtnetwork-config.h
+ C:/Qt/5.13.1/mingw73_64/include/QtNetwork/qtnetworkglobal.h
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/QDesktopWidget
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/QGridLayout
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/QLabel
@@ -326,8 +361,19 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qwidget.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.cpp
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Message.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SharedEditor.h
 CMakeFiles/Client.dir/LoginDialog.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QDebug
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QList
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QObject
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QRect
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QSize
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/QSizeF
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qalgorithms.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qarraydata.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic.h
@@ -343,9 +389,11 @@ CMakeFiles/Client.dir/LoginDialog.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qconfig.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qcontainerfwd.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qcontiguouscache.h
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/qcoreapplication.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qcoreevent.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qdatastream.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qdebug.h
+ C:/Qt/5.13.1/mingw73_64/include/QtCore/qeventloop.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qfile.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qfiledevice.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qflags.h
@@ -400,6 +448,9 @@ CMakeFiles/Client.dir/LoginDialog.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qvarlengtharray.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qvector.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qversiontagging.h
+ C:/Qt/5.13.1/mingw73_64/include/QtGui/QGuiApplication
+ C:/Qt/5.13.1/mingw73_64/include/QtGui/QScreen
+ C:/Qt/5.13.1/mingw73_64/include/QtGui/QTransform
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qbrush.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qcolor.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qcursor.h
@@ -407,8 +458,10 @@ CMakeFiles/Client.dir/LoginDialog.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qfont.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qfontinfo.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qfontmetrics.h
+ C:/Qt/5.13.1/mingw73_64/include/QtGui/qguiapplication.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qicon.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qimage.h
+ C:/Qt/5.13.1/mingw73_64/include/QtGui/qinputmethod.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qkeysequence.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qmatrix.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qpaintdevice.h
@@ -421,6 +474,7 @@ CMakeFiles/Client.dir/LoginDialog.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qregion.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qrgb.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qrgba64.h
+ C:/Qt/5.13.1/mingw73_64/include/QtGui/qscreen.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qtextcursor.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qtextformat.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qtextoption.h
@@ -792,6 +846,7 @@ CMakeFiles/Client.dir/main.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qversiontagging.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QGuiApplication
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QScreen
+ C:/Qt/5.13.1/mingw73_64/include/QtGui/QTextDocument
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QTransform
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qbrush.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qcolor.h
