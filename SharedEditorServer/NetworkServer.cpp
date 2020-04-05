@@ -37,6 +37,7 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
     connect(thread, &ServerThread::finished,
             [thread](){
                 QPointer<QThread> th(thread);
+                qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
                 emit thread->deleteMe(th);
             });
 
