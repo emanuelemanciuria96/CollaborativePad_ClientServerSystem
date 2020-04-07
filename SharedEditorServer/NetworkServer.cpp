@@ -86,10 +86,13 @@ void NetworkServer::localErase(Message m) {
     std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
     int i = 0;
    // std::unique_lock ul(sym_mutex);
-    for( auto s: _symbles) //algoritmo lineare anche qui, migliorabile (penso che nella libreria STL ci possa essere già qualcosa di implementato)
-        if( !(s==(_symbles)[i]) )
-            i++;
-    _symbles.erase(_symbles.begin()+i);
+    for( auto s: _symbles){ //algoritmo lineare anche qui, migliorabile (penso che nella libreria STL ci possa essere già qualcosa di implementato)
+        if( s==(_symbles)[i] ) break;
+        i++;
+    }
+    
+    if(i<_symbles.size())
+        _symbles.erase(_symbles.begin()+i);
 
     to_string();
 }
