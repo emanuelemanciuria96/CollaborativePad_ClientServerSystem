@@ -21,9 +21,10 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
     //e identico modo! quando faccio il localInsert, pero',
     //devo ricordare di avere 2 valori in piu'
     std::vector<quint32> v = {0};
-    v = {INT_MAX};
     Symbol s('0',-1,-1, v);
     _symbols.push_back(s);
+    v = {UINT32_MAX};
+    s = Symbol('0',-1,-1, v);
     _symbols.push_back(s);
 }
 
@@ -34,7 +35,7 @@ void generateNewPosition( std::vector<quint32>& prev, std::vector<quint32>& next
         prev.push_back(0);
     }
     if( depth >= next.size() ){
-        next.push_back(INT_MAX);
+        next.push_back(UINT32_MAX);
     }
     if( next[depth] - prev[depth] > 1 ){
         pos = (float)prev[depth]/2 + (float)next[depth]/2;
@@ -54,15 +55,14 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
 
     index++;
     std::vector<quint32> newPos;
-    Symbol s(value,_siteId,_counter++,newPos);
     std::vector<quint32> prev = _symbols[index-1].getPos();
     std::vector<quint32> next = _symbols[index].getPos();
     generateNewPosition(prev,next,newPos);
+    Symbol s(value,_siteId,_counter++,newPos);
     _symbols.insert(_symbols.begin()+index,s);
 
     DataPacket packet(_siteId, -1, DataPacket::textTyping);
-    packet.setPayload(std::make_shared<Message>(Message(insertion,_siteId,s)));
-    //Message m{insertion,_siteId,s};
+    packet.setPayload(std::make_shared<Message>(insertion,_siteId,s));
 
     sendPacket(packet);
 //    this->to_string();
@@ -79,8 +79,7 @@ void SharedEditor::localErase(qint32 index) {
     _symbols.erase(_symbols.begin()+index);
 
     DataPacket packet(_siteId, -1, DataPacket::textTyping);
-    packet.setPayload(std::make_shared<Message>(Message(removal,_siteId,s)));
-    //Message m{removal,_siteId,s};
+    packet.setPayload( std::make_shared<Message>(Message::removal,_siteId,s) );
 
     sendPacket(packet);
     this->to_string();
@@ -88,26 +87,26 @@ void SharedEditor::localErase(qint32 index) {
 
 void SharedEditor::process(const Message &m) {
 
-    if ( insertion == m.getAction() ) {
+    if ( Message::insertion == m.getAction() ) {
         qint32 pos = 0;
         for ( auto s: _symbols )
-            if( s.getPos() < m.getSymbol().getPos() )
+            if( s < m.getSymbol() )
                 pos++;
             else break;
 
         _symbols.insert(_symbols.begin()+pos,m.getSymbol());
         emit symbolsChanged();
     }
-    else if ( removal == m.getAction() ) {
-        qint32 pos = -1;
+    else if ( Message::removal == m.getAction() ) {
+        qint32 pos = 0;
 
         for ( auto s: _symbols ){
-            pos++;
-            if( s.getPos()==m.getSymbol().getPos() && s == m.getSymbol() )
+            if( s==m.getSymbol() )
                 break;
+            pos++;
         }
 
-        if( pos != -1) {
+        if( pos != _symbols.size()) {
             _symbols.erase(_symbols.begin() + pos);
             emit symbolsChanged();
         }
@@ -193,7 +192,7 @@ void SharedEditor::recvMessage(QDataStream& in) {
     }
 
     Symbol s(ch, siteIdS, count, pos);
-    Message msg(action == 0 ? insertion : removal, siteIdM, s);
+    Message msg(action == 0 ? Message::insertion : Message::removal, siteIdM, s);
     this->process(msg);
 //    this->to_string();
     emit symbolsChanged();
@@ -265,7 +264,7 @@ void SharedEditor::recvLoginInfo(QDataStream& in){
 void SharedEditor::loginSlot(QString& username, QString& password) {
     std::cout << "sending user=" << username.toStdString() << " and password=" << password.toStdString() << std::endl;
     DataPacket packet(-1, -1, DataPacket::login);
-    packet.setPayload(std::make_shared<LoginInfo>(LoginInfo(-1, LoginInfo::login_request, std::move(username), std::move(password))));
+    packet.setPayload( std::make_shared<LoginInfo>( -1, LoginInfo::login_request, std::move(username), std::move(password)) );
     sendPacket(packet);
 }
 
