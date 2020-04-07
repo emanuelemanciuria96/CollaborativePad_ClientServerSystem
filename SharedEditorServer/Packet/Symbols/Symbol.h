@@ -22,7 +22,7 @@ public:
         _ch(ch),_symId(id,cnt),_pos(pos){}
 
     bool operator==(Symbol s){
-        return _symId == s._symId;
+        return _symId == s._symId && _pos==s._pos;
     }
     bool operator<(Symbol s){
         return _pos<s._pos || (_pos==s._pos && _symId < s._symId); }
