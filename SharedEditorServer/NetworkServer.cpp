@@ -73,9 +73,10 @@ void NetworkServer::localInsert(Message m) {
     std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localInsert"<<std::endl;
     int i = 0;
    // std::unique_lock ul(sym_mutex);
-    for (auto s: _symbles)   //algoritmo lineare, migliorabile
-        if (!(s < (_symbles)[i]))
-            i++;
+    for (auto s: _symbles) {   //algoritmo lineare, migliorabile
+        if ( m.getSymbol() < s ) break;
+        i++;
+    }
 
     _symbles.insert(_symbles.begin() + i, m.getSymbol());
 
@@ -87,8 +88,8 @@ void NetworkServer::localErase(Message m) {
     int i = 0;
    // std::unique_lock ul(sym_mutex);
     for( auto s: _symbles){ //algoritmo lineare anche qui, migliorabile (penso che nella libreria STL ci possa essere già qualcosa di implementato)
-        if( s==(_symbles)[i] ) break;
-        i++;
+        if( m.getSymbol() == s ) break;
+            i++;
     }
     
     if(i<_symbles.size())
