@@ -10,18 +10,19 @@
 #include <vector>
 #include <QtGlobal>
 
-typedef enum {insertion,removal} action_t;
-
 class Message: public Payload {
-private:
-    action_t _action ;
-    Symbol _sym;
+
 public:
+    typedef enum {insertion,removal} action_t;
+
     Message(action_t action,qint32 siteId,Symbol& sym):
             _action(action), Payload(siteId), _sym(sym){}
     qint32 getSiteId(){ return _siteID; }
     action_t getAction() const{ return _action; }
     Symbol getSymbol() const{ return _sym; }
+private:
+    action_t _action ;
+    Symbol _sym;
 };
 
 
