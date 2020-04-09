@@ -162,6 +162,7 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
         for (auto skt: _sockets) {
             sl.unlock();
             if (skt.first != socket) {
+                qDebug() << "Invio messaggio";
                 int id = qMetaTypeId<DataPacket>();
                 emit skt.first->sendMessage(packet,skt.second);
             }

@@ -33,19 +33,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = "C:\Program Files\JetBrains\CLion 2019.3.4\bin\cmake\win\bin\cmake.exe"
+CMAKE_COMMAND = "C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe"
 
 # The command to remove a file.
-RM = "C:\Program Files\JetBrains\CLion 2019.3.4\bin\cmake\win\bin\cmake.exe" -E remove -f
+RM = "C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Muska\CLionProjects\SharedEditor_MalnatiProject\Client
+CMAKE_SOURCE_DIR = C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Muska\CLionProjects\SharedEditor_MalnatiProject\Client\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug
 
 # Utility rule file for Client_autogen.
 
@@ -53,8 +53,8 @@ CMAKE_BINARY_DIR = C:\Users\Muska\CLionProjects\SharedEditor_MalnatiProject\Clie
 include CMakeFiles/Client_autogen.dir/progress.make
 
 CMakeFiles/Client_autogen:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=C:\Users\Muska\CLionProjects\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Client"
-	"C:\Program Files\JetBrains\CLion 2019.3.4\bin\cmake\win\bin\cmake.exe" -E cmake_autogen C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenInfo.cmake Debug
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Client"
+	"C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -E cmake_autogen C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenInfo.cmake Debug
 
 Client_autogen: CMakeFiles/Client_autogen
 Client_autogen: CMakeFiles/Client_autogen.dir/build.make
@@ -71,6 +71,6 @@ CMakeFiles/Client_autogen.dir/clean:
 .PHONY : CMakeFiles/Client_autogen.dir/clean
 
 CMakeFiles/Client_autogen.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Muska\CLionProjects\SharedEditor_MalnatiProject\Client C:\Users\Muska\CLionProjects\SharedEditor_MalnatiProject\Client C:\Users\Muska\CLionProjects\SharedEditor_MalnatiProject\Client\cmake-build-debug C:\Users\Muska\CLionProjects\SharedEditor_MalnatiProject\Client\cmake-build-debug C:\Users\Muska\CLionProjects\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles\Client_autogen.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles\Client_autogen.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Client_autogen.dir/depend
 

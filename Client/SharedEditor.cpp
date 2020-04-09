@@ -30,7 +30,7 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
 void generateNewPosition( std::vector<quint32>& prev, std::vector<quint32>& next, std::vector<quint32>& newPos, qint32 depth = 0 ){
 
-    qint32 pos;
+    quint32 pos;
     if ( depth >= prev.size() ){
         prev.push_back(0);
     }
@@ -62,7 +62,7 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
     _symbols.insert(_symbols.begin()+index,s);
 
     DataPacket packet(_siteId, -1, DataPacket::textTyping);
-    packet.setPayload(std::make_shared<Message>(insertion,_siteId,s));
+    packet.setPayload(std::make_shared<Message>(Message::insertion,_siteId,s));
 
     sendPacket(packet);
 //    this->to_string();
@@ -86,7 +86,7 @@ void SharedEditor::localErase(qint32 index) {
 }
 
 void SharedEditor::process(const Message &m) {
-
+    std::cout << "Messaggio ricevuto " << m.getAction() << std::endl;
     if ( Message::insertion == m.getAction() ) {
         qint32 pos = 0;
         for ( auto s: _symbols )
@@ -95,7 +95,7 @@ void SharedEditor::process(const Message &m) {
             else break;
 
         _symbols.insert(_symbols.begin()+pos,m.getSymbol());
-        emit symbolsChanged();
+        emit symbolsChanged(pos, m.getSymbol().getValue(), "insert");
     }
     else if ( Message::removal == m.getAction() ) {
         qint32 pos = 0;
@@ -108,7 +108,7 @@ void SharedEditor::process(const Message &m) {
 
         if( pos != _symbols.size()) {
             _symbols.erase(_symbols.begin() + pos);
-            emit symbolsChanged();
+            emit symbolsChanged(pos, m.getSymbol().getValue(), "remove");
         }
     }
 
@@ -195,7 +195,6 @@ void SharedEditor::recvMessage(QDataStream& in) {
     Message msg(action == 0 ? Message::insertion : Message::removal, siteIdM, s);
     this->process(msg);
 //    this->to_string();
-    emit symbolsChanged();
 
     if(this->socket->bytesAvailable()>0)         //se arrivano dati troppo velocemente la recvMessage() non fa in tempo
         emit socket->readyRead();                //a processare i segnali readyRead() e i dati rimangono accodati

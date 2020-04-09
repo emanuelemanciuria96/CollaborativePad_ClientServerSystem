@@ -40,7 +40,7 @@ private slots:
 public slots:
     void loginSlot(QString& username, QString& password);
 signals:
-    void symbolsChanged();
+    void symbolsChanged(qint32 pos, QChar value, const QString& action);
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );

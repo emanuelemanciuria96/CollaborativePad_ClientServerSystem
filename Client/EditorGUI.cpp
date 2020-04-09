@@ -5,9 +5,11 @@
 #include "EditorGUI.h"
 
 EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QMainWindow(parent){
+    signalBlocker = false;
     setModel(model);
     setUpGUI();
     setWindowTitle(QCoreApplication::applicationName());
+
 }
 
 
@@ -37,7 +39,7 @@ void EditorGUI::setUpGUI() {
     connect(textEdit->document(), SIGNAL(contentsChange(int, int, int)), this, SLOT(contentsChange(int,int,int)));
 
 //    load("./file.txt");
-    updateSymbols();
+    loadSymbols();
 
 }
 
@@ -67,8 +69,10 @@ bool EditorGUI::load(const QString &f) {
 }
 
 
-void EditorGUI::updateSymbols() {
+void EditorGUI::loadSymbols() {
+    signalBlocker = !signalBlocker;
     textEdit->setText(model->to_string());
+    signalBlocker = !signalBlocker;
 }
 
 void EditorGUI::setupEditActions() {
@@ -97,22 +101,54 @@ void EditorGUI::setCurrentFileName(const QString &filename) {
     setWindowModified(false);
 }
 
-void EditorGUI::setModel(SharedEditor *model) {
-    this->model = model;
+void EditorGUI::setModel(SharedEditor* _model) {
+    this->model = _model;
 }
 
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i=0;
-    if(charsRemoved > 0){  //sono stati cancellati dei caratteri
-        std::cout << "Cancellazione carattere" << std::endl;
-        for(i=0; i<charsRemoved; i++){
-            model->localErase(pos+i);
+    if(!signalBlocker) {
+        if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
+            std::cout << "Cancellazione carattere " << pos << std::endl;
+            for (i = 0; i < charsRemoved; i++) {
+                model->localErase(pos + i);
+            }
+        }
+        if (charsAdded > 0) {  //sono stati aggiunti caratteri
+            std::cout << "Inserimento carattere " << pos << std::endl;
+            for (i = 0; i < charsAdded; i++) {
+                model->localInsert(pos + i, textEdit->document()->characterAt(pos + i));
+            }
         }
     }
-    if(charsAdded > 0){  //sono stati aggiunti caratteri
-        std::cout << "Inserimento carattere" << std::endl;
-        for(i=0; i<charsAdded; i++){
-            model->localInsert(pos+i, textEdit->document()->characterAt(pos+i));
-        }
-    }
+}
+
+void EditorGUI::insertText(qint32 pos, QChar value) {
+    pos--;
+    auto cursor = textEdit->textCursor();
+    cursor.movePosition(QTextCursor::MoveOperation::Start, QTextCursor::MoveMode::MoveAnchor,1);
+    cursor.movePosition(QTextCursor::MoveOperation::NextCharacter, QTextCursor::MoveMode::MoveAnchor,pos);
+    signalBlocker = !signalBlocker;
+    cursor.insertText(QString(value));
+    std::cout << "Inserito " << pos << " " << value.unicode() << std::endl;
+    signalBlocker = !signalBlocker;
+}
+
+void EditorGUI::deleteText(qint32 pos) {
+    pos--;
+    auto cursor = textEdit->textCursor();
+    cursor.movePosition(QTextCursor::MoveOperation::Start, QTextCursor::MoveMode::MoveAnchor,1);
+    cursor.movePosition(QTextCursor::MoveOperation::NextCharacter, QTextCursor::MoveMode::MoveAnchor,pos);
+    signalBlocker = !signalBlocker;
+    cursor.deleteChar();
+    std::cout << "Rimosso " << pos << std::endl;
+    signalBlocker = !signalBlocker;
+}
+
+
+void EditorGUI::updateSymbols(qint32 pos, QChar value, const QString& action) {
+    if(action == "remove")
+        deleteText(pos);
+    else
+        insertText(pos,value);
 }

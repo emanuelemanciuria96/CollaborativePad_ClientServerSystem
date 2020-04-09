@@ -1,4 +1,4 @@
-C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir
-C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client_autogen.dir
+C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir
+C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client_autogen.dir

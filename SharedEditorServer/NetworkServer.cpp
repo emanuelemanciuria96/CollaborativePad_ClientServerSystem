@@ -50,7 +50,7 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
 
 void generateNewPosition( std::vector<qint32>& prev, std::vector<qint32>& next, std::vector<qint32>& newPos, qint32 depth = 0 ){
 
-    qint32 pos;
+    quint32 pos;
     if ( depth >= prev.size() ){
         prev.push_back(0);
     }

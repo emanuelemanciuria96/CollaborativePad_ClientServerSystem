@@ -7,12 +7,12 @@
 
 int main(int argc, char **argv) {
     QApplication app(argc, argv);
-    SharedEditor ed;  //connessione al server effettuata direttamente nel costruttore
-    auto mainWindow = new EditorGUI(&ed);
+    auto ed = new SharedEditor;  //connessione al server effettuata direttamente nel costruttore
+    auto mainWindow = new EditorGUI(ed);
     auto loginDialog = new LoginDialog(mainWindow);
 
-    QObject::connect(loginDialog, &LoginDialog::acceptLogin, &ed, &SharedEditor::loginSlot);
-    QObject::connect(&ed, &SharedEditor::symbolsChanged, mainWindow, &EditorGUI::updateSymbols);
+    QObject::connect(loginDialog, &LoginDialog::acceptLogin, ed, &SharedEditor::loginSlot);
+    QObject::connect(ed, &SharedEditor::symbolsChanged, mainWindow, &EditorGUI::updateSymbols);
 
     loginDialog->exec();
     mainWindow->show();              //inserisci user = ciao e password = suca se vuoi che funzioni tutto
