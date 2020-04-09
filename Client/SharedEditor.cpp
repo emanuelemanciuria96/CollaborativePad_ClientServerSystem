@@ -38,7 +38,8 @@ void generateNewPosition( std::vector<quint32>& prev, std::vector<quint32>& next
         next.push_back(UINT32_MAX);
     }
     if( next[depth] - prev[depth] > 1 ){
-        pos = (float)prev[depth]/2 + (float)next[depth]/2;
+        pos = prev[depth]/2 + next[depth]/2 + ( prev[depth]%2 + next[depth]%2 )/2;
+        // in questo modo se i due numeri sono entrambi dispari, la media viene calcolata correttamente
     }
     else if ( next[depth] - prev[depth] <= 1 ){
         pos = prev[depth];
