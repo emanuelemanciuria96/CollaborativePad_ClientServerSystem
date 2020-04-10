@@ -230,6 +230,9 @@ void SharedEditor::sendPacket(DataPacket& packet){
 }
 
 void SharedEditor::sendMessage(DataPacket& packet) {
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(3));
+
     auto ptr = std::dynamic_pointer_cast<Message>(packet.getPayload());
     QDataStream out;
     qint32 num=ptr->getSymbol().getPos().size();
@@ -280,7 +283,7 @@ void SharedEditor::loginSlot(QString& username, QString& password) {
 
 void SharedEditor::test() {
     for(auto s:_symbols) {
-        std::cout << s.getValue().toLatin1() << " - " << s.getPos().size()-2 << " - ";
+        std::cout << s.getValue().toLatin1() << " - " << s.getPos().size() << " - ";
         for(auto p: s.getPos())
             std::cout<<p<<"; ";
         std::cout<<std::endl;
