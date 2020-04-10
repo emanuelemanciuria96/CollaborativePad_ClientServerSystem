@@ -28,6 +28,55 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
     _symbols.push_back(s);
 }
 
+quint32 intermediateValue(quint32 prev,quint32 next,double factor){
+    // calcolo del valore intermedio
+    double tmp=(next-prev)*factor;
+    quint32 val=prev+tmp;
+    if(val==next){
+        val--;
+    } else if (val==prev){
+        val++;
+    }
+    return val;
+}
+void generateNewPosition2(std::vector<quint32>& prev, std::vector<quint32>& next, std::vector<quint32>& newPos){
+    quint32 max=UINT_MAX;
+    double factor=0.05;
+    //double factor=0.015625; // 1/64
+    int sizePrev=prev.size();
+    int sizeNext=next.size();
+    int min=std::min(sizePrev,sizeNext);
+    for (int i = 0; i<min; i++) { // cerco il primo valore intermedio, se lo trovo esco
+        if(next[i]-prev[i]>1){
+            newPos.push_back(intermediateValue(prev[i],next[i],factor));
+            return;
+        }else{
+            newPos.push_back(prev[i]);
+        }
+    }
+    if(sizePrev>=sizeNext) { // distinguo due casi
+        for (int i = min; i < sizePrev; i++) {
+            if (max - prev[i] > 1) {
+                newPos.push_back(intermediateValue(prev[i], max, factor));
+                return;
+            } else {
+                newPos.push_back(prev[i]);
+            }
+        }
+        newPos.push_back(intermediateValue(0, max, factor));
+    } else {
+        for (int i = min; i < sizeNext; i++) {
+            if (next[i] > 1) {
+                newPos.push_back(intermediateValue(0, next[i], factor));
+                return;
+            } else {
+                newPos.push_back(0);
+            }
+        }
+        newPos.push_back(intermediateValue(0, max, factor));
+    }
+}
+
 void generateNewPosition( std::vector<quint32>& prev, std::vector<quint32>& next, std::vector<quint32>& newPos, qint32 depth = 0 ){
 
     quint32 pos;
