@@ -8,25 +8,25 @@
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_PREFIX_PATH=C:\Qt\5.13.1\mingw73_64\lib\cmake" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_PREFIX_PATH=C:\Qt\5.12.5\mingw73_64\lib\cmake" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04cd708d-e74e-4476-8c5c-a9f18ec4ecf9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EditorGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/EditorGUI.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EditorGUI.h" beforeDir="false" afterPath="$PROJECT_DIR$/EditorGUI.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SharedEditor.h" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeCCompiler.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeCXXCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeCXXCompiler.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeRCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeRCCompiler.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeSystem.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeSystem.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/a.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdCXX/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdCXX/a.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeCXXCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeRCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdCXX/a.exe" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeRuleHashes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeRuleHashes.txt" afterDir="false" />
@@ -42,6 +42,7 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/cmake_clean.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.internal" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/flags.make" afterDir="false" />
@@ -52,8 +53,11 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenInfo.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenOldSettings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenOldSettings.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/ParseCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/ParseCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/ParseCache.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
@@ -63,30 +67,59 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/moc_predefs.h" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/moc_predefs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/3.15.3/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/3.15.3/CMakeCXXCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/3.15.3/CMakeRCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/3.15.3/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdCXX/a.exe" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/CMakeRuleHashes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/CMakeRuleHashes.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/Command.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/Command.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/DataPacket.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/Message.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/Message.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/Payload.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/Payload.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/Symbols/SymId.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/Symbols/SymId.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/Symbols/Symbol.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/Packet/Symbols/Symbol.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/SharedEditorServer_autogen/mocs_compilation.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/SharedEditorServer_autogen/mocs_compilation.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/build.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/depend.internal" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/flags.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/includes_CXX.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/includes_CXX.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/jsoncpp.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/jsoncpp.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/link.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/linklibs.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/linklibs.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer.dir/objects.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/AutogenInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/AutogenInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/AutogenOldSettings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/AutogenOldSettings.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/ParseCache.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/build.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
@@ -95,8 +128,12 @@
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_NetworkServer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_NetworkServer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_ServerThread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_ServerThread.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_Socket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/EWIEGA46WW/moc_Socket.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/G2NQOARGLM/moc_DataPacket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/G2NQOARGLM/moc_DataPacket.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/mocs_compilation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/mocs_compilation.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/cmake-build-debug/cmake_install.cmake" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -147,6 +184,18 @@
       <recent name="C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client" />
     </key>
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="RunManager" selected="CMake Application.Client">
     <configuration name="Client" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Client" TARGET_NAME="Client" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Client" RUN_TARGET_NAME="Client">
       <method v="2">
@@ -186,6 +235,9 @@
       <workItem from="1586076506607" duration="3510000" />
       <workItem from="1586420302227" duration="1509000" />
       <workItem from="1586421876428" duration="5297000" />
+      <workItem from="1586441038224" duration="6584000" />
+      <workItem from="1586458315279" duration="6314000" />
+      <workItem from="1586511381742" duration="4054000" />
     </task>
     <servers />
   </component>

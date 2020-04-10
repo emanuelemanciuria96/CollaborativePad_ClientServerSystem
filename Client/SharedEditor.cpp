@@ -38,7 +38,11 @@ void generateNewPosition( std::vector<quint32>& prev, std::vector<quint32>& next
         next.push_back(UINT32_MAX);
     }
     if( next[depth] - prev[depth] > 1 ){
-        pos = (float)prev[depth]/2 + (float)next[depth]/2;
+        if( (next[depth] - prev[depth])>256 )
+            pos = prev[depth] + ((next[depth] - prev[depth])>>6);
+        else
+            pos = (prev[depth]>>1) + (next[depth]>>1) + (( (prev[depth]&1) + (next[depth]&1) )>>1);
+            // la formula di sopra calcola il punto medio tenendo conto del resto (calcolato con un AND ed uno SHIFT)
     }
     else if ( next[depth] - prev[depth] <= 1 ){
         pos = prev[depth];
@@ -66,6 +70,7 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
 
     sendPacket(packet);
 //    this->to_string();
+    emit test1();
 
 }
 
@@ -83,6 +88,8 @@ void SharedEditor::localErase(qint32 index) {
 
     sendPacket(packet);
     this->to_string();
+
+    emit test1();
 }
 
 void SharedEditor::process(const Message &m) {
@@ -112,6 +119,8 @@ void SharedEditor::process(const Message &m) {
         }
     }
 
+    emit test1();
+
 }
 
 QString SharedEditor::to_string() {
@@ -121,6 +130,8 @@ QString SharedEditor::to_string() {
                   [&str](Symbol s){
                       str += s.getValue();
                   });
+
+
 //    std::cout<<"Local editor: "<<str.toStdString()<<std::endl;
     return str;
 }
@@ -177,9 +188,9 @@ void SharedEditor::recvMessage(QDataStream& in) {
     qint32 action;
     QChar ch;
     qint32 siteIdS;
-    qint32  count;
+    quint32  count;
     qint32 num;
-    qint32 p;
+    quint32 p;
     std::vector<quint32> pos;
 
     in.setDevice(this->socket);
@@ -266,4 +277,18 @@ void SharedEditor::loginSlot(QString& username, QString& password) {
     packet.setPayload( std::make_shared<LoginInfo>( -1, LoginInfo::login_request, std::move(username), std::move(password)) );
     sendPacket(packet);
 }
+
+void SharedEditor::test() {
+    for(auto s:_symbols) {
+        std::cout << s.getValue().toLatin1() << " - " << s.getPos().size()-2 << " - ";
+        for(auto p: s.getPos())
+            std::cout<<p<<"; ";
+        std::cout<<std::endl;
+    }
+
+    std::cout<<"#caratteri inseriti: "<<_symbols.size()<<std::endl;
+
+}
+
+
 

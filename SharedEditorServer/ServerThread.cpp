@@ -106,9 +106,10 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                 std::lock_guard lg(skt_mutex);
                 _sockets.emplace_back(this->socket,new std::mutex());
             }
-        } else
+        } else {
             std::cout << "client not logged!" << std::endl;
-        sendPacket(packet);
+            sendPacket(packet);
+        }
     }
 }
 

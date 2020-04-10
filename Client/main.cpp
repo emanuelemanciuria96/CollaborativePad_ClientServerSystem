@@ -13,6 +13,7 @@ int main(int argc, char **argv) {
 
     QObject::connect(loginDialog, &LoginDialog::acceptLogin, ed, &SharedEditor::loginSlot);
     QObject::connect(ed, &SharedEditor::symbolsChanged, mainWindow, &EditorGUI::updateSymbols);
+    QObject::connect(ed,&SharedEditor::test1,ed,&SharedEditor::test);
 
     loginDialog->exec();
     mainWindow->show();              //inserisci user = ciao e password = suca se vuoi che funzioni tutto
