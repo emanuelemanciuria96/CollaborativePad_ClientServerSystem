@@ -63,7 +63,6 @@ void generateNewPosition2(std::vector<quint32>& prev, std::vector<quint32>& next
                 newPos.push_back(prev[i]);
             }
         }
-        newPos.push_back(intermediateValue(0, max, factor));
     } else {
         for (int i = min; i < sizeNext; i++) {
             if (next[i] > 1) {
@@ -73,8 +72,8 @@ void generateNewPosition2(std::vector<quint32>& prev, std::vector<quint32>& next
                 newPos.push_back(0);
             }
         }
-        newPos.push_back(intermediateValue(0, max, factor));
     }
+    newPos.push_back(intermediateValue(0, max, factor));
 }
 
 void generateNewPosition( std::vector<quint32>& prev, std::vector<quint32>& next, std::vector<quint32>& newPos, qint32 depth = 0 ){
