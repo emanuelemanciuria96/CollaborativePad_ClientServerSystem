@@ -54,7 +54,7 @@ void generateNewPosition2(std::vector<quint32>& prev, std::vector<quint32>& next
             newPos.push_back(prev[i]);
         }
     }
-    if(sizePrev>=sizeNext) { // distinguo due casi
+    if(sizePrev>sizeNext) { // distinguo due casi
         for (int i = min; i < sizePrev; i++) {
             if (max - prev[i] > 1) {
                 newPos.push_back(intermediateValue(prev[i], max, factor));
