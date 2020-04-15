@@ -23,6 +23,7 @@
 #include <QFileInfo>
 #include <QTextDocument>
 #include "SharedEditor.h"
+#include "RemoteCursor.h"
 
 class EditorGUI: public QMainWindow {
     Q_OBJECT
@@ -34,6 +35,8 @@ private:
     QString fileName;
     SharedEditor* model;
     bool signalBlocker;
+    std::vector<RemoteCursor> remoteCursors;
+    QAction* actionSave;
 
     void setUpGUI();
     void setupFileActions();
@@ -42,7 +45,12 @@ private:
     void setCurrentFileName(const QString &filename);
     bool load(const QString &f);
     void loadSymbols();
-
+    void updateRemoteCursor(qint32 siteId, int pos);
+    void removeCursor(qint32 siteId);
+    void fileNew();
+    void fileOpen();
+    void fileSave();
+    void fileSaveAs();
 
 private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);

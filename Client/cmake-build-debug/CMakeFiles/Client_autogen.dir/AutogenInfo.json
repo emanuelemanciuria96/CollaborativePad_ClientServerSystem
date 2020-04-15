@@ -1,0 +1,165 @@
+{
+	"BUILD_DIR" : "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen",
+	"CMAKE_BINARY_DIR" : "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client",
+	"CMAKE_EXECUTABLE" : "C:/Program Files/JetBrains/CLion 2018.3.4/bin/cmake/win/bin/cmake.exe",
+	"CMAKE_SOURCE_DIR" : "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client",
+	"HEADERS" : 
+	[
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.h",
+			"MU",
+			"EWIEGA46WW/moc_EditorGUI.cpp"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.h",
+			"MU",
+			"EWIEGA46WW/moc_LoginDialog.cpp"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h",
+			"MU",
+			"G2NQOARGLM/moc_DataPacket.cpp"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h",
+			"MU",
+			"G2NQOARGLM/moc_LoginInfo.cpp"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Message.h",
+			"MU",
+			"G2NQOARGLM/moc_Message.cpp"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Payload.h",
+			"MU",
+			"G2NQOARGLM/moc_Payload.cpp"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h",
+			"MU",
+			"DY6VS6FRYF/moc_SymId.cpp"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h",
+			"MU",
+			"DY6VS6FRYF/moc_Symbol.cpp"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/RemoteCursor.h",
+			"MU",
+			"EWIEGA46WW/moc_RemoteCursor.cpp"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SharedEditor.h",
+			"MU",
+			"EWIEGA46WW/moc_SharedEditor.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/include",
+	"MOC_COMPILATION_FILE" : "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"QT_CHARTS_LIB",
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_NETWORK_LIB",
+		"QT_WIDGETS_LIB"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"C:/Qt/5.13.1/mingw73_64/include",
+		"C:/Qt/5.13.1/mingw73_64/include/QtCore",
+		"C:/Qt/5.13.1/mingw73_64/mkspecs/win32-g++",
+		"C:/Qt/5.13.1/mingw73_64/include/QtGui",
+		"C:/Qt/5.13.1/mingw73_64/include/QtANGLE",
+		"C:/Qt/5.13.1/mingw73_64/include/QtWidgets",
+		"C:/Qt/5.13.1/mingw73_64/include/QtCharts",
+		"C:/Qt/5.13.1/mingw73_64/include/QtNetwork",
+		"C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++",
+		"C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32",
+		"C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward",
+		"C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include",
+		"C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed",
+		"C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/x86_64-w64-mingw32/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/g++.exe",
+		"-dM",
+		"-E",
+		"-c",
+		"C:/Program Files/JetBrains/CLion 2018.3.4/bin/cmake/win/share/cmake-3.16/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 2,
+	"PARSE_CACHE_FILE" : "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "C:/Qt/5.13.1/mingw73_64/bin/moc.exe",
+	"QT_UIC_EXECUTABLE" : "C:/Qt/5.13.1/mingw73_64/bin/uic.exe",
+	"QT_VERSION_MAJOR" : 5,
+	"SETTINGS_FILE" : "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.cpp",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.cpp",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/DataPacket.cpp",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.cpp",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Message.cpp",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Payload.cpp",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.cpp",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/RemoteCursor.cpp",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SharedEditor.cpp",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/main.cpp",
+			"MU"
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}
