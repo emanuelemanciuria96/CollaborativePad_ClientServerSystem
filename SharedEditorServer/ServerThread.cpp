@@ -85,6 +85,8 @@ void ServerThread::recvPacket()
             std::cout<<"Coglione c'è un errore"<<std::endl;
         }
     }
+    if(this->socket->bytesAvailable()>0)         //se arrivano dati troppo velocemente la recvMessage() non fa in tempo
+            emit socket->readyRead();
 }
 
 void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
