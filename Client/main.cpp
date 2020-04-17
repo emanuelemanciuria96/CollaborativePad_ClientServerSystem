@@ -6,6 +6,7 @@
 #include "EditorGUI.h"
 
 int main(int argc, char **argv) {
+
     QApplication app(argc, argv);
     auto ed = new SharedEditor;  //connessione al server effettuata direttamente nel costruttore
     auto mainWindow = new EditorGUI(ed);

@@ -142,29 +142,26 @@ void SharedEditor::localErase(qint32 index) {
 
 void SharedEditor::process(const Message &m) {
     std::cout << "Messaggio ricevuto " << m.getAction() << std::endl;
+    qint32 pos = 0;
     if ( Message::insertion == m.getAction() ) {
-        qint32 pos = 0;
-        for ( auto s: _symbols )
-            if( s < m.getSymbol() )
-                pos++;
-            else break;
 
-        _symbols.insert(_symbols.begin()+pos,m.getSymbol());
+        auto i = std::lower_bound(_symbols.begin(),_symbols.end(),m.getSymbol());
+        pos = i - _symbols.begin();
+        _symbols.insert(i,m.getSymbol());
+
         emit symbolsChanged(pos, m.getSymbol().getValue(), "insert");
     }
     else if ( Message::removal == m.getAction() ) {
-        qint32 pos = 0;
 
-        for ( auto s: _symbols ){
-            if( s==m.getSymbol() )
-                break;
-            pos++;
-        }
+        auto i = std::lower_bound(_symbols.begin(),_symbols.end(),m.getSymbol());
+        pos = i - _symbols.begin();
 
-        if( pos != _symbols.size()) {
-            _symbols.erase(_symbols.begin() + pos);
+        if( i != _symbols.end() && *i == m.getSymbol() ) {
+            _symbols.erase(i);
             emit symbolsChanged(pos, m.getSymbol().getValue(), "remove");
         }
+        if( !(*i == m.getSymbol()) )
+            throw std::exception(); //errore fatale
     }
 
     emit test1();
@@ -228,7 +225,11 @@ void SharedEditor::recvPacket() {
             break;
         }
     }
-}
+
+    if(this->socket->bytesAvailable()>0)         //se arrivano dati troppo velocemente la recvMessage() non fa in tempo
+            emit socket->readyRead();                //a processare i segnali readyRead() e i dati rimangono accodati
+}                                                //sul socket, in questo modo svuoto la coda richiamando la recvMessage()
+
 
 void SharedEditor::recvMessage(QDataStream& in) {
 
@@ -236,7 +237,7 @@ void SharedEditor::recvMessage(QDataStream& in) {
     qint32 action;
     QChar ch;
     qint32 siteIdS;
-    quint32  count;
+    quint32 count;
     qint32 num;
     quint32 p;
     std::vector<quint32> pos;
@@ -245,7 +246,7 @@ void SharedEditor::recvMessage(QDataStream& in) {
     in.setVersion(QDataStream::Qt_5_5);
 
     in >> siteIdM >> action >> ch >> siteIdS >> count >> num;      //riceve sul socket un oggetto Message serializzato
-    for(int i=0; i<num; i++){                                      //che viene passato alla process()
+    for (int i = 0; i < num; i++) {                                      //che viene passato alla process()
         in >> p;
         pos.push_back(p);
     }
@@ -255,9 +256,7 @@ void SharedEditor::recvMessage(QDataStream& in) {
     this->process(msg);
 //    this->to_string();
 
-    if(this->socket->bytesAvailable()>0)         //se arrivano dati troppo velocemente la recvMessage() non fa in tempo
-        emit socket->readyRead();                //a processare i segnali readyRead() e i dati rimangono accodati
-}                                                //sul socket, in questo modo svuoto la coda richiamando la recvMessage()
+}
 
 void SharedEditor::sendPacket(DataPacket& packet){
     switch(packet.getTypeOfData()){

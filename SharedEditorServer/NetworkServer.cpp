@@ -71,29 +71,24 @@ void generateNewPosition( std::vector<qint32>& prev, std::vector<qint32>& next, 
 
 void NetworkServer::localInsert(Message m) {
     std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localInsert"<<std::endl;
-    int i = 0;
-   // std::unique_lock ul(sym_mutex);
-    for (auto s: _symbles) {   //algoritmo lineare, migliorabile
-        if ( m.getSymbol() < s ) break;
-        i++;
-    }
 
-    _symbles.insert(_symbles.begin() + i, m.getSymbol());
+   // std::unique_lock ul(sym_mutex);
+    auto i = std::lower_bound(_symbles.begin(),_symbles.end(),m.getSymbol());
+    _symbles.insert(i,m.getSymbol());
 
     to_string();
 }
 
 void NetworkServer::localErase(Message m) {
     std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
-    int i = 0;
+
    // std::unique_lock ul(sym_mutex);
-    for( auto s: _symbles){ //algoritmo lineare anche qui, migliorabile (penso che nella libreria STL ci possa essere già qualcosa di implementato)
-        if( m.getSymbol() == s ) break;
-            i++;
-    }
-    
-    if(i<_symbles.size())
-        _symbles.erase(_symbles.begin()+i);
+    auto i = std::lower_bound(_symbles.begin(),_symbles.end(),m.getSymbol());
+
+    if( *i == m.getSymbol() )  //l'oggetto va trovato per forza, se non c'è
+        _symbles.erase(i);     //significa che non c'è coerenza fra i dati dei client
+    else
+        throw std::exception(); ///sarebbe bene trattare meglio questa eccezione
 
     to_string();
 }
