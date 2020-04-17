@@ -156,11 +156,11 @@ void SharedEditor::process(const Message &m) {
         auto i = std::lower_bound(_symbols.begin(),_symbols.end(),m.getSymbol());
         pos = i - _symbols.begin();
 
-        if( i != _symbols.end() && *i == m.getSymbol() ) {
+        if( *i == m.getSymbol() ) {
             _symbols.erase(i);
             emit symbolsChanged(pos, m.getSymbol().getValue(), "remove");
         }
-        if( !(*i == m.getSymbol()) )
+        else
             throw std::exception(); //errore fatale
     }
 
