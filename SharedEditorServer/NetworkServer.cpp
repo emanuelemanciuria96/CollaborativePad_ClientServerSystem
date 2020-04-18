@@ -32,6 +32,7 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
     qDebug()<< "Creating Thread";
 
     ServerThread *thread = new ServerThread(socketDesc,msgHandler.get());
+    thread->moveToThread(thread);
 
     connect(thread,&ServerThread::deleteMe,this,&NetworkServer::deleteThread);
     connect(thread, &ServerThread::finished,
@@ -40,8 +41,9 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
                 qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
                 emit thread->deleteMe(th);
             });
+    // adoperando una chiusura incapsulo il puntatore al thread, ciò mi permette di evitare
+    // di costruirmi una struttura dati che mi tenga traccia di tutti i thread creati
 
-    thread->moveToThread(thread);
 
     thread->start();
 

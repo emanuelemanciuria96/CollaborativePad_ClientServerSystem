@@ -378,6 +378,33 @@ SharedEditor.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/SharedEditor.cpp.s
 .PHONY : SharedEditor.cpp.s
 
+Transceiver.obj: Transceiver.cpp.obj
+
+.PHONY : Transceiver.obj
+
+# target to build an object file
+Transceiver.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Transceiver.cpp.obj
+.PHONY : Transceiver.cpp.obj
+
+Transceiver.i: Transceiver.cpp.i
+
+.PHONY : Transceiver.i
+
+# target to preprocess a source file
+Transceiver.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Transceiver.cpp.i
+.PHONY : Transceiver.cpp.i
+
+Transceiver.s: Transceiver.cpp.s
+
+.PHONY : Transceiver.s
+
+# target to generate assembly for a file
+Transceiver.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Transceiver.cpp.s
+.PHONY : Transceiver.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -442,6 +469,9 @@ help:
 	@echo ... SharedEditor.obj
 	@echo ... SharedEditor.i
 	@echo ... SharedEditor.s
+	@echo ... Transceiver.obj
+	@echo ... Transceiver.i
+	@echo ... Transceiver.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

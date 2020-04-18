@@ -15,8 +15,8 @@ std::shared_mutex ServerThread::skt_mutex;  // questo è lo shared mutex per la 
 std::vector<std::pair<Socket*,std::mutex*>> ServerThread::_sockets; //qui ci sono dei mutex esclisivi per ogni socket
 /// PER ORA USO IL VETTORE PER TESTARE IL FUNZIONAMENTO, POI INSERIRO' LA MAPPA (IL VETTORE SO USARLO BENE, LA MAPPA ANCORA NO)
 
-ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent):QThread(parent){
-    this->socketDescriptor = socketDescriptor;
+ServerThread::ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent):QThread(parent){
+    this->socketDescriptor = socketDesc;
     this->msgHandler = std::shared_ptr<MessageHandler>(msgHandler);
     this->isLogged = false;
 }

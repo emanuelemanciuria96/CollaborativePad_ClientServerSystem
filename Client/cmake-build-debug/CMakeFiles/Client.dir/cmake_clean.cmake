@@ -11,6 +11,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj"
   "CMakeFiles/Client.dir/LoginDialog.cpp.obj"
   "CMakeFiles/Client.dir/EditorGUI.cpp.obj"
+  "CMakeFiles/Client.dir/Transceiver.cpp.obj"
   "Client.pdb"
   "Client.exe"
   "Client.exe.manifest"
