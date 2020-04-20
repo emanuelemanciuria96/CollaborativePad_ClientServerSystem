@@ -47,7 +47,7 @@ void DBSql::query(std::string query, bool debug) {
         if(debug==1) {
             printTableResult(query);
         }
-        updateResult(query, cols);
+        updateResult(cols);
     }
 
     // Finialize the usage
@@ -64,7 +64,7 @@ void DBSql::printTableResult(std::string query){
     this->rc = sqlite3_exec(this->db, query.c_str(), callback, 0, &this->zErrMsg);
     std::cout<<"----------------------------------"<<std::endl;
 }
-void DBSql::updateResult(std::string query,int cols) {
+void DBSql::updateResult(int cols) {
     this->result.clear();
     int result_size=sqlite3_column_bytes(this->stmt, 0); //dimensione in byte del risultato,
     if(result_size==0) { // Risultato vuoto
