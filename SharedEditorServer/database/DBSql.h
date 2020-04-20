@@ -29,7 +29,7 @@ private:
 
 
     void printTableResult(std::string query);
-    void updateResult(std::string query,int cols);
+    void updateResult(int cols);
     void checkDBErrors();
 public:
     DBSql(std::string name);
