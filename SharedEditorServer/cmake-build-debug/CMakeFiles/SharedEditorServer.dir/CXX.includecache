@@ -6,76 +6,290 @@
 
 #IncludeRegexTransform: 
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.h
+thread
+-
+Packet/Message.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
+functional
+-
+queue
+-
+mutex
+-
+condition_variable
+-
+
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.h
+iostream
+-
+QObject
+-
+QDebug
+-
+QTcpServer
+-
+QTcpSocket
+-
+QDataStream
+-
+thread
+-
+shared_mutex
+-
+Packet/Symbols/Symbol.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
+ServerThread.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/ServerThread.h
+Packet/DataPacket.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
+Packet/Message.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
+MessageHandler.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.h
+QtCore/QPointer
+-
+
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Command.h
+QtCore/QString
+-
+Payload.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
+
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
+QtGlobal
+-
+memory
+-
+QtCore/QObject
+-
+Payload.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
+
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/LoginInfo.h
+QtGlobal
+-
+QtCore/QString
+-
+Payload.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
+fstream
+-
+../json/json.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/json.h
+
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
+Payload.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
+Symbols/Symbol.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
+vector
+-
+QtGlobal
+-
+
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
+QtGlobal
+-
+
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/SymId.h
+QtGlobal
+-
+
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
+vector
+-
+QtGlobal
+-
+QChar
+-
+SymId.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/SymId.h
+
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/ServerThread.h
+Packet/DataPacket.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
+QThread
+-
+QTcpSocket
+-
+QtCore/QMutex
+-
+shared_mutex
+-
+NetworkServer.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.h
+Packet/Symbols/Symbol.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
+Packet/Message.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
+Packet/LoginInfo.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/LoginInfo.h
+Packet/Command.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Command.h
+MessageHandler.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.h
+Socket.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Socket.h
+
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Socket.h
+QTcpSocket
+-
+mutex
+-
+Packet/DataPacket.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
+QObject
+-
+
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/json.h
+cstring
+-
+memory
+-
+cstddef
+-
+cstdint
+-
+istream
+-
+memory
+-
+ostream
+-
+sstream
+-
+string
+-
+type_traits
+-
+allocator.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/allocator.h
+version.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/version.h
+config.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/config.h
+forwards.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/forwards.h
+forwards.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/forwards.h
+array
+-
+exception
+-
+map
+-
+memory
+-
+string
+-
+vector
+-
+json_features.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/json_features.h
+value.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/value.h
+deque
+-
+iosfwd
+-
+istream
+-
+stack
+-
+string
+-
+value.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/value.h
+ostream
+-
+string
+-
+vector
+-
+cstdlib
+-
+sstream
+-
+config.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/config.h
+
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/main.cpp
+QApplication
+-
+NetworkServer.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.h
+
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QChar
 qchar.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qchar.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QDataStream
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QDataStream
 qdatastream.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qdatastream.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qdatastream.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QDebug
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QDebug
 qdebug.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qdebug.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qdebug.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QMutex
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QMutex
 qmutex.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qmutex.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qmutex.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QObject
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QObject
 qobject.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobject.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qobject.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QPointer
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QPointer
 qpointer.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qpointer.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qpointer.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QString
 qstring.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstring.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstring.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QThread
 qthread.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qthread.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QtGlobal
 qglobal.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qglobal.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qalgorithms.h
 QtCore/qglobal.h
 -
 intrin.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qarraydata.h
 QtCore/qrefcount.h
 -
 string.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qatomic.h
 QtCore/qglobal.h
 -
 QtCore/qbasicatomic.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_bootstrap.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qatomic_bootstrap.h
 QtCore/qgenericatomic.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qatomic_cxx11.h
 QtCore/qgenericatomic.h
 -
 atomic
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qatomic_msvc.h
 QtCore/qgenericatomic.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
-QtCore/qglobal.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qbasicatomic.h
+QtCore/qatomic.h
 -
 QtCore/qatomic_bootstrap.h
 -
@@ -84,7 +298,7 @@ QtCore/qatomic_cxx11.h
 QtCore/qatomic_msvc.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qbytearray.h
 QtCore/qrefcount.h
 -
 QtCore/qnamespace.h
@@ -102,31 +316,31 @@ string
 iterator
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qbytearraylist.h
 QtCore/qlist.h
 -
 QtCore/qbytearray.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qchar.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcompilerdetection.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qcompilerdetection.h
 QtCore/qglobal.h
 -
 utility
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig-bootstrapped.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qconfig-bootstrapped.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qconfig.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcontainerfwd.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qcontainerfwd.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcontiguouscache.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qcontiguouscache.h
 QtCore/qatomic.h
 -
 limits.h
@@ -134,7 +348,7 @@ limits.h
 new
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcoreapplication.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qcoreapplication.h
 QtCore/qglobal.h
 -
 QtCore/qstring.h
@@ -148,7 +362,7 @@ QtCore/qeventloop.h
 QtCore/qscopedpointer.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcoreevent.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qcoreevent.h
 QtCore/qnamespace.h
 -
 QtCore/qbytearray.h
@@ -156,7 +370,7 @@ QtCore/qbytearray.h
 QtCore/qobjectdefs.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qdatastream.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qdatastream.h
 QtCore/qscopedpointer.h
 -
 QtCore/qiodevice.h
@@ -164,7 +378,7 @@ QtCore/qiodevice.h
 QtCore/qpair.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qdebug.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qdebug.h
 QtCore/qalgorithms.h
 -
 QtCore/qhash.h
@@ -196,11 +410,11 @@ map
 utility
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qeventloop.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qeventloop.h
 QtCore/qobject.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qfile.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qfile.h
 QtCore/qfiledevice.h
 -
 QtCore/qstring.h
@@ -208,25 +422,25 @@ QtCore/qstring.h
 stdio.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qfiledevice.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qfiledevice.h
 QtCore/qiodevice.h
 -
 QtCore/qstring.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qflags.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qflags.h
 QtCore/qglobal.h
 -
 initializer_list
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qgenericatomic.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qgenericatomic.h
 QtCore/qglobal.h
 -
 QtCore/qtypeinfo.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qglobal.h
 type_traits
 -
 cstddef
@@ -268,7 +482,7 @@ QtCore/qnumeric.h
 QtCore/qversiontagging.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobalstatic.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qglobalstatic.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -276,7 +490,7 @@ QtCore/qatomic.h
 QtCore/qmutex.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qhash.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qhash.h
 QtCore/qchar.h
 -
 QtCore/qiterator.h
@@ -292,7 +506,7 @@ initializer_list
 algorithm
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qhashfunctions.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qhashfunctions.h
 QtCore/qstring.h
 -
 QtCore/qpair.h
@@ -300,7 +514,7 @@ QtCore/qpair.h
 numeric
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qiodevice.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qiodevice.h
 QtCore/qglobal.h
 -
 QtCore/qobject.h
@@ -312,15 +526,15 @@ QtCore/qscopedpointer.h
 QtCore/qstring.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qiterator.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qiterator.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qline.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qline.h
 QtCore/qpoint.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qlist.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qlist.h
 QtCore/qalgorithms.h
 -
 QtCore/qiterator.h
@@ -352,7 +566,7 @@ QtCore/qbytearraylist.h
 QtCore/qstringlist.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qlocale.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qlocale.h
 QtCore/qvariant.h
 -
 QtCore/qstring.h
@@ -362,11 +576,11 @@ QtCore/qobjectdefs.h
 QtCore/qshareddata.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qlogging.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qlogging.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qmap.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qmap.h
 QtCore/qiterator.h
 -
 QtCore/qlist.h
@@ -386,11 +600,11 @@ functional
 initializer_list
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qmargins.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qmargins.h
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qmetatype.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qmetatype.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -410,7 +624,7 @@ list
 map
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qmutex.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qmutex.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -422,15 +636,15 @@ chrono
 limits
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qnamespace.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qnamespace.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qnumeric.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qnumeric.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobject.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qobject.h
 QtCore/qobjectdefs.h
 -
 QtCore/qstring.h
@@ -450,37 +664,37 @@ QtCore/qobject_impl.h
 chrono
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobject_impl.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qobject_impl.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobjectdefs.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qobjectdefs.h
 QtCore/qnamespace.h
 -
 QtCore/qobjectdefs_impl.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobjectdefs_impl.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qobjectdefs_impl.h
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qpair.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qpair.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qpoint.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qpoint.h
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qpointer.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qpointer.h
 QtCore/qsharedpointer.h
 -
 QtCore/qtypeinfo.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qprocessordetection.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qprocessordetection.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qrect.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qrect.h
 QtCore/qmargins.h
 -
 QtCore/qsize.h
@@ -488,23 +702,23 @@ QtCore/qsize.h
 QtCore/qpoint.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qrefcount.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qrefcount.h
 QtCore/qatomic.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qregexp.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qregexp.h
 QtCore/qglobal.h
 -
 QtCore/qstring.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qscopedpointer.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qscopedpointer.h
 QtCore/qglobal.h
 -
 stdlib.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qset.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qset.h
 QtCore/qhash.h
 -
 initializer_list
@@ -512,7 +726,7 @@ initializer_list
 iterator
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qshareddata.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qshareddata.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -522,7 +736,7 @@ QtCore/qhash.h
 QtCore/qhashfunctions.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsharedpointer.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qsharedpointer.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -532,7 +746,7 @@ QtCore/qshareddata.h
 QtCore/qsharedpointer_impl.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsharedpointer_impl.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qsharedpointer_impl.h
 new
 -
 QtCore/qatomic.h
@@ -544,11 +758,11 @@ QtCore/qhash.h
 QtCore/qhashfunctions.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsize.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qsize.h
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstring.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstring.h
 QtCore/qchar.h
 -
 QtCore/qbytearray.h
@@ -572,11 +786,11 @@ stdarg.h
 QtCore/qstringbuilder.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringalgorithms.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstringalgorithms.h
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringbuilder.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstringbuilder.h
 QtCore/qstring.h
 -
 QtCore/qbytearray.h
@@ -584,7 +798,7 @@ QtCore/qbytearray.h
 string.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringlist.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstringlist.h
 QtCore/qlist.h
 -
 QtCore/qalgorithms.h
@@ -596,15 +810,15 @@ QtCore/qstring.h
 QtCore/qstringmatcher.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringliteral.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstringliteral.h
 QtCore/qarraydata.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringmatcher.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstringmatcher.h
 QtCore/qstring.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringview.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstringview.h
 QtCore/qchar.h
 -
 QtCore/qbytearray.h
@@ -616,11 +830,11 @@ QtCore/qstringalgorithms.h
 string
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsysinfo.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qsysinfo.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsystemdetection.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qsystemdetection.h
 QtCore/qglobal.h
 -
 TargetConditionals.h
@@ -630,9 +844,9 @@ Availability.h
 AvailabilityMacros.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qtcore-config.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qtcore-config.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qtextstream.h
 QtCore/qiodevice.h
 -
 QtCore/qstring.h
@@ -646,7 +860,7 @@ QtCore/qscopedpointer.h
 stdio.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qthread.h
 QtCore/qobject.h
 -
 future
@@ -656,11 +870,11 @@ functional
 limits.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qtypeinfo.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qurl.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qurl.h
 QtCore/qbytearray.h
 -
 QtCore/qobjectdefs.h
@@ -676,7 +890,7 @@ QtCore/qglobal.h
 QtCore/qurlquery.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qurlquery.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qurlquery.h
 QtCore/qpair.h
 -
 QtCore/qshareddata.h
@@ -686,7 +900,7 @@ QtCore/qurl.h
 QtCore/qstringlist.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qvariant.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qvariant.h
 QtCore/qatomic.h
 -
 QtCore/qbytearray.h
@@ -710,7 +924,7 @@ QtCore/qbytearraylist.h
 variant
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qvarlengtharray.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qvarlengtharray.h
 QtCore/qcontainerfwd.h
 -
 QtCore/qglobal.h
@@ -730,7 +944,7 @@ initializer_list
 iterator
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qvector.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qvector.h
 QtCore/qalgorithms.h
 -
 QtCore/qiterator.h
@@ -758,11 +972,11 @@ algorithm
 QtCore/qpoint.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qversiontagging.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qversiontagging.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qbrush.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qbrush.h
 QtGui/qtguiglobal.h
 -
 QtCore/qpair.h
@@ -784,7 +998,7 @@ QtGui/qimage.h
 QtGui/qpixmap.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qcolor.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qcolor.h
 QtGui/qtguiglobal.h
 -
 QtGui/qrgb.h
@@ -796,7 +1010,7 @@ QtCore/qstringlist.h
 QtGui/qrgba64.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qcursor.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qcursor.h
 QtGui/qtguiglobal.h
 -
 QtCore/qpoint.h
@@ -804,7 +1018,7 @@ QtCore/qpoint.h
 QtGui/qwindowdefs.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qevent.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qevent.h
 QtGui/qtguiglobal.h
 -
 QtGui/qwindowdefs.h
@@ -836,7 +1050,7 @@ QtGui/qvector2d.h
 QtGui/qtouchdevice.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qfont.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qfont.h
 QtGui/qtguiglobal.h
 -
 QtGui/qwindowdefs.h
@@ -846,7 +1060,7 @@ QtCore/qstring.h
 QtCore/qsharedpointer.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qfontinfo.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qfontinfo.h
 QtGui/qtguiglobal.h
 -
 QtGui/qfont.h
@@ -854,7 +1068,7 @@ QtGui/qfont.h
 QtCore/qsharedpointer.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qfontmetrics.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qfontmetrics.h
 QtGui/qtguiglobal.h
 -
 QtGui/qfont.h
@@ -864,7 +1078,7 @@ QtCore/qsharedpointer.h
 QtCore/qrect.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qguiapplication.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qguiapplication.h
 QtGui/qtguiglobal.h
 -
 QtCore/qcoreapplication.h
@@ -880,7 +1094,7 @@ QtCore/qpoint.h
 QtCore/qsize.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qimage.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qimage.h
 QtGui/qtguiglobal.h
 -
 QtGui/qcolor.h
@@ -902,13 +1116,13 @@ QtCore/qstring.h
 QtCore/qstringlist.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qinputmethod.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qinputmethod.h
 QtGui/qtguiglobal.h
 -
 QtCore/qobject.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qkeysequence.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qkeysequence.h
 QtGui/qtguiglobal.h
 -
 QtCore/qstring.h
@@ -916,7 +1130,7 @@ QtCore/qstring.h
 QtCore/qobjectdefs.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qmatrix.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qmatrix.h
 QtGui/qtguiglobal.h
 -
 QtGui/qpolygon.h
@@ -932,7 +1146,7 @@ QtCore/qpoint.h
 QtCore/qrect.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpaintdevice.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qpaintdevice.h
 QtGui/qtguiglobal.h
 -
 QtGui/qwindowdefs.h
@@ -940,7 +1154,7 @@ QtGui/qwindowdefs.h
 QtCore/qrect.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpainterpath.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qpainterpath.h
 QtGui/qtguiglobal.h
 -
 QtGui/qmatrix.h
@@ -956,7 +1170,7 @@ QtCore/qvector.h
 QtCore/qscopedpointer.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpalette.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qpalette.h
 QtGui/qtguiglobal.h
 -
 QtGui/qwindowdefs.h
@@ -966,11 +1180,11 @@ QtGui/qcolor.h
 QtGui/qbrush.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpixelformat.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qpixelformat.h
 QtGui/qtguiglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpixmap.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qpixmap.h
 QtGui/qtguiglobal.h
 -
 QtGui/qpaintdevice.h
@@ -988,7 +1202,7 @@ QtGui/qimage.h
 QtGui/qtransform.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpolygon.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qpolygon.h
 QtGui/qtguiglobal.h
 -
 QtCore/qvector.h
@@ -998,7 +1212,7 @@ QtCore/qpoint.h
 QtCore/qrect.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qregion.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qregion.h
 QtGui/qtguiglobal.h
 -
 QtCore/qatomic.h
@@ -1010,33 +1224,33 @@ QtGui/qwindowdefs.h
 QtCore/qdatastream.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qrgb.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qrgb.h
 QtGui/qtguiglobal.h
 -
 QtCore/qprocessordetection.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qrgba64.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qrgba64.h
 QtGui/qtguiglobal.h
 -
 QtCore/qprocessordetection.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtgui-config.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qtgui-config.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtguiglobal.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qtguiglobal.h
 QtCore/qglobal.h
 -
 QtGui/qtgui-config.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtouchdevice.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qtouchdevice.h
 QtGui/qtguiglobal.h
 -
 QtCore/qobject.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtransform.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qtransform.h
 QtGui/qtguiglobal.h
 -
 QtGui/qmatrix.h
@@ -1056,7 +1270,7 @@ QtCore/qpoint.h
 QtCore/qrect.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qvector2d.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qvector2d.h
 QtGui/qtguiglobal.h
 -
 QtCore/qpoint.h
@@ -1064,7 +1278,7 @@ QtCore/qpoint.h
 QtCore/qmetatype.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qwindowdefs.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qwindowdefs.h
 QtGui/qtguiglobal.h
 -
 QtCore/qobjectdefs.h
@@ -1074,19 +1288,19 @@ QtCore/qnamespace.h
 QtGui/qwindowdefs_win.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qwindowdefs_win.h
+D:/Qt/5.12.3/mingw73_64/include/QtGui/qwindowdefs_win.h
 QtGui/qtguiglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/QTcpServer
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/QTcpServer
 qtcpserver.h
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpserver.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qtcpserver.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/QTcpSocket
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/QTcpSocket
 qtcpsocket.h
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpsocket.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qtcpsocket.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qabstractsocket.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qabstractsocket.h
 QtNetwork/qtnetworkglobal.h
 -
 QtCore/qiodevice.h
@@ -1096,7 +1310,7 @@ QtCore/qobject.h
 QtCore/qdebug.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qhostaddress.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qhostaddress.h
 QtNetwork/qtnetworkglobal.h
 -
 QtCore/qpair.h
@@ -1108,7 +1322,7 @@ QtCore/qshareddata.h
 QtNetwork/qabstractsocket.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpserver.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qtcpserver.h
 QtNetwork/qtnetworkglobal.h
 -
 QtCore/qobject.h
@@ -1118,7 +1332,7 @@ QtNetwork/qabstractsocket.h
 QtNetwork/qhostaddress.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpsocket.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qtcpsocket.h
 QtNetwork/qtnetworkglobal.h
 -
 QtNetwork/qabstractsocket.h
@@ -1126,19 +1340,19 @@ QtNetwork/qabstractsocket.h
 QtCore/qvariant.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtnetwork-config.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qtnetwork-config.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtnetworkglobal.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qtnetworkglobal.h
 QtCore/qglobal.h
 -
 QtNetwork/qtnetwork-config.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/QApplication
+D:/Qt/5.12.3/mingw73_64/include/QtWidgets/QApplication
 qapplication.h
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qapplication.h
+D:/Qt/5.12.3/mingw73_64/include/QtWidgets/qapplication.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qapplication.h
+D:/Qt/5.12.3/mingw73_64/include/QtWidgets/qapplication.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtCore/qcoreapplication.h
@@ -1156,13 +1370,13 @@ QtWidgets/qdesktopwidget.h
 QtGui/qguiapplication.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qdesktopwidget.h
+D:/Qt/5.12.3/mingw73_64/include/QtWidgets/qdesktopwidget.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qwidget.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qsizepolicy.h
+D:/Qt/5.12.3/mingw73_64/include/QtWidgets/qsizepolicy.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtCore/qobject.h
@@ -1170,15 +1384,15 @@ QtCore/qobject.h
 QtCore/qalgorithms.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qtwidgets-config.h
+D:/Qt/5.12.3/mingw73_64/include/QtWidgets/qtwidgets-config.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qtwidgetsglobal.h
+D:/Qt/5.12.3/mingw73_64/include/QtWidgets/qtwidgetsglobal.h
 QtGui/qtguiglobal.h
 -
 QtWidgets/qtwidgets-config.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qwidget.h
+D:/Qt/5.12.3/mingw73_64/include/QtWidgets/qwidget.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtGui/qwindowdefs.h
@@ -1209,218 +1423,4 @@ QtGui/qkeysequence.h
 -
 QtGui/qevent.h
 -
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.h
-thread
--
-Packet/Message.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
-functional
--
-queue
--
-mutex
--
-condition_variable
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.cpp
-NetworkServer.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.h
-QApplication
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.h
-iostream
--
-QObject
--
-QDebug
--
-QTcpServer
--
-QTcpSocket
--
-QDataStream
--
-thread
--
-shared_mutex
--
-Packet/Symbols/Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
-ServerThread.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/ServerThread.h
-Packet/DataPacket.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
-Packet/Message.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
-MessageHandler.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.h
-QtCore/QPointer
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Command.h
-QtCore/QString
--
-Payload.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
-QtGlobal
--
-memory
--
-QtCore/QObject
--
-Payload.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/LoginInfo.h
-QtGlobal
--
-QtCore/QString
--
-Payload.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
-fstream
--
-../json/json.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/json/json.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
-Payload.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
-Symbols/Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
-vector
--
-QtGlobal
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
-QtGlobal
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/SymId.h
-QtGlobal
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
-vector
--
-QtGlobal
--
-QChar
--
-SymId.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/SymId.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/ServerThread.h
-Packet/DataPacket.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
-QThread
--
-QTcpSocket
--
-QtCore/QMutex
--
-shared_mutex
--
-NetworkServer.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.h
-Packet/Symbols/Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
-Packet/Message.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
-Packet/LoginInfo.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/LoginInfo.h
-Packet/Command.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Command.h
-MessageHandler.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.h
-Socket.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Socket.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Socket.h
-QTcpSocket
--
-mutex
--
-Packet/DataPacket.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
-QObject
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/json/json.h
-cstring
--
-memory
--
-cstddef
--
-cstdint
--
-istream
--
-memory
--
-ostream
--
-sstream
--
-string
--
-type_traits
--
-allocator.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/json/allocator.h
-version.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/json/version.h
-config.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/json/config.h
-forwards.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/json/forwards.h
-forwards.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/json/forwards.h
-array
--
-exception
--
-map
--
-memory
--
-string
--
-vector
--
-json_features.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/json/json_features.h
-value.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/json/value.h
-deque
--
-iosfwd
--
-istream
--
-stack
--
-string
--
-value.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/json/value.h
-ostream
--
-string
--
-vector
--
-cstdlib
--
-sstream
--
-config.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/json/config.h
 
