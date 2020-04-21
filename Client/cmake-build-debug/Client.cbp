@@ -169,6 +169,15 @@
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.h">
 			<Option target="Client"/>
 		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Socket.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Transceiver.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Transceiver.h">
+			<Option target="Client"/>
+		</Unit>
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp">
 			<Option target="Client"/>
 		</Unit>
