@@ -6,6 +6,11 @@
 #include <utility>
 #include <QtCore/QDataStream>
 #include <fstream>
+#include <QtCore/QJsonObject>
+#include <QtCore/QJsonArray>
+#include <QtCore/QFile>
+#include <QtCore/QDir>
+#include <QtCore/QJsonDocument>
 #include "ServerThread.h"
 #include "NetworkServer.h"
 #include "Packet/LoginInfo.h"
@@ -241,6 +246,31 @@ void ServerThread::sendMessage(DataPacket& packet,std::mutex* mtx){
             out << (qint32) i;
         socket->waitForBytesWritten(-1);
     }
+}
+
+void ServerThread::QTsaveFileJson(const std::string& dir,std::vector<Symbol> _symbols){
+    QJsonArray symbols;
+
+    for(auto& itr:_symbols) {
+        QJsonObject symbol;
+        QJsonObject symId;
+        symbol["char"] = itr.getValue().toLatin1();
+        symId["siteId"] = itr.getSymId().getSiteId();
+        symId["count"] = itr.getSymId().getCount();
+        symbol["symId"] = symId;
+        QJsonArray pos;
+
+        for(auto i: itr.getPos()){
+            QJsonValue val((qint64)i);
+            pos.append(val);
+        }
+        symbol["pos"]=pos;
+        symbols.append(symbol);
+    }
+    QJsonDocument json(symbols);
+    QFile file(QString::fromStdString(dir));
+    file.open(QIODevice::WriteOnly);
+    file.write(json.toJson());
 }
 
 void ServerThread::saveFileJson(std::string dir,std::vector<Symbol> _symbols){//vector<symbol> to json

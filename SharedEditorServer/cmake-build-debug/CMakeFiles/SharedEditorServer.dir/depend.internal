@@ -577,6 +577,11 @@ CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj
  C:/Qt/5.14.1/mingw73_64/include/QtCore/QChar
  C:/Qt/5.14.1/mingw73_64/include/QtCore/QDataStream
  C:/Qt/5.14.1/mingw73_64/include/QtCore/QDebug
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/QDir
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/QFile
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/QJsonArray
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/QJsonDocument
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/QJsonObject
  C:/Qt/5.14.1/mingw73_64/include/QtCore/QMutex
  C:/Qt/5.14.1/mingw73_64/include/QtCore/QObject
  C:/Qt/5.14.1/mingw73_64/include/QtCore/QPointer
@@ -602,6 +607,10 @@ CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj
  C:/Qt/5.14.1/mingw73_64/include/QtCore/qcoreevent.h
  C:/Qt/5.14.1/mingw73_64/include/QtCore/qdatastream.h
  C:/Qt/5.14.1/mingw73_64/include/QtCore/qdebug.h
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/qdir.h
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/qfile.h
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/qfiledevice.h
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/qfileinfo.h
  C:/Qt/5.14.1/mingw73_64/include/QtCore/qflags.h
  C:/Qt/5.14.1/mingw73_64/include/QtCore/qgenericatomic.h
  C:/Qt/5.14.1/mingw73_64/include/QtCore/qglobal.h
@@ -610,6 +619,10 @@ CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj
  C:/Qt/5.14.1/mingw73_64/include/QtCore/qhashfunctions.h
  C:/Qt/5.14.1/mingw73_64/include/QtCore/qiodevice.h
  C:/Qt/5.14.1/mingw73_64/include/QtCore/qiterator.h
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/qjsonarray.h
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/qjsondocument.h
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/qjsonobject.h
+ C:/Qt/5.14.1/mingw73_64/include/QtCore/qjsonvalue.h
  C:/Qt/5.14.1/mingw73_64/include/QtCore/qlist.h
  C:/Qt/5.14.1/mingw73_64/include/QtCore/qlocale.h
  C:/Qt/5.14.1/mingw73_64/include/QtCore/qlogging.h

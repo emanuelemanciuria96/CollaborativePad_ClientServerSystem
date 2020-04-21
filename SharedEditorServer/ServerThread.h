@@ -54,6 +54,7 @@ private:
 
     void saveFileJson(std::string dir,std::vector<Symbol> _symbols);
     std::vector<Symbol> loadFileJson(std::string dir);
+    void QTsaveFileJson(const std::string& dir,std::vector<Symbol> _symbols);
 };
 
 

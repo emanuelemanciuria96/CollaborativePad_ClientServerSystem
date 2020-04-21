@@ -576,6 +576,11 @@ CMakeFiles/SharedEditorServer.dir/Packet/Symbols/Symbol.cpp.obj: ../Packet/Symbo
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/QChar
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/QDataStream
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/QDebug
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/QDir
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/QFile
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/QJsonArray
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/QJsonDocument
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/QJsonObject
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/QMutex
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/QObject
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/QPointer
@@ -601,6 +606,10 @@ CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qcoreevent.h
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qdatastream.h
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qdebug.h
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qdir.h
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qfile.h
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qfiledevice.h
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qfileinfo.h
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qflags.h
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qgenericatomic.h
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qglobal.h
@@ -609,6 +618,10 @@ CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qhashfunctions.h
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qiodevice.h
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qiterator.h
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qjsonarray.h
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qjsondocument.h
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qjsonobject.h
+CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qjsonvalue.h
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qlist.h
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qlocale.h
 CMakeFiles/SharedEditorServer.dir/ServerThread.cpp.obj: C:/Qt/5.14.1/mingw73_64/include/QtCore/qlogging.h
