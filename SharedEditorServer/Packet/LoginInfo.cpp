@@ -4,6 +4,7 @@
 
 
 #include "LoginInfo.h"
+#include "../database/DBSql.h"
 
 
 LoginInfo::LoginInfo(qint32 siteId, qint32 type, const QString user, const QString password) : Payload(siteId),
@@ -36,14 +37,19 @@ void LoginInfo::setType(type_t type) {
 }
 
 qint32 LoginInfo::login() {
+    DBSql sqldb("login.db");
+    sqldb.openDB();
+    std::string query;
 
-    LoginInfo logData = loadLoginJson(_user.toStdString()+".json");
-    if(_user == logData.getUser() && _password == logData.getPassword()) {
+    query = "SELECT * FROM LOGIN WHERE USER='"+_user.toStdString()+"'";
+    sqldb.query(query);
+    sqldb.closeDB();
+    if(_password.toStdString() == sqldb.getResult()["PASS"]) {
         _type = LoginInfo::login_ok;
-        _siteID = 5;
+        _siteID = std::stoi(sqldb.getResult()["SITEID"]);
         _user = "";
         _password = "";
-        return 5;
+        return _siteID;
     } else {
         _type = LoginInfo::login_error;
         _siteID = -1;
@@ -51,17 +57,4 @@ qint32 LoginInfo::login() {
         _password = "";
         return -1;
     }
-}
-
-LoginInfo LoginInfo::loadLoginJson(std::string dir){
-    std::ifstream file_input(dir);
-    Json::Reader reader;
-    Json::Value root;
-    reader.parse(file_input, root);
-
-    QString user = QString::fromStdString(root["user"].asString());
-    QString password = QString::fromStdString(root["password"].asString());
-    LoginInfo data(-1, -1, std::move(user), std::move(password));
-
-    return data;
 }

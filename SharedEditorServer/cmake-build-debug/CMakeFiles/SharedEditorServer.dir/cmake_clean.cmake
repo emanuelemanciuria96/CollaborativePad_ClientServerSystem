@@ -1,4 +1,7 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/SharedEditorServer_autogen.dir/AutogenOldSettings.txt"
+  "CMakeFiles/SharedEditorServer_autogen.dir/ParseCache.txt"
+  "SharedEditorServer_autogen"
   "CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj"
   "CMakeFiles/SharedEditorServer.dir/NetworkServer.cpp.obj"
   "CMakeFiles/SharedEditorServer.dir/Packet/Command.cpp.obj"
@@ -16,9 +19,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/SharedEditorServer.dir/database/sqlite3.c.obj"
   "CMakeFiles/SharedEditorServer.dir/jsoncpp.cpp.obj"
   "CMakeFiles/SharedEditorServer.dir/main.cpp.obj"
-  "CMakeFiles/SharedEditorServer_autogen.dir/AutogenOldSettings.txt"
-  "CMakeFiles/SharedEditorServer_autogen.dir/ParseCache.txt"
-  "SharedEditorServer_autogen"
   "SharedEditorServer.exe"
   "SharedEditorServer.exe.manifest"
   "SharedEditorServer.pdb"

@@ -38,42 +38,33 @@ public:
     void closeDB();
     std::map<std::string,std::string> getResult();
 
-    static void fExample(){// ESEMPIO DI UTILIZZO
+    static void initialize(){// ESEMPIO DI UTILIZZO
 
         // se non si indica la directory completa il db viene salvato
         // nella cartella cmake-build-debug del progetto (non so come mai)
 
-        DBSql sqldb("example.db");
+        DBSql sqldb("login.db");
         sqldb.openDB();
         std::string query;
 
-        query = "CREATE TABLE PEOPLE ("  \
-         "ID INT PRIMARY KEY     NOT NULL," \
-         "NAME           TEXT    NOT NULL, "\
-         "AGE            INT     NOT NULL);";
+        query = "CREATE TABLE LOGIN ("  \
+         "USER      TEXT PRIMARY KEY     NOT NULL," \
+         "PASS      TEXT                NOT NULL," \
+         "SITEID    INT                 NOT NULL);";
         sqldb.query(query);
 
         query = "DELETE FROM PEOPLE"; //Svuoto la tabella in caso di test multipli
         sqldb.query(query);
 
-        query = "INSERT INTO PEOPLE ('ID', 'NAME', 'AGE') VALUES  ('1', 'Emanuele', '14');";
+        query = "INSERT INTO LOGIN ('USER', 'PASS', 'SITEID') VALUES ('ciao', 'suca', '5');";
         sqldb.query(query);
 
-        query = "INSERT INTO PEOPLE ('ID', 'NAME', 'AGE') VALUES  ('2', 'Simone','12');";
-        sqldb.query(query);
-
-        query = "INSERT INTO PEOPLE ('ID', 'NAME', 'AGE') VALUES  ('3', 'Tommaso','13');";
-        sqldb.query(query);
-
-        query = "DELETE FROM PEOPLE WHERE ID=3";
-        sqldb.query(query);
-
-        query = "SELECT * FROM PEOPLE WHERE NAME='Simone'";
-        sqldb.query(query);
-        std::cout << "-> "<< sqldb.getResult()["ID"] << std::endl;
-
-        query = "SELECT * FROM PEOPLE";
+        query = "SELECT * FROM LOGIN";
         sqldb.query(query,1);//Print full table
+
+        query = "SELECT PASS FROM LOGIN WHERE USER='ciao'";
+        sqldb.query(query);
+
         sqldb.closeDB();
     }// ESEMPIO DI UTILIZZO
 };

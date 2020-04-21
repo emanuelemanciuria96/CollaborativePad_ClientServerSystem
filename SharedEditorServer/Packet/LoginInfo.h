@@ -36,8 +36,6 @@ public:
     void setType(type_t type);
 
     qint32 login();
-    LoginInfo loadLoginJson(std::string dir);
-
 };
 
 

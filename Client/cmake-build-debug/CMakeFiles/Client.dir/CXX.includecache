@@ -6,95 +6,99 @@
 
 #IncludeRegexTransform: 
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QArgument
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QArgument
 qobjectdefs.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobjectdefs.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qobjectdefs.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QChar
 qchar.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qchar.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QDataStream
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QDataStream
 qdatastream.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qdatastream.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qdatastream.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QFile
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QDebug
+qdebug.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qdebug.h
+
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QFile
 qfile.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qfile.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qfile.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QFileInfo
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QFileInfo
 qfileinfo.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qfileinfo.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qfileinfo.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QList
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QList
 qlist.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qlist.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qlist.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QObject
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QObject
 qobject.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobject.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qobject.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QRect
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QRect
 qrect.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qrect.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qrect.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QSize
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QSize
 qsize.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsize.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qsize.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QSizeF
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QSizeF
 qsize.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsize.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qsize.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QString
 qstring.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstring.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qstring.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextCodec
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QTextCodec
 qtextcodec.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextcodec.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qtextcodec.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextStream
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QTextStream
 qtextstream.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qtextstream.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
+C:/Qt/5.14.1/mingw73_64/include/QtCore/QtGlobal
 qglobal.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qglobal.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qalgorithms.h
 QtCore/qglobal.h
 -
 intrin.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qarraydata.h
 QtCore/qrefcount.h
 -
 string.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qatomic.h
 QtCore/qglobal.h
 -
 QtCore/qbasicatomic.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_bootstrap.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qatomic_bootstrap.h
 QtCore/qgenericatomic.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qatomic_cxx11.h
 QtCore/qgenericatomic.h
 -
 atomic
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qatomic_msvc.h
 QtCore/qgenericatomic.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qbasicatomic.h
 QtCore/qglobal.h
 -
 QtCore/qatomic_bootstrap.h
@@ -104,7 +108,7 @@ QtCore/qatomic_cxx11.h
 QtCore/qatomic_msvc.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qbytearray.h
 QtCore/qrefcount.h
 -
 QtCore/qnamespace.h
@@ -122,31 +126,37 @@ string
 iterator
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qbytearraylist.h
 QtCore/qlist.h
 -
 QtCore/qbytearray.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qchar.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcompilerdetection.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qcompilerdetection.h
 QtCore/qglobal.h
 -
 utility
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig-bootstrapped.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qconfig-bootstrapped.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qconfig.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcontainerfwd.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qcontainerfwd.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcontiguouscache.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qcontainertools_impl.h
+QtCore/qglobal.h
+-
+iterator
+-
+
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qcontiguouscache.h
 QtCore/qatomic.h
 -
 limits.h
@@ -154,7 +164,7 @@ limits.h
 new
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcoreapplication.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qcoreapplication.h
 QtCore/qglobal.h
 -
 QtCore/qstring.h
@@ -168,7 +178,7 @@ QtCore/qeventloop.h
 QtCore/qscopedpointer.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcoreevent.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qcoreevent.h
 QtCore/qnamespace.h
 -
 QtCore/qbytearray.h
@@ -176,7 +186,7 @@ QtCore/qbytearray.h
 QtCore/qobjectdefs.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qdatastream.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qdatastream.h
 QtCore/qscopedpointer.h
 -
 QtCore/qiodevice.h
@@ -184,7 +194,7 @@ QtCore/qiodevice.h
 QtCore/qpair.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qdebug.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qdebug.h
 QtCore/qalgorithms.h
 -
 QtCore/qhash.h
@@ -216,11 +226,11 @@ map
 utility
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qeventloop.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qeventloop.h
 QtCore/qobject.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qfile.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qfile.h
 QtCore/qfiledevice.h
 -
 QtCore/qstring.h
@@ -228,13 +238,13 @@ QtCore/qstring.h
 stdio.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qfiledevice.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qfiledevice.h
 QtCore/qiodevice.h
 -
 QtCore/qstring.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qfileinfo.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qfileinfo.h
 QtCore/qfile.h
 -
 QtCore/qlist.h
@@ -244,19 +254,19 @@ QtCore/qshareddata.h
 QtCore/qmetatype.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qflags.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qflags.h
 QtCore/qglobal.h
 -
 initializer_list
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qgenericatomic.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qgenericatomic.h
 QtCore/qglobal.h
 -
 QtCore/qtypeinfo.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qglobal.h
 type_traits
 -
 cstddef
@@ -298,15 +308,17 @@ QtCore/qnumeric.h
 QtCore/qversiontagging.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobalstatic.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qglobalstatic.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
 -
 QtCore/qmutex.h
 -
+mutex
+-
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qhash.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qhash.h
 QtCore/qchar.h
 -
 QtCore/qiterator.h
@@ -317,20 +329,24 @@ QtCore/qrefcount.h
 -
 QtCore/qhashfunctions.h
 -
-initializer_list
+QtCore/qcontainertools_impl.h
 -
 algorithm
 -
+initializer_list
+-
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qhashfunctions.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qhashfunctions.h
 QtCore/qstring.h
 -
 QtCore/qpair.h
 -
 numeric
 -
+functional
+-
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qiodevice.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qiodevice.h
 QtCore/qglobal.h
 -
 QtCore/qobject.h
@@ -342,15 +358,15 @@ QtCore/qscopedpointer.h
 QtCore/qstring.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qiterator.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qiterator.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qline.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qline.h
 QtCore/qpoint.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qlist.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qlist.h
 QtCore/qalgorithms.h
 -
 QtCore/qiterator.h
@@ -361,13 +377,17 @@ QtCore/qarraydata.h
 -
 QtCore/qhashfunctions.h
 -
-iterator
+QtCore/qvector.h
 -
-list
+QtCore/qcontainertools_impl.h
 -
 algorithm
 -
 initializer_list
+-
+iterator
+-
+list
 -
 stdlib.h
 -
@@ -382,7 +402,7 @@ QtCore/qbytearraylist.h
 QtCore/qstringlist.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qlocale.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qlocale.h
 QtCore/qvariant.h
 -
 QtCore/qstring.h
@@ -392,11 +412,11 @@ QtCore/qobjectdefs.h
 QtCore/qshareddata.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qlogging.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qlogging.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qmap.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qmap.h
 QtCore/qiterator.h
 -
 QtCore/qlist.h
@@ -407,20 +427,20 @@ QtCore/qpair.h
 -
 QtCore/qdebug.h
 -
-map
--
-new
--
 functional
 -
 initializer_list
 -
+map
+-
+new
+-
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qmargins.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qmargins.h
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qmetatype.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qmetatype.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -440,7 +460,7 @@ list
 map
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qmutex.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qmutex.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -452,15 +472,15 @@ chrono
 limits
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qnamespace.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qnamespace.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qnumeric.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qnumeric.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobject.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qobject.h
 QtCore/qobjectdefs.h
 -
 QtCore/qstring.h
@@ -480,31 +500,31 @@ QtCore/qobject_impl.h
 chrono
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobject_impl.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qobject_impl.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobjectdefs.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qobjectdefs.h
 QtCore/qnamespace.h
 -
 QtCore/qobjectdefs_impl.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobjectdefs_impl.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qobjectdefs_impl.h
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qpair.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qpair.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qpoint.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qpoint.h
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qprocessordetection.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qprocessordetection.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qrect.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qrect.h
 QtCore/qmargins.h
 -
 QtCore/qsize.h
@@ -512,31 +532,33 @@ QtCore/qsize.h
 QtCore/qpoint.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qrefcount.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qrefcount.h
 QtCore/qatomic.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qregexp.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qregexp.h
 QtCore/qglobal.h
 -
 QtCore/qstring.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qscopedpointer.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qscopedpointer.h
 QtCore/qglobal.h
 -
 stdlib.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qset.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qset.h
 QtCore/qhash.h
+-
+QtCore/qcontainertools_impl.h
 -
 initializer_list
 -
 iterator
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qshareddata.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qshareddata.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -546,7 +568,7 @@ QtCore/qhash.h
 QtCore/qhashfunctions.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsharedpointer.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qsharedpointer.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -555,8 +577,10 @@ QtCore/qshareddata.h
 -
 QtCore/qsharedpointer_impl.h
 -
+memory
+-
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsharedpointer_impl.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qsharedpointer_impl.h
 new
 -
 QtCore/qatomic.h
@@ -567,12 +591,16 @@ QtCore/qhash.h
 -
 QtCore/qhashfunctions.h
 -
-
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsize.h
-QtCore/qnamespace.h
+memory
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstring.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qsize.h
+QtCore/qnamespace.h
+-
+QtCore/qmargins.h
+-
+
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qstring.h
 QtCore/qchar.h
 -
 QtCore/qbytearray.h
@@ -596,11 +624,11 @@ stdarg.h
 QtCore/qstringbuilder.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringalgorithms.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qstringalgorithms.h
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringbuilder.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qstringbuilder.h
 QtCore/qstring.h
 -
 QtCore/qbytearray.h
@@ -608,10 +636,12 @@ QtCore/qbytearray.h
 string.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringlist.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qstringlist.h
 QtCore/qlist.h
 -
 QtCore/qalgorithms.h
+-
+QtCore/qcontainertools_impl.h
 -
 QtCore/qregexp.h
 -
@@ -620,15 +650,17 @@ QtCore/qstring.h
 QtCore/qstringmatcher.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringliteral.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qstringliteral.h
 QtCore/qarraydata.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringmatcher.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qstringmatcher.h
 QtCore/qstring.h
 -
+QtCore/qstringview.h
+-
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringview.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qstringview.h
 QtCore/qchar.h
 -
 QtCore/qbytearray.h
@@ -640,11 +672,11 @@ QtCore/qstringalgorithms.h
 string
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsysinfo.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qsysinfo.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsystemdetection.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qsystemdetection.h
 QtCore/qglobal.h
 -
 TargetConditionals.h
@@ -654,15 +686,15 @@ Availability.h
 AvailabilityMacros.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qtcore-config.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qtcore-config.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextcodec.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qtextcodec.h
 QtCore/qstring.h
 -
 QtCore/qlist.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qtextstream.h
 QtCore/qiodevice.h
 -
 QtCore/qstring.h
@@ -676,11 +708,11 @@ QtCore/qscopedpointer.h
 stdio.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qtypeinfo.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qurl.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qurl.h
 QtCore/qbytearray.h
 -
 QtCore/qobjectdefs.h
@@ -696,7 +728,7 @@ QtCore/qglobal.h
 QtCore/qurlquery.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qurlquery.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qurlquery.h
 QtCore/qpair.h
 -
 QtCore/qshareddata.h
@@ -705,8 +737,10 @@ QtCore/qurl.h
 -
 QtCore/qstringlist.h
 -
+initializer_list
+-
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qvariant.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qvariant.h
 QtCore/qatomic.h
 -
 QtCore/qbytearray.h
@@ -730,12 +764,22 @@ QtCore/qbytearraylist.h
 variant
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qvarlengtharray.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qvarlengtharray.h
 QtCore/qcontainerfwd.h
 -
 QtCore/qglobal.h
 -
 QtCore/qalgorithms.h
+-
+QtCore/qcontainertools_impl.h
+-
+QtCore/qhashfunctions.h
+-
+algorithm
+-
+initializer_list
+-
+iterator
 -
 new
 -
@@ -743,19 +787,11 @@ string.h
 -
 stdlib.h
 -
-algorithm
--
-initializer_list
--
-iterator
--
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qvector.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qvector.h
 QtCore/qalgorithms.h
 -
 QtCore/qiterator.h
--
-QtCore/qlist.h
 -
 QtCore/qrefcount.h
 -
@@ -763,7 +799,11 @@ QtCore/qarraydata.h
 -
 QtCore/qhashfunctions.h
 -
+QtCore/qcontainertools_impl.h
+-
 iterator
+-
+initializer_list
 -
 vector
 -
@@ -771,34 +811,32 @@ stdlib.h
 -
 string.h
 -
-initializer_list
--
 algorithm
 -
 QtCore/qpoint.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qversiontagging.h
+C:/Qt/5.14.1/mingw73_64/include/QtCore/qversiontagging.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/QGuiApplication
+C:/Qt/5.14.1/mingw73_64/include/QtGui/QGuiApplication
 qguiapplication.h
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qguiapplication.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qguiapplication.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/QScreen
+C:/Qt/5.14.1/mingw73_64/include/QtGui/QScreen
 qscreen.h
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qscreen.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qscreen.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/QTextDocument
+C:/Qt/5.14.1/mingw73_64/include/QtGui/QTextDocument
 qtextdocument.h
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtextdocument.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qtextdocument.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/QTransform
+C:/Qt/5.14.1/mingw73_64/include/QtGui/QTransform
 qtransform.h
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtransform.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qtransform.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qbrush.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qbrush.h
 QtGui/qtguiglobal.h
 -
 QtCore/qpair.h
@@ -820,7 +858,7 @@ QtGui/qimage.h
 QtGui/qpixmap.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qcolor.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qcolor.h
 QtGui/qtguiglobal.h
 -
 QtGui/qrgb.h
@@ -832,7 +870,7 @@ QtCore/qstringlist.h
 QtGui/qrgba64.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qcursor.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qcursor.h
 QtGui/qtguiglobal.h
 -
 QtCore/qpoint.h
@@ -840,7 +878,7 @@ QtCore/qpoint.h
 QtGui/qwindowdefs.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qevent.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qevent.h
 QtGui/qtguiglobal.h
 -
 QtGui/qwindowdefs.h
@@ -872,7 +910,7 @@ QtGui/qvector2d.h
 QtGui/qtouchdevice.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qfont.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qfont.h
 QtGui/qtguiglobal.h
 -
 QtGui/qwindowdefs.h
@@ -882,7 +920,7 @@ QtCore/qstring.h
 QtCore/qsharedpointer.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qfontinfo.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qfontinfo.h
 QtGui/qtguiglobal.h
 -
 QtGui/qfont.h
@@ -890,7 +928,7 @@ QtGui/qfont.h
 QtCore/qsharedpointer.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qfontmetrics.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qfontmetrics.h
 QtGui/qtguiglobal.h
 -
 QtGui/qfont.h
@@ -900,7 +938,7 @@ QtCore/qsharedpointer.h
 QtCore/qrect.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qguiapplication.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qguiapplication.h
 QtGui/qtguiglobal.h
 -
 QtCore/qcoreapplication.h
@@ -916,7 +954,7 @@ QtCore/qpoint.h
 QtCore/qsize.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qicon.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qicon.h
 QtGui/qtguiglobal.h
 -
 QtCore/qsize.h
@@ -926,7 +964,7 @@ QtCore/qlist.h
 QtGui/qpixmap.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qimage.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qimage.h
 QtGui/qtguiglobal.h
 -
 QtGui/qcolor.h
@@ -948,13 +986,13 @@ QtCore/qstring.h
 QtCore/qstringlist.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qinputmethod.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qinputmethod.h
 QtGui/qtguiglobal.h
 -
 QtCore/qobject.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qkeysequence.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qkeysequence.h
 QtGui/qtguiglobal.h
 -
 QtCore/qstring.h
@@ -962,7 +1000,7 @@ QtCore/qstring.h
 QtCore/qobjectdefs.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qmatrix.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qmatrix.h
 QtGui/qtguiglobal.h
 -
 QtGui/qpolygon.h
@@ -978,7 +1016,7 @@ QtCore/qpoint.h
 QtCore/qrect.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpaintdevice.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qpaintdevice.h
 QtGui/qtguiglobal.h
 -
 QtGui/qwindowdefs.h
@@ -986,7 +1024,7 @@ QtGui/qwindowdefs.h
 QtCore/qrect.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpainterpath.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qpainterpath.h
 QtGui/qtguiglobal.h
 -
 QtGui/qmatrix.h
@@ -1002,7 +1040,7 @@ QtCore/qvector.h
 QtCore/qscopedpointer.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpalette.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qpalette.h
 QtGui/qtguiglobal.h
 -
 QtGui/qwindowdefs.h
@@ -1012,7 +1050,7 @@ QtGui/qcolor.h
 QtGui/qbrush.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpen.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qpen.h
 QtGui/qtguiglobal.h
 -
 QtGui/qcolor.h
@@ -1020,11 +1058,11 @@ QtGui/qcolor.h
 QtGui/qbrush.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpixelformat.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qpixelformat.h
 QtGui/qtguiglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpixmap.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qpixmap.h
 QtGui/qtguiglobal.h
 -
 QtGui/qpaintdevice.h
@@ -1042,7 +1080,7 @@ QtGui/qimage.h
 QtGui/qtransform.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qpolygon.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qpolygon.h
 QtGui/qtguiglobal.h
 -
 QtCore/qvector.h
@@ -1052,7 +1090,7 @@ QtCore/qpoint.h
 QtCore/qrect.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qregion.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qregion.h
 QtGui/qtguiglobal.h
 -
 QtCore/qatomic.h
@@ -1064,19 +1102,19 @@ QtGui/qwindowdefs.h
 QtCore/qdatastream.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qrgb.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qrgb.h
 QtGui/qtguiglobal.h
 -
 QtCore/qprocessordetection.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qrgba64.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qrgba64.h
 QtGui/qtguiglobal.h
 -
 QtCore/qprocessordetection.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qscreen.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qscreen.h
 QtGui/qtguiglobal.h
 -
 QtCore/QList
@@ -1094,7 +1132,7 @@ QtGui/QTransform
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtextcursor.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qtextcursor.h
 QtGui/qtguiglobal.h
 -
 QtCore/qstring.h
@@ -1104,7 +1142,7 @@ QtCore/qshareddata.h
 QtGui/qtextformat.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtextdocument.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qtextdocument.h
 QtGui/qtguiglobal.h
 -
 QtCore/qobject.h
@@ -1120,7 +1158,7 @@ QtGui/qfont.h
 QtCore/qurl.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtextformat.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qtextformat.h
 QtGui/qtguiglobal.h
 -
 QtGui/qcolor.h
@@ -1140,7 +1178,7 @@ QtGui/qbrush.h
 QtGui/qtextoption.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtextoption.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qtextoption.h
 QtGui/qtguiglobal.h
 -
 QtCore/qnamespace.h
@@ -1150,21 +1188,21 @@ QtCore/qchar.h
 QtCore/qmetatype.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtgui-config.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qtgui-config.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtguiglobal.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qtguiglobal.h
 QtCore/qglobal.h
 -
 QtGui/qtgui-config.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtouchdevice.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qtouchdevice.h
 QtGui/qtguiglobal.h
 -
 QtCore/qobject.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qtransform.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qtransform.h
 QtGui/qtguiglobal.h
 -
 QtGui/qmatrix.h
@@ -1184,7 +1222,7 @@ QtCore/qpoint.h
 QtCore/qrect.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qvector2d.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qvector2d.h
 QtGui/qtguiglobal.h
 -
 QtCore/qpoint.h
@@ -1192,7 +1230,7 @@ QtCore/qpoint.h
 QtCore/qmetatype.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qwindowdefs.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qwindowdefs.h
 QtGui/qtguiglobal.h
 -
 QtCore/qobjectdefs.h
@@ -1202,23 +1240,23 @@ QtCore/qnamespace.h
 QtGui/qwindowdefs_win.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtGui/qwindowdefs_win.h
+C:/Qt/5.14.1/mingw73_64/include/QtGui/qwindowdefs_win.h
 QtGui/qtguiglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/QAbstractSocket
+C:/Qt/5.14.1/mingw73_64/include/QtNetwork/QAbstractSocket
 qabstractsocket.h
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qabstractsocket.h
+C:/Qt/5.14.1/mingw73_64/include/QtNetwork/qabstractsocket.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/QTcpServer
+C:/Qt/5.14.1/mingw73_64/include/QtNetwork/QTcpServer
 qtcpserver.h
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpserver.h
+C:/Qt/5.14.1/mingw73_64/include/QtNetwork/qtcpserver.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/QTcpSocket
+C:/Qt/5.14.1/mingw73_64/include/QtNetwork/QTcpSocket
 qtcpsocket.h
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpsocket.h
+C:/Qt/5.14.1/mingw73_64/include/QtNetwork/qtcpsocket.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qabstractsocket.h
+C:/Qt/5.14.1/mingw73_64/include/QtNetwork/qabstractsocket.h
 QtNetwork/qtnetworkglobal.h
 -
 QtCore/qiodevice.h
@@ -1228,7 +1266,7 @@ QtCore/qobject.h
 QtCore/qdebug.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qhostaddress.h
+C:/Qt/5.14.1/mingw73_64/include/QtNetwork/qhostaddress.h
 QtNetwork/qtnetworkglobal.h
 -
 QtCore/qpair.h
@@ -1240,7 +1278,7 @@ QtCore/qshareddata.h
 QtNetwork/qabstractsocket.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpserver.h
+C:/Qt/5.14.1/mingw73_64/include/QtNetwork/qtcpserver.h
 QtNetwork/qtnetworkglobal.h
 -
 QtCore/qobject.h
@@ -1250,7 +1288,7 @@ QtNetwork/qabstractsocket.h
 QtNetwork/qhostaddress.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpsocket.h
+C:/Qt/5.14.1/mingw73_64/include/QtNetwork/qtcpsocket.h
 QtNetwork/qtnetworkglobal.h
 -
 QtNetwork/qabstractsocket.h
@@ -1258,53 +1296,83 @@ QtNetwork/qabstractsocket.h
 QtCore/qvariant.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtnetwork-config.h
+C:/Qt/5.14.1/mingw73_64/include/QtNetwork/qtnetwork-config.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtnetworkglobal.h
+C:/Qt/5.14.1/mingw73_64/include/QtNetwork/qtnetworkglobal.h
 QtCore/qglobal.h
 -
 QtNetwork/qtnetwork-config.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/QDesktopWidget
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QApplication
+qapplication.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qapplication.h
+
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QDesktopWidget
 qdesktopwidget.h
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qdesktopwidget.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qdesktopwidget.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/QGridLayout
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QDialog
+qdialog.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qdialog.h
+
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QDialogButtonBox
+qdialogbuttonbox.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qdialogbuttonbox.h
+
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QGridLayout
 qgridlayout.h
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qgridlayout.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qgridlayout.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/QLabel
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QLabel
 qlabel.h
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qlabel.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qlabel.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/QMainWindow
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QLineEdit
+qlineedit.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qlineedit.h
+
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QMainWindow
 qmainwindow.h
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qmainwindow.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qmainwindow.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/QMenuBar
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QMenuBar
 qmenubar.h
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qmenubar.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qmenubar.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/QStatusBar
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QPushButton
+qpushbutton.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qpushbutton.h
+
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QStatusBar
 qstatusbar.h
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qstatusbar.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qstatusbar.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/QTextEdit
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QTextEdit
 qtextedit.h
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qtextedit.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qtextedit.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/QToolBar
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/QToolBar
 qtoolbar.h
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qtoolbar.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qtoolbar.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qabstractscrollarea.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qabstractbutton.h
+QtWidgets/qtwidgetsglobal.h
+-
+QtGui/qicon.h
+-
+QtGui/qkeysequence.h
+-
+QtWidgets/qwidget.h
+-
+
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qabstractscrollarea.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qframe.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qaction.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qaction.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtGui/qkeysequence.h
@@ -1320,13 +1388,31 @@ QtGui/qicon.h
 QtWidgets/qactiongroup.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qactiongroup.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qactiongroup.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qaction.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qboxlayout.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qapplication.h
+QtWidgets/qtwidgetsglobal.h
+-
+QtCore/qcoreapplication.h
+-
+QtGui/qwindowdefs.h
+-
+QtCore/qpoint.h
+-
+QtCore/qsize.h
+-
+QtGui/qcursor.h
+-
+QtWidgets/qdesktopwidget.h
+-
+QtGui/qguiapplication.h
+-
+
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qboxlayout.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qlayout.h
@@ -1336,19 +1422,31 @@ QtWidgets/qwidget.h
 limits.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qdesktopwidget.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qdesktopwidget.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qwidget.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qframe.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qdialog.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qwidget.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qgridlayout.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qdialogbuttonbox.h
+QtWidgets/qtwidgetsglobal.h
+-
+QtWidgets/qwidget.h
+-
+
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qframe.h
+QtWidgets/qtwidgetsglobal.h
+-
+QtWidgets/qwidget.h
+-
+
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qgridlayout.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qlayout.h
@@ -1358,13 +1456,13 @@ QtWidgets/qwidget.h
 limits.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qlabel.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qlabel.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qframe.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qlayout.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qlayout.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtCore/qobject.h
@@ -1384,7 +1482,7 @@ QtWidgets/qboxlayout.h
 QtWidgets/qgridlayout.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qlayoutitem.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qlayoutitem.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qsizepolicy.h
@@ -1394,7 +1492,19 @@ QtCore/qrect.h
 limits.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qmainwindow.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qlineedit.h
+QtWidgets/qtwidgetsglobal.h
+-
+QtWidgets/qframe.h
+-
+QtGui/qtextcursor.h
+-
+QtCore/qstring.h
+-
+QtCore/qmargins.h
+-
+
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qmainwindow.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qwidget.h
@@ -1402,7 +1512,7 @@ QtWidgets/qwidget.h
 QtWidgets/qtabwidget.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qmenu.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qmenu.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qwidget.h
@@ -1414,13 +1524,19 @@ QtGui/qicon.h
 QtWidgets/qaction.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qmenubar.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qmenubar.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qmenu.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qsizepolicy.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qpushbutton.h
+QtWidgets/qtwidgetsglobal.h
+-
+QtWidgets/qabstractbutton.h
+-
+
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qsizepolicy.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtCore/qobject.h
@@ -1428,13 +1544,13 @@ QtCore/qobject.h
 QtCore/qalgorithms.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qstatusbar.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qstatusbar.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qwidget.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qtabwidget.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qtabwidget.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qwidget.h
@@ -1442,7 +1558,7 @@ QtWidgets/qwidget.h
 QtGui/qicon.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qtextedit.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qtextedit.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qabstractscrollarea.h
@@ -1456,7 +1572,7 @@ QtGui/qtextcursor.h
 QtGui/qtextformat.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qtoolbar.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qtoolbar.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtWidgets/qaction.h
@@ -1464,15 +1580,15 @@ QtWidgets/qaction.h
 QtWidgets/qwidget.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qtwidgets-config.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qtwidgets-config.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qtwidgetsglobal.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qtwidgetsglobal.h
 QtGui/qtguiglobal.h
 -
 QtWidgets/qtwidgets-config.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtWidgets/qwidget.h
+C:/Qt/5.14.1/mingw73_64/include/QtWidgets/qwidget.h
 QtWidgets/qtwidgetsglobal.h
 -
 QtGui/qwindowdefs.h
@@ -1504,11 +1620,11 @@ QtGui/qkeysequence.h
 QtGui/qevent.h
 -
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/EditorGUI.cpp
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/EditorGUI.cpp
 EditorGUI.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/EditorGUI.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/EditorGUI.h
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/EditorGUI.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/EditorGUI.h
 QGuiApplication
 -
 QtCore/QArgument
@@ -1544,35 +1660,93 @@ QFileInfo
 QTextDocument
 -
 SharedEditor.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/SharedEditor.h
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/LoginDialog.cpp
+LoginDialog.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/LoginDialog.h
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/LoginDialog.h
+QDialog
+-
+QtWidgets/QLabel
+-
+QtWidgets/QLineEdit
+-
+QDialogButtonBox
+-
+QGridLayout
+-
+QPushButton
+-
+QDebug
+-
+QGuiApplication
+-
+QScreen
+-
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/DataPacket.cpp
+DataPacket.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
+LoginInfo.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
 QtGlobal
 -
 memory
 -
 Payload.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Payload.h
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.cpp
+LoginInfo.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
+utility
+-
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
+QtGlobal
+-
+QtCore/QString
+-
 Payload.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Message.cpp
+Message.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Message.h
+Message.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Message.h
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Message.h
+Payload.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Payload.h
 Symbols/Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
 vector
 -
 QtGlobal
 -
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Payload.cpp
+Payload.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Payload.h
 QtGlobal
 -
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
 QtGlobal
 -
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.cpp
+Symbol.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
 vector
 -
 QtGlobal
@@ -1580,21 +1754,33 @@ QtGlobal
 QChar
 -
 SymId.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
 
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/SharedEditor.cpp
+SharedEditor.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/SharedEditor.h
+Packet/LoginInfo.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
+vector
+-
+algorithm
+-
+thread
+-
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/SharedEditor.h
 iostream
 -
 Packet/Symbols/Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
 vector
 -
 Packet/DataPacket.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
 Packet/Payload.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Payload.h
 Packet/Message.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/Packet/Message.h
 QTcpServer
 -
 QTcpSocket
@@ -1605,4 +1791,56 @@ QAbstractSocket
 -
 QString
 -
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp
+memory
+-
+../../../EditorGUI.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/EditorGUI.h
+QtCore/qbytearray.h
+-
+QtCore/qmetatype.h
+-
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp
+memory
+-
+../../../LoginDialog.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/LoginDialog.h
+QtCore/qbytearray.h
+-
+QtCore/qmetatype.h
+-
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp
+memory
+-
+../../../SharedEditor.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/SharedEditor.h
+QtCore/qbytearray.h
+-
+QtCore/qmetatype.h
+-
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp
+EWIEGA46WW/moc_EditorGUI.cpp
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp
+EWIEGA46WW/moc_LoginDialog.cpp
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp
+EWIEGA46WW/moc_SharedEditor.cpp
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp
+
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/main.cpp
+QtWidgets/QApplication
+-
+thread
+-
+SharedEditor.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/SharedEditor.h
+LoginDialog.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/LoginDialog.h
+winsock2.h
+-
+EditorGUI.h
+C:/Users/Muska/CLionProjects/SharedEditor_MalnatiProject/Client/EditorGUI.h
 
