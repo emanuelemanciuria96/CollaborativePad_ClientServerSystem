@@ -14,6 +14,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj"
   "CMakeFiles/SharedEditorServer.dir/jsoncpp.cpp.obj"
   "CMakeFiles/SharedEditorServer.dir/Packet/Command.cpp.obj"
+  "CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.obj"
   "SharedEditorServer.pdb"
   "SharedEditorServer.exe"
   "SharedEditorServer.exe.manifest"

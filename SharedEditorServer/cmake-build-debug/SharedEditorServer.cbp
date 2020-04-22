@@ -160,6 +160,12 @@
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h">
 			<Option target="SharedEditorServer"/>
 		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/StringMessages.cpp">
+			<Option target="SharedEditorServer"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/StringMessages.h">
+			<Option target="SharedEditorServer"/>
+		</Unit>
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/SymId.cpp">
 			<Option target="SharedEditorServer"/>
 		</Unit>

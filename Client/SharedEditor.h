@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Packet/Symbols/Symbol.h"
 #include <vector>
+#include "Packet/StringMessages.h"
 #include "Packet/DataPacket.h"
 #include "Packet/Payload.h"
 #include "Socket.h"
@@ -29,6 +30,7 @@ private:
     qint32 _counter;
     Transceiver* transceiver;
     void processMessage(Message& m);
+    void processMessages(StringMessages& strMess);
     void processLoginInfo(LoginInfo& logInf);
 
     bool isLogged;

@@ -324,6 +324,33 @@ Packet/Payload.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Payload.cpp.s
 .PHONY : Packet/Payload.cpp.s
 
+Packet/StringMessages.obj: Packet/StringMessages.cpp.obj
+
+.PHONY : Packet/StringMessages.obj
+
+# target to build an object file
+Packet/StringMessages.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj
+.PHONY : Packet/StringMessages.cpp.obj
+
+Packet/StringMessages.i: Packet/StringMessages.cpp.i
+
+.PHONY : Packet/StringMessages.i
+
+# target to preprocess a source file
+Packet/StringMessages.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/StringMessages.cpp.i
+.PHONY : Packet/StringMessages.cpp.i
+
+Packet/StringMessages.s: Packet/StringMessages.cpp.s
+
+.PHONY : Packet/StringMessages.s
+
+# target to generate assembly for a file
+Packet/StringMessages.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/StringMessages.cpp.s
+.PHONY : Packet/StringMessages.cpp.s
+
 Packet/Symbols/Symbol.obj: Packet/Symbols/Symbol.cpp.obj
 
 .PHONY : Packet/Symbols/Symbol.obj
@@ -463,6 +490,9 @@ help:
 	@echo ... Packet/Payload.obj
 	@echo ... Packet/Payload.i
 	@echo ... Packet/Payload.s
+	@echo ... Packet/StringMessages.obj
+	@echo ... Packet/StringMessages.i
+	@echo ... Packet/StringMessages.s
 	@echo ... Packet/Symbols/Symbol.obj
 	@echo ... Packet/Symbols/Symbol.i
 	@echo ... Packet/Symbols/Symbol.s

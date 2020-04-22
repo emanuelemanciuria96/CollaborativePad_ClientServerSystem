@@ -238,6 +238,20 @@ CMakeFiles/SharedEditorServer.dir/Packet/Command.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SharedEditorServer.dir/Packet/Command.cpp.s"
 	D:\PROGRA~2\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer\Packet\Command.cpp" -o CMakeFiles\SharedEditorServer.dir\Packet\Command.cpp.s
 
+CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.obj: CMakeFiles/SharedEditorServer.dir/flags.make
+CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.obj: CMakeFiles/SharedEditorServer.dir/includes_CXX.rsp
+CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.obj: ../Packet/StringMessages.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.obj"
+	D:\PROGRA~2\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SharedEditorServer.dir\Packet\StringMessages.cpp.obj -c "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer\Packet\StringMessages.cpp"
+
+CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.i"
+	D:\PROGRA~2\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer\Packet\StringMessages.cpp" > CMakeFiles\SharedEditorServer.dir\Packet\StringMessages.cpp.i
+
+CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.s"
+	D:\PROGRA~2\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer\Packet\StringMessages.cpp" -o CMakeFiles\SharedEditorServer.dir\Packet\StringMessages.cpp.s
+
 # Object files for target SharedEditorServer
 SharedEditorServer_OBJECTS = \
 "CMakeFiles/SharedEditorServer.dir/SharedEditorServer_autogen/mocs_compilation.cpp.obj" \
@@ -252,7 +266,8 @@ SharedEditorServer_OBJECTS = \
 "CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.obj" \
 "CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj" \
 "CMakeFiles/SharedEditorServer.dir/jsoncpp.cpp.obj" \
-"CMakeFiles/SharedEditorServer.dir/Packet/Command.cpp.obj"
+"CMakeFiles/SharedEditorServer.dir/Packet/Command.cpp.obj" \
+"CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.obj"
 
 # External object files for target SharedEditorServer
 SharedEditorServer_EXTERNAL_OBJECTS =
@@ -270,6 +285,7 @@ SharedEditorServer.exe: CMakeFiles/SharedEditorServer.dir/Packet/LoginInfo.cpp.o
 SharedEditorServer.exe: CMakeFiles/SharedEditorServer.dir/MessageHandler.cpp.obj
 SharedEditorServer.exe: CMakeFiles/SharedEditorServer.dir/jsoncpp.cpp.obj
 SharedEditorServer.exe: CMakeFiles/SharedEditorServer.dir/Packet/Command.cpp.obj
+SharedEditorServer.exe: CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.obj
 SharedEditorServer.exe: CMakeFiles/SharedEditorServer.dir/build.make
 SharedEditorServer.exe: C:/Qt/5.12.5/mingw73_64/lib/libQt5Chartsd.a
 SharedEditorServer.exe: C:/Qt/5.12.5/mingw73_64/lib/libQt5Networkd.a
@@ -279,7 +295,7 @@ SharedEditorServer.exe: C:/Qt/5.12.5/mingw73_64/lib/libQt5Cored.a
 SharedEditorServer.exe: CMakeFiles/SharedEditorServer.dir/linklibs.rsp
 SharedEditorServer.exe: CMakeFiles/SharedEditorServer.dir/objects1.rsp
 SharedEditorServer.exe: CMakeFiles/SharedEditorServer.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable SharedEditorServer.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\SharedEditorServer\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable SharedEditorServer.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\SharedEditorServer.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

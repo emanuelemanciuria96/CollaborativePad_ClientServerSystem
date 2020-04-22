@@ -165,7 +165,7 @@ void SharedEditor::process(DataPacket pkt) {
             processLoginInfo(*std::dynamic_pointer_cast<LoginInfo>(pkt.getPayload()));
             break;
         case DataPacket::textTyping :
-            processMessage(*std::dynamic_pointer_cast<Message>(pkt.getPayload()));
+            processMessages(*std::dynamic_pointer_cast<StringMessages>(pkt.getPayload()));
             break;
         default:
             std::cout<<"Coglione 2 volte, c'è un errore"<<std::endl;
@@ -187,9 +187,8 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
     }
 }
 
-
 void SharedEditor::processMessage(Message &m) {
-    std::cout << "Messaggio ricevuto " << m.getAction() << std::endl;
+
     qint32 pos = 0;
     if ( Message::insertion == m.getAction() ) {
 
@@ -211,6 +210,11 @@ void SharedEditor::processMessage(Message &m) {
         else
             throw std::exception(); //errore fatale
     }
+}
+
+void SharedEditor::processMessages(StringMessages &strMess) {
+    for( auto m : strMess.stringToMessages() )
+        processMessage(m);
 }
 
 QString SharedEditor::to_string() {

@@ -109,13 +109,11 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i=0;
     if(!signalBlocker) {
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
-            std::cout << "Cancellazione carattere " << pos << std::endl;
             for (i = 0; i < charsRemoved; i++) {
                 model->localErase(pos);
             }
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
-            std::cout << "Inserimento carattere " << pos << std::endl;
             for (i = 0; i < charsAdded; i++) {
                 model->localInsert(pos + i, textEdit->document()->characterAt(pos + i));
             }
@@ -130,7 +128,6 @@ void EditorGUI::insertText(qint32 pos, QChar value) {
     cursor.movePosition(QTextCursor::MoveOperation::NextCharacter, QTextCursor::MoveMode::MoveAnchor,pos);
     signalBlocker = !signalBlocker;
     cursor.insertText(QString(value));
-    std::cout << "Inserito " << pos << " " << value.unicode() << std::endl;
     signalBlocker = !signalBlocker;
 }
 
@@ -141,7 +138,6 @@ void EditorGUI::deleteText(qint32 pos) {
     cursor.movePosition(QTextCursor::MoveOperation::NextCharacter, QTextCursor::MoveMode::MoveAnchor,pos);
     signalBlocker = !signalBlocker;
     cursor.deleteChar();
-    std::cout << "Rimosso " << pos << std::endl;
     signalBlocker = !signalBlocker;
 }
 

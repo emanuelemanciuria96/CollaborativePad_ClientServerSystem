@@ -26,6 +26,10 @@ C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
 qthread.h
 C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
 
+C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
+qtimer.h
+C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
+
 C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
 qglobal.h
 C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
@@ -70,6 +74,12 @@ QtCore/qatomic_bootstrap.h
 QtCore/qatomic_cxx11.h
 -
 QtCore/qatomic_msvc.h
+-
+
+C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
+QtCore/qglobal.h
+-
+QtCore/qnamespace.h
 -
 
 C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
@@ -586,6 +596,16 @@ functional
 limits.h
 -
 
+C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
+QtCore/qglobal.h
+-
+QtCore/qbasictimer.h
+-
+QtCore/qobject.h
+-
+chrono
+-
+
 C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
 QtCore/qglobal.h
 -
@@ -758,6 +778,22 @@ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_Mal
 QtGlobal
 -
 
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h
+Payload.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+Symbols/Symbol.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
+Message.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
+vector
+-
+QtGlobal
+-
+string
+-
+QString
+-
+
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
 QtGlobal
 -
@@ -789,6 +825,8 @@ Packet/Symbols/Symbol.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
 vector
 -
+Packet/StringMessages.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h
 Packet/DataPacket.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
 Packet/Payload.h
@@ -820,12 +858,22 @@ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_Mal
 QObject
 -
 
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Transceiver.cpp
+iostream
+-
+QtCore/QDataStream
+-
+Transceiver.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Transceiver.h
+
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Transceiver.h
 QThread
 -
 QTcpServer
 -
 QTcpSocket
+-
+QtCore/QTimer
 -
 Socket.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Socket.h
@@ -837,4 +885,6 @@ Packet/LoginInfo.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
 Packet/Payload.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+Packet/StringMessages.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h
 

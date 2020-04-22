@@ -17,6 +17,7 @@ public:
 
     Message(action_t action,qint32 siteId,Symbol& sym):
             _action(action), Payload(siteId), _sym(sym){}
+    Message(const Message& msg) = default;
     qint32 getSiteId(){ return _siteID; }
     action_t getAction() const{ return _action; }
     Symbol getSymbol() const{ return _sym; }

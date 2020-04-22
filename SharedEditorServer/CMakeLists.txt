@@ -18,5 +18,6 @@ list(APPEND LIBRARIES
         Qt5::Network)
 list(REMOVE_DUPLICATES LIBRARIES)
 add_executable(SharedEditorServer main.cpp NetworkServer.cpp NetworkServer.h Packet/Symbols/Symbol.cpp Packet/Symbols/Symbol.h Packet/Symbols/SymId.cpp Packet/Symbols/SymId.h ServerThread.cpp ServerThread.h
-        Packet/Message.cpp Packet/Message.h Packet/DataPacket.cpp Packet/DataPacket.h Packet/Payload.cpp Packet/Payload.h Packet/LoginInfo.cpp Packet/LoginInfo.h MessageHandler.cpp MessageHandler.h jsoncpp.cpp json/json-forwards.h json/json.h Packet/Command.cpp Packet/Command.h Socket.h)
+        Packet/Message.cpp Packet/Message.h Packet/DataPacket.cpp Packet/DataPacket.h Packet/Payload.cpp Packet/Payload.h Packet/LoginInfo.cpp Packet/LoginInfo.h MessageHandler.cpp MessageHandler.h jsoncpp.cpp
+        json/json-forwards.h json/json.h Packet/Command.cpp Packet/Command.h Socket.h Packet/StringMessages.cpp Packet/StringMessages.h)
 target_link_libraries(SharedEditorServer ${LIBRARIES})

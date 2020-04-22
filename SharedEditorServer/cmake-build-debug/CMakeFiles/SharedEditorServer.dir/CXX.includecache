@@ -826,6 +826,22 @@ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_Mal
 QtGlobal
 -
 
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/StringMessages.h
+Payload.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
+Symbols/Symbol.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
+Message.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
+vector
+-
+QtGlobal
+-
+string
+-
+QString
+-
+
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/SymId.h
 QtGlobal
 -
@@ -861,6 +877,8 @@ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_Mal
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/ServerThread.h
 Packet/DataPacket.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
+Packet/StringMessages.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/SharedEditorServer/Packet/StringMessages.h
 QThread
 -
 QTcpSocket

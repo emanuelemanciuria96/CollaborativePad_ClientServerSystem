@@ -16,6 +16,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/ming
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextCodec
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextStream
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
+CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -24,6 +25,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/ming
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
@@ -87,6 +89,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/ming
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextcodec.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qurl.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qurlquery.h
@@ -186,6 +189,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/DataPac
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/Message.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/Payload.h
+CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/StringMessages.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/Symbols/SymId.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/Symbols/Symbol.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../SharedEditor.h
@@ -213,6 +217,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextCodec
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextStream
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -221,6 +226,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
@@ -284,6 +290,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextcodec.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qurl.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qurlquery.h
@@ -374,6 +381,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/DataPacket.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/Message.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/Payload.h
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/StringMessages.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/Symbols/SymId.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/Symbols/Symbol.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../SharedEditor.h
@@ -670,6 +678,47 @@ CMakeFiles/Client.dir/Packet/Payload.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/Qt
 CMakeFiles/Client.dir/Packet/Payload.cpp.obj: ../Packet/Payload.cpp
 CMakeFiles/Client.dir/Packet/Payload.cpp.obj: ../Packet/Payload.h
 
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_bootstrap.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qcompilerdetection.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig-bootstrapped.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qflags.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qgenericatomic.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobalstatic.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qlogging.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qmutex.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qnamespace.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qnumeric.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qprocessordetection.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qrefcount.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qstring.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringalgorithms.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringbuilder.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringliteral.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringview.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qsysinfo.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qsystemdetection.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtcore-config.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qversiontagging.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: ../Packet/Message.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: ../Packet/Payload.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: ../Packet/StringMessages.cpp
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: ../Packet/StringMessages.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: ../Packet/Symbols/SymId.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj: ../Packet/Symbols/Symbol.h
+
 CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
 CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic.h
@@ -703,6 +752,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCo
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QObject
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
+CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -711,6 +761,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCo
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
@@ -764,6 +815,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCo
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtcore-config.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qvariant.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qvarlengtharray.h
@@ -782,6 +834,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/DataPacket.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/Message.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/Payload.h
+CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/StringMessages.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/Symbols/SymId.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/Symbols/Symbol.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../SharedEditor.cpp
@@ -794,6 +847,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCor
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QObject
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
+CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -802,6 +856,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCor
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
@@ -855,6 +910,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCor
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtcore-config.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qvariant.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qvarlengtharray.h
@@ -872,6 +928,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/DataPacket.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/Message.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/Payload.h
+CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/StringMessages.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/Symbols/SymId.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/Symbols/Symbol.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Socket.h
@@ -893,6 +950,7 @@ CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QStri
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextCodec
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextStream
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
+CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -901,6 +959,7 @@ CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatom
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
@@ -964,6 +1023,7 @@ CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtcor
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextcodec.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qurl.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qurlquery.h
@@ -1065,6 +1125,7 @@ CMakeFiles/Client.dir/main.cpp.obj: ../Packet/DataPacket.h
 CMakeFiles/Client.dir/main.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/Client.dir/main.cpp.obj: ../Packet/Message.h
 CMakeFiles/Client.dir/main.cpp.obj: ../Packet/Payload.h
+CMakeFiles/Client.dir/main.cpp.obj: ../Packet/StringMessages.h
 CMakeFiles/Client.dir/main.cpp.obj: ../Packet/Symbols/SymId.h
 CMakeFiles/Client.dir/main.cpp.obj: ../Packet/Symbols/Symbol.h
 CMakeFiles/Client.dir/main.cpp.obj: ../SharedEditor.h

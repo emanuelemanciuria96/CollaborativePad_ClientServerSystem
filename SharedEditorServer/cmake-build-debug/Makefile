@@ -324,6 +324,33 @@ Packet/Payload.cpp.s:
 	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/Payload.cpp.s
 .PHONY : Packet/Payload.cpp.s
 
+Packet/StringMessages.obj: Packet/StringMessages.cpp.obj
+
+.PHONY : Packet/StringMessages.obj
+
+# target to build an object file
+Packet/StringMessages.cpp.obj:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.obj
+.PHONY : Packet/StringMessages.cpp.obj
+
+Packet/StringMessages.i: Packet/StringMessages.cpp.i
+
+.PHONY : Packet/StringMessages.i
+
+# target to preprocess a source file
+Packet/StringMessages.cpp.i:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.i
+.PHONY : Packet/StringMessages.cpp.i
+
+Packet/StringMessages.s: Packet/StringMessages.cpp.s
+
+.PHONY : Packet/StringMessages.s
+
+# target to generate assembly for a file
+Packet/StringMessages.cpp.s:
+	$(MAKE) -f CMakeFiles\SharedEditorServer.dir\build.make CMakeFiles/SharedEditorServer.dir/Packet/StringMessages.cpp.s
+.PHONY : Packet/StringMessages.cpp.s
+
 Packet/Symbols/SymId.obj: Packet/Symbols/SymId.cpp.obj
 
 .PHONY : Packet/Symbols/SymId.obj
@@ -517,6 +544,9 @@ help:
 	@echo ... Packet/Payload.obj
 	@echo ... Packet/Payload.i
 	@echo ... Packet/Payload.s
+	@echo ... Packet/StringMessages.obj
+	@echo ... Packet/StringMessages.i
+	@echo ... Packet/StringMessages.s
 	@echo ... Packet/Symbols/SymId.obj
 	@echo ... Packet/Symbols/SymId.i
 	@echo ... Packet/Symbols/SymId.s

@@ -17,6 +17,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextCodec
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextStream
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -25,6 +26,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
@@ -88,6 +90,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextcodec.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qurl.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qurlquery.h
@@ -187,6 +190,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.h
@@ -214,6 +218,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextCodec
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextStream
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -222,6 +227,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
@@ -285,6 +291,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextcodec.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qurl.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qurlquery.h
@@ -375,6 +382,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.h
@@ -670,6 +678,47 @@ CMakeFiles/Client.dir/Packet/Payload.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qversiontagging.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.cpp
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_bootstrap.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qcompilerdetection.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig-bootstrapped.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qflags.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qgenericatomic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobalstatic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qlogging.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qmutex.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qnamespace.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qnumeric.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qprocessordetection.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qrefcount.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qstring.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringalgorithms.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringbuilder.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringliteral.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringview.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qsysinfo.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qsystemdetection.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qtcore-config.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qversiontagging.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.cpp
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
 CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
@@ -704,6 +753,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QObject
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -712,6 +762,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
@@ -765,6 +816,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtcore-config.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qvariant.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qvarlengtharray.h
@@ -783,6 +835,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.cpp
@@ -795,6 +848,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QObject
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -803,6 +857,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
@@ -856,6 +911,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtcore-config.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qvariant.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qvarlengtharray.h
@@ -873,6 +929,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Socket.h
@@ -894,6 +951,7 @@ CMakeFiles/Client.dir/main.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextCodec
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextStream
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -902,6 +960,7 @@ CMakeFiles/Client.dir/main.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
@@ -965,6 +1024,7 @@ CMakeFiles/Client.dir/main.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextcodec.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qurl.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qurlquery.h
@@ -1066,6 +1126,7 @@ CMakeFiles/Client.dir/main.cpp.obj
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.h
