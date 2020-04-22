@@ -108,6 +108,23 @@ void EditorGUI::setModel(SharedEditor* _model) {
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i=0;
     if(!signalBlocker) {
+        // se faccio copia incolla sulla prima posizione Qt mi cancella e riscrive tutto, compreso un carattere
+        // fantasma, per evitare che vada fuori dai bordi e che cancelli e risciva tutto, servono questi 2 if:
+        // - il primo verifica se siamo nella condizione detta sopra (cancellazione di un certo numero di elementi
+        //   e inserimento di un altri
+        // - il secondo, una volta in quella situazione, se si sta facendo inserimento di qualcosa (il numero di elementi
+        //   inseriti sarà sicuramente maggiore)
+/// CI SONO ANCORA PROBLEMI SE FACCIO UNDO
+        if( pos == 0 && charsRemoved > 0 && charsAdded > 0 ){
+            if(charsAdded > charsRemoved ) {
+                charsAdded -= charsRemoved;
+                charsRemoved = 0;
+            }
+            else if( charsAdded > 1 ){
+                charsAdded--;
+                charsRemoved--;
+            }
+        }
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             for (i = 0; i < charsRemoved; i++) {
                 model->localErase(pos);

@@ -238,7 +238,7 @@ void SharedEditor::test() {
         std::cout<<std::endl;
     }*/
 
-    std::cout<<"#caratteri inseriti: "<<_symbols.size()<<std::endl;
+    std::cout<<"#caratteri inseriti: "<<_symbols.size()-2<<std::endl;
 
 }
 

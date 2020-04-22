@@ -42,11 +42,6 @@ void ServerThread::run()
     exec(); //loop degli eventi attivato qui
 }
 
-/** da modificare nella funzione recvMessage:
- *        posizione (chiave di ordinamento del vettore) oppure, qualora
- *        possibile, cercare un contenitore dell'STL che sia adatto alla
- *        ricerca (che implementi già algoritmi di ricerca ottimi)
- **/
 
 void ServerThread::recvPacket()
 {
