@@ -40,7 +40,6 @@ void EditorGUI::setUpGUI() {
 
 //    load("./file.txt");
     loadSymbols();
-
 }
 
 
@@ -148,43 +147,78 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     }
 }
 
-void EditorGUI::insertText(qint32 pos, QChar value) {
+void EditorGUI::insertText(qint32 pos, QChar value, qint32 siteId) {
     pos--;
-    auto cursor = textEdit->textCursor();
-//    cursor.movePosition(QTextCursor::MoveOperation::Start, QTextCursor::MoveMode::MoveAnchor,1);
-//    cursor.movePosition(QTextCursor::MoveOperation::NextCharacter, QTextCursor::MoveMode::MoveAnchor,pos);
-    cursor.setPosition(pos,QTextCursor::MoveMode::MoveAnchor);
+    RemoteCursor* cursor;
+
+    cursor = getRemoteCursor(siteId);
+
+    std::cout << "position:" << pos << std::endl;
+    cursor->setPosition(pos,QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
-    cursor.insertText(QString(value));
-    std::cout << "Inserito " << pos << " " << value.unicode() << std::endl;
+    cursor->insertText(QString(value));
+    std::cout << "Inserito " << value.unicode() << " in "  << pos << std::endl;
     signalBlocker = !signalBlocker;
+    updateRemoteCursors(siteId,pos, Message::insertion);
 }
 
-void EditorGUI::deleteText(qint32 pos) {
+bool EditorGUI::checkSiteId(RemoteCursor& rc, qint32 siteId){
+    return rc.getSiteId() == siteId;
+}
+
+void EditorGUI::deleteText(qint32 pos, qint32 siteId) {
     pos--;
-    auto cursor = textEdit->textCursor();
-//    cursor.movePosition(QTextCursor::MoveOperation::Start, QTextCursor::MoveMode::MoveAnchor,1);
-//    cursor.movePosition(QTextCursor::MoveOperation::NextCharacter, QTextCursor::MoveMode::MoveAnchor,pos);
-    cursor.setPosition(pos,QTextCursor::MoveMode::MoveAnchor);
+    RemoteCursor* cursor;
+
+    cursor = getRemoteCursor(siteId);
+
+    std::cout << "position:" << pos << std::endl;
+    cursor->setPosition(pos,QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
-    cursor.deleteChar();
+    cursor->deleteChar();
     std::cout << "Rimosso " << pos << std::endl;
     signalBlocker = !signalBlocker;
+    updateRemoteCursors(siteId,pos, Message::removal);
 }
 
 
-void EditorGUI::updateSymbols(qint32 pos, QChar value, const QString& action) {
-    if(action == "remove")
-        deleteText(pos);
+void EditorGUI::updateSymbols(qint32 pos, QChar value, qint32 siteId, Message::action_t action) {
+    if(action == Message::removal)
+        deleteText(pos, siteId);
     else
-        insertText(pos,value);
+        insertText(pos,value, siteId);
 }
 
-void EditorGUI::updateRemoteCursor(qint32 siteId, int pos) {
-    if (remoteCursors[siteId].isNull()) {
-        remoteCursors[siteId].setPosition(pos,QTextCursor::MoveMode::MoveAnchor);
+void EditorGUI::updateRemoteCursors(qint32 siteId, int pos, Message::action_t action) {
+    // aggiorno la posizione degli altri cursori
+
+    for(auto it = remoteCursors.begin(); it!= remoteCursors.end(); it++){
+        if(it->getSiteId()!=siteId){
+            auto newPosition = it->position();
+            if(newPosition > pos){
+                if(action == Message::insertion)
+                    it->setPosition(newPosition+1, QTextCursor::MoveAnchor);
+                else
+                    it->setPosition(newPosition-1, QTextCursor::MoveAnchor);
+            }
+        }
+    }
+}
+
+
+RemoteCursor* EditorGUI::getRemoteCursor(qint32 siteId) {
+    RemoteCursor* cursor;
+    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
+    std::for_each(remoteCursors.begin(), remoteCursors.end(), [](RemoteCursor& rc){std::cout << rc.getSiteId() << std::endl;});
+    auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor& c) {
+        std::cout << "SiteId: " << c.getSiteId() << std::endl;
+        return (c.getSiteId() == siteId);});
+    if (it == remoteCursors.end()) {
+        remoteCursors.emplace_back(textEdit->document(),siteId);
+        cursor = &remoteCursors.back();
     } else
-        remoteCursors.emplace(remoteCursors.begin()+siteId, siteId, pos);
+        cursor = (&(*it));
+    return cursor;
 }
 
 void EditorGUI::removeCursor(qint32 siteId) {

@@ -4,4 +4,13 @@
 
 #include "RemoteCursor.h"
 
-RemoteCursor::RemoteCursor(qint32 siteId, int pos) : _siteId(siteId), _pos(pos), QTextCursor() {};
+qint32 RemoteCursor::getSiteId() const {
+    return _siteId;
+}
+//
+//RemoteCursor &RemoteCursor::operator=(const RemoteCursor& source) {
+//    if(this!= &source){
+//        delete
+//    }
+//    return *this;
+//}

@@ -11,11 +11,16 @@
 #include <QtWidgets/QLabel>
 
 class RemoteCursor : public QTextCursor{
+private:
     qint32 _siteId;
-    int _pos;
+//    int _pos;
 
 public:
-    RemoteCursor(qint32 siteId, int pos);
+    RemoteCursor(): QTextCursor(){ _siteId = -1;};
+    explicit RemoteCursor(qint32 siteId) : _siteId(siteId), QTextCursor() {};
+    RemoteCursor(QTextDocument *document, qint32 siteId) : _siteId(siteId), QTextCursor(document) {};
+//    RemoteCursor& operator=(const RemoteCursor& rc);
+    qint32 getSiteId() const;
 };
 
 

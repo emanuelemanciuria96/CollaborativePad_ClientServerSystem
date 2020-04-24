@@ -22,6 +22,7 @@
 #include <QtCore/QTextStream>
 #include <QFileInfo>
 #include <QTextDocument>
+#include <algorithm>
 #include "SharedEditor.h"
 #include "RemoteCursor.h"
 
@@ -45,26 +46,29 @@ private:
     void setCurrentFileName(const QString &filename);
     bool load(const QString &f);
     void loadSymbols();
-    void updateRemoteCursor(qint32 siteId, int pos);
+    void updateRemoteCursors(qint32 siteId, int pos, Message::action_t action);
+    RemoteCursor* getRemoteCursor(qint32 siteId);
     void removeCursor(qint32 siteId);
     void fileNew();
     void fileOpen();
     void fileSave();
     void fileSaveAs();
+    void insertText(qint32 pos, QChar value, qint32 siteId);
+    void deleteText(qint32 pos, qint32 siteId);
+    static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
 
 private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);
 
 public slots:
-    void updateSymbols(qint32 pos, QChar value, const QString& action);
+    void updateSymbols(qint32 pos, QChar value, qint32 siteId, Message::action_t action);
 
 signals:
 
 public:
     EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);
-    void insertText(qint32 pos, QChar value);
-    void deleteText(qint32 pos);
+
 };
 
 

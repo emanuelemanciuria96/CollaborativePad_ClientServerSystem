@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_SharedEditor_t {
-    QByteArrayData data[13];
-    char stringdata0[105];
+    QByteArrayData data[15];
+    char stringdata0[130];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,19 +37,22 @@ QT_MOC_LITERAL(1, 13, 14), // "symbolsChanged"
 QT_MOC_LITERAL(2, 28, 0), // ""
 QT_MOC_LITERAL(3, 29, 3), // "pos"
 QT_MOC_LITERAL(4, 33, 5), // "value"
-QT_MOC_LITERAL(5, 39, 6), // "action"
-QT_MOC_LITERAL(6, 46, 5), // "test1"
-QT_MOC_LITERAL(7, 52, 10), // "recvPacket"
-QT_MOC_LITERAL(8, 63, 9), // "loginSlot"
-QT_MOC_LITERAL(9, 73, 8), // "QString&"
-QT_MOC_LITERAL(10, 82, 8), // "username"
-QT_MOC_LITERAL(11, 91, 8), // "password"
-QT_MOC_LITERAL(12, 100, 4) // "test"
+QT_MOC_LITERAL(5, 39, 6), // "siteId"
+QT_MOC_LITERAL(6, 46, 17), // "Message::action_t"
+QT_MOC_LITERAL(7, 64, 6), // "action"
+QT_MOC_LITERAL(8, 71, 5), // "test1"
+QT_MOC_LITERAL(9, 77, 10), // "recvPacket"
+QT_MOC_LITERAL(10, 88, 9), // "loginSlot"
+QT_MOC_LITERAL(11, 98, 8), // "QString&"
+QT_MOC_LITERAL(12, 107, 8), // "username"
+QT_MOC_LITERAL(13, 116, 8), // "password"
+QT_MOC_LITERAL(14, 125, 4) // "test"
 
     },
     "SharedEditor\0symbolsChanged\0\0pos\0value\0"
-    "action\0test1\0recvPacket\0loginSlot\0"
-    "QString&\0username\0password\0test"
+    "siteId\0Message::action_t\0action\0test1\0"
+    "recvPacket\0loginSlot\0QString&\0username\0"
+    "password\0test"
 };
 #undef QT_MOC_LITERAL
 
@@ -67,21 +70,21 @@ static const uint qt_meta_data_SharedEditor[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    3,   39,    2, 0x06 /* Public */,
-       6,    0,   46,    2, 0x06 /* Public */,
+       1,    4,   39,    2, 0x06 /* Public */,
+       8,    0,   48,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    0,   47,    2, 0x08 /* Private */,
-       8,    2,   48,    2, 0x0a /* Public */,
-      12,    0,   53,    2, 0x0a /* Public */,
+       9,    0,   49,    2, 0x08 /* Private */,
+      10,    2,   50,    2, 0x0a /* Public */,
+      14,    0,   55,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::Int, QMetaType::QChar, QMetaType::QString,    3,    4,    5,
+    QMetaType::Void, QMetaType::Int, QMetaType::QChar, QMetaType::Int, 0x80000000 | 6,    3,    4,    5,    7,
     QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 9, 0x80000000 | 9,   10,   11,
+    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 11,   12,   13,
     QMetaType::Void,
 
        0        // eod
@@ -93,7 +96,7 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         auto *_t = static_cast<SharedEditor *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->symbolsChanged((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QChar(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
+        case 0: _t->symbolsChanged((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QChar(*)>(_a[2])),(*reinterpret_cast< qint32(*)>(_a[3])),(*reinterpret_cast< Message::action_t(*)>(_a[4]))); break;
         case 1: _t->test1(); break;
         case 2: _t->recvPacket(); break;
         case 3: _t->loginSlot((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
@@ -103,7 +106,7 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (SharedEditor::*)(qint32 , QChar , const QString & );
+            using _t = void (SharedEditor::*)(qint32 , QChar , qint32 , Message::action_t );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::symbolsChanged)) {
                 *result = 0;
                 return;
@@ -160,9 +163,9 @@ int SharedEditor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void SharedEditor::symbolsChanged(qint32 _t1, QChar _t2, const QString & _t3)
+void SharedEditor::symbolsChanged(qint32 _t1, QChar _t2, qint32 _t3, Message::action_t _t4)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t4))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 

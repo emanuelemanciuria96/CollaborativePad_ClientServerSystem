@@ -43,7 +43,7 @@ public slots:
     void test();
 
 signals:
-    void symbolsChanged(qint32 pos, QChar value, const QString& action);
+    void symbolsChanged(qint32 pos, QChar value, qint32 siteId, Message::action_t action);
 
     void test1();
 

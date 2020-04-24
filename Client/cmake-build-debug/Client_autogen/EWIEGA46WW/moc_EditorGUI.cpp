@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EditorGUI_t {
-    QByteArrayData data[9];
-    char stringdata0[81];
+    QByteArrayData data[11];
+    char stringdata0[106];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -40,12 +40,14 @@ QT_MOC_LITERAL(4, 30, 12), // "charsRemoved"
 QT_MOC_LITERAL(5, 43, 10), // "charsAdded"
 QT_MOC_LITERAL(6, 54, 13), // "updateSymbols"
 QT_MOC_LITERAL(7, 68, 5), // "value"
-QT_MOC_LITERAL(8, 74, 6) // "action"
+QT_MOC_LITERAL(8, 74, 6), // "siteId"
+QT_MOC_LITERAL(9, 81, 17), // "Message::action_t"
+QT_MOC_LITERAL(10, 99, 6) // "action"
 
     },
     "EditorGUI\0contentsChange\0\0pos\0"
     "charsRemoved\0charsAdded\0updateSymbols\0"
-    "value\0action"
+    "value\0siteId\0Message::action_t\0action"
 };
 #undef QT_MOC_LITERAL
 
@@ -64,11 +66,11 @@ static const uint qt_meta_data_EditorGUI[] = {
 
  // slots: name, argc, parameters, tag, flags
        1,    3,   24,    2, 0x08 /* Private */,
-       6,    3,   31,    2, 0x0a /* Public */,
+       6,    4,   31,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,    3,    4,    5,
-    QMetaType::Void, QMetaType::Int, QMetaType::QChar, QMetaType::QString,    3,    7,    8,
+    QMetaType::Void, QMetaType::Int, QMetaType::QChar, QMetaType::Int, 0x80000000 | 9,    3,    7,    8,   10,
 
        0        // eod
 };
@@ -80,7 +82,7 @@ void EditorGUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->contentsChange((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 1: _t->updateSymbols((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QChar(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
+        case 1: _t->updateSymbols((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QChar(*)>(_a[2])),(*reinterpret_cast< qint32(*)>(_a[3])),(*reinterpret_cast< Message::action_t(*)>(_a[4]))); break;
         default: ;
         }
     }
