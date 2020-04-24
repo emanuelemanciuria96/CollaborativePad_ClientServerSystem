@@ -19,9 +19,9 @@ void Transceiver::run() {
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
 
     timer = new QTimer();
-    timer->setSingleShot(true);
+    //timer->setSingleShot(true);
     connect(timer,SIGNAL(timeout()),this,SLOT(sendAllMessages()));
-
+    timer->start(std::chrono::milliseconds(500));
     exec(); //loop degli eventi attivato qui
 }
 
@@ -127,20 +127,25 @@ void Transceiver::sendPacket(DataPacket pkt){
 
 void Transceiver::sendAllMessages() {
 
-    firstMessage = true;
+            if(messages.size()>0) {
+                QDataStream out;
+                out.setDevice(socket);
+                out.setVersion(QDataStream::Qt_5_5);
 
-    QDataStream out;
-    out.setDevice(socket);
-    out.setVersion(QDataStream::Qt_5_5);
+                qint32 siteID = messages[0].getSiteId();
+                auto *strMess = new StringMessages(messages, siteID);
+                DataPacket pkt(siteID, 0, DataPacket::textTyping, strMess);
+                out << pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
+                    strMess->getSiteId() << strMess->getFormattedMessages();
 
-    qint32 siteID = messages[0].getSiteId();
-    auto *strMess = new StringMessages(messages,siteID);
-    DataPacket pkt(siteID,0,DataPacket::textTyping,strMess);
-    out << pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
-         strMess->getSiteId() << strMess->getFormattedMessages() ;
+                std::cout << "sent all, chars: " << strMess->getFormattedMessages().size() << std::endl;
+                socket->waitForBytesWritten(-1);
+            }
 
-    std::cout<<"messages sent all at once: "<<messages.size()<<std::endl;
-    messages.clear();
+        timer->start(std::chrono::milliseconds(200));
+
+
+
 
 /*
     qint32 num=ptr->getSymbol().getPos().size();
@@ -150,19 +155,12 @@ void Transceiver::sendAllMessages() {
         out << (qint32) i;
 */
 
-    socket->waitForBytesWritten(-1);
+
 }
 
 
 void Transceiver::sendMessage(DataPacket& packet) {
-
-    if(firstMessage){
-        timer->start(std::chrono::milliseconds(200));
-        firstMessage = false;
-    }
-
-    messages.push_back(*std::dynamic_pointer_cast<Message>(packet.getPayload()));
-
+        messages.push_back(*std::dynamic_pointer_cast<Message>(packet.getPayload()));
 }
 
 void Transceiver::sendLoginInfo(DataPacket& packet){
