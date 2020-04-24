@@ -10,14 +10,14 @@
 #include <QtCore/QObject>
 #include "Payload.h"
 
-class DataPacket: public  QObject {
+class DataPacket: QObject {
     Q_OBJECT
 public:
     typedef enum Constants
     {
-        textTyping = 1,
-        login = 2,
-        command = 3,
+        textTyping = 0,
+        login = 1,
+        command = 2,
     }data_t;
 
     DataPacket();

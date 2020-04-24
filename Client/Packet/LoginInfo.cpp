@@ -6,7 +6,7 @@
 
 #include <utility>
 
-LoginInfo::LoginInfo(qint32 siteId, type_t type, QString user, QString password) : Payload(siteId),
+LoginInfo::LoginInfo(qint32 siteId, qint32 type, QString user, QString password) : Payload(siteId),
                                                                                                  _user(std::move(user)),
                                                                                                  _type(type),
                                                                                                  _password(std::move(password)) {}
@@ -27,10 +27,10 @@ void LoginInfo::setPassword( QString password) {
     _password = password;
 }
 
-LoginInfo::type_t LoginInfo::getType() {
+qint32 LoginInfo::getType() {
     return _type;
 }
 
-void LoginInfo::setType(type_t type) {
+void LoginInfo::setType(qint32 type) {
     _type = type;
 }

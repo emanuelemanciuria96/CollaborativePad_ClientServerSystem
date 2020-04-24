@@ -7,24 +7,18 @@
 
 #include <QtGlobal>
 #include <memory>
-#include <QtCore/QObject>
 #include "Payload.h"
 
-class DataPacket : public QObject{
-    Q_OBJECT
+class DataPacket {
 public:
     typedef enum Constants
     {
-        textTyping = 1,
-        login = 2,
-        command = 3,
+        textTyping = 0,
+        login = 1,
+        command = 2,
     }data_t;
 
-    DataPacket();
-    DataPacket(qint32 source, quint32 errcode, data_t typeOfData,Payload* pl= nullptr,QObject *parent = 0);
-    DataPacket(const DataPacket& packet);
-    ~DataPacket() = default;
-
+    DataPacket(qint32 source, quint32 errcode, data_t typeOfData,Payload* pl= nullptr);
     qint32 getSource() const;
     void setSource(qint32 source);
     quint32 getErrcode() const;
@@ -40,6 +34,5 @@ private:
     std::shared_ptr<Payload> payload;
 };
 
-Q_DECLARE_METATYPE(DataPacket);
 
 #endif //SHAREDEDITORSERVER_DATAPACKET_H
