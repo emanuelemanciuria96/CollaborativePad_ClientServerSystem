@@ -38,8 +38,6 @@ private:
 
     Socket *socket;
     qintptr socketDescriptor;
-
-    bool firstMessage = true;
     QTimer *timer;
 
     qint32 connectToServer();
@@ -48,7 +46,9 @@ private:
     void sendMessage(DataPacket& pkt);
     void recvLoginInfo(DataPacket& pkt, QDataStream& in);
     void recvMessage(DataPacket& pkt,QDataStream& in);
+
 };
 
 
 #endif //CLIENT_TRANSCEIVER_H
+
