@@ -77,8 +77,17 @@ std::vector<Message> StringMessages::stringToMessages() {
 }
 
 QString StringMessages::messagesToString(std::vector<Message> &vm) {
+    std::vector<Message> vmCopy;
+    int min=this->numMessages;
+    if (min > vm.size()) {
+        min = vm.size();
+    }
+    for (int i = 0; i < min; i++) {
+        vmCopy.push_back(vm[i]);
+    }
+    vm.erase(vm.begin(), vm.begin() + min);
     formattedMessages = "";
-    for (auto m: vm) {
+    for (auto m: vmCopy) {
         formattedMessages.append(messageToString(m));
         formattedMessages.append(messages_separator);
     }
@@ -91,4 +100,5 @@ QString StringMessages::appendMessage(Message &m){
 
     return formattedMessages;
 }
+
 
