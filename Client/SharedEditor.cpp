@@ -197,7 +197,7 @@ void SharedEditor::processMessage(Message &m) {
         pos = i - _symbols.begin();
         _symbols.insert(i,m.getSymbol());
 
-        emit symbolsChanged(pos, m.getSymbol().getValue(), "insert");
+        emit symbolsChanged(pos, m.getSymbol().getValue(), m.getSiteId(),Message::insertion);
     }
     else if ( Message::removal == m.getAction() ) {
 
@@ -206,7 +206,7 @@ void SharedEditor::processMessage(Message &m) {
 
         if( *i == m.getSymbol() ) {
             _symbols.erase(i);
-            emit symbolsChanged(pos, m.getSymbol().getValue(), "remove");
+            emit symbolsChanged(pos, m.getSymbol().getValue(),m.getSiteId(), Message::removal);
         }
         else
             throw std::exception(); //errore fatale
