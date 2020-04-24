@@ -35,7 +35,7 @@ signals:
 
 private:
     std::vector<Message> messages;
-
+    bool firstMessage = true;
     Socket *socket;
     qintptr socketDescriptor;
     QTimer *timer;
