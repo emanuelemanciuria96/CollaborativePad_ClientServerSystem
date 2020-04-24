@@ -114,7 +114,7 @@ void SharedEditor::loginSlot(QString& username, QString& password) {
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
 }
-
+#include <string>
 void SharedEditor::localInsert(qint32 index, QChar value) {
 
     if ( index > _symbols.size() - 2 ){
@@ -140,7 +140,9 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
 }
 
 void SharedEditor::localErase(qint32 index) {
-
+    if(index==0){
+        std::cout<<"text size: "<<_symbols.size()<<std::endl;
+    }
     if ( index > _symbols.size() - 2 ){
         throw "fuori dai limiti"; //da implementare classe eccezione
     }
@@ -238,7 +240,7 @@ void SharedEditor::test() {
         std::cout<<std::endl;
     }*/
 
-    std::cout<<"#caratteri inseriti: "<<_symbols.size()-2<<std::endl;
+    //std::cout<<"#caratteri inseriti: "<<_symbols.size()-2<<std::endl;
 
 }
 
@@ -246,6 +248,7 @@ void SharedEditor::deleteThread() {
     transceiver->deleteLater();
     exit(-1);
 }
+
 
 
 
