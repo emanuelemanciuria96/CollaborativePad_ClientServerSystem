@@ -140,9 +140,6 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
 }
 
 void SharedEditor::localErase(qint32 index) {
-    if(index==0){
-        std::cout<<"text size: "<<_symbols.size()<<std::endl;
-    }
     if ( index > _symbols.size() - 2 ){
         throw "fuori dai limiti"; //da implementare classe eccezione
     }
