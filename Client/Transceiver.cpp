@@ -140,6 +140,7 @@ void Transceiver::sendAllMessages() {
     DataPacket pkt(siteID,0,DataPacket::textTyping,strMess);
     out << pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
          strMess->getSiteId() << strMess->getFormattedMessages() ;
+    socket->waitForBytesWritten(-1);
 
     if( !messages.empty() ) {
         timer->start(std::chrono::milliseconds(100));
