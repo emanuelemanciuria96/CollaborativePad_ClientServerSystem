@@ -46,8 +46,10 @@ private:
     const int items_separatorSize=items_separator.size();
     const int pos_separatorSize=pos_separator.size();
 
+    const int numMessages=200;
     QString formattedMessages;
 
 };
 
 #endif //SHAREDEDITORSERVER_STRINGMESSAGES_H
+
