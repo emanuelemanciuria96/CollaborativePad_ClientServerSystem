@@ -18,6 +18,11 @@
 			"EWIEGA46WW/moc_LoginDialog.cpp"
 		],
 		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Command.h",
+			"MU",
+			"G2NQOARGLM/moc_Command.cpp"
+		],
+		[
 			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h",
 			"MU",
 			"G2NQOARGLM/moc_DataPacket.cpp"
@@ -122,6 +127,10 @@
 		],
 		[
 			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.cpp",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Command.cpp",
 			"MU"
 		],
 		[

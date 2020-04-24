@@ -216,6 +216,33 @@ LoginDialog.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/LoginDialog.cpp.s
 .PHONY : LoginDialog.cpp.s
 
+Packet/Command.obj: Packet/Command.cpp.obj
+
+.PHONY : Packet/Command.obj
+
+# target to build an object file
+Packet/Command.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Command.cpp.obj
+.PHONY : Packet/Command.cpp.obj
+
+Packet/Command.i: Packet/Command.cpp.i
+
+.PHONY : Packet/Command.i
+
+# target to preprocess a source file
+Packet/Command.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Command.cpp.i
+.PHONY : Packet/Command.cpp.i
+
+Packet/Command.s: Packet/Command.cpp.s
+
+.PHONY : Packet/Command.s
+
+# target to generate assembly for a file
+Packet/Command.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Command.cpp.s
+.PHONY : Packet/Command.cpp.s
+
 Packet/DataPacket.obj: Packet/DataPacket.cpp.obj
 
 .PHONY : Packet/DataPacket.obj
@@ -451,6 +478,9 @@ help:
 	@echo ... LoginDialog.obj
 	@echo ... LoginDialog.i
 	@echo ... LoginDialog.s
+	@echo ... Packet/Command.obj
+	@echo ... Packet/Command.i
+	@echo ... Packet/Command.s
 	@echo ... Packet/DataPacket.obj
 	@echo ... Packet/DataPacket.i
 	@echo ... Packet/DataPacket.s
