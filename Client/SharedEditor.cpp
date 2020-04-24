@@ -150,7 +150,7 @@ void SharedEditor::process(const Message &m) {
             else break;
 
         _symbols.insert(_symbols.begin()+pos,m.getSymbol());
-        emit symbolsChanged(pos, m.getSymbol().getValue(), m.getSiteId(),Message::insertion);
+        emit symbolsChanged(pos, m.getSymbol().getValue(), "insert");
     }
     else if ( Message::removal == m.getAction() ) {
         qint32 pos = 0;
@@ -163,7 +163,7 @@ void SharedEditor::process(const Message &m) {
 
         if( pos != _symbols.size()) {
             _symbols.erase(_symbols.begin() + pos);
-            emit symbolsChanged(pos, m.getSymbol().getValue(),m.getSiteId(), Message::removal);
+            emit symbolsChanged(pos, m.getSymbol().getValue(), "remove");
         }
     }
 

@@ -512,43 +512,6 @@ CMakeFiles/Client.dir/LoginDialog.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qwidget.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.cpp
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.h
-CMakeFiles/Client.dir/Packet/Command.cpp.obj
- C:/Qt/5.13.1/mingw73_64/include/QtCore/QString
- C:/Qt/5.13.1/mingw73_64/include/QtCore/QtGlobal
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qarraydata.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic_bootstrap.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic_cxx11.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic_msvc.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qbasicatomic.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qbytearray.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qchar.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qcompilerdetection.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qconfig-bootstrapped.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qconfig.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qflags.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qgenericatomic.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qglobal.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qglobalstatic.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qlogging.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qmutex.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qnamespace.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qnumeric.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qprocessordetection.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qrefcount.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qstring.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qstringalgorithms.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qstringbuilder.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qstringliteral.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qstringview.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qsysinfo.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qsystemdetection.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qtcore-config.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qtypeinfo.h
- C:/Qt/5.13.1/mingw73_64/include/QtCore/qversiontagging.h
- C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Command.cpp
- C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Command.h
- C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Payload.h
 CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QString
  C:/Qt/5.13.1/mingw73_64/include/QtCore/QtGlobal

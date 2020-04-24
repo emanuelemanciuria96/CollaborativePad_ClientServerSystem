@@ -130,12 +130,6 @@
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Command.cpp">
-			<Option target="Client"/>
-		</Unit>
-		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Command.h">
-			<Option target="Client"/>
-		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/DataPacket.cpp">
 			<Option target="Client"/>
 		</Unit>

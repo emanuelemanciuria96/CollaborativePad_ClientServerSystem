@@ -5,7 +5,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj"
   "CMakeFiles/Client.dir/EditorGUI.cpp.obj"
   "CMakeFiles/Client.dir/LoginDialog.cpp.obj"
-  "CMakeFiles/Client.dir/Packet/Command.cpp.obj"
   "CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj"
   "CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj"
   "CMakeFiles/Client.dir/Packet/Message.cpp.obj"
