@@ -23,7 +23,7 @@ class ServerThread : public QThread{
 Q_OBJECT
 
 public:
-    explicit ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent =0);
+    explicit ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent =0);
     void run() override;
 
 signals:
