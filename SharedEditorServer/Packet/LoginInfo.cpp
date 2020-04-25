@@ -41,16 +41,25 @@ qint32 LoginInfo::login() {
     sqldb.openDB();
     std::string query;
 
-    query = "SELECT * FROM LOGIN WHERE USER='"+_user.toStdString()+"'";
+    query = "SELECT PASS, SITEID FROM LOGIN WHERE USER='"+_user.toStdString()+"'";
     sqldb.query(query);
     sqldb.closeDB();
-    if(_password.toStdString() == sqldb.getResult()["PASS"]) {
-        _type = LoginInfo::login_ok;
-        _siteID = std::stoi(sqldb.getResult()["SITEID"]);
-        _user = "";
-        _password = "";
-        return _siteID;
-    } else {
+
+    if(sqldb.getResult().find("PASS") == sqldb.getResult().end()) {
+        if (_password == sqldb.getResult()["PASS"].first()) {
+            _type = LoginInfo::login_ok;
+            _siteID = sqldb.getResult()["SITEID"].first().toInt();
+            _user = "";
+            _password = "";
+            return _siteID;
+        } else {
+            _type = LoginInfo::login_error;
+            _siteID = -1;
+            _user = "";
+            _password = "";
+            return -1;
+        }
+    }else {
         _type = LoginInfo::login_error;
         _siteID = -1;
         _user = "";

@@ -3,14 +3,75 @@
 //
 
 #include "Command.h"
+#include "../database/DBSql.h"
 
-Command::Command(qint32 siteID, Command::cmd_t cmd, QString& arg1, QString& arg2):Payload(siteID),
-                cmd(cmd),arg1(arg1){
-    /// Visto che penso sia quasi impossibile che  si possa inviare il valore
-    /// nullptr attraverso il socket, penso che per segnalare che non ci sia
-    /// nessun secondo argomento, sia opportuno ideare una stringa che non possa
-    /// essere un argomento come, ad esempio, "\!\" o robe del genere
-    if(arg2 == "\\!\\")
-        this->arg2 = nullptr;
-    else this->arg2 = arg2;
+#include <utility>
+
+Command::Command(qint32 siteId, Command::cmd_t cmd, QVector<QString> args) : Payload(siteId), _cmd(cmd),
+                                                                                    _args(std::move(args)) {}
+
+Command::cmd_t Command::getCmd() const {
+    return _cmd;
 }
+
+void Command::setCmd(Command::cmd_t cmd) {
+    this->_cmd = cmd;
+}
+
+const QVector<QString> &Command::getArgs() const {
+    return _args;
+}
+
+void Command::setArgs(const QVector<QString> &args) {
+    _args = args;
+}
+
+const QString &Command::getCurrentDirectory() const {
+    return _currentDirectory;
+}
+
+void Command::setCurrentDirectory(const QString &directory) {
+    _currentDirectory = directory;
+}
+
+QVector<QString> Command::getDirectories(QString& user, QString& directory) {
+    QVector<QString> directories;
+    QString local;
+    DBSql sqldb("ciao_directories.db");
+    sqldb.openDB();
+    std::string query;
+    int count = 0;
+    int i = 0;
+
+    query = "SELECT * FROM DIRECTORIES";
+    sqldb.query(query);
+    if(sqldb.getResult().find("DIRECTORY") == sqldb.getResult().end())
+        return directories;
+
+    if(!directory.endsWith("/"))
+        local = directory+"/";
+    else
+        local = directory;
+
+    while((i = local.indexOf("/", i)) != -1) {
+        ++count;
+        i++;
+    }
+    directories = sqldb.getResult()["DIRECTORY"];
+    for(const auto& s: directories){
+        std::cout << s.toStdString() << std::endl;
+    }
+    directories.erase(std::remove_if(directories.begin(), directories.end(), [local, count](const QString& str) {
+        int j = 0;
+        int k = 0;
+        while ((j = str.indexOf("/", j)) != -1) {
+            ++j;
+            k++;
+        }
+        return (k>count || !str.startsWith(local));
+    }), directories.end());
+
+    return directories;
+}
+
+

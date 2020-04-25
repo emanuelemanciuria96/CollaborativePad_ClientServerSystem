@@ -11,6 +11,8 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <QtCore/QString>
+#include <QtCore/QVector>
 #include "sqlite3.h"
 
 
@@ -25,8 +27,7 @@ private:
 
     // vettore (mappa) contenente la prima riga dell'ultima query eseguita
     // vuoto se la query non è una select oppure se il risultato è nullo
-    std::map<std::string, std::string> result;
-
+    std::map<QString, QVector<QString>> result;
 
     void printTableResult(std::string query);
     void updateResult(int cols);
@@ -36,8 +37,7 @@ public:
     void openDB();
     void query(std::string query, bool debug=0); // se debug=1 stampa la tabella risultante
     void closeDB();
-    std::map<std::string,std::string> getResult();
-
+    std::map<QString,QVector<QString>> getResult();
     static void initialize(){// ESEMPIO DI UTILIZZO
 
         // se non si indica la directory completa il db viene salvato
@@ -53,7 +53,7 @@ public:
          "SITEID    INT                 NOT NULL);";
         sqldb.query(query);
 
-        query = "DELETE FROM PEOPLE"; //Svuoto la tabella in caso di test multipli
+        query = "DELETE FROM LOGIN"; //Svuoto la tabella in caso di test multipli
         sqldb.query(query);
 
         query = "INSERT INTO LOGIN ('USER', 'PASS', 'SITEID') VALUES ('ciao', 'suca', '5');";
@@ -62,10 +62,34 @@ public:
         query = "SELECT * FROM LOGIN";
         sqldb.query(query,1);//Print full table
 
-        query = "SELECT PASS FROM LOGIN WHERE USER='ciao'";
-        sqldb.query(query);
-
         sqldb.closeDB();
+
+        DBSql sqldb1("ciao_directories.db");
+        sqldb1.openDB();
+
+        query = "CREATE TABLE DIRECTORIES ("  \
+         "DIRECTORY      TEXT PRIMARY KEY     NOT NULL);";
+        sqldb1.query(query);
+
+        query = "DELETE FROM DIRECTORIES"; //Svuoto la tabella in caso di test multipli
+        sqldb1.query(query);
+
+        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('/Documenti>D');";
+        sqldb1.query(query);
+
+        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('/Nuovo documento>F');";
+        sqldb1.query(query);
+
+        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('/Nuova cartella>D');";
+        sqldb1.query(query);
+
+        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('/Nuova cartella/file>F');";
+        sqldb1.query(query);
+
+        query = "SELECT * FROM DIRECTORIES";
+        sqldb1.query(query,1);//Print full table
+
+        sqldb1.closeDB();
     }// ESEMPIO DI UTILIZZO
 };
 

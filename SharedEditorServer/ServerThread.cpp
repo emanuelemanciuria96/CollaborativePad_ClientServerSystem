@@ -23,7 +23,6 @@ std::vector<std::pair<Socket*,std::mutex*>> ServerThread::_sockets; //qui ci son
 ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent):QThread(parent){
     this->socketDescriptor = socketDescriptor;
     this->msgHandler = std::shared_ptr<MessageHandler>(msgHandler);
-    this->isLogged = false;
 }
 
 void ServerThread::run()
@@ -102,12 +101,12 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 
     in >> siteId >> type >> user >> password;
 
-    if(type == LoginInfo::login_request && !isLogged) {
+    if(type == LoginInfo::login_request && isLogged.isNull()) {
         auto shr = std::make_shared<LoginInfo>( -1, type, user, password);
         packet.setPayload(shr);
         if (shr.get()->login() != -1) {
             std::cout << "client successfully logged!" << std::endl;
-            isLogged = true;                                               //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
+            isLogged = shr->getUser();                                               //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
             sendPacket(packet);                           //non fa nulla, non risponde con messaggi di errore
             {
                 std::lock_guard lg(skt_mutex);
@@ -140,7 +139,7 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
         pos.push_back(p);
     }
 
-    if(isLogged) {                                          //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
+    if(!isLogged.isEmpty()) {                                          //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
         Symbol sym(ch, siteIdS, count, pos);            //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
         packet.setPayload( std::make_shared<Message>((Message::action_t) action, siteIdM, sym) );
         auto msg = *std::dynamic_pointer_cast<Message>(packet.getPayload());
@@ -183,12 +182,40 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
 void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
     qint32 siteId;
     quint32 cmd;
-    QString arg1;
-    QString arg2;
+    QVector<QString> args;
 
-    in >> siteId >> cmd >> arg1 >> arg2;
-    packet.setPayload( std::make_shared<Command>(siteId,(Command::cmd_t)cmd,arg1,arg2));
+    in >> siteId >> cmd >> args;
+    packet.setPayload( std::make_shared<Command>(siteId,(Command::cmd_t)cmd,std::move(args)));
 
+    switch(cmd){
+        case (Command::cd):{
+
+            break;
+        }
+
+        case (Command::rm):{
+            break;
+        }
+
+        case (Command::cp):{
+            break;
+        }
+
+        case (Command::mv):{
+            break;
+        }
+
+        case (Command::opn):{
+            break;
+        }
+
+        case (Command::cls):{
+            break;
+        }
+
+        default:
+            std::cout << "Coglione errore nel Command" << std::endl;
+    }
 }
 
 void ServerThread::sendPacket(DataPacket packet, std::mutex *mtx){
@@ -207,7 +234,7 @@ void ServerThread::sendPacket(DataPacket packet, std::mutex *mtx){
         }
 
         case (DataPacket::command): {
-
+            sendCommand(packet, mtx);
             break;
         }
 
@@ -246,6 +273,16 @@ void ServerThread::sendMessage(DataPacket& packet,std::mutex* mtx){
             out << (qint32) i;
         socket->waitForBytesWritten(-1);
     }
+}
+
+void ServerThread::sendCommand(DataPacket& packet, std::mutex *mtx){
+    QDataStream out;
+    out.setDevice(socket);
+    out.setVersion(QDataStream::Qt_5_5);
+
+    auto ptr = std::dynamic_pointer_cast<Command>(packet.getPayload());
+    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
 }
 
 void ServerThread::QTsaveFileJson(const std::string& dir,std::vector<Symbol> _symbols){

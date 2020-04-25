@@ -48,9 +48,9 @@ private:
 
     void sendLoginInfo(DataPacket& packet, std::mutex *mtx = nullptr);
     void sendMessage(DataPacket& packet, std::mutex *mtx);
+    void sendCommand(DataPacket& packet, std::mutex *mtx = nullptr);
 
-
-    bool isLogged;
+    QString isLogged;
 
     void saveFileJson(std::string dir,std::vector<Symbol> _symbols);
     std::vector<Symbol> loadFileJson(std::string dir);
