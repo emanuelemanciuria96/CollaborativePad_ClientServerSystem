@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/MessageHandler.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.h
 thread
 -
 Packet/Message.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Message.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
 functional
 -
 queue
@@ -20,13 +20,13 @@ mutex
 condition_variable
 -
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/NetworkServer.cpp
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.cpp
 NetworkServer.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/NetworkServer.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.h
 QApplication
 -
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/NetworkServer.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.h
 iostream
 -
 QObject
@@ -44,25 +44,25 @@ thread
 shared_mutex
 -
 Packet/Symbols/Symbol.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Symbols/Symbol.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
 ServerThread.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/ServerThread.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/ServerThread.h
 Packet/DataPacket.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/DataPacket.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
 Packet/Message.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Message.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
 MessageHandler.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/MessageHandler.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.h
 QtCore/QPointer
 -
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Command.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Command.h
 QtCore/QString
 -
 Payload.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Payload.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/DataPacket.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
 QtGlobal
 -
 memory
@@ -70,41 +70,41 @@ memory
 QtCore/QObject
 -
 Payload.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Payload.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/LoginInfo.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/LoginInfo.h
 QtGlobal
 -
 QtCore/QString
 -
 Payload.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Payload.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
 fstream
 -
 ../json/json.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/json/json.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/json.h
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Message.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
 Payload.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Payload.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
 Symbols/Symbol.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Symbols/Symbol.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
 vector
 -
 QtGlobal
 -
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Payload.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
 QtGlobal
 -
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/StringMessages.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/StringMessages.h
 Payload.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Payload.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h
 Symbols/Symbol.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Symbols/Symbol.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
 Message.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Message.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
 vector
 -
 QtGlobal
@@ -114,11 +114,11 @@ string
 QString
 -
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Symbols/SymId.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/SymId.h
 QtGlobal
 -
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Symbols/Symbol.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
 vector
 -
 QtGlobal
@@ -126,13 +126,13 @@ QtGlobal
 QChar
 -
 SymId.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Symbols/SymId.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/SymId.h
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/ServerThread.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/ServerThread.h
 Packet/DataPacket.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/DataPacket.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
 Packet/StringMessages.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/StringMessages.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/StringMessages.h
 QThread
 -
 QTcpSocket
@@ -142,31 +142,31 @@ QtCore/QMutex
 shared_mutex
 -
 NetworkServer.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/NetworkServer.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.h
 Packet/Symbols/Symbol.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Symbols/Symbol.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h
 Packet/Message.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Message.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h
 Packet/LoginInfo.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/LoginInfo.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/LoginInfo.h
 Packet/Command.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/Command.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Command.h
 MessageHandler.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/MessageHandler.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.h
 Socket.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Socket.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Socket.h
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Socket.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Socket.h
 QTcpSocket
 -
 mutex
 -
 Packet/DataPacket.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/Packet/DataPacket.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h
 QObject
 -
 
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/json/json.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/json.h
 cstring
 -
 memory
@@ -188,15 +188,15 @@ string
 type_traits
 -
 allocator.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/json/allocator.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/allocator.h
 version.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/json/version.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/version.h
 config.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/json/config.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/config.h
 forwards.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/json/forwards.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/forwards.h
 forwards.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/json/forwards.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/forwards.h
 array
 -
 exception
@@ -210,9 +210,9 @@ string
 vector
 -
 json_features.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/json/json_features.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/json_features.h
 value.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/json/value.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/value.h
 deque
 -
 iosfwd
@@ -224,7 +224,7 @@ stack
 string
 -
 value.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/json/value.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/value.h
 ostream
 -
 string
@@ -236,7 +236,7 @@ cstdlib
 sstream
 -
 config.h
-D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/json/config.h
+D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/config.h
 
 D:/Qt/5.12.3/mingw73_64/include/QtCore/QChar
 qchar.h

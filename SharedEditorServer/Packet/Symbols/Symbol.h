@@ -26,6 +26,8 @@ public:
     }
     bool operator<(Symbol s){
         return _pos<s._pos || (_pos==s._pos && _symId < s._symId); }
+    bool operator>(Symbol s){
+        return _pos>s._pos || (_pos==s._pos && _symId > s._symId); }
     std::vector<quint32> getPos(){ return _pos; }
     void setPos(std::vector<quint32>& pos){ _pos = pos; }
     QChar getValue() { return _ch; }

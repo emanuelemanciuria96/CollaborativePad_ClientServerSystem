@@ -33,6 +33,8 @@ QString StringMessages::messageToString(Message& m){
         s.append(pos_separator);
     }
     s.append(items_separator);
+    s.append(QString::number(m.getLocalIndex()));
+    s.append(items_separator);
     return s;
 }
 
@@ -61,8 +63,9 @@ Message StringMessages::stringToMessage(QString s) {
     for(int i=0;i<vec_pos.size();i++){
         pos.push_back(vec_pos[i].toUInt());
     }
+    qint32 index=vec_items[5].toUInt();
     Symbol sym(ch,siteId,count,pos);
-    Message msg(vec_items[0] == "1" ? Message::insertion : Message::removal, siteId, sym);
+    Message msg(vec_items[0] == "1" ? Message::insertion : Message::removal, siteId, sym,index);
     return msg;
 }
 
@@ -78,17 +81,24 @@ std::vector<Message> StringMessages::stringToMessages() {
 
 QString StringMessages::messagesToString(std::vector<Message> &vm) {
     formattedMessages = "";
-    for (auto m: vm) {
-        formattedMessages.append(messageToString(m));
+    int index=0;
+    for (int i=0;i<vm.size();i++) {
+        index=index+1;
+        formattedMessages.append(messageToString(vm[i]));
         formattedMessages.append(messages_separator);
+        if(formattedMessages.size()>maxChar){
+            break;
+        }
     }
+    vm.erase(vm.begin(), vm.begin() + index);
     return formattedMessages;
 }
 
 QString StringMessages::appendMessage(Message &m){
     formattedMessages.append(messageToString(m));
     formattedMessages.append(messages_separator);
-
     return formattedMessages;
 }
+
+
 

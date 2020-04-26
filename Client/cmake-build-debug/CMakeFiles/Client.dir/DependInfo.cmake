@@ -4,18 +4,18 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp" "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj"
-  "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/EditorGUI.cpp" "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client.dir/EditorGUI.cpp.obj"
-  "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/LoginDialog.cpp" "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj"
-  "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/DataPacket.cpp" "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj"
-  "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/LoginInfo.cpp" "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj"
-  "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Message.cpp" "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Message.cpp.obj"
-  "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Payload.cpp" "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Payload.cpp.obj"
-  "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/StringMessages.cpp" "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj"
-  "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Symbols/Symbol.cpp" "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj"
-  "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/SharedEditor.cpp" "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj"
-  "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Transceiver.cpp" "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client.dir/Transceiver.cpp.obj"
-  "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/main.cpp" "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/EditorGUI.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/EditorGUI.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/LoginDialog.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/DataPacket.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Message.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Message.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Payload.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Payload.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/StringMessages.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/SharedEditor.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Transceiver.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Transceiver.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/main.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

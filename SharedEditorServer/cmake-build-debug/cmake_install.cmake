@@ -1,4 +1,4 @@
-# Install script for directory: D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer
+# Install script for directory: D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/SharedEditorServer/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
