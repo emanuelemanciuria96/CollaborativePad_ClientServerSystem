@@ -234,7 +234,6 @@ void SharedEditor::processMessages(StringMessages &strMess) {
         s += std::get<2>(vt[i]);
         if(std::get<1>(vt[i])==1) {
             if (std::get<1>(vt[i+1])==1 and std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 1) {
-                int a = 0;
             } else {
                 //qDebug()<<"insert "<<s<<" in pos "<<firstPos;
                 emit symbolsChanged(firstPos, (QChar &&) "1", s);
@@ -243,7 +242,6 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             }
         }else {
             if (std::get<1>(vt[i+1])==0 and std::get<0>(vt[i]) == std::get<0>(vt[i+1])) {
-                int a = 0;
             } else {
                 //qDebug()<<"remove "<<s<<" in pos "<<firstPos+s.size()-1;
                 emit symbolsChanged(firstPos+s.size()-1, (QChar &&) "2", s);
