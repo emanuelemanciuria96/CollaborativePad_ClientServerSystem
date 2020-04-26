@@ -50,39 +50,18 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
 }
 
 
-void generateNewPosition( std::vector<qint32>& prev, std::vector<qint32>& next, std::vector<qint32>& newPos, qint32 depth = 0 ){
-
-    quint32 pos;
-    if ( depth >= prev.size() ){
-        prev.push_back(0);
-    }
-    if( depth >= next.size() ){
-        next.push_back(INT_MAX);
-    }
-    if( next[depth] - prev[depth] > 1 ){
-        pos = (float)prev[depth]/2 + (float)next[depth]/2;
-    }
-    else if ( next[depth] - prev[depth] <= 1 ){
-        pos = prev[depth];
-        generateNewPosition(prev, next, newPos, depth+1);
-    }
-    newPos.insert(newPos.begin(),pos);
-
-}
-
-
 void NetworkServer::localInsert(Message m) {
-    std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localInsert"<<std::endl;
+    //std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localInsert"<<std::endl;
 
    // std::unique_lock ul(sym_mutex);
     auto i = std::lower_bound(_symbles.begin(),_symbles.end(),m.getSymbol());
     _symbles.insert(i,m.getSymbol());
 
-    to_string();
+    //to_string();
 }
 
 void NetworkServer::localErase(Message m) {
-    std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
+    //std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
 
    // std::unique_lock ul(sym_mutex);
     auto i = std::lower_bound(_symbles.begin(),_symbles.end(),m.getSymbol());
@@ -92,7 +71,7 @@ void NetworkServer::localErase(Message m) {
     else
         throw std::exception(); ///sarebbe bene trattare meglio questa eccezione
 
-    to_string();
+    //to_string();
 }
 
 void NetworkServer::to_string() {

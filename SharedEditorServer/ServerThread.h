@@ -6,6 +6,7 @@
 #define ES3_PROJ_NETWORKSERVER_SERVERTHREAD_H
 
 #include "Packet/DataPacket.h"
+#include "Packet/StringMessages.h"
 #include <QThread>
 #include <QTcpSocket>
 #include <QtCore/QMutex>
