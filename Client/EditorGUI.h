@@ -55,8 +55,8 @@ signals:
 public:
     EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);
-    void insertText(qint32 pos, QChar value);
-    void deleteText(qint32 pos);
+    void insertText(qint32 pos, QString value);
+    void deleteText(qint32 pos,QString value="a");
 };
 
 

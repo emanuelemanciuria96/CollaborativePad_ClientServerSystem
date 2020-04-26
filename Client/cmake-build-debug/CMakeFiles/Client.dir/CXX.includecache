@@ -6,64 +6,206 @@
 
 #IncludeRegexTransform: 
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/DataPacket.h
+QtGlobal
+-
+memory
+-
+QtCore/QObject
+-
+Payload.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Payload.h
+
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/LoginInfo.h
+QtGlobal
+-
+QtCore/QString
+-
+Payload.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Payload.h
+
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Message.h
+Payload.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Payload.h
+Symbols/Symbol.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Symbols/Symbol.h
+vector
+-
+QtGlobal
+-
+
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Payload.h
+QtGlobal
+-
+
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/StringMessages.h
+Payload.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Payload.h
+Symbols/Symbol.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Symbols/Symbol.h
+Message.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Message.h
+vector
+-
+QtGlobal
+-
+string
+-
+QString
+-
+
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Symbols/SymId.h
+QtGlobal
+-
+
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Symbols/Symbol.h
+vector
+-
+QtGlobal
+-
+QChar
+-
+SymId.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Symbols/SymId.h
+
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/SharedEditor.cpp
+SharedEditor.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/SharedEditor.h
+Packet/LoginInfo.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/LoginInfo.h
+vector
+-
+algorithm
+-
+tuple
+-
+string
+-
+
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/SharedEditor.h
+iostream
+-
+Packet/Symbols/Symbol.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Symbols/Symbol.h
+vector
+-
+Packet/StringMessages.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/StringMessages.h
+Packet/DataPacket.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/DataPacket.h
+Packet/Payload.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Payload.h
+Socket.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Socket.h
+Transceiver.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Transceiver.h
+Packet/Message.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Message.h
+QTcpServer
+-
+QTcpSocket
+-
+QtCore/QDataStream
+-
+QAbstractSocket
+-
+QString
+-
+
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Socket.h
+QTcpSocket
+-
+mutex
+-
+Packet/DataPacket.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/DataPacket.h
+QObject
+-
+
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Transceiver.h
+QThread
+-
+QTcpServer
+-
+QTcpSocket
+-
+QtCore/QTimer
+-
+Socket.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Socket.h
+Packet/DataPacket.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/DataPacket.h
+Packet/Message.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Message.h
+Packet/LoginInfo.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/LoginInfo.h
+Packet/Payload.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Payload.h
+Packet/StringMessages.h
+D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/StringMessages.h
+
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QChar
 qchar.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qchar.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QDataStream
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QDataStream
 qdatastream.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qdatastream.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qdatastream.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QObject
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QObject
 qobject.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobject.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qobject.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QString
 qstring.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstring.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstring.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QThread
 qthread.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qthread.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QTimer
+qtimer.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qtimer.h
+
+D:/Qt/5.12.3/mingw73_64/include/QtCore/QtGlobal
 qglobal.h
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qglobal.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qalgorithms.h
 QtCore/qglobal.h
 -
 intrin.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qarraydata.h
 QtCore/qrefcount.h
 -
 string.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qatomic.h
 QtCore/qglobal.h
 -
 QtCore/qbasicatomic.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_bootstrap.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qatomic_bootstrap.h
 QtCore/qgenericatomic.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qatomic_cxx11.h
 QtCore/qgenericatomic.h
 -
 atomic
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qatomic_msvc.h
 QtCore/qgenericatomic.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
-QtCore/qglobal.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qbasicatomic.h
+QtCore/qatomic.h
 -
 QtCore/qatomic_bootstrap.h
 -
@@ -72,7 +214,13 @@ QtCore/qatomic_cxx11.h
 QtCore/qatomic_msvc.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qbasictimer.h
+QtCore/qglobal.h
+-
+QtCore/qnamespace.h
+-
+
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qbytearray.h
 QtCore/qrefcount.h
 -
 QtCore/qnamespace.h
@@ -90,31 +238,31 @@ string
 iterator
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qbytearraylist.h
 QtCore/qlist.h
 -
 QtCore/qbytearray.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qchar.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcompilerdetection.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qcompilerdetection.h
 QtCore/qglobal.h
 -
 utility
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig-bootstrapped.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qconfig-bootstrapped.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qconfig.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcontainerfwd.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qcontainerfwd.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcontiguouscache.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qcontiguouscache.h
 QtCore/qatomic.h
 -
 limits.h
@@ -122,7 +270,7 @@ limits.h
 new
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qcoreevent.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qcoreevent.h
 QtCore/qnamespace.h
 -
 QtCore/qbytearray.h
@@ -130,7 +278,7 @@ QtCore/qbytearray.h
 QtCore/qobjectdefs.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qdatastream.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qdatastream.h
 QtCore/qscopedpointer.h
 -
 QtCore/qiodevice.h
@@ -138,7 +286,7 @@ QtCore/qiodevice.h
 QtCore/qpair.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qdebug.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qdebug.h
 QtCore/qalgorithms.h
 -
 QtCore/qhash.h
@@ -170,19 +318,19 @@ map
 utility
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qflags.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qflags.h
 QtCore/qglobal.h
 -
 initializer_list
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qgenericatomic.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qgenericatomic.h
 QtCore/qglobal.h
 -
 QtCore/qtypeinfo.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qglobal.h
 type_traits
 -
 cstddef
@@ -224,7 +372,7 @@ QtCore/qnumeric.h
 QtCore/qversiontagging.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobalstatic.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qglobalstatic.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -232,7 +380,7 @@ QtCore/qatomic.h
 QtCore/qmutex.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qhash.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qhash.h
 QtCore/qchar.h
 -
 QtCore/qiterator.h
@@ -248,7 +396,7 @@ initializer_list
 algorithm
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qhashfunctions.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qhashfunctions.h
 QtCore/qstring.h
 -
 QtCore/qpair.h
@@ -256,7 +404,7 @@ QtCore/qpair.h
 numeric
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qiodevice.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qiodevice.h
 QtCore/qglobal.h
 -
 QtCore/qobject.h
@@ -268,11 +416,11 @@ QtCore/qscopedpointer.h
 QtCore/qstring.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qiterator.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qiterator.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qlist.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qlist.h
 QtCore/qalgorithms.h
 -
 QtCore/qiterator.h
@@ -304,7 +452,7 @@ QtCore/qbytearraylist.h
 QtCore/qstringlist.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qlocale.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qlocale.h
 QtCore/qvariant.h
 -
 QtCore/qstring.h
@@ -314,11 +462,11 @@ QtCore/qobjectdefs.h
 QtCore/qshareddata.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qlogging.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qlogging.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qmap.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qmap.h
 QtCore/qiterator.h
 -
 QtCore/qlist.h
@@ -338,7 +486,7 @@ functional
 initializer_list
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qmetatype.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qmetatype.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -358,7 +506,7 @@ list
 map
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qmutex.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qmutex.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -370,15 +518,15 @@ chrono
 limits
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qnamespace.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qnamespace.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qnumeric.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qnumeric.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobject.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qobject.h
 QtCore/qobjectdefs.h
 -
 QtCore/qstring.h
@@ -398,47 +546,47 @@ QtCore/qobject_impl.h
 chrono
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobject_impl.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qobject_impl.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobjectdefs.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qobjectdefs.h
 QtCore/qnamespace.h
 -
 QtCore/qobjectdefs_impl.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qobjectdefs_impl.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qobjectdefs_impl.h
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qpair.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qpair.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qpoint.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qpoint.h
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qprocessordetection.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qprocessordetection.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qrefcount.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qrefcount.h
 QtCore/qatomic.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qregexp.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qregexp.h
 QtCore/qglobal.h
 -
 QtCore/qstring.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qscopedpointer.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qscopedpointer.h
 QtCore/qglobal.h
 -
 stdlib.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qset.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qset.h
 QtCore/qhash.h
 -
 initializer_list
@@ -446,7 +594,7 @@ initializer_list
 iterator
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qshareddata.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qshareddata.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -456,7 +604,7 @@ QtCore/qhash.h
 QtCore/qhashfunctions.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsharedpointer.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qsharedpointer.h
 QtCore/qglobal.h
 -
 QtCore/qatomic.h
@@ -466,7 +614,7 @@ QtCore/qshareddata.h
 QtCore/qsharedpointer_impl.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsharedpointer_impl.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qsharedpointer_impl.h
 new
 -
 QtCore/qatomic.h
@@ -478,7 +626,7 @@ QtCore/qhash.h
 QtCore/qhashfunctions.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstring.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstring.h
 QtCore/qchar.h
 -
 QtCore/qbytearray.h
@@ -502,11 +650,11 @@ stdarg.h
 QtCore/qstringbuilder.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringalgorithms.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstringalgorithms.h
 QtCore/qnamespace.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringbuilder.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstringbuilder.h
 QtCore/qstring.h
 -
 QtCore/qbytearray.h
@@ -514,7 +662,7 @@ QtCore/qbytearray.h
 string.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringlist.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstringlist.h
 QtCore/qlist.h
 -
 QtCore/qalgorithms.h
@@ -526,15 +674,15 @@ QtCore/qstring.h
 QtCore/qstringmatcher.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringliteral.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstringliteral.h
 QtCore/qarraydata.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringmatcher.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstringmatcher.h
 QtCore/qstring.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qstringview.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qstringview.h
 QtCore/qchar.h
 -
 QtCore/qbytearray.h
@@ -546,11 +694,11 @@ QtCore/qstringalgorithms.h
 string
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsysinfo.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qsysinfo.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qsystemdetection.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qsystemdetection.h
 QtCore/qglobal.h
 -
 TargetConditionals.h
@@ -560,9 +708,9 @@ Availability.h
 AvailabilityMacros.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qtcore-config.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qtcore-config.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qtextstream.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qtextstream.h
 QtCore/qiodevice.h
 -
 QtCore/qstring.h
@@ -576,7 +724,7 @@ QtCore/qscopedpointer.h
 stdio.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qthread.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qthread.h
 QtCore/qobject.h
 -
 future
@@ -586,11 +734,21 @@ functional
 limits.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qtimer.h
+QtCore/qglobal.h
+-
+QtCore/qbasictimer.h
+-
+QtCore/qobject.h
+-
+chrono
+-
+
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qtypeinfo.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qvariant.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qvariant.h
 QtCore/qatomic.h
 -
 QtCore/qbytearray.h
@@ -614,7 +772,7 @@ QtCore/qbytearraylist.h
 variant
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qvarlengtharray.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qvarlengtharray.h
 QtCore/qcontainerfwd.h
 -
 QtCore/qglobal.h
@@ -634,7 +792,7 @@ initializer_list
 iterator
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qvector.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qvector.h
 QtCore/qalgorithms.h
 -
 QtCore/qiterator.h
@@ -662,23 +820,23 @@ algorithm
 QtCore/qpoint.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtCore/qversiontagging.h
+D:/Qt/5.12.3/mingw73_64/include/QtCore/qversiontagging.h
 QtCore/qglobal.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/QAbstractSocket
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/QAbstractSocket
 qabstractsocket.h
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qabstractsocket.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qabstractsocket.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/QTcpServer
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/QTcpServer
 qtcpserver.h
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpserver.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qtcpserver.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/QTcpSocket
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/QTcpSocket
 qtcpsocket.h
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpsocket.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qtcpsocket.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qabstractsocket.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qabstractsocket.h
 QtNetwork/qtnetworkglobal.h
 -
 QtCore/qiodevice.h
@@ -688,7 +846,7 @@ QtCore/qobject.h
 QtCore/qdebug.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qhostaddress.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qhostaddress.h
 QtNetwork/qtnetworkglobal.h
 -
 QtCore/qpair.h
@@ -700,7 +858,7 @@ QtCore/qshareddata.h
 QtNetwork/qabstractsocket.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpserver.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qtcpserver.h
 QtNetwork/qtnetworkglobal.h
 -
 QtCore/qobject.h
@@ -710,7 +868,7 @@ QtNetwork/qabstractsocket.h
 QtNetwork/qhostaddress.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpsocket.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qtcpsocket.h
 QtNetwork/qtnetworkglobal.h
 -
 QtNetwork/qabstractsocket.h
@@ -718,123 +876,11 @@ QtNetwork/qabstractsocket.h
 QtCore/qvariant.h
 -
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtnetwork-config.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qtnetwork-config.h
 
-C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtnetworkglobal.h
+D:/Qt/5.12.3/mingw73_64/include/QtNetwork/qtnetworkglobal.h
 QtCore/qglobal.h
 -
 QtNetwork/qtnetwork-config.h
 -
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
-QtGlobal
--
-memory
--
-QtCore/QObject
--
-Payload.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
-QtGlobal
--
-QtCore/QString
--
-Payload.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
-Payload.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
-Symbols/Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
-vector
--
-QtGlobal
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
-QtGlobal
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
-QtGlobal
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
-vector
--
-QtGlobal
--
-QChar
--
-SymId.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.cpp
-SharedEditor.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.h
-Packet/LoginInfo.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
-vector
--
-algorithm
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.h
-iostream
--
-Packet/Symbols/Symbol.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
-vector
--
-Packet/DataPacket.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
-Packet/Payload.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
-Socket.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Socket.h
-Transceiver.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Transceiver.h
-Packet/Message.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
-QTcpServer
--
-QTcpSocket
--
-QtCore/QDataStream
--
-QAbstractSocket
--
-QString
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Socket.h
-QTcpSocket
--
-mutex
--
-Packet/DataPacket.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
-QObject
--
-
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Transceiver.h
-QThread
--
-QTcpServer
--
-QTcpSocket
--
-Socket.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Socket.h
-Packet/DataPacket.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
-Packet/Message.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
-Packet/LoginInfo.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
-Packet/Payload.h
-D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
 

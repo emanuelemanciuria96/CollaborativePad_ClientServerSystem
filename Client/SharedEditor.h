@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Packet/Symbols/Symbol.h"
 #include <vector>
+#include "Packet/StringMessages.h"
 #include "Packet/DataPacket.h"
 #include "Packet/Payload.h"
 #include "Socket.h"
@@ -28,7 +29,8 @@ private:
     std::vector<Symbol> _symbols;
     qint32 _counter;
     Transceiver* transceiver;
-    void processMessage(Message& m);
+    quint32 getIndex(Message& m);
+    void processMessages(StringMessages& strMess);
     void processLoginInfo(LoginInfo& logInf);
 
     bool isLogged;

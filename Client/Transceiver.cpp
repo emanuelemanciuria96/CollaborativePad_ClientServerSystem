@@ -18,6 +18,10 @@ void Transceiver::run() {
     connect(socket,&Socket::sendPacket,this,&Transceiver::sendPacket,Qt::QueuedConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
 
+    timer = new QTimer();
+    timer->setSingleShot(true);
+    connect(timer,SIGNAL(timeout()),this,SLOT(sendAllMessages()));
+    
     exec(); //loop degli eventi attivato qui
 }
 
@@ -42,7 +46,7 @@ void Transceiver::recvPacket() {
     quint32 errcode;
     quint32 type_of_data;
 
-    qDebug() << "Receving packet";
+    //qDebug() << "Receving packet";
 
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
@@ -72,7 +76,7 @@ void Transceiver::recvPacket() {
 }                                                //sul socket, in questo modo svuoto la coda richiamando la recvMessage()
 
 void Transceiver::recvLoginInfo(DataPacket& pkt,QDataStream& in){
-    quint32 siteId;
+    qint32 siteId;
     qint32 type;
     QString user;
     QString password;
@@ -87,26 +91,15 @@ void Transceiver::recvLoginInfo(DataPacket& pkt,QDataStream& in){
 
 void Transceiver::recvMessage(DataPacket& pkt, QDataStream& in) {
 
-    qint32 siteIdM;
-    qint32 action;
-    QChar ch;
-    qint32 siteIdS;
-    quint32 count;
-    qint32 num;
-    quint32 p;
-    std::vector<quint32> pos;
+    qint32 siteId;
+    QString formattedMessages;
 
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
 
-    in >> siteIdM >> action >> ch >> siteIdS >> count >> num;      //riceve sul socket un oggetto Message serializzato
-    for (int i = 0; i < num; i++) {                                      //che viene passato alla process()
-        in >> p;
-        pos.push_back(p);
-    }
+    in >> siteId >> formattedMessages;
 
-    Symbol s(ch, siteIdS, count, pos);
-    pkt.setPayload(std::make_shared<Message>((Message::action_t)action, siteIdM, s));
+    pkt.setPayload(std::make_shared<StringMessages>(formattedMessages,siteId));
 
     emit readyToProcess(pkt);
 
@@ -129,23 +122,48 @@ void Transceiver::sendPacket(DataPacket pkt){
             std::cout<<"Coglione c'è un errore"<<std::endl;
         }
     }
+
 }
 
-void Transceiver::sendMessage(DataPacket& packet) {
+void Transceiver::sendAllMessages() {
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(3));
-    auto ptr = std::dynamic_pointer_cast<Message>(packet.getPayload());
+    firstMessage = true;
 
     QDataStream out;
-    qint32 num=ptr->getSymbol().getPos().size();
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
+    qint32 siteID = messages[0].getSiteId();
+    auto *strMess = new StringMessages(messages,siteID);
+    DataPacket pkt(siteID,0,DataPacket::textTyping,strMess);
+    out << pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
+         strMess->getSiteId() << strMess->getFormattedMessages() ;
+    socket->waitForBytesWritten(-1);
+    if( !messages.empty() ) {
+        timer->start(100);
+        firstMessage = false;
+    }
+
+/*
+    qint32 num=ptr->getSymbol().getPos().size();
     out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << (qint32)ptr->getAction() << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId() << ptr->getSymbol().getSymId().getCount() << num;
     for(auto i : ptr->getSymbol().getPos())
         out << (qint32) i;
-    socket->waitForBytesWritten(-1);
+*/
+
+
+}
+
+
+void Transceiver::sendMessage(DataPacket& packet) {
+    
+    if(firstMessage){
+        timer->start(200);
+        firstMessage = false;
+    }
+    
+    messages.push_back(*std::dynamic_pointer_cast<Message>(packet.getPayload()));
 }
 
 void Transceiver::sendLoginInfo(DataPacket& packet){
@@ -158,11 +176,13 @@ void Transceiver::sendLoginInfo(DataPacket& packet){
     out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
     socket->waitForBytesWritten(-1);
+
 }
 
-void Transceiver::disconnected()
-{
+void Transceiver::disconnected(){
+
     socket->deleteLater();
+    timer->deleteLater();
     std::cout<<"Server unavailable!"<<std::endl;
     exit(0);
 }

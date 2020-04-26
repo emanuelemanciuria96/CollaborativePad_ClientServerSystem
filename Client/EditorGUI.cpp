@@ -108,14 +108,29 @@ void EditorGUI::setModel(SharedEditor* _model) {
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i=0;
     if(!signalBlocker) {
+        // se faccio copia incolla sulla prima posizione Qt mi cancella e riscrive tutto, compreso un carattere
+        // fantasma, per evitare che vada fuori dai bordi e che cancelli e risciva tutto, servono questi 2 if:
+        // - il primo verifica se siamo nella condizione detta sopra (cancellazione di un certo numero di elementi
+        //   e inserimento di un altri
+        // - il secondo, una volta in quella situazione, se si sta facendo inserimento di qualcosa (il numero di elementi
+        //   inseriti sarà sicuramente maggiore)
+/// CI SONO ANCORA PROBLEMI SE FACCIO UNDO
+        if( pos == 0 && charsRemoved > 0 && charsAdded > 0 ){
+            if(charsAdded > charsRemoved ) {
+                charsAdded -= charsRemoved;
+                charsRemoved = 0;
+            }
+            else if( charsAdded > 1 ){
+                charsAdded--;
+                charsRemoved--;
+            }
+        }
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
-            std::cout << "Cancellazione carattere " << pos << std::endl;
             for (i = 0; i < charsRemoved; i++) {
                 model->localErase(pos);
             }
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
-            std::cout << "Inserimento carattere " << pos << std::endl;
             for (i = 0; i < charsAdded; i++) {
                 model->localInsert(pos + i, textEdit->document()->characterAt(pos + i));
             }
@@ -123,32 +138,32 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     }
 }
 
-void EditorGUI::insertText(qint32 pos, QChar value) {
+void EditorGUI::insertText(qint32 pos, QString value) {
     pos--;
     auto cursor = textEdit->textCursor();
     cursor.movePosition(QTextCursor::MoveOperation::Start, QTextCursor::MoveMode::MoveAnchor,1);
     cursor.movePosition(QTextCursor::MoveOperation::NextCharacter, QTextCursor::MoveMode::MoveAnchor,pos);
     signalBlocker = !signalBlocker;
     cursor.insertText(QString(value));
-    std::cout << "Inserito " << pos << " " << value.unicode() << std::endl;
     signalBlocker = !signalBlocker;
 }
 
-void EditorGUI::deleteText(qint32 pos) {
-    pos--;
-    auto cursor = textEdit->textCursor();
-    cursor.movePosition(QTextCursor::MoveOperation::Start, QTextCursor::MoveMode::MoveAnchor,1);
-    cursor.movePosition(QTextCursor::MoveOperation::NextCharacter, QTextCursor::MoveMode::MoveAnchor,pos);
-    signalBlocker = !signalBlocker;
-    cursor.deleteChar();
-    std::cout << "Rimosso " << pos << std::endl;
-    signalBlocker = !signalBlocker;
+void EditorGUI::deleteText(qint32 pos,QString value) {
+    for(int i =0;i<value.size();i++) {
+        pos--;
+        auto cursor = textEdit->textCursor();
+        cursor.movePosition(QTextCursor::MoveOperation::Start, QTextCursor::MoveMode::MoveAnchor, 1);
+        cursor.movePosition(QTextCursor::MoveOperation::NextCharacter, QTextCursor::MoveMode::MoveAnchor, pos);
+        signalBlocker = !signalBlocker;
+        cursor.deleteChar();
+        signalBlocker = !signalBlocker;
+    }
 }
 
 
 void EditorGUI::updateSymbols(qint32 pos, QChar value, const QString& action) {
-    if(action == "remove")
-        deleteText(pos);
+    if(value == "2")
+        deleteText(pos,action);
     else
-        insertText(pos,value);
+        insertText(pos,action);
 }

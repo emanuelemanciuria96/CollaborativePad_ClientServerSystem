@@ -6,6 +6,7 @@
 #include "Packet/LoginInfo.h"
 #include <vector>
 #include <algorithm>
+#include <tuple>
 
 SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
@@ -48,7 +49,7 @@ quint32 intermediateValue(quint32 prev,quint32 next,double factor){
 }
 void generateNewPosition2(std::vector<quint32>& prev, std::vector<quint32>& next, std::vector<quint32>& newPos){
     quint32 max=UINT_MAX;
-    double factor=0.05;
+    double factor=0.001;
     //double factor=0.015625; // 1/64
     int sizePrev=prev.size();
     int sizeNext=next.size();
@@ -114,7 +115,7 @@ void SharedEditor::loginSlot(QString& username, QString& password) {
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
 }
-
+#include <string>
 void SharedEditor::localInsert(qint32 index, QChar value) {
 
     if ( index > _symbols.size() - 2 ){
@@ -125,12 +126,12 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
     std::vector<quint32> newPos;
     std::vector<quint32> prev = _symbols[index-1].getPos();
     std::vector<quint32> next = _symbols[index].getPos();
-    generateNewPosition(prev,next,newPos);
+    generateNewPosition2(prev,next,newPos);
     Symbol s(value,_siteId,_counter++,newPos);
     _symbols.insert(_symbols.begin()+index,s);
 
     DataPacket packet(_siteId, -1, DataPacket::textTyping);
-    packet.setPayload(std::make_shared<Message>(Message::insertion,_siteId,s));
+    packet.setPayload(std::make_shared<Message>(Message::insertion,_siteId,s,index));
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
@@ -140,7 +141,6 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
 }
 
 void SharedEditor::localErase(qint32 index) {
-
     if ( index > _symbols.size() - 2 ){
         throw "fuori dai limiti"; //da implementare classe eccezione
     }
@@ -149,7 +149,7 @@ void SharedEditor::localErase(qint32 index) {
     _symbols.erase(_symbols.begin()+index);
 
     DataPacket packet(_siteId, -1, DataPacket::textTyping);
-    packet.setPayload( std::make_shared<Message>(Message::removal,_siteId,s) );
+    packet.setPayload( std::make_shared<Message>(Message::removal,_siteId,s,index) );
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
@@ -165,7 +165,7 @@ void SharedEditor::process(DataPacket pkt) {
             processLoginInfo(*std::dynamic_pointer_cast<LoginInfo>(pkt.getPayload()));
             break;
         case DataPacket::textTyping :
-            processMessage(*std::dynamic_pointer_cast<Message>(pkt.getPayload()));
+            processMessages(*std::dynamic_pointer_cast<StringMessages>(pkt.getPayload()));
             break;
         default:
             std::cout<<"Coglione 2 volte, c'è un errore"<<std::endl;
@@ -186,31 +186,73 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
         std::cout << "client not logged!" << std::endl;
     }
 }
-
-
-void SharedEditor::processMessage(Message &m) {
-    std::cout << "Messaggio ricevuto " << m.getAction() << std::endl;
-    qint32 pos = 0;
-    if ( Message::insertion == m.getAction() ) {
-
-        auto i = std::lower_bound(_symbols.begin(),_symbols.end(),m.getSymbol());
-        pos = i - _symbols.begin();
-        _symbols.insert(i,m.getSymbol());
-
-        emit symbolsChanged(pos, m.getSymbol().getValue(), "insert");
-    }
-    else if ( Message::removal == m.getAction() ) {
-
-        auto i = std::lower_bound(_symbols.begin(),_symbols.end(),m.getSymbol());
-        pos = i - _symbols.begin();
-
-        if( *i == m.getSymbol() ) {
-            _symbols.erase(i);
-            emit symbolsChanged(pos, m.getSymbol().getValue(), "remove");
+quint32 SharedEditor::getIndex(Message &m) {
+    quint32 pos =m.getLocalIndex();//search index
+    if(m.getSymbol()>_symbols[pos]){
+        for(quint32 i=pos;i<_symbols.size();i++){
+            if(m.getSymbol()>_symbols[pos]){
+                pos++;
+            }else{
+                break;
+            }
         }
-        else
-            throw std::exception(); //errore fatale
+    }else{
+        for(quint32 i=pos;i>0;i--){
+            if(m.getSymbol()>_symbols[pos]){
+                pos--;
+            }else{
+                break;
+            }
+        }
     }
+    return pos;
+}
+
+
+void SharedEditor::processMessages(StringMessages &strMess) {
+    //qDebug()<<strMess.getFormattedMessages();
+    std::vector<std::tuple<qint32,bool,QChar>> vt;
+    for( auto m:strMess.stringToMessages()) {
+        qint32 pos=getIndex(m);
+        if(m.getAction()==Message::insertion){
+            _symbols.insert(_symbols.begin()+pos,m.getSymbol());
+            vt.push_back(std::tuple<qint32 ,bool,QChar>(pos,1,m.getSymbol().getValue()));
+        }else if(_symbols[pos]==m.getSymbol()){
+            vt.push_back(std::tuple<qint32, bool, QChar>(pos, 0, m.getSymbol().getValue()));
+            _symbols.erase(_symbols.begin()+pos);
+        }
+    }
+    //Refresh GUI
+
+    if(vt.size()<1){
+        return;
+    }
+    QString s="";
+    qint32 firstPos=std::get<0>(vt[0]);
+    vt.push_back(std::tuple<qint32 ,bool,QChar>(-8,1,9));
+    for(int i=0;i<vt.size()-1;i++) {
+        s += std::get<2>(vt[i]);
+        if(std::get<1>(vt[i])==1) {
+            if (std::get<1>(vt[i+1])==1 and std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 1) {
+                int a = 0;
+            } else {
+                //qDebug()<<"insert "<<s<<" in pos "<<firstPos;
+                emit symbolsChanged(firstPos, (QChar &&) "1", s);
+                s = "";
+                firstPos = std::get<0>(vt[i+1]);
+            }
+        }else {
+            if (std::get<1>(vt[i+1])==0 and std::get<0>(vt[i]) == std::get<0>(vt[i+1])) {
+                int a = 0;
+            } else {
+                //qDebug()<<"remove "<<s<<" in pos "<<firstPos+s.size()-1;
+                emit symbolsChanged(firstPos+s.size()-1, (QChar &&) "2", s);
+                s = "";
+                firstPos = std::get<0>(vt[i+1]);
+            }
+        }
+    }
+
 }
 
 QString SharedEditor::to_string() {
@@ -234,7 +276,7 @@ void SharedEditor::test() {
         std::cout<<std::endl;
     }*/
 
-    std::cout<<"#caratteri inseriti: "<<_symbols.size()<<std::endl;
+    //std::cout<<"#caratteri inseriti: "<<_symbols.size()-2<<std::endl;
 
 }
 
@@ -242,6 +284,7 @@ void SharedEditor::deleteThread() {
     transceiver->deleteLater();
     exit(-1);
 }
+
 
 
 

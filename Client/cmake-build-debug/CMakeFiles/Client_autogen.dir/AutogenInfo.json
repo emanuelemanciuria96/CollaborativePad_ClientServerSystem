@@ -1,0 +1,179 @@
+{
+	"BUILD_DIR" : "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/Client_autogen",
+	"CMAKE_BINARY_DIR" : "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client",
+	"CMAKE_EXECUTABLE" : "D:/Program Files/JetBrains/CLion 2019.2.3/bin/cmake/win/bin/cmake.exe",
+	"CMAKE_SOURCE_DIR" : "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client",
+	"HEADERS" : 
+	[
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/EditorGUI.h",
+			"MU",
+			"EWIEGA46WW/moc_EditorGUI.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/LoginDialog.h",
+			"MU",
+			"EWIEGA46WW/moc_LoginDialog.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/DataPacket.h",
+			"MU",
+			"G2NQOARGLM/moc_DataPacket.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/LoginInfo.h",
+			"MU",
+			"G2NQOARGLM/moc_LoginInfo.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Message.h",
+			"MU",
+			"G2NQOARGLM/moc_Message.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Payload.h",
+			"MU",
+			"G2NQOARGLM/moc_Payload.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/StringMessages.h",
+			"MU",
+			"G2NQOARGLM/moc_StringMessages.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Symbols/SymId.h",
+			"MU",
+			"DY6VS6FRYF/moc_SymId.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Symbols/Symbol.h",
+			"MU",
+			"DY6VS6FRYF/moc_Symbol.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/SharedEditor.h",
+			"MU",
+			"EWIEGA46WW/moc_SharedEditor.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Socket.h",
+			"MU",
+			"EWIEGA46WW/moc_Socket.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Transceiver.h",
+			"MU",
+			"EWIEGA46WW/moc_Transceiver.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/Client_autogen/include",
+	"MOC_COMPILATION_FILE" : "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"QT_CHARTS_LIB",
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_NETWORK_LIB",
+		"QT_WIDGETS_LIB"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"D:/Qt/5.12.3/mingw73_64/include",
+		"D:/Qt/5.12.3/mingw73_64/include/QtCore",
+		"D:/Qt/5.12.3/mingw73_64/mkspecs/win32-g++",
+		"D:/Qt/5.12.3/mingw73_64/include/QtGui",
+		"D:/Qt/5.12.3/mingw73_64/include/QtANGLE",
+		"D:/Qt/5.12.3/mingw73_64/include/QtWidgets",
+		"D:/Qt/5.12.3/mingw73_64/include/QtCharts",
+		"D:/Qt/5.12.3/mingw73_64/include/QtNetwork",
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++",
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32",
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward",
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include",
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed",
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/x86_64-w64-mingw32/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/g++.exe",
+		"-dM",
+		"-E",
+		"-c",
+		"D:/Program Files/JetBrains/CLion 2019.2.3/bin/cmake/win/share/cmake-3.16/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/Client_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 4,
+	"PARSE_CACHE_FILE" : "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "D:/Qt/5.12.3/mingw73_64/bin/moc.exe",
+	"QT_UIC_EXECUTABLE" : "D:/Qt/5.12.3/mingw73_64/bin/uic.exe",
+	"QT_VERSION_MAJOR" : 5,
+	"SETTINGS_FILE" : "D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/EditorGUI.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/LoginDialog.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/DataPacket.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/LoginInfo.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Message.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Payload.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/StringMessages.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Packet/Symbols/Symbol.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/SharedEditor.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/Transceiver.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject-Transceiver-ottimizzazione_ricerca_Symbles/Client/main.cpp",
+			"MU"
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}
