@@ -3,9 +3,7 @@
 //
 
 #include "SharedEditor.h"
-#include "Packet/LoginInfo.h"
-#include <vector>
-#include <algorithm>
+
 
 SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
@@ -135,7 +133,7 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
 //    this->to_string();
-    emit test1();
+//    emit test1();
 
 }
 
@@ -155,7 +153,7 @@ void SharedEditor::localErase(qint32 index) {
     emit transceiver->getSocket()->sendPacket(packet);
     this->to_string();
 
-    emit test1();
+//    emit test1();
 }
 
 void SharedEditor::process(DataPacket pkt) {
@@ -173,7 +171,7 @@ void SharedEditor::process(DataPacket pkt) {
     }
 
     auto m = std::dynamic_pointer_cast<Message>(pkt.getPayload());
-    emit test1();
+//    emit test1();
 
 }
 
@@ -196,6 +194,7 @@ void SharedEditor::processMessage(Message &m) {
         auto i = std::lower_bound(_symbols.begin(),_symbols.end(),m.getSymbol());
         pos = i - _symbols.begin();
         _symbols.insert(i,m.getSymbol());
+//        EditorUpdateQueue.push(m.getSymbol());
 
         emit symbolsChanged(pos, m.getSymbol().getValue(), m.getSiteId(),Message::insertion);
     }
@@ -206,6 +205,8 @@ void SharedEditor::processMessage(Message &m) {
 
         if( *i == m.getSymbol() ) {
             _symbols.erase(i);
+//            EditorUpdateQueue.push(m.getSymbol());
+
             emit symbolsChanged(pos, m.getSymbol().getValue(),m.getSiteId(), Message::removal);
         }
         else
@@ -242,6 +243,5 @@ void SharedEditor::deleteThread() {
     transceiver->deleteLater();
     exit(-1);
 }
-
 
 

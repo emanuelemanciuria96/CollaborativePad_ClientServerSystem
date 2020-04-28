@@ -16,6 +16,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/ming
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QTextCodec
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QTextStream
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QThread
+CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QTimer
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qalgorithms.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qarraydata.h
@@ -24,6 +25,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/ming
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic_cxx11.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic_msvc.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbasicatomic.h
+CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbasictimer.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbytearray.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbytearraylist.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qchar.h
@@ -87,6 +89,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/ming
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtextcodec.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtextstream.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qthread.h
+CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtimer.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtypeinfo.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qurl.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qurlquery.h
@@ -215,6 +218,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QTextCodec
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QTextStream
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QThread
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QTimer
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qalgorithms.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qarraydata.h
@@ -223,6 +227,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic_cxx11.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic_msvc.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbasicatomic.h
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbasictimer.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbytearray.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbytearraylist.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qchar.h
@@ -286,6 +291,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtextcodec.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtextstream.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qthread.h
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtimer.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtypeinfo.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qurl.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qurlquery.h
@@ -823,6 +829,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCo
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QObject
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QString
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QThread
+CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QTimer
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qalgorithms.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qarraydata.h
@@ -831,6 +838,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCo
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic_cxx11.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic_msvc.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbasicatomic.h
+CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbasictimer.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbytearray.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbytearraylist.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qchar.h
@@ -884,6 +892,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCo
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtcore-config.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtextstream.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qthread.h
+CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtimer.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtypeinfo.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qvariant.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qvarlengtharray.h
@@ -1013,6 +1022,7 @@ CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QStri
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QTextCodec
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QTextStream
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QThread
+CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QTimer
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qalgorithms.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qarraydata.h
@@ -1021,6 +1031,7 @@ CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qatom
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic_cxx11.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qatomic_msvc.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbasicatomic.h
+CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbasictimer.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbytearray.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qbytearraylist.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qchar.h
@@ -1084,6 +1095,7 @@ CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtcor
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtextcodec.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtextstream.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qthread.h
+CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtimer.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qtypeinfo.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qurl.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qurlquery.h

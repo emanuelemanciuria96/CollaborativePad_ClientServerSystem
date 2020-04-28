@@ -43,6 +43,11 @@
 			"G2NQOARGLM/moc_Payload.cpp"
 		],
 		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/Packet/StringMessages.h",
+			"MU",
+			"G2NQOARGLM/moc_StringMessages.cpp"
+		],
+		[
 			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/SymId.h",
 			"MU",
 			"DY6VS6FRYF/moc_SymId.cpp"
@@ -61,6 +66,21 @@
 			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/Socket.h",
 			"MU",
 			"EWIEGA46WW/moc_Socket.cpp"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/database/DBSql.h",
+			"MU",
+			"BL3K65LMA5/moc_DBSql.cpp"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/database/sqlite3.h",
+			"MU",
+			"BL3K65LMA5/moc_sqlite3.cpp"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/database/sqlite3ext.h",
+			"MU",
+			"BL3K65LMA5/moc_sqlite3ext.cpp"
 		],
 		[
 			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/json/json-forwards.h",
@@ -160,6 +180,10 @@
 			"MU"
 		],
 		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/Packet/StringMessages.cpp",
+			"MU"
+		],
+		[
 			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/SymId.cpp",
 			"MU"
 		],
@@ -169,6 +193,18 @@
 		],
 		[
 			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/ServerThread.cpp",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/database/DBSql.cpp",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/database/shell.c",
+			"MU"
+		],
+		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/SharedEditorServer/database/sqlite3.c",
 			"MU"
 		],
 		[

@@ -11,6 +11,7 @@ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Payl
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
+C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/RemoteCursor.h
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/DataPacket.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SharedEditor.h
@@ -23,8 +24,7 @@ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.c
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Message.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Payload.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.cpp
+C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/RemoteCursor.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SharedEditor.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Transceiver.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/main.cpp
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/RemoteCursor.h
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/RemoteCursor.cpp

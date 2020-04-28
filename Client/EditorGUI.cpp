@@ -9,6 +9,10 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QMainWindow(parent)
     setModel(model);
     setUpGUI();
     setWindowTitle(QCoreApplication::applicationName());
+    posLastChar = -1;
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
+    timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
 
@@ -147,17 +151,17 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     }
 }
 
-void EditorGUI::insertText(qint32 pos, QChar value, qint32 siteId) {
+void EditorGUI::insertText(qint32 pos, const QString& value, qint32 siteId) {
     pos--;
     RemoteCursor* cursor;
 
     cursor = getRemoteCursor(siteId);
 
-    std::cout << "position:" << pos << std::endl;
+//    std::cout << "position:" << pos << std::endl;
     cursor->setPosition(pos,QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
-    cursor->insertText(QString(value));
-    std::cout << "Inserito " << value.unicode() << " in "  << pos << std::endl;
+    cursor->insertText(value);
+    std::cout << "Inseriti " << value.size() << " caratteri in "  << pos << std::endl;
     signalBlocker = !signalBlocker;
     updateRemoteCursors(siteId,pos, Message::insertion);
 }
@@ -172,7 +176,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId) {
 
     cursor = getRemoteCursor(siteId);
 
-    std::cout << "position:" << pos << std::endl;
+//    std::cout << "position:" << pos << std::endl;
     cursor->setPosition(pos,QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
     cursor->deleteChar();
@@ -183,10 +187,19 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId) {
 
 
 void EditorGUI::updateSymbols(qint32 pos, QChar value, qint32 siteId, Message::action_t action) {
-    if(action == Message::removal)
+    if(action == Message::removal){
+        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId);
-    else
-        insertText(pos,value, siteId);
+    }
+    else {
+        if(posLastChar<0 || pos!=posLastChar+1) {
+            flushInsertQueue();
+            posQueue = pos;
+            siteIdQueue = siteId;
+        }
+        insertQueue.push(value);
+        posLastChar = pos;
+    }
 }
 
 void EditorGUI::updateRemoteCursors(qint32 siteId, int pos, Message::action_t action) {
@@ -208,8 +221,8 @@ void EditorGUI::updateRemoteCursors(qint32 siteId, int pos, Message::action_t ac
 
 RemoteCursor* EditorGUI::getRemoteCursor(qint32 siteId) {
     RemoteCursor* cursor;
-    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
-    std::for_each(remoteCursors.begin(), remoteCursors.end(), [](RemoteCursor& rc){std::cout << rc.getSiteId() << std::endl;});
+//    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
+//    std::for_each(remoteCursors.begin(), remoteCursors.end(), [](RemoteCursor& rc){std::cout << rc.getSiteId() << std::endl;});
     auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor& c) {
         std::cout << "SiteId: " << c.getSiteId() << std::endl;
         return (c.getSiteId() == siteId);});
@@ -223,7 +236,6 @@ RemoteCursor* EditorGUI::getRemoteCursor(qint32 siteId) {
 
 void EditorGUI::removeCursor(qint32 siteId) {
     if (!remoteCursors[siteId].isNull()){
-
         remoteCursors.erase(remoteCursors.begin()+siteId);
     }
 }
@@ -242,4 +254,17 @@ void EditorGUI::fileSave() {
 
 void EditorGUI::fileSaveAs() {
 //    TODO
+}
+
+void EditorGUI::flushInsertQueue() {
+    if(insertQueue.empty())
+        return;
+
+    QString s;
+    while(!insertQueue.empty()){
+        s.push_back(insertQueue.front());
+        insertQueue.pop();
+    }
+    insertText(posQueue, s, siteIdQueue);
+    posLastChar = -1;
 }

@@ -25,6 +25,7 @@
 #include <algorithm>
 #include "SharedEditor.h"
 #include "RemoteCursor.h"
+#include <queue>
 
 class EditorGUI: public QMainWindow {
     Q_OBJECT
@@ -38,7 +39,11 @@ private:
     bool signalBlocker;
     std::vector<RemoteCursor> remoteCursors;
     QAction* actionSave;
-
+    std::queue<QChar> insertQueue;
+    qint32 siteIdQueue;
+    qint32 posQueue;
+    qint32 posLastChar;
+    QTimer* timer;
     void setUpGUI();
     void setupFileActions();
     void setupEditActions();
@@ -53,13 +58,12 @@ private:
     void fileOpen();
     void fileSave();
     void fileSaveAs();
-    void insertText(qint32 pos, QChar value, qint32 siteId);
+    void insertText(qint32 pos, const QString& value, qint32 siteId);
     void deleteText(qint32 pos, qint32 siteId);
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
-
 private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);
-
+    void flushInsertQueue();
 public slots:
     void updateSymbols(qint32 pos, QChar value, qint32 siteId, Message::action_t action);
 
