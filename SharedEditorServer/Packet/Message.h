@@ -11,21 +11,23 @@
 #include <QtGlobal>
 
 
-
 class Message: public Payload {
 
-public:
-    typedef enum {insertion,removal} action_t;
+    public:
+        typedef enum {insertion = 1,removal = 2} action_t;
 
-    Message(action_t action,qint32 siteId,Symbol& sym):
-            _action(action), Payload(siteId), _sym(sym){}
-    qint32 getSiteId(){ return _siteID; }
-    action_t getAction() const{ return _action; }
-    Symbol getSymbol() const{ return _sym; }
-private:
-    action_t _action ;
-    Symbol _sym;
-};
+        Message(action_t action,qint32 siteId,Symbol& sym,qint32 ind):
+                _action(action), Payload(siteId), _sym(sym),localIndex(ind){}
+        Message(const Message& msg) = default;
+        qint32 getSiteId(){ return _siteID; }
+        action_t getAction() const{ return _action; }
+        Symbol getSymbol() const{ return _sym; }
+        qint32 getLocalIndex(){ return localIndex; }
+    private:
+        qint32 localIndex;
+        action_t _action ;
+        Symbol _sym;
+    };
 
 
 #endif //ES3_PROJ_NETWORKSERVER_MESSAGE_H

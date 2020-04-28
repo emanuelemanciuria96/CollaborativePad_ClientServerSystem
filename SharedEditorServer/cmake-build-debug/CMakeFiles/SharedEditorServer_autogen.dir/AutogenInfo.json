@@ -1,0 +1,197 @@
+{
+	"BUILD_DIR" : "D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen",
+	"CMAKE_BINARY_DIR" : "D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer",
+	"CMAKE_EXECUTABLE" : "D:/Program Files/JetBrains/CLion 2019.2.3/bin/cmake/win/bin/cmake.exe",
+	"CMAKE_SOURCE_DIR" : "D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer",
+	"HEADERS" : 
+	[
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.h",
+			"MU",
+			"EWIEGA46WW/moc_MessageHandler.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.h",
+			"MU",
+			"EWIEGA46WW/moc_NetworkServer.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Command.h",
+			"MU",
+			"G2NQOARGLM/moc_Command.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.h",
+			"MU",
+			"G2NQOARGLM/moc_DataPacket.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/LoginInfo.h",
+			"MU",
+			"G2NQOARGLM/moc_LoginInfo.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.h",
+			"MU",
+			"G2NQOARGLM/moc_Message.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.h",
+			"MU",
+			"G2NQOARGLM/moc_Payload.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/StringMessages.h",
+			"MU",
+			"G2NQOARGLM/moc_StringMessages.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/SymId.h",
+			"MU",
+			"DY6VS6FRYF/moc_SymId.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.h",
+			"MU",
+			"DY6VS6FRYF/moc_Symbol.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/ServerThread.h",
+			"MU",
+			"EWIEGA46WW/moc_ServerThread.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Socket.h",
+			"MU",
+			"EWIEGA46WW/moc_Socket.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/json-forwards.h",
+			"MU",
+			"ICHL3IZI6V/moc_json-forwards.cpp"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/json/json.h",
+			"MU",
+			"ICHL3IZI6V/moc_json.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/include",
+	"MOC_COMPILATION_FILE" : "D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"QT_CHARTS_LIB",
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_NETWORK_LIB",
+		"QT_WIDGETS_LIB"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"D:/Qt/5.12.3/mingw73_64/include",
+		"D:/Qt/5.12.3/mingw73_64/include/QtCore",
+		"D:/Qt/5.12.3/mingw73_64/mkspecs/win32-g++",
+		"D:/Qt/5.12.3/mingw73_64/include/QtGui",
+		"D:/Qt/5.12.3/mingw73_64/include/QtANGLE",
+		"D:/Qt/5.12.3/mingw73_64/include/QtWidgets",
+		"D:/Qt/5.12.3/mingw73_64/include/QtCharts",
+		"D:/Qt/5.12.3/mingw73_64/include/QtNetwork",
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++",
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32",
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward",
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include",
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed",
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/x86_64-w64-mingw32/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/g++.exe",
+		"-dM",
+		"-E",
+		"-c",
+		"D:/Program Files/JetBrains/CLion 2019.2.3/bin/cmake/win/share/cmake-3.16/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/SharedEditorServer_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 4,
+	"PARSE_CACHE_FILE" : "D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "D:/Qt/5.12.3/mingw73_64/bin/moc.exe",
+	"QT_UIC_EXECUTABLE" : "D:/Qt/5.12.3/mingw73_64/bin/uic.exe",
+	"QT_VERSION_MAJOR" : 5,
+	"SETTINGS_FILE" : "D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/cmake-build-debug/CMakeFiles/SharedEditorServer_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/MessageHandler.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/NetworkServer.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Command.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/DataPacket.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/LoginInfo.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Message.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Payload.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/StringMessages.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/SymId.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/Packet/Symbols/Symbol.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/ServerThread.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/jsoncpp.cpp",
+			"MU"
+		],
+		[
+			"D:/Desktop/SharedEditor_MalnatiProject/SharedEditorServer/main.cpp",
+			"MU"
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}
