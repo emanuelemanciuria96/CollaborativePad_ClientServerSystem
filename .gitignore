@@ -1,2 +1,5 @@
-**/.idea/**
-**/cmake-build-debug/**
+.idea/
+SharedEditorServer/.idea/
+SharedEditorServer/cmake-build-debug/
+Client/.idea/
+Client/cmake-build-debug/
