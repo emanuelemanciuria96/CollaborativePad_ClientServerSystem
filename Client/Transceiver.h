@@ -36,6 +36,8 @@ signals:
 private:
     std::vector<Message> messages;
     bool firstMessage = true;
+    qint32 sendFrequency=100;
+    qint32 timeFirst=200;
     Socket *socket;
     qintptr socketDescriptor;
     QTimer *timer;
