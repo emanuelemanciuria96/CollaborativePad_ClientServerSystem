@@ -38,7 +38,10 @@ public:
     const QString &getCurrentDirectory() const;
     void setCurrentDirectory(const QString &directory);
     QVector<QString> getDirectories(QString& user, QString& directory);
-    bool removeDirectory(QString &directory);
+    bool removeDirectory(QString& user, QString &directory);
+    bool makeDirectory(QString& user, QString &directory);
+    bool copyFile(QString& user, QString& src, QString& dest);
+    bool moveFile(QString& user, QString& src, QString& dest);
 
 private:
     cmd_t _cmd;

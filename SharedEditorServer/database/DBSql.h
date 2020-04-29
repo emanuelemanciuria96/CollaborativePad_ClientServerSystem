@@ -38,6 +38,7 @@ public:
     void query(std::string query, bool debug=0); // se debug=1 stampa la tabella risultante
     void closeDB();
     std::map<QString,QVector<QString>> getResult();
+    int getErrCode();
     static void initialize(){// ESEMPIO DI UTILIZZO
 
         // se non si indica la directory completa il db viene salvato

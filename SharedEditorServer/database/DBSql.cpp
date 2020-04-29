@@ -94,3 +94,7 @@ void DBSql::closeDB() {
 std::map<QString,QVector<QString>> DBSql::getResult(){
     return this->result;
 }
+
+int DBSql::getErrCode() {
+    return sqlite3_errcode(this->db);
+}

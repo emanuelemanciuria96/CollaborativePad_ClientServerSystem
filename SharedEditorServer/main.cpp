@@ -11,6 +11,5 @@ int main(int argc, char **argv) {
 
     s.startServer();
     app.exec();
-
     return 0;
 }
