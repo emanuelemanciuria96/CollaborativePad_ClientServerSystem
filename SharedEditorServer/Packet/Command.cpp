@@ -43,10 +43,7 @@ QVector<QString> Command::getDirectories(QString& user, QString& directory) {
     query = "SELECT * FROM DIRECTORIES WHERE DIRECTORY LIKE '"+directory.left(directory.size()-3).toStdString()+"%"+std::to_string(directory.right(1).toUInt()+1)+"'";
     sqldb.query(query);
 
-    if(sqldb.getResult().find("DIRECTORY") == sqldb.getResult().end())
-        return directories;
-    else
-        return sqldb.getResult()["DIRECTORY"];
+    return sqldb.getResult()["DIRECTORY"];
 }
 
 bool Command::removeDirectory(QString &directory) {

@@ -108,6 +108,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
         if (shr->login() != -1) {
             std::cout << "client successfully logged!" << std::endl;
             isLogged = shr->getUser();                                               //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
+            std::cout << isLogged.toStdString() << std::endl;
             sendPacket(packet);                           //non fa nulla, non risponde con messaggi di errore
             {
                 std::lock_guard lg(skt_mutex);

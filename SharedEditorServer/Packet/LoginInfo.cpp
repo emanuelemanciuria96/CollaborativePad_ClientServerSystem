@@ -45,12 +45,10 @@ qint32 LoginInfo::login() {
     sqldb.query(query);
     sqldb.closeDB();
 
-    if(sqldb.getResult().find("PASS") == sqldb.getResult().end()) {
+    if(!sqldb.getResult()["PASS"].isEmpty()) {
         if (_password == sqldb.getResult()["PASS"].first()) {
             _type = LoginInfo::login_ok;
             _siteID = sqldb.getResult()["SITEID"].first().toInt();
-            _user = "";
-            _password = "";
             return _siteID;
         } else {
             _type = LoginInfo::login_error;
