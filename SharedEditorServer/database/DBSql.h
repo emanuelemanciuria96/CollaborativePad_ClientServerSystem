@@ -74,16 +74,16 @@ public:
         query = "DELETE FROM DIRECTORIES"; //Svuoto la tabella in caso di test multipli
         sqldb1.query(query);
 
-        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('/Documenti>D');";
+        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('Documenti>D0');";
         sqldb1.query(query);
 
-        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('/Nuovo documento>F');";
+        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('Nuovo documento>F0');";
         sqldb1.query(query);
 
-        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('/Nuova cartella>D');";
+        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('Nuova cartella>D0');";
         sqldb1.query(query);
 
-        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('/Nuova cartella/file>F');";
+        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('Nuova cartella/file>F1');";
         sqldb1.query(query);
 
         query = "SELECT * FROM DIRECTORIES";

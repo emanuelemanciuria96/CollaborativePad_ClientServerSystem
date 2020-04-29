@@ -23,6 +23,7 @@ std::vector<std::pair<Socket*,std::mutex*>> ServerThread::_sockets; //qui ci son
 ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent):QThread(parent){
     this->socketDescriptor = socketDescriptor;
     this->msgHandler = std::shared_ptr<MessageHandler>(msgHandler);
+    this->isLogged = "";
 }
 
 void ServerThread::run()
@@ -101,10 +102,10 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 
     in >> siteId >> type >> user >> password;
 
-    if(type == LoginInfo::login_request && isLogged.isNull()) {
+    if(type == LoginInfo::login_request && isLogged.isEmpty()) {
         auto shr = std::make_shared<LoginInfo>( -1, type, user, password);
         packet.setPayload(shr);
-        if (shr.get()->login() != -1) {
+        if (shr->login() != -1) {
             std::cout << "client successfully logged!" << std::endl;
             isLogged = shr->getUser();                                               //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
             sendPacket(packet);                           //non fa nulla, non risponde con messaggi di errore

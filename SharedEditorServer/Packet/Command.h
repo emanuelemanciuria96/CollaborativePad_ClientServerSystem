@@ -38,6 +38,7 @@ public:
     const QString &getCurrentDirectory() const;
     void setCurrentDirectory(const QString &directory);
     QVector<QString> getDirectories(QString& user, QString& directory);
+    bool removeDirectory(QString &directory);
 
 private:
     cmd_t _cmd;

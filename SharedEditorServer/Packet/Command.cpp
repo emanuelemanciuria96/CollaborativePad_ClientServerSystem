@@ -36,42 +36,21 @@ void Command::setCurrentDirectory(const QString &directory) {
 
 QVector<QString> Command::getDirectories(QString& user, QString& directory) {
     QVector<QString> directories;
-    QString local;
     DBSql sqldb("ciao_directories.db");
     sqldb.openDB();
     std::string query;
-    int count = 0;
-    int i = 0;
 
-    query = "SELECT * FROM DIRECTORIES";
+    query = "SELECT * FROM DIRECTORIES WHERE DIRECTORY LIKE '"+directory.left(directory.size()-3).toStdString()+"%"+std::to_string(directory.right(1).toUInt()+1)+"'";
     sqldb.query(query);
+
     if(sqldb.getResult().find("DIRECTORY") == sqldb.getResult().end())
         return directories;
-
-    if(!directory.endsWith("/"))
-        local = directory+"/";
     else
-        local = directory;
+        return sqldb.getResult()["DIRECTORY"];
+}
 
-    while((i = local.indexOf("/", i)) != -1) {
-        ++count;
-        i++;
-    }
-    directories = sqldb.getResult()["DIRECTORY"];
-    for(const auto& s: directories){
-        std::cout << s.toStdString() << std::endl;
-    }
-    directories.erase(std::remove_if(directories.begin(), directories.end(), [local, count](const QString& str) {
-        int j = 0;
-        int k = 0;
-        while ((j = str.indexOf("/", j)) != -1) {
-            ++j;
-            k++;
-        }
-        return (k>count || !str.startsWith(local));
-    }), directories.end());
-
-    return directories;
+bool Command::removeDirectory(QString &directory) {
+    return false;
 }
 
 
