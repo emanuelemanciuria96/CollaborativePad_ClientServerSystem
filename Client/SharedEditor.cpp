@@ -126,7 +126,7 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
     std::vector<quint32> newPos;
     std::vector<quint32> prev = _symbols[index-1].getPos();
     std::vector<quint32> next = _symbols[index].getPos();
-    generateNewPosition(prev,next,newPos);
+    generateNewPosition2(prev,next,newPos);
     Symbol s(value,_siteId,_counter++,newPos);
     _symbols.insert(_symbols.begin()+index,s);
 
@@ -137,7 +137,6 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
     emit transceiver->getSocket()->sendPacket(packet);
 //    this->to_string();
     emit test1();
-
 }
 
 void SharedEditor::localErase(qint32 index) {
@@ -193,18 +192,14 @@ qint32 SharedEditor::getIndex(Message &m) {
     }
     if(m.getSymbol()>_symbols[pos]){
         for(qint32 i=pos+1;i<_symbols.size()-1;i++){
-            if(m.getSymbol()>_symbols[i]){
-            }else{
-                pos=i;
-                break;
+            if(m.getSymbol()<_symbols[i]){
+                return i;
             }
         }
     }else{
         for(qint32 i=pos-1;i>=0;i--){
             if(m.getSymbol()>_symbols[i]){
-            }else{
-                pos=i;
-                break;
+                return i+1;
             }
         }
     }
