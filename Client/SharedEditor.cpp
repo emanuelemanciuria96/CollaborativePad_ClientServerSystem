@@ -203,7 +203,7 @@ qint32 SharedEditor::getIndex(Message &m) {
         for(qint32 i=pos-1;i>=0;i--){
             if(m.getSymbol()>_symbols[i]){
             }else{
-                pos=i+1;
+                pos=i;
                 break;
             }
         }
