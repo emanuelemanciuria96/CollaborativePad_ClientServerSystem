@@ -140,7 +140,7 @@ void Transceiver::sendAllMessages() {
          strMess->getSiteId() << strMess->getFormattedMessages() ;
     socket->waitForBytesWritten(-1);
     if( !messages.empty() ) {
-        timer->start(100);
+        timer->start(sendFrequency);
         firstMessage = false;
     }
 
@@ -159,7 +159,7 @@ void Transceiver::sendAllMessages() {
 void Transceiver::sendMessage(DataPacket& packet) {
     
     if(firstMessage){
-        timer->start(200);
+        timer->start(timeFirst);
         firstMessage = false;
     }
     
