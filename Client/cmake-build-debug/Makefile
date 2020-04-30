@@ -38,19 +38,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = "D:\Program Files\JetBrains\CLion 2019.2.3\bin\cmake\win\bin\cmake.exe"
+CMAKE_COMMAND = "C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe"
 
 # The command to remove a file.
-RM = "D:\Program Files\JetBrains\CLion 2019.2.3\bin\cmake\win\bin\cmake.exe" -E remove -f
+RM = "C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\Desktop\SharedEditor_MalnatiProject\Client
+CMAKE_SOURCE_DIR = C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\Desktop\SharedEditor_MalnatiProject\Client\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -58,7 +58,7 @@ CMAKE_BINARY_DIR = D:\Desktop\SharedEditor_MalnatiProject\Client\cmake-build-deb
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	"D:\Program Files\JetBrains\CLion 2019.2.3\bin\cmake\win\bin\cmake.exe" -E echo "No interactive CMake dialog available."
+	"C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -E echo "No interactive CMake dialog available."
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -69,7 +69,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	"D:\Program Files\JetBrains\CLion 2019.2.3\bin\cmake\win\bin\cmake.exe" -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	"C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -79,9 +79,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\Desktop\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles D:\Desktop\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\Desktop\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -215,6 +215,33 @@ LoginDialog.s: LoginDialog.cpp.s
 LoginDialog.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/LoginDialog.cpp.s
 .PHONY : LoginDialog.cpp.s
+
+Packet/Command.obj: Packet/Command.cpp.obj
+
+.PHONY : Packet/Command.obj
+
+# target to build an object file
+Packet/Command.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Command.cpp.obj
+.PHONY : Packet/Command.cpp.obj
+
+Packet/Command.i: Packet/Command.cpp.i
+
+.PHONY : Packet/Command.i
+
+# target to preprocess a source file
+Packet/Command.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Command.cpp.i
+.PHONY : Packet/Command.cpp.i
+
+Packet/Command.s: Packet/Command.cpp.s
+
+.PHONY : Packet/Command.s
+
+# target to generate assembly for a file
+Packet/Command.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Command.cpp.s
+.PHONY : Packet/Command.cpp.s
 
 Packet/DataPacket.obj: Packet/DataPacket.cpp.obj
 
@@ -378,6 +405,33 @@ Packet/Symbols/Symbol.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.s
 .PHONY : Packet/Symbols/Symbol.cpp.s
 
+RemoteCursor.obj: RemoteCursor.cpp.obj
+
+.PHONY : RemoteCursor.obj
+
+# target to build an object file
+RemoteCursor.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/RemoteCursor.cpp.obj
+.PHONY : RemoteCursor.cpp.obj
+
+RemoteCursor.i: RemoteCursor.cpp.i
+
+.PHONY : RemoteCursor.i
+
+# target to preprocess a source file
+RemoteCursor.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/RemoteCursor.cpp.i
+.PHONY : RemoteCursor.cpp.i
+
+RemoteCursor.s: RemoteCursor.cpp.s
+
+.PHONY : RemoteCursor.s
+
+# target to generate assembly for a file
+RemoteCursor.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/RemoteCursor.cpp.s
+.PHONY : RemoteCursor.cpp.s
+
 SharedEditor.obj: SharedEditor.cpp.obj
 
 .PHONY : SharedEditor.obj
@@ -478,6 +532,9 @@ help:
 	@echo ... LoginDialog.obj
 	@echo ... LoginDialog.i
 	@echo ... LoginDialog.s
+	@echo ... Packet/Command.obj
+	@echo ... Packet/Command.i
+	@echo ... Packet/Command.s
 	@echo ... Packet/DataPacket.obj
 	@echo ... Packet/DataPacket.i
 	@echo ... Packet/DataPacket.s
@@ -496,6 +553,9 @@ help:
 	@echo ... Packet/Symbols/Symbol.obj
 	@echo ... Packet/Symbols/Symbol.i
 	@echo ... Packet/Symbols/Symbol.s
+	@echo ... RemoteCursor.obj
+	@echo ... RemoteCursor.i
+	@echo ... RemoteCursor.s
 	@echo ... SharedEditor.obj
 	@echo ... SharedEditor.i
 	@echo ... SharedEditor.s

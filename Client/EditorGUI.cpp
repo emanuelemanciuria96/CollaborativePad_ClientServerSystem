@@ -136,6 +136,10 @@ void EditorGUI::setModel(SharedEditor* _model) {
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i=0;
     if(!signalBlocker) {
+        if(pos == 0){
+            charsAdded -= charsRemoved;
+            charsRemoved = 0;
+        }
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             std::cout << "Cancellazione carattere " << pos << std::endl;
             for (i = 0; i < charsRemoved; i++) {
@@ -163,14 +167,14 @@ void EditorGUI::insertText(qint32 pos, const QString& value, qint32 siteId) {
     cursor->insertText(value);
     std::cout << "Inseriti " << value.size() << " caratteri in "  << pos << std::endl;
     signalBlocker = !signalBlocker;
-    updateRemoteCursors(siteId,pos, Message::insertion);
+//    updateRemoteCursors(siteId,pos, Message::insertion);
 }
 
 bool EditorGUI::checkSiteId(RemoteCursor& rc, qint32 siteId){
     return rc.getSiteId() == siteId;
 }
 
-void EditorGUI::deleteText(qint32 pos, qint32 siteId) {
+void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     pos--;
     RemoteCursor* cursor;
 
@@ -178,27 +182,29 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId) {
 
 //    std::cout << "position:" << pos << std::endl;
     cursor->setPosition(pos,QTextCursor::MoveMode::MoveAnchor);
+    cursor->setPosition(pos+n, QTextCursor::KeepAnchor);
     signalBlocker = !signalBlocker;
-    cursor->deleteChar();
+    cursor->removeSelectedText();
     std::cout << "Rimosso " << pos << std::endl;
     signalBlocker = !signalBlocker;
-    updateRemoteCursors(siteId,pos, Message::removal);
+//    updateRemoteCursors(siteId,pos, Message::removal);
 }
 
 
-void EditorGUI::updateSymbols(qint32 pos, QChar value, qint32 siteId, Message::action_t action) {
+void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action) {
     if(action == Message::removal){
-        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
-        deleteText(pos, siteId);
+//        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
+        deleteText(pos, siteId, s.size());
     }
     else {
-        if(posLastChar<0 || pos!=posLastChar+1) {
-            flushInsertQueue();
-            posQueue = pos;
-            siteIdQueue = siteId;
-        }
-        insertQueue.push(value);
-        posLastChar = pos;
+        insertText(pos, s, siteId);
+//        if(posLastChar<0 || pos!=posLastChar+1) {
+//            flushInsertQueue();
+//            posQueue = pos;
+//            siteIdQueue = siteId;
+//        }
+//        insertQueue.push(value);
+//        posLastChar = pos;
     }
 }
 

@@ -1,18 +1,19 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'SharedEditor.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.3)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.13.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#include <memory>
 #include "../../../SharedEditor.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'SharedEditor.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.3. It"
+#error "This file was generated using the moc from 5.13.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -21,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_SharedEditor_t {
-    QByteArrayData data[16];
-    char stringdata0[130];
+    QByteArrayData data[18];
+    char stringdata0[151];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,24 +36,27 @@ QT_MOC_LITERAL(0, 0, 12), // "SharedEditor"
 QT_MOC_LITERAL(1, 13, 14), // "symbolsChanged"
 QT_MOC_LITERAL(2, 28, 0), // ""
 QT_MOC_LITERAL(3, 29, 3), // "pos"
-QT_MOC_LITERAL(4, 33, 5), // "value"
-QT_MOC_LITERAL(5, 39, 6), // "action"
-QT_MOC_LITERAL(6, 46, 5), // "test1"
-QT_MOC_LITERAL(7, 52, 9), // "loginSlot"
-QT_MOC_LITERAL(8, 62, 8), // "QString&"
-QT_MOC_LITERAL(9, 71, 8), // "username"
-QT_MOC_LITERAL(10, 80, 8), // "password"
-QT_MOC_LITERAL(11, 89, 7), // "process"
-QT_MOC_LITERAL(12, 97, 10), // "DataPacket"
-QT_MOC_LITERAL(13, 108, 3), // "pkt"
-QT_MOC_LITERAL(14, 112, 12), // "deleteThread"
-QT_MOC_LITERAL(15, 125, 4) // "test"
+QT_MOC_LITERAL(4, 33, 1), // "s"
+QT_MOC_LITERAL(5, 35, 6), // "siteId"
+QT_MOC_LITERAL(6, 42, 17), // "Message::action_t"
+QT_MOC_LITERAL(7, 60, 6), // "action"
+QT_MOC_LITERAL(8, 67, 5), // "test1"
+QT_MOC_LITERAL(9, 73, 9), // "loginSlot"
+QT_MOC_LITERAL(10, 83, 8), // "QString&"
+QT_MOC_LITERAL(11, 92, 8), // "username"
+QT_MOC_LITERAL(12, 101, 8), // "password"
+QT_MOC_LITERAL(13, 110, 7), // "process"
+QT_MOC_LITERAL(14, 118, 10), // "DataPacket"
+QT_MOC_LITERAL(15, 129, 3), // "pkt"
+QT_MOC_LITERAL(16, 133, 12), // "deleteThread"
+QT_MOC_LITERAL(17, 146, 4) // "test"
 
     },
-    "SharedEditor\0symbolsChanged\0\0pos\0value\0"
-    "action\0test1\0loginSlot\0QString&\0"
-    "username\0password\0process\0DataPacket\0"
-    "pkt\0deleteThread\0test"
+    "SharedEditor\0symbolsChanged\0\0pos\0s\0"
+    "siteId\0Message::action_t\0action\0test1\0"
+    "loginSlot\0QString&\0username\0password\0"
+    "process\0DataPacket\0pkt\0deleteThread\0"
+    "test"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,22 +74,22 @@ static const uint qt_meta_data_SharedEditor[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    3,   44,    2, 0x06 /* Public */,
-       6,    0,   51,    2, 0x06 /* Public */,
+       1,    4,   44,    2, 0x06 /* Public */,
+       8,    0,   53,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    2,   52,    2, 0x0a /* Public */,
-      11,    1,   57,    2, 0x0a /* Public */,
-      14,    0,   60,    2, 0x0a /* Public */,
-      15,    0,   61,    2, 0x0a /* Public */,
+       9,    2,   54,    2, 0x0a /* Public */,
+      13,    1,   59,    2, 0x0a /* Public */,
+      16,    0,   62,    2, 0x0a /* Public */,
+      17,    0,   63,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::Int, QMetaType::QChar, QMetaType::QString,    3,    4,    5,
+    QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Int, 0x80000000 | 6,    3,    4,    5,    7,
     QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 8, 0x80000000 | 8,    9,   10,
-    QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void, 0x80000000 | 10, 0x80000000 | 10,   11,   12,
+    QMetaType::Void, 0x80000000 | 14,   15,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -98,7 +102,7 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         auto *_t = static_cast<SharedEditor *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->symbolsChanged((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QChar(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
+        case 0: _t->symbolsChanged((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< qint32(*)>(_a[3])),(*reinterpret_cast< Message::action_t(*)>(_a[4]))); break;
         case 1: _t->test1(); break;
         case 2: _t->loginSlot((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 3: _t->process((*reinterpret_cast< DataPacket(*)>(_a[1]))); break;
@@ -120,7 +124,7 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (SharedEditor::*)(qint32 , QChar , const QString & );
+            using _t = void (SharedEditor::*)(qint32 , const QString & , qint32 , Message::action_t );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::symbolsChanged)) {
                 *result = 0;
                 return;
@@ -177,9 +181,9 @@ int SharedEditor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void SharedEditor::symbolsChanged(qint32 _t1, QChar _t2, const QString & _t3)
+void SharedEditor::symbolsChanged(qint32 _t1, const QString & _t2, qint32 _t3, Message::action_t _t4)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t4))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 

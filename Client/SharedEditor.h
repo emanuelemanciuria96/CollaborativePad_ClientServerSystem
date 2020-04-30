@@ -33,7 +33,7 @@ private:
     std::vector<Symbol> _symbols;
     qint32 _counter;
     Transceiver* transceiver;
-    quint32 getIndex(Message& m);
+    qint32 getIndex(Message& m);
     void processMessages(StringMessages& strMess);
     void processLoginInfo(LoginInfo& logInf);
     bool isLogged;
@@ -45,7 +45,7 @@ public slots:
     void test();
 
 signals:
-    void symbolsChanged(qint32 pos, QChar value, qint32 siteId, Message::action_t action);
+    void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void test1();
 
 public:

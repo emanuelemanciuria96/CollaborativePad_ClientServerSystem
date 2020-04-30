@@ -92,7 +92,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
     QString password;
 
     in >> siteId >> type >> user >> password;
-
+    std::cout << "recvLoginInfo: " << user.toStdString() << " " << password.toStdString() << std::endl;
     if(type == LoginInfo::login_request && !isLogged) {
         auto shr = std::make_shared<LoginInfo>( -1, type, user, password);
         packet.setPayload(shr);
