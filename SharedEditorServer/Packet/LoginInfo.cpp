@@ -3,6 +3,8 @@
 //
 
 
+#include <QtSql/QSqlDatabase>
+#include <QtWidgets/QMessageBox>
 #include "LoginInfo.h"
 #include "../database/DBSql.h"
 
