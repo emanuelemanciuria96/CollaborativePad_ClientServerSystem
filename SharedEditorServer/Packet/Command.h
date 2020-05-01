@@ -37,11 +37,12 @@ public:
     void setArgs(const QVector<QString> &args);
     const QString &getCurrentDirectory() const;
     void setCurrentDirectory(const QString &directory);
-    QVector<QString> getDirectories(QString& user, QString& directory);
-    bool removeDirectory(QString& user, QString &directory);
-    bool makeDirectory(QString& user, QString &directory);
-    bool copyFile(QString& user, QString& src, QString& dest);
-    bool moveFile(QString& user, QString& src, QString& dest);
+    QVector<QString> mkdirCommand(QString& connectionId, QString& user, QString& directory);
+    QVector<QString> openCommand(QString& connectionId, QString& user, QString& directory);
+    bool removeDirectory(QString& connectionId, QString& user, QString &directory);
+    bool makeDirectory(QString& connectionId, QString& user, QString &directory);
+    bool copyFile(QString& connectionId, QString& user, QString& src, QString& dest);
+    bool moveFile(QString& connectionId, QString& user, QString& src, QString& dest);
 
 private:
     cmd_t _cmd;

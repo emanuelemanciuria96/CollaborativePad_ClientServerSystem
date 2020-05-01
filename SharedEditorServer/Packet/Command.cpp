@@ -7,6 +7,9 @@
 
 #include <utility>
 #include <QtCore/QDir>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QVariant>
 
 Command::Command(qint32 siteId, Command::cmd_t cmd, QVector<QString> args) : Payload(siteId), _cmd(cmd),
                                                                                     _args(std::move(args)) {}
@@ -35,19 +38,36 @@ void Command::setCurrentDirectory(const QString &directory) {
     _currentDirectory = directory;
 }
 
-QVector<QString> Command::getDirectories(QString& user, QString& directory) {
-    QVector<QString> directories;
-    DBSql sqldb(user.toStdString()+"_directories.db");
-    sqldb.openDB();
-    std::string query;
-
-    query = "SELECT * FROM DIRECTORIES WHERE DIRECTORY LIKE '"+directory.left(directory.size()-3).toStdString()+"%"+std::to_string(directory.right(1).toUInt()+1)+"'";
-    sqldb.query(query);
-
-    return sqldb.getResult()["DIRECTORY"];
+QVector<QString> Command::mkdirCommand(QString& connectionId, QString& user, QString& directory) {
+    return QVector<QString>();
 }
 
-bool Command::removeDirectory(QString& user, QString &directory) {
+/*LE FUNZIONI CHE SEGUONO SONO TUTTE DA RIFARE*/
+
+QVector<QString> Command::openCommand(QString& connectionId, QString& user, QString& directory) {
+    QVector<QString> directories;
+    QSqlDatabase db = QSqlDatabase::database(connectionId);
+    db.setDatabaseName(user+"_directories.db");
+
+    if (!db.open())
+        return directories;
+
+    QSqlQuery query(db);
+    if(!query.exec("SELECT * FROM DIRECTORIES WHERE DIRECTORY LIKE '"+directory.left(directory.size()-3)+"/%"+QString::number(directory.right(1).toUInt()+1)+"'"))
+    {
+        db.close();
+        return directories;
+    }
+
+    while(query.next()){
+        directories.push_back(query.value("DIRECTORY").toString());
+    }
+
+    db.close();
+    return directories;
+}
+
+bool Command::removeDirectory(QString& connectionId, QString& user, QString &directory) {
     DBSql sqldb(user.toStdString()+"_directories.db");
     sqldb.openDB();
     std::string query;
@@ -69,7 +89,7 @@ bool Command::removeDirectory(QString& user, QString &directory) {
     return false;
 }
 
-bool Command::makeDirectory(QString& user, QString &directory) {
+bool Command::makeDirectory(QString& connectionId, QString& user, QString &directory) {
     QDir dir;
 
     if(dir.mkdir(directory.left(directory.size() - 3))){
@@ -89,7 +109,7 @@ bool Command::makeDirectory(QString& user, QString &directory) {
     }
 }
 
-bool Command::copyFile(QString& user, QString &src, QString &dest) {
+bool Command::copyFile(QString& connectionId, QString& user, QString &src, QString &dest) {
     DBSql sqldb(user.toStdString()+"_directories.db");
     sqldb.openDB();
     std::string query;
@@ -126,7 +146,7 @@ bool Command::copyFile(QString& user, QString &src, QString &dest) {
     return false;
 }
 
-bool Command::moveFile(QString& user, QString& src, QString& dest) {
+bool Command::moveFile(QString& connectionId, QString& user, QString& src, QString& dest) {
     DBSql sqldb(user.toStdString()+"_directories.db");
     sqldb.openDB();
     std::string query;

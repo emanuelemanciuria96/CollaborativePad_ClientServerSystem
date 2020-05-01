@@ -11,6 +11,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QDir>
 #include <QtCore/QJsonDocument>
+#include <QtSql/QSqlDatabase>
 #include "ServerThread.h"
 #include "NetworkServer.h"
 #include "Packet/LoginInfo.h"
@@ -43,6 +44,9 @@ void ServerThread::run()
     connect(socket,&Socket::sendMessage,this,&ServerThread::sendPacket,Qt::QueuedConnection);
     connect(socket, SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+
+    setThreadId();
+    QSqlDatabase::addDatabase("QSQLITE", threadId);
 
     exec(); //loop degli eventi attivato qui
 }
@@ -105,11 +109,10 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
     if(type == LoginInfo::login_request && isLogged.isEmpty()) {
         auto shr = std::make_shared<LoginInfo>( -1, type, user, password);
         packet.setPayload(shr);
-        if (shr->login() != -1) {
-            std::cout << "client successfully logged!" << std::endl;
-            isLogged = shr->getUser();                                               //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
-            std::cout << isLogged.toStdString() << std::endl;
-            sendPacket(packet);                           //non fa nulla, non risponde con messaggi di errore
+        if (shr->login(threadId) != -1) {
+            isLogged = user;
+            std::cout << "client "+user.toStdString()+" successfully logged!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
+            sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
             {
                 std::lock_guard lg(skt_mutex);
                 _sockets.emplace_back(this->socket,new std::mutex());
@@ -379,7 +382,16 @@ void ServerThread::disconnected()
     }
 
     socket->deleteLater();
+    QSqlDatabase::removeDatabase(threadId);
     std::cout<<"Client disconnected!"<<std::endl;
     exit(0);
+}
+
+void ServerThread::setThreadId() {
+    auto myid = std::this_thread::get_id();
+    std::stringstream ss;
+    ss << myid;
+    std::string IdString = ss.str();
+    threadId = QString::fromStdString(IdString);
 }
 

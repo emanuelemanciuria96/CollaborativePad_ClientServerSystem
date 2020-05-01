@@ -3,10 +3,11 @@
 //
 
 
-#include <QtSql/QSqlDatabase>
+#include <QSqlDatabase>
 #include <QtWidgets/QMessageBox>
 #include "LoginInfo.h"
-#include "../database/DBSql.h"
+#include <QSqlQuery>
+#include <QtCore/QVariant>
 
 
 LoginInfo::LoginInfo(qint32 siteId, qint32 type, const QString user, const QString password) : Payload(siteId),
@@ -38,19 +39,23 @@ void LoginInfo::setType(type_t type) {
     _type = type;
 }
 
-qint32 LoginInfo::login() {
-    DBSql sqldb("login.db");
-    sqldb.openDB();
-    std::string query;
+qint32 LoginInfo::login(const QString& connectionId) {
+    QSqlDatabase db = QSqlDatabase::database(connectionId);
+    db.setDatabaseName("login.db");
 
-    query = "SELECT PASS, SITEID FROM LOGIN WHERE USER='"+_user.toStdString()+"'";
-    sqldb.query(query);
-    sqldb.closeDB();
+    if (!db.open())
+        return -1;
 
-    if(!sqldb.getResult()["PASS"].isEmpty()) {
-        if (_password == sqldb.getResult()["PASS"].first()) {
+    QSqlQuery query(db);
+    if(!query.exec("SELECT PASS, SITEID FROM LOGIN WHERE USER='"+_user+"'"))
+        return -1;
+
+    db.close();
+
+    if(query.first()) {
+        if (_password == query.value("PASS").toString()) {
             _type = LoginInfo::login_ok;
-            _siteID = sqldb.getResult()["SITEID"].first().toInt();
+            _siteID = query.value("SITEID").toInt();
             return _siteID;
         } else {
             _type = LoginInfo::login_error;

@@ -25,6 +25,7 @@ Q_OBJECT
 public:
     explicit ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent =0);
     void run() override;
+    void setThreadId();
 
 signals:
     void error(QTcpSocket::SocketError socketerror);    //slot che gestisce questo segnale da implementare
@@ -51,6 +52,9 @@ private:
     void sendCommand(DataPacket& packet, std::mutex *mtx = nullptr);
 
     QString isLogged;
+    QString threadId;
+
+private:
 
     void saveFileJson(std::string dir,std::vector<Symbol> _symbols);
     std::vector<Symbol> loadFileJson(std::string dir);

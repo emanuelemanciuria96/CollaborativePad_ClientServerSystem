@@ -35,7 +35,7 @@ public:
     qint32 getType();
     void setType(type_t type);
 
-    qint32 login();
+    qint32 login(const QString& connectionId);
 };
 
 
