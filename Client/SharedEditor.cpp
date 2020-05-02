@@ -191,8 +191,8 @@ qint32 SharedEditor::getIndex(Message &m) {
         pos=_symbols.size()-1;
     }
     if(m.getSymbol()>_symbols[pos]){
-        for(qint32 i=pos+1;i<_symbols.size()-1;i++){
-            if(m.getSymbol()<_symbols[i]){
+        for(qint32 i=pos+1;i<_symbols.size();i++){
+            if(m.getSymbol() < _symbols[i] || m.getSymbol() == _symbols[i]){
                 return i;
             }
         }
