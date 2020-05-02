@@ -31,7 +31,7 @@ void ServerThread::run()
 
     if ( !socket->setSocketDescriptor(this->socketDescriptor) )   //setto il descriptor del socket
     {
-        emit error (socket->error());         //da gestire
+        emit error (socket->error());       //da gestire
         return;
     }
 
@@ -42,11 +42,6 @@ void ServerThread::run()
     exec(); //loop degli eventi attivato qui
 }
 
-/** da modificare nella funzione recvMessage:
- *        posizione (chiave di ordinamento del vettore) oppure, qualora
- *        possibile, cercare un contenitore dell'STL che sia adatto alla
- *        ricerca (che implementi già algoritmi di ricerca ottimi)
- **/
 
 void ServerThread::recvPacket()
 {
@@ -83,10 +78,11 @@ void ServerThread::recvPacket()
 
         default: {
             std::cout<<"Coglione c'è un errore"<<std::endl;
+            throw "mannaggia quel porcodiddio" ;
         }
     }
     if(this->socket->bytesAvailable()>0)         //se arrivano dati troppo velocemente la recvMessage() non fa in tempo
-            emit socket->readyRead();
+             emit socket->readyRead();
 }
 
 void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
@@ -96,7 +92,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
     QString password;
 
     in >> siteId >> type >> user >> password;
-
+    std::cout << "recvLoginInfo: " << user.toStdString() << " " << password.toStdString() << std::endl;
     if(type == LoginInfo::login_request && !isLogged) {
         auto shr = std::make_shared<LoginInfo>( -1, type, user, password);
         packet.setPayload(shr);
@@ -118,33 +114,27 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
 {
 
-    qint32 siteIdM;
-    qint32 action;
-    QChar ch;
-    qint32 siteIdS;
-    quint32  count;
-    qint32 num;
-    qint32 p;
-    std::vector<quint32> pos;
+    qint32 siteId;
+    QString formattedMessages;
 
-    qDebug()<<"Receving message";
+    in.setDevice(this->socket);
+    in.setVersion(QDataStream::Qt_5_5);
 
-    in >> siteIdM >> action >> ch >> siteIdS >> count >> num; //il protocollo scelto per il passaggio della posizione richiede
-    for(int i=0; i<num; i++){                                 //la lettura di un valore ad indicare la lunghezza di pos
-        in >> p;
-        pos.push_back(p);
-    }
+    in >> siteId >> formattedMessages;
 
-    if(isLogged) {                                          //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
-        Symbol sym(ch, siteIdS, count, pos);            //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
-        packet.setPayload( std::make_shared<Message>((Message::action_t) action, siteIdM, sym) );
-        auto msg = *std::dynamic_pointer_cast<Message>(packet.getPayload());
+    auto *strMess = new StringMessages(formattedMessages,siteId);
+    packet.setPayload(std::shared_ptr<StringMessages>(strMess));
 
-        //Message msg((action_t) action, siteIdM, sym);
-        if (action == Message::insertion) {
-            msgHandler->submit(NetworkServer::localInsert, msg);
-        } else {
-            msgHandler->submit(NetworkServer::localErase, msg);
+    //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
+    //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
+    if(isLogged) {
+
+        for (auto msg: strMess->stringToMessages()) {
+            if (msg.getAction() == Message::insertion) {
+                msgHandler->submit(NetworkServer::localInsert, msg);
+            } else {
+                msgHandler->submit(NetworkServer::localErase, msg);
+            }
         }
 
         /** nota: mentre la scrittura del file locale può essere una azione asincrona, la comunicazione
@@ -163,9 +153,8 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
 
         std::shared_lock sl(skt_mutex);
         for (auto skt: _sockets) {
-            sl.unlock();
+            sl.unlock(); /// la presenza di questa roba è da testare, potrebbe non essere utile
             if (skt.first != socket) {
-                qDebug() << "Invio messaggio";
                 int id = qMetaTypeId<DataPacket>();
                 emit skt.first->sendMessage(packet,skt.second);
             }
@@ -229,18 +218,15 @@ void ServerThread::sendMessage(DataPacket& packet,std::mutex* mtx){
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    auto msg = std::dynamic_pointer_cast<Message>(packet.getPayload());
-    qint32 num=msg->getSymbol().getPos().size();
-
+    auto strMess = std::dynamic_pointer_cast<StringMessages>(packet.getPayload());
 
     {
         std::lock_guard lg(*mtx);
-        out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
-        out << msg->getSiteId() << (qint32)msg->getAction() << msg->getSymbol().getValue() << msg->getSymbol().getSymId().getSiteId() << msg->getSymbol().getSymId().getCount() << num;
-        for(auto i : msg->getSymbol().getPos())
-            out << (qint32) i;
+        out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
+            strMess->getSiteId() << strMess->getFormattedMessages();
         socket->waitForBytesWritten(-1);
     }
+
 }
 
 void ServerThread::saveFileJson(std::string dir,std::vector<Symbol> _symbols){//vector<symbol> to json

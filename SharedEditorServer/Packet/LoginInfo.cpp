@@ -3,6 +3,7 @@
 //
 
 
+#include <iostream>
 #include "LoginInfo.h"
 
 
@@ -61,6 +62,7 @@ LoginInfo LoginInfo::loadLoginJson(std::string dir){
 
     QString user = QString::fromStdString(root["user"].asString());
     QString password = QString::fromStdString(root["password"].asString());
+    std::cout << "loadLoginJson: " << user.toStdString() << password.toStdString() << std::endl;
     LoginInfo data(-1, -1, std::move(user), std::move(password));
 
     return data;

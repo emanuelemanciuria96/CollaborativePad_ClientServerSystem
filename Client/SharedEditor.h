@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Packet/Symbols/Symbol.h"
 #include <vector>
+#include "Packet/StringMessages.h"
 #include "Packet/DataPacket.h"
 #include "Packet/Payload.h"
 #include "Socket.h"
@@ -19,30 +20,32 @@
 #include <QAbstractSocket>
 #include <QString>
 
+#include "Packet/LoginInfo.h"
+#include <vector>
+#include <algorithm>
+#include <QtCore/QTimer>
+
 
 class SharedEditor: public QObject {
-
     Q_OBJECT
 private:
     qint32 _siteId;
     std::vector<Symbol> _symbols;
     qint32 _counter;
     Transceiver* transceiver;
-    void processMessage(Message& m);
+    qint32 getIndex(Message& m);
+    void processMessages(StringMessages& strMess);
     void processLoginInfo(LoginInfo& logInf);
-
     bool isLogged;
 
 public slots:
     void loginSlot(QString& username, QString& password);
-    void process( DataPacket pkt);
+    void process(DataPacket pkt);
     void deleteThread();
-
     void test();
 
 signals:
-    void symbolsChanged(qint32 pos, QChar value, const QString& action);
-
+    void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void test1();
 
 public:

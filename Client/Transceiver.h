@@ -8,11 +8,13 @@
 #include <QThread>
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <QtCore/QTimer>
 #include "Socket.h"
 #include "Packet/DataPacket.h"
 #include "Packet/Message.h"
 #include "Packet/LoginInfo.h"
 #include "Packet/Payload.h"
+#include "Packet/StringMessages.h"
 
 class Transceiver: public QThread {
 
@@ -25,14 +27,18 @@ public:
 public slots:
     void recvPacket();
     void sendPacket(DataPacket pkt);
+    void sendAllMessages();
     void disconnected();
 
 signals:
     void readyToProcess(DataPacket pkt);
 
 private:
+    std::vector<Message> messages;
+    bool firstMessage = true;
     Socket *socket;
     qintptr socketDescriptor;
+    QTimer *timer;
 
     qint32 connectToServer();
 
@@ -40,7 +46,9 @@ private:
     void sendMessage(DataPacket& pkt);
     void recvLoginInfo(DataPacket& pkt, QDataStream& in);
     void recvMessage(DataPacket& pkt,QDataStream& in);
+
 };
 
 
 #endif //CLIENT_TRANSCEIVER_H
+
