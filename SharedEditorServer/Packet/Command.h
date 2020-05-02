@@ -37,7 +37,7 @@ public:
     void setArgs(const QVector<QString> &args);
     const QString &getCurrentDirectory() const;
     void setCurrentDirectory(const QString &directory);
-    QVector<QString> mkdirCommand(QString& connectionId, QString& user, QString& directory);
+    bool mkdirCommand(QString& connectionId, QString& user);
     QVector<QString> openCommand(QString& connectionId, QString& user, QString& directory);
     bool removeDirectory(QString& connectionId, QString& user, QString &directory);
     bool makeDirectory(QString& connectionId, QString& user, QString &directory);

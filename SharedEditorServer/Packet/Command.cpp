@@ -38,8 +38,28 @@ void Command::setCurrentDirectory(const QString &directory) {
     _currentDirectory = directory;
 }
 
-QVector<QString> Command::mkdirCommand(QString& connectionId, QString& user, QString& directory) {
-    return QVector<QString>();
+bool Command::mkdirCommand(QString& connectionId, QString& user) {
+    if(_args.size()!=1)
+        return false;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId);
+    db.setDatabaseName(user+"_directories.db");
+
+    if (!db.open())
+        return false;
+
+    QString currentDir(_args.first());
+    currentDir.truncate(currentDir.lastIndexOf("/"));
+    QString newDir(_args.first()+">D");
+
+    QSqlQuery query(db);
+    if(!query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('"+currentDir+"', '"+newDir+"');")){
+        db.close();
+        return false;
+    }
+
+    db.close();
+    return true;
 }
 
 /*LE FUNZIONI CHE SEGUONO SONO TUTTE DA RIFARE*/
