@@ -30,19 +30,11 @@ void Command::setArgs(const QVector<QString> &args) {
     _args = args;
 }
 
-const QString &Command::getCurrentDirectory() const {
-    return _currentDirectory;
-}
-
-void Command::setCurrentDirectory(const QString &directory) {
-    _currentDirectory = directory;
-}
-
 bool Command::mkdirCommand(QString& connectionId, QString& user) {
     if(_args.size()!=1)
         return false;
 
-    QSqlDatabase db = QSqlDatabase::database(connectionId);
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_directories");
     db.setDatabaseName(user+"_directories.db");
 
     if (!db.open())
@@ -60,6 +52,73 @@ bool Command::mkdirCommand(QString& connectionId, QString& user) {
 
     db.close();
     return true;
+}
+
+bool Command::rmCommand(QString& connectionId, QString& user) {
+    if(_args.size()!=1)
+        return false;
+
+    QChar type(_args.first().back());
+
+    if(type == "D"){
+        return rmDir(connectionId, user);
+    } else if(type == "F"){
+        return rmFile(connectionId, user);
+    }
+
+    return false;
+}
+
+bool Command::rmDir(QString &connectionId, QString &user) {
+    if(_args.size()!=1)
+        return false;
+
+    QSqlDatabase dbDirs = QSqlDatabase::database(connectionId+"_directories");
+    QSqlDatabase dbFiles = QSqlDatabase::database(connectionId+"_files");
+    dbDirs.setDatabaseName(user+"_directories.db");
+    dbFiles.setDatabaseName(user+"_files");
+
+    if (!dbDirs.open() || !dbFiles.open())
+        return false;
+
+    QString dir = _args.first();
+    QSqlQuery dirQuery(dbDirs);
+    QSqlQuery fileQuery(dbFiles);
+
+    dbFiles.transaction();
+    fileQuery.exec("SELECT SUBF FROM DIRECTORIES WHERE DIRECTORY='"+dir+"' AND SUBF LIKE '%F'");
+
+    QVector<QString> filesDir;
+    QVector<QString> files;
+
+    while (fileQuery.next()) {
+        filesDir.push_back(fileQuery.value("SUBF").toString());
+    }
+
+    for(const auto& f: filesDir){
+        fileQuery.exec("SELECT FILEID FROM FILES WHERE DIR='"+f+"'");
+        files.push_back(fileQuery.value("FILEID").toString());
+    }
+
+    for(auto f: files){
+        fileQuery.exec("DELETE FROM FILES WHERE FILEID='"+f+"'");
+    }
+
+    if(!dirQuery.exec("DELETE FROM DIRECTORIES WHERE SUBF='"+dir+">D"+"' OR DIRECTORY='"+dir+"'")){
+        dbFiles.rollback();
+        return false;
+    }
+
+    if(!dbFiles.commit()){
+        dbFiles.rollback();
+        return false;
+    }
+    //manca gestione sottocartelle
+    return false;
+}
+
+bool Command::rmFile(QString &connectionId, QString &user) {
+    return false;
 }
 
 /*LE FUNZIONI CHE SEGUONO SONO TUTTE DA RIFARE*/
@@ -85,48 +144,6 @@ QVector<QString> Command::openCommand(QString& connectionId, QString& user, QStr
 
     db.close();
     return directories;
-}
-
-bool Command::removeDirectory(QString& connectionId, QString& user, QString &directory) {
-    DBSql sqldb(user.toStdString()+"_directories.db");
-    sqldb.openDB();
-    std::string query;
-
-    query = "DELETE FROM DIRECTORIES WHERE DIRECTORY='"+directory.toStdString()+"'";
-    sqldb.query(query);
-
-    query = "SELECT * FROM DIRECTORIES WHERE DIRECTORY='"+directory.toStdString()+"'";
-    sqldb.query(query);
-
-    if(directory.at(directory.size()-2) == "F"){
-        QFile file(directory.left(directory.size() - 3));
-        return (sqldb.getResult()["DIRECTORY"].isEmpty() && file.remove());
-    }else if(directory.at(directory.size()-2) == "D"){
-        QDir dir(directory.left(directory.size() - 3));
-        return (sqldb.getResult()["DIRECTORY"].isEmpty() && dir.removeRecursively());
-    }
-
-    return false;
-}
-
-bool Command::makeDirectory(QString& connectionId, QString& user, QString &directory) {
-    QDir dir;
-
-    if(dir.mkdir(directory.left(directory.size() - 3))){
-        DBSql sqldb(user.toStdString()+"_directories.db");
-        sqldb.openDB();
-        std::string query;
-
-        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('"+directory.toStdString()+"');";
-        sqldb.query(query);
-
-        query = "SELECT * FROM DIRECTORIES WHERE DIRECTORY='"+directory.toStdString()+"'";
-        sqldb.query(query);
-
-        return !sqldb.getResult()["DIRECTORY"].isEmpty();
-    }else{
-        return false;
-    }
 }
 
 bool Command::copyFile(QString& connectionId, QString& user, QString &src, QString &dest) {

@@ -65,9 +65,9 @@ static bool initializeDb()
          "SUBF           TEXT, PRIMARY KEY (DIRECTORY, SUBF));");
         query.exec("DELETE FROM DIRECTORIES");
         query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('', '/Cartella1>D');");
-        query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('Cartella1', '/Cartella1/Sottocartella1>D');");
-        query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('Cartella1', '/Cartella1/Sottocartella2>D');");
-        query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('Cartella1', '/Cartella1/prova>F');");
+        query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('/Cartella1', '/Cartella1/Sottocartella1>D');");
+        query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('/Cartella1', '/Cartella1/Sottocartella2>D');");
+        query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('/Cartella1', '/Cartella1/prova>F');");
         query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('', '/Cartella2>D');");
         query.exec("SELECT * FROM DIRECTORIES");
 

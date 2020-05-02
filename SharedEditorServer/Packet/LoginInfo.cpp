@@ -40,7 +40,7 @@ void LoginInfo::setType(type_t type) {
 }
 
 qint32 LoginInfo::login(const QString& connectionId) {
-    QSqlDatabase db = QSqlDatabase::database(connectionId);
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_login");
     db.setDatabaseName("login.db");
 
     if (!db.open())

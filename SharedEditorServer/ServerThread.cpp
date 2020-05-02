@@ -46,7 +46,9 @@ void ServerThread::run()
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
 
     setThreadId();
-    QSqlDatabase::addDatabase("QSQLITE", threadId);
+    QSqlDatabase::addDatabase("QSQLITE", threadId+"_login");
+    QSqlDatabase::addDatabase("QSQLITE", threadId+"_directories");
+    QSqlDatabase::addDatabase("QSQLITE", threadId+"_files");
 
     exec(); //loop degli eventi attivato qui
 }
@@ -382,7 +384,9 @@ void ServerThread::disconnected()
     }
 
     socket->deleteLater();
-    QSqlDatabase::removeDatabase(threadId);
+    QSqlDatabase::removeDatabase(threadId+"_login");
+    QSqlDatabase::removeDatabase(threadId+"_directories");
+    QSqlDatabase::removeDatabase(threadId+"_files");
     std::cout<<"Client disconnected!"<<std::endl;
     exit(0);
 }
