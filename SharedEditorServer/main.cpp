@@ -4,6 +4,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlDriver>
+#include <QtCore/QFile>
 
 #include "NetworkServer.h"
 #include "database/DBSql.h"

@@ -35,6 +35,7 @@ public:
     void setCmd(cmd_t cmd);
     const QVector<QString> &getArgs() const;
     void setArgs(const QVector<QString> &args);
+    bool cdCommand(QString& connectionId, QString& user);
     bool mkdirCommand(QString& connectionId, QString& user);
     bool rmCommand(QString& connectionId, QString& user);
     QVector<QString> openCommand(QString& connectionId, QString& user, QString& directory);

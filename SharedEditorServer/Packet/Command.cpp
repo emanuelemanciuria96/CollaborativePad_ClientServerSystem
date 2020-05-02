@@ -30,6 +30,31 @@ void Command::setArgs(const QVector<QString> &args) {
     _args = args;
 }
 
+bool Command::cdCommand(QString& connectionId, QString& user){
+    if(_args.size()!=1)
+        return false;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_directories");
+    db.setDatabaseName(user+"_directories.db");
+
+    if (!db.open())
+        return false;
+
+    QString dir = _args.first();
+    _args.clear();
+    QSqlQuery query(db);
+
+    if(!query.exec("SELECT SUBF FROM DIRECTORIES WHERE DIR='"+dir+"'")){
+        db.close();
+        return false;
+    }
+
+    while(query.next())
+        _args.push_back(query.value("SUBF").toString());
+
+    return true;
+}
+
 bool Command::mkdirCommand(QString& connectionId, QString& user) {
     if(_args.size()!=1)
         return false;
@@ -76,49 +101,96 @@ bool Command::rmDir(QString &connectionId, QString &user) {
     QSqlDatabase dbDirs = QSqlDatabase::database(connectionId+"_directories");
     QSqlDatabase dbFiles = QSqlDatabase::database(connectionId+"_files");
     dbDirs.setDatabaseName(user+"_directories.db");
-    dbFiles.setDatabaseName(user+"_files");
+    dbFiles.setDatabaseName(user+"_files.db");
 
     if (!dbDirs.open() || !dbFiles.open())
         return false;
 
     QString dir = _args.first();
+    dir.truncate(dir.lastIndexOf(">"));
     QSqlQuery dirQuery(dbDirs);
     QSqlQuery fileQuery(dbFiles);
 
-    dbFiles.transaction();
-    fileQuery.exec("SELECT SUBF FROM DIRECTORIES WHERE DIRECTORY='"+dir+"' AND SUBF LIKE '%F'");
-
-    QVector<QString> filesDir;
     QVector<QString> files;
 
+    dbFiles.transaction();
+    fileQuery.exec("SELECT FILEID FROM FILES WHERE DIR LIKE '"+dir+"/"+"%'");
+
     while (fileQuery.next()) {
-        filesDir.push_back(fileQuery.value("SUBF").toString());
-    }
-
-    for(const auto& f: filesDir){
-        fileQuery.exec("SELECT FILEID FROM FILES WHERE DIR='"+f+"'");
         files.push_back(fileQuery.value("FILEID").toString());
-    }
-
-    for(auto f: files){
-        fileQuery.exec("DELETE FROM FILES WHERE FILEID='"+f+"'");
     }
 
     if(!dirQuery.exec("DELETE FROM DIRECTORIES WHERE SUBF='"+dir+">D"+"' OR DIRECTORY='"+dir+"'")){
         dbFiles.rollback();
+        dbFiles.close();
+        dbDirs.close();
+        return false;
+    }
+    fileQuery.exec("DELETE FROM FILES WHERE DIR LIKE '"+dir+"/"+"%'");
+    if(!dbFiles.commit()){
+        dbFiles.rollback();
+        dbFiles.close();
+        dbDirs.close();
+        return false;
+    }
+
+    dbFiles.close();
+    dbDirs.close();
+
+    for(const auto& f: files)
+        QFile::remove(f);
+
+    return true;
+}
+
+bool Command::rmFile(QString &connectionId, QString &user) {
+    if(_args.size()!=1)
+        return false;
+
+    QSqlDatabase dbDirs = QSqlDatabase::database(connectionId+"_directories");
+    QSqlDatabase dbFiles = QSqlDatabase::database(connectionId+"_files");
+    dbDirs.setDatabaseName(user+"_directories.db");
+    dbFiles.setDatabaseName(user+"_files.db");
+    QString fileDir(_args.first());
+
+    if (!dbDirs.open() || !dbFiles.open())
+        return false;
+
+    QSqlQuery dirQuery(dbDirs);
+    QSqlQuery fileQuery(dbFiles);
+
+    if(!fileQuery.exec("SELECT FILEID FROM FILES WHERE DIR='"+fileDir+"'")){
+        dbFiles.close();
+        dbDirs.close();
+        return false;
+    }
+
+    if(!fileQuery.first()){
+        dbFiles.close();
+        dbDirs.close();
+        return false;
+    }
+
+    QFile file(fileQuery.value("FILEID").toString());
+    dbFiles.transaction();
+    fileQuery.exec("DELETE FROM FILES WHERE DIR='"+fileDir+"'");
+
+    if(!dirQuery.exec("DELETE FROM DIRECTORIES WHERE SUBF='"+fileDir+"'")){
+        dbFiles.rollback();
+        dbFiles.close();
+        dbDirs.close();
         return false;
     }
 
     if(!dbFiles.commit()){
         dbFiles.rollback();
+        dbFiles.close();
+        dbDirs.close();
         return false;
     }
-    //manca gestione sottocartelle
-    return false;
-}
 
-bool Command::rmFile(QString &connectionId, QString &user) {
-    return false;
+    file.remove();
+    return true;
 }
 
 /*LE FUNZIONI CHE SEGUONO SONO TUTTE DA RIFARE*/
