@@ -68,8 +68,6 @@ void NetworkServer::localErase(Message m) {
 
     if( *i == m.getSymbol() )  //l'oggetto va trovato per forza, se non c'è
         _symbles.erase(i);     //significa che non c'è coerenza fra i dati dei client
-    else
-        throw std::exception(); ///sarebbe bene trattare meglio questa eccezione
 
     to_string();
 }

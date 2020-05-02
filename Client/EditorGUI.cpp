@@ -41,7 +41,7 @@ void EditorGUI::setUpGUI() {
     this->resize(size.width()*0.7,size.height()*0.7);
 
     connect(textEdit->document(), SIGNAL(contentsChange(int, int, int)), this, SLOT(contentsChange(int,int,int)));
-
+    connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
 //    load("./file.txt");
     loadSymbols();
 }
@@ -136,9 +136,13 @@ void EditorGUI::setModel(SharedEditor* _model) {
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i=0;
     if(!signalBlocker) {
-        if(pos == 0){
+        if(pos == 0 && !selected){
             charsAdded -= charsRemoved;
             charsRemoved = 0;
+        }
+        else if(selected && pos == 0){
+            charsRemoved--;
+            charsAdded--;
         }
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             std::cout << "Cancellazione carattere " << pos << std::endl;

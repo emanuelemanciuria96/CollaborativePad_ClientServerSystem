@@ -44,6 +44,8 @@ private:
     qint32 posQueue;
     qint32 posLastChar;
     QTimer* timer;
+    bool selected= false;
+
     void setUpGUI();
     void setupFileActions();
     void setupEditActions();
@@ -64,6 +66,7 @@ private:
 private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);
     void flushInsertQueue();
+    void setSelected(bool yes){ selected = yes;}
 public slots:
     void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
 

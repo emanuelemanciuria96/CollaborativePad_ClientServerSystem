@@ -187,20 +187,20 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
     }
 }
 qint32 SharedEditor::getIndex(Message &m) {
-    qint32 pos = m.getLocalIndex();//search index
-    if (pos > _symbols.size() - 1) {
-        pos = _symbols.size() - 1;
+    qint32 pos=m.getLocalIndex();//search index
+    if(pos>_symbols.size()-1){
+        pos=_symbols.size()-1;
     }
-    if (m.getSymbol() > _symbols[pos]) {
-        for (qint32 i = pos + 1; i < _symbols.size() - 1; i++) {
-            if (m.getSymbol() < _symbols[i]) {
+    if(m.getSymbol()>_symbols[pos]){
+        for(qint32 i=pos+1;i<_symbols.size();i++){
+            if(m.getSymbol() < _symbols[i] || m.getSymbol() == _symbols[i]){
                 return i;
             }
         }
-    } else {
-        for (qint32 i = pos - 1; i >= 0; i--) {
-            if (m.getSymbol() > _symbols[i]) {
-                return i + 1;
+    }else{
+        for(qint32 i=pos-1;i>=0;i--){
+            if(m.getSymbol()>_symbols[i]){
+                return i+1;
             }
         }
     }
