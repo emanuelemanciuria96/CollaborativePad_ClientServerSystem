@@ -136,11 +136,11 @@ void EditorGUI::setModel(SharedEditor* _model) {
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i=0;
     if(!signalBlocker) {
-        if(pos == 0 && !selected){
+        if( !selected && pos == 0 && charsRemoved > 0 && charsAdded > 1){
             charsAdded -= charsRemoved;
             charsRemoved = 0;
         }
-        else if(selected && pos == 0){
+        else if(selected && pos == 0 && charsRemoved > 0 && charsAdded > 1){
             charsRemoved--;
             charsAdded--;
         }
