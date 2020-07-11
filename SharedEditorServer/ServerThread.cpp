@@ -43,46 +43,46 @@ void ServerThread::run()
 }
 
 
-void ServerThread::recvPacket()
-{
-    std::cout<<"Thread "<<std::this_thread::get_id()<<" reading from socket "<<this->socketDescriptor<<std::endl;
+void ServerThread::recvPacket() {
+    std::cout << "Thread " << std::this_thread::get_id() << " reading from socket " << this->socketDescriptor
+              << std::endl;
 
     QDataStream in;
     qint32 source;
     quint32 errcode;
     quint32 type_of_data;
 
-    qDebug()<<"Receving packet";
+    qDebug() << "Receving packet";
 
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
 
-    in >> source >> errcode >> type_of_data;
-    DataPacket packet(source, errcode, (DataPacket::data_t)type_of_data);
+    while(this->socket->bytesAvailable()>0) {
+        in >> source >> errcode >> type_of_data;
+        DataPacket packet(source, errcode, (DataPacket::data_t) type_of_data);
 
-    switch (type_of_data){
-        case (DataPacket::login): {
-            recvLoginInfo(packet,in);
-            break;
-        }
+        switch (type_of_data) {
+            case (DataPacket::login): {
+                recvLoginInfo(packet, in);
+                break;
+            }
 
-        case (DataPacket::textTyping): {
-            recvMessage(packet,in);
-            break;
-        }
+            case (DataPacket::textTyping): {
+                recvMessage(packet, in);
+                break;
+            }
 
-        case (DataPacket::command): {
-            recvCommand(packet,in);
-            break;
-        }
+            case (DataPacket::command): {
+                recvCommand(packet, in);
+                break;
+            }
 
-        default: {
-            std::cout<<"Coglione c'è un errore"<<std::endl;
-            throw "mannaggia quel porcodiddio" ;
+            default: {
+                std::cout << "Coglione c'è un errore" << std::endl;
+                throw "mannaggia quel porcodiddio";
+            }
         }
     }
-    if(this->socket->bytesAvailable()>0)         //se arrivano dati troppo velocemente la recvMessage() non fa in tempo
-             emit socket->readyRead();
 }
 
 void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {

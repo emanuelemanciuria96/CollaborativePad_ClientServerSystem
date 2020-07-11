@@ -50,30 +50,28 @@ void Transceiver::recvPacket() {
 
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
+    while(this->socket->bytesAvailable()>0) {
+        in >> source >> errcode >> type_of_data;
+        DataPacket packet(source, errcode, (DataPacket::data_t) type_of_data);
 
-    in >> source >> errcode >> type_of_data;
-    DataPacket packet(source, errcode, (DataPacket::data_t)type_of_data);
+        switch (type_of_data) {
+            case (DataPacket::login): {
+                recvLoginInfo(packet, in);
+                break;
+            }
 
-    switch (type_of_data) {
-        case (DataPacket::login): {
-            recvLoginInfo(packet,in);
-            break;
-        }
+            case (DataPacket::textTyping): {
+                recvMessage(packet, in);
+                break;
+            }
 
-        case (DataPacket::textTyping): {
-            recvMessage(packet,in);
-            break;
-        }
-
-        default: {
-            std::cout << "Coglione c'e' un errore" << std::endl;
-            break;
+            default: {
+                std::cout << "Coglione c'e' un errore" << std::endl;
+                break;
+            }
         }
     }
-
-    //if(this->socket->bytesAvailable()>0)         //se arrivano dati troppo velocemente la recvMessage() non fa in tempo
-    //        emit socket->readyRead();                //a processare i segnali readyRead() e i dati rimangono accodati
-}                                                //sul socket, in questo modo svuoto la coda richiamando la recvMessage()
+}
 
 void Transceiver::recvLoginInfo(DataPacket& pkt,QDataStream& in){
     qint32 siteId;
