@@ -32,6 +32,7 @@ public slots:
 
 signals:
     void readyToProcess(DataPacket pkt);
+    void deleteText();
 
 private:
     std::vector<Message> messages;
@@ -46,6 +47,7 @@ private:
     void sendMessage(DataPacket& pkt);
     void recvLoginInfo(DataPacket& pkt, QDataStream& in);
     void recvMessage(DataPacket& pkt,QDataStream& in);
+    void rollBack();
 
 };
 

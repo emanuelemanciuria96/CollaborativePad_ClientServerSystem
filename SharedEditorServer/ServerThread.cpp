@@ -78,9 +78,22 @@ void ServerThread::recvPacket() {
             }
 
             default: {
-                std::cout << "Coglione c'è un errore" << std::endl;
-                throw "mannaggia quel porcodiddio";
+                std::cout << "il dato in arrivo è corrotto, necessario un riallineamento dei dati" << std::endl;
+                packet.setErrcode(-1);
+                packet.setSource(-1);
+                packet.setTypeOfData(DataPacket::textTyping);
+                packet.setPayload(nullptr);
+
+                std::shared_lock sl(skt_mutex);
+                for (auto skt: _sockets) {
+                    if (skt.first == socket) {
+                        sl.unlock();
+                        sendMessage(packet,skt.second);
+                        sl.lock();
+                    }
+                }
             }
+
         }
     }
 }
@@ -137,23 +150,9 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
             }
         }
 
-        /** nota: mentre la scrittura del file locale può essere una azione asincrona, la comunicazione
-         * agli altri utenti di ciò che sta avvenendo non può per due motivi:
-         * 1. è più urgente che i client sappiano cosa gli altri client stiano facendo piuttosto
-         *    che sapere che quello che è stato scritto sia realmente stato salvato oppure no
-         * 2. la comunicazione agli altri socket è probabilmente più rapida della scrittura
-         *    su file.
-         * inoltre in questo caso potrebbe essere utile uno shared_lock piuttosto che un lock in
-         * mutua esclusione, questo perchè (verosimilmente) le azioni che richiedono l'accesso al
-         * vettore di socket in scrittura saranno più rari e richiedono tempistiche molto più lunghe
-         * (la scrittura su questo vettore avviene solo dopo la connessione di un client). Molto più
-         * frequenti sono, invece, gli accessi in lettura; e non permettere ad un thread di leggere da
-         * questo vettore quando un altro sta leggendo, è poco efficiente
-        **/
-
         std::shared_lock sl(skt_mutex);
         for (auto skt: _sockets) {
-            sl.unlock(); /// la presenza di questa roba è da testare, potrebbe non essere utile
+            sl.unlock();
             if (skt.first != socket) {
                 int id = qMetaTypeId<DataPacket>();
                 emit skt.first->sendMessage(packet,skt.second);

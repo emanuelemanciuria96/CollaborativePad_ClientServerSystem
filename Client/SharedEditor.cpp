@@ -19,6 +19,7 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
     connect(transceiver,SIGNAL(finished()),this,SLOT(deleteThread()));
     connect(transceiver,&Transceiver::readyToProcess,this,&SharedEditor::process,Qt::QueuedConnection);
+    connect(transceiver,&Transceiver::deleteText,this,&SharedEditor::deleteText,Qt::QueuedConnection);
 
 
     transceiver->start();
@@ -136,7 +137,7 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
 //    this->to_string();
-    emit test1();
+
 
 }
 
@@ -155,7 +156,7 @@ void SharedEditor::localErase(qint32 index) {
     emit transceiver->getSocket()->sendPacket(packet);
     this->to_string();
 
-    emit test1();
+
 }
 
 void SharedEditor::process(DataPacket pkt) {
@@ -173,7 +174,7 @@ void SharedEditor::process(DataPacket pkt) {
     }
 
     auto m = std::dynamic_pointer_cast<Message>(pkt.getPayload());
-    emit test1();
+
 
 }
 
@@ -256,6 +257,10 @@ void SharedEditor::processMessages(StringMessages &strMess) {
 
 }
 
+void SharedEditor::deleteText(){
+    emit deleteAllText();
+}
+
 QString SharedEditor::to_string() {
     QString str;
 
@@ -269,17 +274,6 @@ QString SharedEditor::to_string() {
     return str;
 }
 
-void SharedEditor::test() {
-   /* for(auto s:_symbols) {
-        std::cout << s.getValue().toLatin1() << " - " << s.getPos().size() << " - ";
-        for(auto p: s.getPos())
-            std::cout<<p<<"; ";
-        std::cout<<std::endl;
-    }*/
-
-    //std::cout<<"#caratteri inseriti: "<<_symbols.size()-2<<std::endl;
-
-}
 
 void SharedEditor::deleteThread() {
     transceiver->deleteLater();

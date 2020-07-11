@@ -42,11 +42,11 @@ public slots:
     void loginSlot(QString& username, QString& password);
     void process(DataPacket pkt);
     void deleteThread();
-    void test();
+    void deleteText();
 
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
-    void test1();
+    void deleteAllText();
 
 public:
     explicit SharedEditor(QObject *parent = 0);

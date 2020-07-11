@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_SharedEditor_t {
     QByteArrayData data[18];
-    char stringdata0[151];
+    char stringdata0[165];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,23 +39,23 @@ QT_MOC_LITERAL(4, 33, 1), // "s"
 QT_MOC_LITERAL(5, 35, 6), // "siteId"
 QT_MOC_LITERAL(6, 42, 17), // "Message::action_t"
 QT_MOC_LITERAL(7, 60, 6), // "action"
-QT_MOC_LITERAL(8, 67, 5), // "test1"
-QT_MOC_LITERAL(9, 73, 9), // "loginSlot"
-QT_MOC_LITERAL(10, 83, 8), // "QString&"
-QT_MOC_LITERAL(11, 92, 8), // "username"
-QT_MOC_LITERAL(12, 101, 8), // "password"
-QT_MOC_LITERAL(13, 110, 7), // "process"
-QT_MOC_LITERAL(14, 118, 10), // "DataPacket"
-QT_MOC_LITERAL(15, 129, 3), // "pkt"
-QT_MOC_LITERAL(16, 133, 12), // "deleteThread"
-QT_MOC_LITERAL(17, 146, 4) // "test"
+QT_MOC_LITERAL(8, 67, 13), // "deleteAllText"
+QT_MOC_LITERAL(9, 81, 9), // "loginSlot"
+QT_MOC_LITERAL(10, 91, 8), // "QString&"
+QT_MOC_LITERAL(11, 100, 8), // "username"
+QT_MOC_LITERAL(12, 109, 8), // "password"
+QT_MOC_LITERAL(13, 118, 7), // "process"
+QT_MOC_LITERAL(14, 126, 10), // "DataPacket"
+QT_MOC_LITERAL(15, 137, 3), // "pkt"
+QT_MOC_LITERAL(16, 141, 12), // "deleteThread"
+QT_MOC_LITERAL(17, 154, 10) // "deleteText"
 
     },
     "SharedEditor\0symbolsChanged\0\0pos\0s\0"
-    "siteId\0Message::action_t\0action\0test1\0"
-    "loginSlot\0QString&\0username\0password\0"
-    "process\0DataPacket\0pkt\0deleteThread\0"
-    "test"
+    "siteId\0Message::action_t\0action\0"
+    "deleteAllText\0loginSlot\0QString&\0"
+    "username\0password\0process\0DataPacket\0"
+    "pkt\0deleteThread\0deleteText"
 };
 #undef QT_MOC_LITERAL
 
@@ -102,11 +102,11 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->symbolsChanged((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< qint32(*)>(_a[3])),(*reinterpret_cast< Message::action_t(*)>(_a[4]))); break;
-        case 1: _t->test1(); break;
+        case 1: _t->deleteAllText(); break;
         case 2: _t->loginSlot((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 3: _t->process((*reinterpret_cast< DataPacket(*)>(_a[1]))); break;
         case 4: _t->deleteThread(); break;
-        case 5: _t->test(); break;
+        case 5: _t->deleteText(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -131,7 +131,7 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         }
         {
             using _t = void (SharedEditor::*)();
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::test1)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::deleteAllText)) {
                 *result = 1;
                 return;
             }
@@ -187,7 +187,7 @@ void SharedEditor::symbolsChanged(qint32 _t1, const QString & _t2, qint32 _t3, M
 }
 
 // SIGNAL 1
-void SharedEditor::test1()
+void SharedEditor::deleteAllText()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }

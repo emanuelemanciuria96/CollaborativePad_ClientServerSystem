@@ -61,6 +61,10 @@ void Transceiver::recvPacket() {
             }
 
             case (DataPacket::textTyping): {
+                if(errcode == -1){
+                    rollBack();
+                    break;
+                }
                 recvMessage(packet, in);
                 break;
             }
@@ -141,18 +145,11 @@ void Transceiver::sendAllMessages() {
         timer->start(100);
         firstMessage = false;
     }
-
-/*
-    qint32 num=ptr->getSymbol().getPos().size();
-    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
-    out << ptr->getSiteId() << (qint32)ptr->getAction() << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId() << ptr->getSymbol().getSymId().getCount() << num;
-    for(auto i : ptr->getSymbol().getPos())
-        out << (qint32) i;
-*/
-
-
 }
 
+void Transceiver::rollBack(){
+    emit deleteText();
+}
 
 void Transceiver::sendMessage(DataPacket& packet) {
     
