@@ -46,7 +46,7 @@ private:
     const int items_separatorSize=items_separator.size();
     const int pos_separatorSize=pos_separator.size();
 
-    const int maxChar=10000;
+    const int maxChar=500;
     QString formattedMessages;
 
 };
