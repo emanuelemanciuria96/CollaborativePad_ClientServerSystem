@@ -998,8 +998,10 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Socket.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Transceiver.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QBuffer
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QDataStream
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QIODevice
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QObject
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
@@ -1013,6 +1015,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qbuffer.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h

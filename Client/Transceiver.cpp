@@ -4,9 +4,11 @@
 
 #include <iostream>
 #include <QtCore/QDataStream>
+#include <QtCore/QIODevice>
+#include <QtCore/QBuffer>
 #include "Transceiver.h"
 
-Transceiver::Transceiver(QObject* parent):QThread(parent) {}
+Transceiver::Transceiver(quint32 siteID, QObject* parent):_siteID(siteID),QThread(parent) {}
 
 void Transceiver::run() {
 
@@ -61,14 +63,13 @@ void Transceiver::recvPacket() {
             }
 
             case (DataPacket::textTyping): {
-                if(errcode == -1){
+                if(errcode == -1)
                     rollBack();
-                    break;
-                }
-                recvMessage(packet, in);
+                else
+                    recvMessage(packet, in);
+
                 break;
             }
-
             default: {
                 std::cout << "Coglione c'e' un errore" << std::endl;
                 break;
@@ -131,34 +132,61 @@ void Transceiver::sendAllMessages() {
 
     firstMessage = true;
 
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
     QDataStream out;
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
+    /**
     qint32 siteID = messages[0].getSiteId();
     auto *strMess = new StringMessages(messages,siteID);
     DataPacket pkt(siteID,0,DataPacket::textTyping,strMess);
-    out << pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
+    tmp << pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
          strMess->getSiteId() << strMess->getFormattedMessages() ;
+    **/
+
+    tmp << _siteID << 0 << DataPacket::textTyping;
+    Message m = messages[0];
+    int nextMessageSize = 0;
+    while(!messages.empty() && buf.data().size()+nextMessageSize< 10000){
+        auto s = m.getSymbol();
+        quint32 posDim = s.getPos().size();
+        tmp<<m.getSiteId()<<(quint32)m.getAction()<<m.getLocalIndex()
+            <<s.getSymId().getSiteId()<<s.getSymId().getCount()
+            <<s.getValue()<<posDim;
+        for(auto p:s.getPos())
+            tmp<<p;
+        messages.erase(messages.begin());
+        m = messages[0];
+        nextMessageSize = sizeof(m)+m.getSymbol().getPos().size()*sizeof(quint32);
+        // std::cout<<"next sent message size:"<<nextMessageSize<<std::endl;
+    }
+
+    std::cout<<"Bytes written: "<<buf.data().size()<<std::endl;
+
+    out.device()->write(buf.data());
     socket->waitForBytesWritten(-1);
+
     if( !messages.empty() ) {
         timer->start(100);
         firstMessage = false;
     }
 }
 
-void Transceiver::rollBack(){
-    emit deleteText();
-}
-
 void Transceiver::sendMessage(DataPacket& packet) {
-    
-    if(firstMessage){
+
+   if(firstMessage){
         timer->start(200);
         firstMessage = false;
-    }
-    
-    messages.push_back(*std::dynamic_pointer_cast<Message>(packet.getPayload()));
+   }
+
+   messages.push_back(*std::dynamic_pointer_cast<Message>(packet.getPayload()));
+
+
+
+
 }
 
 void Transceiver::sendLoginInfo(DataPacket& packet){
@@ -180,4 +208,8 @@ void Transceiver::disconnected(){
     timer->deleteLater();
     std::cout<<"Server unavailable!"<<std::endl;
     exit(0);
+}
+
+void Transceiver::rollBack(){
+    emit deleteText();
 }

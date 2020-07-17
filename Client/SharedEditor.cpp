@@ -14,7 +14,7 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
     _counter = 0;
     this->isLogged = false;
 
-    transceiver = new Transceiver;
+    transceiver = new Transceiver(_siteId);
     transceiver->moveToThread(transceiver);
 
     connect(transceiver,SIGNAL(finished()),this,SLOT(deleteThread()));
@@ -49,7 +49,7 @@ quint32 intermediateValue(quint32 prev,quint32 next,double factor){
     return val;
 }
 void generateNewPosition2(std::vector<quint32>& prev, std::vector<quint32>& next, std::vector<quint32>& newPos){
-    quint32 max=UINT_MAX;
+    quint32 max=UINT32_MAX;
     double factor=0.001;
     //double factor=0.015625; // 1/64
     int sizePrev=prev.size();
@@ -95,8 +95,8 @@ void generateNewPosition( std::vector<quint32>& prev, std::vector<quint32>& next
         next.push_back(UINT32_MAX);
     }
     if( next[depth] - prev[depth] > 1 ){
-        if( (next[depth] - prev[depth])>256 )
-            pos = prev[depth] + ((next[depth] - prev[depth])>>6);
+        if( (next[depth] - prev[depth])>512 )
+            pos = prev[depth] + ((next[depth] - prev[depth])>>7);
         else
             pos = (prev[depth]>>1) + (next[depth]>>1) + (( (prev[depth]&1) + (next[depth]&1) )>>1);
             // la formula di sopra calcola il punto medio tenendo conto del resto (calcolato con un AND ed uno SHIFT)
@@ -127,7 +127,7 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
     std::vector<quint32> newPos;
     std::vector<quint32> prev = _symbols[index-1].getPos();
     std::vector<quint32> next = _symbols[index].getPos();
-    generateNewPosition2(prev,next,newPos);
+    generateNewPosition(prev,next,newPos);
     Symbol s(value,_siteId,_counter++,newPos);
     _symbols.insert(_symbols.begin()+index,s);
 
@@ -187,6 +187,7 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
         std::cout << "client not logged!" << std::endl;
     }
 }
+
 qint32 SharedEditor::getIndex(Message &m) {
     qint32 pos=m.getLocalIndex();//search index
     if(pos>_symbols.size()-1){

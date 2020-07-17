@@ -997,8 +997,10 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../SharedEditor.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Socket.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Transceiver.h
 
+CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QBuffer
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QDataStream
+CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QIODevice
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QObject
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
@@ -1012,6 +1014,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCor
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
+CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbuffer.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearraylist.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h

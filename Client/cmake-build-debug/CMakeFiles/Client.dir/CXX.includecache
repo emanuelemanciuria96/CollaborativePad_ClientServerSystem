@@ -6,6 +6,10 @@
 
 #IncludeRegexTransform: 
 
+C:/Qt/5.12.5/mingw73_64/include/QtCore/QBuffer
+qbuffer.h
+C:/Qt/5.12.5/mingw73_64/include/QtCore/qbuffer.h
+
 C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
 qchar.h
 C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
@@ -13,6 +17,10 @@ C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
 C:/Qt/5.12.5/mingw73_64/include/QtCore/QDataStream
 qdatastream.h
 C:/Qt/5.12.5/mingw73_64/include/QtCore/qdatastream.h
+
+C:/Qt/5.12.5/mingw73_64/include/QtCore/QIODevice
+qiodevice.h
+C:/Qt/5.12.5/mingw73_64/include/QtCore/qiodevice.h
 
 C:/Qt/5.12.5/mingw73_64/include/QtCore/QObject
 qobject.h
@@ -80,6 +88,12 @@ C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasictimer.h
 QtCore/qglobal.h
 -
 QtCore/qnamespace.h
+-
+
+C:/Qt/5.12.5/mingw73_64/include/QtCore/qbuffer.h
+QtCore/qiodevice.h
+-
+QtCore/qbytearray.h
 -
 
 C:/Qt/5.12.5/mingw73_64/include/QtCore/qbytearray.h
@@ -819,6 +833,10 @@ iostream
 -
 QtCore/QDataStream
 -
+QtCore/QIODevice
+-
+QtCore/QBuffer
+-
 Transceiver.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Transceiver.h
 
@@ -830,6 +848,8 @@ QTcpServer
 QTcpSocket
 -
 QtCore/QTimer
+-
+deque
 -
 Socket.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Socket.h

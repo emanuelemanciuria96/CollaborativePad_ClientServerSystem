@@ -24,7 +24,7 @@ void EditorGUI::setUpGUI() {
 
     statusBar->showMessage ("StatusBar");
 
-    connect(textEdit,SLOT(clear()),this,SIGNAL(clear()));
+    connect(this,SIGNAL(clear()),textEdit,SLOT(clear()));
 
 //    aggiungo gli elementi alla finestra
     this->setCentralWidget(textEdit);
@@ -282,5 +282,7 @@ void EditorGUI::flushInsertQueue() {
 }
 
 void EditorGUI::deleteAllText() {
+    signalBlocker = !signalBlocker;
     emit clear();
+    signalBlocker = !signalBlocker;
 }

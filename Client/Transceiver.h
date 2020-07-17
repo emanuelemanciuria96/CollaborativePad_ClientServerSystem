@@ -9,6 +9,7 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QtCore/QTimer>
+#include <deque>
 #include "Socket.h"
 #include "Packet/DataPacket.h"
 #include "Packet/Message.h"
@@ -21,7 +22,7 @@ class Transceiver: public QThread {
     Q_OBJECT
 public:
     void run() override;
-    Transceiver(QObject* parent = nullptr);
+    Transceiver(quint32 siteID,QObject* parent = nullptr);
     Socket* getSocket(){ return socket; };
 
 public slots:
@@ -35,7 +36,8 @@ signals:
     void deleteText();
 
 private:
-    std::vector<Message> messages;
+    quint32 _siteID;
+    std::deque<Message> messages;
     bool firstMessage = true;
     Socket *socket;
     qintptr socketDescriptor;
