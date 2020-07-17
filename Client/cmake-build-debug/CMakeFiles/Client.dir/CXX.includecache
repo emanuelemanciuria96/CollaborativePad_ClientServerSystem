@@ -700,6 +700,10 @@ C:/Qt/5.12.5/mingw73_64/include/QtCore/qversiontagging.h
 QtCore/qglobal.h
 -
 
+C:/Qt/5.12.5/mingw73_64/include/QtNetwork/QAbstractSocket
+qabstractsocket.h
+C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qabstractsocket.h
+
 C:/Qt/5.12.5/mingw73_64/include/QtNetwork/QTcpServer
 qtcpserver.h
 C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtcpserver.h
@@ -817,6 +821,58 @@ QChar
 -
 SymId.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h
+
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.cpp
+SharedEditor.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.h
+Packet/LoginInfo.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
+vector
+-
+algorithm
+-
+tuple
+-
+string
+-
+
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.h
+iostream
+-
+Packet/Symbols/Symbol.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h
+vector
+-
+Packet/StringMessages.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h
+Packet/DataPacket.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
+Packet/Payload.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+Socket.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Socket.h
+Transceiver.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Transceiver.h
+Packet/Message.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
+QTcpServer
+-
+QTcpSocket
+-
+QtCore/QDataStream
+-
+QAbstractSocket
+-
+QString
+-
+Packet/LoginInfo.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
+vector
+-
+algorithm
+-
+QtCore/QTimer
+-
 
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Socket.h
 QTcpSocket

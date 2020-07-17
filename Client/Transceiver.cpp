@@ -159,6 +159,7 @@ void Transceiver::sendAllMessages() {
         for(auto p:s.getPos())
             tmp<<p;
         messages.erase(messages.begin());
+
         m = messages[0];
         nextMessageSize = sizeof(m)+m.getSymbol().getPos().size()*sizeof(quint32);
         // std::cout<<"next sent message size:"<<nextMessageSize<<std::endl;

@@ -12,7 +12,8 @@
 #include <QtGlobal>
 #include <string>
 #include <QString>
-
+#include <queue>
+#include <memory>
 
 
 class StringMessages: public Payload{
@@ -26,28 +27,14 @@ public:
     //        0#&ch#&siteid#&count#&pos1,pos2,..,#&@%1#&ch#&siteid#&count...
     // il primo elemento può essere 0/1 a seconda se insertion/removal
 
-    explicit StringMessages(qint32 siteID = -1):Payload(siteID){ formattedMessages = ""; }
-    StringMessages(QString &stringMess, qint32 siteID);
+    explicit StringMessages(qint32 siteID = -1):Payload(siteID){ messages = nullptr; }
     StringMessages(std::vector<Message> &vm, qint32 siteID);
-
-    std::vector<Message> stringToMessages();  // string to message vector
-    QString messagesToString(std::vector<Message> &vm); // message vector to string
-    QString appendMessage(Message &m);
-    QString getFormattedMessages(){ return formattedMessages; }
-
+    Message& pop();    
+    void push(Message& m);
+    std::shared_ptr<std::queue<Message>> getMessages(){ return messages; }
+    
 private:
-    QString messageToString(Message& m); // functions for
-    Message stringToMessage(QString s);  //      single message
-
-    const QString messages_separator ="@%";   // separatore dei messaggi
-    const QString items_separator ="#&";    //  separatore di elementi del messaggio
-    const QString pos_separator =",";      //  separatore degli elementi del pos di un messaggio
-    const int messages_separatorSize=messages_separator.size();
-    const int items_separatorSize=items_separator.size();
-    const int pos_separatorSize=pos_separator.size();
-
-    const int maxChar=500;
-    QString formattedMessages;
+    std::shared_ptr<std::queue<Message>> messages;
 
 };
 

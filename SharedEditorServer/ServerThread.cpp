@@ -100,7 +100,6 @@ void ServerThread::recvPacket() {
         std::cout<<"ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
     }
 
-    return;
 }
 
 void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
@@ -132,39 +131,6 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
 {
 
-    /**qint32 siteId;
-    QString formattedMessages;
-
-    in.setDevice(this->socket);
-    in.setVersion(QDataStream::Qt_5_5);
-
-    in >> siteId >> formattedMessages;
-
-    auto *strMess = new StringMessages(formattedMessages,siteId);
-    packet.setPayload(std::shared_ptr<StringMessages>(strMess));
-    //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
-    //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
-    if(isLogged) {
-
-        for (auto msg: strMess->stringToMessages()) {
-            if (msg.getAction() == Message::insertion) {
-                msgHandler->submit(NetworkServer::localInsert, msg);
-            } else {
-                msgHandler->submit(NetworkServer::localErase, msg);
-            }
-        }
-
-        std::shared_lock sl(skt_mutex);
-        for (auto skt: _sockets) {
-            sl.unlock();
-            if (skt.first != socket) {
-                int id = qMetaTypeId<DataPacket>();
-                emit skt.first->sendMessage(packet,skt.second);
-            }
-            sl.lock();
-        }
-    }**/
-
     qint32 siteID;
     quint32 action;
     quint32 localIndex;
@@ -173,36 +139,37 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
     QChar ch;
     quint32 posDim;
     std::vector<quint32> pos;
+    std::shared_ptr<StringMessages> strMess(new StringMessages());
 
     in.setDevice(socket);
     while(socket->bytesAvailable()>0){
         pos.clear();
         in>>siteID>>action>>localIndex>>siteIDs>>count>>ch>>posDim;
-        for(int i=0;i<posDim;i++){
+        for(quint32 i=0;i<posDim;i++){
             quint32 p;
             in>>p;
             pos.push_back(p);
         }
         Symbol sym(ch,siteIDs,count,pos);
-        packet.setPayload(std::make_shared<Message>((Message::action_t)action,siteID,sym,localIndex));
-        Message *msg = static_cast<Message*>(packet.getPayload().get());
+        Message msg((Message::action_t)action,siteID,sym,localIndex);
         if (action == Message::insertion) {
-            msgHandler->submit(NetworkServer::localInsert, *msg);
+            msgHandler->submit(NetworkServer::localInsert, msg);
         } else {
-            msgHandler->submit(NetworkServer::localErase, *msg);
+            msgHandler->submit(NetworkServer::localErase, msg);
         }
 
+        strMess.get()->push(msg);
+    }
+    packet.setPayload(strMess);
 
-
-       /** std::shared_lock sl(skt_mutex);
-        for (auto skt: _sockets) {
-            sl.unlock();
-            if (skt.first != socket) {
-                int id = qMetaTypeId<DataPacket>();
-                emit skt.first->sendMessage(packet,skt.second);
-            }
-            sl.lock();
-        }**/
+    std::shared_lock sl(skt_mutex);
+    for (auto skt: _sockets) {
+        sl.unlock();
+        if (skt.first != socket) {
+            int id = qMetaTypeId<DataPacket>();
+            emit skt.first->sendMessage(packet,skt.second);
+        }
+        sl.lock();
     }
 
 }
@@ -266,8 +233,8 @@ void ServerThread::sendMessage(DataPacket& packet,std::mutex* mtx){
 
     {
         std::lock_guard lg(*mtx);
-        out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
-            strMess->getSiteId() << strMess->getFormattedMessages();
+      //  out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
+      //      strMess->getSiteId() << strMess->getFormattedMessages();
         socket->waitForBytesWritten(-1);
     }
 
