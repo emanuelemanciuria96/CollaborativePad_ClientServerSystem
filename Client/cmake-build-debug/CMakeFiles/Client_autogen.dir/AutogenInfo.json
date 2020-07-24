@@ -8,6 +8,11 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/CursorNames.h",
+			"MU",
+			"EWIEGA46WW/moc_CursorNames.cpp"
+		],
+		[
 			"C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.h",
 			"MU",
 			"EWIEGA46WW/moc_EditorGUI.cpp"

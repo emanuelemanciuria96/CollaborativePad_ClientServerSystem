@@ -185,6 +185,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgets-config.h
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgetsglobal.h
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qwidget.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/CursorNames.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
@@ -302,6 +303,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qvector.h
  C:/Qt/5.13.1/mingw73_64/include/QtCore/qversiontagging.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QGuiApplication
+ C:/Qt/5.13.1/mingw73_64/include/QtGui/QPainter
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QScreen
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QTextCursor
  C:/Qt/5.13.1/mingw73_64/include/QtGui/QTextDocument
@@ -320,6 +322,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qkeysequence.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qmatrix.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qpaintdevice.h
+ C:/Qt/5.13.1/mingw73_64/include/QtGui/qpainter.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qpainterpath.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qpalette.h
  C:/Qt/5.13.1/mingw73_64/include/QtGui/qpen.h
@@ -379,6 +382,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgets-config.h
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgetsglobal.h
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qwidget.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/CursorNames.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.cpp
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
@@ -902,6 +906,7 @@ CMakeFiles/Client.dir/RemoteCursor.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgets-config.h
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgetsglobal.h
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qwidget.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/CursorNames.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/RemoteCursor.cpp
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/RemoteCursor.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj
@@ -1278,6 +1283,7 @@ CMakeFiles/Client.dir/main.cpp.obj
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgets-config.h
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgetsglobal.h
  C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qwidget.h
+ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/CursorNames.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.h
  C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h

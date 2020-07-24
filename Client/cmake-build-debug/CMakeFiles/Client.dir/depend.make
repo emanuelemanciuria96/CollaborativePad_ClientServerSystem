@@ -184,6 +184,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/ming
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgets-config.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgetsglobal.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qwidget.h
+CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../CursorNames.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../EditorGUI.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../LoginDialog.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/DataPacket.h
@@ -301,6 +302,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qvector.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtCore/qversiontagging.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/QGuiApplication
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/QPainter
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/QScreen
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/QTextCursor
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/QTextDocument
@@ -319,6 +321,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/q
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/qkeysequence.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/qmatrix.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/qpaintdevice.h
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/qpainter.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/qpainterpath.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/qpalette.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtGui/qpen.h
@@ -378,6 +381,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidge
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgets-config.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgetsglobal.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qwidget.h
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../CursorNames.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../EditorGUI.cpp
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../EditorGUI.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/DataPacket.h
@@ -901,6 +905,7 @@ CMakeFiles/Client.dir/RemoteCursor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWi
 CMakeFiles/Client.dir/RemoteCursor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgets-config.h
 CMakeFiles/Client.dir/RemoteCursor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgetsglobal.h
 CMakeFiles/Client.dir/RemoteCursor.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qwidget.h
+CMakeFiles/Client.dir/RemoteCursor.cpp.obj: ../CursorNames.h
 CMakeFiles/Client.dir/RemoteCursor.cpp.obj: ../RemoteCursor.cpp
 CMakeFiles/Client.dir/RemoteCursor.cpp.obj: ../RemoteCursor.h
 
@@ -1277,6 +1282,7 @@ CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qt
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgets-config.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qtwidgetsglobal.h
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.13.1/mingw73_64/include/QtWidgets/qwidget.h
+CMakeFiles/Client.dir/main.cpp.obj: ../CursorNames.h
 CMakeFiles/Client.dir/main.cpp.obj: ../EditorGUI.h
 CMakeFiles/Client.dir/main.cpp.obj: ../LoginDialog.h
 CMakeFiles/Client.dir/main.cpp.obj: ../Packet/DataPacket.h

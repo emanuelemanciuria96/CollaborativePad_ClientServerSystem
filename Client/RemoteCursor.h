@@ -9,16 +9,19 @@
 #include <QtCore/QtGlobal>
 #include <QTextCursor>
 #include <QtWidgets/QLabel>
+#include "CursorNames.h"
 
 class RemoteCursor : public QTextCursor{
 private:
     qint32 _siteId;
-//    int _pos;
-
+    QString generateName();
 public:
+    QLabel* labelName;
+    QLabel* labelCursor;
+
     RemoteCursor(): QTextCursor(){ _siteId = -1;};
     explicit RemoteCursor(qint32 siteId) : _siteId(siteId), QTextCursor() {};
-    RemoteCursor(QTextDocument *document, qint32 siteId) : _siteId(siteId), QTextCursor(document) {};
+    RemoteCursor(QTextDocument *document, qint32 siteId);
 //    RemoteCursor& operator=(const RemoteCursor& rc);
     qint32 getSiteId() const;
 };

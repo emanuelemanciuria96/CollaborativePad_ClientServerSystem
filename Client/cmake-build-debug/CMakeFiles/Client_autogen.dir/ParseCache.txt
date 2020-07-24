@@ -8,6 +8,7 @@ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog
  mmc:Q_OBJECT
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
  mmc:Q_OBJECT
+C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Command.h
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Payload.h
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.cpp
@@ -23,6 +24,7 @@ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Socket.h
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Transceiver.h
  mmc:Q_OBJECT
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.cpp
+C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Command.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Message.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/StringMessages.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.cpp
@@ -30,5 +32,4 @@ C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/RemoteCurso
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SharedEditor.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Transceiver.cpp
 C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/main.cpp
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Command.h
-C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Command.cpp
+C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/CursorNames.h

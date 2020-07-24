@@ -12,21 +12,35 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
+    <list default="true" id="406099d7-11df-46c1-8b54-4b056e8c01a4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/CursorNames.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EditorGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/EditorGUI.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EditorGUI.h" beforeDir="false" afterPath="$PROJECT_DIR$/EditorGUI.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packet/Symbols/SymId.h" beforeDir="false" afterPath="$PROJECT_DIR$/Packet/Symbols/SymId.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RemoteCursor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/RemoteCursor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RemoteCursor.h" beforeDir="false" afterPath="$PROJECT_DIR$/RemoteCursor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/a.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdCXX/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdCXX/a.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/EditorGUI.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/EditorGUI.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenInfo.json" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenInfo.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenUsed.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/AutogenUsed.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/ParseCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/ParseCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +54,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectId" id="1bBKCIx8ekS6ORSWnAdiA1BK2HF" />
+  <component name="ProjectId" id="1bUdZ4XeZNKZJ9ex6YQrwDH3v5O" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -59,7 +73,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RunManager" selected="CMake Application.Client">
     <configuration name="Client" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Client" TARGET_NAME="Client" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Client" RUN_TARGET_NAME="Client">
@@ -82,18 +96,14 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="" />
-      <created>1588099917756</created>
+      <changelist id="406099d7-11df-46c1-8b54-4b056e8c01a4" name="Default Changelist" comment="" />
+      <created>1588690658591</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1588099917756</updated>
-      <workItem from="1588099921535" duration="101000" />
-      <workItem from="1588172841004" duration="610000" />
-      <workItem from="1588238039048" duration="7790000" />
-      <workItem from="1588253225897" duration="7765000" />
-      <workItem from="1588268631026" duration="535000" />
-      <workItem from="1588269593742" duration="618000" />
-      <workItem from="1588426986386" duration="449000" />
+      <updated>1588690658591</updated>
+      <workItem from="1588690662263" duration="4386000" />
+      <workItem from="1589206133377" duration="5873000" />
+      <workItem from="1589550562084" duration="7031000" />
     </task>
     <servers />
   </component>
@@ -101,42 +111,65 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="723" height="219" key="GridCell.Tab.0.bottom" timestamp="1588263905372">
+    <state width="723" height="112" key="GridCell.Tab.0.bottom" timestamp="1589557955720">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state width="723" height="219" key="GridCell.Tab.0.center" timestamp="1588263905372">
+    <state width="723" height="112" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1589213113087" />
+    <state width="723" height="112" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1589557955720" />
+    <state width="723" height="112" key="GridCell.Tab.0.center" timestamp="1589557955720">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state width="723" height="219" key="GridCell.Tab.0.left" timestamp="1588263905372">
+    <state width="723" height="112" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1589213113087" />
+    <state width="723" height="112" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1589557955720" />
+    <state width="723" height="112" key="GridCell.Tab.0.left" timestamp="1589557955720">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state width="723" height="219" key="GridCell.Tab.0.right" timestamp="1588263905372">
+    <state width="723" height="112" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1589213113087" />
+    <state width="723" height="112" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1589557955720" />
+    <state width="723" height="112" key="GridCell.Tab.0.right" timestamp="1589557955720">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state width="723" height="219" key="GridCell.Tab.1.bottom" timestamp="1588263905373">
+    <state width="723" height="112" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1589213113087" />
+    <state width="723" height="112" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1589557955720" />
+    <state width="723" height="226" key="GridCell.Tab.1.bottom" timestamp="1588695060852">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.1.bottom/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905373" />
-    <state width="723" height="219" key="GridCell.Tab.1.center" timestamp="1588263905372">
+    <state width="723" height="226" key="GridCell.Tab.1.bottom/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588695060852" />
+    <state width="723" height="226" key="GridCell.Tab.1.center" timestamp="1588695060852">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.1.center/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state width="723" height="219" key="GridCell.Tab.1.left" timestamp="1588263905372">
+    <state width="723" height="226" key="GridCell.Tab.1.center/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588695060852" />
+    <state width="723" height="226" key="GridCell.Tab.1.left" timestamp="1588695060851">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.1.left/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state width="723" height="219" key="GridCell.Tab.1.right" timestamp="1588263905372">
+    <state width="723" height="226" key="GridCell.Tab.1.left/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588695060851" />
+    <state width="723" height="226" key="GridCell.Tab.1.right" timestamp="1588695060852">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.1.right/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state x="136" y="64" key="SettingsEditor" timestamp="1588427081475">
+    <state width="723" height="226" key="GridCell.Tab.1.right/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588695060852" />
+    <state x="277" y="57" key="SettingsEditor" timestamp="1588690700111">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588099980638" />
-    <state x="136" y="64" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1588427081475" />
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588690700111" />
+    <state x="46" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1589554292275">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="46" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1589554292275" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/EditorGUI.cpp</url>
+          <line>139</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="this" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
