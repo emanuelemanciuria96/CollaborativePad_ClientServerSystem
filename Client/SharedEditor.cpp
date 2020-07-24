@@ -211,11 +211,11 @@ qint32 SharedEditor::getIndex(Message &m) {
 
 
 void SharedEditor::processMessages(StringMessages &strMess) {
-    //qDebug()<<strMess.getFormattedMessages();
 
     std::vector<std::tuple<qint32,bool, QChar,qint32>> vt;
 
-    for(auto m:strMess.stringToMessages()) {
+    while(!strMess.getMessages().get()->empty()) {
+        auto m = strMess.pop();
         qint32 pos=getIndex(m);
         if(m.getAction()==Message::insertion){
             _symbols.insert(_symbols.begin()+pos,m.getSymbol());
@@ -257,6 +257,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     }
 
 }
+
 
 void SharedEditor::deleteText(){
     emit deleteAllText();

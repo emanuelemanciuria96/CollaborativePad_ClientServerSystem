@@ -6,13 +6,14 @@
 #include <utility>
 #include <QtCore/QDataStream>
 #include <fstream>
+#include <QtCore/QBuffer>
 #include "ServerThread.h"
 #include "NetworkServer.h"
 #include "Packet/LoginInfo.h"
 #include "json/json.h"
 
 std::shared_mutex ServerThread::skt_mutex;  // questo è lo shared mutex per la struttura "_sockets"
-std::vector<std::pair<Socket*,std::mutex*>> ServerThread::_sockets; //qui ci sono dei mutex esclisivi per ogni socket
+std::map<Socket*,std::mutex*> ServerThread::_sockets; //qui ci sono dei mutex esclisivi per ogni socket
 /// PER ORA USO IL VETTORE PER TESTARE IL FUNZIONAMENTO, POI INSERIRO' LA MAPPA (IL VETTORE SO USARLO BENE, LA MAPPA ANCORA NO)
 
 ServerThread::ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent):QThread(parent){
@@ -26,7 +27,7 @@ void ServerThread::run()
 
     std::cout<<"ServerThread::run line 27, thread "<<std::this_thread::get_id()<<std::endl;
 
-    socket = new Socket();
+    socket = std::shared_ptr<Socket>(new Socket());
     socket->moveToThread(this);
 
     if ( !socket->setSocketDescriptor(this->socketDescriptor) )   //setto il descriptor del socket
@@ -35,9 +36,9 @@ void ServerThread::run()
         return;
     }
 
-    connect(socket,&Socket::sendMessage,this,&ServerThread::sendPacket,Qt::QueuedConnection);
-    connect(socket, SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
-    connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+    connect(socket.get(),&Socket::sendMessage,this,&ServerThread::sendPacket,Qt::QueuedConnection);
+    connect(socket.get(), SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
+    connect(socket.get(), SIGNAL(disconnected()), this, SLOT(disconnected()));
 
     exec(); //loop degli eventi attivato qui
 }
@@ -54,7 +55,7 @@ void ServerThread::recvPacket() {
 
     qDebug() << "Receving packet";
 
-    in.setDevice(this->socket);
+    in.setDevice(this->socket.get());
     in.setVersion(QDataStream::Qt_5_5);
 
     while(this->socket->bytesAvailable()>0) {
@@ -88,7 +89,7 @@ void ServerThread::recvPacket() {
                 socket->readAll();
                 std::shared_lock sl(skt_mutex);
                 for (auto skt: _sockets) {
-                    if (skt.first == socket) {
+                    if (skt.first == socket.get() ) {
                         sl.unlock();
                         sendMessage(packet,skt.second);
                         sl.lock();
@@ -117,10 +118,17 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
             std::cout << "client successfully logged!" << std::endl;
             isLogged = true;                                               //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
             sendPacket(packet);                           //non fa nulla, non risponde con messaggi di errore
+
             {
                 std::lock_guard lg(skt_mutex);
-                _sockets.emplace_back(this->socket,new std::mutex());
+                _sockets.insert(std::make_pair(this->socket.get(),new std::mutex()));
             }
+
+            _siteID = packet.getPayload()->getSiteId();
+            QPointer<QThread> th(this);
+            qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
+            emit recordThread(th);
+
         } else {
             std::cout << "client not logged!" << std::endl;
             sendPacket(packet);
@@ -128,9 +136,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
     }
 }
 
-void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
-{
-
+void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
     qint32 siteID;
     quint32 action;
     quint32 localIndex;
@@ -139,9 +145,10 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
     QChar ch;
     quint32 posDim;
     std::vector<quint32> pos;
-    std::shared_ptr<StringMessages> strMess(new StringMessages());
 
-    in.setDevice(socket);
+    std::shared_ptr<StringMessages> strMess(new StringMessages(packet.getSource()));
+
+    in.setDevice(socket.get());
     while(socket->bytesAvailable()>0){
         pos.clear();
         in>>siteID>>action>>localIndex>>siteIDs>>count>>ch>>posDim;
@@ -151,21 +158,21 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
             pos.push_back(p);
         }
         Symbol sym(ch,siteIDs,count,pos);
-        Message msg((Message::action_t)action,siteID,sym,localIndex);
+        auto msg = std::make_shared<Message>((Message::action_t)action,siteID,sym,localIndex);
         if (action == Message::insertion) {
             msgHandler->submit(NetworkServer::localInsert, msg);
         } else {
             msgHandler->submit(NetworkServer::localErase, msg);
         }
 
-        strMess.get()->push(msg);
+        strMess.get()->push(*msg);
     }
     packet.setPayload(strMess);
 
     std::shared_lock sl(skt_mutex);
     for (auto skt: _sockets) {
         sl.unlock();
-        if (skt.first != socket) {
+        if (skt.first != socket.get()) {
             int id = qMetaTypeId<DataPacket>();
             emit skt.first->sendMessage(packet,skt.second);
         }
@@ -215,7 +222,7 @@ void ServerThread::sendPacket(DataPacket packet, std::mutex *mtx){
 void ServerThread::sendLoginInfo(DataPacket &packet, std::mutex *mtx) {
     auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
     QDataStream out;
-    out.setDevice(socket);
+    out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
 
     out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
@@ -225,16 +232,32 @@ void ServerThread::sendLoginInfo(DataPacket &packet, std::mutex *mtx) {
 
 void ServerThread::sendMessage(DataPacket& packet,std::mutex* mtx){
 
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
     QDataStream out;
-    out.setDevice(socket);
+    out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
 
-    auto strMess = std::dynamic_pointer_cast<StringMessages>(packet.getPayload());
+    auto msgs = std::dynamic_pointer_cast<StringMessages>(packet.getPayload());
+    tmp << packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData();
+
+    while(!msgs->getMessages().get()->empty()){
+        Message m = msgs->pop();
+        Symbol s = m.getSymbol();
+        quint32 posDim = s.getPos().size();
+        tmp<<m.getSiteId()<<(quint32)m.getAction()<<m.getLocalIndex()
+           <<s.getSymId().getSiteId()<<s.getSymId().getCount()
+           <<s.getValue()<<posDim;
+        for(auto p:s.getPos())
+            tmp<<p;
+
+    }
 
     {
         std::lock_guard lg(*mtx);
-      //  out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
-      //      strMess->getSiteId() << strMess->getFormattedMessages();
+        std::cout<<"Bytes written: "<<buf.data().size()<<std::endl;
+        out.device()->write(buf.data());
         socket->waitForBytesWritten(-1);
     }
 
@@ -292,19 +315,12 @@ std::vector<Symbol> ServerThread::loadFileJson(std::string dir){//json to vector
 
 void ServerThread::disconnected()
 {
-    int i = 0;
-    {
-        std::shared_lock sl(skt_mutex);
-        for (auto skt:_sockets) {
-            if (skt.first == socket) break;
-            i++;
-        }
-    }
 
-    if(i<_sockets.size()){
-        std::lock_guard lg(skt_mutex);
-        _sockets.erase(_sockets.begin()+i);
-    }
+    std::shared_lock sl(skt_mutex);
+    auto i = _sockets.find(socket.get());
+    sl.unlock();
+    std::lock_guard lg(skt_mutex);
+    _sockets.erase(i);
 
     socket->deleteLater();
     std::cout<<"Client disconnected!"<<std::endl;

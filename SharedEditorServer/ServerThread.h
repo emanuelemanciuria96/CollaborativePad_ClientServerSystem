@@ -26,10 +26,13 @@ Q_OBJECT
 public:
     explicit ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent =0);
     void run() override;
+    quint32 getSiteID(){ return _siteID; }
+    std::shared_ptr<Socket> getSocket(){ return socket; }
 
 signals:
     void error(QTcpSocket::SocketError socketerror);    //slot che gestisce questo segnale da implementare
     void deleteMe(QPointer<QThread> th);
+    void recordThread(QPointer<QThread> th);
 
 public slots:
     void recvPacket();
@@ -37,11 +40,12 @@ public slots:
     void disconnected();
 
 private:
-    Socket *socket;
+    std::shared_ptr<Socket> socket;
+    quint32 _siteID;
     qintptr socketDescriptor;
     std::shared_ptr<MessageHandler> msgHandler;
     static std::shared_mutex skt_mutex;
-    static std::vector<std::pair<Socket*,std::mutex*>> _sockets;
+    static std::map<Socket*,std::mutex*> _sockets;
 
     void recvLoginInfo(DataPacket& packet, QDataStream& in);
     void recvMessage(DataPacket& packet,QDataStream& in);

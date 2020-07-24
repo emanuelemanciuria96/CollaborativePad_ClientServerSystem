@@ -43,26 +43,29 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
             });
     // adoperando una chiusura incapsulo il puntatore al thread, ciò mi permette di evitare
     // di costruirmi una struttura dati che mi tenga traccia di tutti i thread creati
-
+    connect(thread,&ServerThread::recordThread,this,&NetworkServer::recordThread,Qt::QueuedConnection);
 
     thread->start();
-
 }
 
 
-void NetworkServer::localInsert(Message m) {
+void NetworkServer::localInsert(Payload &pl) {
     //std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localInsert"<<std::endl;
 
-   // std::unique_lock ul(sym_mutex);
+    Message& m = dynamic_cast<Message&>(pl);
+    // std::unique_lock ul(sym_mutex);
     auto i = std::lower_bound(_symbles.begin(),_symbles.end(),m.getSymbol());
     _symbles.insert(i,m.getSymbol());
 
     to_string();
+
 }
 
-void NetworkServer::localErase(Message m) {
+
+void NetworkServer::localErase(Payload &pl) {
     //std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
 
+    Message& m = dynamic_cast<Message&>(pl);
    // std::unique_lock ul(sym_mutex);
     auto i = std::lower_bound(_symbles.begin(),_symbles.end(),m.getSymbol());
 
@@ -71,6 +74,7 @@ void NetworkServer::localErase(Message m) {
 
     to_string();
 }
+
 
 void NetworkServer::to_string() {
     QString str;
@@ -82,7 +86,13 @@ void NetworkServer::to_string() {
     std::cout<<"Local editor: "<<str.toStdString()<<std::endl;
 }
 
+
 void NetworkServer::deleteThread(QPointer<QThread> th) {
     auto thread = dynamic_cast<ServerThread*>(th.data());
     thread->deleteLater();
+}
+
+void NetworkServer::recordThread(QPointer<QThread> th) {
+    auto thread = dynamic_cast<ServerThread*>(th.data());
+    sockets.insert(std::make_pair(thread->getSiteID(),thread->getSocket()));
 }

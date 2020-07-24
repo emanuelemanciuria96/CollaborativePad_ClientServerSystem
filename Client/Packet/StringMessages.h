@@ -19,17 +19,10 @@
 class StringMessages: public Payload{
 
 public:
-    // al momento è una classe a parte che espone due metodi per fare la conversione,
-    // eventualmente possiamo integrare meglio questa classe come payload di un pacchetto
-    // oppure sfruttare la command.
-    //
-    // la struttura della stringa è di questo tipo:
-    //        0#&ch#&siteid#&count#&pos1,pos2,..,#&@%1#&ch#&siteid#&count...
-    // il primo elemento può essere 0/1 a seconda se insertion/removal
 
-    explicit StringMessages(qint32 siteID = -1):Payload(siteID){ messages = nullptr; }
+    explicit StringMessages(qint32 siteID = -1):Payload(siteID){  messages = std::make_shared<std::queue<Message>>();  }
     StringMessages(std::vector<Message> &vm, qint32 siteID);
-    Message& pop();    
+    Message pop();
     void push(Message& m);
     std::shared_ptr<std::queue<Message>> getMessages(){ return messages; }
     

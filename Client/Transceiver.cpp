@@ -85,7 +85,7 @@ void Transceiver::recvLoginInfo(DataPacket& pkt,QDataStream& in){
     QString password;
 
     in >> siteId >> type >> user >> password;
-
+    _siteID = siteId;
     pkt.setPayload(std::make_shared<LoginInfo>(siteId,(LoginInfo::type_t)type,user,password));
 
     emit readyToProcess(pkt);
@@ -94,15 +94,31 @@ void Transceiver::recvLoginInfo(DataPacket& pkt,QDataStream& in){
 
 void Transceiver::recvMessage(DataPacket& pkt, QDataStream& in) {
 
-    qint32 siteId;
-    QString formattedMessages;
+    qint32 siteID;
+    quint32 action;
+    quint32 localIndex;
+    qint32 siteIDs;
+    quint32 count;
+    QChar ch;
+    quint32 posDim;
+    std::vector<quint32> pos;
 
-    in.setDevice(this->socket);
-    in.setVersion(QDataStream::Qt_5_5);
+    std::shared_ptr<StringMessages> strMess(new StringMessages(pkt.getSource()));
 
-    in >> siteId >> formattedMessages;
-
-    pkt.setPayload(std::make_shared<StringMessages>(formattedMessages,siteId));
+    in.setDevice(socket);
+    while(socket->bytesAvailable()>0){
+        pos.clear();
+        in>>siteID>>action>>localIndex>>siteIDs>>count>>ch>>posDim;
+        for(quint32 i=0;i<posDim;i++){
+            quint32 p;
+            in>>p;
+            pos.push_back(p);
+        }
+        Symbol sym(ch,siteIDs,count,pos);
+        Message msg((Message::action_t)action,siteID,sym,localIndex);
+        strMess.get()->push(msg);
+    }
+    pkt.setPayload(strMess);
 
     emit readyToProcess(pkt);
 
@@ -138,14 +154,6 @@ void Transceiver::sendAllMessages() {
     QDataStream out;
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
-
-    /**
-    qint32 siteID = messages[0].getSiteId();
-    auto *strMess = new StringMessages(messages,siteID);
-    DataPacket pkt(siteID,0,DataPacket::textTyping,strMess);
-    tmp << pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
-         strMess->getSiteId() << strMess->getFormattedMessages() ;
-    **/
 
     tmp << _siteID << 0 << DataPacket::textTyping;
     Message m = messages[0];
