@@ -223,6 +223,11 @@ void SharedEditor::recvPacket() {
             break;
         }
 
+        case (DataPacket::command): {
+            recvCommand(in);
+            break;
+        }
+
         default: {
             std::cout << "Coglione c'è un errore" << std::endl;
             break;
@@ -275,6 +280,7 @@ void SharedEditor::sendPacket(DataPacket& packet){
 
         case (DataPacket::command): {
             sendCommand(packet);
+            break;
         }
 
         default: {
@@ -348,6 +354,7 @@ void SharedEditor::recvCommand(QDataStream &in) {
 
     switch (cmd) {
         case (Command::cd): {
+            std::cout << "cd args:" << std::endl;
             for (auto &a: args)
                 std::cout << a.toStdString() << std::endl;
             break;

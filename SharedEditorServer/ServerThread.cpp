@@ -24,7 +24,8 @@ std::vector<std::pair<Socket*,std::mutex*>> ServerThread::_sockets; //qui ci son
 ServerThread::ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent):QThread(parent){
     this->socketDescriptor = socketDescriptor;
     this->msgHandler = std::shared_ptr<MessageHandler>(msgHandler);
-    this->isLogged = "";
+    this->_username = "";
+    this->_siteID = -1;
 }
 
 void ServerThread::run()
@@ -108,11 +109,12 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 
     in >> siteId >> type >> user >> password;
 
-    if(type == LoginInfo::login_request && isLogged.isEmpty()) {
+    if(type == LoginInfo::login_request && _username.isEmpty()) {
         auto shr = std::make_shared<LoginInfo>( -1, type, user, password);
         packet.setPayload(shr);
-        if (shr->login(threadId) != -1) {
-            isLogged = user;
+        _siteID = shr->login(threadId);
+        if (_siteID != -1) {
+            _username = user;
             std::cout << "client "+user.toStdString()+" successfully logged!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
             sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
             {
@@ -146,7 +148,7 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
         pos.push_back(p);
     }
 
-    if(!isLogged.isEmpty()) {                                          //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
+    if(!_username.isEmpty()) {                                          //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
         Symbol sym(ch, siteIdS, count, pos);            //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
         packet.setPayload( std::make_shared<Message>((Message::action_t) action, siteIdM, sym) );
         auto msg = *std::dynamic_pointer_cast<Message>(packet.getPayload());
@@ -193,11 +195,11 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
     in >> siteId >> cmd >> args;
     packet.setPayload( std::make_shared<Command>(siteId,(Command::cmd_t)cmd,std::move(args)));
-    auto command = *std::dynamic_pointer_cast<Command>(packet.getPayload());
+    auto command = std::dynamic_pointer_cast<Command>(packet.getPayload());
 
     switch(cmd){
         case (Command::cd):{
-            command.cdCommand(threadId, isLogged);
+            command->cdCommand(threadId, _username);
             sendPacket(packet);
             break;
         }

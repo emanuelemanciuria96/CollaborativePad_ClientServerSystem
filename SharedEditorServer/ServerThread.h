@@ -51,7 +51,8 @@ private:
     void sendMessage(DataPacket& packet, std::mutex *mtx);
     void sendCommand(DataPacket& packet, std::mutex *mtx = nullptr);
 
-    QString isLogged;
+    QString _username;
+    qint32 _siteID;
     QString threadId;
 
 private:
