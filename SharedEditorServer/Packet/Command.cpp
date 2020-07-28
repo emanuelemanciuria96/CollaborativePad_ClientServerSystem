@@ -11,15 +11,15 @@
 #include <QtSql/QSqlQuery>
 #include <QVariant>
 
-Command::Command(qint32 siteId, Command::cmd_t cmd, QVector<QString> args) : Payload(siteId), _cmd(cmd),
+Command::Command(qint32 siteId, qint32 cmd, QVector<QString> args) : Payload(siteId), _cmd(cmd),
                                                                                     _args(std::move(args)) {}
 
-Command::cmd_t Command::getCmd() const {
+qint32 Command::getCmd() const {
     return _cmd;
 }
 
-void Command::setCmd(Command::cmd_t cmd) {
-    this->_cmd = cmd;
+void Command::setCmd(qint32 cmd) {
+    _cmd = cmd;
 }
 
 const QVector<QString> &Command::getArgs() const {
@@ -44,7 +44,7 @@ bool Command::cdCommand(QString& connectionId, QString& user){
     _args.clear();
     QSqlQuery query(db);
 
-    if(!query.exec("SELECT SUBF FROM DIRECTORIES WHERE DIR='"+dir+"'")){
+    if(!query.exec("SELECT SUBF FROM DIRECTORIES WHERE DIRECTORY='"+dir+"'")){
         db.close();
         return false;
     }
@@ -304,7 +304,3 @@ bool Command::moveFile(QString& connectionId, QString& user, QString& src, QStri
     }
     return false;
 }
-
-
-
-

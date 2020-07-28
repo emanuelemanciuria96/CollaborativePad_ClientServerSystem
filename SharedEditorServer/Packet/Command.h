@@ -30,11 +30,11 @@ public:
         find = 9,
     }cmd_t;
 
-    Command(qint32 siteId, cmd_t cmd, QVector<QString> args);
-    cmd_t getCmd() const;
-    void setCmd(cmd_t cmd);
+    Command(qint32 siteId, qint32 cmd, QVector<QString> args);
     const QVector<QString> &getArgs() const;
     void setArgs(const QVector<QString> &args);
+    qint32 getCmd() const;
+    void setCmd(qint32 cmd);
     bool cdCommand(QString& connectionId, QString& user);
     bool mkdirCommand(QString& connectionId, QString& user);
     bool rmCommand(QString& connectionId, QString& user);
@@ -43,7 +43,7 @@ public:
     bool moveFile(QString& connectionId, QString& user, QString& src, QString& dest);
 
 private:
-    cmd_t _cmd;
+    qint32 _cmd;
     QVector<QString> _args;
     bool rmDir(QString& connectionId, QString& user);
     bool rmFile(QString& connectionId, QString& user);

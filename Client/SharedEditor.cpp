@@ -4,9 +4,11 @@
 
 #include "SharedEditor.h"
 #include "Packet/LoginInfo.h"
+#include "Packet/Command.h"
 #include <vector>
 #include <algorithm>
 #include <thread>
+#include <sstream>
 
 SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
@@ -15,6 +17,7 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
     this->connectToServer();
     _counter = 0;
     this->isLogged = false;
+    currentFolder = "";
 
     //creo due delimitatori, servono a gestire l'inserimento
     //in coda, in testa o in mezzo al testo allo stesso
@@ -270,6 +273,10 @@ void SharedEditor::sendPacket(DataPacket& packet){
             break;
         }
 
+        case (DataPacket::command): {
+            sendCommand(packet);
+        }
+
         default: {
             std::cout<<"Coglione c'è un errore"<<std::endl;
         }
@@ -304,6 +311,17 @@ void SharedEditor::sendLoginInfo(DataPacket& packet){
     socket->waitForBytesWritten(-1);
 }
 
+void SharedEditor::sendCommand(DataPacket& packet){
+    QDataStream out;
+    out.setDevice(socket);
+    out.setVersion(QDataStream::Qt_5_5);
+
+    auto ptr = std::dynamic_pointer_cast<Command>(packet.getPayload());
+    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
+    socket->waitForBytesWritten(-1);
+}
+
 void SharedEditor::recvLoginInfo(QDataStream& in){
     quint32 siteId;
     qint32 type;
@@ -318,6 +336,80 @@ void SharedEditor::recvLoginInfo(QDataStream& in){
         isLogged = true;
     } else {
         std::cout << "client not logged!" << std::endl;
+    }
+}
+
+void SharedEditor::recvCommand(QDataStream &in) {
+    qint32 siteId;
+    quint32 cmd;
+    QVector<QString> args;
+
+    in >> siteId >> cmd >> args;
+
+    switch (cmd) {
+        case (Command::cd): {
+            for (auto &a: args)
+                std::cout << a.toStdString() << std::endl;
+            break;
+        }
+
+        case (Command::rm): {
+            break;
+        }
+
+        case (Command::cp): {
+            break;
+        }
+
+        case (Command::mv): {
+            break;
+        }
+
+        case (Command::opn): {
+            break;
+        }
+
+        case (Command::cls): {
+            break;
+        }
+
+        default:
+            std::cout << "Coglione errore nel Command" << std::endl;
+    }
+}
+
+void SharedEditor::commandLoop(){  //questa funzione serve solo a testare la command
+    std::string cmd{};             //a livello testuale, fa cagare ed è giusto che sia così
+    std::string args{};
+    QVector<QString> argsV;
+
+    DataPacket p(-1, -1, DataPacket::command);
+    p.setPayload( std::make_shared<Command>( _siteId, Command::cd, QVector<QString>(1, "")));
+    sendPacket(p); //questo serve per farsi inviare il contenuto della root
+
+    while(cmd != "opn"){
+        auto in = std::string{};
+        auto str = std::string{};
+
+        std::getline(std::cin, in);
+        auto iss = std::istringstream{in};
+
+        iss >> cmd;
+
+        while (iss >> str) {
+            argsV.push_back(QString::fromStdString(str));
+        }
+
+        if (cmd == "cd"){
+            DataPacket packet(-1, -1, DataPacket::command);
+            packet.setPayload( std::make_shared<Command>( _siteId, Command::cd, argsV));
+            sendPacket(packet);
+            argsV.clear();
+        } else if (cmd == "opn") {
+            std::cout << "Apertura editor" << std::endl;
+        } else {
+            std::cout << "Coglione errore nel commandLoop" << std::endl;
+        }
     }
 }
 

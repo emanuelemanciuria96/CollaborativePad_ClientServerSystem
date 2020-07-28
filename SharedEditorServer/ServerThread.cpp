@@ -193,10 +193,12 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
     in >> siteId >> cmd >> args;
     packet.setPayload( std::make_shared<Command>(siteId,(Command::cmd_t)cmd,std::move(args)));
+    auto command = *std::dynamic_pointer_cast<Command>(packet.getPayload());
 
     switch(cmd){
         case (Command::cd):{
-
+            command.cdCommand(threadId, isLogged);
+            sendPacket(packet);
             break;
         }
 

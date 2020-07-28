@@ -25,12 +25,15 @@ private:
     std::vector<Symbol> _symbols;
     qint32 _counter;
     QTcpSocket *socket;
+    QString currentFolder;
     qint32 connectToServer();
     void recvMessage(QDataStream& in);
     void sendMessage(DataPacket& packet);
     void sendPacket(DataPacket& packet);
+    void sendCommand(DataPacket& packet);
     void sendLoginInfo(DataPacket& packet);
     void recvLoginInfo(QDataStream& in);
+    void recvCommand(QDataStream &in);
     bool isLogged;
 
 private slots:
@@ -53,6 +56,7 @@ public:
     void localErase( qint32 index );
     void process( const Message& m);
     QString to_string();
+    void commandLoop();
 
 };
 
