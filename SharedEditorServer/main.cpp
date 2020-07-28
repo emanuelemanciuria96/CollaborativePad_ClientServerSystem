@@ -1,7 +1,7 @@
 #include <QApplication>
 #include "NetworkServer.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv) {//test
     QApplication app(argc, argv);
 
     NetworkServer s;
