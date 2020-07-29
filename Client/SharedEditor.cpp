@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <tuple>
+#include <string>
 
 SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
@@ -115,7 +116,7 @@ void SharedEditor::loginSlot(QString& username, QString& password) {
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
 }
-#include <string>
+
 void SharedEditor::localInsert(qint32 index, QChar value) {
 
     if ( index > _symbols.size() - 2 ){
@@ -167,6 +168,9 @@ void SharedEditor::process(DataPacket pkt) {
         case DataPacket::textTyping :
             processMessages(*std::dynamic_pointer_cast<StringMessages>(pkt.getPayload()));
             break;
+        case DataPacket::command :
+            processCommand(*std::dynamic_pointer_cast<Command>(pkt.getPayload()));
+            break;
         default:
             std::cout<<"Coglione 2 volte, c'è un errore"<<std::endl;
             throw std::exception();
@@ -186,6 +190,7 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
         std::cout << "client not logged!" << std::endl;
     }
 }
+
 qint32 SharedEditor::getIndex(Message &m) {
     qint32 pos=m.getLocalIndex();//search index
     if(pos>_symbols.size()-1){
@@ -254,6 +259,62 @@ void SharedEditor::processMessages(StringMessages &strMess) {
         }
     }
 
+}
+
+void SharedEditor::processCommand(Command& cmd){
+    switch (cmd.getCmd()) {
+        case (Command::cd): {
+           processCdCommand(cmd);
+           break;
+        }
+
+        case (Command::rm): {
+            break;
+        }
+
+        case (Command::cp): {
+            break;
+        }
+
+        case (Command::mv): {
+            break;
+        }
+
+        case (Command::opn): {
+            break;
+        }
+
+        case (Command::cls): {
+            break;
+        }
+
+        default:
+            std::cout << "Coglione errore nel Command" << std::endl;
+    }
+}
+
+void SharedEditor::processCdCommand(Command& cmd){
+    std::cout << "cd args:" << std::endl;
+    for (auto &a: cmd.getArgs())
+        std::cout << a.toStdString() << std::endl;
+}
+
+void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare ma per ora non ho idee migliori
+   /* DataPacket packet(-1, -1, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::cd, QVector<QString>(1, "")));
+    emit transceiver->getSocket()->sendPacket(packet); //questo serve a farsi inviare il contenuto della root*/
+
+    /*DataPacket packet(-1, -1, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::mkdir, QVector<QString>(1, "/Cartella test")));
+    emit transceiver->getSocket()->sendPacket(packet); //questo serve a creare una cartella "Cartella test" nella root*/
+
+    /*DataPacket packet(-1, -1, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::rm, QVector<QString>(1, "/Cartella1>D")));
+    emit transceiver->getSocket()->sendPacket(packet); //questo serve a cancellare la cartella "Cartella1"*/
+
+    /*DataPacket packet(-1, -1, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::opn, QVector<QString>(1, "/prova>F")));
+    emit transceiver->getSocket()->sendPacket(packet); //questo serve ad aprire il file "prova.json" sul server*/
 }
 
 QString SharedEditor::to_string() {

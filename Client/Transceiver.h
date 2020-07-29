@@ -44,8 +44,10 @@ private:
 
     void sendLoginInfo(DataPacket& pkt);
     void sendMessage(DataPacket& pkt);
+    void sendCommand(DataPacket& pkt);
     void recvLoginInfo(DataPacket& pkt, QDataStream& in);
     void recvMessage(DataPacket& pkt,QDataStream& in);
+    void recvCommand(DataPacket& pkt,QDataStream& in);
 
 };
 

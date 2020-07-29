@@ -21,6 +21,7 @@
 #include <QString>
 
 #include "Packet/LoginInfo.h"
+#include "Packet/Command.h"
 #include <vector>
 #include <algorithm>
 #include <QtCore/QTimer>
@@ -36,6 +37,8 @@ private:
     qint32 getIndex(Message& m);
     void processMessages(StringMessages& strMess);
     void processLoginInfo(LoginInfo& logInf);
+    void processCommand(Command& cmd);
+    void processCdCommand(Command& cmd);
     bool isLogged;
 
 public slots:
@@ -53,6 +56,7 @@ public:
     void localInsert( qint32 index, QChar value );
     void localErase( qint32 index );
     QString to_string();
+    void testCommand();
 
 };
 

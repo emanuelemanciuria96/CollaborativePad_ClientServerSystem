@@ -19,6 +19,7 @@ int main(int argc, char **argv) {
     loginDialog->exec();
     if(loginDialog->abort)
         return 0;
+    ed->testCommand();
     mainWindow->show();              //inserisci user = ciao e password = suca se vuoi che funzioni tutto
 
 

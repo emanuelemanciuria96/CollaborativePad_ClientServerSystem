@@ -5,6 +5,7 @@
 #include <iostream>
 #include <QtCore/QDataStream>
 #include "Transceiver.h"
+#include "Packet/Command.h"
 
 Transceiver::Transceiver(QObject* parent):QThread(parent) {}
 
@@ -65,6 +66,11 @@ void Transceiver::recvPacket() {
                 break;
             }
 
+            case (DataPacket::command): {
+                recvCommand(packet, in);
+                break;
+            }
+
             default: {
                 std::cout << "Coglione c'e' un errore" << std::endl;
                 break;
@@ -103,6 +109,18 @@ void Transceiver::recvMessage(DataPacket& pkt, QDataStream& in) {
 
 }
 
+void Transceiver::recvCommand(DataPacket& pkt, QDataStream &in) {
+    qint32 siteId;
+    quint32 cmd;
+    QVector<QString> args;
+
+    in >> siteId >> cmd >> args;
+
+    pkt.setPayload( std::make_shared<Command>(siteId,(Command::cmd_t)cmd,std::move(args)));
+
+    emit readyToProcess(pkt);
+}
+
 void Transceiver::sendPacket(DataPacket pkt){
 
     switch(pkt.getTypeOfData()){
@@ -113,6 +131,11 @@ void Transceiver::sendPacket(DataPacket pkt){
 
         case (DataPacket::textTyping): {
             sendMessage(pkt);
+            break;
+        }
+
+        case (DataPacket::command): {
+            sendCommand(pkt);
             break;
         }
 
@@ -173,6 +196,19 @@ void Transceiver::sendLoginInfo(DataPacket& packet){
 
     out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
+    socket->waitForBytesWritten(-1);
+
+}
+
+void Transceiver::sendCommand(DataPacket& packet){
+
+    QDataStream out;
+    auto ptr = std::dynamic_pointer_cast<Command>(packet.getPayload());
+    out.setDevice(socket);
+    out.setVersion(QDataStream::Qt_5_5);
+
+    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
     socket->waitForBytesWritten(-1);
 
 }
