@@ -11,8 +11,6 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include <QtCore/QString>
-#include <QtCore/QVector>
 #include "sqlite3.h"
 
 
@@ -27,7 +25,8 @@ private:
 
     // vettore (mappa) contenente la prima riga dell'ultima query eseguita
     // vuoto se la query non è una select oppure se il risultato è nullo
-    std::map<QString, QVector<QString>> result;
+    std::map<std::string, std::string> result;
+
 
     void printTableResult(std::string query);
     void updateResult(int cols);
@@ -37,60 +36,45 @@ public:
     void openDB();
     void query(std::string query, bool debug=0); // se debug=1 stampa la tabella risultante
     void closeDB();
-    std::map<QString,QVector<QString>> getResult();
-    int getErrCode();
-    static void initialize(){// ESEMPIO DI UTILIZZO
+    std::map<std::string,std::string> getResult();
+
+    static void fExample(){// ESEMPIO DI UTILIZZO
 
         // se non si indica la directory completa il db viene salvato
         // nella cartella cmake-build-debug del progetto (non so come mai)
 
-        DBSql sqldb("login.db");
+        DBSql sqldb("example.db");
         sqldb.openDB();
         std::string query;
 
-        query = "CREATE TABLE LOGIN ("  \
-         "USER      TEXT PRIMARY KEY     NOT NULL," \
-         "PASS      TEXT                NOT NULL," \
-         "SITEID    INT                 NOT NULL);";
+        query = "CREATE TABLE PEOPLE ("  \
+         "ID INT PRIMARY KEY     NOT NULL," \
+         "NAME           TEXT    NOT NULL, "\
+         "AGE            INT     NOT NULL);";
         sqldb.query(query);
 
-        query = "DELETE FROM LOGIN"; //Svuoto la tabella in caso di test multipli
+        query = "DELETE FROM PEOPLE"; //Svuoto la tabella in caso di test multipli
         sqldb.query(query);
 
-        query = "INSERT INTO LOGIN ('USER', 'PASS', 'SITEID') VALUES ('ciao', 'suca', '5');";
+        query = "INSERT INTO PEOPLE ('ID', 'NAME', 'AGE') VALUES  ('1', 'Emanuele', '14');";
         sqldb.query(query);
 
-        query = "SELECT * FROM LOGIN";
+        query = "INSERT INTO PEOPLE ('ID', 'NAME', 'AGE') VALUES  ('2', 'Simone','12');";
+        sqldb.query(query);
+
+        query = "INSERT INTO PEOPLE ('ID', 'NAME', 'AGE') VALUES  ('3', 'Tommaso','13');";
+        sqldb.query(query);
+
+        query = "DELETE FROM PEOPLE WHERE ID=3";
+        sqldb.query(query);
+
+        query = "SELECT * FROM PEOPLE WHERE NAME='Simone'";
+        sqldb.query(query);
+        std::cout << "-> "<< sqldb.getResult()["ID"] << std::endl;
+
+        query = "SELECT * FROM PEOPLE";
         sqldb.query(query,1);//Print full table
-
         sqldb.closeDB();
-
-        DBSql sqldb1("ciao_directories.db");
-        sqldb1.openDB();
-
-        query = "CREATE TABLE DIRECTORIES ("  \
-         "DIRECTORY      TEXT PRIMARY KEY     NOT NULL);";
-        sqldb1.query(query);
-
-        query = "DELETE FROM DIRECTORIES"; //Svuoto la tabella in caso di test multipli
-        sqldb1.query(query);
-
-        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('Documenti>D0');";
-        sqldb1.query(query);
-
-        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('Nuovo documento>F0');";
-        sqldb1.query(query);
-
-        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('Nuova cartella>D0');";
-        sqldb1.query(query);
-
-        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('Nuova cartella/file>F1');";
-        sqldb1.query(query);
-
-        query = "SELECT * FROM DIRECTORIES";
-        sqldb1.query(query,1);//Print full table
-
-        sqldb1.closeDB();
     }// ESEMPIO DI UTILIZZO
 };
 

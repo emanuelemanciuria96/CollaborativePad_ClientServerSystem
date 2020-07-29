@@ -7,13 +7,12 @@
 
 DBSql::DBSql(std::string name):nameDB(name){};
 
-int callback(void *that, int argc, char **argv, char **azColName) { // Compiled SQLite Statement
+int callback(void *NotUsed, int argc, char **argv, char **azColName) { // Compiled SQLite Statement
     // int argc: holds the number of results
     // (array) azColName: holds each column returned
     // (array) argv: holds each value
-    auto *res = (QVector<QString>*) that;
-
     for(int i = 0; i < argc; i++) {
+        // Show column name, value, and newline
         std::cout <<"("<< azColName[i] << ": " << argv[i]<<")  ";
     }
     // Insert a newline
@@ -62,28 +61,19 @@ void DBSql::printTableResult(std::string query){
         return;
     }
     std::cout<<"--------------RESULT--------------"<<std::endl;
-    this->rc = sqlite3_exec(this->db, query.c_str(), callback, &this->result, &this->zErrMsg);
+    this->rc = sqlite3_exec(this->db, query.c_str(), callback, 0, &this->zErrMsg);
     std::cout<<"----------------------------------"<<std::endl;
 }
 void DBSql::updateResult(int cols) {
     this->result.clear();
-
     int result_size=sqlite3_column_bytes(this->stmt, 0); //dimensione in byte del risultato,
     if(result_size==0) { // Risultato vuoto
         return;
     }
-    auto val = SQLITE_ROW;
-    while(val == SQLITE_ROW){
-        for (int i = 0; i < cols; i++) {
-            QString key = (char *) sqlite3_column_name(this->stmt, i);
-            QString val = (char *) sqlite3_column_text(this->stmt, i);
-            if (this->result.find(key) == this->result.end()) {
-                QVector<QString> v;
-                result.insert({key, v});
-            }
-            this->result.at(key).push_back(val);
-        }
-        val = sqlite3_step(stmt);
+    for (int i = 0; i < cols; i++) {
+        std::string key = (char *) sqlite3_column_name( this->stmt, i );
+        std::string val = (char *) sqlite3_column_text( this->stmt, i);
+        this->result.insert({key,val});
     }
 }
 void DBSql::closeDB() {
@@ -91,10 +81,6 @@ void DBSql::closeDB() {
     sqlite3_close(this->db);
 }
 
-std::map<QString,QVector<QString>> DBSql::getResult(){
+std::map<std::string,std::string> DBSql::getResult(){
     return this->result;
-}
-
-int DBSql::getErrCode() {
-    return sqlite3_errcode(this->db);
 }

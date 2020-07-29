@@ -24,14 +24,14 @@ public:
         find = 9,
     }cmd_t;
 
-    Command(qint32 siteId, qint32 cmd, QVector<QString> args);
-    qint32 getCmd() const;
-    void setCmd(qint32 cmd);
+    Command(qint32 siteId, cmd_t cmd, QVector<QString> args);
+    cmd_t getCmd() const;
+    void setCmd(cmd_t cmd);
     const QVector<QString> &getArgs() const;
     void setArgs(const QVector<QString> &args);
 
 private:
-    qint32 _cmd;
+    cmd_t _cmd;
     QVector<QString> _args;
 };
 

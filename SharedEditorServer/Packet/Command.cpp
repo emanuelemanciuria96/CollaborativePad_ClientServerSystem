@@ -3,22 +3,20 @@
 //
 
 #include "Command.h"
-#include "../database/DBSql.h"
-
 #include <utility>
 #include <QtCore/QDir>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QVariant>
 
-Command::Command(qint32 siteId, qint32 cmd, QVector<QString> args) : Payload(siteId), _cmd(cmd),
-                                                                                    _args(std::move(args)) {}
+Command::Command(qint32 siteId, cmd_t cmd, QVector<QString> args) : Payload(siteId), _cmd(cmd),
+                                                                     _args(std::move(args)) {}
 
-qint32 Command::getCmd() const {
+Command::cmd_t Command::getCmd() const {
     return _cmd;
 }
 
-void Command::setCmd(qint32 cmd) {
+void Command::setCmd(Command::cmd_t cmd) {
     _cmd = cmd;
 }
 
@@ -193,8 +191,35 @@ bool Command::rmFile(QString &connectionId, QString &user) {
     return true;
 }
 
+QString Command::opnCommand(QString &connectionId, QString &user){
+    QString fileName{};
+
+    if(_args.size()!=1)
+        return fileName;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_files");
+    db.setDatabaseName(user+"_files.db");
+
+    if (!db.open())
+        return fileName;
+
+    QString filePath = _args.first();
+    QSqlQuery query(db);
+
+    if(!query.exec("SELECT FILEID FROM FILES WHERE DIR='"+filePath+"'")){
+        db.close();
+        return fileName;
+    }
+
+    query.next();
+    fileName = query.value("FILEID").toString();
+
+    return fileName;
+}
+
 /*LE FUNZIONI CHE SEGUONO SONO TUTTE DA RIFARE*/
 
+/*
 QVector<QString> Command::openCommand(QString& connectionId, QString& user, QString& directory) {
     QVector<QString> directories;
     QSqlDatabase db = QSqlDatabase::database(connectionId);
@@ -303,4 +328,4 @@ bool Command::moveFile(QString& connectionId, QString& user, QString& src, QStri
         return !sqldb.getResult()["DIRECTORY"].isEmpty();
     }
     return false;
-}
+}*/

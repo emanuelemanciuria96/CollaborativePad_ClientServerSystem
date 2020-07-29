@@ -68,7 +68,7 @@ static bool initializeDb()
         query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('', '/Cartella1>D');");
         query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('/Cartella1', '/Cartella1/Sottocartella1>D');");
         query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('/Cartella1', '/Cartella1/Sottocartella2>D');");
-        query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('/Cartella1', '/Cartella1/prova>F');");
+        query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('', '/prova>F');");
         query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('', '/Cartella2>D');");
         query.exec("SELECT * FROM DIRECTORIES");
 
@@ -79,7 +79,28 @@ static bool initializeDb()
             QString sub = query.value(1).toString();
             std::cout << name.toStdString() << "\t\t\t\t" << sub.toStdString() << std::endl;
         }
-    db.close();
+        db.close();
+    }
+
+    {
+        QSqlDatabase db = QSqlDatabase::database("initialize");
+        db.setDatabaseName("w_directories.db");
+        if (!db.open()) {
+            QMessageBox::critical(nullptr, QObject::tr("Cannot open database"),
+                                  QObject::tr("Unable to establish a database connection.\n"
+                                              "This example needs SQLite support. Please read "
+                                              "the Qt SQL driver documentation for information how "
+                                              "to build it.\n\n"
+                                              "Click Cancel to exit."), QMessageBox::Cancel);
+            return false;
+        }
+
+        QSqlQuery query(db);
+        query.exec("CREATE TABLE DIRECTORIES ("  \
+         "DIRECTORY      TEXT," \
+         "SUBF           TEXT, PRIMARY KEY (DIRECTORY, SUBF));");
+        query.exec("DELETE FROM DIRECTORIES");
+        db.close();
     }
 
     {
@@ -100,7 +121,7 @@ static bool initializeDb()
          "FILEID      TEXT PRIMARY KEY NOT NULL," \
          "DIR           TEXT NOT NULL);");
         query.exec("DELETE FROM FILES");
-        query.exec("INSERT INTO FILES ('FILEID', 'DIR') VALUES ('q_prova.txt', '/Cartella1/prova>F');");
+        query.exec("INSERT INTO FILES ('FILEID', 'DIR') VALUES ('prova.json', '/prova>F');");
         query.exec("SELECT * FROM FILES");
 
         std::cout << "FILEID" << "\t\t\t\t" << "DIR" << std::endl;
@@ -110,6 +131,28 @@ static bool initializeDb()
             QString sub = query.value(1).toString();
             std::cout << name.toStdString() << "\t\t\t\t" << sub.toStdString() << std::endl;
         }
+        db.close();
+    }
+
+    {
+        QSqlDatabase db = QSqlDatabase::database("initialize");
+        db.setDatabaseName("w_files.db");
+        if (!db.open()) {
+            QMessageBox::critical(nullptr, QObject::tr("Cannot open database"),
+                                  QObject::tr("Unable to establish a database connection.\n"
+                                              "This example needs SQLite support. Please read "
+                                              "the Qt SQL driver documentation for information how "
+                                              "to build it.\n\n"
+                                              "Click Cancel to exit."), QMessageBox::Cancel);
+            return false;
+        }
+
+        QSqlQuery query(db);
+        query.exec("CREATE TABLE FILES ("  \
+         "FILEID      TEXT PRIMARY KEY NOT NULL," \
+         "DIR           TEXT NOT NULL);");
+        query.exec("DELETE FROM FILES");
+        query.exec("INSERT INTO FILES ('FILEID', 'DIR') VALUES ('prova.json', '/prova>F');");
         db.close();
     }
 

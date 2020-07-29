@@ -45,10 +45,12 @@ private:
     const int messages_separatorSize=messages_separator.size();
     const int items_separatorSize=items_separator.size();
     const int pos_separatorSize=pos_separator.size();
-
+    
     const int maxChar=500;
     QString formattedMessages;
 
 };
 
 #endif //SHAREDEDITORSERVER_STRINGMESSAGES_H
+
+

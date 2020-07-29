@@ -32,6 +32,7 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
     qDebug()<< "Creating Thread";
 
     ServerThread *thread = new ServerThread(socketDesc,msgHandler.get());
+    thread->moveToThread(thread);
 
     connect(thread,&ServerThread::deleteMe,this,&NetworkServer::deleteThread);
     connect(thread, &ServerThread::finished,
@@ -40,31 +41,11 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
                 qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
                 emit thread->deleteMe(th);
             });
+    // adoperando una chiusura incapsulo il puntatore al thread, ciò mi permette di evitare
+    // di costruirmi una struttura dati che mi tenga traccia di tutti i thread creati
 
-    thread->moveToThread(thread);
 
     thread->start();
-
-}
-
-
-void generateNewPosition( std::vector<qint32>& prev, std::vector<qint32>& next, std::vector<qint32>& newPos, qint32 depth = 0 ){
-
-    quint32 pos;
-    if ( depth >= prev.size() ){
-        prev.push_back(0);
-    }
-    if( depth >= next.size() ){
-        next.push_back(INT_MAX);
-    }
-    if( next[depth] - prev[depth] > 1 ){
-        pos = (float)prev[depth]/2 + (float)next[depth]/2;
-    }
-    else if ( next[depth] - prev[depth] <= 1 ){
-        pos = prev[depth];
-        generateNewPosition(prev, next, newPos, depth+1);
-    }
-    newPos.insert(newPos.begin(),pos);
 
 }
 
@@ -87,8 +68,6 @@ void NetworkServer::localErase(Message m) {
 
     if( *i == m.getSymbol() )  //l'oggetto va trovato per forza, se non c'è
         _symbles.erase(i);     //significa che non c'è coerenza fra i dati dei client
-    else
-        throw std::exception(); ///sarebbe bene trattare meglio questa eccezione
 
     to_string();
 }

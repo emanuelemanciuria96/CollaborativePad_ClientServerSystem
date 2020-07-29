@@ -9,7 +9,10 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QMainWindow(parent)
     setModel(model);
     setUpGUI();
     setWindowTitle(QCoreApplication::applicationName());
-
+    posLastChar = -1;
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
+    timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
 
@@ -17,16 +20,17 @@ void EditorGUI::setUpGUI() {
 //    inizializzo gli elementi
     statusBar = new QStatusBar(this);
     textEdit = new QTextEdit(this);
-    toolBar = new QToolBar("ToolBar", this);
+    toolBar = new QToolBar("Toolbar",this);
 
     statusBar->showMessage ("StatusBar");
 
 //    aggiungo gli elementi alla finestra
     this->setCentralWidget(textEdit);
-    this->addToolBar(toolBar);
     this->setStatusBar(statusBar);
+    this->addToolBar(toolBar);
+    toolBar->setMovable(false);
 
-    menuBar()->addMenu("&File");
+    setupFileActions();
     menuBar()->addMenu("&Options");
 
     textEdit->setFocus();
@@ -37,10 +41,9 @@ void EditorGUI::setUpGUI() {
     this->resize(size.width()*0.7,size.height()*0.7);
 
     connect(textEdit->document(), SIGNAL(contentsChange(int, int, int)), this, SLOT(contentsChange(int,int,int)));
-
+    connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
 //    load("./file.txt");
     loadSymbols();
-
 }
 
 
@@ -75,11 +78,36 @@ void EditorGUI::loadSymbols() {
     signalBlocker = !signalBlocker;
 }
 
-void EditorGUI::setupEditActions() {
-    //TODO
+void EditorGUI::setupFileActions() {
+//    QToolBar *tb = addToolBar(tr("File Actions"));
+    QMenu *menu = menuBar()->addMenu(tr("&File"));
+
+    QAction *a = menu->addAction(tr("&New"),this,&EditorGUI::fileNew);
+    a->setPriority(QAction::LowPriority);
+    a->setShortcut(QKeySequence::New);
+//    tb->addAction(a);
+
+    a = menu->addAction(tr("&Open..."), this, &EditorGUI::fileOpen);
+    a->setShortcut(QKeySequence::Open);
+//    tb->addAction(a);
+
+    menu->addSeparator();
+
+    actionSave = menu->addAction(tr("&Save"), this, &EditorGUI::fileSave);
+    actionSave->setShortcut(QKeySequence::Save);
+    actionSave->setEnabled(false);
+//    tb->addAction(actionSave);
+
+    a = menu->addAction(tr("Save &As..."), this, &EditorGUI::fileSaveAs);
+    a->setPriority(QAction::LowPriority);
+    menu->addSeparator();
+
+    a = menu->addAction(tr("&Quit"), this, &EditorGUI::close);
+    a->setShortcut(Qt::CTRL + Qt::Key_Q);
+
 }
 
-void EditorGUI::setupFileActions() {
+void EditorGUI::setupEditActions() {
     //TODO
 }
 
@@ -108,6 +136,14 @@ void EditorGUI::setModel(SharedEditor* _model) {
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i=0;
     if(!signalBlocker) {
+        if( !selected && pos == 0 && charsRemoved > 0 && charsAdded > 1){
+            charsAdded -= charsRemoved;
+            charsRemoved = 0;
+        }
+        else if(selected && pos == 0 && charsRemoved > 0 && charsAdded > 1){
+            charsRemoved--;
+            charsAdded--;
+        }
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             std::cout << "Cancellazione carattere " << pos << std::endl;
             for (i = 0; i < charsRemoved; i++) {
@@ -123,32 +159,122 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     }
 }
 
-void EditorGUI::insertText(qint32 pos, QChar value) {
+void EditorGUI::insertText(qint32 pos, const QString& value, qint32 siteId) {
     pos--;
-    auto cursor = textEdit->textCursor();
-    cursor.movePosition(QTextCursor::MoveOperation::Start, QTextCursor::MoveMode::MoveAnchor,1);
-    cursor.movePosition(QTextCursor::MoveOperation::NextCharacter, QTextCursor::MoveMode::MoveAnchor,pos);
+    RemoteCursor* cursor;
+
+    cursor = getRemoteCursor(siteId);
+
+//    std::cout << "position:" << pos << std::endl;
+    cursor->setPosition(pos,QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
-    cursor.insertText(QString(value));
-    std::cout << "Inserito " << pos << " " << value.unicode() << std::endl;
+    cursor->insertText(value);
+    std::cout << "Inseriti " << value.size() << " caratteri in "  << pos << std::endl;
     signalBlocker = !signalBlocker;
+//    updateRemoteCursors(siteId,pos, Message::insertion);
 }
 
-void EditorGUI::deleteText(qint32 pos) {
+bool EditorGUI::checkSiteId(RemoteCursor& rc, qint32 siteId){
+    return rc.getSiteId() == siteId;
+}
+
+void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     pos--;
-    auto cursor = textEdit->textCursor();
-    cursor.movePosition(QTextCursor::MoveOperation::Start, QTextCursor::MoveMode::MoveAnchor,1);
-    cursor.movePosition(QTextCursor::MoveOperation::NextCharacter, QTextCursor::MoveMode::MoveAnchor,pos);
+    RemoteCursor* cursor;
+
+    cursor = getRemoteCursor(siteId);
+
+//    std::cout << "position:" << pos << std::endl;
+    cursor->setPosition(pos,QTextCursor::MoveMode::MoveAnchor);
+    cursor->setPosition(pos+n, QTextCursor::KeepAnchor);
     signalBlocker = !signalBlocker;
-    cursor.deleteChar();
+    cursor->removeSelectedText();
     std::cout << "Rimosso " << pos << std::endl;
     signalBlocker = !signalBlocker;
+//    updateRemoteCursors(siteId,pos, Message::removal);
 }
 
 
-void EditorGUI::updateSymbols(qint32 pos, QChar value, const QString& action) {
-    if(action == "remove")
-        deleteText(pos);
-    else
-        insertText(pos,value);
+void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action) {
+    if(action == Message::removal){
+//        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
+        deleteText(pos, siteId, s.size());
+    }
+    else {
+        insertText(pos, s, siteId);
+//        if(posLastChar<0 || pos!=posLastChar+1) {
+//            flushInsertQueue();
+//            posQueue = pos;
+//            siteIdQueue = siteId;
+//        }
+//        insertQueue.push(value);
+//        posLastChar = pos;
+    }
+}
+
+void EditorGUI::updateRemoteCursors(qint32 siteId, int pos, Message::action_t action) {
+    // aggiorno la posizione degli altri cursori
+
+    for(auto it = remoteCursors.begin(); it!= remoteCursors.end(); it++){
+        if(it->getSiteId()!=siteId){
+            auto newPosition = it->position();
+            if(newPosition > pos){
+                if(action == Message::insertion)
+                    it->setPosition(newPosition+1, QTextCursor::MoveAnchor);
+                else
+                    it->setPosition(newPosition-1, QTextCursor::MoveAnchor);
+            }
+        }
+    }
+}
+
+
+RemoteCursor* EditorGUI::getRemoteCursor(qint32 siteId) {
+    RemoteCursor* cursor;
+//    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
+//    std::for_each(remoteCursors.begin(), remoteCursors.end(), [](RemoteCursor& rc){std::cout << rc.getSiteId() << std::endl;});
+    auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor& c) {
+        std::cout << "SiteId: " << c.getSiteId() << std::endl;
+        return (c.getSiteId() == siteId);});
+    if (it == remoteCursors.end()) {
+        remoteCursors.emplace_back(textEdit->document(),siteId);
+        cursor = &remoteCursors.back();
+    } else
+        cursor = (&(*it));
+    return cursor;
+}
+
+void EditorGUI::removeCursor(qint32 siteId) {
+    if (!remoteCursors[siteId].isNull()){
+        remoteCursors.erase(remoteCursors.begin()+siteId);
+    }
+}
+
+void EditorGUI::fileNew() {
+//    TODO
+}
+
+void EditorGUI::fileOpen() {
+//    TODO
+}
+
+void EditorGUI::fileSave() {
+//    TODO
+}
+
+void EditorGUI::fileSaveAs() {
+//    TODO
+}
+
+void EditorGUI::flushInsertQueue() {
+    if(insertQueue.empty())
+        return;
+
+    QString s;
+    while(!insertQueue.empty()){
+        s.push_back(insertQueue.front());
+        insertQueue.pop();
+    }
+    insertText(posQueue, s, siteIdQueue);
+    posLastChar = -1;
 }

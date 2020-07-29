@@ -6,6 +6,7 @@
 #define ES3_PROJ_NETWORKSERVER_SERVERTHREAD_H
 
 #include "Packet/DataPacket.h"
+#include "Packet/StringMessages.h"
 #include <QThread>
 #include <QTcpSocket>
 #include <QtCore/QMutex>
@@ -23,7 +24,7 @@ class ServerThread : public QThread{
 Q_OBJECT
 
 public:
-    explicit ServerThread(qintptr socketDescriptor, MessageHandler *msgHandler,QObject *parent =0);
+    explicit ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent =0);
     void run() override;
     void setThreadId();
 
@@ -54,8 +55,6 @@ private:
     QString _username;
     qint32 _siteID;
     QString threadId;
-
-private:
 
     void saveFileJson(std::string dir,std::vector<Symbol> _symbols);
     std::vector<Symbol> loadFileJson(std::string dir);

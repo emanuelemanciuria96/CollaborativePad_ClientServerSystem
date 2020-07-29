@@ -20,6 +20,7 @@ class LoginDialog: public QDialog {
     Q_OBJECT
 
 public:
+    bool abort;
     LoginDialog(QWidget *parent = 0);
     void setUsername(QString& username);
     void setPassword(QString& password);
@@ -35,7 +36,7 @@ private:
 signals:
     void acceptLogin(QString& username, QString& password);
 
-public slots:
+private slots:
     void slotAcceptLogin();
 
 };

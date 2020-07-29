@@ -2,9 +2,11 @@
 // Created by Windows on 22/03/2020.
 //
 
+#include <iostream>
 #include "LoginDialog.h"
 
 LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent){
+    abort = true;
     setUpGUI();
     setWindowTitle("User login");
     setModal(true);
@@ -49,9 +51,11 @@ void LoginDialog::setUpGUI() {
     formGridLayout->addWidget(buttons,2,0,1,2);
 
     //imposto la grandezza della finestra
+//    setMinimumSize(222,125);
+    setMinimumSize(100,100);
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.1,size.height()*0.1);
-
+    std::cout << this->size().width() << "x" << this->size().height() << std::endl;
     setLayout(formGridLayout);
 }
 
@@ -69,6 +73,7 @@ void LoginDialog::slotAcceptLogin() {
 
     //emetto il signal con le credenziali
     emit acceptLogin(username,password);
-
+    abort = false;
     close();
 }
+

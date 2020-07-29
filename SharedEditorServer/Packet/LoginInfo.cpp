@@ -10,10 +10,10 @@
 #include <QtCore/QVariant>
 
 
-LoginInfo::LoginInfo(qint32 siteId, qint32 type, const QString user, const QString password) : Payload(siteId),
-                                                                                                 _user(user),
-                                                                                                 _type(type),
-                                                                                                 _password(password) {}
+LoginInfo::LoginInfo(qint32 siteId, type_t type, QString user, QString password) : Payload(siteId),
+                                                                                   _user(std::move(user)),
+                                                                                   _type(type),
+                                                                                   _password(std::move(password)) {}
 
 QString &LoginInfo::getUser(){
     return _user;
@@ -31,7 +31,7 @@ void LoginInfo::setPassword( QString password) {
     _password = password;
 }
 
-qint32 LoginInfo::getType() {
+LoginInfo::type_t LoginInfo::getType() {
     return _type;
 }
 

@@ -22,7 +22,10 @@
 #include <QtCore/QTextStream>
 #include <QFileInfo>
 #include <QTextDocument>
+#include <algorithm>
 #include "SharedEditor.h"
+#include "RemoteCursor.h"
+#include <queue>
 
 class EditorGUI: public QMainWindow {
     Q_OBJECT
@@ -34,6 +37,14 @@ private:
     QString fileName;
     SharedEditor* model;
     bool signalBlocker;
+    std::vector<RemoteCursor> remoteCursors;
+    QAction* actionSave;
+    std::queue<QChar> insertQueue;
+    qint32 siteIdQueue;
+    qint32 posQueue;
+    qint32 posLastChar;
+    QTimer* timer;
+    bool selected= false;
 
     void setUpGUI();
     void setupFileActions();
@@ -42,21 +53,29 @@ private:
     void setCurrentFileName(const QString &filename);
     bool load(const QString &f);
     void loadSymbols();
-
-
+    void updateRemoteCursors(qint32 siteId, int pos, Message::action_t action);
+    RemoteCursor* getRemoteCursor(qint32 siteId);
+    void removeCursor(qint32 siteId);
+    void fileNew();
+    void fileOpen();
+    void fileSave();
+    void fileSaveAs();
+    void insertText(qint32 pos, const QString& value, qint32 siteId);
+    void deleteText(qint32 pos, qint32 siteId,qint32 n);
+    static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
 private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);
-
+    void flushInsertQueue();
+    void setSelected(bool yes){ selected = yes;}
 public slots:
-    void updateSymbols(qint32 pos, QChar value, const QString& action);
+    void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
 
 signals:
 
 public:
     EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);
-    void insertText(qint32 pos, QChar value);
-    void deleteText(qint32 pos);
+
 };
 
 

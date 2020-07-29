@@ -8,8 +8,11 @@
 #include <iostream>
 #include "Packet/Symbols/Symbol.h"
 #include <vector>
+#include "Packet/StringMessages.h"
 #include "Packet/DataPacket.h"
 #include "Packet/Payload.h"
+#include "Socket.h"
+#include "Transceiver.h"
 #include "Packet/Message.h"
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -17,46 +20,43 @@
 #include <QAbstractSocket>
 #include <QString>
 
+#include "Packet/LoginInfo.h"
+#include "Packet/Command.h"
+#include <vector>
+#include <algorithm>
+#include <QtCore/QTimer>
+
 
 class SharedEditor: public QObject {
-Q_OBJECT
+    Q_OBJECT
 private:
     qint32 _siteId;
     std::vector<Symbol> _symbols;
     qint32 _counter;
-    QTcpSocket *socket;
-    QString currentFolder;
-    qint32 connectToServer();
-    void recvMessage(QDataStream& in);
-    void sendMessage(DataPacket& packet);
-    void sendPacket(DataPacket& packet);
-    void sendCommand(DataPacket& packet);
-    void sendLoginInfo(DataPacket& packet);
-    void recvLoginInfo(QDataStream& in);
-    void recvCommand(QDataStream &in);
+    Transceiver* transceiver;
+    qint32 getIndex(Message& m);
+    void processMessages(StringMessages& strMess);
+    void processLoginInfo(LoginInfo& logInf);
+    void processCommand(Command& cmd);
+    void processCdCommand(Command& cmd);
     bool isLogged;
-
-private slots:
-
-    void recvPacket();
 
 public slots:
     void loginSlot(QString& username, QString& password);
-
+    void process(DataPacket pkt);
+    void deleteThread();
     void test();
 
 signals:
-    void symbolsChanged(qint32 pos, QChar value, const QString& action);
-
+    void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void test1();
 
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );
     void localErase( qint32 index );
-    void process( const Message& m);
     QString to_string();
-    void commandLoop();
+    void testCommand();
 
 };
 

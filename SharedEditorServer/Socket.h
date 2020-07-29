@@ -14,7 +14,7 @@ class Socket: public QTcpSocket {
 Q_OBJECT
 
 public:
-    Socket(QObject *parent = 0):QTcpSocket(parent){}
+    explicit Socket(QObject *parent = 0):QTcpSocket(parent){}
 
 signals:
     void sendMessage(DataPacket pkt,std::mutex *mtx = nullptr);
