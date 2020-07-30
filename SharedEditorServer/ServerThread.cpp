@@ -327,7 +327,7 @@ void ServerThread::sendMessage(DataPacket& packet,std::mutex* mtx){
 
 void ServerThread::sendCommand(DataPacket& packet, std::mutex *mtx){
     QDataStream out;
-    out.setDevice(socket);
+    out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
 
     auto ptr = std::dynamic_pointer_cast<Command>(packet.getPayload());
@@ -417,7 +417,9 @@ void ServerThread::disconnected()
     auto i = _sockets.find(socket.get());
     sl.unlock();
     std::lock_guard lg(skt_mutex);
-    _sockets.erase(i);
+
+    if( i != _sockets.end() )
+        _sockets.erase(i);
 
     socket->deleteLater();
     QSqlDatabase::removeDatabase(threadId+"_login");

@@ -28,8 +28,6 @@ public:
     void run() override;
     quint32 getSiteID(){ return _siteID; }
     std::shared_ptr<Socket> getSocket(){ return socket; }
-    void setThreadId();
-
 
 signals:
     void error(QTcpSocket::SocketError socketerror);    //slot che gestisce questo segnale da implementare
@@ -43,11 +41,14 @@ public slots:
 
 private:
     std::shared_ptr<Socket> socket;
-    
     qintptr socketDescriptor;
     std::shared_ptr<MessageHandler> msgHandler;
     static std::shared_mutex skt_mutex;
     static std::map<Socket*,std::mutex*> _sockets;
+    QString _username;
+    qint32 _siteID;
+    QString threadId;
+
 
     void recvLoginInfo(DataPacket& packet, QDataStream& in);
     void recvMessage(DataPacket& packet,QDataStream& in);
@@ -57,13 +58,12 @@ private:
     void sendMessage(DataPacket& packet, std::mutex *mtx);
     void sendCommand(DataPacket& packet, std::mutex *mtx = nullptr);
 
-    QString _username;
-    qint32 _siteID;
-    QString threadId;
-
     void saveFileJson(std::string dir,std::vector<Symbol> _symbols);
     std::vector<Symbol> loadFileJson(std::string dir);
     void QTsaveFileJson(const std::string& dir,std::vector<Symbol> _symbols);
+
+    void setThreadId();
+
 };
 
 

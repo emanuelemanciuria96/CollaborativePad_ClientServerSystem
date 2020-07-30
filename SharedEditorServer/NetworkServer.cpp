@@ -2,6 +2,7 @@
 // Created by muska on 15/10/2019.
 //
 #include "NetworkServer.h"
+#include <QtSql/QSqlDatabase>
 #include <QApplication>
 
 
@@ -9,6 +10,12 @@ std::vector<Symbol> NetworkServer::_symbles;
 
 NetworkServer::NetworkServer(QObject *parent) : QTcpServer(parent){
     msgHandler = std::make_shared<MessageHandler>();
+
+    setThreadId();
+    QSqlDatabase::addDatabase("QSQLITE", threadId+"_login");
+    QSqlDatabase::addDatabase("QSQLITE", threadId+"_directories");
+    QSqlDatabase::addDatabase("QSQLITE", threadId+"_files");
+
 }
 
 void NetworkServer::startServer() {
@@ -89,10 +96,27 @@ void NetworkServer::to_string() {
 
 void NetworkServer::deleteThread(QPointer<QThread> th) {
     auto thread = dynamic_cast<ServerThread*>(th.data());
+    auto i = active_sockets.find(thread->getSiteID());
+    if( i != active_sockets.end() )
+        active_sockets.erase(i);
     thread->deleteLater();
 }
 
 void NetworkServer::recordThread(QPointer<QThread> th) {
     auto thread = dynamic_cast<ServerThread*>(th.data());
-    sockets.insert(std::make_pair(thread->getSiteID(),thread->getSocket()));
+    active_sockets.insert(std::make_pair(thread->getSiteID(),thread->getSocket()));
+}
+
+void NetworkServer::setThreadId() {
+    auto myid = std::this_thread::get_id();
+    std::stringstream ss;
+    ss << myid;
+    std::string IdString = ss.str();
+    threadId = QString::fromStdString(IdString);
+}
+
+NetworkServer::~NetworkServer() {
+    for(auto i:active_sockets)
+        i.second->disconnected();
+    active_sockets.clear();
 }

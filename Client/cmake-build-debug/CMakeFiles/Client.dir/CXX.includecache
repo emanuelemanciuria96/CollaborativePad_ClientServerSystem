@@ -30,6 +30,10 @@ C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
 qtimer.h
 C:/Qt/5.12.5/mingw73_64/include/QtCore/qtimer.h
 
+C:/Qt/5.12.5/mingw73_64/include/QtCore/QVector
+qvector.h
+C:/Qt/5.12.5/mingw73_64/include/QtCore/qvector.h
+
 C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
 qglobal.h
 C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
@@ -746,6 +750,14 @@ QtCore/qglobal.h
 QtNetwork/qtnetwork-config.h
 -
 
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Command.h
+QtCore/QString
+-
+QtCore/QVector
+-
+Payload.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
 QtGlobal
 -
@@ -857,6 +869,8 @@ QString
 -
 Packet/LoginInfo.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
+Packet/Command.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Command.h
 vector
 -
 algorithm

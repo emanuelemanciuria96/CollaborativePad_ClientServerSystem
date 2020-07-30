@@ -27,6 +27,7 @@ Q_OBJECT
 public:
     explicit NetworkServer(QObject *parent = 0);
     NetworkServer(const NetworkServer& ns) = delete;
+    ~NetworkServer();
     void startServer();
     static void to_string();
 
@@ -40,7 +41,10 @@ public slots:
 private:
     std::shared_ptr<MessageHandler> msgHandler;
     static std::vector<Symbol> _symbles;    // struttura per il salvataggio del testo
-    std::map<quint32,std::shared_ptr<Socket>> sockets;
+    std::map<quint32,std::shared_ptr<Socket>> active_sockets;
+    QString threadId;
+
+    void setThreadId();
     // static std::mutex sym_mutex;  per ora questo mutex non serve: ci accede un solo thread, che è quello creato in MessageHandler
 
 protected:

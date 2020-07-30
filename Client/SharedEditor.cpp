@@ -264,7 +264,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
 
 void SharedEditor::deleteText(){
     emit deleteAllText();
-
+}
 
 void SharedEditor::processCommand(Command& cmd){
     switch (cmd.getCmd()) {
