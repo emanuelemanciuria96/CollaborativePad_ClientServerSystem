@@ -6,6 +6,7 @@
 #define SHAREDEDITORSERVER_COMMAND_H
 
 #include <QtCore/QString>
+#include <QtCore/QVector>
 #include "Payload.h"
 
 class Command: public Payload {
@@ -28,13 +29,25 @@ public:
         sv = 8,
         find = 9,
     }cmd_t;
-    Command(qint32 siteID, cmd_t cmd, QString& arg1, QString& arg2); // non tutti i comandi
+
+    Command(qint32 siteId, cmd_t cmd, QVector<QString> args);
+    const QVector<QString> &getArgs() const;
+    void setArgs(const QVector<QString> &args);
+    cmd_t getCmd() const;
+    void setCmd(cmd_t cmd);
+    bool cdCommand(QString& connectionId, QString& user);
+    bool mkdirCommand(QString& connectionId, QString& user);
+    bool rmCommand(QString& connectionId, QString& user);
+    QString opnCommand(QString &connectionId, QString &user);
+    /*QVector<QString> openCommand(QString& connectionId, QString& user, QString& directory);
+    bool copyFile(QString& connectionId, QString& user, QString& src, QString& dest);
+    bool moveFile(QString& connectionId, QString& user, QString& src, QString& dest);*/
 
 private:
-    cmd_t cmd;
-    QString arg1;
-    QString arg2;
-
+    cmd_t _cmd;
+    QVector<QString> _args;
+    bool rmDir(QString& connectionId, QString& user);
+    bool rmFile(QString& connectionId, QString& user);
 };
 
 
