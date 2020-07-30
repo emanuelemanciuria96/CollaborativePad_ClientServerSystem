@@ -11,7 +11,6 @@
 #include <QTcpSocket>
 #include <QtCore/QMutex>
 #include <shared_mutex>
-#include "NetworkServer.h"
 #include "Packet/Symbols/Symbol.h"
 #include "Packet/Message.h"
 #include "Packet/LoginInfo.h"
@@ -27,6 +26,7 @@ public:
     explicit ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent =0);
     void run() override;
     quint32 getSiteID(){ return _siteID; }
+    QString& getUsername(){ return _username; }
     std::shared_ptr<Socket> getSocket(){ return socket; }
 
 signals:
@@ -55,12 +55,9 @@ private:
     void recvCommand(DataPacket& packet,QDataStream& in);
 
     void sendLoginInfo(DataPacket& packet, std::mutex *mtx = nullptr);
-    void sendMessage(DataPacket& packet, std::mutex *mtx);
+    void sendMessage(DataPacket& packet, std::mutex *mtx = nullptr);
     void sendCommand(DataPacket& packet, std::mutex *mtx = nullptr);
 
-    void saveFileJson(std::string dir,std::vector<Symbol> _symbols);
-    std::vector<Symbol> loadFileJson(std::string dir);
-    void QTsaveFileJson(const std::string& dir,std::vector<Symbol> _symbols);
 
     void setThreadId();
 

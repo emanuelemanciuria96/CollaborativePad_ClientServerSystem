@@ -141,6 +141,24 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
             qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
             emit recordThread(th);
 
+            /// in mancanza di un client che mi chieda di ricevere un file, faccio questo nella
+            /// procedura di login
+            QVector<QString> vec = {"/prova>F"};
+            auto comm = std::make_shared<Command>(_siteID,Command::opn,vec);
+            QString fileName;
+
+            fileName = comm->opnCommand(threadId, _username);
+            if(!fileName.isEmpty())
+                std::cout << fileName.toStdString() << std::endl;
+            else
+                std::cout << "opn command failed!" << std::endl;
+
+            vec.clear();
+            vec.insert(0,fileName);
+            comm->setArgs(vec);
+
+            msgHandler->submit(&NetworkServer::processOpnCommand,comm);
+
         } else {
             std::cout << "client not logged!" << std::endl;
             sendPacket(packet);
@@ -178,7 +196,7 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
             msgHandler->submit(NetworkServer::localErase, msg);
         }
 
-        strMess.get()->push(*msg);
+        strMess->push(*msg);
     }
     packet.setPayload(strMess);
 
@@ -316,8 +334,13 @@ void ServerThread::sendMessage(DataPacket& packet,std::mutex* mtx){
 
     }
 
-    {
+    if(mtx != nullptr){
         std::lock_guard lg(*mtx);
+        std::cout<<"Bytes written: "<<buf.data().size()<<std::endl;
+        out.device()->write(buf.data());
+        socket->waitForBytesWritten(-1);
+    }
+    else{
         std::cout<<"Bytes written: "<<buf.data().size()<<std::endl;
         out.device()->write(buf.data());
         socket->waitForBytesWritten(-1);
@@ -335,80 +358,6 @@ void ServerThread::sendCommand(DataPacket& packet, std::mutex *mtx){
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
 }
 
-void ServerThread::QTsaveFileJson(const std::string& dir,std::vector<Symbol> _symbols){
-    QJsonArray symbols;
-
-    for(auto& itr:_symbols) {
-        QJsonObject symbol;
-        QJsonObject symId;
-        symbol["char"] = itr.getValue().toLatin1();
-        symId["siteId"] = itr.getSymId().getSiteId();
-        symId["count"] = itr.getSymId().getCount();
-        symbol["symId"] = symId;
-        QJsonArray pos;
-
-        for(auto i: itr.getPos()){
-            QJsonValue val((qint64)i);
-            pos.append(val);
-        }
-        symbol["pos"]=pos;
-        symbols.append(symbol);
-    }
-    QJsonDocument json(symbols);
-    QFile file(QString::fromStdString(dir));
-    file.open(QIODevice::WriteOnly);
-    file.write(json.toJson());
-}
-
-void ServerThread::saveFileJson(std::string dir,std::vector<Symbol> _symbols){//vector<symbol> to json
-    std::ofstream file_id;
-    file_id.open(dir);
-    Json::Value event;
-    int index=0;
-    for(auto itr:_symbols) {
-        event[index]["index"] = index;
-        event[index]["char"] = QString(itr.getValue()).toStdString();
-        event[index]["symId"]["siteId"] = itr.getSymId().getSiteId();
-        event[index]["symId"]["count"] = itr.getSymId().getCount();
-
-        Json::Value vec(Json::arrayValue);
-
-        for(int i=0; i<itr.getPos().size();i++){
-            vec.append(Json::Value(itr.getPos()[i]));
-        }
-        event[index]["pos"]=vec;
-
-        index++;
-    }
-
-    Json::StyledWriter styledWriter;
-    file_id << styledWriter.write(event);
-
-    file_id.close();
-}
-
-std::vector<Symbol> ServerThread::loadFileJson(std::string dir){//json to vector<symbol>
-    std::ifstream file_input(dir);
-    Json::Reader reader;
-    Json::Value root;
-    reader.parse(file_input, root);
-
-    std::vector<Symbol> _symbols;
-
-    for(int i=0; i<root.size(); i++) {
-        QChar value=*(root[i]["char"].asCString());
-        qint32 _siteId=root[i]["symId"]["siteId"].asUInt64();
-        qint32 _counter=root[i]["symId"]["count"].asUInt64();
-        std::vector<quint32> pos;
-        Symbol s(value,_siteId,_counter, pos);
-        for(int j=0;j<root[i]["pos"].size();j++){
-            qint32 val=root[i]["pos"][j].asUInt64();
-            pos.push_back(val);
-        }
-        _symbols.insert(_symbols.end(),s);
-    }
-    return _symbols;
-}
 
 void ServerThread::disconnected()
 {

@@ -33,6 +33,7 @@ public:
 
     static void localInsert(Payload &pl);
     static void localErase(Payload &pl);
+    static void processOpnCommand(Payload &pl);
 
 public slots:
     void deleteThread(QPointer<QThread> th);
@@ -41,8 +42,13 @@ public slots:
 private:
     std::shared_ptr<MessageHandler> msgHandler;
     static std::vector<Symbol> _symbles;    // struttura per il salvataggio del testo
-    std::map<quint32,std::shared_ptr<Socket>> active_sockets;
-    QString threadId;
+    static std::map<quint32,std::shared_ptr<Socket>> active_sockets;
+    static QString threadId;
+
+    static void saveFileJson(std::string dir,std::vector<Symbol> _symbols);
+    static std::vector<Symbol> loadFileJson(std::string dir);
+    static void QTsaveFileJson(const std::string& dir,std::vector<Symbol> _symbols);
+
 
     void setThreadId();
     // static std::mutex sym_mutex;  per ora questo mutex non serve: ci accede un solo thread, che è quello creato in MessageHandler

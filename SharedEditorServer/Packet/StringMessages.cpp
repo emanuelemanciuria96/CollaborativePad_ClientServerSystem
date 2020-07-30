@@ -22,3 +22,8 @@ void StringMessages::push(Message &m) {
     messages.get()->push(m);
 }
 
+void StringMessages::clear() {
+    while(!messages->empty())
+        messages->pop();
+}
+

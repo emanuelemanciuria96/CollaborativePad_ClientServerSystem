@@ -24,6 +24,8 @@ public:
     StringMessages(std::vector<Message> &vm, qint32 siteID);
     Message pop();
     void push(Message& m);
+    bool empty(){ return messages->empty(); }
+    void clear();
     std::shared_ptr<std::queue<Message>> getMessages(){ return messages; }
     
 private:

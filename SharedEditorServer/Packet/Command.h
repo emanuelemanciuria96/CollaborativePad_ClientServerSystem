@@ -32,13 +32,16 @@ public:
 
     Command(qint32 siteId, cmd_t cmd, QVector<QString> args);
     const QVector<QString> &getArgs() const;
+    void setArgs(QVector<QString>& args){ _args = args; }
     void setArgs(const QVector<QString> &args);
     cmd_t getCmd() const;
     void setCmd(cmd_t cmd);
+    qint32 getSiteId(){ return _siteID; }
+
     bool cdCommand(QString& connectionId, QString& user);
     bool mkdirCommand(QString& connectionId, QString& user);
     bool rmCommand(QString& connectionId, QString& user);
-    QString opnCommand(QString &connectionId, QString &user);
+    QString opnCommand(QString &connectionId, QString& user);
     /*QVector<QString> openCommand(QString& connectionId, QString& user, QString& directory);
     bool copyFile(QString& connectionId, QString& user, QString& src, QString& dest);
     bool moveFile(QString& connectionId, QString& user, QString& src, QString& dest);*/

@@ -191,7 +191,7 @@ bool Command::rmFile(QString &connectionId, QString &user) {
     return true;
 }
 
-QString Command::opnCommand(QString &connectionId, QString &user){
+QString Command::opnCommand(QString &connectionId, QString& user){
     QString fileName{};
 
     if(_args.size()!=1)
