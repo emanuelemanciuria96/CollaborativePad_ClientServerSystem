@@ -157,7 +157,8 @@ void Transceiver::sendAllMessages() {
     qint32 siteID = messages[0].getSiteId();
     auto *strMess = new StringMessages(messages,siteID);
     DataPacket pkt(siteID,0,DataPacket::textTyping,strMess);
-    out << pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
+    qint32 bytes=16+(strMess->getFormattedMessages().size()*16)/8+4+4;
+    out << bytes<<pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
          strMess->getSiteId() << strMess->getFormattedMessages() ;
     socket->waitForBytesWritten(-1);
     if( !messages.empty() ) {
