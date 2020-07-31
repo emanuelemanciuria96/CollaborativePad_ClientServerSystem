@@ -52,24 +52,42 @@ void ServerThread::run()
 
     exec(); //loop degli eventi attivato qui
 }
-
+static qint32 mysize=0;
 
 void ServerThread::recvPacket() {
-    std::cout << "Thread " << std::this_thread::get_id() << " reading from socket " << this->socketDescriptor
-              << std::endl;
-
+    //std::cout << "Thread " << std::this_thread::get_id() << " reading from socket " << this->socketDescriptor<< std::endl;
     QDataStream in;
-    qint32 source;
+    qint32 source=0;
     quint32 errcode;
     quint32 type_of_data;
 
-    qDebug() << "Receving packet";
+    //qDebug() << "Receving packet";
 
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
 
     while(this->socket->bytesAvailable()>0) {
-        in >> source >> errcode >> type_of_data;
+
+
+        std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
+
+        if(mysize==0) {
+            in >> source;
+        }
+        if(mysize==0 && source>40){
+            mysize=source;
+        }
+        if(mysize>0){
+            std::cout<<socket->bytesAvailable()<<" "<<mysize-4<<std::endl;
+            if(socket->bytesAvailable()!=mysize-4){
+                std::cout<<socket->bytesAvailable()<<" "<<mysize-4<<std::endl;
+                return;
+            }
+            in >> source;
+        }
+
+        in >>  errcode >> type_of_data;
+
         DataPacket packet(source, errcode, (DataPacket::data_t) type_of_data);
 
         switch (type_of_data) {
@@ -93,6 +111,9 @@ void ServerThread::recvPacket() {
                 throw "mannaggia quel porcodiddio";
             }
         }
+        std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
+        std::cout<<std::endl;
+        mysize=0;
     }
 }
 
@@ -132,7 +153,7 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in)
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
 
-    in >> siteId >> formattedMessages;
+    in >> siteId  >> formattedMessages;
 
     auto *strMess = new StringMessages(formattedMessages,siteId);
     packet.setPayload(std::shared_ptr<StringMessages>(strMess));
