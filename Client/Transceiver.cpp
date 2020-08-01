@@ -27,7 +27,8 @@ void Transceiver::run() {
 }
 
 qint32 Transceiver::connectToServer() {
-    socket->connectToHost(QHostAddress::LocalHost, 1234);
+    socket->connectToHost("192.168.1.102", 1234);
+    //socket->connectToHost(QHostAddress::LocalHost, 1234);
     if(socket->waitForConnected(1000)) {
         connect(socket, SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
         std::cout << "Connected!" << std::endl;
@@ -195,7 +196,8 @@ void Transceiver::sendLoginInfo(DataPacket& packet){
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    qint32 bytes=-14;//TODO dimensione socket
+    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
     socket->waitForBytesWritten(-1);
 
@@ -208,7 +210,8 @@ void Transceiver::sendCommand(DataPacket& packet){
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    qint32 bytes=-14;//TODO dimensione socket
+    out <<bytes<< packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
     socket->waitForBytesWritten(-1);
 
