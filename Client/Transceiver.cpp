@@ -22,7 +22,7 @@ void Transceiver::run() {
     timer = new QTimer();
     timer->setSingleShot(true);
     connect(timer,SIGNAL(timeout()),this,SLOT(sendAllMessages()));
-    
+
     exec(); //loop degli eventi attivato qui
 }
 

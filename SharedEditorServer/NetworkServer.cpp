@@ -51,17 +51,17 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
 
 
 void NetworkServer::localInsert(Message m) {
-    std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localInsert"<<std::endl;
+    //std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localInsert"<<std::endl;
 
    // std::unique_lock ul(sym_mutex);
     auto i = std::lower_bound(_symbles.begin(),_symbles.end(),m.getSymbol());
     _symbles.insert(i,m.getSymbol());
 
-    to_string();
+    //to_string();
 }
 
 void NetworkServer::localErase(Message m) {
-    std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
+    //std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
 
    // std::unique_lock ul(sym_mutex);
     auto i = std::lower_bound(_symbles.begin(),_symbles.end(),m.getSymbol());
@@ -69,7 +69,7 @@ void NetworkServer::localErase(Message m) {
     if( *i == m.getSymbol() )  //l'oggetto va trovato per forza, se non c'è
         _symbles.erase(i);     //significa che non c'è coerenza fra i dati dei client
 
-    to_string();
+    //to_string();
 }
 
 void NetworkServer::to_string() {

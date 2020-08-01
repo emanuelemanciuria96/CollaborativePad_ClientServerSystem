@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'LoginDialog.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.5)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.7)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'LoginDialog.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.5. It"
+#error "This file was generated using the moc from 5.9.7. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -48,7 +48,7 @@ QT_MOC_LITERAL(6, 52, 15) // "slotAcceptLogin"
 static const uint qt_meta_data_LoginDialog[] = {
 
  // content:
-       8,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
        2,   14, // methods
@@ -76,7 +76,7 @@ static const uint qt_meta_data_LoginDialog[] = {
 void LoginDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<LoginDialog *>(_o);
+        LoginDialog *_t = static_cast<LoginDialog *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->acceptLogin((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
@@ -86,7 +86,7 @@ void LoginDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (LoginDialog::*)(QString & , QString & );
+            typedef void (LoginDialog::*_t)(QString & , QString & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&LoginDialog::acceptLogin)) {
                 *result = 0;
                 return;
@@ -95,14 +95,10 @@ void LoginDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject LoginDialog::staticMetaObject = { {
-    &QDialog::staticMetaObject,
-    qt_meta_stringdata_LoginDialog.data,
-    qt_meta_data_LoginDialog,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
+const QMetaObject LoginDialog::staticMetaObject = {
+    { &QDialog::staticMetaObject, qt_meta_stringdata_LoginDialog.data,
+      qt_meta_data_LoginDialog,  qt_static_metacall, nullptr, nullptr}
+};
 
 
 const QMetaObject *LoginDialog::metaObject() const

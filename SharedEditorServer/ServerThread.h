@@ -41,6 +41,7 @@ private:
     Socket *socket;
     qintptr socketDescriptor;
     std::shared_ptr<MessageHandler> msgHandler;
+    qint32 socketSize=0;
     static std::shared_mutex skt_mutex;
     static std::vector<std::pair<Socket*,std::mutex*>> _sockets;
 
