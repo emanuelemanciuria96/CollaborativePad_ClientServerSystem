@@ -65,7 +65,7 @@ void ServerThread::recvPacket() {
 
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
-
+    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     while(this->socket->bytesAvailable()>0) {
         std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
         if(this->socketSize==0) {
