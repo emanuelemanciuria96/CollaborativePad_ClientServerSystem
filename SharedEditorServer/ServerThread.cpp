@@ -65,7 +65,7 @@ void ServerThread::recvPacket() {
 
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
     while(this->socket->bytesAvailable()>0) {
         std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
         if(this->socketSize==0) {
@@ -280,7 +280,8 @@ void ServerThread::sendLoginInfo(DataPacket &packet, std::mutex *mtx) {
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    qint32 bytes=-14;//TODO dimensione socket
+    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
     socket->waitForBytesWritten(-1);
 }
@@ -295,7 +296,9 @@ void ServerThread::sendMessage(DataPacket& packet,std::mutex* mtx){
 
     {
         std::lock_guard lg(*mtx);
-        out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
+
+        qint32 bytes=16+(strMess->getFormattedMessages().size()*16)/8+4+4;
+        out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
             strMess->getSiteId() << strMess->getFormattedMessages();
         socket->waitForBytesWritten(-1);
     }
@@ -308,7 +311,8 @@ void ServerThread::sendCommand(DataPacket& packet, std::mutex *mtx){
     out.setVersion(QDataStream::Qt_5_5);
 
     auto ptr = std::dynamic_pointer_cast<Command>(packet.getPayload());
-    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    qint32 bytes=-14;//TODO dimensione socket
+    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
 }
 

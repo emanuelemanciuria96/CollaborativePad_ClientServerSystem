@@ -234,7 +234,7 @@ RemoteCursor* EditorGUI::getRemoteCursor(qint32 siteId) {
 //    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
 //    std::for_each(remoteCursors.begin(), remoteCursors.end(), [](RemoteCursor& rc){std::cout << rc.getSiteId() << std::endl;});
     auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor& c) {
-        std::cout << "SiteId: " << c.getSiteId() << std::endl;
+        //std::cout << "SiteId: " << c.getSiteId() << std::endl;
         return (c.getSiteId() == siteId);});
     if (it == remoteCursors.end()) {
         remoteCursors.emplace_back(textEdit->document(),siteId);

@@ -44,6 +44,7 @@ qint32 Transceiver::connectToServer() {
 void Transceiver::recvPacket() {
 
     QDataStream in;
+    qint32 bytes=0;
     qint32 source;
     quint32 errcode;
     quint32 type_of_data;
@@ -53,6 +54,17 @@ void Transceiver::recvPacket() {
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
     while(this->socket->bytesAvailable()>0) {
+        std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
+        if(this->socketSize==0) {
+            in >> bytes;
+            this->socketSize = bytes;
+        }
+        if(this->socketSize!=0 && bytes!=-14){
+            if(socket->bytesAvailable()!=this->socketSize-4){
+                return;
+            }
+        }
+
         in >> source >> errcode >> type_of_data;
         DataPacket packet(source, errcode, (DataPacket::data_t) type_of_data);
 
@@ -77,6 +89,9 @@ void Transceiver::recvPacket() {
                 break;
             }
         }
+        std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
+        std::cout<<std::endl;
+        this->socketSize=0;
     }
 }
 

@@ -5,21 +5,21 @@
 		<Option title="Client"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\Qt\;CMake Files\..\..\..\..\Qt\5.12.3\;CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\;CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\;CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\;CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Core\;CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\;CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Widgets\;CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Charts\;CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Network\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\Qt\;CMake Files\..\..\..\Qt\5.12.3\;CMake Files\..\..\..\Qt\5.12.3\mingw73_64\;CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\;CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\;CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Core\;CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\;CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Widgets\;CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Charts\;CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Network\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
+				<Option working_dir="D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Client">
-				<Option output="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
+				<Option output="D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -29,7 +29,7 @@
 					<Add option="-DQT_WIDGETS_LIB"/>
 					<Add option="-DQT_CHARTS_LIB"/>
 					<Add option="-DQT_NETWORK_LIB"/>
-					<Add directory="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/include"/>
+					<Add directory="D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/include"/>
 					<Add directory="D:/Qt/5.12.3/mingw73_64/include"/>
 					<Add directory="D:/Qt/5.12.3/mingw73_64/include/QtCore"/>
 					<Add directory="D:/Qt/5.12.3/mingw73_64/./mkspecs/win32-g++"/>
@@ -46,15 +46,15 @@
 					<Add directory="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 Client"/>
-					<CompileFile command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 Client"/>
+					<CompileFile command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Client/fast">
-				<Option output="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
+				<Option output="D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -64,7 +64,7 @@
 					<Add option="-DQT_WIDGETS_LIB"/>
 					<Add option="-DQT_CHARTS_LIB"/>
 					<Add option="-DQT_NETWORK_LIB"/>
-					<Add directory="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/include"/>
+					<Add directory="D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/include"/>
 					<Add directory="D:/Qt/5.12.3/mingw73_64/include"/>
 					<Add directory="D:/Qt/5.12.3/mingw73_64/include/QtCore"/>
 					<Add directory="D:/Qt/5.12.3/mingw73_64/./mkspecs/win32-g++"/>
@@ -81,225 +81,225 @@
 					<Add directory="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 Client/fast"/>
-					<CompileFile command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 Client/fast"/>
+					<CompileFile command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
+				<Option working_dir="D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
+				<Option working_dir="D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Client_autogen">
-				<Option working_dir="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
+				<Option working_dir="D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 Client_autogen"/>
-					<CompileFile command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 Client_autogen"/>
+					<CompileFile command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/mingw32-make.exe -f &quot;D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/EditorGUI.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/EditorGUI.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/EditorGUI.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/EditorGUI.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/LoginDialog.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/LoginDialog.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/LoginDialog.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/LoginDialog.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/Command.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Command.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/Command.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Command.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/DataPacket.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/DataPacket.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/Message.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Message.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/Message.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Message.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/Payload.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Payload.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/Payload.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Payload.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/StringMessages.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/StringMessages.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Symbols/SymId.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/RemoteCursor.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/RemoteCursor.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/RemoteCursor.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/RemoteCursor.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/SharedEditor.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/SharedEditor.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/SharedEditor.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/SharedEditor.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Socket.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Socket.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Transceiver.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Transceiver.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/Transceiver.h">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/Transceiver.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/main.cpp">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/main.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/CMakeLists.txt">
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Core/Qt5CoreConfig.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Core\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Core/Qt5CoreConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Core\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Core/Qt5CoreConfigExtras.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Core\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Core/Qt5CoreConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Core\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Core\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Core\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Core\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Core\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Core/Qt5CoreMacros.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Core\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Core/Qt5CoreMacros.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Core\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QTgaPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QTgaPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QTiffPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QTiffPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QWindowsDirect2DIntegrationPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QWindowsDirect2DIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QWindowsIntegrationPlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QWindowsIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QXdgDesktopPortalThemePlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Gui/Qt5Gui_QXdgDesktopPortalThemePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Gui\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Widgets\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Widgets\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Widgets\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Widgets\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Widgets\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Widgets\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Widgets\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Widgets\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Widgets/Qt5Widgets_QWindowsVistaStylePlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Widgets\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Widgets/Qt5Widgets_QWindowsVistaStylePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Widgets\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Charts/Qt5ChartsConfig.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Charts\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Charts/Qt5ChartsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Charts\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Charts/Qt5ChartsConfigVersion.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Charts\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Charts/Qt5ChartsConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Charts\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Network/Qt5NetworkConfig.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Network\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Network/Qt5NetworkConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Network\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Network/Qt5NetworkConfigVersion.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Network\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Network/Qt5NetworkConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Network\"/>
 		</Unit>
-		<Unit filename="D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/../../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Network/Qt5Network_QGenericEnginePlugin.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Network\"/>
+		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/../../../Qt/5.12.3/mingw73_64/lib/cmake/Qt5Network/Qt5Network_QGenericEnginePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Qt\5.12.3\mingw73_64\lib\cmake\Qt5Network\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

@@ -57,7 +57,7 @@ void NetworkServer::localInsert(Message m) {
     auto i = std::lower_bound(_symbles.begin(),_symbles.end(),m.getSymbol());
     _symbles.insert(i,m.getSymbol());
 
-    //to_string();
+    to_string();
 }
 
 void NetworkServer::localErase(Message m) {

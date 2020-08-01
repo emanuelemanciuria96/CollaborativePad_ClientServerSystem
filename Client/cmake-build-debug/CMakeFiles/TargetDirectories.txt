@@ -1,4 +1,4 @@
-D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir
-D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-D:/Desktop/tommyuni/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client_autogen.dir
+D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir
+D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client_autogen.dir
