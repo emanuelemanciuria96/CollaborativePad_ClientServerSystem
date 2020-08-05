@@ -125,6 +125,8 @@ void Transceiver::recvMessage(DataPacket& pkt, QDataStream& in) {
     }
     pkt.setPayload(strMess);
 
+    std::cout<<"receaving some messages"<<std::endl;
+
     emit readyToProcess(pkt);
 
 }

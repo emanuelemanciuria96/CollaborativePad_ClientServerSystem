@@ -5,27 +5,24 @@
 #include <iostream>
 #include <utility>
 #include <QtCore/QDataStream>
-#include <fstream>
 #include <QtCore/QBuffer>
 #include <QtSql/QSqlDatabase>
-#include <QtCore/QFile>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
 #include <QtCore/QJsonDocument>
 #include "ServerThread.h"
 #include "NetworkServer.h"
 #include "Packet/LoginInfo.h"
-#include "json/json.h"
 
-std::shared_mutex ServerThread::skt_mutex;  // questo è lo shared mutex per la struttura "_sockets"
-std::map<Socket*,std::mutex*> ServerThread::_sockets; //qui ci sono dei mutex esclisivi per ogni socket
-/// PER ORA USO IL VETTORE PER TESTARE IL FUNZIONAMENTO, POI INSERIRO' LA MAPPA (IL VETTORE SO USARLO BENE, LA MAPPA ANCORA NO)
+
+SocketsPool ServerThread::_sockets;
 
 ServerThread::ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent):QThread(parent){
     this->socketDescriptor = socketDesc;
     this->msgHandler = std::shared_ptr<MessageHandler>(msgHandler);
     this->_username = "";
     this->_siteID = -1;
+    this->operatingFileName = "";
 }
 
 void ServerThread::run()
@@ -98,21 +95,16 @@ void ServerThread::recvPacket() {
                 packet.setPayload(std::make_shared<StringMessages>());
 
                 socket->readAll();
-                std::shared_lock sl(skt_mutex);
-                for (auto skt: _sockets) {
-                    if (skt.first == socket.get() ) {
-                        sl.unlock();
-                        sendMessage(packet,skt.second);
-                        sl.lock();
-                    }
-                }
-                break;
+                sendMessage(packet);
             }
+            break;
         }
-        std::cout<<"ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
     }
+    std::cout<<"ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
 
 }
+
+
 
 void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
     quint32 siteId;
@@ -131,11 +123,6 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
             std::cout << "client "+user.toStdString()+" successfully logged!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
             sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
 
-            {
-                std::lock_guard lg(skt_mutex);
-                _sockets.insert(std::make_pair(this->socket.get(),new std::mutex()));
-            }
-
             _siteID = packet.getPayload()->getSiteId();
             QPointer<QThread> th(this);
             qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
@@ -143,21 +130,26 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 
             /// in mancanza di un client che mi chieda di ricevere un file, faccio questo nella
             /// procedura di login
-            QVector<QString> vec = {"/prova>F"};
-            auto comm = std::make_shared<Command>(_siteID,Command::opn,vec);
-            QString fileName;
+                QString name = QString::fromStdString("/prova"+std::to_string(_siteID)+">F");
+                std::cout << name.toStdString() << std::endl;
+                QVector<QString> vec = {name};
+                auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);
 
-            fileName = comm->opnCommand(threadId, _username);
-            if(!fileName.isEmpty())
-                std::cout << fileName.toStdString() << std::endl;
-            else
-                std::cout << "opn command failed!" << std::endl;
+                QString fileName = comm->opnCommand(threadId, _username);
+                if (!fileName.isEmpty()) {
+                    operatingFileName = fileName;
+                    std::cout << fileName.toStdString() << std::endl;
+                }
+                else
+                    std::cout << "opn command failed!" << std::endl;
 
-            vec.clear();
-            vec.insert(0,fileName);
-            comm->setArgs(vec);
-
-            msgHandler->submit(&NetworkServer::processOpnCommand,comm);
+                vec.clear();
+                vec.insert(0, fileName);
+                comm->setArgs(vec);
+                _sockets.attachSocket(fileName,_siteID,socket.get());
+                msgHandler->submit(&NetworkServer::processOpnCommand, comm);
+            /// quando il client chiederà autonomamente di aprire un file
+            /// ELIMINARE FINO A QUI
 
         } else {
             std::cout << "client not logged!" << std::endl;
@@ -200,15 +192,7 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
     }
     packet.setPayload(strMess);
 
-    std::shared_lock sl(skt_mutex);
-    for (auto skt: _sockets) {
-        sl.unlock();
-        if (skt.first != socket.get()) {
-            int id = qMetaTypeId<DataPacket>();
-            emit skt.first->sendMessage(packet,skt.second);
-        }
-        sl.lock();
-    }
+    _sockets.broadcast(operatingFileName,_siteID,packet);
 
 }
 
@@ -257,14 +241,21 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
             QString fileName;
 
             fileName = command->opnCommand(threadId, _username);
-            if(!fileName.isEmpty())
+            if(!fileName.isEmpty()) {
+                operatingFileName = fileName;
+                _sockets.attachSocket(fileName,_siteID,socket.get());
                 std::cout << fileName.toStdString() << std::endl;
-            else
+                QVector<QString> vec = {fileName};
+                command->setArgs(vec);
+                msgHandler->submit(&NetworkServer::processOpnCommand, command);
+            }else
                 std::cout << "opn command failed!" << std::endl;
             break;
         }
 
         case (Command::cls):{
+            if( operatingFileName!="")
+                _sockets.detachSocket(operatingFileName,_siteID);
             break;
         }
 
@@ -273,23 +264,23 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
     }
 }
 
-void ServerThread::sendPacket(DataPacket packet, std::mutex *mtx){
+void ServerThread::sendPacket(DataPacket packet){
 
     std::cout<<"thread "<<std::this_thread::get_id()<<" sending packet to "<<this->socketDescriptor<<std::endl;
 
     switch(packet.getTypeOfData()){
         case (DataPacket::login): {
-           sendLoginInfo(packet,mtx);
+           sendLoginInfo(packet);
            break;
         }
 
         case (DataPacket::textTyping): {
-            sendMessage(packet, mtx);
+            sendMessage(packet);
             break;
         }
 
         case (DataPacket::command): {
-            sendCommand(packet, mtx);
+            sendCommand(packet);
             break;
         }
 
@@ -299,7 +290,7 @@ void ServerThread::sendPacket(DataPacket packet, std::mutex *mtx){
     }
 }
 
-void ServerThread::sendLoginInfo(DataPacket &packet, std::mutex *mtx) {
+void ServerThread::sendLoginInfo(DataPacket &packet) {
     auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
     QDataStream out;
     out.setDevice(socket.get());
@@ -310,7 +301,7 @@ void ServerThread::sendLoginInfo(DataPacket &packet, std::mutex *mtx) {
     socket->waitForBytesWritten(-1);
 }
 
-void ServerThread::sendMessage(DataPacket& packet,std::mutex* mtx){
+void ServerThread::sendMessage(DataPacket& packet){
 
     QBuffer buf;
     buf.open(QBuffer::WriteOnly);
@@ -334,21 +325,13 @@ void ServerThread::sendMessage(DataPacket& packet,std::mutex* mtx){
 
     }
 
-    if(mtx != nullptr){
-        std::lock_guard lg(*mtx);
-        std::cout<<"Bytes written: "<<buf.data().size()<<std::endl;
-        out.device()->write(buf.data());
-        socket->waitForBytesWritten(-1);
-    }
-    else{
-        std::cout<<"Bytes written: "<<buf.data().size()<<std::endl;
-        out.device()->write(buf.data());
-        socket->waitForBytesWritten(-1);
-    }
+    std::cout<<"Bytes written: "<<buf.data().size()<<std::endl;
+    out.device()->write(buf.data());
+    socket->waitForBytesWritten(-1);
 
 }
 
-void ServerThread::sendCommand(DataPacket& packet, std::mutex *mtx){
+void ServerThread::sendCommand(DataPacket& packet){
     QDataStream out;
     out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
@@ -362,13 +345,8 @@ void ServerThread::sendCommand(DataPacket& packet, std::mutex *mtx){
 void ServerThread::disconnected()
 {
 
-    std::shared_lock sl(skt_mutex);
-    auto i = _sockets.find(socket.get());
-    sl.unlock();
-    std::lock_guard lg(skt_mutex);
-
-    if( i != _sockets.end() )
-        _sockets.erase(i);
+    if( operatingFileName!="")
+        _sockets.detachSocket(operatingFileName,_siteID);
 
     socket->deleteLater();
     QSqlDatabase::removeDatabase(threadId+"_login");

@@ -121,7 +121,8 @@ static bool initializeDb()
          "FILEID      TEXT PRIMARY KEY NOT NULL," \
          "DIR           TEXT NOT NULL);");
         query.exec("DELETE FROM FILES");
-        query.exec("INSERT INTO FILES ('FILEID', 'DIR') VALUES ('prova.json', '/prova>F');");
+        query.exec("INSERT INTO FILES ('FILEID', 'DIR') VALUES ('prova2.json', '/prova2>F')");
+        query.exec("INSERT INTO FILES ('FILEID', 'DIR') VALUES ('prova1.json', '/prova1>F')");
         query.exec("SELECT * FROM FILES");
 
         std::cout << "FILEID" << "\t\t\t\t" << "DIR" << std::endl;
@@ -152,7 +153,8 @@ static bool initializeDb()
          "FILEID      TEXT PRIMARY KEY NOT NULL," \
          "DIR           TEXT NOT NULL);");
         query.exec("DELETE FROM FILES");
-        query.exec("INSERT INTO FILES ('FILEID', 'DIR') VALUES ('prova.json', '/prova>F');");
+        query.exec("INSERT INTO FILES ('FILEID', 'DIR') VALUES ('prova2.json', '/prova2>F')");
+        query.exec("INSERT INTO FILES ('FILEID', 'DIR') VALUES ('prova1.json', '/prova1>F')");
         db.close();
     }
 

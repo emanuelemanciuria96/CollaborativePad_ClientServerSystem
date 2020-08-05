@@ -2,7 +2,6 @@
 #include <thread>
 #include "SharedEditor.h"
 #include "LoginDialog.h"
-#include <winsock2.h>
 #include "EditorGUI.h"
 
 int main(int argc, char **argv) {

@@ -240,7 +240,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(-8,1,2,9));
     for(int i=0;i<vt.size()-1;i++) {
         s += std::get<2>(vt[i]);
-        std::cerr << "stringa: " << s.toStdString() << std::endl;
+        // std::cerr << "stringa: " << s.toStdString() << std::endl;
         if(std::get<1>(vt[i])==1) {
             if (std::get<1>(vt[i+1])==1 and std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 1) {
             } else {

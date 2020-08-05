@@ -17,17 +17,20 @@
 #include "Packet/Command.h"
 #include "MessageHandler.h"
 #include "Socket.h"
+#include "SocketsPool.h"
 
 
 class ServerThread : public QThread{
 Q_OBJECT
 
 public:
-    explicit ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent =0);
+    explicit ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent = 0);
     void run() override;
+    QString getOperatingFileName(){ return operatingFileName; }
     quint32 getSiteID(){ return _siteID; }
     QString& getUsername(){ return _username; }
     std::shared_ptr<Socket> getSocket(){ return socket; }
+    void registerToSocketsList();
 
 signals:
     void error(QTcpSocket::SocketError socketerror);    //slot che gestisce questo segnale da implementare
@@ -36,28 +39,27 @@ signals:
 
 public slots:
     void recvPacket();
-    void sendPacket(DataPacket packet, std::mutex *mtx = nullptr);
+    void sendPacket(DataPacket packet);
     void disconnected();
 
 private:
     std::shared_ptr<Socket> socket;
     qintptr socketDescriptor;
     std::shared_ptr<MessageHandler> msgHandler;
-    static std::shared_mutex skt_mutex;
-    static std::map<Socket*,std::mutex*> _sockets;
+    static SocketsPool _sockets; // l'oggetto è thread safe
     QString _username;
     qint32 _siteID;
     QString threadId;
+    QString operatingFileName;
 
 
     void recvLoginInfo(DataPacket& packet, QDataStream& in);
     void recvMessage(DataPacket& packet,QDataStream& in);
     void recvCommand(DataPacket& packet,QDataStream& in);
 
-    void sendLoginInfo(DataPacket& packet, std::mutex *mtx = nullptr);
-    void sendMessage(DataPacket& packet, std::mutex *mtx = nullptr);
-    void sendCommand(DataPacket& packet, std::mutex *mtx = nullptr);
-
+    void sendLoginInfo(DataPacket& packet);
+    void sendMessage(DataPacket& packet);
+    void sendCommand(DataPacket& packet);
 
     void setThreadId();
 
