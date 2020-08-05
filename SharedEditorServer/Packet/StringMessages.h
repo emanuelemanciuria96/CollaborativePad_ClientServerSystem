@@ -4,7 +4,6 @@
 
 #ifndef SHAREDEDITORSERVER_STRINGMESSAGES_H
 #define SHAREDEDITORSERVER_STRINGMESSAGES_H
-
 #include "Payload.h"
 #include "Symbols/Symbol.h"
 #include "Message.h"
@@ -46,7 +45,7 @@ private:
     const int items_separatorSize=items_separator.size();
     const int pos_separatorSize=pos_separator.size();
 
-    const int maxChar=500;
+    const int maxChar=13000;
     QString formattedMessages;
 
 };

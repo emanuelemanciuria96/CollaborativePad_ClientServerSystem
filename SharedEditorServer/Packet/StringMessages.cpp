@@ -2,6 +2,7 @@
 // Created by tomma on 20/04/2020.
 //
 
+
 #include <iostream>
 #include "StringMessages.h"
 
@@ -99,6 +100,3 @@ QString StringMessages::appendMessage(Message &m){
     formattedMessages.append(messages_separator);
     return formattedMessages;
 }
-
-
-
