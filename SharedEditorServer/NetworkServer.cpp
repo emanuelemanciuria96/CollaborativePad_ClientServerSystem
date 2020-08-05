@@ -85,6 +85,7 @@ void NetworkServer::localInsert(Payload &pl) {
 }
 
 
+
 void NetworkServer::localErase(Payload &pl) {
     //std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
 
@@ -97,6 +98,7 @@ void NetworkServer::localErase(Payload &pl) {
     }
 
 }
+
 
 void NetworkServer::processOpnCommand(Payload &pl) {
 

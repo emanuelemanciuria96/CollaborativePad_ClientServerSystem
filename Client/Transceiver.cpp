@@ -24,12 +24,13 @@ void Transceiver::run() {
     timer = new QTimer();
     timer->setSingleShot(true);
     connect(timer,SIGNAL(timeout()),this,SLOT(sendAllMessages()));
-    
+
     exec(); //loop degli eventi attivato qui
 }
 
 qint32 Transceiver::connectToServer() {
-    socket->connectToHost(QHostAddress::LocalHost, 1234);
+    socket->connectToHost("192.168.1.102", 1234);
+    //socket->connectToHost(QHostAddress::LocalHost, 1234);
     if(socket->waitForConnected(1000)) {
         connect(socket, SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
         std::cout << "Connected!" << std::endl;
@@ -45,6 +46,7 @@ qint32 Transceiver::connectToServer() {
 void Transceiver::recvPacket() {
 
     QDataStream in;
+    qint32 bytes=0;
     qint32 source;
     quint32 errcode;
     quint32 type_of_data;
@@ -54,6 +56,17 @@ void Transceiver::recvPacket() {
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
     while(this->socket->bytesAvailable()>0) {
+        std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
+        if(this->socketSize==0) {
+            in >> bytes;
+            this->socketSize = bytes;
+        }
+        if(this->socketSize!=0 && bytes!=-14){
+            if(socket->bytesAvailable()!=this->socketSize-4){
+                return;
+            }
+        }
+
         in >> source >> errcode >> type_of_data;
         DataPacket packet(source, errcode, (DataPacket::data_t) type_of_data);
 
@@ -80,6 +93,9 @@ void Transceiver::recvPacket() {
                 break;
             }
         }
+        std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
+        std::cout<<std::endl;
+        this->socketSize=0;
     }
 }
 
@@ -100,34 +116,17 @@ void Transceiver::recvLoginInfo(DataPacket& pkt,QDataStream& in){
 void Transceiver::recvMessage(DataPacket& pkt, QDataStream& in) {
 
     qint32 siteID;
-    quint32 action;
-    quint32 localIndex;
-    qint32 siteIDs;
-    quint32 count;
-    QChar ch;
-    quint32 posDim;
-    std::vector<quint32> pos;
-
-    std::shared_ptr<StringMessages> strMess(new StringMessages(pkt.getSource()));
+    QString formattedMessage
 
     in.setDevice(socket);
-    while(socket->bytesAvailable()>0){
-        pos.clear();
-        in>>siteID>>action>>localIndex>>siteIDs>>count>>ch>>posDim;
-        for(quint32 i=0;i<posDim;i++){
-            quint32 p;
-            in>>p;
-            pos.push_back(p);
-        }
-        Symbol sym(ch,siteIDs,count,pos);
-        Message msg((Message::action_t)action,siteID,sym,localIndex);
-        strMess.get()->push(msg);
-    }
-    pkt.setPayload(strMess);
+    in.setVersion(QDataStream::Qt_5_5);
+
+    in >> siteId >> formattedMessages;
+
+    pkt.setPayload(std::make_shared<StringMessages>(formattedMessages,siteId));
+    emit readyToProcess(pkt);
 
     std::cout<<"receaving some messages"<<std::endl;
-
-    emit readyToProcess(pkt);
 
 }
 
@@ -179,27 +178,13 @@ void Transceiver::sendAllMessages() {
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    tmp << _siteID << 0 << DataPacket::textTyping;
-    Message m = messages[0];
-    int nextMessageSize = 0;
-    while(!messages.empty() && buf.data().size()+nextMessageSize< 10000){
-        auto s = m.getSymbol();
-        quint32 posDim = s.getPos().size();
-        tmp<<m.getSiteId()<<(quint32)m.getAction()<<m.getLocalIndex()
-            <<s.getSymId().getSiteId()<<s.getSymId().getCount()
-            <<s.getValue()<<posDim;
-        for(auto p:s.getPos())
-            tmp<<p;
-        messages.erase(messages.begin());
+    qint32 siteID = messages[0].getSiteId();
+    auto *strMess = new StringMessages(messages,siteID);
+    DataPacket pkt(siteID,0,DataPacket::textTyping,strMess);
+    qint32 bytes=16+(strMess->getFormattedMessages().size()*16)/8+4+4;
+    out << bytes<<pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
+         strMess->getSiteId() << strMess->getFormattedMessages() ;
 
-        m = messages[0];
-        nextMessageSize = sizeof(m)+m.getSymbol().getPos().size()*sizeof(quint32);
-        // std::cout<<"next sent message size:"<<nextMessageSize<<std::endl;
-    }
-
-    std::cout<<"Bytes written: "<<buf.data().size()<<std::endl;
-
-    out.device()->write(buf.data());
     socket->waitForBytesWritten(-1);
 
     if( !messages.empty() ) {
@@ -229,7 +214,8 @@ void Transceiver::sendLoginInfo(DataPacket& packet){
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    qint32 bytes=-14;//TODO dimensione socket
+    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
     socket->waitForBytesWritten(-1);
 
@@ -242,7 +228,8 @@ void Transceiver::sendCommand(DataPacket& packet){
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    qint32 bytes=-14;//TODO dimensione socket
+    out <<bytes<< packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
     socket->waitForBytesWritten(-1);
 

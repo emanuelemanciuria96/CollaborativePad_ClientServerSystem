@@ -51,24 +51,34 @@ void ServerThread::run()
     exec(); //loop degli eventi attivato qui
 }
 
-
 void ServerThread::recvPacket() {
-    std::cout << "Thread " << std::this_thread::get_id() << " reading from socket " << this->socketDescriptor
-              << std::endl;
-
+    //std::cout << "Thread " << std::this_thread::get_id() << " reading from socket " << this->socketDescriptor<< std::endl;
     QDataStream in;
-    qint32 source;
+    qint32 bytes=0;
+    qint32 source=0;
     quint32 errcode;
     quint32 type_of_data;
 
-    qDebug() << "Receving packet";
+    //qDebug() << "Receving packet";
 
     in.setDevice(this->socket.get());
     in.setVersion(QDataStream::Qt_5_5);
 
     while(this->socket->bytesAvailable()>0) {
-        std::cout<<"starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
-        in >> source >> errcode >> type_of_data;
+
+        std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
+        if(this->socketSize==0) {
+            in >> bytes;
+            this->socketSize = bytes;
+        }
+        if(this->socketSize!=0 && bytes!=-14){
+            if(socket->bytesAvailable()!=this->socketSize-4){
+                return;
+            }
+        }
+
+        in >> source>>errcode >> type_of_data;
+
         DataPacket packet(source, errcode, (DataPacket::data_t) type_of_data);
 
         switch (type_of_data) {
@@ -99,6 +109,9 @@ void ServerThread::recvPacket() {
             }
             break;
         }
+        std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
+        std::cout<<std::endl;
+        this->socketSize=0;
     }
     std::cout<<"ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
 
@@ -159,40 +172,38 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 }
 
 
-void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
-    qint32 siteID;
-    quint32 action;
-    quint32 localIndex;
-    qint32 siteIDs;
-    quint32 count;
-    QChar ch;
-    quint32 posDim;
-    std::vector<quint32> pos;
 
-    std::shared_ptr<StringMessages> strMess(new StringMessages(packet.getSource()));
+void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
+    qint32 siteId;
+    QString formattedMessages;
+
 
     in.setDevice(socket.get());
-    while(socket->bytesAvailable()>0){
-        pos.clear();
-        in>>siteID>>action>>localIndex>>siteIDs>>count>>ch>>posDim;
-        for(quint32 i=0;i<posDim;i++){
-            quint32 p;
-            in>>p;
-            pos.push_back(p);
-        }
-        Symbol sym(ch,siteIDs,count,pos);
-        auto msg = std::make_shared<Message>((Message::action_t)action,siteID,sym,localIndex);
-        if (action == Message::insertion) {
-            msgHandler->submit(NetworkServer::localInsert, msg);
-        } else {
-            msgHandler->submit(NetworkServer::localErase, msg);
-        }
+    in.setVersion(QDataStream::Qt_5_5);
 
-        strMess->push(*msg);
+    in >> siteId  >> formattedMessages;
+
+    auto *strMess = new StringMessages(formattedMessages,siteId);
+    packet.setPayload(std::shared_ptr<StringMessages>(strMess));
+
+    //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
+    //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
+    if(!_username.isEmpty()) {
+
+        for (auto msg: strMess->stringToMessages()) {
+
+            std::shared_ptr<Message> m = std::make_shared<Message>(msg);
+
+            if (msg.getAction() == Message::insertion) {
+                msgHandler->submit(NetworkServer::localInsert, msg);
+            } else {
+                msgHandler->submit(NetworkServer::localErase, msg);
+            }
+        }
+        packet.setPayload(strMess);
+
+        _sockets.broadcast(operatingFileName,_siteID,packet);
     }
-    packet.setPayload(strMess);
-
-    _sockets.broadcast(operatingFileName,_siteID,packet);
 
 }
 
@@ -296,37 +307,23 @@ void ServerThread::sendLoginInfo(DataPacket &packet) {
     out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
 
-    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    qint32 bytes=-14;//TODO dimensione socket
+    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
     socket->waitForBytesWritten(-1);
 }
 
 void ServerThread::sendMessage(DataPacket& packet){
 
-    QBuffer buf;
-    buf.open(QBuffer::WriteOnly);
-    QDataStream tmp(&buf);
     QDataStream out;
     out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
 
-    auto msgs = std::dynamic_pointer_cast<StringMessages>(packet.getPayload());
-    tmp << packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData();
+    auto strMess = std::dynamic_pointer_cast<StringMessages>(packet.getPayload());
 
-    while(!msgs->getMessages().get()->empty()){
-        Message m = msgs->pop();
-        Symbol s = m.getSymbol();
-        quint32 posDim = s.getPos().size();
-        tmp<<m.getSiteId()<<(quint32)m.getAction()<<m.getLocalIndex()
-           <<s.getSymId().getSiteId()<<s.getSymId().getCount()
-           <<s.getValue()<<posDim;
-        for(auto p:s.getPos())
-            tmp<<p;
-
-    }
-
-    std::cout<<"Bytes written: "<<buf.data().size()<<std::endl;
-    out.device()->write(buf.data());
+    qint32 bytes=16+(strMess->getFormattedMessages().size()*16)/8+4+4;
+        out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
+        strMess->getSiteId() << strMess->getFormattedMessages();
     socket->waitForBytesWritten(-1);
 
 }
@@ -337,7 +334,8 @@ void ServerThread::sendCommand(DataPacket& packet){
     out.setVersion(QDataStream::Qt_5_5);
 
     auto ptr = std::dynamic_pointer_cast<Command>(packet.getPayload());
-    out << packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    qint32 bytes=-14;//TODO dimensione socket
+    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
 }
 

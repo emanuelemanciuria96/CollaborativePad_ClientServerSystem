@@ -46,12 +46,13 @@ private:
     std::shared_ptr<Socket> socket;
     qintptr socketDescriptor;
     std::shared_ptr<MessageHandler> msgHandler;
+
     static SocketsPool _sockets; // l'oggetto è thread safe
     QString _username;
     qint32 _siteID;
     QString threadId;
     QString operatingFileName;
-
+    qint32 socketSize=0;
 
     void recvLoginInfo(DataPacket& packet, QDataStream& in);
     void recvMessage(DataPacket& packet,QDataStream& in);

@@ -4,20 +4,20 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/EditorGUI.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/EditorGUI.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/LoginDialog.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Command.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Command.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Message.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Payload.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/RemoteCursor.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/RemoteCursor.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Transceiver.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Transceiver.cpp.obj"
-  "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/main.cpp" "D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/EditorGUI.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/EditorGUI.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/LoginDialog.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Command.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Command.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/DataPacket.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Message.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Message.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Payload.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Payload.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/StringMessages.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/RemoteCursor.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/RemoteCursor.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/SharedEditor.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/Transceiver.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Transceiver.cpp.obj"
+  "D:/Desktop/SharedEditor_MalnatiProject/Client/main.cpp" "D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -33,14 +33,14 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "Client_autogen/include"
-  "C:/Qt/5.12.5/mingw73_64/include"
-  "C:/Qt/5.12.5/mingw73_64/include/QtCore"
-  "C:/Qt/5.12.5/mingw73_64/./mkspecs/win32-g++"
-  "C:/Qt/5.12.5/mingw73_64/include/QtGui"
-  "C:/Qt/5.12.5/mingw73_64/include/QtANGLE"
-  "C:/Qt/5.12.5/mingw73_64/include/QtWidgets"
-  "C:/Qt/5.12.5/mingw73_64/include/QtCharts"
-  "C:/Qt/5.12.5/mingw73_64/include/QtNetwork"
+  "D:/Qt/5.12.3/mingw73_64/include"
+  "D:/Qt/5.12.3/mingw73_64/include/QtCore"
+  "D:/Qt/5.12.3/mingw73_64/./mkspecs/win32-g++"
+  "D:/Qt/5.12.3/mingw73_64/include/QtGui"
+  "D:/Qt/5.12.3/mingw73_64/include/QtANGLE"
+  "D:/Qt/5.12.3/mingw73_64/include/QtWidgets"
+  "D:/Qt/5.12.3/mingw73_64/include/QtCharts"
+  "D:/Qt/5.12.3/mingw73_64/include/QtNetwork"
   )
 
 # Targets to which this target links.

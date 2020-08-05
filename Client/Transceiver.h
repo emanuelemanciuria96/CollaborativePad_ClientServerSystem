@@ -42,6 +42,7 @@ private:
     Socket *socket;
     qintptr socketDescriptor;
     QTimer *timer;
+    qint32 socketSize=0;
 
     qint32 connectToServer();
 
