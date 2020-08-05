@@ -63,14 +63,18 @@ private:
     void insertText(qint32 pos, const QString& value, qint32 siteId);
     void deleteText(qint32 pos, qint32 siteId,qint32 n);
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
+
 private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);
     void flushInsertQueue();
     void setSelected(bool yes){ selected = yes;}
+
 public slots:
     void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
+    void deleteAllText();
 
 signals:
+    void clear();
 
 public:
     EditorGUI(SharedEditor *model, QWidget *parent = nullptr);

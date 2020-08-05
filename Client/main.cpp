@@ -2,7 +2,6 @@
 #include <thread>
 #include "SharedEditor.h"
 #include "LoginDialog.h"
-#include <winsock2.h>
 #include "EditorGUI.h"
 
 int main(int argc, char **argv) {
@@ -14,7 +13,7 @@ int main(int argc, char **argv) {
 
     QObject::connect(loginDialog, &LoginDialog::acceptLogin, ed, &SharedEditor::loginSlot);
     QObject::connect(ed, &SharedEditor::symbolsChanged, mainWindow, &EditorGUI::updateSymbols);
-    QObject::connect(ed,&SharedEditor::test1,ed,&SharedEditor::test);
+    QObject::connect(ed,&SharedEditor::deleteAllText,mainWindow,&EditorGUI::deleteAllText);
 
     loginDialog->exec();
     if(loginDialog->abort)
@@ -22,14 +21,6 @@ int main(int argc, char **argv) {
     ed->testCommand();
     mainWindow->show();              //inserisci user = ciao e password = suca se vuoi che funzioni tutto
 
-
-
-//    QString s = "DAJEEEE";
-//
-//    std::cout << "Inserisci lettere:" << std::endl;
-//    for(int i=0;i<s.length();i++) {
-//        ed.localInsert(i, s[i]);
-//    }
 
     app.exec();
     return 0;
