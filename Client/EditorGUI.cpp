@@ -4,7 +4,7 @@
 
 #include "EditorGUI.h"
 
-EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QMainWindow(parent){
+EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     signalBlocker = false;
     setModel(model);
     setUpGUI();
@@ -18,29 +18,16 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QMainWindow(parent)
 
 void EditorGUI::setUpGUI() {
 //    inizializzo gli elementi
-    statusBar = new QStatusBar(this);
+//    setupFileActions();
     textEdit = new QTextEdit(this);
-    toolBar = new QToolBar("Toolbar",this);
-
-    statusBar->showMessage ("StatusBar");
+    setLayout(new QVBoxLayout(this));
+    this->layout()->addWidget(textEdit);
+    this->layout()->setContentsMargins(0,0,0,0);
 
     connect(this,SIGNAL(clear()),textEdit,SLOT(clear()));
 
-//    aggiungo gli elementi alla finestra
-    this->setCentralWidget(textEdit);
-    this->setStatusBar(statusBar);
-    this->addToolBar(toolBar);
-    toolBar->setMovable(false);
-
-    setupFileActions();
-    menuBar()->addMenu("&Options");
-
     textEdit->setFocus();
     setCurrentFileName(QString());
-
-//    imposto la grandezza della finestra
-    auto size = QGuiApplication::primaryScreen()->size();
-    this->resize(size.width()*0.7,size.height()*0.7);
 
     connect(textEdit->document(), SIGNAL(contentsChange(int, int, int)), this, SLOT(contentsChange(int,int,int)));
     connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
@@ -80,6 +67,7 @@ void EditorGUI::loadSymbols() {
     signalBlocker = !signalBlocker;
 }
 
+/*
 void EditorGUI::setupFileActions() {
 //    QToolBar *tb = addToolBar(tr("File Actions"));
     QMenu *menu = menuBar()->addMenu(tr("&File"));
@@ -108,6 +96,7 @@ void EditorGUI::setupFileActions() {
     a->setShortcut(Qt::CTRL + Qt::Key_Q);
 
 }
+*/
 
 void EditorGUI::setupEditActions() {
     //TODO

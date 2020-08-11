@@ -50,6 +50,7 @@ public slots:
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void deleteAllText();
+    void filePathsArrived(QVector<QString> &paths);
 
 public:
     explicit SharedEditor(QObject *parent = 0);

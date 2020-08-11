@@ -27,13 +27,11 @@
 #include "RemoteCursor.h"
 #include <queue>
 
-class EditorGUI: public QMainWindow {
+class EditorGUI: public QWidget {
     Q_OBJECT
 
 private:
-    QStatusBar* statusBar;
     QTextEdit* textEdit;
-    QToolBar* toolBar;
     QString fileName;
     SharedEditor* model;
     bool signalBlocker;
@@ -47,7 +45,7 @@ private:
     bool selected= false;
 
     void setUpGUI();
-    void setupFileActions();
+   // void setupFileActions();
     void setupEditActions();
     void setupTextActions();
     void setCurrentFileName(const QString &filename);
