@@ -124,10 +124,22 @@
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/EditorGUI.h">
 			<Option target="Client"/>
 		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/FileSystemTreeView.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/FileSystemTreeView.h">
+			<Option target="Client"/>
+		</Unit>
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/LoginDialog.cpp">
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/LoginDialog.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/MainWindow.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/MainWindow.h">
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Command.cpp">

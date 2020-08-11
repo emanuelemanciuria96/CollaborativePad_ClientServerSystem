@@ -22,7 +22,7 @@ class Transceiver: public QThread {
     Q_OBJECT
 public:
     void run() override;
-    Transceiver(quint32 siteID,QObject* parent = nullptr);
+    Transceiver(qint32 siteID,QObject* parent = 0);
     Socket* getSocket(){ return socket; };
 
 public slots:
@@ -36,7 +36,7 @@ signals:
     void deleteText();
 
 private:
-    quint32 _siteID;
+    qint32 _siteID;
     std::vector<Message> messages;
     bool firstMessage = true;
     Socket *socket;

@@ -189,6 +189,33 @@ EditorGUI.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/EditorGUI.cpp.s
 .PHONY : EditorGUI.cpp.s
 
+FileSystemTreeView.obj: FileSystemTreeView.cpp.obj
+
+.PHONY : FileSystemTreeView.obj
+
+# target to build an object file
+FileSystemTreeView.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/FileSystemTreeView.cpp.obj
+.PHONY : FileSystemTreeView.cpp.obj
+
+FileSystemTreeView.i: FileSystemTreeView.cpp.i
+
+.PHONY : FileSystemTreeView.i
+
+# target to preprocess a source file
+FileSystemTreeView.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/FileSystemTreeView.cpp.i
+.PHONY : FileSystemTreeView.cpp.i
+
+FileSystemTreeView.s: FileSystemTreeView.cpp.s
+
+.PHONY : FileSystemTreeView.s
+
+# target to generate assembly for a file
+FileSystemTreeView.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/FileSystemTreeView.cpp.s
+.PHONY : FileSystemTreeView.cpp.s
+
 LoginDialog.obj: LoginDialog.cpp.obj
 
 .PHONY : LoginDialog.obj
@@ -215,6 +242,33 @@ LoginDialog.s: LoginDialog.cpp.s
 LoginDialog.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/LoginDialog.cpp.s
 .PHONY : LoginDialog.cpp.s
+
+MainWindow.obj: MainWindow.cpp.obj
+
+.PHONY : MainWindow.obj
+
+# target to build an object file
+MainWindow.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/MainWindow.cpp.obj
+.PHONY : MainWindow.cpp.obj
+
+MainWindow.i: MainWindow.cpp.i
+
+.PHONY : MainWindow.i
+
+# target to preprocess a source file
+MainWindow.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/MainWindow.cpp.i
+.PHONY : MainWindow.cpp.i
+
+MainWindow.s: MainWindow.cpp.s
+
+.PHONY : MainWindow.s
+
+# target to generate assembly for a file
+MainWindow.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/MainWindow.cpp.s
+.PHONY : MainWindow.cpp.s
 
 Packet/Command.obj: Packet/Command.cpp.obj
 
@@ -529,9 +583,15 @@ help:
 	@echo ... EditorGUI.obj
 	@echo ... EditorGUI.i
 	@echo ... EditorGUI.s
+	@echo ... FileSystemTreeView.obj
+	@echo ... FileSystemTreeView.i
+	@echo ... FileSystemTreeView.s
 	@echo ... LoginDialog.obj
 	@echo ... LoginDialog.i
 	@echo ... LoginDialog.s
+	@echo ... MainWindow.obj
+	@echo ... MainWindow.i
+	@echo ... MainWindow.s
 	@echo ... Packet/Command.obj
 	@echo ... Packet/Command.i
 	@echo ... Packet/Command.s

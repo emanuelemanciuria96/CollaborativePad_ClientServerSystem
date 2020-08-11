@@ -9,7 +9,7 @@
 #include "Transceiver.h"
 #include "Packet/Command.h"
 
-Transceiver::Transceiver(quint32 siteID, QObject* parent):_siteID(siteID),QThread(parent) {}
+Transceiver::Transceiver(qint32 siteID, QObject* parent):_siteID(siteID),QThread(parent) {}
 
 void Transceiver::run() {
 

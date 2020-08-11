@@ -252,6 +252,34 @@ CMakeFiles/Client.dir/Packet/Command.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/Packet/Command.cpp.s"
 	D:\PROGRA~2\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\Client\Packet\Command.cpp" -o CMakeFiles\Client.dir\Packet\Command.cpp.s
 
+CMakeFiles/Client.dir/MainWindow.cpp.obj: CMakeFiles/Client.dir/flags.make
+CMakeFiles/Client.dir/MainWindow.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
+CMakeFiles/Client.dir/MainWindow.cpp.obj: ../MainWindow.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/Client.dir/MainWindow.cpp.obj"
+	D:\PROGRA~2\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\MainWindow.cpp.obj -c "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\Client\MainWindow.cpp"
+
+CMakeFiles/Client.dir/MainWindow.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/MainWindow.cpp.i"
+	D:\PROGRA~2\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\Client\MainWindow.cpp" > CMakeFiles\Client.dir\MainWindow.cpp.i
+
+CMakeFiles/Client.dir/MainWindow.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/MainWindow.cpp.s"
+	D:\PROGRA~2\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\Client\MainWindow.cpp" -o CMakeFiles\Client.dir\MainWindow.cpp.s
+
+CMakeFiles/Client.dir/FileSystemTreeView.cpp.obj: CMakeFiles/Client.dir/flags.make
+CMakeFiles/Client.dir/FileSystemTreeView.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
+CMakeFiles/Client.dir/FileSystemTreeView.cpp.obj: ../FileSystemTreeView.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/Client.dir/FileSystemTreeView.cpp.obj"
+	D:\PROGRA~2\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\FileSystemTreeView.cpp.obj -c "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\Client\FileSystemTreeView.cpp"
+
+CMakeFiles/Client.dir/FileSystemTreeView.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/FileSystemTreeView.cpp.i"
+	D:\PROGRA~2\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\Client\FileSystemTreeView.cpp" > CMakeFiles\Client.dir\FileSystemTreeView.cpp.i
+
+CMakeFiles/Client.dir/FileSystemTreeView.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/FileSystemTreeView.cpp.s"
+	D:\PROGRA~2\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\Client\FileSystemTreeView.cpp" -o CMakeFiles\Client.dir\FileSystemTreeView.cpp.s
+
 # Object files for target Client
 Client_OBJECTS = \
 "CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" \
@@ -267,7 +295,9 @@ Client_OBJECTS = \
 "CMakeFiles/Client.dir/Transceiver.cpp.obj" \
 "CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj" \
 "CMakeFiles/Client.dir/RemoteCursor.cpp.obj" \
-"CMakeFiles/Client.dir/Packet/Command.cpp.obj"
+"CMakeFiles/Client.dir/Packet/Command.cpp.obj" \
+"CMakeFiles/Client.dir/MainWindow.cpp.obj" \
+"CMakeFiles/Client.dir/FileSystemTreeView.cpp.obj"
 
 # External object files for target Client
 Client_EXTERNAL_OBJECTS =
@@ -286,6 +316,8 @@ Client.exe: CMakeFiles/Client.dir/Transceiver.cpp.obj
 Client.exe: CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj
 Client.exe: CMakeFiles/Client.dir/RemoteCursor.cpp.obj
 Client.exe: CMakeFiles/Client.dir/Packet/Command.cpp.obj
+Client.exe: CMakeFiles/Client.dir/MainWindow.cpp.obj
+Client.exe: CMakeFiles/Client.dir/FileSystemTreeView.cpp.obj
 Client.exe: CMakeFiles/Client.dir/build.make
 Client.exe: C:/Qt/5.12.5/mingw73_64/lib/libQt5Chartsd.a
 Client.exe: C:/Qt/5.12.5/mingw73_64/lib/libQt5Networkd.a
@@ -295,7 +327,7 @@ Client.exe: C:/Qt/5.12.5/mingw73_64/lib/libQt5Cored.a
 Client.exe: CMakeFiles/Client.dir/linklibs.rsp
 Client.exe: CMakeFiles/Client.dir/objects1.rsp
 Client.exe: CMakeFiles/Client.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable Client.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="D:\poliTO\magistrale\Programmazione di Sistema\Malnati\progetto\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX executable Client.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Client.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
