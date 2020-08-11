@@ -29,7 +29,7 @@
 class MessageHandler {
 private:
     std::thread looper;
-    std::queue<std::pair<std::function<void(Message)>,Message>> _queue;
+    std::queue<std::pair<std::function<void(Payload&)>,std::shared_ptr<Payload>>> _queue;
     std::mutex mtx;
     std::condition_variable cv;
     bool finished;
@@ -39,7 +39,7 @@ public:
     MessageHandler():finished(false){
         looper = std::move(std::thread(&MessageHandler::startLooper,this));
     }
-    void submit(std::function<void(Message)> f,Message& msg);
+    void submit(std::function<void(Payload&)> f,std::shared_ptr<Payload> pl);
     ~MessageHandler();
 };
 

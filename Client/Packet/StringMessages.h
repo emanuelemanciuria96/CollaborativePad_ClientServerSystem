@@ -5,6 +5,7 @@
 #ifndef SHAREDEDITORSERVER_STRINGMESSAGES_H
 #define SHAREDEDITORSERVER_STRINGMESSAGES_H
 
+
 #include "Payload.h"
 #include "Symbols/Symbol.h"
 #include "Message.h"
@@ -18,10 +19,6 @@
 class StringMessages: public Payload{
 
 public:
-    // al momento è una classe a parte che espone due metodi per fare la conversione,
-    // eventualmente possiamo integrare meglio questa classe come payload di un pacchetto
-    // oppure sfruttare la command.
-    //
     // la struttura della stringa è di questo tipo:
     //        0#&ch#&siteid#&count#&pos1,pos2,..,#&@%1#&ch#&siteid#&count...
     // il primo elemento può essere 0/1 a seconda se insertion/removal
@@ -45,12 +42,10 @@ private:
     const int messages_separatorSize=messages_separator.size();
     const int items_separatorSize=items_separator.size();
     const int pos_separatorSize=pos_separator.size();
-    
-    const int maxChar=10000;
+
+    const int maxChar=12000;
     QString formattedMessages;
 
 };
 
 #endif //SHAREDEDITORSERVER_STRINGMESSAGES_H
-
-

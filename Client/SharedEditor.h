@@ -21,6 +21,7 @@
 #include <QString>
 
 #include "Packet/LoginInfo.h"
+#include "Packet/Command.h"
 #include <vector>
 #include <algorithm>
 #include <QtCore/QTimer>
@@ -36,23 +37,27 @@ private:
     qint32 getIndex(Message& m);
     void processMessages(StringMessages& strMess);
     void processLoginInfo(LoginInfo& logInf);
+    void processCommand(Command& cmd);
+    void processCdCommand(Command& cmd);
     bool isLogged;
 
 public slots:
     void loginSlot(QString& username, QString& password);
     void process(DataPacket pkt);
     void deleteThread();
-    void test();
+    void deleteText();
 
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
-    void test1();
+    void deleteAllText();
+    void filePathsArrived(QVector<QString> &paths);
 
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );
     void localErase( qint32 index );
     QString to_string();
+    void testCommand();
 
 };
 

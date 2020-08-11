@@ -5,7 +5,7 @@
 #include <QtGui/QPainter>
 #include "EditorGUI.h"
 
-EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QMainWindow(parent) {
+EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     signalBlocker = false;
     setModel(model);
     setUpGUI();
@@ -19,29 +19,18 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QMainWindow(parent)
 
 void EditorGUI::setUpGUI() {
 //    inizializzo gli elementi
-    statusBar = new QStatusBar(this);
+//    setupFileActions();
     textEdit = new QTextEdit(this);
-    toolBar = new QToolBar("Toolbar", this);
+    setLayout(new QVBoxLayout(this));
+    this->layout()->addWidget(textEdit);
+    this->layout()->setContentsMargins(0,0,0,0);
 
-    statusBar->showMessage("StatusBar");
-
-//    aggiungo gli elementi alla finestra
-    this->setCentralWidget(textEdit);
-    this->setStatusBar(statusBar);
-    this->addToolBar(toolBar);
-    toolBar->setMovable(false);
-
-    setupFileActions();
-    menuBar()->addMenu("&Options");
+    connect(this,SIGNAL(clear()),textEdit,SLOT(clear()));
 
     textEdit->setFocus();
     setCurrentFileName(QString());
 
-//    imposto la grandezza della finestra
-    auto size = QGuiApplication::primaryScreen()->size();
-    this->resize(size.width() * 0.7, size.height() * 0.7);
-
-    connect(textEdit->document(), &QTextDocument::contentsChange, this, &EditorGUI::contentsChange);
+    connect(textEdit->document(), SIGNAL(contentsChange(int, int, int)), this, SLOT(contentsChange(int,int,int)));
     connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
 //    load("./file.txt");
     loadSymbols();
@@ -50,13 +39,13 @@ void EditorGUI::setUpGUI() {
 
 bool EditorGUI::load(const QString &f) {
     QString f1 = R"(C:\Users\Windows\Documents\POLITO\Programmazione di sistema\Progetto\MyTest\file.txt)";
-    if (!QFile::exists(f1)) {
+    if(!QFile::exists(f1)){
         std::cout << "File non esiste";
         return false;
     }
     QFile file(f1);
 
-    if (!file.open(QFile::ReadOnly)) {
+    if(!file.open(QFile::ReadOnly)) {
         std::cout << "File non aperto";
         return false;
     }
@@ -79,11 +68,12 @@ void EditorGUI::loadSymbols() {
     signalBlocker = !signalBlocker;
 }
 
+/*
 void EditorGUI::setupFileActions() {
 //    QToolBar *tb = addToolBar(tr("File Actions"));
     QMenu *menu = menuBar()->addMenu(tr("&File"));
 
-    QAction *a = menu->addAction(tr("&New"), this, &EditorGUI::fileNew);
+    QAction *a = menu->addAction(tr("&New"),this,&EditorGUI::fileNew);
     a->setPriority(QAction::LowPriority);
     a->setShortcut(QKeySequence::New);
 //    tb->addAction(a);
@@ -107,6 +97,7 @@ void EditorGUI::setupFileActions() {
     a->setShortcut(Qt::CTRL + Qt::Key_Q);
 
 }
+*/
 
 void EditorGUI::setupEditActions() {
     //TODO
@@ -121,7 +112,7 @@ void EditorGUI::setCurrentFileName(const QString &filename) {
     textEdit->document()->setModified(false);
 
     QString showName;
-    if (fileName.isEmpty())
+    if(fileName.isEmpty())
         showName = "untitled.txt";
     else
         showName = QFileInfo(fileName).fileName();
@@ -130,7 +121,7 @@ void EditorGUI::setCurrentFileName(const QString &filename) {
     setWindowModified(false);
 }
 
-void EditorGUI::setModel(SharedEditor *_model) {
+void EditorGUI::setModel(SharedEditor* _model) {
     this->model = _model;
 }
 
@@ -148,13 +139,13 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             charsAdded--;
         }
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
-            std::cout << "Cancellazione carattere " << pos << std::endl;
+            //std::cout << "Cancellazione carattere " << pos << std::endl;
             for (i = 0; i < charsRemoved; i++) {
                 model->localErase(pos);
             }
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
-            std::cout << "Inserimento carattere " << pos << std::endl;
+            //std::cout << "Inserimento carattere " << pos << std::endl;
             for (i = 0; i < charsAdded; i++) {
                 model->localInsert(pos + i, textEdit->document()->characterAt(pos + i));
             }
@@ -172,7 +163,7 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
     cursor->insertText(value);
-    std::cout << "Inseriti " << value.size() << " caratteri in " << pos << std::endl;
+    //std::cout << "Inseriti " << value.size() << " caratteri in " << pos << std::endl;
     signalBlocker = !signalBlocker;
     drawCursor(cursor);
     updateRemoteCursors(siteId,pos, Message::insertion);
@@ -193,7 +184,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     cursor->setPosition(pos + n, QTextCursor::KeepAnchor);
     signalBlocker = !signalBlocker;
     cursor->removeSelectedText();
-    std::cout << "Rimosso " << pos << std::endl;
+    //std::cout << "Rimosso " << pos << std::endl;
     signalBlocker = !signalBlocker;
     drawCursor(cursor);
     updateRemoteCursors(siteId,pos, Message::removal);
@@ -239,7 +230,7 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
 //    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
 //    std::for_each(remoteCursors.begin(), remoteCursors.end(), [](RemoteCursor& rc){std::cout << rc.getSiteId() << std::endl;});
     auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
-        std::cout << "SiteId: " << c.getSiteId() << std::endl;
+        //std::cout << "SiteId: " << c.getSiteId() << std::endl;
         return (c.getSiteId() == siteId);
     });
     if (it == remoteCursors.end()) {
@@ -247,8 +238,6 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
         cursor = &remoteCursors.back();
     } else
         cursor = (&(*it));
-
-
     return cursor;
 }
 
@@ -257,7 +246,6 @@ void EditorGUI::removeCursor(qint32 siteId) {
         remoteCursors.erase(remoteCursors.begin() + siteId);
     }
 }
-
 
 void EditorGUI::fileNew() {
 //    TODO
@@ -330,4 +318,9 @@ void EditorGUI::drawCursor(RemoteCursor *cursor){
     cursor->labelName->move(curRect.left()+width+2, ty-5);
 //            curRect.top()-5);
     cursor->labelCursor->move(curRect.left()-2,curRect.top());
+}
+void EditorGUI::deleteAllText() {
+    signalBlocker = !signalBlocker;
+    emit clear();
+    signalBlocker = !signalBlocker;
 }

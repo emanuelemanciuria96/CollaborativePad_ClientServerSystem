@@ -16,15 +16,15 @@ void MessageHandler::startLooper() {
         _queue.pop();
 
         ul.unlock();
-        item.first(item.second);
+        item.first(*item.second);
         ul.lock();
     }
 }
 
-void MessageHandler::submit(std::function<void(Message)> f, Message& msg) {
+void MessageHandler::submit(std::function<void(Payload&)> f, std::shared_ptr<Payload> pl) {
     std::unique_lock ul(mtx);
     if(!finished)
-        _queue.push(std::make_pair(f,msg));
+        _queue.push(std::make_pair(f,pl));
     cv.notify_one();
 }
 

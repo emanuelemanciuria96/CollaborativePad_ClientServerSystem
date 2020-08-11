@@ -16,7 +16,8 @@
 #include <QGuiApplication>
 #include <QScreen>
 
-class LoginDialog: public QDialog {
+
+class LoginDialog: public QWidget {
     Q_OBJECT
 
 public:
@@ -24,6 +25,7 @@ public:
     LoginDialog(QWidget *parent = 0);
     void setUsername(QString& username);
     void setPassword(QString& password);
+    QDialogButtonBox* getButtons(){ return buttons; }
 
 private:
     QLabel* labelUsername;
@@ -35,6 +37,7 @@ private:
 
 signals:
     void acceptLogin(QString& username, QString& password);
+    void loginAchieved();
 
 private slots:
     void slotAcceptLogin();

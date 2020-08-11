@@ -1,21 +1,16 @@
 //
-// Created by utente on 01/04/2020.
+// Created by Muska on 28/07/2020.
 //
 
-#ifndef SHAREDEDITORSERVER_COMMAND_H
-#define SHAREDEDITORSERVER_COMMAND_H
+#ifndef CLIENT_COMMAND_H
+#define CLIENT_COMMAND_H
 
 #include <QtCore/QString>
+#include <QtCore/QVector>
 #include "Payload.h"
 
 class Command: public Payload {
 public:
-    /** qui sono elencati alcuni dei possibili comandi
-     * che il client può inviare al server, non sono così
-     * sicuro che servano tutti, nè che non manchi nulla,
-     * in ogni caso basta venire a modificare qui.
-     * ogni operatore avrà massimo 2 parametri, entrambe
-     * saranno stringhe, ma una potrebbe essere inutilizzata. **/
     typedef enum _cmd{
         cd = 0,
         rm = 1,
@@ -28,14 +23,16 @@ public:
         sv = 8,
         find = 9,
     }cmd_t;
-    Command(qint32 siteID, cmd_t cmd, QString& arg1, QString& arg2); // non tutti i comandi
+
+    Command(qint32 siteId, cmd_t cmd, QVector<QString> args);
+    cmd_t getCmd() const;
+    void setCmd(cmd_t cmd);
+    const QVector<QString> &getArgs() const;
+    void setArgs(const QVector<QString> &args);
 
 private:
-    cmd_t cmd;
-    QString arg1;
-    QString arg2;
-
+    cmd_t _cmd;
+    QVector<QString> _args;
 };
 
-
-#endif //SHAREDEDITORSERVER_COMMAND_H
+#endif //CLIENT_COMMAND_H
