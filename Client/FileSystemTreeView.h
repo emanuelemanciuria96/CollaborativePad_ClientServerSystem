@@ -20,7 +20,7 @@ public:
     ~FileSystemTreeView();
 
 public slots:
-    void constructFromPaths(QVector<QString> &paths);
+    void constructFromPaths(const QVector<QString> &paths);
 
 private:
     QTreeWidgetItem *root;

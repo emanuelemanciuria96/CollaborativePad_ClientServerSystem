@@ -324,6 +324,33 @@ Packet/DataPacket.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/DataPacket.cpp.s
 .PHONY : Packet/DataPacket.cpp.s
 
+Packet/FileInfo.obj: Packet/FileInfo.cpp.obj
+
+.PHONY : Packet/FileInfo.obj
+
+# target to build an object file
+Packet/FileInfo.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj
+.PHONY : Packet/FileInfo.cpp.obj
+
+Packet/FileInfo.i: Packet/FileInfo.cpp.i
+
+.PHONY : Packet/FileInfo.i
+
+# target to preprocess a source file
+Packet/FileInfo.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/FileInfo.cpp.i
+.PHONY : Packet/FileInfo.cpp.i
+
+Packet/FileInfo.s: Packet/FileInfo.cpp.s
+
+.PHONY : Packet/FileInfo.s
+
+# target to generate assembly for a file
+Packet/FileInfo.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/FileInfo.cpp.s
+.PHONY : Packet/FileInfo.cpp.s
+
 Packet/LoginInfo.obj: Packet/LoginInfo.cpp.obj
 
 .PHONY : Packet/LoginInfo.obj
@@ -598,6 +625,9 @@ help:
 	@echo ... Packet/DataPacket.obj
 	@echo ... Packet/DataPacket.i
 	@echo ... Packet/DataPacket.s
+	@echo ... Packet/FileInfo.obj
+	@echo ... Packet/FileInfo.i
+	@echo ... Packet/FileInfo.s
 	@echo ... Packet/LoginInfo.obj
 	@echo ... Packet/LoginInfo.i
 	@echo ... Packet/LoginInfo.s

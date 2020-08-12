@@ -113,7 +113,8 @@ void generateNewPosition( std::vector<quint32>& prev, std::vector<quint32>& next
 void SharedEditor::loginSlot(QString& username, QString& password) {
     std::cout << "sending user=" << username.toStdString() << " and password=" << password.toStdString() << std::endl;
     DataPacket packet(-1, -1, DataPacket::login);
-    packet.setPayload( std::make_shared<LoginInfo>( -1, LoginInfo::login_request, std::move(username), std::move(QString(QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha3_256).toHex()))) );
+    packet.setPayload( std::make_shared<LoginInfo>( -1, LoginInfo::login_request, std::move(username),
+            std::move(QString(QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha3_256).toHex()))) );
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
@@ -173,6 +174,9 @@ void SharedEditor::process(DataPacket pkt) {
         case DataPacket::command :
             processCommand(*std::dynamic_pointer_cast<Command>(pkt.getPayload()));
             break;
+        case DataPacket::file_info :
+            processFileInfo(*std::dynamic_pointer_cast<FileInfo>(pkt.getPayload()));
+            break;
         default:
             std::cout<<"Coglione 2 volte, c'è un errore"<<std::endl;
             throw std::exception();
@@ -186,32 +190,13 @@ void SharedEditor::process(DataPacket pkt) {
 void SharedEditor::processLoginInfo(LoginInfo &logInf) {
     if(logInf.getType() == LoginInfo::login_ok) {
         _siteId = logInf.getSiteId();
+        transceiver->setSiteId(_siteId);
         std::cout << "client successfully logged!" << std::endl;
         isLogged = true;
+        emit loginAchieved();
     } else {
         std::cout << "client not logged!" << std::endl;
     }
-}
-
-qint32 SharedEditor::getIndex(Message &m) {
-    qint32 pos=m.getLocalIndex();//search index
-    if(pos>_symbols.size()-1){
-        pos=_symbols.size()-1;
-    }
-    if(m.getSymbol()>_symbols[pos]){
-        for(qint32 i=pos+1;i<_symbols.size();i++){
-            if(m.getSymbol() < _symbols[i] || m.getSymbol() == _symbols[i]){
-                return i;
-            }
-        }
-    }else{
-        for(qint32 i=pos-1;i>=0;i--){
-            if(m.getSymbol()>_symbols[i]){
-                return i+1;
-            }
-        }
-    }
-    return pos;
 }
 
 
@@ -264,20 +249,27 @@ void SharedEditor::processMessages(StringMessages &strMess) {
 
 }
 
-void SharedEditor::deleteText(){
-    emit deleteAllText();
+void SharedEditor::processFileInfo(FileInfo &filInf) {
+    switch ( filInf.getFileInfo()  ){
+        case FileInfo::start: {
+            isFileOpened = true;
+            break;
+        }
+        case FileInfo::eof: {
+            findCounter();
+            /// TODO: inserire qui segnale di apertura editor
+            break;
+        }
+    }
+
 }
 
 void SharedEditor::processCommand(Command& cmd){
+
     switch (cmd.getCmd()) {
         case (Command::cd): {
            processCdCommand(cmd);
            break;
-        }
-
-        case (Command::tree): {
-            processTreeCommand(cmd);
-            break;
         }
 
         case (Command::rm): {
@@ -300,6 +292,11 @@ void SharedEditor::processCommand(Command& cmd){
             break;
         }
 
+        case (Command::tree): {
+            processTreeCommand(cmd);
+            break;
+        }
+
         default:
             std::cout << "Coglione errore nel Command" << std::endl;
     }
@@ -312,9 +309,61 @@ void SharedEditor::processCdCommand(Command& cmd){
 }
 
 void SharedEditor::processTreeCommand(Command& cmd){
-    std::cout << "tree args:" << std::endl;
-    for (auto &a: cmd.getArgs())
-        std::cout << a.toStdString() << std::endl;
+
+    emit filePathsArrived(cmd.getArgs());
+}
+
+void SharedEditor::deleteText(){
+    emit deleteAllText();
+}
+
+void SharedEditor::findCounter() {
+
+    quint32 maxCounter = 0;
+    for(auto sym: _symbols) {
+        if (sym.getSymId().getSiteId() == _siteId)
+            if (sym.getSymId().getCount() > maxCounter)
+                maxCounter = sym.getSymId().getCount();
+
+        std::cout<<"sym: \n"<<
+                 "    siteId: "<<sym.getSymId().getSiteId()<<std::endl<<
+                 "     counter: "<<sym.getSymId().getCount()<<std::endl;
+    }
+    std::cout<<"my counter value: "<<maxCounter;
+    _counter = maxCounter;
+
+}
+
+qint32 SharedEditor::getIndex(Message &m) {
+    qint32 pos=m.getLocalIndex();//search index
+    if(pos>_symbols.size()-1){
+        pos=_symbols.size()-1;
+    }
+    if(m.getSymbol()>_symbols[pos]){
+        for(qint32 i=pos+1;i<_symbols.size();i++){
+            if(m.getSymbol() < _symbols[i] || m.getSymbol() == _symbols[i]){
+                return i;
+            }
+        }
+    }else{
+        for(qint32 i=pos-1;i>=0;i--){
+            if(m.getSymbol()>_symbols[i]){
+                return i+1;
+            }
+        }
+    }
+    return pos;
+}
+
+void SharedEditor::requireFileSystem() {
+
+    auto cmd = std::make_shared<Command>(_siteId,Command::tree,QVector<QString>());
+    DataPacket packet(_siteId,0,DataPacket::command);
+    packet.setPayload(cmd);
+
+    int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
 }
 
 void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare ma per ora non ho idee migliori
@@ -358,7 +407,4 @@ void SharedEditor::deleteThread() {
     transceiver->deleteLater();
     exit(-1);
 }
-
-
-
 

@@ -154,6 +154,12 @@
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h">
 			<Option target="Client"/>
 		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.h">
+			<Option target="Client"/>
+		</Unit>
 		<Unit filename="D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.cpp">
 			<Option target="Client"/>
 		</Unit>

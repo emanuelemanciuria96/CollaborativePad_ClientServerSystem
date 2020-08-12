@@ -48,6 +48,10 @@ C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
 qchar.h
 C:/Qt/5.12.5/mingw73_64/include/QtCore/qchar.h
 
+C:/Qt/5.12.5/mingw73_64/include/QtCore/QCryptographicHash
+qcryptographichash.h
+C:/Qt/5.12.5/mingw73_64/include/QtCore/qcryptographichash.h
+
 C:/Qt/5.12.5/mingw73_64/include/QtCore/QDataStream
 qdatastream.h
 C:/Qt/5.12.5/mingw73_64/include/QtCore/qdatastream.h
@@ -5164,6 +5168,10 @@ QtCore/QObject
 Payload.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
 
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.h
+Payload.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
 QtGlobal
 -
@@ -5237,6 +5245,8 @@ tuple
 -
 string
 -
+QtCore/QCryptographicHash
+-
 
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/SharedEditor.h
 iostream
@@ -5267,6 +5277,8 @@ QAbstractSocket
 -
 QString
 -
+Packet/FileInfo.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.h
 Packet/LoginInfo.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
 Packet/Command.h
@@ -5325,6 +5337,8 @@ Packet/Payload.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
 Packet/StringMessages.h
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/StringMessages.h
+Packet/FileInfo.h
+D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.h
 
 D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp
 ../../../EditorGUI.h

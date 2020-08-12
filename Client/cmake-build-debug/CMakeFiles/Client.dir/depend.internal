@@ -512,6 +512,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/MainWindow.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Command.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
@@ -709,6 +710,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/EditorGUI.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Command.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
@@ -1731,6 +1733,7 @@ CMakeFiles/Client.dir/MainWindow.cpp.obj
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/MainWindow.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Command.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
@@ -1835,7 +1838,34 @@ CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_bootstrap.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qcompilerdetection.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig-bootstrapped.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qflags.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qgenericatomic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobalstatic.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qlogging.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qmutex.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qnumeric.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qprocessordetection.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qsysinfo.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qsystemdetection.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qtcore-config.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qversiontagging.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.cpp
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QCryptographicHash
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -1849,6 +1879,7 @@ CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qcompilerdetection.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig-bootstrapped.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qcryptographichash.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qflags.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qgenericatomic.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
@@ -1857,6 +1888,8 @@ CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qmutex.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qnamespace.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qnumeric.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qobjectdefs.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qobjectdefs_impl.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qprocessordetection.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qrefcount.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qstring.h
@@ -2112,6 +2145,7 @@ CMakeFiles/Client.dir/RemoteCursor.cpp.obj
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/RemoteCursor.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QCryptographicHash
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QDataStream
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QObject
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
@@ -2135,6 +2169,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qcontainerfwd.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qcontiguouscache.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qcoreevent.h
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/qcryptographichash.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qdatastream.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qdebug.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qflags.h
@@ -2196,6 +2231,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtnetworkglobal.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Command.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
@@ -2294,6 +2330,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtnetworkglobal.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Command.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h
@@ -2814,6 +2851,7 @@ CMakeFiles/Client.dir/main.cpp.obj
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/MainWindow.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Command.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/DataPacket.h
+ D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/FileInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/LoginInfo.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Message.h
  D:/poliTO/magistrale/Programmazione di Sistema/Malnati/progetto/SharedEditor_MalnatiProject/Client/Packet/Payload.h

@@ -28,10 +28,11 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     loginSettings();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
-    connect(loginDialog, &LoginDialog::loginAchieved, this, &MainWindow::loginFinished);
+    connect(shEditor, &SharedEditor::loginAchieved, this, &MainWindow::loginFinished);
     connect(shEditor, &SharedEditor::symbolsChanged, editor, &EditorGUI::updateSymbols);
-    connect(shEditor,&SharedEditor::deleteAllText, editor,&EditorGUI::deleteAllText);
-    connect(shEditor,&SharedEditor::filePathsArrived, treeView,&FileSystemTreeView::constructFromPaths);
+    connect(shEditor, &SharedEditor::deleteAllText, editor, &EditorGUI::deleteAllText);
+    connect(shEditor, &SharedEditor::filePathsArrived, treeView, &FileSystemTreeView::constructFromPaths);
+    connect(this, &MainWindow::fileSystemRequest, shEditor, &SharedEditor::requireFileSystem);
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
@@ -43,6 +44,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
 void MainWindow::loginFinished() {
     widgetLogin->hide();
+    emit fileSystemRequest();
     this->setCentralWidget(widgetEditor);
     dockWidgetTree->show();
     widgetEditor->show();
@@ -115,13 +117,3 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
 
 }
 
-MainWindow::~MainWindow() {
-    widgetLogin->deleteLater();
-    widgetEditor->deleteLater();
-    dockWidgetTree->deleteLater();
-    treeView->deleteLater();
-    editor->deleteLater();
-    loginDialog->deleteLater();
-    statusBar->deleteLater();
-    toolBar->deleteLater();
-}

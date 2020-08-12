@@ -511,6 +511,7 @@ CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../LoginDialog.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../MainWindow.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/Command.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/DataPacket.h
+CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/FileInfo.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/Message.h
 CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj: ../Packet/Payload.h
@@ -708,6 +709,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../EditorGUI.cpp
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../EditorGUI.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/Command.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/DataPacket.h
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/FileInfo.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/Message.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: ../Packet/Payload.h
@@ -1730,6 +1732,7 @@ CMakeFiles/Client.dir/MainWindow.cpp.obj: ../MainWindow.cpp
 CMakeFiles/Client.dir/MainWindow.cpp.obj: ../MainWindow.h
 CMakeFiles/Client.dir/MainWindow.cpp.obj: ../Packet/Command.h
 CMakeFiles/Client.dir/MainWindow.cpp.obj: ../Packet/DataPacket.h
+CMakeFiles/Client.dir/MainWindow.cpp.obj: ../Packet/FileInfo.h
 CMakeFiles/Client.dir/MainWindow.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/Client.dir/MainWindow.cpp.obj: ../Packet/Message.h
 CMakeFiles/Client.dir/MainWindow.cpp.obj: ../Packet/Payload.h
@@ -1835,6 +1838,33 @@ CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj: ../Packet/DataPacket.h
 CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj: ../Packet/Payload.h
 
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_bootstrap.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_cxx11.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qatomic_msvc.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qbasicatomic.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qcompilerdetection.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig-bootstrapped.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qflags.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qgenericatomic.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobalstatic.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qlogging.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qmutex.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qnumeric.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qprocessordetection.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qsysinfo.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qsystemdetection.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtcore-config.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qtypeinfo.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qversiontagging.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: ../Packet/FileInfo.cpp
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: ../Packet/FileInfo.h
+CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj: ../Packet/Payload.h
+
+CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QCryptographicHash
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -1848,6 +1878,7 @@ CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qcompilerdetection.h
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig-bootstrapped.h
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qconfig.h
+CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qcryptographichash.h
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qflags.h
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qgenericatomic.h
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qglobal.h
@@ -1856,6 +1887,8 @@ CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qmutex.h
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qnamespace.h
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qnumeric.h
+CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qobjectdefs.h
+CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qobjectdefs_impl.h
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qprocessordetection.h
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qrefcount.h
 CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qstring.h
@@ -2111,6 +2144,7 @@ CMakeFiles/Client.dir/RemoteCursor.cpp.obj: ../RemoteCursor.cpp
 CMakeFiles/Client.dir/RemoteCursor.cpp.obj: ../RemoteCursor.h
 
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QChar
+CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QCryptographicHash
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QDataStream
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QObject
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
@@ -2134,6 +2168,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCo
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qcontainerfwd.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qcontiguouscache.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qcoreevent.h
+CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qcryptographichash.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qdatastream.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qdebug.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qflags.h
@@ -2195,6 +2230,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtNe
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtnetworkglobal.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/Command.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/DataPacket.h
+CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/FileInfo.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/Message.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: ../Packet/Payload.h
@@ -2293,6 +2329,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtNet
 CMakeFiles/Client.dir/Transceiver.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtNetwork/qtnetworkglobal.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/Command.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/DataPacket.h
+CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/FileInfo.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/Message.h
 CMakeFiles/Client.dir/Transceiver.cpp.obj: ../Packet/Payload.h
@@ -2813,6 +2850,7 @@ CMakeFiles/Client.dir/main.cpp.obj: ../LoginDialog.h
 CMakeFiles/Client.dir/main.cpp.obj: ../MainWindow.h
 CMakeFiles/Client.dir/main.cpp.obj: ../Packet/Command.h
 CMakeFiles/Client.dir/main.cpp.obj: ../Packet/DataPacket.h
+CMakeFiles/Client.dir/main.cpp.obj: ../Packet/FileInfo.h
 CMakeFiles/Client.dir/main.cpp.obj: ../Packet/LoginInfo.h
 CMakeFiles/Client.dir/main.cpp.obj: ../Packet/Message.h
 CMakeFiles/Client.dir/main.cpp.obj: ../Packet/Payload.h

@@ -16,6 +16,7 @@
 #include "Packet/LoginInfo.h"
 #include "Packet/Payload.h"
 #include "Packet/StringMessages.h"
+#include "Packet/FileInfo.h"
 
 class Transceiver: public QThread {
 
@@ -24,6 +25,7 @@ public:
     void run() override;
     Transceiver(qint32 siteID,QObject* parent = 0);
     Socket* getSocket(){ return socket; };
+    void setSiteId( qint32 siteID ){ _siteID = siteID; }
 
 public slots:
     void recvPacket();
@@ -49,7 +51,9 @@ private:
     void sendLoginInfo(DataPacket& pkt);
     void sendMessage(DataPacket& pkt);
     void sendCommand(DataPacket& pkt);
+
     void recvLoginInfo(DataPacket& pkt, QDataStream& in);
+    void recvFileInfo(DataPacket& pkt, QDataStream& in);
     void recvMessage(DataPacket& pkt,QDataStream& in);
 
     void rollBack();

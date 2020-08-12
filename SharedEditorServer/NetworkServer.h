@@ -20,6 +20,7 @@
 #include "MessageHandler.h"
 #include "Socket.h"
 #include "Files.h"
+#include "Packet/FileInfo.h"
 #include <QtCore/QPointer>
 #include <QtCore/QTimer>
 

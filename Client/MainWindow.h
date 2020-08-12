@@ -15,7 +15,6 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     MainWindow(SharedEditor* shEditor, QWidget* parent = 0);
-    ~MainWindow();
 
 private:
 
@@ -31,6 +30,9 @@ private:
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
     void treeFileSystemSettings();
+
+signals:
+    void fileSystemRequest();
 
 public slots:
     void loginFinished();

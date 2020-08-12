@@ -56,7 +56,7 @@ QTreeWidgetItem* FileSystemTreeView::addChild(QTreeWidgetItem *parent, QString n
 
 }
 
-void FileSystemTreeView::constructFromPaths(QVector<QString> &paths) {
+void FileSystemTreeView::constructFromPaths(const QVector<QString> &paths) {
 
     for(auto path: paths){
         QString intermediatePath = "";

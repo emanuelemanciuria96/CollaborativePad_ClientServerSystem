@@ -15,7 +15,6 @@
 #include <QString>
 
 
-
 class StringMessages: public Payload{
 
 public:

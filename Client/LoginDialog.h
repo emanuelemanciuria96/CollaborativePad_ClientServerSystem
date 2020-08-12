@@ -37,7 +37,6 @@ private:
 
 signals:
     void acceptLogin(QString& username, QString& password);
-    void loginAchieved();
 
 private slots:
     void slotAcceptLogin();

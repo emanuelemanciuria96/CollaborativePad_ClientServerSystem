@@ -88,6 +88,11 @@ void Transceiver::recvPacket() {
                 recvCommand(packet, in);
                 break;
             }
+            case (DataPacket::file_info): {
+                recvFileInfo(packet, in);
+                break;
+            }
+
             default: {
                 std::cout << "Coglione c'e' un errore" << std::endl;
                 break;
@@ -108,6 +113,17 @@ void Transceiver::recvLoginInfo(DataPacket& pkt,QDataStream& in){
     in >> siteId >> type >> user >> password;
     _siteID = siteId;
     pkt.setPayload(std::make_shared<LoginInfo>(siteId,(LoginInfo::type_t)type,user,password));
+
+    emit readyToProcess(pkt);
+
+}
+
+void Transceiver::recvFileInfo(DataPacket& pkt, QDataStream& in){
+    qint32 siteId;
+    qint32 type;
+
+    in>>siteId>>type;
+    pkt.setPayload(std::make_shared<FileInfo>(siteId,(FileInfo::file_info_t)type));
 
     emit readyToProcess(pkt);
 
@@ -175,9 +191,8 @@ void Transceiver::sendAllMessages() {
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    qint32 siteID = messages[0].getSiteId();
-    auto *strMess = new StringMessages(messages,siteID);
-    DataPacket pkt(siteID,0,DataPacket::textTyping,strMess);
+    auto *strMess = new StringMessages(messages,_siteID);
+    DataPacket pkt(_siteID,0,DataPacket::textTyping,strMess);
     qint32 bytes=16+(strMess->getFormattedMessages().size()*16)/8+4+4;
     out << bytes<<pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
          strMess->getSiteId() << strMess->getFormattedMessages() ;
@@ -197,10 +212,9 @@ void Transceiver::sendMessage(DataPacket& packet) {
         firstMessage = false;
    }
 
+   std::cout<<"sending message with siteId: "<<packet.getPayload()->getSiteId();
+
    messages.push_back(*std::dynamic_pointer_cast<Message>(packet.getPayload()));
-
-
-
 
 }
 
@@ -211,7 +225,12 @@ void Transceiver::sendLoginInfo(DataPacket& packet){
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    qint32 bytes=-14;//TODO dimensione socket
+    /*
+    qint32 bytes = sizeof(qint32)+sizeof(qint32)+sizeof(quint32)+
+        +sizeof(qint32)+sizeof(LoginInfo::type_t)+ptr->getUser().size()*16/8+
+        +ptr->getPassword().size()*16/8;
+    */
+    qint32 bytes = -14;
     out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
     socket->waitForBytesWritten(-1);

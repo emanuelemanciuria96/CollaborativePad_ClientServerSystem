@@ -143,7 +143,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 
             /// in mancanza di un client che mi chieda di ricevere un file, faccio questo nella
             /// procedura di login
-                QString name = QString::fromStdString("/prova"+std::to_string(_siteID)+">F");
+                QString name = QString::fromStdString("/prova1>F");
                 std::cout << name.toStdString() << std::endl;
                 QVector<QString> vec = {name};
                 auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);
@@ -250,6 +250,9 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
             fileName = command->opnCommand(threadId);
             if(!fileName.isEmpty()) {
+                if( operatingFileName != "" )
+                    _sockets.detachSocket(operatingFileName,_siteID);
+
                 operatingFileName = fileName;
                 _sockets.attachSocket(fileName,_siteID,socket.get());
                 std::cout << fileName.toStdString() << std::endl;
@@ -298,6 +301,11 @@ void ServerThread::sendPacket(DataPacket packet){
             break;
         }
 
+        case (DataPacket::file_info):{
+            sendFileInfo(packet);
+            break;
+        }
+
         default: {
             std::cout<<"Coglione c'è un errore"<<std::endl;
         }
@@ -340,7 +348,22 @@ void ServerThread::sendCommand(DataPacket& packet){
     qint32 bytes=-14;//TODO dimensione socket
     out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
+    socket->waitForBytesWritten(-1);
 }
+
+void ServerThread::sendFileInfo(DataPacket& packet){
+    QDataStream out;
+    out.setDevice(socket.get());
+    out.setVersion(QDataStream::Qt_5_5);
+
+    auto ptr = std::dynamic_pointer_cast<FileInfo>(packet.getPayload());
+    qint32 bytes=-14;//TODO dimensione socket
+    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    out << ptr->getSiteId()<<(quint32) ptr->getFileInfo();
+    socket->waitForBytesWritten(-1);
+
+}
+
 
 
 void ServerThread::disconnected()

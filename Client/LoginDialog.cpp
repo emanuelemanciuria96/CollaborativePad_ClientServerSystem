@@ -76,7 +76,6 @@ void LoginDialog::slotAcceptLogin() {
 
     //emetto il signal con le credenziali
     emit acceptLogin(username,password);
-    emit loginAchieved();
     abort = false;
 }
 
