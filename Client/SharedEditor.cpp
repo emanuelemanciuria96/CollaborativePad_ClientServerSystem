@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <tuple>
 #include <string>
+#include <QtCore/QCryptographicHash>
 
 SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
@@ -112,7 +113,7 @@ void generateNewPosition( std::vector<quint32>& prev, std::vector<quint32>& next
 void SharedEditor::loginSlot(QString& username, QString& password) {
     std::cout << "sending user=" << username.toStdString() << " and password=" << password.toStdString() << std::endl;
     DataPacket packet(-1, -1, DataPacket::login);
-    packet.setPayload( std::make_shared<LoginInfo>( -1, LoginInfo::login_request, std::move(username), std::move(password)) );
+    packet.setPayload( std::make_shared<LoginInfo>( -1, LoginInfo::login_request, std::move(username), std::move(QString(QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha3_256).toHex()))) );
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
@@ -274,6 +275,11 @@ void SharedEditor::processCommand(Command& cmd){
            break;
         }
 
+        case (Command::tree): {
+            processTreeCommand(cmd);
+            break;
+        }
+
         case (Command::rm): {
             break;
         }
@@ -305,6 +311,12 @@ void SharedEditor::processCdCommand(Command& cmd){
         std::cout << a.toStdString() << std::endl;
 }
 
+void SharedEditor::processTreeCommand(Command& cmd){
+    std::cout << "tree args:" << std::endl;
+    for (auto &a: cmd.getArgs())
+        std::cout << a.toStdString() << std::endl;
+}
+
 void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare ma per ora non ho idee migliori
    /* DataPacket packet(-1, -1, DataPacket::command);
     packet.setPayload( std::make_shared<Command>( _siteId, Command::cd, QVector<QString>(1, "")));
@@ -321,6 +333,10 @@ void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare m
     /*DataPacket packet(-1, -1, DataPacket::command);
     packet.setPayload( std::make_shared<Command>( _siteId, Command::opn, QVector<QString>(1, "/prova>F")));
     emit transceiver->getSocket()->sendPacket(packet); //questo serve ad aprire il file "prova.json" sul server*/
+
+    /*DataPacket packet(-1, -1, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( 1, Command::tree, QVector<QString>()));
+    emit transceiver->getSocket()->sendPacket(packet); //questo serve a farsi inviare tutte le subdirectory del client*/
 
 }
 

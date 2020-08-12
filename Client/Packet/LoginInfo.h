@@ -28,6 +28,7 @@ public:
     void setPassword(QString password);
     type_t getType();
     void setType(type_t type);
+    QString getHashPassword();
 
 private:
     QString _user;

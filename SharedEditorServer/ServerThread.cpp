@@ -148,7 +148,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                 QVector<QString> vec = {name};
                 auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);
 
-                QString fileName = comm->opnCommand(threadId, _username);
+                QString fileName = comm->opnCommand(threadId);
                 if (!fileName.isEmpty()) {
                     operatingFileName = fileName;
                     std::cout << fileName.toStdString() << std::endl;
@@ -216,13 +216,13 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
     switch(cmd){
         case (Command::cd):{
-            command->cdCommand(threadId, _username);
+            command->cdCommand(threadId);
             sendPacket(packet);
             break;
         }
 
         case (Command::mkdir):{
-            if(command->mkdirCommand(threadId, _username))
+            if(command->mkdirCommand(threadId))
                 std::cout << "mkdir command ok!" << std::endl;
             else
                 std::cout << "mkdir command failed!" << std::endl;
@@ -230,7 +230,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::rm):{
-            if(command->rmCommand(threadId, _username))
+            if(command->rmCommand(threadId))
                 std::cout << "rm command ok!" << std::endl;
             else
                 std::cout << "mkdir command failed!" << std::endl;
@@ -248,7 +248,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         case (Command::opn):{
             QString fileName;
 
-            fileName = command->opnCommand(threadId, _username);
+            fileName = command->opnCommand(threadId);
             if(!fileName.isEmpty()) {
                 operatingFileName = fileName;
                 _sockets.attachSocket(fileName,_siteID,socket.get());
@@ -258,6 +258,12 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                 msgHandler->submit(&NetworkServer::processOpnCommand, command);
             }else
                 std::cout << "opn command failed!" << std::endl;
+            break;
+        }
+
+        case (Command::tree):{
+            command->treeCommand(threadId);
+            sendPacket(packet);
             break;
         }
 

@@ -8,9 +8,10 @@
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QVariant>
+#include <iostream>
 
 Command::Command(qint32 siteId, cmd_t cmd, QVector<QString> args) : Payload(siteId), _cmd(cmd),
-                                                                     _args(std::move(args)) {}
+                                                                    _args(std::move(args)) {}
 
 Command::cmd_t Command::getCmd() const {
     return _cmd;
@@ -28,12 +29,12 @@ void Command::setArgs(const QVector<QString> &args) {
     _args = args;
 }
 
-bool Command::cdCommand(QString& connectionId, QString& user){
+bool Command::cdCommand(QString& connectionId){
     if(_args.size()!=1)
         return false;
 
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_directories");
-    db.setDatabaseName(user+"_directories.db");
+    db.setDatabaseName("directories.db");
 
     if (!db.open())
         return false;
@@ -42,7 +43,7 @@ bool Command::cdCommand(QString& connectionId, QString& user){
     _args.clear();
     QSqlQuery query(db);
 
-    if(!query.exec("SELECT SUBF FROM DIRECTORIES WHERE DIRECTORY='"+dir+"'")){
+    if(!query.exec("SELECT SUBF FROM DIRECTORIES WHERE DIRECTORY='"+dir+"' AND SITEID='"+QString::number(_siteID)+"'")){
         db.close();
         return false;
     }
@@ -53,12 +54,12 @@ bool Command::cdCommand(QString& connectionId, QString& user){
     return true;
 }
 
-bool Command::mkdirCommand(QString& connectionId, QString& user) {
+bool Command::mkdirCommand(QString& connectionId) {
     if(_args.size()!=1)
         return false;
 
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_directories");
-    db.setDatabaseName(user+"_directories.db");
+    db.setDatabaseName("directories.db");
 
     if (!db.open())
         return false;
@@ -68,7 +69,7 @@ bool Command::mkdirCommand(QString& connectionId, QString& user) {
     QString newDir(_args.first()+">D");
 
     QSqlQuery query(db);
-    if(!query.exec("INSERT INTO DIRECTORIES ('DIRECTORY', 'SUBF') VALUES ('"+currentDir+"', '"+newDir+"');")){
+    if(!query.exec("INSERT INTO DIRECTORIES ('SITEID', 'DIRECTORY', 'SUBF') VALUES ('"+QString::number(_siteID)+"', '"+currentDir+"', '"+newDir+"');")){
         db.close();
         return false;
     }
@@ -77,29 +78,29 @@ bool Command::mkdirCommand(QString& connectionId, QString& user) {
     return true;
 }
 
-bool Command::rmCommand(QString& connectionId, QString& user) {
+bool Command::rmCommand(QString& connectionId) {
     if(_args.size()!=1)
         return false;
 
     QChar type(_args.first().back());
 
     if(type == "D"){
-        return rmDir(connectionId, user);
+        return rmDir(connectionId);
     } else if(type == "F"){
-        return rmFile(connectionId, user);
+        return rmFile(connectionId);
     }
 
     return false;
 }
 
-bool Command::rmDir(QString &connectionId, QString &user) {
+bool Command::rmDir(QString &connectionId) {
     if(_args.size()!=1)
         return false;
 
     QSqlDatabase dbDirs = QSqlDatabase::database(connectionId+"_directories");
     QSqlDatabase dbFiles = QSqlDatabase::database(connectionId+"_files");
-    dbDirs.setDatabaseName(user+"_directories.db");
-    dbFiles.setDatabaseName(user+"_files.db");
+    dbDirs.setDatabaseName("directories.db");
+    dbFiles.setDatabaseName("files.db");
 
     if (!dbDirs.open() || !dbFiles.open())
         return false;
@@ -112,19 +113,19 @@ bool Command::rmDir(QString &connectionId, QString &user) {
     QVector<QString> files;
 
     dbFiles.transaction();
-    fileQuery.exec("SELECT FILEID FROM FILES WHERE DIR LIKE '"+dir+"/"+"%'");
+    fileQuery.exec("SELECT FILEID FROM FILES WHERE DIR LIKE '"+dir+"/"+"%' AND SITEID='"+QString::number(_siteID)+"'");
 
     while (fileQuery.next()) {
         files.push_back(fileQuery.value("FILEID").toString());
     }
 
-    if(!dirQuery.exec("DELETE FROM DIRECTORIES WHERE SUBF='"+dir+">D"+"' OR DIRECTORY='"+dir+"'")){
+    if(!dirQuery.exec("DELETE FROM DIRECTORIES WHERE SUBF='"+dir+">D"+"' OR DIRECTORY='"+dir+"' AND SITEID='"+QString::number(_siteID)+"'")){
         dbFiles.rollback();
         dbFiles.close();
         dbDirs.close();
         return false;
     }
-    fileQuery.exec("DELETE FROM FILES WHERE DIR LIKE '"+dir+"/"+"%'");
+    fileQuery.exec("DELETE FROM FILES WHERE DIR LIKE '"+dir+"/"+"%' AND SITEID='"+QString::number(_siteID)+"'");
     if(!dbFiles.commit()){
         dbFiles.rollback();
         dbFiles.close();
@@ -141,14 +142,14 @@ bool Command::rmDir(QString &connectionId, QString &user) {
     return true;
 }
 
-bool Command::rmFile(QString &connectionId, QString &user) {
+bool Command::rmFile(QString &connectionId) {
     if(_args.size()!=1)
         return false;
 
     QSqlDatabase dbDirs = QSqlDatabase::database(connectionId+"_directories");
     QSqlDatabase dbFiles = QSqlDatabase::database(connectionId+"_files");
-    dbDirs.setDatabaseName(user+"_directories.db");
-    dbFiles.setDatabaseName(user+"_files.db");
+    dbDirs.setDatabaseName("directories.db");
+    dbFiles.setDatabaseName("files.db");
     QString fileDir(_args.first());
 
     if (!dbDirs.open() || !dbFiles.open())
@@ -157,7 +158,7 @@ bool Command::rmFile(QString &connectionId, QString &user) {
     QSqlQuery dirQuery(dbDirs);
     QSqlQuery fileQuery(dbFiles);
 
-    if(!fileQuery.exec("SELECT FILEID FROM FILES WHERE DIR='"+fileDir+"'")){
+    if(!fileQuery.exec("SELECT FILEID FROM FILES WHERE DIR='"+fileDir+"' AND SITEID='"+QString::number(_siteID)+"'")){
         dbFiles.close();
         dbDirs.close();
         return false;
@@ -171,9 +172,9 @@ bool Command::rmFile(QString &connectionId, QString &user) {
 
     QFile file(fileQuery.value("FILEID").toString());
     dbFiles.transaction();
-    fileQuery.exec("DELETE FROM FILES WHERE DIR='"+fileDir+"'");
+    fileQuery.exec("DELETE FROM FILES WHERE DIR='"+fileDir+"' AND SITEID='"+QString::number(_siteID)+"'");
 
-    if(!dirQuery.exec("DELETE FROM DIRECTORIES WHERE SUBF='"+fileDir+"'")){
+    if(!dirQuery.exec("DELETE FROM DIRECTORIES WHERE SUBF='"+fileDir+"' AND SITEID='"+QString::number(_siteID)+"'")){
         dbFiles.rollback();
         dbFiles.close();
         dbDirs.close();
@@ -191,14 +192,14 @@ bool Command::rmFile(QString &connectionId, QString &user) {
     return true;
 }
 
-QString Command::opnCommand(QString &connectionId, QString& user){
+QString Command::opnCommand(QString &connectionId){
     QString fileName{};
 
     if(_args.size()!=1)
         return fileName;
 
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_files");
-    db.setDatabaseName(user+"_files.db");
+    db.setDatabaseName("files.db");
 
     if (!db.open())
         return fileName;
@@ -206,7 +207,7 @@ QString Command::opnCommand(QString &connectionId, QString& user){
     QString filePath = _args.first();
     QSqlQuery query(db);
 
-    if(!query.exec("SELECT FILEID FROM FILES WHERE DIR='"+filePath+"'")){
+    if(!query.exec("SELECT FILEID FROM FILES WHERE DIR='"+filePath+"' AND SITEID='"+QString::number(_siteID)+"'")){
         db.close();
         return fileName;
     }
@@ -215,6 +216,29 @@ QString Command::opnCommand(QString &connectionId, QString& user){
     fileName = query.value("FILEID").toString();
 
     return fileName;
+}
+
+bool Command::treeCommand(QString &connectionId) {
+    if(!_args.empty())
+        return false;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_directories");
+    db.setDatabaseName("directories.db");
+
+    if (!db.open())
+        return false;
+
+    QSqlQuery query(db);
+
+    if(!query.exec("SELECT SUBF FROM DIRECTORIES WHERE SITEID='"+QString::number(_siteID)+"'")){
+        db.close();
+        return false;
+    }
+
+    while(query.next())
+        _args.push_back(query.value("SUBF").toString());
+
+    return true;
 }
 
 /*LE FUNZIONI CHE SEGUONO SONO TUTTE DA RIFARE*/

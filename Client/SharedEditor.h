@@ -39,6 +39,7 @@ private:
     void processLoginInfo(LoginInfo& logInf);
     void processCommand(Command& cmd);
     void processCdCommand(Command& cmd);
+    void processTreeCommand(Command& cmd);
     bool isLogged;
 
 public slots:

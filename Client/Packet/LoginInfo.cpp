@@ -5,11 +5,12 @@
 #include "LoginInfo.h"
 
 #include <utility>
+#include <QtCore/QCryptographicHash>
 
 LoginInfo::LoginInfo(qint32 siteId, type_t type, QString user, QString password) : Payload(siteId),
-                                                                                                 _user(std::move(user)),
-                                                                                                 _type(type),
-                                                                                                 _password(std::move(password)) {}
+                                                                                   _user(std::move(user)),
+                                                                                   _type(type),
+                                                                                   _password(std::move(password)) {}
 
 QString &LoginInfo::getUser(){
     return _user;
@@ -33,4 +34,8 @@ LoginInfo::type_t LoginInfo::getType() {
 
 void LoginInfo::setType(type_t type) {
     _type = type;
+}
+
+QString LoginInfo::getHashPassword() {
+    return QString(QCryptographicHash::hash(_password.toUtf8(), QCryptographicHash::Sha3_256).toHex());
 }

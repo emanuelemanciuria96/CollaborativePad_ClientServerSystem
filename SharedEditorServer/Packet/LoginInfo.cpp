@@ -8,6 +8,7 @@
 #include "LoginInfo.h"
 #include <QSqlQuery>
 #include <QtCore/QVariant>
+#include <iostream>
 
 
 LoginInfo::LoginInfo(qint32 siteId, type_t type, QString user, QString password) : Payload(siteId),
