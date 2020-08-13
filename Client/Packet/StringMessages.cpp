@@ -67,7 +67,7 @@ Message StringMessages::stringToMessage(QString s) {
     }
     qint32 index=vec_items[5].toUInt();
     Symbol sym(ch,siteId,count,pos);
-    Message msg(vec_items[0] == "1" ? Message::insertion : Message::removal, siteId, sym,index);
+    Message msg(vec_items[0] == "1" ? Message::insertion : Message::removal, _siteID, sym,index);
     return msg;
 }
 

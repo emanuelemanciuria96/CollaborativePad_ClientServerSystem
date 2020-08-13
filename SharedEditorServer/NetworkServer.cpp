@@ -111,7 +111,6 @@ void NetworkServer::processOpnCommand(Payload &pl) {
 
     std::vector<Message> vm;
     int index = 0;
-    quint32 actualPacketDim = sizeof(quint32) + sizeof(qint32) + sizeof(DataPacket::data_t);
 
     // comunico al client che sto inviando il file
     {
@@ -122,19 +121,13 @@ void NetworkServer::processOpnCommand(Payload &pl) {
     for (auto s:symbles) {
         Message m(Message::insertion, siteID, s, index++);
 
-        quint32 nextMessageSize = sizeof(m.getSiteId()) + sizeof(m.getAction()) + sizeof(m.getLocalIndex()) +
-                sizeof(m.getSymbol().getSymId()) + sizeof(m.getSymbol().getValue()) +
-                s.getPos().size() * sizeof(quint32);
-        std::cout << "next buffer size: " << actualPacketDim + nextMessageSize << std::endl;
-
-        if (actualPacketDim + nextMessageSize >= 1000) {
+        if ( vm.size()+1 >= 500) {
             DataPacket pkt(siteID, 0, DataPacket::textTyping, new StringMessages(vm, siteID));
             int id = qMetaTypeId<DataPacket>();
             emit active_threads.find(comm.getSiteId())->second->getSocket()->sendMessage(pkt);
-            actualPacketDim = sizeof(quint32) + sizeof(qint32) + sizeof(DataPacket::data_t);
             vm.clear();
         }
-        actualPacketDim += nextMessageSize;
+
         vm.push_back(m);
     }
 

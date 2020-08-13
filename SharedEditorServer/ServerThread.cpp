@@ -66,13 +66,13 @@ void ServerThread::recvPacket() {
 
     while(this->socket->bytesAvailable()>0) {
 
-        std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
+       // std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
         if(this->socketSize==0) {
             in >> bytes;
             this->socketSize = bytes;
         }
         if(this->socketSize!=0 && bytes!=-14){
-            if(socket->bytesAvailable()!=this->socketSize-4){
+            if(socket->bytesAvailable()<this->socketSize-4){
                 return;
             }
         }
@@ -102,18 +102,18 @@ void ServerThread::recvPacket() {
                 packet.setErrcode(-1);
                 packet.setSource(-1);
                 packet.setTypeOfData(DataPacket::textTyping);
-                packet.setPayload(std::make_shared<StringMessages>());
+                packet.setPayload(std::make_shared<StringMessages>(_siteID));
 
                 socket->readAll();
                 sendMessage(packet);
             }
             break;
         }
-        std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
+        //std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
         std::cout<<std::endl;
         this->socketSize=0;
     }
-    std::cout<<"ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
+   // std::cout<<"ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
 
 }
 
@@ -283,25 +283,29 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
 void ServerThread::sendPacket(DataPacket packet){
 
-    std::cout<<"thread "<<std::this_thread::get_id()<<" sending packet to "<<this->socketDescriptor<<std::endl;
+    //std::cout<<"thread "<<std::this_thread::get_id()<<" sending packet to "<<this->socketDescriptor<<std::endl;
 
     switch(packet.getTypeOfData()){
         case (DataPacket::login): {
-           sendLoginInfo(packet);
-           break;
+            std::cout<<"thread "<<std::this_thread::get_id()<<" sending login info to client: "<<_username.toStdString()<<std::endl;
+            sendLoginInfo(packet);
+            break;
         }
 
         case (DataPacket::textTyping): {
+            std::cout<<"thread "<<std::this_thread::get_id()<<" sending messages to client: "<<_username.toStdString()<<std::endl;
             sendMessage(packet);
             break;
         }
 
         case (DataPacket::command): {
+            std::cout<<"thread "<<std::this_thread::get_id()<<" sending command to client: "<<_username.toStdString()<<std::endl;
             sendCommand(packet);
             break;
         }
 
         case (DataPacket::file_info):{
+            std::cout<<"thread "<<std::this_thread::get_id()<<" sending file info to client: "<<_username.toStdString()<<std::endl;
             sendFileInfo(packet);
             break;
         }
@@ -322,6 +326,9 @@ void ServerThread::sendLoginInfo(DataPacket &packet) {
     out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
     socket->waitForBytesWritten(-1);
+
+    std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
+
 }
 
 void ServerThread::sendMessage(DataPacket& packet){
@@ -337,6 +344,8 @@ void ServerThread::sendMessage(DataPacket& packet){
         strMess->getSiteId() << strMess->getFormattedMessages();
     socket->waitForBytesWritten(-1);
 
+    std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
+
 }
 
 void ServerThread::sendCommand(DataPacket& packet){
@@ -349,6 +358,9 @@ void ServerThread::sendCommand(DataPacket& packet){
     out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
     socket->waitForBytesWritten(-1);
+
+    std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
+
 }
 
 void ServerThread::sendFileInfo(DataPacket& packet){
@@ -361,6 +373,8 @@ void ServerThread::sendFileInfo(DataPacket& packet){
     out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId()<<(quint32) ptr->getFileInfo();
     socket->waitForBytesWritten(-1);
+
+    std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
 
 }
 

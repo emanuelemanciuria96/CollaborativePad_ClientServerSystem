@@ -25,7 +25,7 @@ public:
     //        0#&ch#&siteid#&count#&pos1,pos2,..,#&@%1#&ch#&siteid#&count...
     // il primo elemento può essere 0/1 a seconda se insertion/removal
 
-    explicit StringMessages(qint32 siteID = -1):Payload(siteID){ formattedMessages = ""; }
+    explicit StringMessages(qint32 siteID):Payload(siteID){ formattedMessages = ""; }
     StringMessages(QString &stringMess, qint32 siteID);
     StringMessages(std::vector<Message> &vm, qint32 siteID);
 

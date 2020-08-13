@@ -256,7 +256,9 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
             break;
         }
         case FileInfo::eof: {
+            std::cout<<"inizio findCounter"<<std::endl;
             findCounter();
+            std::cout<<"fine findCounter"<<std::endl;
             /// TODO: inserire qui segnale di apertura editor
             break;
         }
@@ -325,11 +327,8 @@ void SharedEditor::findCounter() {
             if (sym.getSymId().getCount() > maxCounter)
                 maxCounter = sym.getSymId().getCount();
 
-        std::cout<<"sym: \n"<<
-                 "    siteId: "<<sym.getSymId().getSiteId()<<std::endl<<
-                 "     counter: "<<sym.getSymId().getCount()<<std::endl;
     }
-    std::cout<<"my counter value: "<<maxCounter;
+    std::cout<<"my counter value: "<<maxCounter<<std::endl;;
     _counter = maxCounter;
 
 }

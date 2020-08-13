@@ -13,57 +13,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Packet/FileInfo.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Packet/FileInfo.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SharedEditorServer/Packet/FileInfo.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SharedEditorServer/Packet/FileInfo.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileSystemTreeView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemTreeView.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileSystemTreeView.h" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemTreeView.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LoginDialog.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LoginDialog.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LoginDialog.h" beforeDir="false" afterPath="$PROJECT_DIR$/LoginDialog.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packet/DataPacket.h" beforeDir="false" afterPath="$PROJECT_DIR$/Packet/DataPacket.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packet/StringMessages.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Packet/StringMessages.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packet/StringMessages.h" beforeDir="false" afterPath="$PROJECT_DIR$/Packet/StringMessages.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SharedEditor.h" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Transceiver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Transceiver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Transceiver.h" beforeDir="false" afterPath="$PROJECT_DIR$/Transceiver.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/StringMessages.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Transceiver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Transceiver.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects1.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects1.rsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/Packet/DataPacket.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/Packet/DataPacket.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/Packet/Message.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/Packet/Message.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/Packet/StringMessages.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/Packet/StringMessages.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/Packet/StringMessages.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/Packet/StringMessages.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.h" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,7 +54,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/CMakeLists.txt" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -143,11 +110,38 @@
       <workItem from="1588268631026" duration="535000" />
       <workItem from="1588269593742" duration="618000" />
       <workItem from="1588426986386" duration="449000" />
+      <workItem from="1597308923881" duration="8353000" />
+      <workItem from="1597325239232" duration="4906000" />
     </task>
+    <task id="LOCAL-00001" summary="completamento gestione file multipli + view del file system">
+      <created>1597251525657</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1597251525657</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="completamento gestione file multipli + view del file system" />
+    <option name="LAST_COMMIT_MESSAGE" value="completamento gestione file multipli + view del file system" />
   </component>
   <component name="WindowStateProjectService">
     <state width="723" height="219" key="GridCell.Tab.0.bottom" timestamp="1588263905372">
@@ -192,14 +186,19 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Transceiver.cpp</url>
-          <line>141</line>
-          <option name="timeStamp" value="9" />
+          <url>file://$PROJECT_DIR$/SharedEditor.cpp</url>
+          <line>323</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/SharedEditor.cpp</url>
-          <line>321</line>
-          <option name="timeStamp" value="10" />
+          <url>file://$PROJECT_DIR$/Transceiver.cpp</url>
+          <line>140</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Transceiver.cpp</url>
+          <line>58</line>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

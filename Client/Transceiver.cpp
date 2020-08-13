@@ -56,13 +56,14 @@ void Transceiver::recvPacket() {
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
     while(this->socket->bytesAvailable()>0) {
-        std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
+        auto sktAvblBytes = socket->bytesAvailable();
+        //std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
         if(this->socketSize==0) {
             in >> bytes;
             this->socketSize = bytes;
         }
         if(this->socketSize!=0 && bytes!=-14){
-            if(socket->bytesAvailable()!=this->socketSize-4){
+            if(socket->bytesAvailable()<this->socketSize-4){
                 return;
             }
         }
@@ -98,7 +99,7 @@ void Transceiver::recvPacket() {
                 break;
             }
         }
-        std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
+        //std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
         std::cout<<std::endl;
         this->socketSize=0;
     }
@@ -199,6 +200,8 @@ void Transceiver::sendAllMessages() {
 
     socket->waitForBytesWritten(-1);
 
+    std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
+
     if( !messages.empty() ) {
         timer->start(100);
         firstMessage = false;
@@ -211,8 +214,6 @@ void Transceiver::sendMessage(DataPacket& packet) {
         timer->start(200);
         firstMessage = false;
    }
-
-   std::cout<<"sending message with siteId: "<<packet.getPayload()->getSiteId();
 
    messages.push_back(*std::dynamic_pointer_cast<Message>(packet.getPayload()));
 
