@@ -9,6 +9,9 @@
 #include "Transceiver.h"
 #include "Packet/Command.h"
 
+qint32 fixedBytesWritten = sizeof(qint32)+sizeof(qint32)+sizeof(quint32)+sizeof(quint32)+sizeof(qint32);
+                        ///      bytes     source        errcode      DataPacket::data_t   siteID
+
 Transceiver::Transceiver(qint32 siteID, QObject* parent):_siteID(siteID),QThread(parent) {}
 
 void Transceiver::run() {
@@ -56,8 +59,7 @@ void Transceiver::recvPacket() {
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
     while(this->socket->bytesAvailable()>0) {
-        auto sktAvblBytes = socket->bytesAvailable();
-        //std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
+        std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
         if(this->socketSize==0) {
             in >> bytes;
             this->socketSize = bytes;
@@ -99,7 +101,7 @@ void Transceiver::recvPacket() {
                 break;
             }
         }
-        //std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
+        std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
         std::cout<<std::endl;
         this->socketSize=0;
     }
@@ -192,11 +194,17 @@ void Transceiver::sendAllMessages() {
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+
     auto *strMess = new StringMessages(messages,_siteID);
+    auto formMess = strMess->getFormattedMessages();
+    tmp << formMess;
+    qint32 bytes = fixedBytesWritten + buf.data().size();
     DataPacket pkt(_siteID,0,DataPacket::textTyping,strMess);
-    qint32 bytes=16+(strMess->getFormattedMessages().size()*16)/8+4+4;
-    out << bytes<<pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
-         strMess->getSiteId() << strMess->getFormattedMessages() ;
+    out << bytes << _siteID << 0 <<(quint32) DataPacket::textTyping <<
+         strMess->getSiteId() << formMess;
 
     socket->waitForBytesWritten(-1);
 
@@ -226,14 +234,15 @@ void Transceiver::sendLoginInfo(DataPacket& packet){
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    /*
-    qint32 bytes = sizeof(qint32)+sizeof(qint32)+sizeof(quint32)+
-        +sizeof(qint32)+sizeof(LoginInfo::type_t)+ptr->getUser().size()*16/8+
-        +ptr->getPassword().size()*16/8;
-    */
-    qint32 bytes = -14;
-    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
-    out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword();
+
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
+    out << bytes << packet.getSource() << packet.getErrcode() << (quint32) packet.getTypeOfData();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword();
     socket->waitForBytesWritten(-1);
 
 }
@@ -245,8 +254,14 @@ void Transceiver::sendCommand(DataPacket& packet){
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    qint32 bytes=-14;//TODO dimensione socket
-    out <<bytes<< packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+    tmp << (quint32) ptr->getCmd() << ptr->getArgs();
+
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
+    out <<bytes<< packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData();
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
     socket->waitForBytesWritten(-1);
 

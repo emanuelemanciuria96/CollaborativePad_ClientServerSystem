@@ -16,6 +16,10 @@
 
 
 SocketsPool ServerThread::_sockets;
+qint32 fixedBytesWritten = sizeof(qint32)+sizeof(qint32)+sizeof(quint32)+sizeof(quint32)+sizeof(qint32);
+                         ///      bytes     source        errcode      DataPacket::data_t   siteID
+
+
 
 ServerThread::ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent):QThread(parent){
     this->socketDescriptor = socketDesc;
@@ -317,14 +321,22 @@ void ServerThread::sendPacket(DataPacket packet){
 }
 
 void ServerThread::sendLoginInfo(DataPacket &packet) {
+
     auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
+
     QDataStream out;
     out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
 
-    qint32 bytes=-14;//TODO dimensione socket
-    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
-    out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword();
+
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
+    out << bytes<<packet.getSource() << packet.getErrcode() << (quint32) packet.getTypeOfData();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword();
     socket->waitForBytesWritten(-1);
 
     std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
@@ -337,10 +349,17 @@ void ServerThread::sendMessage(DataPacket& packet){
     out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
 
-    auto strMess = std::dynamic_pointer_cast<StringMessages>(packet.getPayload());
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
 
-    qint32 bytes=16+(strMess->getFormattedMessages().size()*16)/8+4+4;
-        out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
+    auto strMess = std::dynamic_pointer_cast<StringMessages>(packet.getPayload());
+    auto formMess = strMess->getFormattedMessages();
+
+    tmp << formMess;
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
+    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
         strMess->getSiteId() << strMess->getFormattedMessages();
     socket->waitForBytesWritten(-1);
 
@@ -353,8 +372,15 @@ void ServerThread::sendCommand(DataPacket& packet){
     out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
 
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+
     auto ptr = std::dynamic_pointer_cast<Command>(packet.getPayload());
-    qint32 bytes=-14;//TODO dimensione socket
+    tmp << (quint32) ptr->getCmd() << ptr->getArgs();
+
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
     out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
     socket->waitForBytesWritten(-1);
@@ -369,8 +395,10 @@ void ServerThread::sendFileInfo(DataPacket& packet){
     out.setVersion(QDataStream::Qt_5_5);
 
     auto ptr = std::dynamic_pointer_cast<FileInfo>(packet.getPayload());
-    qint32 bytes=-14;//TODO dimensione socket
-    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+
+    qint32 bytes = fixedBytesWritten + sizeof(quint32);
+
+    out << bytes<<packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData();
     out << ptr->getSiteId()<<(quint32) ptr->getFileInfo();
     socket->waitForBytesWritten(-1);
 
