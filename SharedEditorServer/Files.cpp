@@ -7,25 +7,6 @@
 
 enum{file,counter,mutex,dirty_bit};
 
-/// quando si vogliono creare i file "prova1.json" e "prova2.json" bisogna togliere
-/// 'default' alla dichiarazione del costruttore e togliere il codice commentato
-/**
-Files::Files() {
-    /// mi creo il json in maniera statica
-    std::vector<quint32> pos = {17};
-    Symbol s1('c',8,10,pos);
-    pos.push_back(12992);
-    Symbol s2('i',8,19,pos);
-    pos.push_back(92);
-    Symbol s3('a',8,29,pos);
-    pos.push_back(9928);
-    Symbol s4('o',8,40,pos);
-    std::vector<Symbol> syms = {s1,s2,s3,s4};
-    saveFileJson(".\\prova1.json",syms);
-    saveFileJson(".\\prova2.json",syms);
-
-}
-**/
 
 std::vector<Symbol> Files::openFile(QString& fileName) {
 

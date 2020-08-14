@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_SharedEditor_t {
-    QByteArrayData data[23];
-    char stringdata0[237];
+    QByteArrayData data[25];
+    char stringdata0[257];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -53,8 +53,10 @@ QT_MOC_LITERAL(17, 172, 7), // "process"
 QT_MOC_LITERAL(18, 180, 10), // "DataPacket"
 QT_MOC_LITERAL(19, 191, 3), // "pkt"
 QT_MOC_LITERAL(20, 195, 17), // "requireFileSystem"
-QT_MOC_LITERAL(21, 213, 12), // "deleteThread"
-QT_MOC_LITERAL(22, 226, 10) // "deleteText"
+QT_MOC_LITERAL(21, 213, 11), // "requireFile"
+QT_MOC_LITERAL(22, 225, 8), // "fileName"
+QT_MOC_LITERAL(23, 234, 12), // "deleteThread"
+QT_MOC_LITERAL(24, 247, 9) // "clearText"
 
     },
     "SharedEditor\0symbolsChanged\0\0pos\0s\0"
@@ -63,7 +65,8 @@ QT_MOC_LITERAL(22, 226, 10) // "deleteText"
     "QVector<QString>\0paths\0loginAchieved\0"
     "loginSlot\0QString&\0username\0password\0"
     "process\0DataPacket\0pkt\0requireFileSystem\0"
-    "deleteThread\0deleteText"
+    "requireFile\0fileName\0deleteThread\0"
+    "clearText"
 };
 #undef QT_MOC_LITERAL
 
@@ -73,7 +76,7 @@ static const uint qt_meta_data_SharedEditor[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -81,17 +84,18 @@ static const uint qt_meta_data_SharedEditor[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    4,   59,    2, 0x06 /* Public */,
-       8,    0,   68,    2, 0x06 /* Public */,
-       9,    1,   69,    2, 0x06 /* Public */,
-      12,    0,   72,    2, 0x06 /* Public */,
+       1,    4,   64,    2, 0x06 /* Public */,
+       8,    0,   73,    2, 0x06 /* Public */,
+       9,    1,   74,    2, 0x06 /* Public */,
+      12,    0,   77,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      13,    2,   73,    2, 0x0a /* Public */,
-      17,    1,   78,    2, 0x0a /* Public */,
-      20,    0,   81,    2, 0x0a /* Public */,
-      21,    0,   82,    2, 0x0a /* Public */,
-      22,    0,   83,    2, 0x0a /* Public */,
+      13,    2,   78,    2, 0x0a /* Public */,
+      17,    1,   83,    2, 0x0a /* Public */,
+      20,    0,   86,    2, 0x0a /* Public */,
+      21,    1,   87,    2, 0x0a /* Public */,
+      23,    0,   90,    2, 0x0a /* Public */,
+      24,    0,   91,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Int, 0x80000000 | 6,    3,    4,    5,    7,
@@ -103,6 +107,7 @@ static const uint qt_meta_data_SharedEditor[] = {
     QMetaType::Void, 0x80000000 | 14, 0x80000000 | 14,   15,   16,
     QMetaType::Void, 0x80000000 | 18,   19,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   22,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -122,8 +127,9 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 4: _t->loginSlot((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 5: _t->process((*reinterpret_cast< DataPacket(*)>(_a[1]))); break;
         case 6: _t->requireFileSystem(); break;
-        case 7: _t->deleteThread(); break;
-        case 8: _t->deleteText(); break;
+        case 7: _t->requireFile((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 8: _t->deleteThread(); break;
+        case 9: _t->clearText(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -206,13 +212,13 @@ int SharedEditor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     }
     return _id;
 }

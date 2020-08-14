@@ -21,6 +21,10 @@ public:
 
 public slots:
     void constructFromPaths(const QVector<QString> &paths);
+    void openFile(QTreeWidgetItem *item, int column);
+
+signals:
+    void opnFileRequest(QString fileName);
 
 private:
     QTreeWidgetItem *root;

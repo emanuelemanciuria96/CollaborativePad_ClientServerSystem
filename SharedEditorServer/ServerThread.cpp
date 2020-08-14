@@ -144,7 +144,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
             QPointer<QThread> th(this);
             qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
             emit recordThread(th);
-
+/*****************************
             /// in mancanza di un client che mi chieda di ricevere un file, faccio questo nella
             /// procedura di login
                 QString name = QString::fromStdString("/prova1>F");
@@ -167,7 +167,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                 msgHandler->submit(&NetworkServer::processOpnCommand, comm);
             /// quando il client chiederà autonomamente di aprire un file
             /// ELIMINARE FINO A QUI
-
+*****************************/
         } else {
             std::cout << "client not logged!" << std::endl;
             sendPacket(packet);
@@ -251,11 +251,15 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
         case (Command::opn):{
             QString fileName;
-
+            std::cout << "file requested: "<<command->getArgs()[0].toStdString() << std::endl;
             fileName = command->opnCommand(threadId);
             if(!fileName.isEmpty()) {
-                if( operatingFileName != "" )
-                    _sockets.detachSocket(operatingFileName,_siteID);
+                if( operatingFileName != "" ) {
+                    _sockets.detachSocket(operatingFileName, _siteID);
+                    QVector<QString> vec = {operatingFileName};
+                    auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);
+                    msgHandler->submit(&NetworkServer::processClsCommand,comm);
+                }
 
                 operatingFileName = fileName;
                 _sockets.attachSocket(fileName,_siteID,socket.get());
@@ -275,8 +279,10 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::cls):{
-            if( operatingFileName!="")
-                _sockets.detachSocket(operatingFileName,_siteID);
+            if( operatingFileName!="") {
+                _sockets.detachSocket(operatingFileName, _siteID);
+                msgHandler->submit(&NetworkServer::processClsCommand, command);
+            }
             break;
         }
 

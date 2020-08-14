@@ -52,8 +52,9 @@ public slots:
     void loginSlot(QString& username, QString& password);
     void process(DataPacket pkt);
     void requireFileSystem();
+    void requireFile(QString fileName);
     void deleteThread();
-    void deleteText();
+    void clearText();
 
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);

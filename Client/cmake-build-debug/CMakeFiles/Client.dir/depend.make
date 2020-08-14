@@ -547,6 +547,7 @@ CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTextStream
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
+CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QVector
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
 CMakeFiles/Client.dir/EditorGUI.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -1251,6 +1252,7 @@ CMakeFiles/Client.dir/MainWindow.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore
 CMakeFiles/Client.dir/MainWindow.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
 CMakeFiles/Client.dir/MainWindow.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
 CMakeFiles/Client.dir/MainWindow.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QVariant
+CMakeFiles/Client.dir/MainWindow.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QVector
 CMakeFiles/Client.dir/MainWindow.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtCore
 CMakeFiles/Client.dir/MainWindow.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtCoreDepends
 CMakeFiles/Client.dir/MainWindow.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
@@ -2150,6 +2152,7 @@ CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCo
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
+CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QVector
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
 CMakeFiles/Client.dir/SharedEditor.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h
@@ -2369,6 +2372,7 @@ CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QText
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QVariant
+CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QVector
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtCore
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtCoreDepends
 CMakeFiles/Client.dir/main.cpp.obj: C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal

@@ -99,6 +99,20 @@ bool FileSystemTreeView::isChild(QTreeWidgetItem *parent, QString name) {
     return false;
 }
 
+void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
+
+    auto itm = item;
+    if( item->text(1) == "FILE") {
+        QString path = "";
+        for ( ; itm != root; itm = itm->parent())
+            path = "/"+itm->text(0)+path;
+
+        path+=">F";
+        emit opnFileRequest(path);
+    }
+
+}
+
 FileSystemTreeView::~FileSystemTreeView() {
     delete root;
 }

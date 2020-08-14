@@ -21,7 +21,7 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
     connect(transceiver,SIGNAL(finished()),this,SLOT(deleteThread()));
     connect(transceiver,&Transceiver::readyToProcess,this,&SharedEditor::process,Qt::QueuedConnection);
-    connect(transceiver,&Transceiver::deleteText,this,&SharedEditor::deleteText,Qt::QueuedConnection);
+    connect(transceiver,&Transceiver::deleteText,this,&SharedEditor::clearText,Qt::QueuedConnection);
 
 
     transceiver->start();
@@ -315,7 +315,7 @@ void SharedEditor::processTreeCommand(Command& cmd){
     emit filePathsArrived(cmd.getArgs());
 }
 
-void SharedEditor::deleteText(){
+void SharedEditor::clearText(){
     emit deleteAllText();
 }
 
@@ -365,6 +365,21 @@ void SharedEditor::requireFileSystem() {
 
 }
 
+void SharedEditor::requireFile(QString fileName) {
+    QVector<QString> vec = {std::move(fileName)};
+    auto cmd = std::make_shared<Command>(_siteId,Command::opn,vec);
+    DataPacket packet(_siteId,0,DataPacket::command);
+    packet.setPayload(cmd);
+
+    if( !_symbols.empty() )
+        clearText();
+
+    int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
+}
+
+
 void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare ma per ora non ho idee migliori
    /* DataPacket packet(-1, -1, DataPacket::command);
     packet.setPayload( std::make_shared<Command>( _siteId, Command::cd, QVector<QString>(1, "")));
@@ -406,4 +421,3 @@ void SharedEditor::deleteThread() {
     transceiver->deleteLater();
     exit(-1);
 }
-

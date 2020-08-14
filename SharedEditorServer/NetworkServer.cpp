@@ -103,11 +103,11 @@ void NetworkServer::localErase(Payload &pl) {
 void NetworkServer::processOpnCommand(Payload &pl) {
 
     Command& comm = dynamic_cast<Command&>(pl);
+    QString fileName = comm.getArgs().front();
 
-    std::cout<<"opening files"<<std::endl;
+    std::cout<<"opening file: "<<fileName.toStdString()<<std::endl;
 
-    QString filename = comm.getArgs().front();
-    std::vector<Symbol> symbles = files.openFile(filename);
+    std::vector<Symbol> symbles = files.openFile(fileName);
 
     std::vector<Message> vm;
     int index = 0;
@@ -145,6 +145,17 @@ void NetworkServer::processOpnCommand(Payload &pl) {
         emit active_threads.find(comm.getSiteId())->second->getSocket()->sendMessage(pkt);
     }
     fileOpened.store(true);
+
+}
+
+void NetworkServer::processClsCommand(Payload &pl) {
+
+    Command &comm = dynamic_cast<Command &>(pl);
+    QString fileName = comm.getArgs()[0];
+
+    std::cout<<"closing file: "<<fileName.toStdString()<<std::endl;
+
+    files.closeFile(fileName);
 
 }
 
