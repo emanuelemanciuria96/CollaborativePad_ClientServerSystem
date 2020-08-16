@@ -21,7 +21,7 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
 void EditorGUI::setUpGUI() {
 //    inizializzo gli elementi
 //    setupFileActions();
-    textEdit = new MyTextEdit(remoteCursors,this);
+    textEdit = new MyTextEdit(&remoteCursors,this);
     setLayout(new QVBoxLayout(this));
     this->layout()->addWidget(textEdit);
     this->layout()->setContentsMargins(0,0,0,0);
@@ -152,7 +152,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             for (i = 0; i < charsAdded; i++) {
                 model->localInsert(pos + i, textEdit->document()->characterAt(pos + i));
             }
-            updateRemoteCursors(model->getSiteId(),pos,Message::insertion);
+//            updateRemoteCursors(model->getSiteId(),pos,Message::insertion);
         }
     }
 }
@@ -167,10 +167,11 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
     cursor->insertText(value);
+    textEdit->update();
+    drawLabel(cursor);
     //std::cout << "Inseriti " << value.size() << " caratteri in " << pos << std::endl;
     signalBlocker = !signalBlocker;
-    drawCursor(cursor);
-    updateRemoteCursors(siteId,pos, Message::insertion);
+//    updateRemoteCursors(siteId,pos, Message::insertion);
 }
 
 bool EditorGUI::checkSiteId(RemoteCursor &rc, qint32 siteId) {
@@ -190,8 +191,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     cursor->removeSelectedText();
     //std::cout << "Rimosso " << pos << std::endl;
     signalBlocker = !signalBlocker;
-    drawCursor(cursor);
-    updateRemoteCursors(siteId,pos, Message::removal);
+//    updateRemoteCursors(siteId,pos, Message::removal);
 }
 
 //chiamata quando si ricevono modifiche
@@ -216,7 +216,7 @@ void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos, Message::action_t 
 
     for (auto & remoteCursor : remoteCursors) {
         if (remoteCursor.getSiteId() != mySiteId) {
-            drawCursor(&remoteCursor);
+            drawLabel(&remoteCursor);
 //            auto newPosition = it->position();
 //            if (newPosition > pos) {
 //                if (action == Message::insertion)
@@ -232,7 +232,6 @@ void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos, Message::action_t 
 RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     RemoteCursor *cursor;
 //    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
-//    std::for_each(remoteCursors.begin(), remoteCursors.end(), [](RemoteCursor& rc){std::cout << rc.getSiteId() << std::endl;});
     auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
         std::cout << "SiteId: " << c.getSiteId() << std::endl;
         return (c.getSiteId() == siteId);
@@ -240,6 +239,7 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     if (it == remoteCursors.end()) {
         remoteCursors.emplace_back(textEdit->document(), siteId);
         cursor = &remoteCursors.back();
+        connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
     } else
         cursor = (&(*it));
     return cursor;
@@ -273,44 +273,15 @@ void EditorGUI::flushInsertQueue() {
     posLastChar = -1;
 }
 
-void EditorGUI::drawCursor(RemoteCursor *cursor){
-    // Obtain rectangle of 'real' cursor
-    // and the biggest font that can be contained
+void EditorGUI::drawLabel(RemoteCursor *cursor){
     if (cursor->labelTimer->isActive())
         cursor->labelTimer->stop();
+
     const QRect curRect = textEdit->cursorRect(*cursor);
-    auto width = curRect.width();
-    auto height = curRect.height();
-//    std::cout << width<<"x"<<height<<std::endl;
-
-
-
-
-    QFont bigFont=this->font();
-    bigFont.setPixelSize(curRect.height());
-    QFontMetrics bigFontInfo(bigFont);
-
-//     Obtain size of current font
-    QFont thisFont=this->font();
-    thisFont.setPointSize(textEdit->fontPointSize());
-    QFontMetrics thisFontInfo(thisFont);
-    int thisFontHeight=thisFontInfo.height();
-
-//     Obtain a rectangle that encloses the char, aligned to
-//     the bottom of the 'real' cursor rectangle
-    QRect thisRect=thisFontInfo.boundingRect(curRect, Qt::AlignBottom, "I");
-
-//     Calculate where is the baseline of the current char
-//     with respect to the one of the biggest char
-    int biggerBaseline=curRect.bottom()-bigFontInfo.descent();
-    int thisBaseline=thisRect.bottom()-thisFontInfo.descent();
-    int baseLineDiff=abs(thisBaseline-biggerBaseline);
-
-    int ty=thisRect.bottom()-thisFontInfo.descent()-thisFontHeight*0.85-baseLineDiff;
 
     cursor->labelName->setParent(textEdit);
     cursor->labelName->show();
-    cursor->labelName->move(curRect.left()+5,ty-5);
+    cursor->labelName->move(curRect.left()+5,curRect.top()-5);
     connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
     cursor->labelTimer->start(5000);
 }
@@ -330,9 +301,10 @@ void EditorGUI::handleCursorPosChanged() {
 
 void EditorGUI::updateRemoteCursorPos(quint32 pos, qint32 siteId) {
     std::cout <<"update:" <<siteId << " " << pos << std::endl;
-    auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
-        std::cout << "SiteId: " << c.getSiteId() << std::endl;
-        return (c.getSiteId() == siteId);
-    });
-    it->setPosition(pos,QTextCursor::MoveAnchor);
+
+    auto cursor = getRemoteCursor(siteId);
+    cursor->setPosition(pos, QTextCursor::MoveAnchor);
+    textEdit->update();
+    drawLabel(cursor);
+
 }

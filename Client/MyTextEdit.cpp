@@ -7,24 +7,29 @@
 #include "MyTextEdit.h"
 
 
-MyTextEdit::MyTextEdit(std::vector<RemoteCursor>& remoteCursors, QWidget *parent) : QTextEdit(parent){
-    this->remoteCursors = &remoteCursors;
+MyTextEdit::MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget *parent) : QTextEdit(parent){
+    this->remoteCursors = std::shared_ptr<std::vector<RemoteCursor>>(remoteCursors);
 }
 
 void MyTextEdit::paintEvent(QPaintEvent *e) {
     QTextEdit::paintEvent(e);
     QPainter painter(viewport());
-
-//    if (remoteCursors->empty())
-//        std::cout << "cursori vuoto" << std::endl;
     QPen pen;
-    pen.setColor(Qt::red);
-    pen.setWidth(2);
-    painter.setPen(pen);
+
+
     for (auto & remoteCursor : *remoteCursors) {
+        pen.setColor(remoteCursor.color);
+        pen.setWidth(2);
+        painter.setPen(pen);
+//        if (remoteCursor.labelTimer->isActive())
+//            remoteCursor.labelTimer->stop();
 //        std::cout << remoteCursor.getSiteId() << std::endl;
         const QRect curRect = cursorRect(remoteCursor);
         painter.drawLine(curRect.topLeft(),curRect.bottomLeft());
+//        remoteCursor.labelName->setParent(this);
+//        remoteCursor.labelName->show();
+//        remoteCursor.labelName->move(curRect.left()+5,curRect.top()-5);
+//        remoteCursor.labelTimer->start(5000);
     }
 }
 

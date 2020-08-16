@@ -60,7 +60,7 @@ private:
     void insertText(qint32 pos, const QString& value, qint32 siteId);
     void deleteText(qint32 pos, qint32 siteId,qint32 n);
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
-    void drawCursor(RemoteCursor *cursor);
+    void drawLabel(RemoteCursor *cursor);
 
 private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);

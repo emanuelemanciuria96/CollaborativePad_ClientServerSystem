@@ -8,13 +8,14 @@
 
 #include <QtWidgets/QTextEdit>
 #include "RemoteCursor.h"
+#include <memory>
 
 class MyTextEdit : public QTextEdit{
     Q_OBJECT
 private:
-    std::vector<RemoteCursor> *remoteCursors;
+    std::shared_ptr<std::vector<RemoteCursor>> remoteCursors;
 public:
-    MyTextEdit(std::vector<RemoteCursor>& remoteCursors, QWidget* parent = 0);
+    MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget* parent = 0);
 protected:
     void paintEvent(QPaintEvent *e) override;
 };
