@@ -10,6 +10,7 @@
 #include "EditorGUI.h"
 #include "LoginDialog.h"
 #include "FileSystemTreeView.h"
+#include "AccountView.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -27,13 +28,16 @@ private:
     LoginDialog *loginDialog;
     QStatusBar* statusBar;
     QToolBar* toolBar;
+    AccountView *accountView;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
     void treeFileSystemSettings();
+    void accountSettings();
 
 public slots:
     void loginFinished();
+    void openAccountView();
 
 };
 

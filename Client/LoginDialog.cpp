@@ -35,9 +35,9 @@ void LoginDialog::setUpGUI() {
     //inizializzo buttons
     buttons = new QDialogButtonBox(this);
     buttons->addButton(QDialogButtonBox::Ok);
-    //buttons->addButton(QDialogButtonBox::Cancel);
+    signInButton = new QPushButton("Sign in", this);
+    buttons->addButton(signInButton ,QDialogButtonBox::ActionRole);
     buttons->button(QDialogButtonBox::Ok)->setText("Login");
-    //buttons->button(QDialogButtonBox::Cancel)->setWindowIconText("Abort");
 
     //connect per chiudere la finestra
     //connect(buttons->button(QDialogButtonBox::Cancel),SIGNAL(clicked()), this, SLOT(close()));
@@ -45,6 +45,8 @@ void LoginDialog::setUpGUI() {
     //connect per login
     connect(buttons->button(QDialogButtonBox::Ok), SIGNAL(clicked()),this, SLOT(slotAcceptLogin()));
 
+    //connect registrazione
+    connect(signInButton,&QPushButton::clicked,this, &LoginDialog::slotSignIn);
     //posiziono gli elementi
     formGridLayout->addWidget(labelUsername,0,0);
     formGridLayout->addWidget(editUsername,0,1);
@@ -78,5 +80,9 @@ void LoginDialog::slotAcceptLogin() {
     emit acceptLogin(username,password);
     emit loginAchieved();
     abort = false;
+}
+
+void LoginDialog::slotSignIn() {
+    emit signIn();
 }
 

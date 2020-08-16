@@ -26,6 +26,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     treeFileSystemSettings();
     // login creation
     loginSettings();
+    // accountView creation
+    accountSettings();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(loginDialog, &LoginDialog::loginAchieved, this, &MainWindow::loginFinished);
@@ -33,12 +35,12 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor,&SharedEditor::deleteAllText, editor,&EditorGUI::deleteAllText);
     connect(shEditor,&SharedEditor::filePathsArrived, treeView,&FileSystemTreeView::constructFromPaths);
     connect(shEditor,&SharedEditor::RemoteCursorPosChanged, editor,&EditorGUI::updateRemoteCursorPos);
+    connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::openAccountView);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
 
     this->setCentralWidget(widgetLogin);
-
 }
 
 void MainWindow::loginFinished() {
@@ -115,6 +117,12 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
 
 }
 
+void MainWindow::accountSettings(){
+    accountView = new AccountView(this);
+    this->layout()->addWidget(accountView);
+    accountView->hide();
+}
+
 MainWindow::~MainWindow() {
     widgetLogin->deleteLater();
     widgetEditor->deleteLater();
@@ -125,3 +133,10 @@ MainWindow::~MainWindow() {
     statusBar->deleteLater();
     toolBar->deleteLater();
 }
+
+void MainWindow::openAccountView() {
+    loginDialog->hide();
+    setCentralWidget(accountView);
+    accountView->show();
+}
+

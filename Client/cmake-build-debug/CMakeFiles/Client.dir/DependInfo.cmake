@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/AccountView.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/AccountView.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/EditorGUI.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/FileSystemTreeView.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/FileSystemTreeView.cpp.obj"

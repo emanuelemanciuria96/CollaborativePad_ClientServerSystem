@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Client_autogen.dir/AutogenUsed.txt"
   "CMakeFiles/Client_autogen.dir/ParseCache.txt"
   "Client_autogen"
+  "CMakeFiles/Client.dir/AccountView.cpp.obj"
   "CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj"
   "CMakeFiles/Client.dir/EditorGUI.cpp.obj"
   "CMakeFiles/Client.dir/FileSystemTreeView.cpp.obj"
