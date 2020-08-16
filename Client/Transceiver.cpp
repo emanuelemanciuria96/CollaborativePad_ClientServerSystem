@@ -62,7 +62,7 @@ void Transceiver::recvPacket() {
             this->socketSize = bytes;
         }
         if(this->socketSize!=0 && bytes!=-14){
-            if(socket->bytesAvailable()!=this->socketSize-4){
+            if(socket->bytesAvailable()<this->socketSize-4){
                 return;
             }
         }
@@ -86,6 +86,10 @@ void Transceiver::recvPacket() {
             }
             case (DataPacket::command): {
                 recvCommand(packet, in);
+                break;
+            }
+            case (DataPacket::cursorPos):{
+                recvCursorPos(packet,in);
                 break;
             }
             default: {
@@ -157,6 +161,11 @@ void Transceiver::sendPacket(DataPacket pkt){
 
         case (DataPacket::command): {
             sendCommand(pkt);
+            break;
+        }
+
+        case (DataPacket::cursorPos):{
+            sendCursorPos(pkt);
             break;
         }
 
@@ -242,4 +251,28 @@ void Transceiver::disconnected(){
 
 void Transceiver::rollBack(){
     emit deleteText();
+}
+
+void Transceiver::sendCursorPos(DataPacket &packet) {
+    QDataStream out;
+    out.setDevice(socket);
+    out.setVersion(QDataStream::Qt_5_5);
+
+    auto ptr = std::dynamic_pointer_cast<CursorPosition>(packet.getPayload());
+    qint32 bytes=-14;//TODO dimensione socket
+    out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
+        ptr->getPos() << ptr->getSiteId() ;
+    std::cout << "sending cursor pos "<<  ptr->getSiteId() << " "<< ptr-> getPos() << std::endl;
+}
+
+void Transceiver::recvCursorPos(DataPacket &pkt, QDataStream &in) {
+    qint32 siteId;
+    quint32 pos;
+
+    in >> pos >> siteId;
+
+    pkt.setPayload( std::make_shared<CursorPosition>(pos,siteId));
+
+    emit readyToProcess(pkt);
+
 }

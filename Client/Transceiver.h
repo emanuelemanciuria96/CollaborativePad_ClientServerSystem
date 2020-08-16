@@ -16,6 +16,7 @@
 #include "Packet/LoginInfo.h"
 #include "Packet/Payload.h"
 #include "Packet/StringMessages.h"
+#include "Packet/CursorPosition.h"
 
 class Transceiver: public QThread {
 
@@ -49,13 +50,15 @@ private:
     void sendLoginInfo(DataPacket& pkt);
     void sendMessage(DataPacket& pkt);
     void sendCommand(DataPacket& pkt);
+    void sendCursorPos(DataPacket& packet);
+
     void recvLoginInfo(DataPacket& pkt, QDataStream& in);
     void recvMessage(DataPacket& pkt,QDataStream& in);
 
     void rollBack();
 
     void recvCommand(DataPacket& pkt,QDataStream& in);
-
+    void recvCursorPos(DataPacket& packet, QDataStream& in);
 
 };
 

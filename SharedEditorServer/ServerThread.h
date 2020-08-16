@@ -18,7 +18,7 @@
 #include "MessageHandler.h"
 #include "Socket.h"
 #include "SocketsPool.h"
-
+#include "Packet/CursorPosition.h"
 
 class ServerThread : public QThread{
 Q_OBJECT
@@ -57,10 +57,12 @@ private:
     void recvLoginInfo(DataPacket& packet, QDataStream& in);
     void recvMessage(DataPacket& packet,QDataStream& in);
     void recvCommand(DataPacket& packet,QDataStream& in);
+    void recvCursorPos(DataPacket& packet, QDataStream& in);
 
     void sendLoginInfo(DataPacket& packet);
     void sendMessage(DataPacket& packet);
     void sendCommand(DataPacket& packet);
+    void sendCursorPos(DataPacket& packet);
 
     void setThreadId();
 

@@ -9,7 +9,6 @@
 #include <QtCore/QArgument>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QGridLayout>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QLabel>
 #include <QStatusBar>
 #include <QToolBar>
@@ -26,12 +25,14 @@
 #include "SharedEditor.h"
 #include "RemoteCursor.h"
 #include <queue>
+#include <QTextEdit>
+#include "MyTextEdit.h"
 
 class EditorGUI: public QWidget {
     Q_OBJECT
 
 private:
-    QTextEdit* textEdit;
+    MyTextEdit* textEdit;
     QString fileName;
     SharedEditor* model;
     bool signalBlocker;
@@ -51,13 +52,11 @@ private:
     void setCurrentFileName(const QString &filename);
     bool load(const QString &f);
     void loadSymbols();
-    void updateRemoteCursors(qint32 siteId, int pos, Message::action_t action);
+    void updateRemoteCursors(qint32 mySiteId, int pos, Message::action_t action);
     RemoteCursor* getRemoteCursor(qint32 siteId);
     void removeCursor(qint32 siteId);
     void fileNew();
     void fileOpen();
-    void fileSave();
-    void fileSaveAs();
     void insertText(qint32 pos, const QString& value, qint32 siteId);
     void deleteText(qint32 pos, qint32 siteId,qint32 n);
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
@@ -67,10 +66,12 @@ private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);
     void flushInsertQueue();
     void setSelected(bool yes){ selected = yes;}
+    void handleCursorPosChanged();
 
 public slots:
     void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
     void deleteAllText();
+    void updateRemoteCursorPos(quint32 pos, qint32 siteId);
 
 signals:
     void clear();
@@ -78,6 +79,8 @@ signals:
 public:
     EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);
+
+
 
 };
 

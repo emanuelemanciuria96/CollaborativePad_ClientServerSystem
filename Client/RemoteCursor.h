@@ -10,6 +10,7 @@
 #include <QTextCursor>
 #include <QtWidgets/QLabel>
 #include "CursorNames.h"
+#include <QTimer>
 
 class RemoteCursor : public QTextCursor{
 private:
@@ -17,13 +18,12 @@ private:
     QString generateName();
 public:
     QLabel* labelName;
-    QLabel* labelCursor;
-
+    QTimer* labelTimer;
     RemoteCursor(): QTextCursor(){ _siteId = -1;};
     explicit RemoteCursor(qint32 siteId) : _siteId(siteId), QTextCursor() {};
     RemoteCursor(QTextDocument *document, qint32 siteId);
-//    RemoteCursor& operator=(const RemoteCursor& rc);
     qint32 getSiteId() const;
+
 };
 
 

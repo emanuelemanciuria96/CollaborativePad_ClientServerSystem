@@ -72,7 +72,7 @@ void ServerThread::recvPacket() {
             this->socketSize = bytes;
         }
         if(this->socketSize!=0 && bytes!=-14){
-            if(socket->bytesAvailable()!=this->socketSize-4){
+            if(socket->bytesAvailable()<this->socketSize-4){
                 return;
             }
         }
@@ -94,6 +94,11 @@ void ServerThread::recvPacket() {
 
             case (DataPacket::command): {
                 recvCommand(packet, in);
+                break;
+            }
+
+            case (DataPacket::cursorPos): {
+                recvCursorPos(packet, in);
                 break;
             }
 
@@ -143,7 +148,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 
             /// in mancanza di un client che mi chieda di ricevere un file, faccio questo nella
             /// procedura di login
-                QString name = QString::fromStdString("/prova"+std::to_string(_siteID)+">F");
+                QString name = QString::fromStdString("/prova1>F");
                 std::cout << name.toStdString() << std::endl;
                 QVector<QString> vec = {name};
                 auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);
@@ -272,6 +277,16 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
     }
 }
 
+void ServerThread::recvCursorPos(DataPacket &packet, QDataStream &in) {
+    qint32 siteId;
+    quint32 pos;
+
+    in >> pos >> siteId;
+    packet.setPayload(std::make_shared<CursorPosition>(pos, siteId));
+    std::cout << "Dentro recv " << siteId << std::endl;
+    _sockets.broadcast(operatingFileName, siteId,packet);
+}
+
 void ServerThread::sendPacket(DataPacket packet){
 
     std::cout<<"thread "<<std::this_thread::get_id()<<" sending packet to "<<this->socketDescriptor<<std::endl;
@@ -291,7 +306,10 @@ void ServerThread::sendPacket(DataPacket packet){
             sendCommand(packet);
             break;
         }
-
+        case (DataPacket::cursorPos): {
+            sendCursorPos(packet);
+            break;
+        }
         default: {
             std::cout<<"Coglione c'è un errore"<<std::endl;
         }
@@ -336,6 +354,17 @@ void ServerThread::sendCommand(DataPacket& packet){
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
 }
 
+void ServerThread::sendCursorPos(DataPacket &packet) {
+    QDataStream out;
+    out.setDevice(socket.get());
+    out.setVersion(QDataStream::Qt_5_5);
+
+    auto ptr = std::dynamic_pointer_cast<CursorPosition>(packet.getPayload());
+    qint32 bytes=-14;//TODO dimensione socket
+    out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
+    ptr->getPos() << ptr->getSiteId();
+
+}
 
 void ServerThread::disconnected()
 {

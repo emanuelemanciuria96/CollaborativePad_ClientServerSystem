@@ -22,6 +22,7 @@
 
 #include "Packet/LoginInfo.h"
 #include "Packet/Command.h"
+#include "Packet/CursorPosition.h"
 #include <vector>
 #include <algorithm>
 #include <QtCore/QTimer>
@@ -39,6 +40,7 @@ private:
     void processLoginInfo(LoginInfo& logInf);
     void processCommand(Command& cmd);
     void processCdCommand(Command& cmd);
+    void processCursorPos(CursorPosition& curPos);
     bool isLogged;
 
 public slots:
@@ -51,6 +53,7 @@ signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void deleteAllText();
     void filePathsArrived(QVector<QString> &paths);
+    void RemoteCursorPosChanged(qint32 siteId, quint32 pos);
 
 public:
     explicit SharedEditor(QObject *parent = 0);
@@ -58,6 +61,8 @@ public:
     void localErase( qint32 index );
     QString to_string();
     void testCommand();
+    qint32 getSiteId();
+    void sendCursorPos(qint32 pos);
 
 };
 

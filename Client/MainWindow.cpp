@@ -32,7 +32,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::symbolsChanged, editor, &EditorGUI::updateSymbols);
     connect(shEditor,&SharedEditor::deleteAllText, editor,&EditorGUI::deleteAllText);
     connect(shEditor,&SharedEditor::filePathsArrived, treeView,&FileSystemTreeView::constructFromPaths);
-
+    connect(shEditor,&SharedEditor::RemoteCursorPosChanged, editor,&EditorGUI::updateRemoteCursorPos);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);

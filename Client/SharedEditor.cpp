@@ -160,6 +160,13 @@ void SharedEditor::localErase(qint32 index) {
 
 }
 
+void SharedEditor::sendCursorPos(qint32 pos) {
+    DataPacket packet(_siteId, -1, DataPacket::cursorPos);
+    packet.setPayload(std::make_shared<CursorPosition>(pos, _siteId));
+
+    emit transceiver->getSocket()->sendPacket(packet);
+}
+
 void SharedEditor::process(DataPacket pkt) {
 
     switch (pkt.getTypeOfData()){
@@ -172,6 +179,9 @@ void SharedEditor::process(DataPacket pkt) {
         case DataPacket::command :
             processCommand(*std::dynamic_pointer_cast<Command>(pkt.getPayload()));
             break;
+        case DataPacket::cursorPos:
+            processCursorPos(*std::dynamic_pointer_cast<CursorPosition>(pkt.getPayload()));
+            break;
         default:
             std::cout<<"Coglione 2 volte, c'è un errore"<<std::endl;
             throw std::exception();
@@ -180,6 +190,10 @@ void SharedEditor::process(DataPacket pkt) {
     auto m = std::dynamic_pointer_cast<Message>(pkt.getPayload());
 
 
+}
+
+void SharedEditor::processCursorPos(CursorPosition &curPos) {
+    emit RemoteCursorPosChanged(curPos.getPos(), curPos.getSiteId());
 }
 
 void SharedEditor::processLoginInfo(LoginInfo &logInf) {
@@ -341,6 +355,10 @@ QString SharedEditor::to_string() {
 void SharedEditor::deleteThread() {
     transceiver->deleteLater();
     exit(-1);
+}
+
+qint32 SharedEditor::getSiteId() {
+    return _siteId;
 }
 
 

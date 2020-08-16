@@ -13,6 +13,7 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     posLastChar = -1;
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
+    connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
@@ -20,7 +21,7 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
 void EditorGUI::setUpGUI() {
 //    inizializzo gli elementi
 //    setupFileActions();
-    textEdit = new QTextEdit(this);
+    textEdit = new MyTextEdit(remoteCursors,this);
     setLayout(new QVBoxLayout(this));
     this->layout()->addWidget(textEdit);
     this->layout()->setContentsMargins(0,0,0,0);
@@ -125,12 +126,13 @@ void EditorGUI::setModel(SharedEditor* _model) {
     this->model = _model;
 }
 
+//chiamata quando si effettuano modifiche sul editor
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i = 0;
     if (!signalBlocker) {
         auto blocks = textEdit->document()->blockCount();
         auto pages = textEdit->document()->pageCount();
-        std::cout << "Numero blocchi: " << blocks << " Numero pagine: " << pages << std::endl;
+//        std::cout << "Numero blocchi: " << blocks << " Numero pagine: " << pages << std::endl;
         if (!selected && pos == 0 && charsRemoved > 0 && charsAdded > 1) {
             charsAdded -= charsRemoved;
             charsRemoved = 0;
@@ -143,12 +145,14 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             for (i = 0; i < charsRemoved; i++) {
                 model->localErase(pos);
             }
+            updateRemoteCursors(model->getSiteId(),pos,Message::removal);
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
             //std::cout << "Inserimento carattere " << pos << std::endl;
             for (i = 0; i < charsAdded; i++) {
                 model->localInsert(pos + i, textEdit->document()->characterAt(pos + i));
             }
+            updateRemoteCursors(model->getSiteId(),pos,Message::insertion);
         }
     }
 }
@@ -190,7 +194,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     updateRemoteCursors(siteId,pos, Message::removal);
 }
 
-
+//chiamata quando si ricevono modifiche
 void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action) {
     if (action == Message::removal) {
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
@@ -207,12 +211,12 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::act
     }
 }
 
-void EditorGUI::updateRemoteCursors(qint32 siteId, int pos, Message::action_t action) {
+void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos, Message::action_t action) {
     // aggiorno la posizione degli altri cursori
 
-    for (auto it = remoteCursors.begin(); it != remoteCursors.end(); it++) {
-        if (it->getSiteId() != siteId) {
-            drawCursor(&(*it));
+    for (auto & remoteCursor : remoteCursors) {
+        if (remoteCursor.getSiteId() != mySiteId) {
+            drawCursor(&remoteCursor);
 //            auto newPosition = it->position();
 //            if (newPosition > pos) {
 //                if (action == Message::insertion)
@@ -230,7 +234,7 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
 //    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
 //    std::for_each(remoteCursors.begin(), remoteCursors.end(), [](RemoteCursor& rc){std::cout << rc.getSiteId() << std::endl;});
     auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
-        //std::cout << "SiteId: " << c.getSiteId() << std::endl;
+        std::cout << "SiteId: " << c.getSiteId() << std::endl;
         return (c.getSiteId() == siteId);
     });
     if (it == remoteCursors.end()) {
@@ -255,13 +259,6 @@ void EditorGUI::fileOpen() {
 //    TODO
 }
 
-void EditorGUI::fileSave() {
-//    TODO
-}
-
-void EditorGUI::fileSaveAs() {
-//    TODO
-}
 
 void EditorGUI::flushInsertQueue() {
     if (insertQueue.empty())
@@ -279,16 +276,17 @@ void EditorGUI::flushInsertQueue() {
 void EditorGUI::drawCursor(RemoteCursor *cursor){
     // Obtain rectangle of 'real' cursor
     // and the biggest font that can be contained
+    if (cursor->labelTimer->isActive())
+        cursor->labelTimer->stop();
     const QRect curRect = textEdit->cursorRect(*cursor);
     auto width = curRect.width();
     auto height = curRect.height();
 //    std::cout << width<<"x"<<height<<std::endl;
 
-//    QPainter painter(this->textEdit);
-//    painter.setPen(Qt::red);
-//    painter.drawRect(curRect);
 
-        QFont bigFont=this->font();
+
+
+    QFont bigFont=this->font();
     bigFont.setPixelSize(curRect.height());
     QFontMetrics bigFontInfo(bigFont);
 
@@ -310,17 +308,31 @@ void EditorGUI::drawCursor(RemoteCursor *cursor){
 
     int ty=thisRect.bottom()-thisFontInfo.descent()-thisFontHeight*0.85-baseLineDiff;
 
-
     cursor->labelName->setParent(textEdit);
-    cursor->labelCursor->setParent(textEdit);
     cursor->labelName->show();
-    cursor->labelCursor->show();
-    cursor->labelName->move(curRect.left()+width+2, ty-5);
-//            curRect.top()-5);
-    cursor->labelCursor->move(curRect.left()-2,curRect.top());
+    cursor->labelName->move(curRect.left()+5,ty-5);
+    connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
+    cursor->labelTimer->start(5000);
 }
+
 void EditorGUI::deleteAllText() {
     signalBlocker = !signalBlocker;
     emit clear();
     signalBlocker = !signalBlocker;
+}
+
+void EditorGUI::handleCursorPosChanged() {
+    qint32 pos;
+    pos=textEdit->textCursor().position();
+    std::cout<< "cursor pos:" << pos << std::endl;
+    model->sendCursorPos(pos);
+}
+
+void EditorGUI::updateRemoteCursorPos(quint32 pos, qint32 siteId) {
+    std::cout <<"update:" <<siteId << " " << pos << std::endl;
+    auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
+        std::cout << "SiteId: " << c.getSiteId() << std::endl;
+        return (c.getSiteId() == siteId);
+    });
+    it->setPosition(pos,QTextCursor::MoveAnchor);
 }

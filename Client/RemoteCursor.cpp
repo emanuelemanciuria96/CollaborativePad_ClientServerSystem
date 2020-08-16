@@ -6,11 +6,10 @@
 
 RemoteCursor::RemoteCursor(QTextDocument *document, qint32 siteId) : _siteId(siteId), QTextCursor(document) {
     labelName = new QLabel();
-    labelCursor = new QLabel();
     labelName->setText(generateName());
-    labelCursor->setText("|");
-    labelCursor->setStyleSheet("QLabel {color: red}") ;
     labelName->setStyleSheet("QLabel {background-color: #55ff0000}") ;
+    labelTimer = new QTimer();
+    labelTimer->setSingleShot(true);
 };
 
 
@@ -29,3 +28,6 @@ QString RemoteCursor::generateName() {
 //    }
 //    return *this;
 //}
+
+
+
