@@ -175,10 +175,7 @@ void NetworkServer::recordThread(QPointer<QThread> th) {
 
 void NetworkServer::deleteThread(QPointer<QThread> th) {
     auto thread = dynamic_cast<ServerThread*>(th.data());
-    QString operating_file = thread->getOperatingFileName();
-    if(operating_file!=""){
-        files.closeFile(operating_file);
-    }
+    
     auto i = active_threads.find(thread->getSiteID());
     if( i != active_threads.end() )
         active_threads.erase(i);

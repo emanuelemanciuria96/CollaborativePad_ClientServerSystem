@@ -417,8 +417,12 @@ void ServerThread::sendFileInfo(DataPacket& packet){
 void ServerThread::disconnected()
 {
 
-    if( operatingFileName!="")
-        _sockets.detachSocket(operatingFileName,_siteID);
+    if( operatingFileName!=""){
+        _sockets.detachSocket(operatingFileName, _siteID);
+        QVector<QString> vec = {operatingFileName};
+        auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);
+        msgHandler->submit(&NetworkServer::processClsCommand,comm);
+    }
 
     socket->deleteLater();
     QSqlDatabase::removeDatabase(threadId+"_login");
