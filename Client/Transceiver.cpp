@@ -65,7 +65,7 @@ void Transceiver::recvPacket() {
             this->socketSize = bytes;
         }
         if(this->socketSize!=0 && bytes!=-14){
-            if(socket->bytesAvailable()<this->socketSize-4){
+            if(socket->bytesAvailable() < this->socketSize-4){
                 return;
             }
         }

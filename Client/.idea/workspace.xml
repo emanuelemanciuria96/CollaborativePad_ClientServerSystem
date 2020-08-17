@@ -12,26 +12,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
+    <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="completamento invio su socket">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileSystemTreeView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemTreeView.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileSystemTreeView.h" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemTreeView.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SharedEditor.h" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Transceiver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Transceiver.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Transceiver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Transceiver.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.internal" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/Files.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/Files.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.h" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -118,7 +109,9 @@
       <workItem from="1597339072085" duration="1918000" />
       <workItem from="1597396912404" duration="522000" />
       <workItem from="1597398223341" duration="1045000" />
-      <workItem from="1597403716488" duration="608000" />
+      <workItem from="1597403716488" duration="829000" />
+      <workItem from="1597671425861" duration="1415000" />
+      <workItem from="1597676580776" duration="3301000" />
     </task>
     <task id="LOCAL-00001" summary="completamento gestione file multipli + view del file system">
       <created>1597251525657</created>
@@ -196,26 +189,5 @@
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588099980638" />
     <state x="136" y="64" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1588427081475" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/SharedEditor.cpp</url>
-          <line>323</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Transceiver.cpp</url>
-          <line>141</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Transceiver.cpp</url>
-          <line>61</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

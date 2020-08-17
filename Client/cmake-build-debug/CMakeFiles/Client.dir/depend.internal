@@ -2254,6 +2254,7 @@ CMakeFiles/Client.dir/Transceiver.cpp.obj
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QString
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QThread
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QTimer
+ C:/Qt/5.12.5/mingw73_64/include/QtCore/QVector
  C:/Qt/5.12.5/mingw73_64/include/QtCore/QtGlobal
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qalgorithms.h
  C:/Qt/5.12.5/mingw73_64/include/QtCore/qarraydata.h

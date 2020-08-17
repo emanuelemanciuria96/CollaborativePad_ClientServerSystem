@@ -371,8 +371,10 @@ void SharedEditor::requireFile(QString fileName) {
     DataPacket packet(_siteId,0,DataPacket::command);
     packet.setPayload(cmd);
 
-    if( !_symbols.empty() )
+    if( !_symbols.empty() ) {
         clearText();
+        _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
+    }
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
