@@ -17,7 +17,7 @@
 
 SocketsPool ServerThread::_sockets;
 qint32 fixedBytesWritten = sizeof(qint32)+sizeof(qint32)+sizeof(quint32)+sizeof(quint32)+sizeof(qint32);
-                         ///      bytes     source        errcode      DataPacket::data_t   siteID
+///      bytes     source        errcode      DataPacket::data_t   siteID
 
 
 
@@ -70,7 +70,7 @@ void ServerThread::recvPacket() {
 
     while(this->socket->bytesAvailable()>0) {
 
-       // std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
+        // std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
         if(this->socketSize==0) {
             in >> bytes;
             this->socketSize = bytes;
@@ -111,13 +111,13 @@ void ServerThread::recvPacket() {
                 socket->readAll();
                 sendMessage(packet);
             }
-            break;
+                break;
         }
         //std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
         std::cout<<std::endl;
         this->socketSize=0;
     }
-   // std::cout<<"ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
+    // std::cout<<"ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
 
 }
 
@@ -128,8 +128,10 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
     qint32 type;
     QString user;
     QString password;
+    QPixmap image;
+    QString name;
 
-    in >> siteId >> type >> user >> password;
+    in >> siteId >> type >> user >> password >> name >> image;
 
     if(type == LoginInfo::login_request && _username.isEmpty()) {
         auto shr = std::make_shared<LoginInfo>( -1, (LoginInfo::type_t)type, user, password);
@@ -172,6 +174,11 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
             std::cout << "client not logged!" << std::endl;
             sendPacket(packet);
         }
+    } else if (type == LoginInfo::update_info && !_username.isEmpty()) {
+        auto shr = std::make_shared<LoginInfo>( _siteID, (LoginInfo::type_t)type, "", "");
+        shr->setImage(image);
+        shr->setName(name);
+        shr->updateInfo(threadId);
     }
 }
 
@@ -337,12 +344,12 @@ void ServerThread::sendLoginInfo(DataPacket &packet) {
     QBuffer buf;
     buf.open(QBuffer::WriteOnly);
     QDataStream tmp(&buf);
-    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword();
+    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage();
 
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
     out << bytes<<packet.getSource() << packet.getErrcode() << (quint32) packet.getTypeOfData();
-    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage();
     socket->waitForBytesWritten(-1);
 
     std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;

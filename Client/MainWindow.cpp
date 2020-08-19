@@ -12,6 +12,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     statusBar = new QStatusBar(this);
     statusBar->showMessage ("StatusBar");
     toolBar = new QToolBar("Toolbar",this);
+    infoWidget = new InfoWidget();
 
     //    aggiungo gli elementi alla finestra
     this->setStatusBar(statusBar);
@@ -35,7 +36,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::deleteAllText, editor, &EditorGUI::deleteAllText);
     connect(shEditor, &SharedEditor::filePathsArrived, treeView, &FileSystemTreeView::constructFromPaths);
     connect(this, &MainWindow::fileSystemRequest, shEditor, &SharedEditor::requireFileSystem);
-
+    connect(shEditor, &SharedEditor::userInfoArrived, infoWidget, &InfoWidget::loadData);
+    connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -50,6 +52,7 @@ void MainWindow::loginFinished() {
     this->setCentralWidget(widgetEditor);
     dockWidgetTree->show();
     widgetEditor->show();
+    infoWidget->show();
 }
 
 void MainWindow::loginSettings() {

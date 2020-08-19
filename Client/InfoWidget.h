@@ -1,0 +1,36 @@
+#ifndef INFOWIDGET_H
+#define INFOWIDGET_H
+
+#include <QWidget>
+#include <QtWidgets/QGraphicsScene>
+#include <QtWidgets/QMainWindow>
+#include "InfoWidgetEdit.h"
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class InfoWidget; }
+QT_END_NAMESPACE
+
+class InfoWidget : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    InfoWidget(QWidget *parent = nullptr);
+    const QPixmap *getImage();
+    QString getNickname();
+    QString getName();
+    ~InfoWidget();
+
+private:
+    Ui::InfoWidget *ui;
+    InfoWidgetEdit *infoWidgetEdit;
+
+public slots:
+    void loadData(const QPixmap& image, const QString& nickname, const QString& name);
+    void openInfoEdit();
+    void updateInfo(const QPixmap& image, const QString& name);
+
+signals:
+    void sendUpdatedInfo(const QPixmap& image, const QString& name);
+};
+#endif // INFOWIDGET_H

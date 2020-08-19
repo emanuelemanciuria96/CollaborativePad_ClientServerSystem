@@ -112,10 +112,15 @@ void Transceiver::recvLoginInfo(DataPacket& pkt,QDataStream& in){
     qint32 type;
     QString user;
     QString password;
+    QString name;
+    QPixmap image;
 
-    in >> siteId >> type >> user >> password;
+    in >> siteId >> type >> user >> password  >> name >> image;
     _siteID = siteId;
     pkt.setPayload(std::make_shared<LoginInfo>(siteId,(LoginInfo::type_t)type,user,password));
+    auto ptr = std::dynamic_pointer_cast<LoginInfo>(pkt.getPayload());
+    ptr->setImage(image);
+    ptr->setName(name);
 
     emit readyToProcess(pkt);
 
@@ -237,12 +242,12 @@ void Transceiver::sendLoginInfo(DataPacket& packet){
     QBuffer buf;
     buf.open(QBuffer::WriteOnly);
     QDataStream tmp(&buf);
-    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword();
+    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage();
 
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
     out << bytes << packet.getSource() << packet.getErrcode() << (quint32) packet.getTypeOfData();
-    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage();
     socket->waitForBytesWritten(-1);
 
 }

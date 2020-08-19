@@ -55,12 +55,14 @@ public slots:
     void requireFile(QString fileName);
     void deleteThread();
     void clearText();
+    void sendUpdatedInfo(const QPixmap& image, const QString& name);
 
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void deleteAllText();
     void filePathsArrived(const QVector<QString> &paths);
     void loginAchieved();
+    void userInfoArrived(const QPixmap& image, const QString& nickname, const QString& name);
 
 public:
     explicit SharedEditor(QObject *parent = 0);

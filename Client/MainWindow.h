@@ -10,6 +10,8 @@
 #include "EditorGUI.h"
 #include "LoginDialog.h"
 #include "FileSystemTreeView.h"
+#include "InfoWidget.h"
+#include "InfoWidgetEdit.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -26,6 +28,7 @@ private:
     LoginDialog *loginDialog;
     QStatusBar* statusBar;
     QToolBar* toolBar;
+    InfoWidget* infoWidget;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);

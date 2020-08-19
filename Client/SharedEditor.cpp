@@ -194,6 +194,7 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
         std::cout << "client successfully logged!" << std::endl;
         isLogged = true;
         emit loginAchieved();
+        emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName());
     } else {
         std::cout << "client not logged!" << std::endl;
     }
@@ -403,6 +404,15 @@ void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare m
     packet.setPayload( std::make_shared<Command>( 1, Command::tree, QVector<QString>()));
     emit transceiver->getSocket()->sendPacket(packet); //questo serve a farsi inviare tutte le subdirectory del client*/
 
+}
+
+void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name) {
+    DataPacket packet(-1, -1, DataPacket::login);
+    packet.setPayload( std::make_shared<LoginInfo>( _siteId, LoginInfo::update_info));
+    auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
+    ptr->setImage(image);
+    ptr->setName(name);
+    emit transceiver->getSocket()->sendPacket(packet);
 }
 
 QString SharedEditor::to_string() {
