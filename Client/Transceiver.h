@@ -17,6 +17,7 @@
 #include "Packet/Payload.h"
 #include "Packet/StringMessages.h"
 #include "Packet/CursorPosition.h"
+#include "Packet/Symbols/Symbol.h"
 
 class Transceiver: public QThread {
 

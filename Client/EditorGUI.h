@@ -71,7 +71,7 @@ private slots:
 public slots:
     void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
     void deleteAllText();
-    void updateRemoteCursorPos(quint32 pos, qint32 siteId);
+    void updateRemoteCursorPos(qint32 pos, qint32 siteId);
 
 signals:
     void clear();

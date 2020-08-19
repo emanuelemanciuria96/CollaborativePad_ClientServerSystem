@@ -95,7 +95,7 @@ static const uint qt_meta_data_EditorGUI[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Int, 0x80000000 | 14,    4,   12,   13,   15,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::UInt, QMetaType::Int,    4,   13,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    4,   13,
 
        0        // eod
 };
@@ -113,7 +113,7 @@ void EditorGUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 4: _t->handleCursorPosChanged(); break;
         case 5: _t->updateSymbols((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< qint32(*)>(_a[3])),(*reinterpret_cast< Message::action_t(*)>(_a[4]))); break;
         case 6: _t->deleteAllText(); break;
-        case 7: _t->updateRemoteCursorPos((*reinterpret_cast< quint32(*)>(_a[1])),(*reinterpret_cast< qint32(*)>(_a[2]))); break;
+        case 7: _t->updateRemoteCursorPos((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< qint32(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

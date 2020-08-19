@@ -279,11 +279,21 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
 void ServerThread::recvCursorPos(DataPacket &packet, QDataStream &in) {
     qint32 siteId;
-    quint32 pos;
+    qint32 index;
+    QChar ch;
+    qint32 symbol_siteId;
+    qint32 count;
+    QVector<quint32> pos;
 
-    in >> pos >> siteId;
-    packet.setPayload(std::make_shared<CursorPosition>(pos, siteId));
-    std::cout << "Dentro recv " << siteId << std::endl;
+    in >> ch >> symbol_siteId >> count >> pos >> index >> siteId;
+
+    std::cout << "Dentro recv " << siteId << " pos:" << index << std::endl;
+
+    auto pos_std = pos.toStdVector();
+    auto symbol = Symbol(ch,symbol_siteId,count,pos_std);
+
+    packet.setPayload(std::make_shared<CursorPosition>(symbol,index,siteId));
+
     _sockets.broadcast(operatingFileName, siteId,packet);
 }
 
@@ -360,9 +370,16 @@ void ServerThread::sendCursorPos(DataPacket &packet) {
     out.setVersion(QDataStream::Qt_5_5);
 
     auto ptr = std::dynamic_pointer_cast<CursorPosition>(packet.getPayload());
+    auto vector = QVector<quint32>();
+    for (auto p : ptr->getSymbol().getPos()){
+        vector.push_back(p);
+    }
+    std::cout << "sendCursorPos " << ptr->getIndex() << " siteID: " << ptr->getSiteId() << std::endl;
+
     qint32 bytes=-14;//TODO dimensione socket
     out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
-    ptr->getPos() << ptr->getSiteId();
+        ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
+        << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
 
 }
 

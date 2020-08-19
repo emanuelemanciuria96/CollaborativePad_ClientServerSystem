@@ -5,13 +5,16 @@
 #ifndef CLIENT_CURSORPOSITION_H
 #define CLIENT_CURSORPOSITION_H
 
+#include "Symbols/Symbol.h"
 #include "Payload.h"
 
 class CursorPosition : public Payload {
-    quint32 pos;
+    qint32 index;
+    Symbol s;
 public:
-    CursorPosition(qint32 pos, qint32 siteID);
-    quint32 getPos();
+    CursorPosition(Symbol& _s, qint32 index, qint32 siteID);
+    qint32 getIndex() const;
+    Symbol getSymbol();
 };
 
 

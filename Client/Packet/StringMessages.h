@@ -38,7 +38,7 @@ private:
 
     const QString messages_separator ="@%";   // separatore dei messaggi
     const QString items_separator ="#&";    //  separatore di elementi del messaggio
-    const QString pos_separator =",";      //  separatore degli elementi del pos di un messaggio
+    const QString pos_separator =",";      //  separatore degli elementi del index di un messaggio
     const int messages_separatorSize=messages_separator.size();
     const int items_separatorSize=items_separator.size();
     const int pos_separatorSize=pos_separator.size();

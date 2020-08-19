@@ -141,18 +141,18 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             charsAdded--;
         }
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
-            //std::cout << "Cancellazione carattere " << pos << std::endl;
+            //std::cout << "Cancellazione carattere " << index << std::endl;
             for (i = 0; i < charsRemoved; i++) {
                 model->localErase(pos);
             }
             updateRemoteCursors(model->getSiteId(),pos,Message::removal);
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
-            //std::cout << "Inserimento carattere " << pos << std::endl;
+            //std::cout << "Inserimento carattere " << index << std::endl;
             for (i = 0; i < charsAdded; i++) {
                 model->localInsert(pos + i, textEdit->document()->characterAt(pos + i));
             }
-//            updateRemoteCursors(model->getSiteId(),pos,Message::insertion);
+//            updateRemoteCursors(model->getSiteId(),index,Message::insertion);
         }
     }
 }
@@ -163,15 +163,15 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
 
     cursor = getRemoteCursor(siteId);
 
-//    std::cout << "position:" << pos << std::endl;
+//    std::cout << "position:" << index << std::endl;
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
     cursor->insertText(value);
-    textEdit->update();
-    drawLabel(cursor);
-    //std::cout << "Inseriti " << value.size() << " caratteri in " << pos << std::endl;
+//    textEdit->update();
+//    drawLabel(cursor);
+    //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
     signalBlocker = !signalBlocker;
-//    updateRemoteCursors(siteId,pos, Message::insertion);
+//    updateRemoteCursors(siteId,index, Message::insertion);
 }
 
 bool EditorGUI::checkSiteId(RemoteCursor &rc, qint32 siteId) {
@@ -180,18 +180,18 @@ bool EditorGUI::checkSiteId(RemoteCursor &rc, qint32 siteId) {
 
 void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     pos--;
-    RemoteCursor *cursor;
+    QTextCursor *cursor;
 
     cursor = getRemoteCursor(siteId);
 
-//    std::cout << "position:" << pos << std::endl;
+//    std::cout << "position:" << index << std::endl;
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     cursor->setPosition(pos + n, QTextCursor::KeepAnchor);
     signalBlocker = !signalBlocker;
     cursor->removeSelectedText();
-    //std::cout << "Rimosso " << pos << std::endl;
+    //std::cout << "Rimosso " << index << std::endl;
     signalBlocker = !signalBlocker;
-//    updateRemoteCursors(siteId,pos, Message::removal);
+//    updateRemoteCursors(siteId,index, Message::removal);
 }
 
 //chiamata quando si ricevono modifiche
@@ -201,13 +201,13 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::act
         deleteText(pos, siteId, s.size());
     } else {
         insertText(pos, s, siteId);
-//        if(posLastChar<0 || pos!=posLastChar+1) {
+//        if(posLastChar<0 || index!=posLastChar+1) {
 //            flushInsertQueue();
-//            posQueue = pos;
+//            posQueue = index;
 //            siteIdQueue = siteId;
 //        }
 //        insertQueue.push(value);
-//        posLastChar = pos;
+//        posLastChar = index;
     }
 }
 
@@ -218,7 +218,7 @@ void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos, Message::action_t 
         if (remoteCursor.getSiteId() != mySiteId) {
             drawLabel(&remoteCursor);
 //            auto newPosition = it->position();
-//            if (newPosition > pos) {
+//            if (newPosition > index) {
 //                if (action == Message::insertion)
 //                    it->setPosition(newPosition + 1, QTextCursor::MoveAnchor);
 //                else
@@ -294,14 +294,15 @@ void EditorGUI::deleteAllText() {
 
 void EditorGUI::handleCursorPosChanged() {
     qint32 pos;
-    pos=textEdit->textCursor().position();
-    std::cout<< "cursor pos:" << pos << std::endl;
-    model->sendCursorPos(pos);
+    pos = textEdit->textCursor().position();
+    std::cout << "cursor index:" << pos << std::endl;
+    if (model->getSiteId() != -1) {
+        model->sendCursorPos(pos);
+    }
 }
 
-void EditorGUI::updateRemoteCursorPos(quint32 pos, qint32 siteId) {
-    std::cout <<"update:" <<siteId << " " << pos << std::endl;
-
+void EditorGUI::updateRemoteCursorPos(qint32 pos, qint32 siteId) {
+    std::cout<< "draw in " << pos << " siteID: " << siteId <<std::endl;
     auto cursor = getRemoteCursor(siteId);
     cursor->setPosition(pos, QTextCursor::MoveAnchor);
     textEdit->update();

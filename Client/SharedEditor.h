@@ -35,7 +35,7 @@ private:
     std::vector<Symbol> _symbols;
     qint32 _counter;
     Transceiver* transceiver;
-    qint32 getIndex(Message& m);
+    qint32 getIndex(qint32 index, Symbol symbol);
     void processMessages(StringMessages& strMess);
     void processLoginInfo(LoginInfo& logInf);
     void processCommand(Command& cmd);
@@ -53,7 +53,7 @@ signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void deleteAllText();
     void filePathsArrived(QVector<QString> &paths);
-    void RemoteCursorPosChanged(qint32 siteId, quint32 pos);
+    void RemoteCursorPosChanged(qint32 pos, qint32 siteId);
 
 public:
     explicit SharedEditor(QObject *parent = 0);
@@ -62,7 +62,7 @@ public:
     QString to_string();
     void testCommand();
     qint32 getSiteId();
-    void sendCursorPos(qint32 pos);
+    void sendCursorPos(qint32 index);
 
 };
 

@@ -96,7 +96,7 @@ static const uint qt_meta_data_SharedEditor[] = {
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Int, 0x80000000 | 6,    3,    4,    5,    7,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 10,   11,
-    QMetaType::Void, QMetaType::Int, QMetaType::UInt,    5,    3,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    3,    5,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 14, 0x80000000 | 14,   15,   16,
@@ -116,7 +116,7 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 0: _t->symbolsChanged((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< qint32(*)>(_a[3])),(*reinterpret_cast< Message::action_t(*)>(_a[4]))); break;
         case 1: _t->deleteAllText(); break;
         case 2: _t->filePathsArrived((*reinterpret_cast< QVector<QString>(*)>(_a[1]))); break;
-        case 3: _t->RemoteCursorPosChanged((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< quint32(*)>(_a[2]))); break;
+        case 3: _t->RemoteCursorPosChanged((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< qint32(*)>(_a[2]))); break;
         case 4: _t->loginSlot((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 5: _t->process((*reinterpret_cast< DataPacket(*)>(_a[1]))); break;
         case 6: _t->deleteThread(); break;
@@ -158,7 +158,7 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             }
         }
         {
-            using _t = void (SharedEditor::*)(qint32 , quint32 );
+            using _t = void (SharedEditor::*)(qint32 , qint32 );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::RemoteCursorPosChanged)) {
                 *result = 3;
                 return;
@@ -228,7 +228,7 @@ void SharedEditor::filePathsArrived(QVector<QString> & _t1)
 }
 
 // SIGNAL 3
-void SharedEditor::RemoteCursorPosChanged(qint32 _t1, quint32 _t2)
+void SharedEditor::RemoteCursorPosChanged(qint32 _t1, qint32 _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 3, _a);
