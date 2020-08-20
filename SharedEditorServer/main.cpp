@@ -5,12 +5,15 @@
 #include <QSqlRecord>
 #include <QSqlDriver>
 #include <QtCore/QFile>
+#include <QtCore/QDir>
 
 #include "NetworkServer.h"
 #include "database/DBSql.h"
 
 static bool initializeDb()
 {
+    QDir().mkdir("db");
+    QDir().mkdir("images");
     QSqlDatabase::addDatabase("QSQLITE", "initialize");
     {
         QSqlDatabase db = QSqlDatabase::database("initialize");
@@ -37,7 +40,7 @@ static bool initializeDb()
         query.exec("SELECT * FROM LOGIN");
 
         std::cout << "Clients in database:" << std::endl;
-        std::cout << "USER" << "\t\t" << "PASS" << "\t\t" << "SITEID" << std::endl;
+        std::cout << "USER" << "\t\t" << "PASS" << "\t\t\t\t\t\t\t\t\t\t" << "SITEID" << std::endl;
 
         while (query.next()) {
             QString user = query.value(0).toString();
@@ -45,9 +48,11 @@ static bool initializeDb()
             qint32 siteId = query.value(2).toInt();
             std::cout << user.toStdString() << "\t\t" << password.toStdString() << "\t\t" << siteId << std::endl;
         }
-
+        std::cout << std::endl;
         db.close();
     }
+
+    std::cout << "----------TABELLE VECCHIE----------" << std::endl;
 
     {
         QSqlDatabase db = QSqlDatabase::database("initialize");
@@ -86,6 +91,7 @@ static bool initializeDb()
             QString sub = query.value(2).toString();
             std::cout << siteId << "\t\t\t\t" << name.toStdString() << "\t\t\t\t" << sub.toStdString() << std::endl;
         }
+        std::cout << std::endl;
         db.close();
     }
 
@@ -114,7 +120,7 @@ static bool initializeDb()
         query.exec("INSERT INTO FILES ('SITEID', 'FILEID', 'DIR') VALUES ('2', 'prova2.json', '/prova2>F');");
         query.exec("SELECT * FROM FILES");
 
-        std::cout << "SITEID" << "\t\t\t\t" << "FILEID" << "\t\t\t\t" << "DIR" << std::endl;
+        std::cout << "SITEID" << "\t\t\t\t" << "FILEID" << "\t\t\t\t\t" << "DIR" << std::endl;
 
         while (query.next()) {
             qint32 siteId = query.value(0).toInt();
@@ -122,9 +128,52 @@ static bool initializeDb()
             QString sub = query.value(2).toString();
             std::cout << siteId << "\t\t\t\t" << name.toStdString() << "\t\t\t\t" << sub.toStdString() << std::endl;
         }
+        std::cout << std::endl;
+        db.close();
+    }
+    std::cout << "----------------------------------" << std::endl;
+    std::cout << "----------TABELLE NUOVE----------" << std::endl;
+
+    {
+        QSqlDatabase db = QSqlDatabase::database("initialize");
+        db.setDatabaseName("db/files.db");
+        if (!db.open()) {
+            QMessageBox::critical(nullptr, QObject::tr("Cannot open database"),
+                                  QObject::tr("Unable to establish a database connection.\n"
+                                              "This example needs SQLite support. Please read "
+                                              "the Qt SQL driver documentation for information how "
+                                              "to build it.\n\n"
+                                              "Click Cancel to exit."), QMessageBox::Cancel);
+            return false;
+        }
+
+        QSqlQuery query(db);
+        query.exec("CREATE TABLE FILES ("  \
+         "SITEID         INT," \
+         "NAME           TEXT," \
+         "OWNER          TEXT," \
+         "FSNAME         TEXT, PRIMARY KEY (SITEID, NAME, OWNER));");
+        query.exec("DELETE FROM FILES");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('1', 'prova1', '#', 'prova1.json');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('1', 'prova2', '#', 'prova2.json');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('2', 'prova1', 'q', 'prova1.json');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('2', 'prova2', 'q', 'prova2.json');");
+        query.exec("SELECT * FROM FILES");
+
+        std::cout << "SITEID" << "\t\t\t\t" << "NAME" << "\t\t\t\t" << "OWNER" << "\t\t\t\t" << "FSNAME" << std::endl;
+
+        while (query.next()) {
+            qint32 siteId = query.value(0).toInt();
+            QString name = query.value(1).toString();
+            QString owner = query.value(2).toString();
+            QString fsname = query.value(3).toString();
+            std::cout << siteId << "\t\t\t\t" << name.toStdString() << "\t\t\t\t" << owner.toStdString() << "\t\t\t\t" << fsname.toStdString() << std::endl;
+        }
+        std::cout << std::endl;
         db.close();
     }
 
+    std::cout << "---------------------------------" << std::endl;
     QSqlDatabase::removeDatabase("initialize");
     return true;
 }

@@ -51,6 +51,7 @@ void ServerThread::run()
     QSqlDatabase::addDatabase("QSQLITE", threadId+"_login");
     QSqlDatabase::addDatabase("QSQLITE", threadId+"_directories");
     QSqlDatabase::addDatabase("QSQLITE", threadId+"_files");
+    QSqlDatabase::addDatabase("QSQLITE", threadId+"_filesNEW");
 
     exec(); //loop degli eventi attivato qui
 }
@@ -293,6 +294,12 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
             break;
         }
 
+        case (Command::ls):{
+            command->lsCommand(threadId);
+            sendPacket(packet);
+            break;
+        }
+
         default:
             std::cout << "Coglione errore nel Command" << std::endl;
     }
@@ -419,8 +426,6 @@ void ServerThread::sendFileInfo(DataPacket& packet){
 
 }
 
-
-
 void ServerThread::disconnected()
 {
 
@@ -435,6 +440,7 @@ void ServerThread::disconnected()
     QSqlDatabase::removeDatabase(threadId+"_login");
     QSqlDatabase::removeDatabase(threadId+"_directories");
     QSqlDatabase::removeDatabase(threadId+"_files");
+    QSqlDatabase::removeDatabase(threadId+"_filesNEW");
     std::cout<<"Client disconnected!"<<std::endl;
     exit(0);
 }

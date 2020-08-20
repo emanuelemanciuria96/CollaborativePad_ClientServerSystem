@@ -404,6 +404,10 @@ void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare m
     packet.setPayload( std::make_shared<Command>( 1, Command::tree, QVector<QString>()));
     emit transceiver->getSocket()->sendPacket(packet); //questo serve a farsi inviare tutte le subdirectory del client*/
 
+    /*DataPacket packet(-1, -1, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( 1, Command::ls, QVector<QString>()));
+    emit transceiver->getSocket()->sendPacket(packet); //questo serve a farsi inviare la lista di file del client*/
+
 }
 
 void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name) {

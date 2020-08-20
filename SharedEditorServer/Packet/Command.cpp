@@ -241,6 +241,36 @@ bool Command::treeCommand(QString &connectionId) {
     return true;
 }
 
+/***** FUNZIONI COMMAND PER TABELLE NUOVE *****/
+
+bool Command::lsCommand(QString &connectionId) {
+    if(!_args.empty())
+        return false;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
+    db.setDatabaseName("db/files.db");
+
+    if (!db.open())
+        return false;
+
+    QSqlQuery query(db);
+
+    if(!query.exec("SELECT NAME, OWNER FROM FILES WHERE SITEID='"+QString::number(_siteID)+"'")){
+        db.close();
+        return false;
+    }
+
+    while(query.next()) {
+        QString name(query.value("NAME").toString());
+        QString owner(query.value("OWNER").toString());
+        if (owner != "#")
+            _args.push_back(QString(owner+"/"+name));
+        else
+            _args.push_back(name);
+    }
+    return true;
+}
+
 /*LE FUNZIONI CHE SEGUONO SONO TUTTE DA RIFARE*/
 
 /*
