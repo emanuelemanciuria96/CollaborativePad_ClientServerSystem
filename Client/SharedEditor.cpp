@@ -292,6 +292,7 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
     switch ( filInf.getFileInfo()  ){
         case FileInfo::start: {
             isFileOpened = true;
+
             break;
         }
         case FileInfo::eof: {
@@ -372,26 +373,6 @@ void SharedEditor::findCounter() {
 
 }
 
-qint32 SharedEditor::getIndex(Message &m) {
-    qint32 pos=m.getLocalIndex();//search index
-    if(pos>_symbols.size()-1){
-        pos=_symbols.size()-1;
-    }
-    if(m.getSymbol()>_symbols[pos]){
-        for(qint32 i=pos+1;i<_symbols.size();i++){
-            if(m.getSymbol() < _symbols[i] || m.getSymbol() == _symbols[i]){
-                return i;
-            }
-        }
-    }else{
-        for(qint32 i=pos-1;i>=0;i--){
-            if(m.getSymbol()>_symbols[i]){
-                return i+1;
-            }
-        }
-    }
-    return pos;
-}
 
 void SharedEditor::requireFileSystem() {
 

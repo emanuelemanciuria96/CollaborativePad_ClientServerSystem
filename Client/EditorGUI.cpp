@@ -302,10 +302,12 @@ void EditorGUI::handleCursorPosChanged() {
 }
 
 void EditorGUI::updateRemoteCursorPos(qint32 pos, qint32 siteId) {
-    std::cout<< "draw in " << pos << " siteID: " << siteId <<std::endl;
-    auto cursor = getRemoteCursor(siteId);
-    cursor->setPosition(pos, QTextCursor::MoveAnchor);
-    textEdit->update();
-    drawLabel(cursor);
+    std::cout << "draw in " << pos << " siteID: " << siteId << std::endl;
+    if (siteId > 0) {
+        auto cursor = getRemoteCursor(siteId);
+        cursor->setPosition(pos, QTextCursor::MoveAnchor);
+        textEdit->update();
+        drawLabel(cursor);
+    }
 
 }
