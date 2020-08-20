@@ -103,47 +103,59 @@ void NetworkServer::localErase(Payload &pl) {
 void NetworkServer::processOpnCommand(Payload &pl) {
 
     Command& comm = dynamic_cast<Command&>(pl);
+    QString fileName = comm.getArgs().front();
 
-    std::cout<<"opening files"<<std::endl;
+    std::cout<<"opening file: "<<fileName.toStdString()<<std::endl;
 
-    QString filename = comm.getArgs().front();
-    std::vector<Symbol> symbles = files.openFile(filename);
+    std::vector<Symbol> symbles = files.openFile(fileName);
 
     std::vector<Message> vm;
     int index = 0;
-    quint32 actualPacketDim = sizeof(quint32) + sizeof(qint32) + sizeof(DataPacket::data_t);
 
+    // comunico al client che sto inviando il file
     {
-        std::shared_lock sl(sym_mutex);
-        for (auto s:symbles) {
-            Message m(Message::insertion, siteID, s, index++);
+        DataPacket pkt(comm.getSiteId(),0,DataPacket::file_info,new FileInfo(FileInfo::start,comm.getSiteId()) );
+        int id = qMetaTypeId<DataPacket>();
+        emit active_threads.find(comm.getSiteId())->second->getSocket()->sendMessage(pkt);
+    }
+    for (auto s:symbles) {
+        Message m(Message::insertion, siteID, s, index++);
 
-            quint32 nextMessageSize = sizeof(m.getSiteId()) + sizeof(m.getAction()) + sizeof(m.getLocalIndex()) +
-                                      sizeof(m.getSymbol().getSymId()) + sizeof(m.getSymbol().getValue()) +
-                                      s.getPos().size() * sizeof(quint32);
-            std::cout << "next buffer size: " << actualPacketDim + nextMessageSize << std::endl;
-
-            if (actualPacketDim + nextMessageSize >= 1000) {
-                DataPacket pkt(siteID, 0, DataPacket::textTyping, new StringMessages(vm, siteID));
-                int id = qMetaTypeId<DataPacket>();
-                emit active_threads.find(comm.getSiteId())->second->getSocket()->sendMessage(pkt);
-                actualPacketDim = sizeof(quint32) + sizeof(qint32) + sizeof(DataPacket::data_t);
-                vm.clear();
-            }
-
-            actualPacketDim += nextMessageSize;
-            vm.push_back(m);
+        if ( vm.size()+1 >= 500) {
+            DataPacket pkt(siteID, 0, DataPacket::textTyping, new StringMessages(vm, siteID));
+            int id = qMetaTypeId<DataPacket>();
+            emit active_threads.find(comm.getSiteId())->second->getSocket()->sendMessage(pkt);
+            vm.clear();
         }
+
+        vm.push_back(m);
     }
 
     if( !vm.empty() ){
         DataPacket pkt(siteID,0,DataPacket::textTyping,new StringMessages(vm,siteID));
+        auto sock = active_threads.find(comm.getSiteId())->second->getSocket();
         int id = qMetaTypeId<DataPacket>();
         emit active_threads.find(comm.getSiteId())->second->getSocket()->sendMessage(pkt);
     }
 
-    //show_file(filename);
+    // comunico al client che è terminato l'invio del file
+    {
+        DataPacket pkt(comm.getSiteId(),0,DataPacket::file_info,new FileInfo(FileInfo::eof,comm.getSiteId()) );
+        int id = qMetaTypeId<DataPacket>();
+        emit active_threads.find(comm.getSiteId())->second->getSocket()->sendMessage(pkt);
+    }
     fileOpened.store(true);
+
+}
+
+void NetworkServer::processClsCommand(Payload &pl) {
+
+    Command &comm = dynamic_cast<Command &>(pl);
+    QString fileName = comm.getArgs()[0];
+
+    std::cout<<"closing file: "<<fileName.toStdString()<<std::endl;
+
+    files.closeFile(fileName);
 
 }
 
@@ -163,10 +175,7 @@ void NetworkServer::recordThread(QPointer<QThread> th) {
 
 void NetworkServer::deleteThread(QPointer<QThread> th) {
     auto thread = dynamic_cast<ServerThread*>(th.data());
-    QString operating_file = thread->getOperatingFileName();
-    if(operating_file!=""){
-        files.closeFile(operating_file);
-    }
+    
     auto i = active_threads.find(thread->getSiteID());
     if( i != active_threads.end() )
         active_threads.erase(i);

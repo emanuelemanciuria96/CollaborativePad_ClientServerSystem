@@ -18,14 +18,16 @@
 #include "Packet/StringMessages.h"
 #include "Packet/CursorPosition.h"
 #include "Packet/Symbols/Symbol.h"
+#include "Packet/FileInfo.h"
 
 class Transceiver: public QThread {
 
     Q_OBJECT
 public:
     void run() override;
-    Transceiver(quint32 siteID,QObject* parent = nullptr);
+    Transceiver(qint32 siteID,QObject* parent = 0);
     Socket* getSocket(){ return socket; };
+    void setSiteId( qint32 siteID ){ _siteID = siteID; }
 
 public slots:
     void recvPacket();
@@ -38,7 +40,7 @@ signals:
     void deleteText();
 
 private:
-    quint32 _siteID;
+    qint32 _siteID;
     std::vector<Message> messages;
     bool firstMessage = true;
     Socket *socket;
@@ -53,7 +55,9 @@ private:
     void sendCommand(DataPacket& pkt);
     void sendCursorPos(DataPacket& packet);
 
+
     void recvLoginInfo(DataPacket& pkt, QDataStream& in);
+    void recvFileInfo(DataPacket& pkt, QDataStream& in);
     void recvMessage(DataPacket& pkt,QDataStream& in);
 
     void rollBack();

@@ -56,7 +56,7 @@ QTreeWidgetItem* FileSystemTreeView::addChild(QTreeWidgetItem *parent, QString n
 
 }
 
-void FileSystemTreeView::constructFromPaths(QVector<QString> &paths) {
+void FileSystemTreeView::constructFromPaths(const QVector<QString> &paths) {
 
     for(auto path: paths){
         QString intermediatePath = "";
@@ -97,6 +97,20 @@ bool FileSystemTreeView::isChild(QTreeWidgetItem *parent, QString name) {
             return true;
 
     return false;
+}
+
+void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
+
+    auto itm = item;
+    if( item->text(1) == "FILE") {
+        QString path = "";
+        for ( ; itm != root; itm = itm->parent())
+            path = "/"+itm->text(0)+path;
+
+        path+=">F";
+        emit opnFileRequest(path);
+    }
+
 }
 
 FileSystemTreeView::~FileSystemTreeView() {

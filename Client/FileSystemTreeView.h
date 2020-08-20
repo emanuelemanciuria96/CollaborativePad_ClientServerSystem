@@ -20,7 +20,11 @@ public:
     ~FileSystemTreeView();
 
 public slots:
-    void constructFromPaths(QVector<QString> &paths);
+    void constructFromPaths(const QVector<QString> &paths);
+    void openFile(QTreeWidgetItem *item, int column);
+
+signals:
+    void opnFileRequest(QString fileName);
 
 private:
     QTreeWidgetItem *root;

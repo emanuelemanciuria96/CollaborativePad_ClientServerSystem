@@ -9,7 +9,10 @@
 #include "Transceiver.h"
 #include "Packet/Command.h"
 
-Transceiver::Transceiver(quint32 siteID, QObject* parent):_siteID(siteID),QThread(parent) {}
+qint32 fixedBytesWritten = sizeof(qint32)+sizeof(qint32)+sizeof(quint32)+sizeof(quint32)+sizeof(qint32);
+                        ///      bytes     source        errcode      DataPacket::data_t   siteID
+
+Transceiver::Transceiver(qint32 siteID, QObject* parent):_siteID(siteID),QThread(parent) {}
 
 void Transceiver::run() {
 
@@ -62,7 +65,7 @@ void Transceiver::recvPacket() {
             this->socketSize = bytes;
         }
         if(this->socketSize!=0 && bytes!=-14){
-            if(socket->bytesAvailable()<this->socketSize-4){
+            if(socket->bytesAvailable() < this->socketSize-4){
                 return;
             }
         }
@@ -92,6 +95,11 @@ void Transceiver::recvPacket() {
                 recvCursorPos(packet,in);
                 break;
             }
+            case (DataPacket::file_info): {
+                recvFileInfo(packet, in);
+                break;
+            }
+
             default: {
                 std::cout << "Coglione c'e' un errore" << std::endl;
                 break;
@@ -108,10 +116,26 @@ void Transceiver::recvLoginInfo(DataPacket& pkt,QDataStream& in){
     qint32 type;
     QString user;
     QString password;
+    QString name;
+    QPixmap image;
 
-    in >> siteId >> type >> user >> password;
+    in >> siteId >> type >> user >> password  >> name >> image;
     _siteID = siteId;
     pkt.setPayload(std::make_shared<LoginInfo>(siteId,(LoginInfo::type_t)type,user,password));
+    auto ptr = std::dynamic_pointer_cast<LoginInfo>(pkt.getPayload());
+    ptr->setImage(image);
+    ptr->setName(name);
+
+    emit readyToProcess(pkt);
+
+}
+
+void Transceiver::recvFileInfo(DataPacket& pkt, QDataStream& in){
+    qint32 siteId;
+    qint32 type;
+
+    in>>siteId>>type;
+    pkt.setPayload(std::make_shared<FileInfo>(siteId,(FileInfo::file_info_t)type));
 
     emit readyToProcess(pkt);
 
@@ -184,14 +208,21 @@ void Transceiver::sendAllMessages() {
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    qint32 siteID = messages[0].getSiteId();
-    auto *strMess = new StringMessages(messages,siteID);
-    DataPacket pkt(siteID,0,DataPacket::textTyping,strMess);
-    qint32 bytes=16+(strMess->getFormattedMessages().size()*16)/8+4+4;
-    out << bytes<<pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData() <<
-         strMess->getSiteId() << strMess->getFormattedMessages() ;
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+
+    auto *strMess = new StringMessages(messages,_siteID);
+    auto formMess = strMess->getFormattedMessages();
+    tmp << formMess;
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+    DataPacket pkt(_siteID,0,DataPacket::textTyping,strMess);
+    out << bytes << _siteID << 0 <<(quint32) DataPacket::textTyping <<
+         strMess->getSiteId() << formMess;
 
     socket->waitForBytesWritten(-1);
+
+    std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
 
     if( !messages.empty() ) {
         timer->start(100);
@@ -208,9 +239,6 @@ void Transceiver::sendMessage(DataPacket& packet) {
 
    messages.push_back(*std::dynamic_pointer_cast<Message>(packet.getPayload()));
 
-
-
-
 }
 
 void Transceiver::sendLoginInfo(DataPacket& packet){
@@ -220,9 +248,15 @@ void Transceiver::sendLoginInfo(DataPacket& packet){
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    qint32 bytes=-14;//TODO dimensione socket
-    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
-    out << ptr->getSiteId() << ptr->getType() << ptr->getUser() << ptr->getPassword();
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage();
+
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
+    out << bytes << packet.getSource() << packet.getErrcode() << (quint32) packet.getTypeOfData();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage();
     socket->waitForBytesWritten(-1);
 
 }
@@ -234,8 +268,14 @@ void Transceiver::sendCommand(DataPacket& packet){
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
 
-    qint32 bytes=-14;//TODO dimensione socket
-    out <<bytes<< packet.getSource() << packet.getErrcode() << packet.getTypeOfData();
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+    tmp << (quint32) ptr->getCmd() << ptr->getArgs();
+
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
+    out <<bytes<< packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData();
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
     socket->waitForBytesWritten(-1);
 

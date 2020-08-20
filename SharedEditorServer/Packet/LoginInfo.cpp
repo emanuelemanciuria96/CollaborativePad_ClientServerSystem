@@ -8,6 +8,8 @@
 #include "LoginInfo.h"
 #include <QSqlQuery>
 #include <QtCore/QVariant>
+#include <iostream>
+#include <QtCore/QFile>
 
 
 LoginInfo::LoginInfo(qint32 siteId, type_t type, QString user, QString password) : Payload(siteId),
@@ -39,6 +41,22 @@ void LoginInfo::setType(type_t type) {
     _type = type;
 }
 
+const QPixmap &LoginInfo::getImage() const {
+    return _image;
+}
+
+void LoginInfo::setImage(const QPixmap &image) {
+    _image = image;
+}
+
+const QString &LoginInfo::getName() const {
+    return _name;
+}
+
+void LoginInfo::setName(const QString &name) {
+    _name = name;
+}
+
 qint32 LoginInfo::login(const QString& connectionId) {
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_login");
     db.setDatabaseName("login.db");
@@ -47,7 +65,7 @@ qint32 LoginInfo::login(const QString& connectionId) {
         return -1;
 
     QSqlQuery query(db);
-    if(!query.exec("SELECT PASS, SITEID FROM LOGIN WHERE USER='"+_user+"'"))
+    if(!query.exec("SELECT PASS, SITEID, IMAGE, NAME FROM LOGIN WHERE USER='"+_user+"'"))
         return -1;
 
     db.close();
@@ -56,6 +74,9 @@ qint32 LoginInfo::login(const QString& connectionId) {
         if (_password == query.value("PASS").toString()) {
             _type = LoginInfo::login_ok;
             _siteID = query.value("SITEID").toInt();
+            _image = QPixmap(query.value("IMAGE").toString());
+            _name = query.value("NAME").toString();
+            std::cout << _name.toStdString() << std::endl;
             return _siteID;
         } else {
             _type = LoginInfo::login_error;
@@ -71,4 +92,22 @@ qint32 LoginInfo::login(const QString& connectionId) {
         _password = "";
         return -1;
     }
+}
+
+bool LoginInfo::updateInfo(const QString& connectionId) {
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_login");
+    db.setDatabaseName("login.db");
+
+    if (!db.open())
+        return false;
+
+    QString fileName("images/"+QString::number(_siteID)+".jpg");
+    QSqlQuery query(db);
+    if(!query.exec("UPDATE LOGIN SET IMAGE = '"+fileName+"', NAME = '"+_name+"' WHERE SITEID = '"+QString::number(_siteID)+"';"))
+        return false;
+
+    _image.save(fileName, "JPG", 50);
+    db.close();
+
+    return true;
 }

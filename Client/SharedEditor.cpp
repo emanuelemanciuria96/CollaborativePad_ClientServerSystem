@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <tuple>
 #include <string>
+#include <QtCore/QCryptographicHash>
 
 SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
@@ -20,7 +21,7 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
     connect(transceiver,SIGNAL(finished()),this,SLOT(deleteThread()));
     connect(transceiver,&Transceiver::readyToProcess,this,&SharedEditor::process,Qt::QueuedConnection);
-    connect(transceiver,&Transceiver::deleteText,this,&SharedEditor::deleteText,Qt::QueuedConnection);
+    connect(transceiver,&Transceiver::deleteText,this,&SharedEditor::clearText,Qt::QueuedConnection);
 
 
     transceiver->start();
@@ -112,7 +113,8 @@ void generateNewPosition( std::vector<quint32>& prev, std::vector<quint32>& next
 void SharedEditor::loginSlot(QString& username, QString& password) {
     std::cout << "sending user=" << username.toStdString() << " and password=" << password.toStdString() << std::endl;
     DataPacket packet(-1, -1, DataPacket::login);
-    packet.setPayload( std::make_shared<LoginInfo>( -1, LoginInfo::login_request, std::move(username), std::move(password)) );
+    packet.setPayload( std::make_shared<LoginInfo>( -1, LoginInfo::login_request, std::move(username),
+            std::move(QString(QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha3_256).toHex()))) );
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
@@ -180,6 +182,9 @@ void SharedEditor::process(DataPacket pkt) {
         case DataPacket::command :
             processCommand(*std::dynamic_pointer_cast<Command>(pkt.getPayload()));
             break;
+        case DataPacket::file_info :
+            processFileInfo(*std::dynamic_pointer_cast<FileInfo>(pkt.getPayload()));
+            break;
         case DataPacket::cursorPos:
             processCursorPos(*std::dynamic_pointer_cast<CursorPosition>(pkt.getPayload()));
             break;
@@ -202,8 +207,11 @@ void SharedEditor::processCursorPos(CursorPosition &curPos) {
 void SharedEditor::processLoginInfo(LoginInfo &logInf) {
     if(logInf.getType() == LoginInfo::login_ok) {
         _siteId = logInf.getSiteId();
+        transceiver->setSiteId(_siteId);
         std::cout << "client successfully logged!" << std::endl;
         isLogged = true;
+        emit loginAchieved();
+        emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName());
     } else {
         std::cout << "client not logged!" << std::endl;
     }
@@ -280,11 +288,25 @@ void SharedEditor::processMessages(StringMessages &strMess) {
 
 }
 
-void SharedEditor::deleteText(){
-    emit deleteAllText();
+void SharedEditor::processFileInfo(FileInfo &filInf) {
+    switch ( filInf.getFileInfo()  ){
+        case FileInfo::start: {
+            isFileOpened = true;
+            break;
+        }
+        case FileInfo::eof: {
+            std::cout<<"inizio findCounter"<<std::endl;
+            findCounter();
+            std::cout<<"fine findCounter"<<std::endl;
+            /// TODO: inserire qui segnale di apertura editor
+            break;
+        }
+    }
+
 }
 
 void SharedEditor::processCommand(Command& cmd){
+
     switch (cmd.getCmd()) {
         case (Command::cd): {
            processCdCommand(cmd);
@@ -311,6 +333,11 @@ void SharedEditor::processCommand(Command& cmd){
             break;
         }
 
+        case (Command::tree): {
+            processTreeCommand(cmd);
+            break;
+        }
+
         default:
             std::cout << "Coglione errore nel Command" << std::endl;
     }
@@ -321,6 +348,78 @@ void SharedEditor::processCdCommand(Command& cmd){
     for (auto &a: cmd.getArgs())
         std::cout << a.toStdString() << std::endl;
 }
+
+void SharedEditor::processTreeCommand(Command& cmd){
+
+    emit filePathsArrived(cmd.getArgs());
+}
+
+void SharedEditor::clearText(){
+    emit deleteAllText();
+}
+
+void SharedEditor::findCounter() {
+
+    quint32 maxCounter = 0;
+    for(auto sym: _symbols) {
+        if (sym.getSymId().getSiteId() == _siteId)
+            if (sym.getSymId().getCount() > maxCounter)
+                maxCounter = sym.getSymId().getCount();
+
+    }
+    std::cout<<"my counter value: "<<maxCounter<<std::endl;;
+    _counter = maxCounter;
+
+}
+
+qint32 SharedEditor::getIndex(Message &m) {
+    qint32 pos=m.getLocalIndex();//search index
+    if(pos>_symbols.size()-1){
+        pos=_symbols.size()-1;
+    }
+    if(m.getSymbol()>_symbols[pos]){
+        for(qint32 i=pos+1;i<_symbols.size();i++){
+            if(m.getSymbol() < _symbols[i] || m.getSymbol() == _symbols[i]){
+                return i;
+            }
+        }
+    }else{
+        for(qint32 i=pos-1;i>=0;i--){
+            if(m.getSymbol()>_symbols[i]){
+                return i+1;
+            }
+        }
+    }
+    return pos;
+}
+
+void SharedEditor::requireFileSystem() {
+
+    auto cmd = std::make_shared<Command>(_siteId,Command::tree,QVector<QString>());
+    DataPacket packet(_siteId,0,DataPacket::command);
+    packet.setPayload(cmd);
+
+    int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
+}
+
+void SharedEditor::requireFile(QString fileName) {
+    QVector<QString> vec = {std::move(fileName)};
+    auto cmd = std::make_shared<Command>(_siteId,Command::opn,vec);
+    DataPacket packet(_siteId,0,DataPacket::command);
+    packet.setPayload(cmd);
+
+    if( !_symbols.empty() ) {
+        clearText();
+        _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
+    }
+
+    int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
+}
+
 
 void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare ma per ora non ho idee migliori
    /* DataPacket packet(-1, -1, DataPacket::command);
@@ -339,6 +438,19 @@ void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare m
     packet.setPayload( std::make_shared<Command>( _siteId, Command::opn, QVector<QString>(1, "/prova>F")));
     emit transceiver->getSocket()->sendPacket(packet); //questo serve ad aprire il file "prova.json" sul server*/
 
+    /*DataPacket packet(-1, -1, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( 1, Command::tree, QVector<QString>()));
+    emit transceiver->getSocket()->sendPacket(packet); //questo serve a farsi inviare tutte le subdirectory del client*/
+
+}
+
+void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name) {
+    DataPacket packet(-1, -1, DataPacket::login);
+    packet.setPayload( std::make_shared<LoginInfo>( _siteId, LoginInfo::update_info));
+    auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
+    ptr->setImage(image);
+    ptr->setName(name);
+    emit transceiver->getSocket()->sendPacket(packet);
 }
 
 QString SharedEditor::to_string() {

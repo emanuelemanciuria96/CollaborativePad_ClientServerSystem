@@ -18,7 +18,8 @@ public:
         textTyping = 1,
         login = 2,
         command = 3,
-        cursorPos = 4,
+        file_info = 4,
+        cursorPos = 5,
     }data_t;
 
     DataPacket();

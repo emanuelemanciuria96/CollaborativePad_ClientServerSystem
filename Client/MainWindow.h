@@ -10,12 +10,13 @@
 #include "EditorGUI.h"
 #include "LoginDialog.h"
 #include "FileSystemTreeView.h"
+#include "InfoWidget.h"
+#include "InfoWidgetEdit.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     MainWindow(SharedEditor* shEditor, QWidget* parent = 0);
-    ~MainWindow();
 
 private:
 
@@ -27,10 +28,14 @@ private:
     LoginDialog *loginDialog;
     QStatusBar* statusBar;
     QToolBar* toolBar;
+    InfoWidget* infoWidget;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
     void treeFileSystemSettings();
+
+signals:
+    void fileSystemRequest();
 
 public slots:
     void loginFinished();

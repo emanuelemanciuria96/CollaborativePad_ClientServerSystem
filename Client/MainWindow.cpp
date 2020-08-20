@@ -12,6 +12,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     statusBar = new QStatusBar(this);
     statusBar->showMessage ("StatusBar");
     toolBar = new QToolBar("Toolbar",this);
+    infoWidget = new InfoWidget();
 
     //    aggiungo gli elementi alla finestra
     this->setStatusBar(statusBar);
@@ -28,11 +29,18 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     loginSettings();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
-    connect(loginDialog, &LoginDialog::loginAchieved, this, &MainWindow::loginFinished);
+    connect(treeView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),treeView , SLOT(openFile( QTreeWidgetItem*, int )));
+    connect(treeView, SIGNAL(opnFileRequest(QString)),shEditor , SLOT(requireFile(QString)));
+    connect(shEditor, &SharedEditor::loginAchieved, this, &MainWindow::loginFinished);
     connect(shEditor, &SharedEditor::symbolsChanged, editor, &EditorGUI::updateSymbols);
     connect(shEditor,&SharedEditor::deleteAllText, editor,&EditorGUI::deleteAllText);
     connect(shEditor,&SharedEditor::filePathsArrived, treeView,&FileSystemTreeView::constructFromPaths);
     connect(shEditor,&SharedEditor::RemoteCursorPosChanged, editor,&EditorGUI::updateRemoteCursorPos);
+    connect(shEditor, &SharedEditor::deleteAllText, editor, &EditorGUI::deleteAllText);
+    connect(shEditor, &SharedEditor::filePathsArrived, treeView, &FileSystemTreeView::constructFromPaths);
+    connect(this, &MainWindow::fileSystemRequest, shEditor, &SharedEditor::requireFileSystem);
+    connect(shEditor, &SharedEditor::userInfoArrived, infoWidget, &InfoWidget::loadData);
+    connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -43,9 +51,11 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
 void MainWindow::loginFinished() {
     widgetLogin->hide();
+    emit fileSystemRequest();
     this->setCentralWidget(widgetEditor);
     dockWidgetTree->show();
     widgetEditor->show();
+    infoWidget->show();
 }
 
 void MainWindow::loginSettings() {
@@ -115,13 +125,3 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
 
 }
 
-MainWindow::~MainWindow() {
-    widgetLogin->deleteLater();
-    widgetEditor->deleteLater();
-    dockWidgetTree->deleteLater();
-    treeView->deleteLater();
-    editor->deleteLater();
-    loginDialog->deleteLater();
-    statusBar->deleteLater();
-    toolBar->deleteLater();
-}
