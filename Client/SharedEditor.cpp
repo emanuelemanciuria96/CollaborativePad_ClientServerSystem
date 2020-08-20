@@ -162,6 +162,14 @@ void SharedEditor::localErase(qint32 index) {
 
 }
 
+void SharedEditor::sendCursorPos(qint32 index) {
+    auto _symbol = _symbols[index];
+    DataPacket packet(_siteId, -1, DataPacket::cursorPos);
+    packet.setPayload(std::make_shared<CursorPosition>(_symbol, index, _siteId));
+
+    emit transceiver->getSocket()->sendPacket(packet);
+}
+
 void SharedEditor::process(DataPacket pkt) {
 
     switch (pkt.getTypeOfData()){
@@ -177,6 +185,9 @@ void SharedEditor::process(DataPacket pkt) {
         case DataPacket::file_info :
             processFileInfo(*std::dynamic_pointer_cast<FileInfo>(pkt.getPayload()));
             break;
+        case DataPacket::cursorPos:
+            processCursorPos(*std::dynamic_pointer_cast<CursorPosition>(pkt.getPayload()));
+            break;
         default:
             std::cout<<"Coglione 2 volte, c'è un errore"<<std::endl;
             throw std::exception();
@@ -184,7 +195,13 @@ void SharedEditor::process(DataPacket pkt) {
 
     auto m = std::dynamic_pointer_cast<Message>(pkt.getPayload());
 
+}
 
+void SharedEditor::processCursorPos(CursorPosition &curPos) {
+    auto index = curPos.getIndex();
+    auto symbol = curPos.getSymbol();
+    auto pos = getIndex(index, symbol);
+    emit RemoteCursorPosChanged(pos, curPos.getSiteId());
 }
 
 void SharedEditor::processLoginInfo(LoginInfo &logInf) {
@@ -200,13 +217,34 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
     }
 }
 
+qint32 SharedEditor::getIndex(qint32 index, Symbol symbol ) {
+    qint32 pos= index;//search index
+    if(pos>_symbols.size()-1){
+        pos=_symbols.size()-1;
+    }
+    if(symbol>_symbols[pos]){
+        for(qint32 i=pos+1;i<_symbols.size();i++){
+            if(symbol < _symbols[i] || symbol == _symbols[i]){
+                return i;
+            }
+        }
+    }else{
+        for(qint32 i=pos-1;i>=0;i--){
+            if(symbol>_symbols[i]){
+                return i+1;
+            }
+        }
+    }
+    return pos;
+}
+
 
 void SharedEditor::processMessages(StringMessages &strMess) {
 
     std::vector<std::tuple<qint32,bool, QChar,qint32>> vt;
 
     for( auto m: strMess.stringToMessages() ) {
-        qint32 pos=getIndex(m);
+        qint32 pos=getIndex(m.getLocalIndex(), m.getSymbol());
         if(m.getAction()==Message::insertion){
             _symbols.insert(_symbols.begin()+pos,m.getSymbol());
             vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(pos,1,m.getSymbol().getValue(),m.getSiteId()));
@@ -232,7 +270,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
         if(std::get<1>(vt[i])==1) {
             if (std::get<1>(vt[i+1])==1 and std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 1) {
             } else {
-                //qDebug()<<"insert "<<s<<" in pos "<<firstPos;
+                //qDebug()<<"insert "<<s<<" in index "<<firstPos;
                 emit symbolsChanged(firstPos, s, std::get<3>(vt[i]),Message::insertion);
                 s = "";
                 firstPos = std::get<0>(vt[i+1]);
@@ -240,7 +278,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
         }else {
             if (std::get<1>(vt[i+1])==0 and std::get<0>(vt[i]) == std::get<0>(vt[i+1])) {
             } else {
-                //qDebug()<<"remove "<<s<<" in pos "<<firstPos+s.size()-1;
+                //qDebug()<<"remove "<<s<<" in index "<<firstPos+s.size()-1;
                 emit symbolsChanged(firstPos, s, std::get<3>(vt[i]), Message::removal);
                 s = "";
                 firstPos = std::get<0>(vt[i+1]);
@@ -254,6 +292,7 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
     switch ( filInf.getFileInfo()  ){
         case FileInfo::start: {
             isFileOpened = true;
+
             break;
         }
         case FileInfo::eof: {
@@ -334,26 +373,6 @@ void SharedEditor::findCounter() {
 
 }
 
-qint32 SharedEditor::getIndex(Message &m) {
-    qint32 pos=m.getLocalIndex();//search index
-    if(pos>_symbols.size()-1){
-        pos=_symbols.size()-1;
-    }
-    if(m.getSymbol()>_symbols[pos]){
-        for(qint32 i=pos+1;i<_symbols.size();i++){
-            if(m.getSymbol() < _symbols[i] || m.getSymbol() == _symbols[i]){
-                return i;
-            }
-        }
-    }else{
-        for(qint32 i=pos-1;i>=0;i--){
-            if(m.getSymbol()>_symbols[i]){
-                return i+1;
-            }
-        }
-    }
-    return pos;
-}
 
 void SharedEditor::requireFileSystem() {
 
@@ -437,3 +456,11 @@ void SharedEditor::deleteThread() {
     transceiver->deleteLater();
     exit(-1);
 }
+
+qint32 SharedEditor::getSiteId() {
+    return _siteId;
+}
+
+
+
+

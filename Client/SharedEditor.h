@@ -22,6 +22,7 @@
 #include "Packet/FileInfo.h"
 #include "Packet/LoginInfo.h"
 #include "Packet/Command.h"
+#include "Packet/CursorPosition.h"
 #include <vector>
 #include <algorithm>
 #include <QtCore/QTimer>
@@ -34,10 +35,10 @@ private:
     qint32 _counter;
     std::vector<Symbol> _symbols;
     Transceiver* transceiver;
+    qint32 getIndex(qint32 index, Symbol symbol);
     bool isLogged;
     bool isFileOpened = false;
 
-    qint32 getIndex( Message& m );
     void findCounter();
 
     void processMessages( StringMessages& strMess );
@@ -46,6 +47,7 @@ private:
     void processCommand( Command& cmd );
     void processCdCommand( Command& cmd );
     void processTreeCommand( Command& cmd );
+    void processCursorPos(CursorPosition& curPos);
 
 
 public slots:
@@ -63,6 +65,7 @@ signals:
     void filePathsArrived(const QVector<QString> &paths);
     void loginAchieved();
     void userInfoArrived(const QPixmap& image, const QString& nickname, const QString& name);
+    void RemoteCursorPosChanged(qint32 pos, qint32 siteId);
 
 public:
     explicit SharedEditor(QObject *parent = 0);
@@ -70,6 +73,8 @@ public:
     void localErase( qint32 index );
     QString to_string();
     void testCommand();
+    qint32 getSiteId();
+    void sendCursorPos(qint32 index);
 
 };
 

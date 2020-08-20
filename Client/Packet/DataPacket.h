@@ -19,6 +19,7 @@ public:
         login = 2,
         command = 3,
         file_info = 4,
+        cursorPos = 5,
     }data_t;
 
     DataPacket();

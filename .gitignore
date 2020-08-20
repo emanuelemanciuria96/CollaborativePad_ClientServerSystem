@@ -3,3 +3,6 @@ SharedEditorServer/.idea/
 SharedEditorServer/cmake-build-debug/
 Client/.idea/
 Client/cmake-build-debug/
+Client/cmake-build-debug/Client.cbp
+Client/.idea/workspace.xml
+Client/cmake-build-debug/Client.exe

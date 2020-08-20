@@ -1,18 +1,19 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'EditorGUI.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.5)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.13.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#include <memory>
 #include "../../../EditorGUI.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'EditorGUI.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.5. It"
+#error "This file was generated using the moc from 5.13.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -21,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EditorGUI_t {
-    QByteArrayData data[16];
-    char stringdata0[155];
+    QByteArrayData data[18];
+    char stringdata0[200];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,18 +42,21 @@ QT_MOC_LITERAL(6, 49, 10), // "charsAdded"
 QT_MOC_LITERAL(7, 60, 16), // "flushInsertQueue"
 QT_MOC_LITERAL(8, 77, 11), // "setSelected"
 QT_MOC_LITERAL(9, 89, 3), // "yes"
-QT_MOC_LITERAL(10, 93, 13), // "updateSymbols"
-QT_MOC_LITERAL(11, 107, 1), // "s"
-QT_MOC_LITERAL(12, 109, 6), // "siteId"
-QT_MOC_LITERAL(13, 116, 17), // "Message::action_t"
-QT_MOC_LITERAL(14, 134, 6), // "action"
-QT_MOC_LITERAL(15, 141, 13) // "deleteAllText"
+QT_MOC_LITERAL(10, 93, 22), // "handleCursorPosChanged"
+QT_MOC_LITERAL(11, 116, 13), // "updateSymbols"
+QT_MOC_LITERAL(12, 130, 1), // "s"
+QT_MOC_LITERAL(13, 132, 6), // "siteId"
+QT_MOC_LITERAL(14, 139, 17), // "Message::action_t"
+QT_MOC_LITERAL(15, 157, 6), // "action"
+QT_MOC_LITERAL(16, 164, 13), // "deleteAllText"
+QT_MOC_LITERAL(17, 178, 21) // "updateRemoteCursorPos"
 
     },
     "EditorGUI\0clear\0\0contentsChange\0pos\0"
     "charsRemoved\0charsAdded\0flushInsertQueue\0"
-    "setSelected\0yes\0updateSymbols\0s\0siteId\0"
-    "Message::action_t\0action\0deleteAllText"
+    "setSelected\0yes\0handleCursorPosChanged\0"
+    "updateSymbols\0s\0siteId\0Message::action_t\0"
+    "action\0deleteAllText\0updateRemoteCursorPos"
 };
 #undef QT_MOC_LITERAL
 
@@ -62,7 +66,7 @@ static const uint qt_meta_data_EditorGUI[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -70,14 +74,16 @@ static const uint qt_meta_data_EditorGUI[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   44,    2, 0x06 /* Public */,
+       1,    0,   54,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    3,   45,    2, 0x08 /* Private */,
-       7,    0,   52,    2, 0x08 /* Private */,
-       8,    1,   53,    2, 0x08 /* Private */,
-      10,    4,   56,    2, 0x0a /* Public */,
-      15,    0,   65,    2, 0x0a /* Public */,
+       3,    3,   55,    2, 0x08 /* Private */,
+       7,    0,   62,    2, 0x08 /* Private */,
+       8,    1,   63,    2, 0x08 /* Private */,
+      10,    0,   66,    2, 0x08 /* Private */,
+      11,    4,   67,    2, 0x0a /* Public */,
+      16,    0,   76,    2, 0x0a /* Public */,
+      17,    2,   77,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -86,8 +92,10 @@ static const uint qt_meta_data_EditorGUI[] = {
     QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,    4,    5,    6,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Bool,    9,
-    QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Int, 0x80000000 | 13,    4,   11,   12,   14,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Int, 0x80000000 | 14,    4,   12,   13,   15,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    4,   13,
 
        0        // eod
 };
@@ -102,8 +110,10 @@ void EditorGUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 1: _t->contentsChange((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 2: _t->flushInsertQueue(); break;
         case 3: _t->setSelected((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 4: _t->updateSymbols((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< qint32(*)>(_a[3])),(*reinterpret_cast< Message::action_t(*)>(_a[4]))); break;
-        case 5: _t->deleteAllText(); break;
+        case 4: _t->handleCursorPosChanged(); break;
+        case 5: _t->updateSymbols((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< qint32(*)>(_a[3])),(*reinterpret_cast< Message::action_t(*)>(_a[4]))); break;
+        case 6: _t->deleteAllText(); break;
+        case 7: _t->updateRemoteCursorPos((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< qint32(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -147,13 +157,13 @@ int EditorGUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 8)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 8;
     }
     return _id;
 }

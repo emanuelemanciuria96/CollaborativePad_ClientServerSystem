@@ -91,6 +91,10 @@ void Transceiver::recvPacket() {
                 recvCommand(packet, in);
                 break;
             }
+            case (DataPacket::cursorPos):{
+                recvCursorPos(packet,in);
+                break;
+            }
             case (DataPacket::file_info): {
                 recvFileInfo(packet, in);
                 break;
@@ -181,6 +185,11 @@ void Transceiver::sendPacket(DataPacket pkt){
 
         case (DataPacket::command): {
             sendCommand(pkt);
+            break;
+        }
+
+        case (DataPacket::cursorPos):{
+            sendCursorPos(pkt);
             break;
         }
 
@@ -282,4 +291,44 @@ void Transceiver::disconnected(){
 
 void Transceiver::rollBack(){
     emit deleteText();
+}
+
+void Transceiver::sendCursorPos(DataPacket &packet) {
+    QDataStream out;
+    out.setDevice(socket);
+    out.setVersion(QDataStream::Qt_5_5);
+
+    auto ptr = std::dynamic_pointer_cast<CursorPosition>(packet.getPayload());
+    auto vector = QVector<quint32>();
+    for (auto p : ptr->getSymbol().getPos()){
+        vector.push_back(p);
+    }
+
+    qint32 bytes=-14;//TODO dimensione socket
+    out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
+    ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
+    << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
+
+    std::cout << "sending cursor index " << ptr->getSiteId() << " " << ptr->getIndex() << std::endl;
+
+    socket->waitForBytesWritten(-1);
+}
+
+void Transceiver::recvCursorPos(DataPacket &pkt, QDataStream &in) {
+    qint32 siteId;
+    qint32 index;
+    QChar ch;
+    qint32 symbol_siteId;
+    qint32 count;
+    QVector<quint32> pos;
+
+    in >> ch >> symbol_siteId >> count >> pos >> index >> siteId;
+    std::cout << "Dentro recv " << siteId << " pos:" << index << std::endl;
+    auto pos_std = pos.toStdVector();
+    auto symbol = Symbol(ch,symbol_siteId,count,pos_std);
+
+    pkt.setPayload(std::make_shared<CursorPosition>(symbol,index,siteId));
+
+    emit readyToProcess(pkt);
+
 }

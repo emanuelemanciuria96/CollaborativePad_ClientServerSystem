@@ -102,6 +102,11 @@ void ServerThread::recvPacket() {
                 break;
             }
 
+            case (DataPacket::cursorPos): {
+                recvCursorPos(packet, in);
+                break;
+            }
+
             default: {
                 std::cout << "il dato in arrivo è corrotto, necessario un riallineamento dei dati" << std::endl;
                 packet.setErrcode(-1);
@@ -305,6 +310,26 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
     }
 }
 
+void ServerThread::recvCursorPos(DataPacket &packet, QDataStream &in) {
+    qint32 siteId;
+    qint32 index;
+    QChar ch;
+    qint32 symbol_siteId;
+    qint32 count;
+    QVector<quint32> pos;
+
+    in >> ch >> symbol_siteId >> count >> pos >> index >> siteId;
+
+    std::cout << "Dentro recv " << siteId << " pos:" << index << std::endl;
+
+    auto pos_std = pos.toStdVector();
+    auto symbol = Symbol(ch,symbol_siteId,count,pos_std);
+
+    packet.setPayload(std::make_shared<CursorPosition>(symbol,index,siteId));
+
+    _sockets.broadcast(operatingFileName, siteId,packet);
+}
+
 void ServerThread::sendPacket(DataPacket packet){
 
     //std::cout<<"thread "<<std::this_thread::get_id()<<" sending packet to "<<this->socketDescriptor<<std::endl;
@@ -334,6 +359,10 @@ void ServerThread::sendPacket(DataPacket packet){
             break;
         }
 
+        case (DataPacket::cursorPos): {
+            sendCursorPos(packet);
+            break;
+        }
         default: {
             std::cout<<"Coglione c'è un errore"<<std::endl;
         }
@@ -423,6 +452,26 @@ void ServerThread::sendFileInfo(DataPacket& packet){
     socket->waitForBytesWritten(-1);
 
     std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
+
+}
+
+
+void ServerThread::sendCursorPos(DataPacket &packet) {
+    QDataStream out;
+    out.setDevice(socket.get());
+    out.setVersion(QDataStream::Qt_5_5);
+
+    auto ptr = std::dynamic_pointer_cast<CursorPosition>(packet.getPayload());
+    auto vector = QVector<quint32>();
+    for (auto p : ptr->getSymbol().getPos()){
+        vector.push_back(p);
+    }
+    std::cout << "sendCursorPos " << ptr->getIndex() << " siteID: " << ptr->getSiteId() << std::endl;
+
+    qint32 bytes=-14;//TODO dimensione socket
+    out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
+        ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
+        << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
 
 }
 
