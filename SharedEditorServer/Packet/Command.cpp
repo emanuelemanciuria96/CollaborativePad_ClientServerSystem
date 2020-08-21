@@ -244,6 +244,7 @@ bool Command::treeCommand(QString &connectionId) {
 /***** FUNZIONI COMMAND PER TABELLE NUOVE *****/
 
 bool Command::lsCommand(QString &connectionId) {
+
     if(!_args.empty())
         return false;
 
@@ -295,10 +296,8 @@ bool Command::opnCommand(QString &connectionId){
         query.next();
         _args.push_back(query.value("FSNAME").toString());
 
-        if (_args.first().isEmpty())
-            return false;
+        return !_args.first().isEmpty();
 
-        return true;
     }
 
     auto list = _args.first().split("/");
@@ -315,8 +314,6 @@ bool Command::opnCommand(QString &connectionId){
     query.next();
     _args.push_back(query.value("FSNAME").toString());
 
-    if (_args.first().isEmpty())
-        return false;
+    return !_args.first().isEmpty();
 
-    return true;
 }

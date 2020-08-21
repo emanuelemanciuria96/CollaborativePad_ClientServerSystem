@@ -35,18 +35,19 @@ private:
     qint32 _counter;
     std::vector<Symbol> _symbols;
     Transceiver* transceiver;
-    qint32 getIndex(qint32 index, Symbol symbol);
     bool isLogged;
+    QString fileOpened = "";
     bool isFileOpened = false;
 
     void findCounter();
+    qint32 getIndex(qint32 index, Symbol symbol);
 
     void processMessages( StringMessages& strMess );
     void processLoginInfo( LoginInfo& logInf );
     void processFileInfo( FileInfo& filInf );
     void processCommand( Command& cmd );
     void processCdCommand( Command& cmd );
-    void processTreeCommand( Command& cmd );
+    void processLsCommand( Command& cmd );
     void processCursorPos(CursorPosition& curPos);
 
 

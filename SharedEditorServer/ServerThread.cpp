@@ -263,25 +263,26 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::opn):{
-            QString fileName;
-            std::cout << "file requested: "<<command->getArgs()[0].toStdString() << std::endl;
-            fileName = command->opnCommand(threadId);
-            if(!fileName.isEmpty()) {
+            std::cout << "file requested: "<<command->getArgs().front().toStdString() << std::endl;
+            if( command->opnCommand(threadId) ) {
+
+                QString fileName = command->getArgs().front();
+
                 if( operatingFileName != "" ) {
                     _sockets.detachSocket(operatingFileName, _siteID);
                     QVector<QString> vec = {operatingFileName};
-                    auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);
+                    auto comm = std::make_shared<Command>(_siteID, Command::cls, vec);
                     msgHandler->submit(&NetworkServer::processClsCommand,comm);
                 }
 
                 operatingFileName = fileName;
                 _sockets.attachSocket(fileName,_siteID,socket.get());
                 std::cout << fileName.toStdString() << std::endl;
-                QVector<QString> vec = {fileName};
-                command->setArgs(vec);
                 msgHandler->submit(&NetworkServer::processOpnCommand, command);
+
             }else
                 std::cout << "opn command failed!" << std::endl;
+
             break;
         }
 
@@ -292,11 +293,12 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::cls):{
-            if( operatingFileName!="") {
+            if( operatingFileName!="" && command->opnCommand(threadId)) {
                 _sockets.detachSocket(operatingFileName, _siteID);
                 msgHandler->submit(&NetworkServer::processClsCommand, command);
+            }else
+                std::cout << "cls command failed!" << std::endl;
 
-            }
             break;
         }
 
@@ -461,6 +463,9 @@ void ServerThread::sendCursorPos(DataPacket &packet) {
     QDataStream out;
     out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
 
     auto ptr = std::dynamic_pointer_cast<CursorPosition>(packet.getPayload());
     auto vector = QVector<quint32>();
@@ -469,7 +474,10 @@ void ServerThread::sendCursorPos(DataPacket &packet) {
     }
     std::cout << "sendCursorPos " << ptr->getIndex() << " siteID: " << ptr->getSiteId() << std::endl;
 
-    qint32 bytes=-14;//TODO dimensione socket
+    tmp << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
+        << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex();
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
     out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
         ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
         << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
