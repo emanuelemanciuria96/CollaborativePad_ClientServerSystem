@@ -294,6 +294,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
             if( operatingFileName!="") {
                 _sockets.detachSocket(operatingFileName, _siteID);
                 msgHandler->submit(&NetworkServer::processClsCommand, command);
+
             }
             break;
         }
@@ -470,6 +471,10 @@ void ServerThread::sendCursorPos(DataPacket &packet) {
 
 void ServerThread::disconnected()
 {
+    DataPacket packet(_siteID, 0, DataPacket::cursorPos);
+    auto symbol = Symbol();
+    packet.setPayload(std::make_shared<CursorPosition>(symbol,-1,_siteID));
+    _sockets.broadcast(operatingFileName,_siteID,packet);
 
     if( operatingFileName!=""){
         _sockets.detachSocket(operatingFileName, _siteID);

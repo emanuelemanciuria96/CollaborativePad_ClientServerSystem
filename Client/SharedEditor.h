@@ -65,7 +65,8 @@ signals:
     void filePathsArrived(const QVector<QString> &paths);
     void loginAchieved();
     void userInfoArrived(const QPixmap& image, const QString& nickname, const QString& name);
-    void RemoteCursorPosChanged(qint32 pos, qint32 siteId);
+    void remoteCursorPosChanged(qint32 pos, qint32 siteId);
+    void removeCursor(qint32 siteId);
 
 public:
     explicit SharedEditor(QObject *parent = 0);

@@ -54,7 +54,6 @@ private:
     void loadSymbols();
     void updateRemoteCursors(qint32 mySiteId, int pos, Message::action_t action);
     RemoteCursor* getRemoteCursor(qint32 siteId);
-    void removeCursor(qint32 siteId);
     void fileNew();
     void fileOpen();
     void insertText(qint32 pos, const QString& value, qint32 siteId);
@@ -72,7 +71,7 @@ public slots:
     void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
     void deleteAllText();
     void updateRemoteCursorPos(qint32 pos, qint32 siteId);
-
+    void removeCursor(qint32 siteId);
 signals:
     void clear();
 

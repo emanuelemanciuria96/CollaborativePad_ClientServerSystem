@@ -233,7 +233,7 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     RemoteCursor *cursor;
 //    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
     auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
-        std::cout << "SiteId: " << c.getSiteId() << std::endl;
+//        std::cout << "SiteId: " << c.getSiteId() << std::endl;
         return (c.getSiteId() == siteId);
     });
     if (it == remoteCursors.end()) {
@@ -246,8 +246,13 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
 }
 
 void EditorGUI::removeCursor(qint32 siteId) {
-    if (!remoteCursors[siteId].isNull()) {
-        remoteCursors.erase(remoteCursors.begin() + siteId);
+    auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
+        return (c.getSiteId() == siteId);
+    });
+    if (it != remoteCursors.end()) {
+        remoteCursors.erase(it);
+        std::cout << "Remove cursor " << siteId << std::endl;
+        textEdit->update();
     }
 }
 
@@ -295,7 +300,7 @@ void EditorGUI::deleteAllText() {
 void EditorGUI::handleCursorPosChanged() {
     qint32 pos;
     pos = textEdit->textCursor().position();
-    std::cout << "cursor index:" << pos << std::endl;
+//    std::cout << "cursor index:" << pos << std::endl;
     if (model->getSiteId() != -1) {
         model->sendCursorPos(pos);
     }
@@ -303,11 +308,8 @@ void EditorGUI::handleCursorPosChanged() {
 
 void EditorGUI::updateRemoteCursorPos(qint32 pos, qint32 siteId) {
     std::cout << "draw in " << pos << " siteID: " << siteId << std::endl;
-    if (siteId > 0) {
-        auto cursor = getRemoteCursor(siteId);
-        cursor->setPosition(pos, QTextCursor::MoveAnchor);
-        textEdit->update();
-        drawLabel(cursor);
-    }
-
+    auto cursor = getRemoteCursor(siteId);
+    cursor->setPosition(pos, QTextCursor::MoveAnchor);
+    drawLabel(cursor);
+    textEdit->update();
 }
