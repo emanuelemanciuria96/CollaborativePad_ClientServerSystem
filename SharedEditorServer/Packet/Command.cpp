@@ -272,7 +272,7 @@ bool Command::lsCommand(QString &connectionId) {
 }
 
 bool Command::opnCommand(QString &connectionId){
-    if(_args.empty() || _args.size()>2)
+    if(_args.size() != 1)
         return false;
 
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
@@ -281,7 +281,8 @@ bool Command::opnCommand(QString &connectionId){
     if (!db.open())
         return false;
 
-    if (_args.size() == 1) {
+    auto pos = _args.first().indexOf("/");
+    if (pos == -1) {
         QString name = _args.first();
         _args.clear();
         QSqlQuery query(db);
@@ -300,8 +301,9 @@ bool Command::opnCommand(QString &connectionId){
         return true;
     }
 
-    QString owner = _args.first();
-    QString name = _args.last();
+    auto list = _args.first().split("/");
+    QString owner = list.first();
+    QString name = list.last();
     _args.clear();
     QSqlQuery query(db);
 
