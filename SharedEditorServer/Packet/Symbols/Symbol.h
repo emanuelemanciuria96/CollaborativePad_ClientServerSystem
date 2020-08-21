@@ -18,6 +18,7 @@ private:
     std::vector<quint32> _pos;
 
 public:
+    Symbol():_ch(),_symId(-1,-1),_pos(0){};
     Symbol(QChar ch, qint32 id, quint32 cnt,std::vector<quint32> &pos):
         _ch(ch),_symId(id,cnt),_pos(pos){}
 

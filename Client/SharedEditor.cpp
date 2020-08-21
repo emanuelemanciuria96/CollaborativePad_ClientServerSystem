@@ -198,10 +198,17 @@ void SharedEditor::process(DataPacket pkt) {
 }
 
 void SharedEditor::processCursorPos(CursorPosition &curPos) {
-    auto index = curPos.getIndex();
-    auto symbol = curPos.getSymbol();
-    auto pos = getIndex(index, symbol);
-    emit RemoteCursorPosChanged(pos, curPos.getSiteId());
+    if (curPos.getSiteId() > 0) {
+        if (curPos.getIndex() == -1) {
+            //il client si è disconnesso
+            emit removeCursor(curPos.getSiteId());
+        } else {
+            auto index = curPos.getIndex();
+            auto symbol = curPos.getSymbol();
+            auto pos = getIndex(index, symbol);
+            emit remoteCursorPosChanged(pos, curPos.getSiteId());
+        }
+    }
 }
 
 void SharedEditor::processLoginInfo(LoginInfo &logInf) {
