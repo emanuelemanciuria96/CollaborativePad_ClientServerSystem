@@ -47,6 +47,7 @@ void LoginDialog::setUpGUI() {
 
     //connect registrazione
     connect(signInButton,&QPushButton::clicked,this, &LoginDialog::slotSignIn);
+
     //posiziono gli elementi
     formGridLayout->addWidget(labelUsername,0,0);
     formGridLayout->addWidget(editUsername,0,1);

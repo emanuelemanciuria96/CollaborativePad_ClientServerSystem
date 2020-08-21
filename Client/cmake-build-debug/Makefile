@@ -135,33 +135,6 @@ Client_autogen/fast:
 	$(MAKE) -f CMakeFiles\Client_autogen.dir\build.make CMakeFiles/Client_autogen.dir/build
 .PHONY : Client_autogen/fast
 
-AccountView.obj: AccountView.cpp.obj
-
-.PHONY : AccountView.obj
-
-# target to build an object file
-AccountView.cpp.obj:
-	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/AccountView.cpp.obj
-.PHONY : AccountView.cpp.obj
-
-AccountView.i: AccountView.cpp.i
-
-.PHONY : AccountView.i
-
-# target to preprocess a source file
-AccountView.cpp.i:
-	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/AccountView.cpp.i
-.PHONY : AccountView.cpp.i
-
-AccountView.s: AccountView.cpp.s
-
-.PHONY : AccountView.s
-
-# target to generate assembly for a file
-AccountView.cpp.s:
-	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/AccountView.cpp.s
-.PHONY : AccountView.cpp.s
-
 Client_autogen/mocs_compilation.obj: Client_autogen/mocs_compilation.cpp.obj
 
 .PHONY : Client_autogen/mocs_compilation.obj
@@ -739,9 +712,6 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Client_autogen
-	@echo ... AccountView.obj
-	@echo ... AccountView.i
-	@echo ... AccountView.s
 	@echo ... Client_autogen/mocs_compilation.obj
 	@echo ... Client_autogen/mocs_compilation.i
 	@echo ... Client_autogen/mocs_compilation.s

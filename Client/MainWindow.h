@@ -19,7 +19,6 @@ public:
     MainWindow(SharedEditor* shEditor, QWidget* parent = 0);
 
 private:
-
     QDockWidget *dockWidgetTree;
     QWidget *widgetLogin;
     QWidget *widgetEditor;
@@ -29,17 +28,21 @@ private:
     QStatusBar* statusBar;
     QToolBar* toolBar;
     InfoWidget* infoWidget;
+    InfoWidgetEdit* infoWidgetEdit;
+    QStackedWidget* centralWidget;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
     void treeFileSystemSettings();
+    void infoWidgetsSettings();
 
-signals:
+ signals:
     void fileSystemRequest();
 
 public slots:
     void loginFinished();
-
+    void startSignIn();
+    void backToLogIn();
 };
 
 

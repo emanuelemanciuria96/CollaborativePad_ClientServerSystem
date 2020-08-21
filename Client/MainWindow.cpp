@@ -7,26 +7,31 @@
 
 
 MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(parent) {
-
+    QApplication::setStyle(QStyleFactory::create("fusion"));
+//    for(auto k : QStyleFactory::keys()){
+//        std::cout << k.toStdString() << std::endl;
+//    }
     setWindowTitle("Shared Editor");
     statusBar = new QStatusBar(this);
     statusBar->showMessage ("StatusBar");
     toolBar = new QToolBar("Toolbar",this);
-    infoWidget = new InfoWidget();
+    centralWidget = new QStackedWidget(this);
 
     //    aggiungo gli elementi alla finestra
     this->setStatusBar(statusBar);
     this->addToolBar(toolBar);
     toolBar->setMovable(false);
-
+    setCentralWidget(centralWidget);
     menuBar()->addMenu("&Options");
 
+    // login creation
+    loginSettings();
     // editor creation
     editorSettings(shEditor);
     // tree file system view creation
     treeFileSystemSettings();
-    // login creation
-    loginSettings();
+    // widgetAccount creation
+    infoWidgetsSettings();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),treeView , SLOT(openFile( QTreeWidgetItem*, int )));
@@ -42,21 +47,26 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(this, &MainWindow::fileSystemRequest, shEditor, &SharedEditor::requireFileSystem);
     connect(shEditor, &SharedEditor::userInfoArrived, infoWidget, &InfoWidget::loadData);
     connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
+    connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::startSignIn);
+    connect(infoWidgetEdit, &InfoWidgetEdit::backToLogIn, this, &MainWindow::backToLogIn);
+
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
 
-    this->setCentralWidget(widgetLogin);
+    centralWidget->addWidget(widgetLogin);
+    centralWidget->addWidget(infoWidgetEdit);
+    centralWidget->addWidget(widgetEditor);
+//    this->setCentralWidget(widgetLogin);
 
 }
 
 void MainWindow::loginFinished() {
     widgetLogin->hide();
     emit fileSystemRequest();
-    this->setCentralWidget(widgetEditor);
+    centralWidget->setCurrentWidget(widgetEditor);
     dockWidgetTree->show();
     widgetEditor->show();
-    infoWidget->show();
 }
 
 void MainWindow::loginSettings() {
@@ -126,3 +136,21 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
 
 }
 
+void MainWindow::startSignIn() {
+    widgetLogin->hide();
+    centralWidget->setCurrentWidget(infoWidgetEdit);
+    infoWidgetEdit->show();
+}
+
+void MainWindow::infoWidgetsSettings() {
+
+    infoWidget = new InfoWidget(this);
+    infoWidgetEdit = new InfoWidgetEdit(this);
+
+    infoWidget->hide();
+    infoWidgetEdit->hide();
+}
+
+void MainWindow::backToLogIn() {
+    centralWidget->setCurrentWidget(widgetLogin);
+}

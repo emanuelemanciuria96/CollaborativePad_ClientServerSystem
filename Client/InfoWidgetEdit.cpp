@@ -48,4 +48,5 @@ void InfoWidgetEdit::setName(const QString &name) {
 void InfoWidgetEdit::closeEdit() {
     parentWidget()->show();
     this->close();
+    emit backToLogIn();
 }

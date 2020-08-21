@@ -27,5 +27,6 @@ public slots:
 
 signals:
     void updateInfo(QPixmap image, QString name);
+    void backToLogIn();
 };
 #endif // INFOWIDGETEDIT_H

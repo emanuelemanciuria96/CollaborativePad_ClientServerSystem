@@ -3,8 +3,8 @@
 
 #include <QWidget>
 #include <QtWidgets/QGraphicsScene>
-#include <QtWidgets/QMainWindow>
 #include "InfoWidgetEdit.h"
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class InfoWidget; }
