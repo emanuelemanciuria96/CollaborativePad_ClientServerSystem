@@ -19,7 +19,7 @@
 #include <QtCore/QDataStream>
 #include <QAbstractSocket>
 #include <QString>
-
+#include "Packet/FileInfo.h"
 #include "Packet/LoginInfo.h"
 #include "Packet/Command.h"
 #include "Packet/CursorPosition.h"
@@ -32,28 +32,41 @@ class SharedEditor: public QObject {
     Q_OBJECT
 private:
     qint32 _siteId;
-    std::vector<Symbol> _symbols;
     qint32 _counter;
+    std::vector<Symbol> _symbols;
     Transceiver* transceiver;
-    qint32 getIndex(Message& m);
-    void processMessages(StringMessages& strMess);
-    void processLoginInfo(LoginInfo& logInf);
-    void processCommand(Command& cmd);
-    void processCdCommand(Command& cmd);
-    void processCursorPos(CursorPosition& curPos);
+    qint32 getIndex(qint32 index, Symbol symbol);
     bool isLogged;
+    bool isFileOpened = false;
+
+    void findCounter();
+
+    void processMessages( StringMessages& strMess );
+    void processLoginInfo( LoginInfo& logInf );
+    void processFileInfo( FileInfo& filInf );
+    void processCommand( Command& cmd );
+    void processCdCommand( Command& cmd );
+    void processTreeCommand( Command& cmd );
+    void processCursorPos(CursorPosition& curPos);
+
 
 public slots:
     void loginSlot(QString& username, QString& password);
     void process(DataPacket pkt);
+    void requireFileSystem();
+    void requireFile(QString fileName);
     void deleteThread();
-    void deleteText();
+    void clearText();
+    void sendUpdatedInfo(const QPixmap& image, const QString& name);
 
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void deleteAllText();
-    void filePathsArrived(QVector<QString> &paths);
-    void RemoteCursorPosChanged(qint32 siteId, quint32 pos);
+    void filePathsArrived(const QVector<QString> &paths);
+    void loginAchieved();
+    void userInfoArrived(const QPixmap& image, const QString& nickname, const QString& name);
+    void remoteCursorPosChanged(qint32 pos, qint32 siteId);
+    void removeCursor(qint32 siteId);
 
 public:
     explicit SharedEditor(QObject *parent = 0);
@@ -62,7 +75,7 @@ public:
     QString to_string();
     void testCommand();
     qint32 getSiteId();
-    void sendCursorPos(qint32 pos);
+    void sendCursorPos(qint32 index);
 
 };
 

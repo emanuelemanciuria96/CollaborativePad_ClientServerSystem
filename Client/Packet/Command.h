@@ -22,6 +22,8 @@ public:
         cls = 7,
         sv = 8,
         find = 9,
+        tree = 10,
+        ls = 11,
     }cmd_t;
 
     Command(qint32 siteId, cmd_t cmd, QVector<QString> args);

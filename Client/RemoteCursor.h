@@ -28,6 +28,8 @@ public:
     RemoteCursor(QTextDocument *document, qint32 siteId);
     qint32 getSiteId() const;
 
+    virtual ~RemoteCursor();
+
 };
 
 

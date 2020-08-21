@@ -63,6 +63,7 @@ private:
     void sendMessage(DataPacket& packet);
     void sendCommand(DataPacket& packet);
     void sendCursorPos(DataPacket& packet);
+    void sendFileInfo(DataPacket& packet);
 
     void setThreadId();
 

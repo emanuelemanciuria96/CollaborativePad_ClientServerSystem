@@ -33,17 +33,13 @@ private:
     QLineEdit* editUsername;
     QLineEdit* editPassword;
     QDialogButtonBox* buttons;
-    QPushButton* signInButton;
     void setUpGUI();
 
 signals:
     void acceptLogin(QString& username, QString& password);
-    void loginAchieved();
-    void signIn();
 
 private slots:
     void slotAcceptLogin();
-    void slotSignIn();
 
 };
 

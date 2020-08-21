@@ -4,9 +4,15 @@
 
 #include "CursorPosition.h"
 
-CursorPosition::CursorPosition(qint32 pos, qint32 siteID) : pos(pos), Payload(siteID){}
+#include <utility>
+
+CursorPosition::CursorPosition(Symbol& _s, qint32 index, qint32 siteID) : s(_s), index(index), Payload(siteID){}
 
 
-quint32 CursorPosition::getPos() {
-    return pos;
+qint32 CursorPosition::getIndex() const {
+    return index;
+}
+
+Symbol CursorPosition::getSymbol() {
+    return s;
 }

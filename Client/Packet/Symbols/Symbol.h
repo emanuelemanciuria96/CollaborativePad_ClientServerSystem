@@ -18,6 +18,7 @@ private:
     std::vector<quint32> _pos;
 
 public:
+    Symbol():_ch(),_symId(-1,-1),_pos(0){};
     Symbol(QChar ch, qint32 id, quint32 cnt,std::vector<quint32> &pos):
         _ch(ch),_symId(id,cnt),_pos(pos){}
     bool operator==(Symbol s){
@@ -31,6 +32,14 @@ public:
     void setPos(std::vector<quint32>& pos){ _pos = pos; }
     QChar getValue() { return _ch; }
     SymId getSymId() { return _symId; }
+//    Symbol& operator=(const Symbol& s){
+//        if(this != &s){
+//            this->_ch =s._ch;
+//            this->_symId = s._symId;
+//            this->_pos = s._pos;
+//        }
+//        return *this;
+//    }
 };
 
 

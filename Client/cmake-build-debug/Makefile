@@ -243,6 +243,60 @@ FileSystemTreeView.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/FileSystemTreeView.cpp.s
 .PHONY : FileSystemTreeView.cpp.s
 
+InfoWidget.obj: InfoWidget.cpp.obj
+
+.PHONY : InfoWidget.obj
+
+# target to build an object file
+InfoWidget.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/InfoWidget.cpp.obj
+.PHONY : InfoWidget.cpp.obj
+
+InfoWidget.i: InfoWidget.cpp.i
+
+.PHONY : InfoWidget.i
+
+# target to preprocess a source file
+InfoWidget.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/InfoWidget.cpp.i
+.PHONY : InfoWidget.cpp.i
+
+InfoWidget.s: InfoWidget.cpp.s
+
+.PHONY : InfoWidget.s
+
+# target to generate assembly for a file
+InfoWidget.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/InfoWidget.cpp.s
+.PHONY : InfoWidget.cpp.s
+
+InfoWidgetEdit.obj: InfoWidgetEdit.cpp.obj
+
+.PHONY : InfoWidgetEdit.obj
+
+# target to build an object file
+InfoWidgetEdit.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/InfoWidgetEdit.cpp.obj
+.PHONY : InfoWidgetEdit.cpp.obj
+
+InfoWidgetEdit.i: InfoWidgetEdit.cpp.i
+
+.PHONY : InfoWidgetEdit.i
+
+# target to preprocess a source file
+InfoWidgetEdit.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/InfoWidgetEdit.cpp.i
+.PHONY : InfoWidgetEdit.cpp.i
+
+InfoWidgetEdit.s: InfoWidgetEdit.cpp.s
+
+.PHONY : InfoWidgetEdit.s
+
+# target to generate assembly for a file
+InfoWidgetEdit.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/InfoWidgetEdit.cpp.s
+.PHONY : InfoWidgetEdit.cpp.s
+
 LoginDialog.obj: LoginDialog.cpp.obj
 
 .PHONY : LoginDialog.obj
@@ -404,6 +458,33 @@ Packet/DataPacket.s: Packet/DataPacket.cpp.s
 Packet/DataPacket.cpp.s:
 	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/DataPacket.cpp.s
 .PHONY : Packet/DataPacket.cpp.s
+
+Packet/FileInfo.obj: Packet/FileInfo.cpp.obj
+
+.PHONY : Packet/FileInfo.obj
+
+# target to build an object file
+Packet/FileInfo.cpp.obj:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj
+.PHONY : Packet/FileInfo.cpp.obj
+
+Packet/FileInfo.i: Packet/FileInfo.cpp.i
+
+.PHONY : Packet/FileInfo.i
+
+# target to preprocess a source file
+Packet/FileInfo.cpp.i:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/FileInfo.cpp.i
+.PHONY : Packet/FileInfo.cpp.i
+
+Packet/FileInfo.s: Packet/FileInfo.cpp.s
+
+.PHONY : Packet/FileInfo.s
+
+# target to generate assembly for a file
+Packet/FileInfo.cpp.s:
+	$(MAKE) -f CMakeFiles\Client.dir\build.make CMakeFiles/Client.dir/Packet/FileInfo.cpp.s
+.PHONY : Packet/FileInfo.cpp.s
 
 Packet/LoginInfo.obj: Packet/LoginInfo.cpp.obj
 
@@ -670,6 +751,12 @@ help:
 	@echo ... FileSystemTreeView.obj
 	@echo ... FileSystemTreeView.i
 	@echo ... FileSystemTreeView.s
+	@echo ... InfoWidget.obj
+	@echo ... InfoWidget.i
+	@echo ... InfoWidget.s
+	@echo ... InfoWidgetEdit.obj
+	@echo ... InfoWidgetEdit.i
+	@echo ... InfoWidgetEdit.s
 	@echo ... LoginDialog.obj
 	@echo ... LoginDialog.i
 	@echo ... LoginDialog.s
@@ -688,6 +775,9 @@ help:
 	@echo ... Packet/DataPacket.obj
 	@echo ... Packet/DataPacket.i
 	@echo ... Packet/DataPacket.s
+	@echo ... Packet/FileInfo.obj
+	@echo ... Packet/FileInfo.i
+	@echo ... Packet/FileInfo.s
 	@echo ... Packet/LoginInfo.obj
 	@echo ... Packet/LoginInfo.i
 	@echo ... Packet/LoginInfo.s

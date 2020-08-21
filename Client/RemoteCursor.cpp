@@ -11,7 +11,7 @@ RemoteCursor::RemoteCursor(QTextDocument *document, qint32 siteId) : _siteId(sit
     labelName->setStyleSheet("QLabel {background-color: "+ color.name() + "}") ;
     labelTimer = new QTimer();
     labelTimer->setSingleShot(true);
-};
+}
 
 
 qint32 RemoteCursor::getSiteId() const {
@@ -26,6 +26,11 @@ QString RemoteCursor::generateName() {
 QString RemoteCursor::getColor() {
     auto num = (_siteId*13) % COLORS->size();
     return COLORS[num];
+}
+
+RemoteCursor::~RemoteCursor() {
+    labelName->deleteLater();
+    labelTimer->deleteLater();
 }
 
 

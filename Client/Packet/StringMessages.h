@@ -15,7 +15,6 @@
 #include <QString>
 
 
-
 class StringMessages: public Payload{
 
 public:
@@ -23,7 +22,7 @@ public:
     //        0#&ch#&siteid#&count#&pos1,pos2,..,#&@%1#&ch#&siteid#&count...
     // il primo elemento può essere 0/1 a seconda se insertion/removal
 
-    explicit StringMessages(qint32 siteID = -1):Payload(siteID){ formattedMessages = ""; }
+    explicit StringMessages(qint32 siteID):Payload(siteID){ formattedMessages = ""; }
     StringMessages(QString &stringMess, qint32 siteID);
     StringMessages(std::vector<Message> &vm, qint32 siteID);
 
@@ -38,7 +37,7 @@ private:
 
     const QString messages_separator ="@%";   // separatore dei messaggi
     const QString items_separator ="#&";    //  separatore di elementi del messaggio
-    const QString pos_separator =",";      //  separatore degli elementi del pos di un messaggio
+    const QString pos_separator =",";      //  separatore degli elementi del index di un messaggio
     const int messages_separatorSize=messages_separator.size();
     const int items_separatorSize=items_separator.size();
     const int pos_separatorSize=pos_separator.size();

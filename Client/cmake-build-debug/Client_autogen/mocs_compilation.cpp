@@ -2,6 +2,8 @@
 #include "EWIEGA46WW/moc_AccountView.cpp"
 #include "EWIEGA46WW/moc_EditorGUI.cpp"
 #include "EWIEGA46WW/moc_FileSystemTreeView.cpp"
+#include "EWIEGA46WW/moc_InfoWidget.cpp"
+#include "EWIEGA46WW/moc_InfoWidgetEdit.cpp"
 #include "EWIEGA46WW/moc_LoginDialog.cpp"
 #include "EWIEGA46WW/moc_MainWindow.cpp"
 #include "EWIEGA46WW/moc_MyTextEdit.cpp"
