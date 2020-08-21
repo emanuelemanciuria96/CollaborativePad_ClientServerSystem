@@ -40,13 +40,10 @@ public:
     bool cdCommand(QString& connectionId);
     bool mkdirCommand(QString& connectionId);
     bool rmCommand(QString& connectionId);
-    QString opnCommand(QString &connectionId);
+    bool opnCommand(QString &connectionId);
     bool treeCommand(QString &connectionId);
 
     bool lsCommand(QString &connectionId);
-    /*QVector<QString> openCommand(QString& connectionId, QString& user, QString& directory);
-    bool copyFile(QString& connectionId, QString& user, QString& src, QString& dest);
-    bool moveFile(QString& connectionId, QString& user, QString& src, QString& dest);*/
 
 private:
     cmd_t _cmd;
