@@ -11,6 +11,7 @@ LoginInfo::LoginInfo(qint32 siteId, LoginInfo::type_t type,QString user, QString
         siteId), _user(std::move(user)), _password(std::move(password)), _type(type) {
     _image = QPixmap();
     _name = QString();
+    _email = QString();
 }
 
 QString &LoginInfo::getUser(){
@@ -51,4 +52,12 @@ const QString &LoginInfo::getName() const {
 
 void LoginInfo::setName(const QString &name) {
     _name = name;
+}
+
+const QString &LoginInfo::getEmail() const {
+    return _email;
+}
+
+void LoginInfo::setEmail(const QString &email) {
+    _email = email;
 }

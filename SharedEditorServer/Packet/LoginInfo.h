@@ -36,6 +36,8 @@ public:
     void setImage(const QPixmap &image);
     const QString &getName() const;
     void setName(const QString &name);
+    const QString &getEmail() const;
+    void setEmail(const QString &email);
 
     qint32 login(const QString& connectionId);
     bool updateInfo(const QString& connectionId);
@@ -46,6 +48,7 @@ private:
     type_t _type;
     QPixmap _image;
     QString _name;
+    QString _email;
 };
 
 

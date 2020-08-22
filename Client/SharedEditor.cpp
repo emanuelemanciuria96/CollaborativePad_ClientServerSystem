@@ -9,6 +9,7 @@
 #include <tuple>
 #include <string>
 #include <QtCore/QCryptographicHash>
+#include <QtCore/QFile>
 
 SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
@@ -216,7 +217,7 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
         std::cout << "client successfully logged!" << std::endl;
         isLogged = true;
         emit loginAchieved();
-        emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName());
+        emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName(), logInf.getEmail());
     } else {
         std::cout << "client not logged!" << std::endl;
     }
@@ -438,12 +439,13 @@ void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare m
 
 }
 
-void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name) {
+void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email) {
     DataPacket packet(-1, -1, DataPacket::login);
     packet.setPayload( std::make_shared<LoginInfo>( _siteId, LoginInfo::update_info));
     auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
     ptr->setImage(image);
     ptr->setName(name);
+    ptr->setEmail(email);
     emit transceiver->getSocket()->sendPacket(packet);
 }
 

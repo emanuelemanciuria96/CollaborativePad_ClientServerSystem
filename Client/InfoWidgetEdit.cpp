@@ -28,12 +28,18 @@ void InfoWidgetEdit::openFileDialog() {
         fileNames = fileDialog->selectedFiles();
 
     if (!fileNames.isEmpty()){
-        ui->immagine->setPixmap(QPixmap(fileNames.first()));
+        QPixmap image(fileNames.first());
+        auto imgsize = std::min(image.width(), image.height());
+        auto rect = QRect((image.width() - imgsize) / 2,(image.height() - imgsize) / 2, imgsize, imgsize);
+        auto crop = image.copy(rect);
+        crop.save("images/temp.jpg", "JPG", 50);
+        ui->immagine->setPixmap(QPixmap("images/temp.jpg"));
+        QFile::remove("images/temp.jpg");
     }
 }
 
 void InfoWidgetEdit::emitUpdateInfo() {
-    emit updateInfo(*(ui->immagine->pixmap()), std::move(ui->editname->text()));
+    emit updateInfo(*(ui->immagine->pixmap()), std::move(ui->editname->text()), std::move(ui->editemail->text()));
 }
 
 void InfoWidgetEdit::setImage(const QPixmap *image) {
@@ -43,6 +49,10 @@ void InfoWidgetEdit::setImage(const QPixmap *image) {
 
 void InfoWidgetEdit::setName(const QString &name) {
     ui->editname->setText(name);
+}
+
+void InfoWidgetEdit::setEmail(const QString &email) {
+    ui->editemail->setText(email);
 }
 
 void InfoWidgetEdit::closeEdit() {

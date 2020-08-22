@@ -58,14 +58,14 @@ public slots:
     void requireFile(QString fileName);
     void deleteThread();
     void clearText();
-    void sendUpdatedInfo(const QPixmap& image, const QString& name);
+    void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
 
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void deleteAllText();
     void filePathsArrived(const QVector<QString> &paths);
     void loginAchieved();
-    void userInfoArrived(const QPixmap& image, const QString& nickname, const QString& name);
+    void userInfoArrived(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void remoteCursorPosChanged(qint32 pos, qint32 siteId);
     void removeCursor(qint32 siteId);
 

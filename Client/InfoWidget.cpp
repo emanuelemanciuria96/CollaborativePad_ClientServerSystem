@@ -14,17 +14,19 @@ InfoWidget::InfoWidget(QWidget *parent)
     ui->immagine->setPixmap(image);
 }
 
-void InfoWidget::loadData(const QPixmap& image, const QString& nickname, const QString& name) {
-    ui->immagine->setScaledContents(true);
+void InfoWidget::loadData(const QPixmap& image, const QString& nickname, const QString& name, const QString& email) {
     if(!image.isNull())
         ui->immagine->setPixmap(image);
-    ui->nickname->setText(nickname);
     if (!name.isNull())
         ui->nome->setText(name);
-    connect(ui->pushButton, &QPushButton::clicked, this, &InfoWidget::openInfoEdit);
+    if (!email.isNull())
+        ui->email->setText(email);
+    ui->nickname->setText(nickname);
+    connect(ui->modifica, &QPushButton::clicked, this, &InfoWidget::openInfoEdit);
     connect(infoWidgetEdit, &InfoWidgetEdit::updateInfo, this, &InfoWidget::updateInfo);
     infoWidgetEdit->setImage(ui->immagine->pixmap());
     infoWidgetEdit->setName(ui->nome->text());
+    infoWidgetEdit->setEmail(ui->email->text());
 }
 
 void InfoWidget::openInfoEdit() {
@@ -49,12 +51,12 @@ QString InfoWidget::getName() {
     return std::move(ui->nome->text());
 }
 
-void InfoWidget::updateInfo(const QPixmap& image, const QString& name) {
-    if (*(ui->immagine->pixmap()) != image || ui->nome->text() != name) {
-        ui->immagine->setScaledContents(true);
+void InfoWidget::updateInfo(const QPixmap& image, const QString& name, const QString& email) {
+    if (*(ui->immagine->pixmap()) != image || ui->nome->text() != name || ui->email->text() != email) {
         ui->immagine->setPixmap(image);
         ui->nome->setText(name);
-        emit sendUpdatedInfo(image, name);
+        ui->email->setText(email);
+        emit sendUpdatedInfo(image, name, email);
     }
     infoWidgetEdit->close();
     this->show();

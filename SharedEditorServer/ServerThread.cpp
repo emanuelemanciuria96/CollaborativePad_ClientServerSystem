@@ -136,8 +136,9 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
     QString password;
     QPixmap image;
     QString name;
+    QString email;
 
-    in >> siteId >> type >> user >> password >> name >> image;
+    in >> siteId >> type >> user >> password >> name >> image >> email;
 
     if(type == LoginInfo::login_request && _username.isEmpty()) {
         auto shr = std::make_shared<LoginInfo>( -1, (LoginInfo::type_t)type, user, password);
@@ -184,6 +185,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
         auto shr = std::make_shared<LoginInfo>( _siteID, (LoginInfo::type_t)type, "", "");
         shr->setImage(image);
         shr->setName(name);
+        shr->setEmail(email);
         shr->updateInfo(threadId);
     }
 }
@@ -383,12 +385,12 @@ void ServerThread::sendLoginInfo(DataPacket &packet) {
     QBuffer buf;
     buf.open(QBuffer::WriteOnly);
     QDataStream tmp(&buf);
-    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage();
+    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage() << ptr->getEmail();
 
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
     out << bytes<<packet.getSource() << packet.getErrcode() << (quint32) packet.getTypeOfData();
-    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage() << ptr->getEmail();
     socket->waitForBytesWritten(-1);
 
     std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;

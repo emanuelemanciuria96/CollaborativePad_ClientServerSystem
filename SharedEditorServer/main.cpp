@@ -29,14 +29,15 @@ static bool initializeDb()
         }
         QSqlQuery query(db);
         query.exec("CREATE TABLE LOGIN ("  \
-         "USER      TEXT PRIMARY KEY     NOT NULL," \
+         "USER      TEXT PRIMARY KEY    NOT NULL," \
          "PASS      TEXT                NOT NULL," \
          "SITEID    INT                 NOT NULL,"
-                   "IMAGE     TEXT                NOT NULL,"
-                   "NAME      TEXT                NOT NULL);");
+         "IMAGE     TEXT                NOT NULL,"
+         "NAME      TEXT                NOT NULL,"
+         "EMAIL     TEXT                NOT NULL);");
         query.exec("DELETE FROM LOGIN");
-        query.exec("INSERT INTO LOGIN ('USER', 'PASS', 'SITEID', 'IMAGE', 'NAME') VALUES ('q', '8a5e1d339fafc39350fd8cf1d7ca7982091c27f6b77f75bd4ddab3df425b4f8c', '1', '', '');");
-        query.exec("INSERT INTO LOGIN ('USER', 'PASS', 'SITEID', 'IMAGE', 'NAME') VALUES ('w', 'f1cfdca558ac0c00464ca0f3e265ec6fb32c57caeb106fbfed9f174f6b814642', '2', '', '');");
+        query.exec("INSERT INTO LOGIN ('USER', 'PASS', 'SITEID', 'IMAGE', 'NAME', 'EMAIL') VALUES ('q', '8a5e1d339fafc39350fd8cf1d7ca7982091c27f6b77f75bd4ddab3df425b4f8c', '1', '', 'Mario Rossi', 'mario.rossi@mail.it');");
+        query.exec("INSERT INTO LOGIN ('USER', 'PASS', 'SITEID', 'IMAGE', 'NAME', 'EMAIL') VALUES ('w', 'f1cfdca558ac0c00464ca0f3e265ec6fb32c57caeb106fbfed9f174f6b814642', '2', '', 'Mario Bianchi', 'mario.bianchi@mail.it');");
         query.exec("SELECT * FROM LOGIN");
 
         std::cout << "Clients in database:" << std::endl;
