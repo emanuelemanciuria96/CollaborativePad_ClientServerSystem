@@ -57,6 +57,14 @@ void LoginInfo::setName(const QString &name) {
     _name = name;
 }
 
+const QString &LoginInfo::getEmail() const {
+    return _email;
+}
+
+void LoginInfo::setEmail(const QString &email) {
+    _email = email;
+}
+
 qint32 LoginInfo::login(const QString& connectionId) {
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_login");
     db.setDatabaseName("login.db");
@@ -65,7 +73,7 @@ qint32 LoginInfo::login(const QString& connectionId) {
         return -1;
 
     QSqlQuery query(db);
-    if(!query.exec("SELECT PASS, SITEID, IMAGE, NAME FROM LOGIN WHERE USER='"+_user+"'"))
+    if(!query.exec("SELECT PASS, SITEID, IMAGE, NAME, EMAIL FROM LOGIN WHERE USER='"+_user+"'"))
         return -1;
 
     db.close();
@@ -76,6 +84,7 @@ qint32 LoginInfo::login(const QString& connectionId) {
             _siteID = query.value("SITEID").toInt();
             _image = QPixmap(query.value("IMAGE").toString());
             _name = query.value("NAME").toString();
+            _email = query.value("EMAIL").toString();
             std::cout << _name.toStdString() << std::endl;
             return _siteID;
         } else {
@@ -103,10 +112,10 @@ bool LoginInfo::updateInfo(const QString& connectionId) {
 
     QString fileName("images/"+QString::number(_siteID)+".jpg");
     QSqlQuery query(db);
-    if(!query.exec("UPDATE LOGIN SET IMAGE = '"+fileName+"', NAME = '"+_name+"' WHERE SITEID = '"+QString::number(_siteID)+"';"))
+    if(!query.exec("UPDATE LOGIN SET IMAGE = '"+fileName+"', NAME = '"+_name+"', EMAIL = '"+_email+"' WHERE SITEID = '"+QString::number(_siteID)+"';"))
         return false;
 
-    _image.save(fileName, "JPG", 50);
+    _image.save(fileName, "JPG");
     db.close();
 
     return true;

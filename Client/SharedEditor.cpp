@@ -9,6 +9,7 @@
 #include <tuple>
 #include <string>
 #include <QtCore/QCryptographicHash>
+#include <QtCore/QFile>
 
 SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
@@ -141,7 +142,6 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
     emit transceiver->getSocket()->sendPacket(packet);
 //    this->to_string();
 
-
 }
 
 void SharedEditor::localErase(qint32 index) {
@@ -158,7 +158,6 @@ void SharedEditor::localErase(qint32 index) {
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
     this->to_string();
-
 
 }
 
@@ -218,7 +217,7 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
         std::cout << "client successfully logged!" << std::endl;
         isLogged = true;
         emit loginAchieved();
-        emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName());
+        emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName(), logInf.getEmail());
     } else {
         std::cout << "client not logged!" << std::endl;
     }
@@ -275,7 +274,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
         // std::cerr << "stringa: " << s.toStdString() << std::endl;
 
         if(std::get<1>(vt[i])==1) {
-            if (std::get<1>(vt[i+1])==1 and std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 1) {
+            if (std::get<1>(vt[i+1])==1 && std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 1) {
             } else {
                 //qDebug()<<"insert "<<s<<" in index "<<firstPos;
                 emit symbolsChanged(firstPos, s, std::get<3>(vt[i]),Message::insertion);
@@ -283,7 +282,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                 firstPos = std::get<0>(vt[i+1]);
             }
         }else {
-            if (std::get<1>(vt[i+1])==0 and std::get<0>(vt[i]) == std::get<0>(vt[i+1])) {
+            if (std::get<1>(vt[i+1])==0 && std::get<0>(vt[i]) == std::get<0>(vt[i+1])) {
             } else {
                 //qDebug()<<"remove "<<s<<" in index "<<firstPos+s.size()-1;
                 emit symbolsChanged(firstPos, s, std::get<3>(vt[i]), Message::removal);
@@ -303,10 +302,8 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
             break;
         }
         case FileInfo::eof: {
-            std::cout<<"inizio findCounter"<<std::endl;
             findCounter();
-            std::cout<<"fine findCounter"<<std::endl;
-            /// TODO: inserire qui segnale di apertura editor
+            // TODO: inserire qui segnale di apertura editor
             break;
         }
     }
@@ -341,8 +338,8 @@ void SharedEditor::processCommand(Command& cmd){
             break;
         }
 
-        case (Command::tree): {
-            processTreeCommand(cmd);
+        case (Command::ls): {
+            processLsCommand(cmd);
             break;
         }
 
@@ -357,7 +354,7 @@ void SharedEditor::processCdCommand(Command& cmd){
         std::cout << a.toStdString() << std::endl;
 }
 
-void SharedEditor::processTreeCommand(Command& cmd){
+void SharedEditor::processLsCommand(Command& cmd){
 
     emit filePathsArrived(cmd.getArgs());
 }
@@ -383,7 +380,7 @@ void SharedEditor::findCounter() {
 
 void SharedEditor::requireFileSystem() {
 
-    auto cmd = std::make_shared<Command>(_siteId,Command::tree,QVector<QString>());
+    auto cmd = std::make_shared<Command>(_siteId,Command::ls,QVector<QString>());
     DataPacket packet(_siteId,0,DataPacket::command);
     packet.setPayload(cmd);
 
@@ -393,6 +390,12 @@ void SharedEditor::requireFileSystem() {
 }
 
 void SharedEditor::requireFile(QString fileName) {
+
+    if( fileOpened == fileName.split("/").last() ){
+        return;
+    }else
+        fileOpened = fileName.split("/").last();
+
     QVector<QString> vec = {std::move(fileName)};
     auto cmd = std::make_shared<Command>(_siteId,Command::opn,vec);
     DataPacket packet(_siteId,0,DataPacket::command);
@@ -436,12 +439,13 @@ void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare m
 
 }
 
-void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name) {
+void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email) {
     DataPacket packet(-1, -1, DataPacket::login);
     packet.setPayload( std::make_shared<LoginInfo>( _siteId, LoginInfo::update_info));
     auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
     ptr->setImage(image);
     ptr->setName(name);
+    ptr->setEmail(email);
     emit transceiver->getSocket()->sendPacket(packet);
 }
 

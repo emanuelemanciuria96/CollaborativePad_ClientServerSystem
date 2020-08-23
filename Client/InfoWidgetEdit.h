@@ -16,6 +16,7 @@ public:
     ~InfoWidgetEdit();
     void setImage(const QPixmap* image);
     void setName(const QString& name);
+    void setEmail(const QString& email);
 
 private:
     Ui::InfoWidgetEdit *ui;
@@ -26,7 +27,7 @@ public slots:
     void closeEdit();
 
 signals:
-    void updateInfo(QPixmap image, QString name);
+    void updateInfo(QPixmap image, QString name, QString email);
     void backToLogIn();
 };
 #endif // INFOWIDGETEDIT_H

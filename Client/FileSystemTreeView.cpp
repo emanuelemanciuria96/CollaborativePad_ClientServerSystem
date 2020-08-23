@@ -30,27 +30,19 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
 
 }
 
-QTreeWidgetItem* FileSystemTreeView::addChild(QTreeWidgetItem *parent, QString name) {
+QTreeWidgetItem* FileSystemTreeView::addChild(QTreeWidgetItem *parent, QString name, QString description) {
 
     QTreeWidgetItem *child = new QTreeWidgetItem();
 
-    auto strings = name.split(">");
-    child->setText(0, strings[0]);
+    child->setText(0, name);
+    child->setText(1, description);
 
-    auto children = parent->takeChildren();
-
-    if( strings[1] == "F" ) {
+    if( description == "FILE" )
         child->setIcon(0,file_icn);
-        child->setText(1, "FILE");
-    }
-    else {
+    else
         child->setIcon(0, dir_close);
-        child->setText(1, "DIR");
-    }
 
-    children.push_back(child);
-    parent->addChildren(children);
-
+    parent->addChild(child);
 
     return child;
 
@@ -59,32 +51,30 @@ QTreeWidgetItem* FileSystemTreeView::addChild(QTreeWidgetItem *parent, QString n
 void FileSystemTreeView::constructFromPaths(const QVector<QString> &paths) {
 
     for(auto path: paths){
-        QString intermediatePath = "";
+
+        auto strs = path.split("/");
         auto itm = root;
-        auto strings = path.split("/");
+        QString F_D = "DIR";
+        QString tmpPath = "";
+        int i = 0;
 
-        strings.erase(strings.begin()); // dato che il path inizia con '/' il primo valore è il nome "", e lo elimino
+        for( auto name: strs){
+            tmpPath += name;
 
-        for(auto str: strings){
+            if( ++i == strs.size() )
+                F_D = "FILE";
 
-            QString suffix = "";
-
-            if( str != strings.last() )
-                suffix = ">D";
-            else{
-                suffix = ">"+str.split(">").last();
-                str = str.split(">").first();
+            if( isChild(itm,name) ){
+                itm = itemFromIndex(model.find(tmpPath)->second);
+            }else {
+                itm = addChild(itm, name, F_D);
+                model.insert(std::make_pair(tmpPath, indexFromItem(itm)));
             }
-            intermediatePath+="/"+str;
 
-            if( isChild( itm, str) ){
-                itm = itemFromIndex(model.find(intermediatePath+suffix)->second);
-            }
-            else{
-                itm = addChild(itm,str+suffix);
-                model.insert(std::make_pair(intermediatePath+suffix,indexFromItem(itm)));
-            }
+            tmpPath += "/";
+
         }
+
     }
 
 }
@@ -101,13 +91,13 @@ bool FileSystemTreeView::isChild(QTreeWidgetItem *parent, QString name) {
 
 void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
 
-    auto itm = item;
     if( item->text(1) == "FILE") {
         QString path = "";
-        for ( ; itm != root; itm = itm->parent())
-            path = "/"+itm->text(0)+path;
+        if( item->parent() != root)
+            path = item->parent()->text(0)+"/"+item->text(0);
+        else
+            path = item->text(0);
 
-        path+=">F";
         emit opnFileRequest(path);
     }
 

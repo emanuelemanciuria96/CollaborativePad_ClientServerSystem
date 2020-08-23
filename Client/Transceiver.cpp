@@ -118,13 +118,15 @@ void Transceiver::recvLoginInfo(DataPacket& pkt,QDataStream& in){
     QString password;
     QString name;
     QPixmap image;
+    QString email;
 
-    in >> siteId >> type >> user >> password  >> name >> image;
+    in >> siteId >> type >> user >> password  >> name >> image >> email;
     _siteID = siteId;
     pkt.setPayload(std::make_shared<LoginInfo>(siteId,(LoginInfo::type_t)type,user,password));
     auto ptr = std::dynamic_pointer_cast<LoginInfo>(pkt.getPayload());
     ptr->setImage(image);
     ptr->setName(name);
+    ptr->setEmail(email);
 
     emit readyToProcess(pkt);
 
@@ -168,6 +170,25 @@ void Transceiver::recvCommand(DataPacket& pkt, QDataStream &in) {
     pkt.setPayload( std::make_shared<Command>(siteId,(Command::cmd_t)cmd,std::move(args)));
 
     emit readyToProcess(pkt);
+}
+
+void Transceiver::recvCursorPos(DataPacket &pkt, QDataStream &in) {
+    qint32 siteId;
+    qint32 index;
+    QChar ch;
+    qint32 symbol_siteId;
+    qint32 count;
+    QVector<quint32> pos;
+
+    in >> ch >> symbol_siteId >> count >> pos >> index >> siteId;
+    std::cout << "Dentro recv " << siteId << " pos:" << index << std::endl;
+    auto pos_std = pos.toStdVector();
+    auto symbol = Symbol(ch,symbol_siteId,count,pos_std);
+
+    pkt.setPayload(std::make_shared<CursorPosition>(symbol,index,siteId));
+
+    emit readyToProcess(pkt);
+
 }
 
 void Transceiver::sendPacket(DataPacket pkt){
@@ -251,12 +272,12 @@ void Transceiver::sendLoginInfo(DataPacket& packet){
     QBuffer buf;
     buf.open(QBuffer::WriteOnly);
     QDataStream tmp(&buf);
-    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage();
+    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage() << ptr->getEmail();
 
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
     out << bytes << packet.getSource() << packet.getErrcode() << (quint32) packet.getTypeOfData();
-    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage() << ptr->getEmail();
     socket->waitForBytesWritten(-1);
 
 }
@@ -281,6 +302,33 @@ void Transceiver::sendCommand(DataPacket& packet){
 
 }
 
+void Transceiver::sendCursorPos(DataPacket &packet) {
+    QDataStream out;
+    out.setDevice(socket);
+    out.setVersion(QDataStream::Qt_5_5);
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+
+    auto ptr = std::dynamic_pointer_cast<CursorPosition>(packet.getPayload());
+    auto vector = QVector<quint32>();
+    for (auto p : ptr->getSymbol().getPos()){
+        vector.push_back(p);
+    }
+
+    tmp << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
+        << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex();
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
+    out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData()
+        << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
+        << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
+
+    std::cout << "sending cursor index " << ptr->getSiteId() << " " << ptr->getIndex() << std::endl;
+
+    socket->waitForBytesWritten(-1);
+}
+
 void Transceiver::disconnected(){
 
     socket->deleteLater();
@@ -291,44 +339,4 @@ void Transceiver::disconnected(){
 
 void Transceiver::rollBack(){
     emit deleteText();
-}
-
-void Transceiver::sendCursorPos(DataPacket &packet) {
-    QDataStream out;
-    out.setDevice(socket);
-    out.setVersion(QDataStream::Qt_5_5);
-
-    auto ptr = std::dynamic_pointer_cast<CursorPosition>(packet.getPayload());
-    auto vector = QVector<quint32>();
-    for (auto p : ptr->getSymbol().getPos()){
-        vector.push_back(p);
-    }
-
-    qint32 bytes=-14;//TODO dimensione socket
-    out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
-    ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
-    << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
-
-    std::cout << "sending cursor index " << ptr->getSiteId() << " " << ptr->getIndex() << std::endl;
-
-    socket->waitForBytesWritten(-1);
-}
-
-void Transceiver::recvCursorPos(DataPacket &pkt, QDataStream &in) {
-    qint32 siteId;
-    qint32 index;
-    QChar ch;
-    qint32 symbol_siteId;
-    qint32 count;
-    QVector<quint32> pos;
-
-    in >> ch >> symbol_siteId >> count >> pos >> index >> siteId;
-    std::cout << "Dentro recv " << siteId << " pos:" << index << std::endl;
-    auto pos_std = pos.toStdVector();
-    auto symbol = Symbol(ch,symbol_siteId,count,pos_std);
-
-    pkt.setPayload(std::make_shared<CursorPosition>(symbol,index,siteId));
-
-    emit readyToProcess(pkt);
-
 }

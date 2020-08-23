@@ -40,7 +40,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::loginAchieved, this, &MainWindow::loginFinished);
     connect(shEditor, &SharedEditor::symbolsChanged, editor, &EditorGUI::updateSymbols);
     connect(shEditor,&SharedEditor::deleteAllText, editor,&EditorGUI::deleteAllText);
-    connect(shEditor,&SharedEditor::filePathsArrived, treeView,&FileSystemTreeView::constructFromPaths);
     connect(shEditor, &SharedEditor::remoteCursorPosChanged, editor, &EditorGUI::updateRemoteCursorPos);
     connect(shEditor, &SharedEditor::removeCursor, editor, &EditorGUI::removeCursor);
     connect(shEditor, &SharedEditor::deleteAllText, editor, &EditorGUI::deleteAllText);

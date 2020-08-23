@@ -151,7 +151,7 @@ void NetworkServer::processOpnCommand(Payload &pl) {
 void NetworkServer::processClsCommand(Payload &pl) {
 
     Command &comm = dynamic_cast<Command &>(pl);
-    QString fileName = comm.getArgs()[0];
+    QString fileName = comm.getArgs().front();
 
     std::cout<<"closing file: "<<fileName.toStdString()<<std::endl;
 

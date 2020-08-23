@@ -34,7 +34,7 @@ private:
     QIcon dir_close;
     QIcon file_icn;
 
-    QTreeWidgetItem* addChild(QTreeWidgetItem *parent, QString name);
+    QTreeWidgetItem* addChild(QTreeWidgetItem *parent, QString name,QString description);
     bool isChild(QTreeWidgetItem *parent, QString name);
 
 };
