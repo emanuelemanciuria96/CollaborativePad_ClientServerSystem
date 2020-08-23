@@ -7,7 +7,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class InfoWidgetEdit; }
 QT_END_NAMESPACE
 
-class InfoWidgetEdit : public QMainWindow
+class InfoWidgetEdit : public QWidget
 {
     Q_OBJECT
 

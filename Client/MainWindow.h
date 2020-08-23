@@ -22,6 +22,7 @@ private:
     QDockWidget *dockWidgetTree;
     QWidget *widgetLogin;
     QWidget *widgetEditor;
+    QWidget *widgetInfoEditC;
     FileSystemTreeView *treeView;
     EditorGUI *editor;
     LoginDialog *loginDialog;
