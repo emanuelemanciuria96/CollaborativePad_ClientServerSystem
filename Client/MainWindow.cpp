@@ -145,7 +145,6 @@ void MainWindow::infoWidgetsSettings() {
     infoWidget = new InfoWidget(this);
     widgetInfoEditC = new QWidget(this);
 
-
     infoWidget->hide();
 //    QPalette p1{};
 //    QImage loginBackground = QImage("./textures/texture_clouds_background.png");
@@ -159,10 +158,9 @@ void MainWindow::infoWidgetsSettings() {
 //    box->setLayout(new QVBoxLayout());
 //    box->layout()->addWidget(infoWidgetEdit);
 //    box->layout()->addWidget(new QLabel("prova",box,Qt::Widget));
-    auto boxLayout = new QGridLayout(widgetInfoEditC);
+    auto boxLayout = new QVBoxLayout(widgetInfoEditC);
     boxLayout->addWidget(infoWidgetEdit);
     widgetInfoEditC->setLayout(boxLayout);
-
 //    dynamic_cast<QGridLayout*>(widgetInfoEditC->layout())->addWidget(infoWidgetEdit,0,1,Qt::AlignCenter);
 //    dynamic_cast<QGridLayout*>(widgetInfoEditC->layout())->addWidget(new QLabel("prova",widgetInfoEditC,Qt::Widget),0,0,Qt::AlignCenter);
 //    dynamic_cast<QGridLayout*>(widgetInfoEditC->layout())->addWidget(new QLabel("prova",widgetInfoEditC,Qt::Widget),0,2,Qt::AlignCenter);
