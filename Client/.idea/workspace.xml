@@ -8,26 +8,19 @@
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_PREFIX_PATH=C:\Qt\5.12.5\mingw73_64\lib\cmake" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_PREFIX_PATH=C:\Qt\5.13.1\mingw73_64\lib\cmake" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileSystemTreeView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemTreeView.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileSystemTreeView.h" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemTreeView.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SharedEditor.h" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Transceiver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Transceiver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeRuleHashes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeRuleHashes.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/DependInfo.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/EditorGUI.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/EditorGUI.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/DataPacket.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/LoginInfo.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/Message.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Packet/Message.cpp.obj" afterDir="false" />
@@ -62,13 +55,8 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_Transceiver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_Transceiver.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/G2NQOARGLM/moc_DataPacket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/G2NQOARGLM/moc_DataPacket.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/NetworkServer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/Packet/Command.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/Packet/Command.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/ServerThread.cpp" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -92,7 +80,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CMakeLists.txt" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -103,27 +91,20 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager" selected="CMake Application.Client">
-    <configuration name="Client" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Client" TARGET_NAME="Client" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Client" RUN_TARGET_NAME="Client">
+    <configuration name="Client" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Client" TARGET_NAME="Client" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Client" RUN_TARGET_NAME="Client">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Client_autogen" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Client" TARGET_NAME="Client_autogen" CONFIG_NAME="Debug">
+    <configuration name="Client_autogen" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Client" TARGET_NAME="Client_autogen" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
@@ -131,6 +112,7 @@
       <item itemvalue="CMake Application.Client_autogen" />
     </list>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -148,102 +130,119 @@
       <workItem from="1588268631026" duration="535000" />
       <workItem from="1588269593742" duration="618000" />
       <workItem from="1588426986386" duration="449000" />
-      <workItem from="1597308923881" duration="8353000" />
-      <workItem from="1597325239232" duration="5638000" />
-      <workItem from="1597339050187" duration="20000" />
-      <workItem from="1597339239030" duration="1273000" />
-      <workItem from="1597404063561" duration="29000" />
-      <workItem from="1597677931272" duration="1686000" />
-      <workItem from="1597827167066" duration="282000" />
+      <workItem from="1597160956836" duration="93000" />
+      <workItem from="1597161221492" duration="2353000" />
+      <workItem from="1597226477363" duration="3704000" />
+      <workItem from="1597239404334" duration="597000" />
+      <workItem from="1597240285872" duration="7742000" />
+      <workItem from="1597310285735" duration="23000" />
+      <workItem from="1597334556888" duration="6400000" />
+      <workItem from="1597341102436" duration="1238000" />
+      <workItem from="1597411495816" duration="12314000" />
+      <workItem from="1597585901661" duration="7451000" />
+      <workItem from="1597758486663" duration="593000" />
+      <workItem from="1597759504683" duration="12025000" />
+      <workItem from="1597828542492" duration="5438000" />
+      <workItem from="1597930627852" duration="1493000" />
+      <workItem from="1597934373807" duration="2366000" />
+      <workItem from="1597937763144" duration="1881000" />
+      <workItem from="1597996949316" duration="3111000" />
+      <workItem from="1598001821968" duration="4394000" />
+      <workItem from="1598019417746" duration="3688000" />
+      <workItem from="1598023622536" duration="1702000" />
+      <workItem from="1598090318146" duration="1652000" />
+      <workItem from="1598110208786" duration="2926000" />
+      <workItem from="1598189378652" duration="4213000" />
+      <workItem from="1598194449916" duration="3175000" />
+      <workItem from="1598198223395" duration="1868000" />
+      <workItem from="1598201136493" duration="14000" />
     </task>
-    <task id="LOCAL-00001" summary="completamento gestione file multipli + view del file system">
-      <created>1597251525657</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1597251525657</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="completamento gestione file multipli + view del file system" />
-    <option name="LAST_COMMIT_MESSAGE" value="completamento gestione file multipli + view del file system" />
+    <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="723" height="219" key="GridCell.Tab.0.bottom" timestamp="1588263905372">
+    <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597338903660">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state width="723" height="219" key="GridCell.Tab.0.center" timestamp="1588263905372">
+    <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1597338903659" />
+    <state x="672" y="165" key="#xdebugger.XInspectDialog" timestamp="1597590313280">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state width="723" height="219" key="GridCell.Tab.0.left" timestamp="1588263905372">
+    <state x="672" y="165" key="#xdebugger.XInspectDialog/0.0.1536.824@0.0.1536.824" timestamp="1597590313280" />
+    <state width="479" height="438" key="DebuggerActiveHint" timestamp="1597247491161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state width="723" height="219" key="GridCell.Tab.0.right" timestamp="1588263905372">
+    <state width="479" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1597247491161" />
+    <state width="723" height="165" key="GridCell.Tab.0.bottom" timestamp="1598201079835">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state width="723" height="219" key="GridCell.Tab.1.bottom" timestamp="1588263905373">
+    <state width="723" height="165" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1598201079835" />
+    <state width="723" height="165" key="GridCell.Tab.0.center" timestamp="1598201079834">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.1.bottom/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905373" />
-    <state width="723" height="219" key="GridCell.Tab.1.center" timestamp="1588263905372">
+    <state width="723" height="165" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1598201079834" />
+    <state width="723" height="165" key="GridCell.Tab.0.left" timestamp="1598201079834">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.1.center/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state width="723" height="219" key="GridCell.Tab.1.left" timestamp="1588263905372">
+    <state width="723" height="165" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1598201079834" />
+    <state width="723" height="165" key="GridCell.Tab.0.right" timestamp="1598201079834">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.1.left/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state width="723" height="219" key="GridCell.Tab.1.right" timestamp="1588263905372">
+    <state width="723" height="165" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1598201079834" />
+    <state width="1493" height="227" key="GridCell.Tab.1.bottom" timestamp="1598194181567">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="723" height="219" key="GridCell.Tab.1.right/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588263905372" />
-    <state x="136" y="64" key="SettingsEditor" timestamp="1588427081475">
+    <state width="1493" height="227" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1598194181567" />
+    <state width="1493" height="227" key="GridCell.Tab.1.center" timestamp="1598194181567">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1588099980638" />
-    <state x="136" y="64" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1588427081475" />
+    <state width="1493" height="227" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1598194181567" />
+    <state width="1493" height="227" key="GridCell.Tab.1.left" timestamp="1598194181567">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="227" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1598194181567" />
+    <state width="1493" height="227" key="GridCell.Tab.1.right" timestamp="1598194181567">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="227" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1598194181567" />
+    <state x="169" y="130" key="MergeDialog" timestamp="1598194481210">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="169" y="130" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1598194481210" />
+    <state x="350" y="280" width="879" height="466" key="MultipleFileMergeDialog" timestamp="1598194482524">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="350" y="280" width="879" height="466" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1598194482524" />
+    <state x="277" y="57" key="SettingsEditor" timestamp="1597759724571">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1597759724571" />
+    <state x="649" y="198" key="refactoring.ChangeSignatureDialog" timestamp="1597340248913">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="649" y="198" key="refactoring.ChangeSignatureDialog/0.0.1536.824@0.0.1536.824" timestamp="1597340248913" />
+    <state x="814" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1598112789481">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="814" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1598112789481" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/SharedEditor.cpp</url>
-          <line>316</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Transceiver.cpp</url>
-          <line>141</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/FileSystemTreeView.cpp</url>
-          <line>61</line>
-          <option name="timeStamp" value="27" />
+          <url>file://$PROJECT_DIR$/EditorGUI.cpp</url>
+          <line>248</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="_a" />
+        <watch expression="pkt.payload.get()" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

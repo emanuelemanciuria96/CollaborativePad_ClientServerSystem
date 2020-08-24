@@ -15,7 +15,11 @@
 LoginInfo::LoginInfo(qint32 siteId, type_t type, QString user, QString password) : Payload(siteId),
                                                                                    _user(std::move(user)),
                                                                                    _type(type),
-                                                                                   _password(std::move(password)) {}
+                                                                                   _password(std::move(password)){
+    _image = QPixmap();
+    _name = QString();
+    _email = QString();
+}
 
 QString &LoginInfo::getUser(){
     return _user;
@@ -65,16 +69,27 @@ void LoginInfo::setEmail(const QString &email) {
     _email = email;
 }
 
-qint32 LoginInfo::login(const QString& connectionId) {
+bool LoginInfo::login(const QString& connectionId) {
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_login");
     db.setDatabaseName("login.db");
 
-    if (!db.open())
-        return -1;
+    if (!db.open()) {
+        _type = LoginInfo::login_error;
+        _siteID = -1;
+        _user = "";
+        _password = "";
+        return false;
+    }
 
     QSqlQuery query(db);
-    if(!query.exec("SELECT PASS, SITEID, IMAGE, NAME, EMAIL FROM LOGIN WHERE USER='"+_user+"'"))
-        return -1;
+    if(!query.exec("SELECT PASS, SITEID, IMAGE, NAME, EMAIL FROM LOGIN WHERE USER='"+_user+"'")) {
+        db.close();
+        _type = LoginInfo::login_error;
+        _siteID = -1;
+        _user = "";
+        _password = "";
+        return false;
+    }
 
     db.close();
 
@@ -86,20 +101,20 @@ qint32 LoginInfo::login(const QString& connectionId) {
             _name = query.value("NAME").toString();
             _email = query.value("EMAIL").toString();
             std::cout << _name.toStdString() << std::endl;
-            return _siteID;
+            return true;
         } else {
             _type = LoginInfo::login_error;
             _siteID = -1;
             _user = "";
             _password = "";
-            return -1;
+            return false;
         }
     }else {
         _type = LoginInfo::login_error;
         _siteID = -1;
         _user = "";
         _password = "";
-        return -1;
+        return false;
     }
 }
 
@@ -110,13 +125,94 @@ bool LoginInfo::updateInfo(const QString& connectionId) {
     if (!db.open())
         return false;
 
-    QString fileName("images/"+QString::number(_siteID)+".jpg");
-    QSqlQuery query(db);
-    if(!query.exec("UPDATE LOGIN SET IMAGE = '"+fileName+"', NAME = '"+_name+"', EMAIL = '"+_email+"' WHERE SITEID = '"+QString::number(_siteID)+"';"))
-        return false;
+    QString fileName("");
 
-    _image.save(fileName, "JPG");
+    if (!_image.isNull())
+        fileName = "images/"+QString::number(_siteID)+".jpg";
+
+    QSqlQuery query(db);
+    if(!query.exec("UPDATE LOGIN SET IMAGE = '"+fileName+"', NAME = '"+_name+"', EMAIL = '"+_email+"' WHERE SITEID = '"+QString::number(_siteID)+"';")) {
+        db.close();
+        return false;
+    }
+
+    if (!_image.isNull())
+        _image.save(fileName, "JPG");
     db.close();
 
+    return true;
+}
+
+bool LoginInfo::signup(const QString &connectionId) {
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_login");
+    db.setDatabaseName("login.db");
+
+    if (!db.open()) {
+        _type = LoginInfo::signup_error;
+        _siteID = -1;
+        _user = "";
+        _password = "";
+        _image = QPixmap();
+        _name = "";
+        _email = "";
+        return false;
+    }
+
+    QString fileName("");
+
+    QSqlQuery query(db);
+
+    db.transaction();
+    if(!query.exec("SELECT MAX(SITEID) FROM LOGIN;")) {
+        db.rollback();
+        db.close();
+        _type = LoginInfo::signup_error;
+        _siteID = -1;
+        _user = "";
+        _password = "";
+        _image = QPixmap();
+        _name = "";
+        _email = "";
+        return false;
+    }
+
+    query.next();
+    _siteID = query.value("MAX(SITEID)").toInt();
+    _siteID++;
+
+    if (!_image.isNull())
+        fileName = "images/"+QString::number(_siteID)+".jpg";
+
+    if(!query.exec("INSERT INTO LOGIN VALUES ('"+_user+"', '"+_password+"', '"+QString::number(_siteID)+"', '"+fileName+"', '"+_name+"', '"+_email+"');")) {
+        db.rollback();
+        db.close();
+        _type = LoginInfo::signup_error;
+        _siteID = -1;
+        _user = "";
+        _password = "";
+        _image = QPixmap();
+        _name = "";
+        _email = "";
+        return false;
+    }
+
+    if (!_image.isNull())
+        _image.save(fileName, "JPG");
+
+    if(!db.commit()){
+        db.rollback();
+        db.close();
+        _type = LoginInfo::signup_error;
+        _siteID = -1;
+        _user = "";
+        _password = "";
+        _image = QPixmap();
+        _name = "";
+        _email = "";
+        return false;
+    }
+
+    _type = LoginInfo::signup_ok;
+    db.close();
     return true;
 }

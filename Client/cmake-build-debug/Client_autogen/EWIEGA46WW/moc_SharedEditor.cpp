@@ -1,11 +1,12 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'SharedEditor.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.5)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.13.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#include <memory>
 #include "../../../SharedEditor.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
@@ -13,7 +14,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'SharedEditor.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.5. It"
+#error "This file was generated using the moc from 5.13.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -22,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_SharedEditor_t {
-    QByteArrayData data[32];
-    char stringdata0[345];
+    QByteArrayData data[33];
+    char stringdata0[351];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -49,21 +50,22 @@ QT_MOC_LITERAL(13, 135, 15), // "userInfoArrived"
 QT_MOC_LITERAL(14, 151, 5), // "image"
 QT_MOC_LITERAL(15, 157, 8), // "nickname"
 QT_MOC_LITERAL(16, 166, 4), // "name"
-QT_MOC_LITERAL(17, 171, 22), // "remoteCursorPosChanged"
-QT_MOC_LITERAL(18, 194, 12), // "removeCursor"
-QT_MOC_LITERAL(19, 207, 9), // "loginSlot"
-QT_MOC_LITERAL(20, 217, 8), // "QString&"
-QT_MOC_LITERAL(21, 226, 8), // "username"
-QT_MOC_LITERAL(22, 235, 8), // "password"
-QT_MOC_LITERAL(23, 244, 7), // "process"
-QT_MOC_LITERAL(24, 252, 10), // "DataPacket"
-QT_MOC_LITERAL(25, 263, 3), // "pkt"
-QT_MOC_LITERAL(26, 267, 17), // "requireFileSystem"
-QT_MOC_LITERAL(27, 285, 11), // "requireFile"
-QT_MOC_LITERAL(28, 297, 8), // "fileName"
-QT_MOC_LITERAL(29, 306, 12), // "deleteThread"
-QT_MOC_LITERAL(30, 319, 9), // "clearText"
-QT_MOC_LITERAL(31, 329, 15) // "sendUpdatedInfo"
+QT_MOC_LITERAL(17, 171, 5), // "email"
+QT_MOC_LITERAL(18, 177, 22), // "remoteCursorPosChanged"
+QT_MOC_LITERAL(19, 200, 12), // "removeCursor"
+QT_MOC_LITERAL(20, 213, 9), // "loginSlot"
+QT_MOC_LITERAL(21, 223, 8), // "QString&"
+QT_MOC_LITERAL(22, 232, 8), // "username"
+QT_MOC_LITERAL(23, 241, 8), // "password"
+QT_MOC_LITERAL(24, 250, 7), // "process"
+QT_MOC_LITERAL(25, 258, 10), // "DataPacket"
+QT_MOC_LITERAL(26, 269, 3), // "pkt"
+QT_MOC_LITERAL(27, 273, 17), // "requireFileSystem"
+QT_MOC_LITERAL(28, 291, 11), // "requireFile"
+QT_MOC_LITERAL(29, 303, 8), // "fileName"
+QT_MOC_LITERAL(30, 312, 12), // "deleteThread"
+QT_MOC_LITERAL(31, 325, 9), // "clearText"
+QT_MOC_LITERAL(32, 335, 15) // "sendUpdatedInfo"
 
     },
     "SharedEditor\0symbolsChanged\0\0pos\0s\0"
@@ -71,7 +73,7 @@ QT_MOC_LITERAL(31, 329, 15) // "sendUpdatedInfo"
     "deleteAllText\0filePathsArrived\0"
     "QVector<QString>\0paths\0loginAchieved\0"
     "userInfoArrived\0image\0nickname\0name\0"
-    "remoteCursorPosChanged\0removeCursor\0"
+    "email\0remoteCursorPosChanged\0removeCursor\0"
     "loginSlot\0QString&\0username\0password\0"
     "process\0DataPacket\0pkt\0requireFileSystem\0"
     "requireFile\0fileName\0deleteThread\0"
@@ -97,36 +99,36 @@ static const uint qt_meta_data_SharedEditor[] = {
        8,    0,   93,    2, 0x06 /* Public */,
        9,    1,   94,    2, 0x06 /* Public */,
       12,    0,   97,    2, 0x06 /* Public */,
-      13,    3,   98,    2, 0x06 /* Public */,
-      17,    2,  105,    2, 0x06 /* Public */,
-      18,    1,  110,    2, 0x06 /* Public */,
+      13,    4,   98,    2, 0x06 /* Public */,
+      18,    2,  107,    2, 0x06 /* Public */,
+      19,    1,  112,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      19,    2,  113,    2, 0x0a /* Public */,
-      23,    1,  118,    2, 0x0a /* Public */,
-      26,    0,  121,    2, 0x0a /* Public */,
-      27,    1,  122,    2, 0x0a /* Public */,
-      29,    0,  125,    2, 0x0a /* Public */,
-      30,    0,  126,    2, 0x0a /* Public */,
-      31,    2,  127,    2, 0x0a /* Public */,
+      20,    2,  115,    2, 0x0a /* Public */,
+      24,    1,  120,    2, 0x0a /* Public */,
+      27,    0,  123,    2, 0x0a /* Public */,
+      28,    1,  124,    2, 0x0a /* Public */,
+      30,    0,  127,    2, 0x0a /* Public */,
+      31,    0,  128,    2, 0x0a /* Public */,
+      32,    3,  129,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Int, 0x80000000 | 6,    3,    4,    5,    7,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 10,   11,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QPixmap, QMetaType::QString, QMetaType::QString,   14,   15,   16,
+    QMetaType::Void, QMetaType::QPixmap, QMetaType::QString, QMetaType::QString, QMetaType::QString,   14,   15,   16,   17,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    3,    5,
     QMetaType::Void, QMetaType::Int,    5,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 20, 0x80000000 | 20,   21,   22,
-    QMetaType::Void, 0x80000000 | 24,   25,
+    QMetaType::Void, 0x80000000 | 21, 0x80000000 | 21,   22,   23,
+    QMetaType::Void, 0x80000000 | 25,   26,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   28,
+    QMetaType::Void, QMetaType::QString,   29,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QPixmap, QMetaType::QString,   14,   16,
+    QMetaType::Void, QMetaType::QPixmap, QMetaType::QString, QMetaType::QString,   14,   16,   17,
 
        0        // eod
 };
@@ -141,7 +143,7 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 1: _t->deleteAllText(); break;
         case 2: _t->filePathsArrived((*reinterpret_cast< const QVector<QString>(*)>(_a[1]))); break;
         case 3: _t->loginAchieved(); break;
-        case 4: _t->userInfoArrived((*reinterpret_cast< const QPixmap(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
+        case 4: _t->userInfoArrived((*reinterpret_cast< const QPixmap(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4]))); break;
         case 5: _t->remoteCursorPosChanged((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< qint32(*)>(_a[2]))); break;
         case 6: _t->removeCursor((*reinterpret_cast< qint32(*)>(_a[1]))); break;
         case 7: _t->loginSlot((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
@@ -150,7 +152,7 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 10: _t->requireFile((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 11: _t->deleteThread(); break;
         case 12: _t->clearText(); break;
-        case 13: _t->sendUpdatedInfo((*reinterpret_cast< const QPixmap(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 13: _t->sendUpdatedInfo((*reinterpret_cast< const QPixmap(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -202,7 +204,7 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             }
         }
         {
-            using _t = void (SharedEditor::*)(const QPixmap & , const QString & , const QString & );
+            using _t = void (SharedEditor::*)(const QPixmap & , const QString & , const QString & , const QString & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::userInfoArrived)) {
                 *result = 4;
                 return;
@@ -268,7 +270,7 @@ int SharedEditor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void SharedEditor::symbolsChanged(qint32 _t1, const QString & _t2, qint32 _t3, Message::action_t _t4)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t4))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
@@ -281,7 +283,7 @@ void SharedEditor::deleteAllText()
 // SIGNAL 2
 void SharedEditor::filePathsArrived(const QVector<QString> & _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 
@@ -292,23 +294,23 @@ void SharedEditor::loginAchieved()
 }
 
 // SIGNAL 4
-void SharedEditor::userInfoArrived(const QPixmap & _t1, const QString & _t2, const QString & _t3)
+void SharedEditor::userInfoArrived(const QPixmap & _t1, const QString & _t2, const QString & _t3, const QString & _t4)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t4))) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);
 }
 
 // SIGNAL 5
 void SharedEditor::remoteCursorPosChanged(qint32 _t1, qint32 _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 5, _a);
 }
 
 // SIGNAL 6
 void SharedEditor::removeCursor(qint32 _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 6, _a);
 }
 QT_WARNING_POP

@@ -214,15 +214,36 @@ void SharedEditor::processCursorPos(CursorPosition &curPos) {
 }
 
 void SharedEditor::processLoginInfo(LoginInfo &logInf) {
-    if(logInf.getType() == LoginInfo::login_ok) {
-        _siteId = logInf.getSiteId();
-        transceiver->setSiteId(_siteId);
-        std::cout << "client successfully logged!" << std::endl;
-        isLogged = true;
-        emit loginAchieved();
-        emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName(), logInf.getEmail());
-    } else {
-        std::cout << "client not logged!" << std::endl;
+    switch (logInf.getType()) {
+        case LoginInfo::login_ok:
+            _siteId = logInf.getSiteId();
+            transceiver->setSiteId(_siteId);
+            std::cout << "client successfully logged!" << std::endl;
+            isLogged = true;
+            emit loginAchieved();
+            emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName(), logInf.getEmail());
+            break;
+
+        case LoginInfo::signup_ok:
+            _siteId = logInf.getSiteId();
+            transceiver->setSiteId(_siteId);
+            std::cout << "client successfully signed up!" << std::endl;
+            isLogged = true;
+            emit loginAchieved();
+            emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName(), logInf.getEmail());
+            break;
+
+        case LoginInfo::login_error:
+            std::cout << "client not logged!" << std::endl;
+            break;
+
+        case LoginInfo::signup_error:
+            std::cout << "client not signed up!" << std::endl;
+            break;
+
+        default:
+            std::cout << "errore nella processlogininfo" << std::endl;
+            break;
     }
 }
 
@@ -413,6 +434,7 @@ void SharedEditor::requireFile(QString fileName) {
     emit transceiver->getSocket()->sendPacket(packet);
 
 }
+
 
 void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email) {
     DataPacket packet(-1, -1, DataPacket::login);

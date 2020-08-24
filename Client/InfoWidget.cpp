@@ -4,7 +4,7 @@
 #include "InfoWidgetEdit.h"
 
 InfoWidget::InfoWidget(QWidget *parent)
-    : QMainWindow(parent)
+    : QWidget(parent)
     , ui(new Ui::InfoWidget)
 {
     ui->setupUi(this);

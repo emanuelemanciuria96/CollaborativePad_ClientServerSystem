@@ -7,26 +7,32 @@
 
 
 MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(parent) {
-
+    QApplication::setStyle(QStyleFactory::create("fusion"));
+//    for(auto k : QStyleFactory::keys()){
+//        std::cout << k.toStdString() << std::endl;
+//    }
     setWindowTitle("Shared Editor");
     statusBar = new QStatusBar(this);
     statusBar->showMessage ("StatusBar");
     toolBar = new QToolBar("Toolbar",this);
-    infoWidget = new InfoWidget();
+    centralWidget = new QStackedWidget(this);
 
     //    aggiungo gli elementi alla finestra
     this->setStatusBar(statusBar);
     this->addToolBar(toolBar);
     toolBar->setMovable(false);
+    setCentralWidget(centralWidget);
 
     menuBar()->addMenu("&Options");
 
+    // login creation
+    loginSettings();
     // editor creation
     editorSettings(shEditor);
     // tree file system view creation
     treeFileSystemSettings();
-    // login creation
-    loginSettings();
+    // widgetAccount creation
+    infoWidgetsSettings();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),treeView , SLOT(openFile( QTreeWidgetItem*, int )));
@@ -41,21 +47,26 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(this, &MainWindow::fileSystemRequest, shEditor, &SharedEditor::requireFileSystem);
     connect(shEditor, &SharedEditor::userInfoArrived, infoWidget, &InfoWidget::loadData);
     connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
+    connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::startSignIn);
+    connect(infoWidgetEdit, &InfoWidgetEdit::backToLogIn, this, &MainWindow::backToLogIn);
+
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
 
-    this->setCentralWidget(widgetLogin);
+    centralWidget->addWidget(widgetLogin);
+    centralWidget->addWidget(widgetInfoEditC);
+    centralWidget->addWidget(widgetEditor);
+//    this->setCentralWidget(widgetLogin);
 
 }
 
 void MainWindow::loginFinished() {
     widgetLogin->hide();
     emit fileSystemRequest();
-    this->setCentralWidget(widgetEditor);
+    centralWidget->setCurrentWidget(widgetEditor);
     dockWidgetTree->show();
     widgetEditor->show();
-    infoWidget->show();
 }
 
 void MainWindow::loginSettings() {
@@ -65,7 +76,7 @@ void MainWindow::loginSettings() {
     QPalette p1{};
     QImage loginBackground = QImage("./textures/texture_clouds_background.png");
     QBrush brush1(loginBackground);
-    p1.setBrush(QPalette::Background,brush1);
+    p1.setBrush(QPalette::Window,brush1);
     widgetLogin->setAutoFillBackground(true);
     widgetLogin->setPalette(p1);
     widgetLogin->setLayout( new QGridLayout(widgetLogin) );
@@ -82,7 +93,7 @@ void MainWindow::loginSettings() {
     grad.setColorAt(0,QColor(rgbColor));
     grad.setColorAt(1,Qt::lightGray);
     QBrush brush2(grad);
-    p2.setBrush(QPalette::Background,brush2);
+    p2.setBrush(QPalette::Window,brush2);
     boxLogin->setAutoFillBackground(true);
     boxLogin->setPalette(p2);
 
@@ -94,7 +105,7 @@ void MainWindow::loginSettings() {
     //boxLogin->layout()->addWidget(new QLabel("Please insert your user and password in the following boxes",widgetLogin));
     boxLogin->layout()->addWidget(loginDialog);
 
-    static_cast<QGridLayout*>(widgetLogin->layout())->addWidget(boxLogin,1,1,4,1,Qt::AlignCenter);
+    dynamic_cast<QGridLayout*>(widgetLogin->layout())->addWidget(boxLogin,1,1,4,1,Qt::AlignCenter);
 
 }
 
@@ -112,7 +123,6 @@ void MainWindow::treeFileSystemSettings() {
 
 
 void MainWindow::editorSettings(SharedEditor* shEditor) {
-
     widgetEditor = new QWidget(this);
     widgetEditor->setStyleSheet("QWidget { background: lightGray; }");
     editor = new EditorGUI(shEditor, widgetEditor);
@@ -125,3 +135,37 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
 
 }
 
+void MainWindow::startSignIn() {
+    centralWidget->setCurrentWidget(widgetInfoEditC);
+    widgetInfoEditC->show();
+    infoWidgetEdit->show();
+}
+
+void MainWindow::infoWidgetsSettings() {
+    infoWidget = new InfoWidget(this);
+    widgetInfoEditC = new QWidget(this);
+
+    infoWidget->hide();
+//    QPalette p1{};
+//    QImage loginBackground = QImage("./textures/texture_clouds_background.png");
+//    QBrush brush1(loginBackground);
+//    p1.setBrush(QPalette::Window,brush1);
+//    widgetInfoEditC->setPalette(p1);
+
+//    QGroupBox *box = new QGroupBox(widgetInfoEditC);
+    infoWidgetEdit = new InfoWidgetEdit(widgetInfoEditC);
+
+//    box->setLayout(new QVBoxLayout());
+//    box->layout()->addWidget(infoWidgetEdit);
+//    box->layout()->addWidget(new QLabel("prova",box,Qt::Widget));
+    auto boxLayout = new QVBoxLayout(widgetInfoEditC);
+    boxLayout->addWidget(infoWidgetEdit);
+    widgetInfoEditC->setLayout(boxLayout);
+//    dynamic_cast<QGridLayout*>(widgetInfoEditC->layout())->addWidget(infoWidgetEdit,0,1,Qt::AlignCenter);
+//    dynamic_cast<QGridLayout*>(widgetInfoEditC->layout())->addWidget(new QLabel("prova",widgetInfoEditC,Qt::Widget),0,0,Qt::AlignCenter);
+//    dynamic_cast<QGridLayout*>(widgetInfoEditC->layout())->addWidget(new QLabel("prova",widgetInfoEditC,Qt::Widget),0,2,Qt::AlignCenter);
+}
+
+void MainWindow::backToLogIn() {
+    centralWidget->setCurrentWidget(widgetLogin);
+}

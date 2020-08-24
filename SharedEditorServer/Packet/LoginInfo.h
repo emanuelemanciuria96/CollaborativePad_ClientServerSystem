@@ -21,7 +21,9 @@ public:
         signup_request = 201,
         update_info = 202,
         login_error = 400,
+        signup_error = 401,
         login_ok = 100,
+        signup_ok = 101,
     } type_t;
 
     LoginInfo(qint32 siteId, type_t type = not_assigned, QString user = "", QString password = "");
@@ -39,8 +41,9 @@ public:
     const QString &getEmail() const;
     void setEmail(const QString &email);
 
-    qint32 login(const QString& connectionId);
+    bool login(const QString& connectionId);
     bool updateInfo(const QString& connectionId);
+    bool signup(const QString& connectionId);
 
 private:
     QString _user;
