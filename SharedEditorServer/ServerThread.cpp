@@ -17,7 +17,7 @@
 
 SocketsPool ServerThread::_sockets;
 qint32 fixedBytesWritten = sizeof(qint32)+sizeof(qint32)+sizeof(quint32)+sizeof(quint32)+sizeof(qint32);
-///      bytes     source        errcode      DataPacket::data_t   siteID
+///                                bytes     source        errcode      DataPacket::data_t   siteID
 
 
 
@@ -151,33 +151,12 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                     std::cout << "client "+user.toStdString()+" successfully logged!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
                     sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
 
+                    _sockets.recordSocket(_siteID,socket);
+
                     QPointer<QThread> th(this);
                     qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
                     emit recordThread(th);
-/*****************************
-            /// in mancanza di un client che mi chieda di ricevere un file, faccio questo nella
-            /// procedura di login
-                QString name = QString::fromStdString("/prova1>F");
-                std::cout << name.toStdString() << std::endl;
-                QVector<QString> vec = {name};
-                auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);
 
-                QString fileName = comm->opnCommand(threadId);
-                if (!fileName.isEmpty()) {
-                    operatingFileName = fileName;
-                    std::cout << fileName.toStdString() << std::endl;
-                }
-                else
-                    std::cout << "opn command failed!" << std::endl;
-
-                vec.clear();
-                vec.insert(0, fileName);
-                comm->setArgs(vec);
-                _sockets.attachSocket(fileName,_siteID,socket.get());
-                msgHandler->submit(&NetworkServer::processOpnCommand, comm);
-            /// quando il client chiederà autonomamente di aprire un file
-            /// ELIMINARE FINO A QUI
-*****************************/
                 } else {
                     std::cout << "client not logged!" << std::endl;
                     sendPacket(packet);
@@ -208,33 +187,12 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                     std::cout << "client "+user.toStdString()+" successfully signed up!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
                     sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
 
+                    _sockets.recordSocket(_siteID,socket);
+
                     QPointer<QThread> th(this);
                     qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
                     emit recordThread(th);
-/*****************************
-            /// in mancanza di un client che mi chieda di ricevere un file, faccio questo nella
-            /// procedura di login
-                QString name = QString::fromStdString("/prova1>F");
-                std::cout << name.toStdString() << std::endl;
-                QVector<QString> vec = {name};
-                auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);
 
-                QString fileName = comm->opnCommand(threadId);
-                if (!fileName.isEmpty()) {
-                    operatingFileName = fileName;
-                    std::cout << fileName.toStdString() << std::endl;
-                }
-                else
-                    std::cout << "opn command failed!" << std::endl;
-
-                vec.clear();
-                vec.insert(0, fileName);
-                comm->setArgs(vec);
-                _sockets.attachSocket(fileName,_siteID,socket.get());
-                msgHandler->submit(&NetworkServer::processOpnCommand, comm);
-            /// quando il client chiederà autonomamente di aprire un file
-            /// ELIMINARE FINO A QUI
-*****************************/
                 } else {
                     std::cout << "client not signed up!" << std::endl;
                     sendPacket(packet);
@@ -336,7 +294,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                 }
 
                 operatingFileName = fileName;
-                _sockets.attachSocket(fileName,_siteID,socket.get());
+                _sockets.attachSocket(fileName,_siteID,socket);
                 std::cout << fileName.toStdString() << std::endl;
                 msgHandler->submit(&NetworkServer::processOpnCommand, command);
 
@@ -552,6 +510,7 @@ void ServerThread::disconnected()
     _sockets.broadcast(operatingFileName,_siteID,packet);
 
     if( operatingFileName!=""){
+        _sockets.discardSocket(_siteID);
         _sockets.detachSocket(operatingFileName, _siteID);
         QVector<QString> vec = {operatingFileName};
         auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);

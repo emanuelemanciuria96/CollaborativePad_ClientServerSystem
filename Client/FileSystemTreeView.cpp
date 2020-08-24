@@ -8,6 +8,7 @@
 #include "FileSystemTreeView.h"
 #include <QIconEngine>
 #include <QApplication>
+#include <QAction>
 
 
 FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
@@ -23,10 +24,34 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
     dir_close = QApplication::style()->standardIcon(QStyle::SP_DirClosedIcon);
     file_icn = QIcon("./icons/text_file_icon.png");
 
+    setupRightClickMenu();
+
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, &QWidget::customContextMenuRequested, this, &FileSystemTreeView::openCustomMenu);
+
     root = new QTreeWidgetItem(this);
     this->insertTopLevelItem(0,root);
     root->setIcon(0,home_dir);
     root->setExpanded(true);
+
+}
+
+void FileSystemTreeView::setupRightClickMenu() {
+
+    rightClickMenu = new QMenu(this);
+    auto newAct = new QAction("edit");
+    connect(newAct,&QAction::triggered,[](){
+        std::cout<<"hai modificato il nome del file"<<std::endl;
+    });
+
+    rightClickMenu->addAction(newAct);
+}
+
+void FileSystemTreeView::openCustomMenu(const QPoint &pos) {
+
+    auto nd = this->itemAt(pos);
+
+    rightClickMenu->exec(this->mapToGlobal(pos));
 
 }
 
@@ -72,9 +97,7 @@ void FileSystemTreeView::constructFromPaths(const QVector<QString> &paths) {
             }
 
             tmpPath += "/";
-
         }
-
     }
 
 }
@@ -106,4 +129,3 @@ void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
 FileSystemTreeView::~FileSystemTreeView() {
     delete root;
 }
-

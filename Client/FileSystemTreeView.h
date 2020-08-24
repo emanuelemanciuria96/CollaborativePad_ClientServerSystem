@@ -11,7 +11,7 @@
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QMainWindow>
-
+#include <QtWidgets/QMenu>
 
 class FileSystemTreeView : public QTreeWidget{
 Q_OBJECT
@@ -21,6 +21,7 @@ public:
 
 public slots:
     void constructFromPaths(const QVector<QString> &paths);
+    void openCustomMenu(const QPoint &pos);
     void openFile(QTreeWidgetItem *item, int column);
 
 signals:
@@ -33,7 +34,9 @@ private:
     QIcon dir_open;
     QIcon dir_close;
     QIcon file_icn;
+    QMenu *rightClickMenu;
 
+    void setupRightClickMenu();
     QTreeWidgetItem* addChild(QTreeWidgetItem *parent, QString name,QString description);
     bool isChild(QTreeWidgetItem *parent, QString name);
 

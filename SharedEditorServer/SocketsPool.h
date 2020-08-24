@@ -14,13 +14,18 @@
 class SocketsPool {
 public:
     SocketsPool() = default;
-    void attachSocket(QString& fileName, qint32 siteId, Socket* skt);
+    void attachSocket(QString& fileName, qint32 siteId, std::shared_ptr<Socket> skt);
     void detachSocket(QString& fileName, qint32 siteId);
+    void recordSocket(qint32 siteId, std::shared_ptr<Socket> skt);
+    void discardSocket(qint32 siteId);
     void broadcast(QString& fileName, qint32 siteId, DataPacket& pkt);
+    void broadcast( std::vector<qint32> &siteId_list, DataPacket& pkt );
 
 private:
+    std::shared_mutex fskt_mtx;
+    std::map< QString,std::tuple<std::shared_mutex*, std::map< qint32,std::shared_ptr<Socket> > > > file_sockets;
     std::shared_mutex skt_mtx;
-    std::map< QString,std::tuple<std::shared_mutex*, std::map<qint32,Socket*>> > file_sockets;
+    std::map<qint32,std::shared_ptr<Socket> > online_sockets;
 
 };
 

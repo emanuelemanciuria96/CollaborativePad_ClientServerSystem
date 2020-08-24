@@ -17,7 +17,7 @@ public:
     explicit Socket(QObject *parent = 0):QTcpSocket(parent){}
 
 signals:
-    void sendMessage(DataPacket pkt,std::mutex *mtx = nullptr);
+    void sendMessage(DataPacket pkt);
 
 };
 
