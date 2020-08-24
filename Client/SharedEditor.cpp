@@ -162,6 +162,9 @@ void SharedEditor::localErase(qint32 index) {
 }
 
 void SharedEditor::sendCursorPos(qint32 index) {
+
+    if(!isFileOpened) return;
+
     auto _symbol = _symbols[index];
     DataPacket packet(_siteId, -1, DataPacket::cursorPos);
     packet.setPayload(std::make_shared<CursorPosition>(_symbol, index, _siteId));
@@ -411,34 +414,6 @@ void SharedEditor::requireFile(QString fileName) {
 
 }
 
-
-void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare ma per ora non ho idee migliori
-   /* DataPacket packet(-1, -1, DataPacket::command);
-    packet.setPayload( std::make_shared<Command>( _siteId, Command::cd, QVector<QString>(1, "")));
-    emit transceiver->getSocket()->sendPacket(packet); //questo serve a farsi inviare il contenuto della root*/
-
-    /*DataPacket packet(-1, -1, DataPacket::command);
-    packet.setPayload( std::make_shared<Command>( _siteId, Command::mkdir, QVector<QString>(1, "/Cartella test")));
-    emit transceiver->getSocket()->sendPacket(packet); //questo serve a creare una cartella "Cartella test" nella root*/
-
-    /*DataPacket packet(-1, -1, DataPacket::command);
-    packet.setPayload( std::make_shared<Command>( _siteId, Command::rm, QVector<QString>(1, "/Cartella1>D")));
-    emit transceiver->getSocket()->sendPacket(packet); //questo serve a cancellare la cartella "Cartella1"*/
-
-    /*DataPacket packet(-1, -1, DataPacket::command);
-    packet.setPayload( std::make_shared<Command>( _siteId, Command::opn, QVector<QString>(1, "/prova>F")));
-    emit transceiver->getSocket()->sendPacket(packet); //questo serve ad aprire il file "prova.json" sul server*/
-
-    /*DataPacket packet(-1, -1, DataPacket::command);
-    packet.setPayload( std::make_shared<Command>( 1, Command::tree, QVector<QString>()));
-    emit transceiver->getSocket()->sendPacket(packet); //questo serve a farsi inviare tutte le subdirectory del client*/
-
-    /*DataPacket packet(-1, -1, DataPacket::command);
-    packet.setPayload( std::make_shared<Command>( 1, Command::ls, QVector<QString>()));
-    emit transceiver->getSocket()->sendPacket(packet); //questo serve a farsi inviare la lista di file del client*/
-
-}
-
 void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email) {
     DataPacket packet(-1, -1, DataPacket::login);
     packet.setPayload( std::make_shared<LoginInfo>( _siteId, LoginInfo::update_info));
@@ -465,7 +440,7 @@ QString SharedEditor::to_string() {
 
 void SharedEditor::deleteThread() {
     transceiver->deleteLater();
-    exit(-1);
+    exit(0);
 }
 
 qint32 SharedEditor::getSiteId() {
