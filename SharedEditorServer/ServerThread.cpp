@@ -140,19 +140,20 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 
     in >> siteId >> type >> user >> password >> name >> image >> email;
 
-    if(type == LoginInfo::login_request && _username.isEmpty()) {
-        auto shr = std::make_shared<LoginInfo>( -1, (LoginInfo::type_t)type, user, password);
-        packet.setPayload(shr);
-        _siteID = shr->login(threadId);
-        if (_siteID != -1) {
-            _username = user;
-            std::cout << "client "+user.toStdString()+" successfully logged!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
-            sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
+    switch (type) {
+        case LoginInfo::login_request:
+            if(_username.isEmpty()) {
+                auto shr = std::make_shared<LoginInfo>( -1, (LoginInfo::type_t)type, user, password);
+                packet.setPayload(shr);
+                if (shr->login(threadId)) {
+                    _siteID = shr->getSiteId();
+                    _username = user;
+                    std::cout << "client "+user.toStdString()+" successfully logged!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
+                    sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
 
-            _siteID = packet.getPayload()->getSiteId();
-            QPointer<QThread> th(this);
-            qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
-            emit recordThread(th);
+                    QPointer<QThread> th(this);
+                    qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
+                    emit recordThread(th);
 /*****************************
             /// in mancanza di un client che mi chieda di ricevere un file, faccio questo nella
             /// procedura di login
@@ -177,16 +178,73 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
             /// quando il client chiederà autonomamente di aprire un file
             /// ELIMINARE FINO A QUI
 *****************************/
-        } else {
-            std::cout << "client not logged!" << std::endl;
-            sendPacket(packet);
-        }
-    } else if (type == LoginInfo::update_info && !_username.isEmpty()) {
-        auto shr = std::make_shared<LoginInfo>( _siteID, (LoginInfo::type_t)type, "", "");
-        shr->setImage(image);
-        shr->setName(name);
-        shr->setEmail(email);
-        shr->updateInfo(threadId);
+                } else {
+                    std::cout << "client not logged!" << std::endl;
+                    sendPacket(packet);
+                }
+            }
+            break;
+
+        case LoginInfo::update_info:
+            if (!_username.isEmpty()) {
+                auto shr = std::make_shared<LoginInfo>( _siteID, (LoginInfo::type_t)type, "", "");
+                shr->setImage(image);
+                shr->setName(name);
+                shr->setEmail(email);
+                shr->updateInfo(threadId);
+            }
+            break;
+
+        case LoginInfo::signup_request:
+            if(_username.isEmpty()){
+                auto shr = std::make_shared<LoginInfo>( -1, (LoginInfo::type_t)type, user, password);
+                shr->setImage(image);
+                shr->setName(name);
+                shr->setEmail(email);
+                packet.setPayload(shr);
+                if (shr->signup(threadId)) {
+                    _siteID = shr->getSiteId();
+                    _username = user;
+                    std::cout << "client "+user.toStdString()+" successfully signed up!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
+                    sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
+
+                    QPointer<QThread> th(this);
+                    qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
+                    emit recordThread(th);
+/*****************************
+            /// in mancanza di un client che mi chieda di ricevere un file, faccio questo nella
+            /// procedura di login
+                QString name = QString::fromStdString("/prova1>F");
+                std::cout << name.toStdString() << std::endl;
+                QVector<QString> vec = {name};
+                auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);
+
+                QString fileName = comm->opnCommand(threadId);
+                if (!fileName.isEmpty()) {
+                    operatingFileName = fileName;
+                    std::cout << fileName.toStdString() << std::endl;
+                }
+                else
+                    std::cout << "opn command failed!" << std::endl;
+
+                vec.clear();
+                vec.insert(0, fileName);
+                comm->setArgs(vec);
+                _sockets.attachSocket(fileName,_siteID,socket.get());
+                msgHandler->submit(&NetworkServer::processOpnCommand, comm);
+            /// quando il client chiederà autonomamente di aprire un file
+            /// ELIMINARE FINO A QUI
+*****************************/
+                } else {
+                    std::cout << "client not signed up!" << std::endl;
+                    sendPacket(packet);
+                }
+            }
+            break;
+
+        default:
+            std::cout << "errore nella recvlogininfo" << std::endl;
+            break;
     }
 }
 

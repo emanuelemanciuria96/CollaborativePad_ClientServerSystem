@@ -211,15 +211,36 @@ void SharedEditor::processCursorPos(CursorPosition &curPos) {
 }
 
 void SharedEditor::processLoginInfo(LoginInfo &logInf) {
-    if(logInf.getType() == LoginInfo::login_ok) {
-        _siteId = logInf.getSiteId();
-        transceiver->setSiteId(_siteId);
-        std::cout << "client successfully logged!" << std::endl;
-        isLogged = true;
-        emit loginAchieved();
-        emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName(), logInf.getEmail());
-    } else {
-        std::cout << "client not logged!" << std::endl;
+    switch (logInf.getType()) {
+        case LoginInfo::login_ok:
+            _siteId = logInf.getSiteId();
+            transceiver->setSiteId(_siteId);
+            std::cout << "client successfully logged!" << std::endl;
+            isLogged = true;
+            emit loginAchieved();
+            emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName(), logInf.getEmail());
+            break;
+
+        case LoginInfo::signup_ok:
+            _siteId = logInf.getSiteId();
+            transceiver->setSiteId(_siteId);
+            std::cout << "client successfully signed up!" << std::endl;
+            isLogged = true;
+            emit loginAchieved();
+            emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName(), logInf.getEmail());
+            break;
+
+        case LoginInfo::login_error:
+            std::cout << "client not logged!" << std::endl;
+            break;
+
+        case LoginInfo::signup_error:
+            std::cout << "client not signed up!" << std::endl;
+            break;
+
+        default:
+            std::cout << "errore nella processlogininfo" << std::endl;
+            break;
     }
 }
 
@@ -437,6 +458,13 @@ void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare m
     packet.setPayload( std::make_shared<Command>( 1, Command::ls, QVector<QString>()));
     emit transceiver->getSocket()->sendPacket(packet); //questo serve a farsi inviare la lista di file del client*/
 
+    /*DataPacket packet(-1, -1, DataPacket::login);
+    packet.setPayload( std::make_shared<LoginInfo>( -1, LoginInfo::signup_request, "provauser", "provapassword"));
+    auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
+    ptr->setImage(QPixmap("images/profile.jpg"));
+    ptr->setName("Prova Prova");
+    ptr->setEmail("prova@prova.com");
+    emit transceiver->getSocket()->sendPacket(packet); //test per simulare registrazione*/
 }
 
 void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email) {
