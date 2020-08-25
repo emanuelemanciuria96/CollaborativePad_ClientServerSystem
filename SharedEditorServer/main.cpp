@@ -155,8 +155,8 @@ static bool initializeDb()
          "OWNER          TEXT," \
          "FSNAME         TEXT, PRIMARY KEY (SITEID, NAME, OWNER));");
         query.exec("DELETE FROM FILES");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('1', 'prova1', '#', 'prova1.json');");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('1', 'prova2', '#', 'prova2.json');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('1', 'prova1', 'q', 'prova1.json');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('1', 'prova2', 'q', 'prova2.json');");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('2', 'prova1', 'q', 'prova1.json');");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('2', 'prova2', 'q', 'prova2.json');");
         query.exec("SELECT * FROM FILES");

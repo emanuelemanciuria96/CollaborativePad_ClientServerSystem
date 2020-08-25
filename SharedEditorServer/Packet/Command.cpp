@@ -29,6 +29,10 @@ void Command::setArgs(const QVector<QString> &args) {
     _args = args;
 }
 
+void Command::addArg(QString &arg) {
+    _args.push_back(arg);
+}
+
 bool Command::cdCommand(QString& connectionId){
     if(_args.size()!=1)
         return false;
@@ -245,8 +249,11 @@ bool Command::treeCommand(QString &connectionId) {
 
 bool Command::lsCommand(QString &connectionId) {
 
-    if(!_args.empty())
+    if( _args.size()!=1 )
         return false;
+
+    auto user = _args.last();
+    _args.erase(_args.end()-1);
 
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
     db.setDatabaseName("db/files.db");
@@ -264,7 +271,7 @@ bool Command::lsCommand(QString &connectionId) {
     while(query.next()) {
         QString name(query.value("NAME").toString());
         QString owner(query.value("OWNER").toString());
-        if (owner != "#")
+        if (owner != user )
             _args.push_back(QString(owner+"/"+name));
         else
             _args.push_back(name);
@@ -273,8 +280,12 @@ bool Command::lsCommand(QString &connectionId) {
 }
 
 bool Command::opnCommand(QString &connectionId){
-    if(_args.size() != 1)
+
+    if(_args.size() != 2)
         return false;
+
+    auto user = _args.last();
+    _args.erase(_args.end()-1);
 
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
     db.setDatabaseName("db/files.db");
@@ -288,7 +299,7 @@ bool Command::opnCommand(QString &connectionId){
         _args.clear();
         QSqlQuery query(db);
 
-        if(!query.exec("SELECT FSNAME FROM FILES WHERE NAME='"+name+"' AND SITEID='"+QString::number(_siteID)+"' AND OWNER='#'")){
+        if(!query.exec("SELECT FSNAME FROM FILES WHERE NAME='"+name+"' AND SITEID='"+QString::number(_siteID)+"' AND OWNER='"+user+"'")){
             db.close();
             return false;
         }
@@ -317,3 +328,58 @@ bool Command::opnCommand(QString &connectionId){
     return !_args.first().isEmpty();
 
 }
+
+QVector<qint32> Command::renCommand(QString &connectionId) {
+
+    if(_args.size() != 3)
+        return QVector<qint32>();
+
+    auto owner = _args.last();
+    _args.erase(_args.end()-1);
+
+    QVector<qint32 > listId;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
+    db.setDatabaseName("db/files.db");
+
+    if (!db.open())
+        return listId;
+
+    QSqlQuery query(db);
+    auto list1 = _args[0].split("/");
+    auto list2 = _args[1].split("/");
+    if( list1.size()==2 ) {
+        if (list1[0] != list2[0])
+            return listId;
+        owner =  list1[0];
+    }
+
+    auto nameOld = list1.last();
+    auto nameNew = list2.last();
+
+    std::cout<<" sto rinominando il file <"<<nameOld.toStdString()<<"> in <"<<nameNew.toStdString()<<">"<<std::endl;
+
+    if(!query.exec("SELECT SITEID FROM FILES WHERE NAME='"+nameOld+"' AND OWNER='"+owner+"'")){
+        db.close();
+        return QVector<qint32>();
+    }
+
+    while(query.next()){
+        qint32 siteId = query.value("SITEID").toInt();
+        if(siteId != _siteID)
+            listId.push_back(siteId);
+    }
+
+    std::cout<<" i siteID che condividono questo file sono:"<<std::endl;
+    for(auto i:listId){
+        std::cout<<"    --"<<i<<std::endl;
+    }
+
+    if(!query.exec("UPDATE FILES SET NAME='"+nameNew+"' WHERE NAME='"+nameOld+"' AND OWNER='"+owner+"'")){
+        db.close();
+        return QVector<qint32>();
+    }
+
+    return listId;
+}
+

@@ -56,6 +56,8 @@ public slots:
     void process(DataPacket pkt);
     void requireFileSystem();
     void requireFile(QString fileName);
+    void requireFileRename(QString before,QString after);
+    //void requireFileDeletion(QString before,QString after);
     void deleteThread();
     void clearText();
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);

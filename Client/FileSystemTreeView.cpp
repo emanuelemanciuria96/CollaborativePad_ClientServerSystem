@@ -26,41 +26,54 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
 
     setupRightClickMenu();
 
-    this->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, &QWidget::customContextMenuRequested, this, &FileSystemTreeView::openCustomMenu);
-
     root = new QTreeWidgetItem(this);
     this->insertTopLevelItem(0,root);
     root->setIcon(0,home_dir);
     root->setExpanded(true);
+
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, &FileSystemTreeView::itemDoubleClicked, this, &FileSystemTreeView::openFile);
+    connect(this, &QWidget::customContextMenuRequested, this, &FileSystemTreeView::openCustomMenu);
+    connect(this, &FileSystemTreeView::itemChanged, this, &FileSystemTreeView::renameFile);
 
 }
 
 void FileSystemTreeView::setupRightClickMenu() {
 
     rightClickMenu = new QMenu(this);
-    auto newAct = new QAction("edit");
-    connect(newAct,&QAction::triggered,[](){
-        std::cout<<"hai modificato il nome del file"<<std::endl;
-    });
+    auto actRn = new QAction("Rename");
+    auto actRm = new QAction("Delete");
 
-    rightClickMenu->addAction(newAct);
+    rightClickMenu->addAction(actRm);
+    rightClickMenu->addAction(actRn);
 }
 
 void FileSystemTreeView::openCustomMenu(const QPoint &pos) {
 
-    auto nd = this->itemAt(pos);
+    auto rightClickedNode = this->itemAt(pos);
+    auto selectedAction = rightClickMenu->exec(this->mapToGlobal(pos));
 
-    rightClickMenu->exec(this->mapToGlobal(pos));
+    if( selectedAction == nullptr) return;
+
+    if( selectedAction->text() == "Delete" ){
+        removeFile(rightClickedNode);
+    }
+    else if( selectedAction->text() == "Rename" ){
+        previousName = rightClickedNode->text(0);
+        this->editItem(rightClickedNode,0);
+    }
 
 }
 
 QTreeWidgetItem* FileSystemTreeView::addChild(QTreeWidgetItem *parent, QString name, QString description) {
 
-    QTreeWidgetItem *child = new QTreeWidgetItem();
+    isRenaming = false;
+
+    auto child = new QTreeWidgetItem();
 
     child->setText(0, name);
     child->setText(1, description);
+    child->setFlags(child->flags() | Qt::ItemIsEditable );
 
     if( description == "FILE" )
         child->setIcon(0,file_icn);
@@ -69,6 +82,8 @@ QTreeWidgetItem* FileSystemTreeView::addChild(QTreeWidgetItem *parent, QString n
 
     parent->addChild(child);
 
+    isRenaming = true;
+
     return child;
 
 }
@@ -76,7 +91,6 @@ QTreeWidgetItem* FileSystemTreeView::addChild(QTreeWidgetItem *parent, QString n
 void FileSystemTreeView::constructFromPaths(const QVector<QString> &paths) {
 
     for(auto path: paths){
-
         auto strs = path.split("/");
         auto itm = root;
         QString F_D = "DIR";
@@ -126,6 +140,29 @@ void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
 
 }
 
+void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
+
+    if( !isRenaming ) return;
+
+    QString actualName = item->text(0);
+
+    auto parent = item->parent();
+    if( parent != root ){
+        previousName = parent->text(0)+"/"+previousName;
+        actualName = parent->text(0)+"/"+actualName;
+    }
+
+    if( previousName != actualName )
+        emit renFileRequest(previousName,actualName);
+
+}
+
+void FileSystemTreeView::removeFile(QTreeWidgetItem *item) {
+    //TODO: da capire se deve essere eliminato per tutti o solo per il client corrente
+}
+
 FileSystemTreeView::~FileSystemTreeView() {
     delete root;
 }
+
+

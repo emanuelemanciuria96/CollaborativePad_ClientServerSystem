@@ -256,6 +256,17 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
             break;
         }
 
+        case (Command::ren):{
+            command->addArg(_username);
+            auto listId = command->renCommand(threadId);
+            if( !listId.empty() ) {
+                _sockets.broadcast(listId,packet);
+            }
+            else
+                std::cout << "rename command failed!" << std::endl;
+            break;
+        }
+
         case (Command::mkdir):{
             if(command->mkdirCommand(threadId))
                 std::cout << "mkdir command ok!" << std::endl;
@@ -281,6 +292,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::opn):{
+            command->addArg(_username);
             std::cout << "file requested: "<<command->getArgs().front().toStdString() << std::endl;
             if( command->opnCommand(threadId) ) {
 
@@ -311,6 +323,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::cls):{
+            command->addArg(_username);
             if( operatingFileName!="" && command->opnCommand(threadId)) {
                 _sockets.detachSocket(operatingFileName, _siteID);
                 msgHandler->submit(&NetworkServer::processClsCommand, command);
@@ -321,6 +334,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::ls):{
+            command->addArg(_username);
             command->lsCommand(threadId);
             sendPacket(packet);
             break;

@@ -396,8 +396,8 @@ void SharedEditor::findCounter() {
                 maxCounter = sym.getSymId().getCount();
 
     }
-    std::cout<<"my counter value: "<<maxCounter<<std::endl;;
-    _counter = maxCounter;
+
+     _counter = maxCounter;
 
 }
 
@@ -435,6 +435,18 @@ void SharedEditor::requireFile(QString fileName) {
 
 }
 
+void SharedEditor::requireFileRename(QString before, QString after) {
+
+    QVector<QString> vec = {std::move(before),std::move(after)};
+
+    auto cmd = std::make_shared<Command>(_siteId,Command::ren,vec);
+    DataPacket packet(_siteId,0,DataPacket::command);
+    packet.setPayload(cmd);
+
+    int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
+}
 
 void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email) {
     DataPacket packet(-1, -1, DataPacket::login);
@@ -468,7 +480,6 @@ void SharedEditor::deleteThread() {
 qint32 SharedEditor::getSiteId() {
     return _siteId;
 }
-
 
 
 

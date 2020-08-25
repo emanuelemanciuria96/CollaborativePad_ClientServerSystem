@@ -19,7 +19,7 @@ public:
     void recordSocket(qint32 siteId, std::shared_ptr<Socket> skt);
     void discardSocket(qint32 siteId);
     void broadcast(QString& fileName, qint32 siteId, DataPacket& pkt);
-    void broadcast( std::vector<qint32> &siteId_list, DataPacket& pkt );
+    void broadcast( QVector<qint32> &siteId_list, DataPacket& pkt );
 
 private:
     std::shared_mutex fskt_mtx;

@@ -88,7 +88,7 @@ void SocketsPool::discardSocket(qint32 siteId) {
 
 }
 
-void SocketsPool::broadcast(std::vector<qint32> &siteId_list, DataPacket &pkt) {
+void SocketsPool::broadcast(QVector<qint32> &siteId_list, DataPacket &pkt) {
 
     std::shared_lock sl(skt_mtx);
     for(auto id : siteId_list){
@@ -96,7 +96,7 @@ void SocketsPool::broadcast(std::vector<qint32> &siteId_list, DataPacket &pkt) {
         if( i != online_sockets.end() ){
             emit i->second->sendMessage(pkt);
         }else{
-            std::cout<<"lo user con site id "<<id<<" non è al momento registrato, la preghiamo di provare più tardi"<<std::endl;
+            std::cout<<"lo user con site id "<<id<<" non e' al momento registrato, la preghiamo di provare piu' tardi"<<std::endl;
         }
     }
 

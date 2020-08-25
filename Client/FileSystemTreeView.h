@@ -23,18 +23,24 @@ public slots:
     void constructFromPaths(const QVector<QString> &paths);
     void openCustomMenu(const QPoint &pos);
     void openFile(QTreeWidgetItem *item, int column);
+    void removeFile(QTreeWidgetItem *item);
+    void renameFile(QTreeWidgetItem *item, int column);
 
 signals:
     void opnFileRequest(QString fileName);
+    void rmvFileRequest(QString fileName);
+    void renFileRequest(QString before, QString after);
 
 private:
     QTreeWidgetItem *root;
     std::map<QString,QModelIndex> model;
+    bool isRenaming = true;
     QIcon home_dir;
     QIcon dir_open;
     QIcon dir_close;
     QIcon file_icn;
     QMenu *rightClickMenu;
+    QString previousName;
 
     void setupRightClickMenu();
     QTreeWidgetItem* addChild(QTreeWidgetItem *parent, QString name,QString description);
