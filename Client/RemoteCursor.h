@@ -17,7 +17,6 @@ class RemoteCursor : public QTextCursor{
 private:
     qint32 _siteId;
     QString generateName();
-
     QString getColor();
 public:
     QLabel* labelName;

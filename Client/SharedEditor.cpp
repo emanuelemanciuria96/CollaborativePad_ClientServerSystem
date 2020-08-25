@@ -464,6 +464,14 @@ qint32 SharedEditor::getSiteId() {
     return _siteId;
 }
 
+void SharedEditor::symbolsScanner() {
+    for(auto s : _symbols){
+        auto siteId = s.getSymId().getSiteId();
+        auto pos = getIndex(-1,s);
+        emit highlight(pos, siteId);
+    }
+}
+
 
 
 

@@ -42,6 +42,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(this, &MainWindow::fileSystemRequest, shEditor, &SharedEditor::requireFileSystem);
     connect(shEditor, &SharedEditor::userInfoArrived, infoWidget, &InfoWidget::loadData);
     connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
+    connect(shEditor, &SharedEditor::highlight, editor, &EditorGUI::highlight);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
