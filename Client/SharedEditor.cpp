@@ -274,7 +274,8 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     std::vector<std::tuple<qint32,bool, QChar,qint32>> vt;
 
     for( auto m: strMess.stringToMessages() ) {
-        qint32 pos=getIndex(m.getLocalIndex(), m.getSymbol());
+        qint32 pos = getIndex(m.getLocalIndex(), m.getSymbol());
+//        std::cout << "insert da siteId " << m.getSymbol().getSymId().getSiteId() << std::endl;
         if(m.getAction()==Message::insertion){
             _symbols.insert(_symbols.begin()+pos,m.getSymbol());
             vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(pos,1,m.getSymbol().getValue(),m.getSiteId()));

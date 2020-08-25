@@ -64,14 +64,13 @@ private:
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
     void drawLabel(RemoteCursor *cursor);
     void keyPressEvent(QKeyEvent *e) override;
-
+    QTextCharFormat getFormat(qint32 siteId);
 private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);
     void flushInsertQueue();
     void setSelected(bool yes){ selected = yes;}
     void handleCursorPosChanged();
     void enableSendCursorPos();
-    void handleSelection();
 
 public slots:
     void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
