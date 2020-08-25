@@ -51,6 +51,7 @@ void ServerThread::run()
     QSqlDatabase::addDatabase("QSQLITE", threadId+"_login");
     QSqlDatabase::addDatabase("QSQLITE", threadId+"_directories");
     QSqlDatabase::addDatabase("QSQLITE", threadId+"_files");
+    QSqlDatabase::addDatabase("QSQLITE", threadId+"_filesNEW");
 
     exec(); //loop degli eventi attivato qui
 }
@@ -135,22 +136,24 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
     QString password;
     QPixmap image;
     QString name;
+    QString email;
 
-    in >> siteId >> type >> user >> password >> name >> image;
+    in >> siteId >> type >> user >> password >> name >> image >> email;
 
-    if(type == LoginInfo::login_request && _username.isEmpty()) {
-        auto shr = std::make_shared<LoginInfo>( -1, (LoginInfo::type_t)type, user, password);
-        packet.setPayload(shr);
-        _siteID = shr->login(threadId);
-        if (_siteID != -1) {
-            _username = user;
-            std::cout << "client "+user.toStdString()+" successfully logged!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
-            sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
+    switch (type) {
+        case LoginInfo::login_request:
+            if(_username.isEmpty()) {
+                auto shr = std::make_shared<LoginInfo>( -1, (LoginInfo::type_t)type, user, password);
+                packet.setPayload(shr);
+                if (shr->login(threadId)) {
+                    _siteID = shr->getSiteId();
+                    _username = user;
+                    std::cout << "client "+user.toStdString()+" successfully logged!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
+                    sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
 
-            _siteID = packet.getPayload()->getSiteId();
-            QPointer<QThread> th(this);
-            qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
-            emit recordThread(th);
+                    QPointer<QThread> th(this);
+                    qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
+                    emit recordThread(th);
 /*****************************
             /// in mancanza di un client che mi chieda di ricevere un file, faccio questo nella
             /// procedura di login
@@ -175,15 +178,73 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
             /// quando il client chiederà autonomamente di aprire un file
             /// ELIMINARE FINO A QUI
 *****************************/
-        } else {
-            std::cout << "client not logged!" << std::endl;
-            sendPacket(packet);
-        }
-    } else if (type == LoginInfo::update_info && !_username.isEmpty()) {
-        auto shr = std::make_shared<LoginInfo>( _siteID, (LoginInfo::type_t)type, "", "");
-        shr->setImage(image);
-        shr->setName(name);
-        shr->updateInfo(threadId);
+                } else {
+                    std::cout << "client not logged!" << std::endl;
+                    sendPacket(packet);
+                }
+            }
+            break;
+
+        case LoginInfo::update_info:
+            if (!_username.isEmpty()) {
+                auto shr = std::make_shared<LoginInfo>( _siteID, (LoginInfo::type_t)type, "", "");
+                shr->setImage(image);
+                shr->setName(name);
+                shr->setEmail(email);
+                shr->updateInfo(threadId);
+            }
+            break;
+
+        case LoginInfo::signup_request:
+            if(_username.isEmpty()){
+                auto shr = std::make_shared<LoginInfo>( -1, (LoginInfo::type_t)type, user, password);
+                shr->setImage(image);
+                shr->setName(name);
+                shr->setEmail(email);
+                packet.setPayload(shr);
+                if (shr->signup(threadId)) {
+                    _siteID = shr->getSiteId();
+                    _username = user;
+                    std::cout << "client "+user.toStdString()+" successfully signed up!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
+                    sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
+
+                    QPointer<QThread> th(this);
+                    qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
+                    emit recordThread(th);
+/*****************************
+            /// in mancanza di un client che mi chieda di ricevere un file, faccio questo nella
+            /// procedura di login
+                QString name = QString::fromStdString("/prova1>F");
+                std::cout << name.toStdString() << std::endl;
+                QVector<QString> vec = {name};
+                auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);
+
+                QString fileName = comm->opnCommand(threadId);
+                if (!fileName.isEmpty()) {
+                    operatingFileName = fileName;
+                    std::cout << fileName.toStdString() << std::endl;
+                }
+                else
+                    std::cout << "opn command failed!" << std::endl;
+
+                vec.clear();
+                vec.insert(0, fileName);
+                comm->setArgs(vec);
+                _sockets.attachSocket(fileName,_siteID,socket.get());
+                msgHandler->submit(&NetworkServer::processOpnCommand, comm);
+            /// quando il client chiederà autonomamente di aprire un file
+            /// ELIMINARE FINO A QUI
+*****************************/
+                } else {
+                    std::cout << "client not signed up!" << std::endl;
+                    sendPacket(packet);
+                }
+            }
+            break;
+
+        default:
+            std::cout << "errore nella recvlogininfo" << std::endl;
+            break;
     }
 }
 
@@ -262,25 +323,26 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::opn):{
-            QString fileName;
-            std::cout << "file requested: "<<command->getArgs()[0].toStdString() << std::endl;
-            fileName = command->opnCommand(threadId);
-            if(!fileName.isEmpty()) {
+            std::cout << "file requested: "<<command->getArgs().front().toStdString() << std::endl;
+            if( command->opnCommand(threadId) ) {
+
+                QString fileName = command->getArgs().front();
+
                 if( operatingFileName != "" ) {
                     _sockets.detachSocket(operatingFileName, _siteID);
                     QVector<QString> vec = {operatingFileName};
-                    auto comm = std::make_shared<Command>(_siteID, Command::opn, vec);
+                    auto comm = std::make_shared<Command>(_siteID, Command::cls, vec);
                     msgHandler->submit(&NetworkServer::processClsCommand,comm);
                 }
 
                 operatingFileName = fileName;
                 _sockets.attachSocket(fileName,_siteID,socket.get());
                 std::cout << fileName.toStdString() << std::endl;
-                QVector<QString> vec = {fileName};
-                command->setArgs(vec);
                 msgHandler->submit(&NetworkServer::processOpnCommand, command);
+
             }else
                 std::cout << "opn command failed!" << std::endl;
+
             break;
         }
 
@@ -291,11 +353,18 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::cls):{
-            if( operatingFileName!="") {
+            if( operatingFileName!="" && command->opnCommand(threadId)) {
                 _sockets.detachSocket(operatingFileName, _siteID);
                 msgHandler->submit(&NetworkServer::processClsCommand, command);
+            }else
+                std::cout << "cls command failed!" << std::endl;
 
-            }
+            break;
+        }
+
+        case (Command::ls):{
+            command->lsCommand(threadId);
+            sendPacket(packet);
             break;
         }
 
@@ -374,12 +443,12 @@ void ServerThread::sendLoginInfo(DataPacket &packet) {
     QBuffer buf;
     buf.open(QBuffer::WriteOnly);
     QDataStream tmp(&buf);
-    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage();
+    tmp<<(quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage() << ptr->getEmail();
 
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
     out << bytes<<packet.getSource() << packet.getErrcode() << (quint32) packet.getTypeOfData();
-    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage() << ptr->getEmail();
     socket->waitForBytesWritten(-1);
 
     std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
@@ -454,6 +523,9 @@ void ServerThread::sendCursorPos(DataPacket &packet) {
     QDataStream out;
     out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
 
     auto ptr = std::dynamic_pointer_cast<CursorPosition>(packet.getPayload());
     auto vector = QVector<quint32>();
@@ -462,7 +534,10 @@ void ServerThread::sendCursorPos(DataPacket &packet) {
     }
     std::cout << "sendCursorPos " << ptr->getIndex() << " siteID: " << ptr->getSiteId() << std::endl;
 
-    qint32 bytes=-14;//TODO dimensione socket
+    tmp << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
+        << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex();
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
     out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
         ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
         << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
@@ -487,6 +562,7 @@ void ServerThread::disconnected()
     QSqlDatabase::removeDatabase(threadId+"_login");
     QSqlDatabase::removeDatabase(threadId+"_directories");
     QSqlDatabase::removeDatabase(threadId+"_files");
+    QSqlDatabase::removeDatabase(threadId+"_filesNEW");
     std::cout<<"Client disconnected!"<<std::endl;
     exit(0);
 }

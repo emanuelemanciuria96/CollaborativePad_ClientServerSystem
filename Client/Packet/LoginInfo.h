@@ -19,7 +19,9 @@ public:
         signup_request = 201,
         update_info = 202,
         login_error = 400,
+        signup_error = 401,
         login_ok = 100,
+        signup_ok = 101,
     } type_t;
 
     LoginInfo(qint32 siteId, type_t type = not_assigned, QString user = "", QString password = "");
@@ -30,11 +32,12 @@ public:
     void setPassword(QString password);
     type_t getType();
     void setType(type_t type);
-    QString getHashPassword();
     const QPixmap &getImage() const;
     void setImage(const QPixmap &image);
     const QString &getName() const;
     void setName(const QString &name);
+    const QString &getEmail() const;
+    void setEmail(const QString &email);
 
 private:
     QString _user;
@@ -42,6 +45,7 @@ private:
     type_t _type;
     QPixmap _image;
     QString _name;
+    QString _email;
 };
 
 

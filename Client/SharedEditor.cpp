@@ -9,6 +9,7 @@
 #include <tuple>
 #include <string>
 #include <QtCore/QCryptographicHash>
+#include <QtCore/QFile>
 
 SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
@@ -141,7 +142,6 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
     emit transceiver->getSocket()->sendPacket(packet);
 //    this->to_string();
 
-
 }
 
 void SharedEditor::localErase(qint32 index) {
@@ -159,10 +159,12 @@ void SharedEditor::localErase(qint32 index) {
     emit transceiver->getSocket()->sendPacket(packet);
     this->to_string();
 
-
 }
 
 void SharedEditor::sendCursorPos(qint32 index) {
+
+    if(!isFileOpened) return;
+
     auto _symbol = _symbols[index];
     DataPacket packet(_siteId, -1, DataPacket::cursorPos);
     packet.setPayload(std::make_shared<CursorPosition>(_symbol, index, _siteId));
@@ -212,15 +214,36 @@ void SharedEditor::processCursorPos(CursorPosition &curPos) {
 }
 
 void SharedEditor::processLoginInfo(LoginInfo &logInf) {
-    if(logInf.getType() == LoginInfo::login_ok) {
-        _siteId = logInf.getSiteId();
-        transceiver->setSiteId(_siteId);
-        std::cout << "client successfully logged!" << std::endl;
-        isLogged = true;
-        emit loginAchieved();
-        emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName());
-    } else {
-        std::cout << "client not logged!" << std::endl;
+    switch (logInf.getType()) {
+        case LoginInfo::login_ok:
+            _siteId = logInf.getSiteId();
+            transceiver->setSiteId(_siteId);
+            std::cout << "client successfully logged!" << std::endl;
+            isLogged = true;
+            emit loginAchieved();
+            emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName(), logInf.getEmail());
+            break;
+
+        case LoginInfo::signup_ok:
+            _siteId = logInf.getSiteId();
+            transceiver->setSiteId(_siteId);
+            std::cout << "client successfully signed up!" << std::endl;
+            isLogged = true;
+            emit loginAchieved();
+            emit userInfoArrived(logInf.getImage(), logInf.getUser(), logInf.getName(), logInf.getEmail());
+            break;
+
+        case LoginInfo::login_error:
+            std::cout << "client not logged!" << std::endl;
+            break;
+
+        case LoginInfo::signup_error:
+            std::cout << "client not signed up!" << std::endl;
+            break;
+
+        default:
+            std::cout << "errore nella processlogininfo" << std::endl;
+            break;
     }
 }
 
@@ -275,7 +298,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
         // std::cerr << "stringa: " << s.toStdString() << std::endl;
 
         if(std::get<1>(vt[i])==1) {
-            if (std::get<1>(vt[i+1])==1 and std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 1) {
+            if (std::get<1>(vt[i+1])==1 && std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 1) {
             } else {
                 //qDebug()<<"insert "<<s<<" in index "<<firstPos;
                 emit symbolsChanged(firstPos, s, std::get<3>(vt[i]),Message::insertion);
@@ -283,7 +306,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                 firstPos = std::get<0>(vt[i+1]);
             }
         }else {
-            if (std::get<1>(vt[i+1])==0 and std::get<0>(vt[i]) == std::get<0>(vt[i+1])) {
+            if (std::get<1>(vt[i+1])==0 && std::get<0>(vt[i]) == std::get<0>(vt[i+1])) {
             } else {
                 //qDebug()<<"remove "<<s<<" in index "<<firstPos+s.size()-1;
                 emit symbolsChanged(firstPos, s, std::get<3>(vt[i]), Message::removal);
@@ -303,10 +326,8 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
             break;
         }
         case FileInfo::eof: {
-            std::cout<<"inizio findCounter"<<std::endl;
             findCounter();
-            std::cout<<"fine findCounter"<<std::endl;
-            /// TODO: inserire qui segnale di apertura editor
+            // TODO: inserire qui segnale di apertura editor
             break;
         }
     }
@@ -341,8 +362,8 @@ void SharedEditor::processCommand(Command& cmd){
             break;
         }
 
-        case (Command::tree): {
-            processTreeCommand(cmd);
+        case (Command::ls): {
+            processLsCommand(cmd);
             break;
         }
 
@@ -357,7 +378,7 @@ void SharedEditor::processCdCommand(Command& cmd){
         std::cout << a.toStdString() << std::endl;
 }
 
-void SharedEditor::processTreeCommand(Command& cmd){
+void SharedEditor::processLsCommand(Command& cmd){
 
     emit filePathsArrived(cmd.getArgs());
 }
@@ -383,7 +404,7 @@ void SharedEditor::findCounter() {
 
 void SharedEditor::requireFileSystem() {
 
-    auto cmd = std::make_shared<Command>(_siteId,Command::tree,QVector<QString>());
+    auto cmd = std::make_shared<Command>(_siteId,Command::ls,QVector<QString>());
     DataPacket packet(_siteId,0,DataPacket::command);
     packet.setPayload(cmd);
 
@@ -393,6 +414,12 @@ void SharedEditor::requireFileSystem() {
 }
 
 void SharedEditor::requireFile(QString fileName) {
+
+    if( fileOpened == fileName.split("/").last() ){
+        return;
+    }else
+        fileOpened = fileName.split("/").last();
+
     QVector<QString> vec = {std::move(fileName)};
     auto cmd = std::make_shared<Command>(_siteId,Command::opn,vec);
     DataPacket packet(_siteId,0,DataPacket::command);
@@ -409,35 +436,13 @@ void SharedEditor::requireFile(QString fileName) {
 }
 
 
-void SharedEditor::testCommand(){ //funzione per testare la command, fa cagare ma per ora non ho idee migliori
-   /* DataPacket packet(-1, -1, DataPacket::command);
-    packet.setPayload( std::make_shared<Command>( _siteId, Command::cd, QVector<QString>(1, "")));
-    emit transceiver->getSocket()->sendPacket(packet); //questo serve a farsi inviare il contenuto della root*/
-
-    /*DataPacket packet(-1, -1, DataPacket::command);
-    packet.setPayload( std::make_shared<Command>( _siteId, Command::mkdir, QVector<QString>(1, "/Cartella test")));
-    emit transceiver->getSocket()->sendPacket(packet); //questo serve a creare una cartella "Cartella test" nella root*/
-
-    /*DataPacket packet(-1, -1, DataPacket::command);
-    packet.setPayload( std::make_shared<Command>( _siteId, Command::rm, QVector<QString>(1, "/Cartella1>D")));
-    emit transceiver->getSocket()->sendPacket(packet); //questo serve a cancellare la cartella "Cartella1"*/
-
-    /*DataPacket packet(-1, -1, DataPacket::command);
-    packet.setPayload( std::make_shared<Command>( _siteId, Command::opn, QVector<QString>(1, "/prova>F")));
-    emit transceiver->getSocket()->sendPacket(packet); //questo serve ad aprire il file "prova.json" sul server*/
-
-    /*DataPacket packet(-1, -1, DataPacket::command);
-    packet.setPayload( std::make_shared<Command>( 1, Command::tree, QVector<QString>()));
-    emit transceiver->getSocket()->sendPacket(packet); //questo serve a farsi inviare tutte le subdirectory del client*/
-
-}
-
-void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name) {
+void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email) {
     DataPacket packet(-1, -1, DataPacket::login);
     packet.setPayload( std::make_shared<LoginInfo>( _siteId, LoginInfo::update_info));
     auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
     ptr->setImage(image);
     ptr->setName(name);
+    ptr->setEmail(email);
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
@@ -457,7 +462,7 @@ QString SharedEditor::to_string() {
 
 void SharedEditor::deleteThread() {
     transceiver->deleteLater();
-    exit(-1);
+    exit(0);
 }
 
 qint32 SharedEditor::getSiteId() {

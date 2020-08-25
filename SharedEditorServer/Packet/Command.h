@@ -29,6 +29,7 @@ public:
         sv = 8,
         find = 9,
         tree = 10,
+        ls = 11,
     }cmd_t;
 
     Command(qint32 siteId, cmd_t cmd, QVector<QString> args);
@@ -39,11 +40,10 @@ public:
     bool cdCommand(QString& connectionId);
     bool mkdirCommand(QString& connectionId);
     bool rmCommand(QString& connectionId);
-    QString opnCommand(QString &connectionId);
+    bool opnCommand(QString &connectionId);
     bool treeCommand(QString &connectionId);
-    /*QVector<QString> openCommand(QString& connectionId, QString& user, QString& directory);
-    bool copyFile(QString& connectionId, QString& user, QString& src, QString& dest);
-    bool moveFile(QString& connectionId, QString& user, QString& src, QString& dest);*/
+
+    bool lsCommand(QString &connectionId);
 
 private:
     cmd_t _cmd;

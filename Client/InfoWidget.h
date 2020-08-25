@@ -3,14 +3,14 @@
 
 #include <QWidget>
 #include <QtWidgets/QGraphicsScene>
-#include <QtWidgets/QMainWindow>
 #include "InfoWidgetEdit.h"
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class InfoWidget; }
 QT_END_NAMESPACE
 
-class InfoWidget : public QMainWindow
+class InfoWidget : public QWidget
 {
     Q_OBJECT
 
@@ -26,11 +26,11 @@ private:
     InfoWidgetEdit *infoWidgetEdit;
 
 public slots:
-    void loadData(const QPixmap& image, const QString& nickname, const QString& name);
+    void loadData(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void openInfoEdit();
-    void updateInfo(const QPixmap& image, const QString& name);
+    void updateInfo(const QPixmap& image, const QString& name, const QString& email);
 
 signals:
-    void sendUpdatedInfo(const QPixmap& image, const QString& name);
+    void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
 };
 #endif // INFOWIDGET_H

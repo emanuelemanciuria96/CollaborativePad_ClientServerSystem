@@ -192,7 +192,7 @@ bool Command::rmFile(QString &connectionId) {
     return true;
 }
 
-QString Command::opnCommand(QString &connectionId){
+/*QString Command::opnCommand(QString &connectionId){
     QString fileName{};
 
     if(_args.size()!=1)
@@ -216,7 +216,7 @@ QString Command::opnCommand(QString &connectionId){
     fileName = query.value("FILEID").toString();
 
     return fileName;
-}
+}*/
 
 bool Command::treeCommand(QString &connectionId) {
     if(!_args.empty())
@@ -241,115 +241,79 @@ bool Command::treeCommand(QString &connectionId) {
     return true;
 }
 
-/*LE FUNZIONI CHE SEGUONO SONO TUTTE DA RIFARE*/
+/***** FUNZIONI COMMAND PER TABELLE NUOVE *****/
 
-/*
-QVector<QString> Command::openCommand(QString& connectionId, QString& user, QString& directory) {
-    QVector<QString> directories;
-    QSqlDatabase db = QSqlDatabase::database(connectionId);
-    db.setDatabaseName(user+"_directories.db");
+bool Command::lsCommand(QString &connectionId) {
+
+    if(!_args.empty())
+        return false;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
+    db.setDatabaseName("db/files.db");
 
     if (!db.open())
-        return directories;
+        return false;
 
     QSqlQuery query(db);
-    if(!query.exec("SELECT * FROM DIRECTORIES WHERE DIRECTORY LIKE '"+directory.left(directory.size()-3)+"/%"+QString::number(directory.right(1).toUInt()+1)+"'"))
-    {
+
+    if(!query.exec("SELECT NAME, OWNER FROM FILES WHERE SITEID='"+QString::number(_siteID)+"'")){
         db.close();
-        return directories;
+        return false;
     }
 
-    while(query.next()){
-        directories.push_back(query.value("DIRECTORY").toString());
+    while(query.next()) {
+        QString name(query.value("NAME").toString());
+        QString owner(query.value("OWNER").toString());
+        if (owner != "#")
+            _args.push_back(QString(owner+"/"+name));
+        else
+            _args.push_back(name);
     }
-
-    db.close();
-    return directories;
+    return true;
 }
 
-bool Command::copyFile(QString& connectionId, QString& user, QString &src, QString &dest) {
-    DBSql sqldb(user.toStdString()+"_directories.db");
-    sqldb.openDB();
-    std::string query;
-
-    if(src.at(src.size()-2) != "F" || dest.at(dest.size()-2) != "F")
+bool Command::opnCommand(QString &connectionId){
+    if(_args.size() != 1)
         return false;
 
-    query = "SELECT * FROM DIRECTORIES WHERE DIRECTORY='"+dest.toStdString()+"'";
-    sqldb.query(query);
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
+    db.setDatabaseName("db/files.db");
 
-    QFile file(dest.left(dest.size() - 3));
-
-    if(!sqldb.getResult()["DIRECTORY"].isEmpty() && file.exists())
-        return true;
-
-    query = "SELECT * FROM DIRECTORIES WHERE DIRECTORY='"+src.toStdString()+"'";
-    sqldb.query(query);
-
-    if(sqldb.getResult()["DIRECTORY"].isEmpty()) {
-        QFile srcFile(src.left(src.size() - 3));
-        srcFile.remove();
-        return false;
-    }
-
-    if(QFile::copy(src.left(src.size() - 3), dest.left(dest.size() - 3))){
-        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('"+dest.toStdString()+"');";
-        sqldb.query(query);
-
-        query = "SELECT * FROM DIRECTORIES WHERE DIRECTORY='"+dest.toStdString()+"'";
-        sqldb.query(query);
-
-        return !sqldb.getResult()["DIRECTORY"].isEmpty();
-    }
-    return false;
-}
-
-bool Command::moveFile(QString& connectionId, QString& user, QString& src, QString& dest) {
-    DBSql sqldb(user.toStdString()+"_directories.db");
-    sqldb.openDB();
-    std::string query;
-
-    if(src.at(src.size()-2) != "F" || dest.at(dest.size()-2) != "F")
+    if (!db.open())
         return false;
 
-    query = "SELECT * FROM DIRECTORIES WHERE DIRECTORY='"+dest.toStdString()+"'";
-    sqldb.query(query);
+    auto pos = _args.first().indexOf("/");
+    if (pos == -1) {
+        QString name = _args.first();
+        _args.clear();
+        QSqlQuery query(db);
 
-    QFile destFile(dest.left(dest.size() - 3));
-
-    if(!sqldb.getResult()["DIRECTORY"].isEmpty() && destFile.exists()){
-        query = "DELETE FROM DIRECTORIES WHERE DIRECTORY='"+src.toStdString()+"'";
-        sqldb.query(query);
-
-        QFile srcFile(src.left(src.size() - 3));
-        srcFile.remove();
-        return true;
-    }
-
-    query = "SELECT * FROM DIRECTORIES WHERE DIRECTORY='"+src.toStdString()+"'";
-    sqldb.query(query);
-
-    if(sqldb.getResult()["DIRECTORY"].isEmpty()){
-        QFile srcFile(src.left(src.size() - 3));
-        srcFile.remove();
-        return false;
-    }
-
-    if(QFile::copy(src.left(src.size() - 3), dest.left(dest.size() - 3))){
-        query = "INSERT INTO DIRECTORIES ('DIRECTORY') VALUES ('"+dest.toStdString()+"');";
-        sqldb.query(query);
-
-        query = "SELECT * FROM DIRECTORIES WHERE DIRECTORY='"+dest.toStdString()+"'";
-        sqldb.query(query);
-
-        if(!sqldb.getResult()["DIRECTORY"].isEmpty()) {
-            query = "DELETE FROM DIRECTORIES WHERE DIRECTORY='"+src.toStdString()+"'";
-            sqldb.query(query);
-            QFile srcFile(src.left(src.size() - 3));
-            srcFile.remove();
+        if(!query.exec("SELECT FSNAME FROM FILES WHERE NAME='"+name+"' AND SITEID='"+QString::number(_siteID)+"' AND OWNER='#'")){
+            db.close();
+            return false;
         }
 
-        return !sqldb.getResult()["DIRECTORY"].isEmpty();
+        query.next();
+        _args.push_back(query.value("FSNAME").toString());
+
+        return !_args.first().isEmpty();
+
     }
-    return false;
-}*/
+
+    auto list = _args.first().split("/");
+    QString owner = list.first();
+    QString name = list.last();
+    _args.clear();
+    QSqlQuery query(db);
+
+    if(!query.exec("SELECT FSNAME FROM FILES WHERE NAME='"+name+"' AND SITEID='"+QString::number(_siteID)+"' AND OWNER='"+owner+"'")){
+        db.close();
+        return false;
+    }
+
+    query.next();
+    _args.push_back(query.value("FSNAME").toString());
+
+    return !_args.first().isEmpty();
+
+}
