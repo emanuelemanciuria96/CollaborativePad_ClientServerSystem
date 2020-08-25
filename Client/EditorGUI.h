@@ -71,6 +71,7 @@ private slots:
     void setSelected(bool yes){ selected = yes;}
     void handleCursorPosChanged();
     void enableSendCursorPos();
+    void handleSelection();
 
 public slots:
     void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);

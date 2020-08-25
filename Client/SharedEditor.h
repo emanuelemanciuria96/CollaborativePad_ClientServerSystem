@@ -38,6 +38,7 @@ private:
     bool isLogged;
     QString fileOpened = "";
     bool isFileOpened = false;
+    bool highlighting = false;
 
     void findCounter();
     qint32 getIndex(qint32 index, Symbol symbol);
@@ -78,7 +79,7 @@ public:
     qint32 getSiteId();
     void sendCursorPos(qint32 index);
     void symbolsScanner();
-
+    bool getHighlighting();
 };
 
 

@@ -18,13 +18,18 @@ qint32 RemoteCursor::getSiteId() const {
     return _siteId;
 }
 
-QString RemoteCursor::generateName() {
+QString RemoteCursor::generateName() const {
     auto num = (_siteId*13) % ANIMALS->size();
     return ANIMALS[num];
 }
 
-QString RemoteCursor::getColor() {
+QString RemoteCursor::getColor() const {
     auto num = (_siteId*13) % COLORS->size();
+    return COLORS[num];
+}
+
+QString RemoteCursor::getColor(qint32 siteId) {
+    auto num = (siteId*13) % COLORS->size();
     return COLORS[num];
 }
 

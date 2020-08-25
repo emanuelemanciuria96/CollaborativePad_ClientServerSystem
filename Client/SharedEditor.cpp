@@ -473,10 +473,15 @@ void SharedEditor::symbolsScanner() {
     for(auto s : _symbols){
         auto siteId = s.getSymId().getSiteId();
         auto pos = getIndex(-1,s);
-        emit highlight(pos, siteId);
+        if(siteId>0)
+            emit highlight(pos, siteId);
     }
+    highlighting = !highlighting;
 }
 
+bool SharedEditor::getHighlighting() {
+    return highlighting;
+}
 
 
 

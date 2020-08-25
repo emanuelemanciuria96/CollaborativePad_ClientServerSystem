@@ -17,6 +17,7 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     connect(timer, &QTimer::timeout, this, &EditorGUI::enableSendCursorPos);
     connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
+//    connect(textEdit, &QTextEdit::selectionChanged, this, &EditorGUI::handleSelection);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
@@ -307,6 +308,10 @@ void EditorGUI::deleteAllText() {
 
 void EditorGUI::handleCursorPosChanged() {
     qint32 pos;
+    if(textEdit->textCursor().hasSelection()){
+        qint32 start = textEdit->textCursor().selectionStart();
+        qint32 end = textEdit->textCursor().selectionEnd();
+    }
     pos = textEdit->textCursor().position();
 //    std::cout << "cursor index:" << pos << std::endl;
     if (model->getSiteId() != -1 && !updateCursorBlocker) {
@@ -327,26 +332,32 @@ void EditorGUI::enableSendCursorPos() {
 }
 
 void EditorGUI::highlight(qint32 pos, qint32 siteId) {
-    std::cout<< "highlight " << pos << " siteId " << siteId << std::endl;
+    std::cout << "highlight " << pos << " siteId " << siteId << std::endl;
     auto cursor = getRemoteCursor(0);
     auto format = QTextCharFormat();
-    if(siteId >= 0) {
-        if(siteId == model->getSiteId())
-            format.setTextOutline(QPen(Qt::red));
+    if (!model->getHighlighting()){
+        if (siteId == model->getSiteId())
+            format.setBackground(QBrush(QColor(RemoteCursor::getColor(model->getSiteId()))));
         else
-            format.setTextOutline(QPen(getRemoteCursor(siteId)->color));
-        cursor->setPosition(pos - 1, QTextCursor::MoveAnchor);
-        cursor->setPosition(pos, QTextCursor::KeepAnchor);
-        cursor->setCharFormat(format);
+            format.setBackground(QColor(getRemoteCursor(siteId)->color));
     }
+    cursor->setPosition(pos - 1, QTextCursor::MoveAnchor);
+    cursor->setPosition(pos, QTextCursor::KeepAnchor);
+    cursor->setCharFormat(format);
+
 }
 
 void EditorGUI::keyPressEvent(QKeyEvent *e) {
     QWidget::keyPressEvent(e);
-    std::cout << "dentro keypress" << std::endl;
+//    std::cout << "dentro keypress" << std::endl;
 
     if(e->key() == Qt::Key_F7){
         std::cout << "premuto F7" << std::endl;
         model->symbolsScanner();
     }
+}
+
+void EditorGUI::handleSelection() {
+    std::cout << "selezione" << std::endl;
+
 }
