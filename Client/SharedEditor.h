@@ -78,7 +78,7 @@ public:
     void testCommand();
     qint32 getSiteId();
     void sendCursorPos(qint32 index);
-    void symbolsScanner();
+    void highlightSymbols(bool checked);
     bool getHighlighting();
 };
 

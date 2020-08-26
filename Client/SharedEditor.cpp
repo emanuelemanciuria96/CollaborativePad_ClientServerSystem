@@ -470,14 +470,14 @@ qint32 SharedEditor::getSiteId() {
     return _siteId;
 }
 
-void SharedEditor::symbolsScanner() {
+void SharedEditor::highlightSymbols(bool checked) {
     for(auto s : _symbols){
         auto siteId = s.getSymId().getSiteId();
         auto pos = getIndex(-1,s);
         if(siteId>0)
             emit highlight(pos, siteId);
     }
-    highlighting = !highlighting;
+    highlighting = checked;
 }
 
 bool SharedEditor::getHighlighting() {

@@ -174,10 +174,9 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
     if(model->getHighlighting())
         cursor->setCharFormat(getFormat(siteId));
     cursor->insertText(value);
-//    textEdit->update();
-//    drawLabel(cursor);
     //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
     signalBlocker = !signalBlocker;
+    drawLabel(cursor);
 //    updateRemoteCursors(siteId,index, Message::insertion);
 }
 
@@ -187,7 +186,7 @@ bool EditorGUI::checkSiteId(RemoteCursor &rc, qint32 siteId) {
 
 void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     pos--;
-    QTextCursor *cursor;
+    RemoteCursor *cursor;
 
     cursor = getRemoteCursor(siteId);
 
@@ -198,6 +197,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     cursor->removeSelectedText();
     //std::cout << "Rimosso " << index << std::endl;
     signalBlocker = !signalBlocker;
+    drawLabel(cursor);
 //    updateRemoteCursors(siteId,index, Message::removal);
 }
 
@@ -288,16 +288,18 @@ void EditorGUI::flushInsertQueue() {
 }
 
 void EditorGUI::drawLabel(RemoteCursor *cursor){
-    if (cursor->labelTimer->isActive())
-        cursor->labelTimer->stop();
+    if(cursor->getSiteId() > 0) {
+        if (cursor->labelTimer->isActive())
+            cursor->labelTimer->stop();
 
-    const QRect curRect = textEdit->cursorRect(*cursor);
+        const QRect curRect = textEdit->cursorRect(*cursor);
 
-    cursor->labelName->setParent(textEdit);
-    cursor->labelName->show();
-    cursor->labelName->move(curRect.left()+5,curRect.top()-5);
-    connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
-    cursor->labelTimer->start(5000);
+        cursor->labelName->setParent(textEdit);
+        cursor->labelName->show();
+        cursor->labelName->move(curRect.left() + 5, curRect.top() - 5);
+        connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
+        cursor->labelTimer->start(5000);
+    }
 }
 
 void EditorGUI::deleteAllText() {
@@ -332,7 +334,7 @@ void EditorGUI::enableSendCursorPos() {
 }
 
 void EditorGUI::highlight(qint32 pos, qint32 siteId) {
-    std::cout << "highlight " << pos << " siteId " << siteId << std::endl;
+//    std::cout << "highlight " << pos << " siteId " << siteId << std::endl;
     auto cursor = getRemoteCursor(0);
     auto format = QTextCharFormat();
 
@@ -350,10 +352,6 @@ void EditorGUI::keyPressEvent(QKeyEvent *e) {
     QWidget::keyPressEvent(e);
 //    std::cout << "dentro keypress" << std::endl;
 
-    if(e->key() == Qt::Key_F7){
-        std::cout << "premuto F7" << std::endl;
-        model->symbolsScanner();
-    }
 }
 
 
