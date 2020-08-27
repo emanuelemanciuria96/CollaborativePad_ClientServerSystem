@@ -23,6 +23,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Packet/Symbols/Symbol.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/RemoteCursor.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/RemoteCursor.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SharedEditor.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj"
+  "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SignInWidget.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/SignInWidget.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Transceiver.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Transceiver.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/main.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj"
   )

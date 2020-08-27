@@ -37,6 +37,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     treeFileSystemSettings();
     // widgetAccount creation
     infoWidgetsSettings();
+    signInWidgetSetup();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),treeView , SLOT(openFile( QTreeWidgetItem*, int )));
@@ -52,7 +53,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::userInfoArrived, infoWidget, &InfoWidget::loadData);
     connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
     connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::startSignIn);
-    connect(infoWidgetEdit, &InfoWidgetEdit::backToLogIn, this, &MainWindow::backToLogIn);
+    connect(widgetSignIn, &SignInWidget::backToLogIn, this, &MainWindow::backToLogIn);
     connect(highlightAction, &QAction::triggered, shEditor, &SharedEditor::highlightSymbols);
     connect(shEditor, &SharedEditor::highlight, editor, &EditorGUI::highlight);
     //    imposto la grandezza della finestra
@@ -62,6 +63,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     centralWidget->addWidget(widgetLogin);
     centralWidget->addWidget(widgetInfoEditC);
     centralWidget->addWidget(widgetEditor);
+    centralWidget->addWidget(widgetSignIn);
 //    this->setCentralWidget(widgetLogin);
 
 }
@@ -142,9 +144,7 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
 }
 
 void MainWindow::startSignIn() {
-    centralWidget->setCurrentWidget(widgetInfoEditC);
-    widgetInfoEditC->show();
-    infoWidgetEdit->show();
+    centralWidget->setCurrentWidget(widgetSignIn);
 }
 
 void MainWindow::infoWidgetsSettings() {
@@ -183,4 +183,8 @@ void MainWindow::highlightActionSetup() {
     highlightAction->setStatusTip("Highlight the text entered by different users");
     highlightAction->setIcon(QIcon("./icons/icons8-spotlight-64.png"));
     highlightAction->font().setPointSize(10);
+}
+
+void MainWindow::signInWidgetSetup() {
+    widgetSignIn = new SignInWidget(this);
 }

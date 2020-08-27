@@ -42,7 +42,7 @@ void LoginDialog::setUpGUI() {
     buttons->button(QDialogButtonBox::Ok)->setText("Login");
 
     //connect per chiudere la finestra
-    //connect(buttons->button(QDialogButtonBox::Cancel),SIGNAL(clicked()), this, SLOT(close()));
+    //connect(buttons->button(QDialogButtonBox::cancel),SIGNAL(clicked()), this, SLOT(close()));
 
     //connect per login
     connect(buttons->button(QDialogButtonBox::Ok), SIGNAL(clicked()),this, SLOT(slotAcceptLogin()));

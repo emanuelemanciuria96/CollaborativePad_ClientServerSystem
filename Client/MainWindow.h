@@ -12,6 +12,7 @@
 #include "FileSystemTreeView.h"
 #include "InfoWidget.h"
 #include "InfoWidgetEdit.h"
+#include "SignInWidget.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -32,12 +33,14 @@ private:
     InfoWidgetEdit* infoWidgetEdit;
     QStackedWidget* centralWidget;
     QAction* highlightAction;
+    SignInWidget *widgetSignIn;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
     void treeFileSystemSettings();
     void infoWidgetsSettings();
     void highlightActionSetup();
+    void signInWidgetSetup();
 
  signals:
     void fileSystemRequest();
