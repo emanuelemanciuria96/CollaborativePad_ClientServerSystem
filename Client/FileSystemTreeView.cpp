@@ -162,12 +162,12 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
         actualName = parent->text(0)+"/"+actualName;
     }
 
-    if( previousName != actualName )
-        emit renFileRequest(previousName,actualName);
-
-    auto node = model.find(previousName);
-    model.insert(std::make_pair(actualName,node->second));
-    model.erase(node);
+    if( previousName != actualName ) {
+        emit renFileRequest(previousName, actualName);
+        auto node = model.find(previousName);
+        model.insert(std::make_pair(actualName, node->second));
+        model.erase(node);
+    }
 
 }
 
