@@ -40,6 +40,7 @@ private:
     bool isFileOpened;
     bool isArrivingFile;
     QString _user;
+    bool highlighting;
 
     void findCounter();
     qint32 getIndex(qint32 index, Symbol symbol);
@@ -74,7 +75,7 @@ signals:
     void userInfoArrived(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void remoteCursorPosChanged(qint32 pos, qint32 siteId);
     void removeCursor(qint32 siteId);
-
+    void highlight(qint32 pos, qint32 siteId);
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );
@@ -83,7 +84,8 @@ public:
     void testCommand();
     qint32 getSiteId();
     void sendCursorPos(qint32 index);
-
+    void highlightSymbols(bool checked);
+    bool getHighlighting();
 };
 
 

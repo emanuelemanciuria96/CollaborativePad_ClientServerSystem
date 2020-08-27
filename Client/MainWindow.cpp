@@ -21,6 +21,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     this->setStatusBar(statusBar);
     this->addToolBar(toolBar);
     toolBar->setMovable(false);
+    toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+
+    highlightActionSetup();
+    toolBar->hide();
     setCentralWidget(centralWidget);
 
     menuBar()->addMenu("&Options");
@@ -50,7 +54,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
     connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::startSignIn);
     connect(infoWidgetEdit, &InfoWidgetEdit::backToLogIn, this, &MainWindow::backToLogIn);
-
+    connect(highlightAction, &QAction::triggered, shEditor, &SharedEditor::highlightSymbols);
+    connect(shEditor, &SharedEditor::highlight, editor, &EditorGUI::highlight);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -68,6 +73,7 @@ void MainWindow::loginFinished() {
     centralWidget->setCurrentWidget(widgetEditor);
     dockWidgetTree->show();
     widgetEditor->show();
+    toolBar->show();
 }
 
 void MainWindow::loginSettings() {
@@ -169,4 +175,13 @@ void MainWindow::infoWidgetsSettings() {
 
 void MainWindow::backToLogIn() {
     centralWidget->setCurrentWidget(widgetLogin);
+}
+
+void MainWindow::highlightActionSetup() {
+    highlightAction = toolBar->addAction("Highlight");
+    highlightAction->setCheckable(true);
+    highlightAction->setShortcut(QKeySequence::Replace); //equivale a Ctrl+H
+    highlightAction->setStatusTip("Highlight the text entered by different users");
+    highlightAction->setIcon(QIcon("./icons/icons8-spotlight-64.png"));
+    highlightAction->font().setPointSize(10);
 }

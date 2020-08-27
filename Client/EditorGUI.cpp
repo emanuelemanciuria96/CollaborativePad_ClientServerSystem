@@ -7,11 +7,14 @@
 
 EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     signalBlocker = false;
+    updateCursorBlocker = false;
     setModel(model);
     setUpGUI();
     setWindowTitle(QCoreApplication::applicationName());
     posLastChar = -1;
     timer = new QTimer(this);
+    curBlockerTimer = new QTimer();
+    connect(timer, &QTimer::timeout, this, &EditorGUI::enableSendCursorPos);
     connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
@@ -130,6 +133,8 @@ void EditorGUI::setModel(SharedEditor* _model) {
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i = 0;
     if (!signalBlocker) {
+        updateCursorBlocker = true;
+        curBlockerTimer->start(1000);
         auto blocks = textEdit->document()->blockCount();
         auto pages = textEdit->document()->pageCount();
 //        std::cout << "Numero blocchi: " << blocks << " Numero pagine: " << pages << std::endl;
@@ -140,12 +145,13 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             charsRemoved--;
             charsAdded--;
         }
+        std::cout << "invio caratteri" << std::endl;
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
             for (i = 0; i < charsRemoved; i++) {
                 model->localErase(pos);
             }
-            updateRemoteCursors(model->getSiteId(),pos,Message::removal);
+//            updateRemoteCursors(model->getSiteId(),pos,Message::removal);
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
             //std::cout << "Inserimento carattere " << index << std::endl;
@@ -162,15 +168,15 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
     RemoteCursor *cursor;
 
     cursor = getRemoteCursor(siteId);
-
-//    std::cout << "position:" << index << std::endl;
+//    std::cout << "Inseriti da siteId: " << siteId << std::endl;
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
+    if(model->getHighlighting())
+        cursor->setCharFormat(getFormat(siteId));
     cursor->insertText(value);
-//    textEdit->update();
-//    drawLabel(cursor);
     //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
     signalBlocker = !signalBlocker;
+    drawLabel(cursor);
 //    updateRemoteCursors(siteId,index, Message::insertion);
 }
 
@@ -180,7 +186,7 @@ bool EditorGUI::checkSiteId(RemoteCursor &rc, qint32 siteId) {
 
 void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     pos--;
-    QTextCursor *cursor;
+    RemoteCursor *cursor;
 
     cursor = getRemoteCursor(siteId);
 
@@ -191,6 +197,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     cursor->removeSelectedText();
     //std::cout << "Rimosso " << index << std::endl;
     signalBlocker = !signalBlocker;
+    drawLabel(cursor);
 //    updateRemoteCursors(siteId,index, Message::removal);
 }
 
@@ -231,6 +238,8 @@ void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos, Message::action_t 
 
 RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     RemoteCursor *cursor;
+    if(siteId < 0)
+        return nullptr;
 //    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
     auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
 //        std::cout << "SiteId: " << c.getSiteId() << std::endl;
@@ -279,16 +288,18 @@ void EditorGUI::flushInsertQueue() {
 }
 
 void EditorGUI::drawLabel(RemoteCursor *cursor){
-    if (cursor->labelTimer->isActive())
-        cursor->labelTimer->stop();
+    if(cursor->getSiteId() > 0) {
+        if (cursor->labelTimer->isActive())
+            cursor->labelTimer->stop();
 
-    const QRect curRect = textEdit->cursorRect(*cursor);
+        const QRect curRect = textEdit->cursorRect(*cursor);
 
-    cursor->labelName->setParent(textEdit);
-    cursor->labelName->show();
-    cursor->labelName->move(curRect.left()+5,curRect.top()-5);
-    connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
-    cursor->labelTimer->start(5000);
+        cursor->labelName->setParent(textEdit);
+        cursor->labelName->show();
+        cursor->labelName->move(curRect.left() + 5, curRect.top() - 5);
+        connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
+        cursor->labelTimer->start(5000);
+    }
 }
 
 void EditorGUI::deleteAllText() {
@@ -299,17 +310,60 @@ void EditorGUI::deleteAllText() {
 
 void EditorGUI::handleCursorPosChanged() {
     qint32 pos;
+//    if(textEdit->textCursor().hasSelection()){
+//        qint32 start = textEdit->textCursor().selectionStart();
+//        qint32 end = textEdit->textCursor().selectionEnd();
+//    }
     pos = textEdit->textCursor().position();
 //    std::cout << "cursor index:" << pos << std::endl;
-    if (model->getSiteId() != -1) {
+    if (model->getSiteId() != -1 && !updateCursorBlocker) {
         model->sendCursorPos(pos);
     }
 }
 
 void EditorGUI::updateRemoteCursorPos(qint32 pos, qint32 siteId) {
-    std::cout << "draw in " << pos << " siteID: " << siteId << std::endl;
+//    std::cout << "draw in " << pos << " siteID: " << siteId << std::endl;
     auto cursor = getRemoteCursor(siteId);
     cursor->setPosition(pos, QTextCursor::MoveAnchor);
     drawLabel(cursor);
     textEdit->update();
+}
+
+void EditorGUI::enableSendCursorPos() {
+    updateCursorBlocker = false;
+}
+
+void EditorGUI::highlight(qint32 pos, qint32 siteId) {
+//    std::cout << "highlight " << pos << " siteId " << siteId << std::endl;
+    auto cursor = getRemoteCursor(0);
+    auto format = QTextCharFormat();
+
+    if (!model->getHighlighting())
+        format = getFormat(siteId);
+
+    signalBlocker = !signalBlocker;
+    cursor->setPosition(pos - 1, QTextCursor::MoveAnchor);
+    cursor->setPosition(pos, QTextCursor::KeepAnchor);
+    cursor->setCharFormat(format);
+    signalBlocker = !signalBlocker;
+}
+
+void EditorGUI::keyPressEvent(QKeyEvent *e) {
+    QWidget::keyPressEvent(e);
+//    std::cout << "dentro keypress" << std::endl;
+
+}
+
+
+QTextCharFormat EditorGUI::getFormat(qint32 siteId) {
+    auto format = QTextCharFormat();
+    auto color = QColor();
+    if (siteId == model->getSiteId())
+        color.setNamedColor(RemoteCursor::getColor(model->getSiteId()));
+    else
+        color = getRemoteCursor(siteId)->color;
+    color.setAlpha(124);
+    format.setBackground(QBrush(color));
+
+    return format;
 }

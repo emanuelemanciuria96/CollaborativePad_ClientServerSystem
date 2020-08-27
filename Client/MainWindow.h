@@ -31,11 +31,13 @@ private:
     InfoWidget* infoWidget;
     InfoWidgetEdit* infoWidgetEdit;
     QStackedWidget* centralWidget;
+    QAction* highlightAction;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
     void treeFileSystemSettings();
     void infoWidgetsSettings();
+    void highlightActionSetup();
 
  signals:
     void fileSystemRequest();

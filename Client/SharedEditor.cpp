@@ -19,6 +19,7 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
     fileOpened = "";
     isFileOpened = false;
     isArrivingFile = false;
+    highlighting = false
     _user = "";
 
     transceiver = new Transceiver(_siteId);
@@ -281,8 +282,9 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     std::vector<std::tuple<qint32,bool, QChar,qint32>> vt;
 
     for( auto m: strMess.stringToMessages() ) {
-        qint32 pos=getIndex(m.getLocalIndex(), m.getSymbol());
-        if( m.getAction()==Message::insertion ) {
+        qint32 pos = getIndex(m.getLocalIndex(), m.getSymbol());
+//        std::cout << "insert da siteId " << m.getSymbol().getSymId().getSiteId() << std::endl;
+        if(m.getAction()==Message::insertion){
             _symbols.insert(_symbols.begin()+pos,m.getSymbol());
             vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(pos,1,m.getSymbol().getValue(),m.getSiteId()));
         }else if(_symbols[pos]==m.getSymbol()){
@@ -526,5 +528,18 @@ qint32 SharedEditor::getSiteId() {
     return _siteId;
 }
 
+void SharedEditor::highlightSymbols(bool checked) {
+    for(auto s : _symbols){
+        auto siteId = s.getSymId().getSiteId();
+        auto pos = getIndex(-1,s);
+        if(siteId>0)
+            emit highlight(pos, siteId);
+    }
+    highlighting = checked;
+}
+
+bool SharedEditor::getHighlighting() {
+    return highlighting;
+}
 
 
