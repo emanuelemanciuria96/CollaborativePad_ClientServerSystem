@@ -71,7 +71,7 @@ void ServerThread::recvPacket() {
 
     while(this->socket->bytesAvailable()>0) {
 
-        // std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
+        std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
         if(this->socketSize==0) {
             in >> bytes;
             this->socketSize = bytes;
@@ -257,7 +257,6 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::ren):{
-            command->addArg(_username);
             auto listId = command->renCommand(threadId);
             if( !listId.empty() ) {
                 _sockets.broadcast(listId,packet);
@@ -292,10 +291,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::opn):{
-            command->addArg(_username);
-            std::cout << "file requested: "<<command->getArgs().front().toStdString() << std::endl;
-            if( command->opnCommand(threadId) ) {
-
+            if( command->srcCommand(threadId) ) {
                 QString fileName = command->getArgs().front();
 
                 if( operatingFileName != "" ) {
@@ -323,8 +319,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::cls):{
-            command->addArg(_username);
-            if( operatingFileName!="" && command->opnCommand(threadId)) {
+            if( operatingFileName!="" && command->srcCommand(threadId)) {
                 _sockets.detachSocket(operatingFileName, _siteID);
                 msgHandler->submit(&NetworkServer::processClsCommand, command);
             }else
@@ -334,7 +329,6 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::ls):{
-            command->addArg(_username);
             command->lsCommand(threadId);
             sendPacket(packet);
             break;

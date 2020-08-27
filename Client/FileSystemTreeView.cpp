@@ -146,6 +146,13 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
 
     QString actualName = item->text(0);
 
+    if(actualName == ""){
+        isRenaming = false;
+        item->setText(0,previousName);
+        isRenaming = true;
+        return;
+    }
+
     auto parent = item->parent();
     if( parent != root ){
         previousName = parent->text(0)+"/"+previousName;
@@ -155,14 +162,36 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
     if( previousName != actualName )
         emit renFileRequest(previousName,actualName);
 
+    auto node = model.find(previousName);
+    model.insert(std::make_pair(actualName,node->second));
+    model.erase(node);
+
 }
 
 void FileSystemTreeView::removeFile(QTreeWidgetItem *item) {
     //TODO: da capire se deve essere eliminato per tutti o solo per il client corrente
 }
 
+void FileSystemTreeView::editFileName(QString &oldName, QString &newName) {
+
+    std::cout<<"renamed file from <"<<oldName.toStdString()<<"> to <"<<newName.toStdString()<<">"<<std::endl;
+
+    auto node = model.find(oldName);
+    if( node == model.end() ){
+        std::cout<<"-----Il file che si sta rinominando da remoto non è presente!!!";
+        return;
+    }
+
+    auto itm = itemFromIndex(node->second);
+    isRenaming = false;
+    itm->setText(0,newName.split("/").last());
+    isRenaming = true;
+
+    model.insert(std::make_pair(newName,node->second));
+    model.erase(node);
+
+}
+
 FileSystemTreeView::~FileSystemTreeView() {
     delete root;
 }
-
-

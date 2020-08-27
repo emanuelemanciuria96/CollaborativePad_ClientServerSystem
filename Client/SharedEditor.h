@@ -36,8 +36,10 @@ private:
     std::vector<Symbol> _symbols;
     Transceiver* transceiver;
     bool isLogged;
-    QString fileOpened = "";
-    bool isFileOpened = false;
+    QString fileOpened;
+    bool isFileOpened;
+    bool isArrivingFile;
+    QString _user;
 
     void findCounter();
     qint32 getIndex(qint32 index, Symbol symbol);
@@ -48,6 +50,7 @@ private:
     void processCommand( Command& cmd );
     void processCdCommand( Command& cmd );
     void processLsCommand( Command& cmd );
+    void processRenCommand( Command &cmd );
     void processCursorPos(CursorPosition& curPos);
 
 
@@ -66,6 +69,7 @@ signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void deleteAllText();
     void filePathsArrived(const QVector<QString> &paths);
+    void fileNameEdited(QString &oldName, QString &newName);
     void loginAchieved();
     void userInfoArrived(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void remoteCursorPosChanged(qint32 pos, qint32 siteId);

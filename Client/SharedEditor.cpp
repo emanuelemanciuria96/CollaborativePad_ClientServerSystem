@@ -15,7 +15,11 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
     _siteId=-1;
     _counter = 0;
-    this->isLogged = false;
+    isLogged = false;
+    fileOpened = "";
+    isFileOpened = false;
+    isArrivingFile = false;
+    _user = "";
 
     transceiver = new Transceiver(_siteId);
     transceiver->moveToThread(transceiver);
@@ -179,6 +183,7 @@ void SharedEditor::process(DataPacket pkt) {
             processLoginInfo(*std::dynamic_pointer_cast<LoginInfo>(pkt.getPayload()));
             break;
         case DataPacket::textTyping :
+            //  if(isFileOpened)
             processMessages(*std::dynamic_pointer_cast<StringMessages>(pkt.getPayload()));
             break;
         case DataPacket::command :
@@ -216,6 +221,7 @@ void SharedEditor::processCursorPos(CursorPosition &curPos) {
 void SharedEditor::processLoginInfo(LoginInfo &logInf) {
     switch (logInf.getType()) {
         case LoginInfo::login_ok:
+            _user = logInf.getUser();
             _siteId = logInf.getSiteId();
             transceiver->setSiteId(_siteId);
             std::cout << "client successfully logged!" << std::endl;
@@ -225,6 +231,7 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
             break;
 
         case LoginInfo::signup_ok:
+            _user = logInf.getUser();
             _siteId = logInf.getSiteId();
             transceiver->setSiteId(_siteId);
             std::cout << "client successfully signed up!" << std::endl;
@@ -275,7 +282,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
 
     for( auto m: strMess.stringToMessages() ) {
         qint32 pos=getIndex(m.getLocalIndex(), m.getSymbol());
-        if(m.getAction()==Message::insertion){
+        if( m.getAction()==Message::insertion ) {
             _symbols.insert(_symbols.begin()+pos,m.getSymbol());
             vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(pos,1,m.getSymbol().getValue(),m.getSiteId()));
         }else if(_symbols[pos]==m.getSymbol()){
@@ -322,11 +329,12 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
     switch ( filInf.getFileInfo()  ){
         case FileInfo::start: {
             isFileOpened = true;
-
+            isArrivingFile = true;
             break;
         }
         case FileInfo::eof: {
             findCounter();
+            isArrivingFile = false;
             // TODO: inserire qui segnale di apertura editor
             break;
         }
@@ -366,6 +374,10 @@ void SharedEditor::processCommand(Command& cmd){
             processLsCommand(cmd);
             break;
         }
+        case (Command::ren): {
+            processRenCommand(cmd);
+            break;
+        }
 
         default:
             std::cout << "Coglione errore nel Command" << std::endl;
@@ -380,7 +392,29 @@ void SharedEditor::processCdCommand(Command& cmd){
 
 void SharedEditor::processLsCommand(Command& cmd){
 
-    emit filePathsArrived(cmd.getArgs());
+    QVector<QString> args = cmd.getArgs();
+    for(QString& arg: args){
+        if( arg.split("/").first()==_user ){
+            arg = arg.split("/").last();
+        }
+    }
+
+    emit filePathsArrived(args);
+}
+
+void SharedEditor::processRenCommand(Command& cmd) {
+    auto args = cmd.getArgs();
+    auto list1 = args[0].split("/");
+    auto list2 = args[1].split("/");
+    if( list1.size()==2 && list1[0]==list2[0]) {
+        if( _user == list1[0] )
+            emit fileNameEdited(list1.last(),list2.last());
+        else
+            emit fileNameEdited(args.first(),args.last());
+    }
+    else
+        std::cout<<" - Il Rename del file è fallito!"<<std::endl;
+
 }
 
 void SharedEditor::clearText(){
@@ -417,8 +451,12 @@ void SharedEditor::requireFile(QString fileName) {
 
     if( fileOpened == fileName.split("/").last() ){
         return;
-    }else
+    }else{
         fileOpened = fileName.split("/").last();
+        isFileOpened = false;
+    }
+    if( fileName.split("/").size()==1 )
+        fileName = _user+"/"+fileName;
 
     QVector<QString> vec = {std::move(fileName)};
     auto cmd = std::make_shared<Command>(_siteId,Command::opn,vec);
@@ -430,12 +468,19 @@ void SharedEditor::requireFile(QString fileName) {
         _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
     }
 
+    _counter = 0;
+
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
 
 }
 
 void SharedEditor::requireFileRename(QString before, QString after) {
+
+    if( before.split("/").size()==1  ) {
+        before = _user + "/" + before;
+        after = _user + "/" + after;
+    }
 
     QVector<QString> vec = {std::move(before),std::move(after)};
 

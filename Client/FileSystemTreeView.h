@@ -25,6 +25,7 @@ public slots:
     void openFile(QTreeWidgetItem *item, int column);
     void removeFile(QTreeWidgetItem *item);
     void renameFile(QTreeWidgetItem *item, int column);
+    void editFileName(QString &oldName, QString &newName);
 
 signals:
     void opnFileRequest(QString fileName);

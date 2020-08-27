@@ -3,6 +3,7 @@
 //
 
 #include <set>
+#include <iostream>
 #include "Files.h"
 
 enum{file,counter,mutex,dirty_bit};
@@ -71,6 +72,7 @@ void Files::rmvSymbolInFile(QString& fileName, Symbol& sym){
         std::get<file>(i->second).erase(pos);
         std::get<dirty_bit>(i->second) = true;
     }
+
 }
 
 void Files::saveChanges(QString &fileName) {
