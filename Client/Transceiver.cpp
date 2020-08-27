@@ -154,6 +154,11 @@ void Transceiver::recvMessage(DataPacket& pkt, QDataStream& in) {
     in >> siteId >> formattedMessages;
 
     pkt.setPayload(std::make_shared<StringMessages>(formattedMessages,siteId));
+
+    std::cout<<" --- number of arrived messages at once "
+        <<std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->stringToMessages().size()<<std::endl;
+
+
     emit readyToProcess(pkt);
 
     std::cout<<"receaving some messages"<<std::endl;
@@ -233,7 +238,12 @@ void Transceiver::sendAllMessages() {
     buf.open(QBuffer::WriteOnly);
     QDataStream tmp(&buf);
 
+    int num_mess = messages.size();
+
     auto *strMess = new StringMessages(messages,_siteID);
+
+    num_mess-=messages.size();
+
     auto formMess = strMess->getFormattedMessages();
     tmp << formMess;
     qint32 bytes = fixedBytesWritten + buf.data().size();
@@ -243,12 +253,13 @@ void Transceiver::sendAllMessages() {
 
     socket->waitForBytesWritten(-1);
 
-    std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
+    std::cout<<" --- sending "<<num_mess<<" messages in once"<<std::endl;
 
     if( !messages.empty() ) {
         timer->start(100);
         firstMessage = false;
     }
+
 }
 
 void Transceiver::sendMessage(DataPacket& packet) {
@@ -324,7 +335,7 @@ void Transceiver::sendCursorPos(DataPacket &packet) {
         << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
         << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
 
-    std::cout << "sending cursor index " << ptr->getSiteId() << " " << ptr->getIndex() << std::endl;
+    //std::cout << "sending cursor index " << ptr->getSiteId() << " " << ptr->getIndex() << std::endl;
 
     socket->waitForBytesWritten(-1);
 }

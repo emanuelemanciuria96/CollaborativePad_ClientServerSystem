@@ -145,7 +145,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             charsRemoved--;
             charsAdded--;
         }
-        std::cout << "invio caratteri" << std::endl;
+        //std::cout << "invio caratteri" << std::endl;
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
             for (i = 0; i < charsRemoved; i++) {

@@ -15,6 +15,7 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
 
     this->setAnimated(true);
     this->setColumnCount(2);
+    this->setEditTriggers(QAbstractItemView::SelectedClicked);
     QStringList headers;
     headers<<"name"<<"description";
     this->setHeaderLabels(headers);
@@ -33,6 +34,8 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
 
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &FileSystemTreeView::itemDoubleClicked, this, &FileSystemTreeView::openFile);
+    connect(this, &FileSystemTreeView::itemDoubleClicked, [this](QTreeWidgetItem *itm, int column){ previousName=itm->text(0);} );
+    connect(this, &FileSystemTreeView::itemClicked, [this](QTreeWidgetItem *itm, int column){ previousName=itm->text(0);} );
     connect(this, &QWidget::customContextMenuRequested, this, &FileSystemTreeView::openCustomMenu);
     connect(this, &FileSystemTreeView::itemChanged, this, &FileSystemTreeView::renameFile);
 
@@ -178,7 +181,7 @@ void FileSystemTreeView::editFileName(QString &oldName, QString &newName) {
 
     auto node = model.find(oldName);
     if( node == model.end() ){
-        std::cout<<"-----Il file che si sta rinominando da remoto non è presente!!!";
+        std::cout<<" ---Il file che si sta rinominando da remoto non è presente!!!";
         return;
     }
 

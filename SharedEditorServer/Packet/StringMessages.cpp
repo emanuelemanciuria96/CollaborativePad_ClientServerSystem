@@ -87,9 +87,6 @@ QString StringMessages::messagesToString(std::vector<Message> &vm) {
         index=index+1;
         formattedMessages.append(messageToString(vm[i]));
         formattedMessages.append(messages_separator);
-        if(formattedMessages.size()>maxChar){
-            break;
-        }
     }
     vm.erase(vm.begin(), vm.begin() + index);
     return formattedMessages;

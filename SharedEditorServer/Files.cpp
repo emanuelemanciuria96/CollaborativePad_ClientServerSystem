@@ -91,6 +91,7 @@ void Files::saveAll() {
     std::shared_lock sl(files_mtx);
     for( auto of: opened_files ) {
         std::shared_lock sl_sym(*std::get<mutex>(of.second));
+        std::cout<<" ---- actual number of inserted symbles: "<<std::get<file>(of.second).size()<<std::endl;
         if (!std::get<dirty_bit>(of.second))
             continue;
         saveFileJson(of.first.toStdString(), std::get<file>(of.second));

@@ -19,7 +19,7 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
     fileOpened = "";
     isFileOpened = false;
     isArrivingFile = false;
-    highlighting = false
+    highlighting = false;
     _user = "";
 
     transceiver = new Transceiver(_siteId);
