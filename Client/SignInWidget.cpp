@@ -88,4 +88,10 @@ void SignInWidget::cancel() {
 
 void SignInWidget::signIn() {
     std::cout << "Sign In pressed" << std::endl;
+    auto user = userEdit->text();
+    auto password = passwordEdit->text();
+    auto name = nameEdit->text();
+    auto email = emailEdit->text();
+    auto image = imageLabel->pixmap();
+    emit registerRequest(user, password, name, email, (QPixmap &) image);
 }

@@ -30,7 +30,7 @@ private slots:
 
 signals:
     void backToLogIn();
-
+    void registerRequest(QString& user, QString& password, QString& name, QString& email, QPixmap& image);
 
 public:
     SignInWidget(QWidget* parent);

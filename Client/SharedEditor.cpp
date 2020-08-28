@@ -121,6 +121,16 @@ void SharedEditor::loginSlot(QString& username, QString& password) {
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
+void SharedEditor::sendRegisterRequest(QString& user, QString& password, QString& name, QString& email, QPixmap& image) {
+    DataPacket packet(-1,0, DataPacket::login);
+    packet.setPayload(std::make_shared<LoginInfo>(-1, LoginInfo::signup_request, std::move(user),
+                      std::move(QString(QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha3_256).toHex())),
+                      std::move(name), std::move(email), std::move(image)));
+
+//    in >> siteId >> type >> user >> password >> name >> image >> email;
+    emit transceiver->getSocket()->sendPacket(packet);
+}
+
 void SharedEditor::localInsert(qint32 index, QChar value) {
 
     if ( index > _symbols.size() - 2 ){

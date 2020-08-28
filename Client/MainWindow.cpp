@@ -56,6 +56,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(widgetSignIn, &SignInWidget::backToLogIn, this, &MainWindow::backToLogIn);
     connect(highlightAction, &QAction::triggered, shEditor, &SharedEditor::highlightSymbols);
     connect(shEditor, &SharedEditor::highlight, editor, &EditorGUI::highlight);
+    connect(widgetSignIn, &SignInWidget::registerRequest, shEditor, &SharedEditor::sendRegisterRequest);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);

@@ -7,8 +7,9 @@
 
 #include <QtGlobal>
 #include <QtCore/QString>
-#include <QtGui/QPixmap>
 #include "Payload.h"
+#include <fstream>
+#include <QtGui/QPixmap>
 
 class LoginInfo: public Payload {
 public:
@@ -25,7 +26,7 @@ public:
     } type_t;
 
     LoginInfo(qint32 siteId, type_t type = not_assigned, QString user = "", QString password = "");
-
+    LoginInfo(qint32 siteId, type_t type, QString user, QString password, QString name, QString email, const QPixmap& image);
     QString &getUser();
     void setUser(QString user);
     QString &getPassword();
@@ -38,6 +39,10 @@ public:
     void setName(const QString &name);
     const QString &getEmail() const;
     void setEmail(const QString &email);
+
+    bool login(const QString& connectionId);
+    bool updateInfo(const QString& connectionId);
+    bool signup(const QString& connectionId);
 
 private:
     QString _user;

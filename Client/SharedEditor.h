@@ -60,6 +60,7 @@ public slots:
     void deleteThread();
     void clearText();
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
+    void sendRegisterRequest(QString& user, QString& password, QString& name, QString& email, QPixmap& image);
 
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
