@@ -184,8 +184,8 @@ void SharedEditor::process(DataPacket pkt) {
             processLoginInfo(*std::dynamic_pointer_cast<LoginInfo>(pkt.getPayload()));
             break;
         case DataPacket::textTyping :
-            //  if(isFileOpened)
-            processMessages(*std::dynamic_pointer_cast<StringMessages>(pkt.getPayload()));
+            if(isFileOpened)
+                processMessages(*std::dynamic_pointer_cast<StringMessages>(pkt.getPayload()));
             break;
         case DataPacket::command :
             processCommand(*std::dynamic_pointer_cast<Command>(pkt.getPayload()));
@@ -282,9 +282,16 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     std::vector<std::tuple<qint32,bool, QChar,qint32>> vt;
 
     for( auto m: strMess.stringToMessages() ) {
+        // calcolo del counter al volo
+        if(isArrivingFile && m.getSymbol().getSymId().getSiteId()==_siteId){
+            if(_counter<m.getSymbol().getSymId().getCount()){
+                _counter = m.getSymbol().getSymId().getCount();
+            }
+        }
+
         qint32 pos = getIndex(m.getLocalIndex(), m.getSymbol());
 //        std::cout << "insert da siteId " << m.getSymbol().getSymId().getSiteId() << std::endl;
-        if(m.getAction()==Message::insertion){
+        if(m.getAction()==Message::insertion && !(m.getSymbol()==_symbols[pos])){
             _symbols.insert(_symbols.begin()+pos,m.getSymbol());
             vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(pos,1,m.getSymbol().getValue(),m.getSiteId()));
         }else if(_symbols[pos]==m.getSymbol()){
@@ -335,8 +342,9 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
             break;
         }
         case FileInfo::eof: {
-            findCounter();
+            //findCounter();
             isArrivingFile = false;
+            std::cout<<" - counter found: "<<_counter<<std::endl;
             // TODO: inserire qui segnale di apertura editor
             break;
         }
@@ -422,21 +430,6 @@ void SharedEditor::processRenCommand(Command& cmd) {
 void SharedEditor::clearText(){
     emit deleteAllText();
 }
-
-void SharedEditor::findCounter() {
-
-    quint32 maxCounter = 0;
-    for(auto sym: _symbols) {
-        if (sym.getSymId().getSiteId() == _siteId)
-            if (sym.getSymId().getCount() > maxCounter)
-                maxCounter = sym.getSymId().getCount();
-
-    }
-
-     _counter = maxCounter;
-
-}
-
 
 void SharedEditor::requireFileSystem() {
 

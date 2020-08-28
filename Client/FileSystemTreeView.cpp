@@ -14,11 +14,10 @@
 FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
 
     this->setAnimated(true);
-    this->setColumnCount(2);
+    this->setColumnCount(1);
     this->setEditTriggers(QAbstractItemView::SelectedClicked);
-    QStringList headers;
-    headers<<"name"<<"description";
-    this->setHeaderLabels(headers);
+    this->setHeaderHidden(true);
+    this->setIndentation(10);
 
     home_dir = QIcon("./icons/directory_icon_opened.png");
     dir_open = QApplication::style()->standardIcon(QStyle::SP_DirOpenIcon);
@@ -54,6 +53,10 @@ void FileSystemTreeView::setupRightClickMenu() {
 void FileSystemTreeView::openCustomMenu(const QPoint &pos) {
 
     auto rightClickedNode = this->itemAt(pos);
+
+    if( !(rightClickedNode->flags() & Qt::ItemIsEditable) )
+        return;
+
     auto selectedAction = rightClickMenu->exec(this->mapToGlobal(pos));
 
     if( selectedAction == nullptr) return;
@@ -75,11 +78,11 @@ QTreeWidgetItem* FileSystemTreeView::addChild(QTreeWidgetItem *parent, QString n
     auto child = new QTreeWidgetItem();
 
     child->setText(0, name);
-    child->setText(1, description);
-    child->setFlags(child->flags() | Qt::ItemIsEditable );
 
-    if( description == "FILE" )
-        child->setIcon(0,file_icn);
+    if( description == "FILE" ) {
+        child->setIcon(0, file_icn);
+        child->setFlags(child->flags() | Qt::ItemIsEditable );
+    }
     else
         child->setIcon(0, dir_close);
 
@@ -131,7 +134,7 @@ bool FileSystemTreeView::isChild(QTreeWidgetItem *parent, QString name) {
 
 void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
 
-    if( item->text(1) == "FILE") {
+    if( item->flags() & Qt::ItemIsEditable ) {
         QString path = "";
         if( item->parent() != root)
             path = item->parent()->text(0)+"/"+item->text(0);

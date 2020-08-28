@@ -42,7 +42,6 @@ private:
     QString _user;
     bool highlighting;
 
-    void findCounter();
     qint32 getIndex(qint32 index, Symbol symbol);
 
     void processMessages( StringMessages& strMess );
