@@ -541,6 +541,8 @@ void ServerThread::sendFile() {
         sendMessage(pkt);
     }
 
+    _file.reset();
+
     // comunico al client che è terminato l'invio del file
     {
         DataPacket pkt(0,0,DataPacket::file_info,new FileInfo(FileInfo::eof,0) );
