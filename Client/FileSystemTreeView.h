@@ -26,11 +26,13 @@ public slots:
     void removeFile(QTreeWidgetItem *item);
     void renameFile(QTreeWidgetItem *item, int column);
     void editFileName(QString &oldName, QString &newName);
+    void inviteUser(QTreeWidgetItem *item);
 
 signals:
     void opnFileRequest(QString fileName);
     void rmvFileRequest(QString fileName);
     void renFileRequest(QString before, QString after);
+    void inviteRequest(const QString& fileName);
 
 private:
     QTreeWidgetItem *root;

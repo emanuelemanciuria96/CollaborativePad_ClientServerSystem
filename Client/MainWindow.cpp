@@ -56,6 +56,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(infoWidgetEdit, &InfoWidgetEdit::backToLogIn, this, &MainWindow::backToLogIn);
     connect(highlightAction, &QAction::triggered, shEditor, &SharedEditor::highlightSymbols);
     connect(shEditor, &SharedEditor::highlight, editor, &EditorGUI::highlight);
+    connect(addUserWidget, &AddUserWidget::searchUser, shEditor, &SharedEditor::searchUser);
+    connect(shEditor, &SharedEditor::searchUserResult, addUserWidget, &AddUserWidget::searchUserResult);
+    connect(addUserWidget, &AddUserWidget::submit, shEditor, &SharedEditor::submit);
+    connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::openAddUser);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -137,6 +141,7 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
     auto layoutEditor = new QVBoxLayout(widgetEditor);
     layoutEditor->addWidget(editor);
     layoutEditor->setContentsMargins(100,0,100,0);
+    addUserWidget = new AddUserWidget(this);
 
     widgetEditor->hide();
 
@@ -175,6 +180,12 @@ void MainWindow::infoWidgetsSettings() {
 
 void MainWindow::backToLogIn() {
     centralWidget->setCurrentWidget(widgetLogin);
+}
+
+void MainWindow::openAddUser(const QString& fileName) {
+    addUserWidget->setFile(fileName);
+    addUserWidget->setWindowFlag(Qt::WindowStaysOnTopHint);
+    addUserWidget->show();
 }
 
 void MainWindow::highlightActionSetup() {

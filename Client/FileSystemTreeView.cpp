@@ -45,14 +45,21 @@ void FileSystemTreeView::setupRightClickMenu() {
     rightClickMenu = new QMenu(this);
     auto actRn = new QAction("Rename");
     auto actRm = new QAction("Delete");
+    auto actInvite = new QAction("Invite");
 
     rightClickMenu->addAction(actRm);
     rightClickMenu->addAction(actRn);
+    rightClickMenu->addAction(actInvite);
 }
 
 void FileSystemTreeView::openCustomMenu(const QPoint &pos) {
 
     auto rightClickedNode = this->itemAt(pos);
+
+    if (rightClickedNode->parent() != root)
+        rightClickMenu->actions().at(2)->setDisabled(true);
+    else
+        rightClickMenu->actions().at(2)->setDisabled(false);
 
     if (!(rightClickedNode->flags() & Qt::ItemIsEditable)) {
         for (auto act: rightClickMenu->actions()) {
@@ -71,6 +78,8 @@ void FileSystemTreeView::openCustomMenu(const QPoint &pos) {
     else if( selectedAction->text() == "Rename" ){
         previousName = rightClickedNode->text(0);
         this->editItem(rightClickedNode,0);
+    } else if ( selectedAction->text() == "Invite" ) {
+        inviteUser(rightClickedNode);
     }
 
     for(auto act:rightClickMenu->actions())
@@ -205,6 +214,10 @@ void FileSystemTreeView::editFileName(QString &oldName, QString &newName) {
     model.insert(std::make_pair(newName,node->second));
     model.erase(node);
 
+}
+
+void FileSystemTreeView::inviteUser(QTreeWidgetItem *item) {
+        emit inviteRequest(item->text(0));
 }
 
 FileSystemTreeView::~FileSystemTreeView() {

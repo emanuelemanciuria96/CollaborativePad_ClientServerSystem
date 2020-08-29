@@ -12,6 +12,7 @@
 #include "FileSystemTreeView.h"
 #include "InfoWidget.h"
 #include "InfoWidgetEdit.h"
+#include "AddUserWidget.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -32,6 +33,7 @@ private:
     InfoWidgetEdit* infoWidgetEdit;
     QStackedWidget* centralWidget;
     QAction* highlightAction;
+    AddUserWidget* addUserWidget;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -46,6 +48,7 @@ public slots:
     void loginFinished();
     void startSignIn();
     void backToLogIn();
+    void openAddUser(const QString& fileName);
 };
 
 
