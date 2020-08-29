@@ -43,6 +43,7 @@ void ServerThread::run()
     }
 
     connect(socket.get(),&Socket::sendMessage,this,&ServerThread::sendPacket,Qt::QueuedConnection);
+    connect(socket.get(),&Socket::sendFile,this,&ServerThread::sendFile,Qt::QueuedConnection);
     connect(socket.get(), SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
     connect(socket.get(), SIGNAL(disconnected()), this, SLOT(disconnected()));
 
@@ -507,6 +508,44 @@ void ServerThread::sendCursorPos(DataPacket &packet) {
     out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
         ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
         << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
+
+}
+
+void ServerThread::sendFile() {
+
+    std::vector<Message> vm;
+    int index = 0;
+
+    // comunico al client che sto inviando il file
+    {
+        DataPacket pkt( 0,0,DataPacket::file_info,new FileInfo(FileInfo::start,_siteID) );
+        sendFileInfo(pkt);
+    }
+
+    for (auto s: *_file) {
+        Message m(Message::insertion, 0, s, index++);
+
+        if ( vm.size()+1 >= 1000) {
+            std::cout<<" --- sending (1) "<<vm.size()<<" messages in once"<<std::endl;
+            DataPacket pkt( 0 , 0, DataPacket::textTyping, new StringMessages(vm, 0));
+            sendMessage(pkt);
+            std::cout<<" --- sending (2) "<<std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->stringToMessages().size()<<" messages in once"<<std::endl;
+            vm.clear();
+        }
+
+        vm.push_back(m);
+    }
+
+    if( !vm.empty() ){
+        DataPacket pkt( 0,0,DataPacket::textTyping,new StringMessages(vm, 0));
+        sendMessage(pkt);
+    }
+
+    // comunico al client che è terminato l'invio del file
+    {
+        DataPacket pkt(0,0,DataPacket::file_info,new FileInfo(FileInfo::eof,0) );
+        sendFileInfo(pkt);
+    }
 
 }
 

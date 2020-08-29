@@ -9,24 +9,26 @@
 enum{file,counter,mutex,dirty_bit};
 
 
-std::vector<Symbol> Files::openFile(QString& fileName) {
+std::shared_ptr<const std::vector<Symbol>> Files::openFile(QString& fileName) {
 
     std::vector<Symbol> symbles;
+    std::shared_ptr<const std::vector<Symbol>> copy_syms;
 
     std::unique_lock ul(files_mtx);
     auto i = opened_files.find(fileName);
     if ( i!=opened_files.end() ){
         std::unique_lock ul_sym(*std::get<mutex>(i->second));
         std::get<counter>(i->second)++;
-        symbles = std::get<file>(i->second);
+        copy_syms = std::shared_ptr<const std::vector<Symbol>>(new std::vector<Symbol>(std::get<file>(i->second)) );
     }
     else{
-        symbles = loadFileJson(fileName.toStdString());
+        loadFileJson(fileName.toStdString(),symbles);
+        copy_syms = std::shared_ptr<const std::vector<Symbol>>(new std::vector<Symbol>(symbles) );
         opened_files.insert( std::make_pair( fileName,std::make_tuple(symbles,1,new std::shared_mutex(),false) ) );
     }
     ul.unlock();
 
-    return symbles;
+    return copy_syms;
 }
 
 void Files::closeFile(QString &fileName) {
@@ -153,13 +155,11 @@ void Files::saveFileJson(std::string dir,std::vector<Symbol>& _symbols){//vector
 }
 
 
-std::vector<Symbol> Files::loadFileJson(std::string dir){//json to vector<symbol>
+void Files::loadFileJson(std::string dir, std::vector<Symbol> &symbles){//json to vector<symbol>
     std::ifstream file_input(dir);
     Json::Reader reader;
     Json::Value root;
     reader.parse(file_input, root);
-
-    std::vector<Symbol> symbles;
 
     for(int i=0; i<root.size(); i++) {
         QChar value((short)root[i]["char"].asUInt());
@@ -173,7 +173,7 @@ std::vector<Symbol> Files::loadFileJson(std::string dir){//json to vector<symbol
         Symbol s(value,_siteId,_counter, pos);
         symbles.insert(symbles.end(),s);
     }
-    return symbles;
+
 }
 
 Files::~Files() {
