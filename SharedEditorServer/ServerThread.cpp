@@ -217,7 +217,7 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
     auto *strMess = new StringMessages(formattedMessages,siteId);
     packet.setPayload(std::shared_ptr<StringMessages>(strMess));
 
-    std::cout<<" --- number of arrived messages at once "<<strMess->stringToMessages().size();
+    // std::cout<<" --- number of arrived messages at once "<<strMess->stringToMessages().size()<<std::endl;
 
     //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
     //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
