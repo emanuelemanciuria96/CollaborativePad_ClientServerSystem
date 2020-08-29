@@ -189,6 +189,8 @@ void FileSystemTreeView::editFileName(QString &oldName, QString &newName) {
 
     std::cout<<"renamed file from <"<<oldName.toStdString()<<"> to <"<<newName.toStdString()<<">"<<std::endl;
 
+    if(model.empty()) return;
+
     auto node = model.find(oldName);
     if( node == model.end() ){
         std::cout<<" ---Il file che si sta rinominando da remoto non è presente!!!";
