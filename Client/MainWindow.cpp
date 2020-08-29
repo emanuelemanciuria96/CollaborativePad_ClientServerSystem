@@ -43,6 +43,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
     connect(shEditor, &SharedEditor::fileNameEdited, treeView, &FileSystemTreeView::editFileName);
     connect(shEditor, &SharedEditor::loginAchieved, this, &MainWindow::loginFinished);
+    connect(shEditor, &SharedEditor::loginError, loginDialog, &LoginDialog::slotLoginError);
     connect(shEditor, &SharedEditor::symbolsChanged, editor, &EditorGUI::updateSymbols);
     connect(shEditor,&SharedEditor::deleteAllText, editor,&EditorGUI::deleteAllText);
     connect(shEditor, &SharedEditor::remoteCursorPosChanged, editor, &EditorGUI::updateRemoteCursorPos);

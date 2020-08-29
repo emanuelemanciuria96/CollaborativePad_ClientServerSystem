@@ -241,7 +241,7 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
             break;
 
         case LoginInfo::login_error:
-            std::cout << "client not logged!" << std::endl;
+            emit loginError();
             break;
 
         case LoginInfo::signup_error:

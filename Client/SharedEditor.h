@@ -78,6 +78,7 @@ signals:
     void removeCursor(qint32 siteId);
     void highlight(qint32 pos, qint32 siteId);
     void searchUserResult(LoginInfo::type_t type);
+    void loginError();
 
 public:
     explicit SharedEditor(QObject *parent = 0);

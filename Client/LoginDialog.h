@@ -30,6 +30,7 @@ public:
 private:
     QLabel* labelUsername;
     QLabel* labelPassword;
+    QLabel* labelResult;
     QLineEdit* editUsername;
     QLineEdit* editPassword;
     QDialogButtonBox* buttons;
@@ -39,10 +40,11 @@ private:
 signals:
     void acceptLogin(QString& username, QString& password);
     void signIn();
-private slots:
+
+public slots:
     void slotAcceptLogin();
     void slotSignIn();
-
+    void slotLoginError();
 };
 
 
