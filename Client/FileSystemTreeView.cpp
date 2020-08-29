@@ -54,20 +54,27 @@ void FileSystemTreeView::openCustomMenu(const QPoint &pos) {
 
     auto rightClickedNode = this->itemAt(pos);
 
-    if( !(rightClickedNode->flags() & Qt::ItemIsEditable) )
-        return;
+    if (!(rightClickedNode->flags() & Qt::ItemIsEditable)) {
+        for (auto act: rightClickMenu->actions()) {
+            if (act->text() == "Delete" || act->text() == "Rename") {
+                act->setDisabled(true);
+            }
+        }
+    }
 
     auto selectedAction = rightClickMenu->exec(this->mapToGlobal(pos));
 
-    if( selectedAction == nullptr) return;
-
-    if( selectedAction->text() == "Delete" ){
+    if( selectedAction == nullptr){} // senza questo crasha dopo due right-click consecutivi
+    else if( selectedAction->text() == "Delete" ){
         removeFile(rightClickedNode);
     }
     else if( selectedAction->text() == "Rename" ){
         previousName = rightClickedNode->text(0);
         this->editItem(rightClickedNode,0);
     }
+
+    for(auto act:rightClickMenu->actions())
+        act->setDisabled(false);
 
 }
 
