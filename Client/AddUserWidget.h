@@ -1,14 +1,14 @@
 #ifndef ADDUSERWIDGET_H
 #define ADDUSERWIDGET_H
 
-#include <QDialog>
+#include <QtWidgets/QMainWindow>
 #include "Packet/LoginInfo.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class AddUserWidget; }
 QT_END_NAMESPACE
 
-class AddUserWidget : public QDialog
+class AddUserWidget : public QMainWindow
 {
     Q_OBJECT
 

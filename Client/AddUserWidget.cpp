@@ -4,7 +4,7 @@
 #include "ui_adduserwidget.h"
 
 AddUserWidget::AddUserWidget(QWidget *parent)
-    :QDialog(parent)
+    :QMainWindow(parent)
     , ui(new Ui::AddUserWidget)
 {
     ui->setupUi(this);
@@ -47,6 +47,9 @@ void AddUserWidget::searchUserResult(LoginInfo::type_t type) {
 
 void AddUserWidget::emitSubmit() {
     emit submit(file, user);
+    ui->userEdit->clear();
+    ui->resultLabel->clear();
+    ui->submitButton->setDisabled(true);
     this->close();
 }
 
