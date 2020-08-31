@@ -29,7 +29,8 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     emailEdit->setPlaceholderText("E-mail");
 
     imageLabel->setFixedSize(150,150);
-    imageLabel->setText("Profile picture");
+    imageLabel->setPixmap(QPixmap("images/profile.jpg"));
+    imageLabel->setScaledContents(true);
 
     buttons->addButton(QDialogButtonBox::Cancel);
     buttons->addButton(QDialogButtonBox::Ok);
@@ -92,6 +93,8 @@ void SignInWidget::signIn() {
     auto password = passwordEdit->text();
     auto name = nameEdit->text();
     auto email = emailEdit->text();
-    auto image = imageLabel->pixmap();
-    emit registerRequest(user, password, name, email, (QPixmap &) image);
+    QPixmap image{};
+    if (*(imageLabel->pixmap()) != QPixmap("images/profile.jpg"))
+        image = *(imageLabel->pixmap());
+    emit registerRequest(user, password, name, email, image);
 }
