@@ -197,7 +197,6 @@ void SharedEditor::process(DataPacket pkt) {
             processCursorPos(*std::dynamic_pointer_cast<CursorPosition>(pkt.getPayload()));
             break;
         default:
-            std::cout<<"Coglione 2 volte, c'è un errore"<<std::endl;
             throw std::exception();
     }
 
@@ -242,11 +241,19 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
             break;
 
         case LoginInfo::login_error:
-            std::cout << "client not logged!" << std::endl;
+            emit loginError();
             break;
 
         case LoginInfo::signup_error:
             std::cout << "client not signed up!" << std::endl;
+            break;
+
+        case LoginInfo::search_user_ok:
+            emit searchUserResult(LoginInfo::search_user_ok);
+            break;
+
+        case LoginInfo::search_user_error:
+            emit searchUserResult(LoginInfo::search_user_error);
             break;
 
         default:
@@ -489,12 +496,28 @@ void SharedEditor::requireFileRename(QString before, QString after) {
 }
 
 void SharedEditor::sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email) {
-    DataPacket packet(-1, -1, DataPacket::login);
+    DataPacket packet(_siteId, 0, DataPacket::login);
     packet.setPayload( std::make_shared<LoginInfo>( _siteId, LoginInfo::update_info));
     auto ptr = std::dynamic_pointer_cast<LoginInfo>(packet.getPayload());
     ptr->setImage(image);
     ptr->setName(name);
     ptr->setEmail(email);
+    emit transceiver->getSocket()->sendPacket(packet);
+}
+
+void SharedEditor::searchUser(const QString &user) {
+    DataPacket packet(_siteId, 0, DataPacket::login);
+    packet.setPayload( std::make_shared<LoginInfo>( _siteId, LoginInfo::search_user_request, user));
+    emit transceiver->getSocket()->sendPacket(packet);
+}
+
+void SharedEditor::submit(const QString& file, const QString& user) {
+    QVector<QString> args;
+    args.push_back(_user);
+    args.push_back(file);
+    args.push_back(user);
+    DataPacket packet(_siteId, 0, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::invite, args));
     emit transceiver->getSocket()->sendPacket(packet);
 }
 

@@ -64,6 +64,8 @@ public slots:
     void deleteThread();
     void clearText();
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
+    void searchUser(const QString& user);
+    void submit(const QString& file, const QString& user);
 
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
@@ -75,12 +77,14 @@ signals:
     void remoteCursorPosChanged(qint32 pos, qint32 siteId);
     void removeCursor(qint32 siteId);
     void highlight(qint32 pos, qint32 siteId);
+    void searchUserResult(LoginInfo::type_t type);
+    void loginError();
+
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );
     void localErase( qint32 index );
     QString to_string();
-    void testCommand();
     qint32 getSiteId();
     void sendCursorPos(qint32 index);
     void highlightSymbols(bool checked);

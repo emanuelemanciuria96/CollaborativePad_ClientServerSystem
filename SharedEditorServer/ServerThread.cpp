@@ -199,6 +199,15 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
             }
             break;
 
+        case LoginInfo::search_user_request:
+            if(!_username.isEmpty()) {
+                auto shr = std::make_shared<LoginInfo>(siteId, (LoginInfo::type_t) type, user);
+                packet.setPayload(shr);
+                shr->searchUser(threadId);
+                sendPacket(packet);
+            }
+            break;
+
         default:
             std::cout << "errore nella recvlogininfo" << std::endl;
             break;
@@ -330,6 +339,11 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         case (Command::ls):{
             command->lsCommand(threadId);
             sendPacket(packet);
+            break;
+        }
+
+        case (Command::invite):{
+            command->inviteCommand(threadId);
             break;
         }
 

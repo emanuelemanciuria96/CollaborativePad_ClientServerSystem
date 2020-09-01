@@ -22,6 +22,9 @@ public:
         signup_error = 401,
         login_ok = 100,
         signup_ok = 101,
+        search_user_request = 300,
+        search_user_ok = 301,
+        search_user_error = 304,
     } type_t;
 
     LoginInfo(qint32 siteId, type_t type = not_assigned, QString user = "", QString password = "");
