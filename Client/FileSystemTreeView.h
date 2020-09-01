@@ -40,7 +40,7 @@ private:
     QIcon dir_open;
     QIcon dir_close;
     QIcon file_icn;
-    QMenu *rightClickMenu;
+    QMenu *rightClickMenu = nullptr;
     QString previousName;
 
     void setupRightClickMenu();
