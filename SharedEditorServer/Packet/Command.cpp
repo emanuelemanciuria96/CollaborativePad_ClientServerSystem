@@ -29,6 +29,10 @@ void Command::setArgs(const QVector<QString> &args) {
     _args = args;
 }
 
+void Command::addArg(QString &arg) {
+    _args.push_back(arg);
+}
+
 bool Command::cdCommand(QString& connectionId){
     if(_args.size()!=1)
         return false;
@@ -245,7 +249,7 @@ bool Command::treeCommand(QString &connectionId) {
 
 bool Command::lsCommand(QString &connectionId) {
 
-    if(!_args.empty())
+    if( !_args.empty() )
         return false;
 
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
@@ -264,15 +268,13 @@ bool Command::lsCommand(QString &connectionId) {
     while(query.next()) {
         QString name(query.value("NAME").toString());
         QString owner(query.value("OWNER").toString());
-        if (owner != "#")
-            _args.push_back(QString(owner+"/"+name));
-        else
-            _args.push_back(name);
+        _args.push_back(QString(owner+"/"+name));
     }
     return true;
 }
 
-bool Command::opnCommand(QString &connectionId){
+bool Command::srcCommand(QString &connectionId){
+
     if(_args.size() != 1)
         return false;
 
@@ -284,29 +286,15 @@ bool Command::opnCommand(QString &connectionId){
 
     auto pos = _args.first().indexOf("/");
     if (pos == -1) {
-        QString name = _args.first();
-        _args.clear();
-        QSqlQuery query(db);
-
-        if(!query.exec("SELECT FSNAME FROM FILES WHERE NAME='"+name+"' AND SITEID='"+QString::number(_siteID)+"' AND OWNER='#'")){
-            db.close();
-            return false;
-        }
-
-        query.next();
-        _args.push_back(query.value("FSNAME").toString());
-
-        return !_args.first().isEmpty();
-
+        return false;
     }
 
-    auto list = _args.first().split("/");
-    QString owner = list.first();
-    QString name = list.last();
+    QString user = _args.first().split("/").first();
+    QString name = _args.first().split("/").last();
     _args.clear();
     QSqlQuery query(db);
 
-    if(!query.exec("SELECT FSNAME FROM FILES WHERE NAME='"+name+"' AND SITEID='"+QString::number(_siteID)+"' AND OWNER='"+owner+"'")){
+    if(!query.exec("SELECT FSNAME FROM FILES WHERE NAME='"+name+"' AND SITEID='"+QString::number(_siteID)+"' AND OWNER='"+user+"'")){
         db.close();
         return false;
     }
@@ -317,3 +305,49 @@ bool Command::opnCommand(QString &connectionId){
     return !_args.first().isEmpty();
 
 }
+
+QVector<qint32> Command::renCommand(QString &connectionId) {
+
+    if(_args.size() != 2)
+        return QVector<qint32>();
+
+    QVector<qint32 > listId;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
+    db.setDatabaseName("db/files.db");
+
+    if (!db.open())
+        return listId;
+
+    QSqlQuery query(db);
+    auto list1 = _args[0].split("/");
+    auto list2 = _args[1].split("/");
+    if( list1.size()!=2 || list2.size()!=2 || list1.first() != list2.first() ) {
+        return listId;
+    }
+
+    auto owner = list1.first();
+    auto nameOld = list1.last();
+    auto nameNew = list2.last();
+
+    if(!query.exec("SELECT SITEID FROM FILES WHERE NAME='"+nameOld+"' AND OWNER='"+owner+"'")){
+        db.close();
+        return QVector<qint32>();
+    }
+
+    while(query.next()){
+        qint32 siteId = query.value("SITEID").toInt();
+        if(siteId != _siteID)
+            listId.push_back(siteId);
+    }
+
+    if(!query.exec("UPDATE FILES SET NAME='"+nameNew+"' WHERE NAME='"+nameOld+"' AND OWNER='"+owner+"'")){
+        db.close();
+        return QVector<qint32>();
+    }
+
+    query.exec("SELECT * FROM FILES");
+
+    return listId;
+}
+

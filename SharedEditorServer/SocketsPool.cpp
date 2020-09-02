@@ -7,16 +7,16 @@
 
 enum{mtx,sockets};
 
-void SocketsPool::attachSocket(QString& fileName, qint32 siteId, Socket *skt) {
+void SocketsPool::attachSocket(QString& fileName, qint32 siteId, std::shared_ptr<Socket> skt) {
 
-    std::unique_lock ul(skt_mtx);
+    std::unique_lock ul(fskt_mtx);
     auto i = file_sockets.find(fileName);
     if( i!=file_sockets.end() ){
         std::unique_lock ul_skts(*std::get<mtx>(i->second));
         std::get<sockets>(i->second).insert(std::make_pair(siteId,skt));
     }
     else{
-        std::map<qint32,Socket*> tmp = {{siteId,skt}};
+        std::map<qint32,std::shared_ptr<Socket> > tmp = {{siteId,skt}};
         file_sockets.insert( std::make_pair(fileName,std::make_tuple(new std::shared_mutex(),tmp)) );
     }
 
@@ -26,7 +26,7 @@ void SocketsPool::detachSocket(QString &fileName, qint32 siteId) {
 
     std::shared_mutex* tmp = nullptr;
 
-    std::unique_lock ul(skt_mtx);
+    std::unique_lock ul(fskt_mtx);
     auto i = file_sockets.find(fileName);
     if( i!=file_sockets.end() ){
         std::unique_lock ul_skt(*std::get<mtx>(i->second));
@@ -50,7 +50,7 @@ void SocketsPool::detachSocket(QString &fileName, qint32 siteId) {
 
 void SocketsPool::broadcast(QString& fileName, qint32 siteId, DataPacket& pkt) {
 
-    std::shared_lock sl(skt_mtx);
+    std::shared_lock sl(fskt_mtx);
     auto i = file_sockets.find(fileName);
     if( i != file_sockets.end() ){
         std::shared_lock sl_skts(*std::get<mtx>(i->second) );
@@ -63,6 +63,42 @@ void SocketsPool::broadcast(QString& fileName, qint32 siteId, DataPacket& pkt) {
     }
     else
         std::cout<<"qui non si dovrebbe mai arrivare! Broadcast"<<std::endl;
+
+}
+
+void SocketsPool::recordSocket(qint32 siteId, std::shared_ptr<Socket> skt) {
+
+    std::unique_lock ul(skt_mtx);
+    auto i = online_sockets.find(siteId);
+    if( i == online_sockets.end() )
+        online_sockets.insert( std::make_pair(siteId,skt) );
+    else
+        std::cout<<"socket già registrato! "<<std::endl;
+
+}
+
+void SocketsPool::discardSocket(qint32 siteId) {
+
+    std::unique_lock ul(skt_mtx);
+    auto i = online_sockets.find(siteId);
+    if( i != online_sockets.end() )
+        online_sockets.erase(i);
+    else
+        std::cout<<"socket mai registrato! "<<std::endl;
+
+}
+
+void SocketsPool::broadcast(QVector<qint32> &siteId_list, DataPacket &pkt) {
+
+    std::shared_lock sl(skt_mtx);
+    for(auto id : siteId_list){
+        auto i = online_sockets.find(id);
+        if( i != online_sockets.end() ){
+            emit i->second->sendMessage(pkt);
+        }else{
+            std::cout<<"lo user con site id "<<id<<" non e' al momento registrato, la preghiamo di provare piu' tardi"<<std::endl;
+        }
+    }
 
 }
 

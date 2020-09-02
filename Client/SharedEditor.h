@@ -36,11 +36,12 @@ private:
     std::vector<Symbol> _symbols;
     Transceiver* transceiver;
     bool isLogged;
-    QString fileOpened = "";
-    bool isFileOpened = false;
-    bool highlighting = false;
+    QString fileOpened;
+    bool isFileOpened;
+    bool isArrivingFile;
+    QString _user;
+    bool highlighting;
 
-    void findCounter();
     qint32 getIndex(qint32 index, Symbol symbol);
 
     void processMessages( StringMessages& strMess );
@@ -49,6 +50,7 @@ private:
     void processCommand( Command& cmd );
     void processCdCommand( Command& cmd );
     void processLsCommand( Command& cmd );
+    void processRenCommand( Command &cmd );
     void processCursorPos(CursorPosition& curPos);
 
 
@@ -57,6 +59,8 @@ public slots:
     void process(DataPacket pkt);
     void requireFileSystem();
     void requireFile(QString fileName);
+    void requireFileRename(QString before,QString after);
+    //void requireFileDeletion(QString before,QString after);
     void deleteThread();
     void clearText();
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
@@ -66,6 +70,7 @@ signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void deleteAllText();
     void filePathsArrived(const QVector<QString> &paths);
+    void fileNameEdited(QString &oldName, QString &newName);
     void loginAchieved();
     void userInfoArrived(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void remoteCursorPosChanged(qint32 pos, qint32 siteId);

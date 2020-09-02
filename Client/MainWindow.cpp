@@ -40,8 +40,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     signInWidgetSetup();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
-    connect(treeView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),treeView , SLOT(openFile( QTreeWidgetItem*, int )));
-    connect(treeView, SIGNAL(opnFileRequest(QString)),shEditor , SLOT(requireFile(QString)));
+    connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
+    connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
+    connect(shEditor, &SharedEditor::fileNameEdited, treeView, &FileSystemTreeView::editFileName);
     connect(shEditor, &SharedEditor::loginAchieved, this, &MainWindow::loginFinished);
     connect(shEditor, &SharedEditor::symbolsChanged, editor, &EditorGUI::updateSymbols);
     connect(shEditor,&SharedEditor::deleteAllText, editor,&EditorGUI::deleteAllText);

@@ -84,8 +84,6 @@ void NetworkServer::localInsert(Payload &pl) {
 
 }
 
-
-
 void NetworkServer::localErase(Payload &pl) {
     //std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
 
@@ -121,10 +119,12 @@ void NetworkServer::processOpnCommand(Payload &pl) {
     for (auto s:symbles) {
         Message m(Message::insertion, siteID, s, index++);
 
-        if ( vm.size()+1 >= 500) {
+        if ( vm.size()+1 >= 1000) {
+            std::cout<<" --- sending (1) "<<vm.size()<<" messages in once"<<std::endl;
             DataPacket pkt(siteID, 0, DataPacket::textTyping, new StringMessages(vm, siteID));
             int id = qMetaTypeId<DataPacket>();
             emit active_threads.find(comm.getSiteId())->second->getSocket()->sendMessage(pkt);
+            std::cout<<" --- sending (2) "<<std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->stringToMessages().size()<<" messages in once"<<std::endl;
             vm.clear();
         }
 
