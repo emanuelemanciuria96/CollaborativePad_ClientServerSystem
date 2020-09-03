@@ -470,6 +470,7 @@ void SharedEditor::requireFile(QString fileName) {
         _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
     }
 
+
     _counter = 0;
 
     int id = qMetaTypeId<DataPacket>();

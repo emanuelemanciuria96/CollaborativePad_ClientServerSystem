@@ -45,7 +45,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::loginAchieved, this, &MainWindow::loginFinished);
     connect(shEditor, &SharedEditor::loginError, loginDialog, &LoginDialog::slotLoginError);
     connect(shEditor, &SharedEditor::symbolsChanged, editor, &EditorGUI::updateSymbols);
-    connect(shEditor,&SharedEditor::deleteAllText, editor,&EditorGUI::deleteAllText);
     connect(shEditor, &SharedEditor::remoteCursorPosChanged, editor, &EditorGUI::updateRemoteCursorPos);
     connect(shEditor, &SharedEditor::removeCursor, editor, &EditorGUI::removeCursor);
     connect(shEditor, &SharedEditor::deleteAllText, editor, &EditorGUI::deleteAllText);
@@ -93,7 +92,7 @@ void MainWindow::loginSettings() {
     widgetLogin->setPalette(p1);
     widgetLogin->setLayout( new QGridLayout(widgetLogin) );
 
-    QGroupBox *boxLogin = new QGroupBox(widgetLogin);
+    auto *boxLogin = new QGroupBox(widgetLogin);
     loginDialog = new LoginDialog(boxLogin);
     boxLogin->setLayout(new QVBoxLayout());
 
