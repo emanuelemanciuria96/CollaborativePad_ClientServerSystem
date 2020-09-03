@@ -105,45 +105,14 @@ void NetworkServer::processOpnCommand(Payload &pl) {
 
     std::cout<<"opening file: "<<fileName.toStdString()<<std::endl;
 
-    std::vector<Symbol> symbles = files.openFile(fileName);
+    auto symbles = files.openFile(fileName);
 
-    std::vector<Message> vm;
-    int index = 0;
-
-    // comunico al client che sto inviando il file
-    {
-        DataPacket pkt(comm.getSiteId(),0,DataPacket::file_info,new FileInfo(FileInfo::start,comm.getSiteId()) );
-        int id = qMetaTypeId<DataPacket>();
-        emit active_threads.find(comm.getSiteId())->second->getSocket()->sendMessage(pkt);
-    }
-    for (auto s:symbles) {
-        Message m(Message::insertion, siteID, s, index++);
-
-        if ( vm.size()+1 >= 1000) {
-            std::cout<<" --- sending (1) "<<vm.size()<<" messages in once"<<std::endl;
-            DataPacket pkt(siteID, 0, DataPacket::textTyping, new StringMessages(vm, siteID));
-            int id = qMetaTypeId<DataPacket>();
-            emit active_threads.find(comm.getSiteId())->second->getSocket()->sendMessage(pkt);
-            std::cout<<" --- sending (2) "<<std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->stringToMessages().size()<<" messages in once"<<std::endl;
-            vm.clear();
-        }
-
-        vm.push_back(m);
+    auto th = active_threads.find(comm.getSiteId());
+    if(th != active_threads.end()){
+        th->second->setFile(symbles);
+        emit th->second->getSocket()->sendFile();
     }
 
-    if( !vm.empty() ){
-        DataPacket pkt(siteID,0,DataPacket::textTyping,new StringMessages(vm,siteID));
-        auto sock = active_threads.find(comm.getSiteId())->second->getSocket();
-        int id = qMetaTypeId<DataPacket>();
-        emit active_threads.find(comm.getSiteId())->second->getSocket()->sendMessage(pkt);
-    }
-
-    // comunico al client che è terminato l'invio del file
-    {
-        DataPacket pkt(comm.getSiteId(),0,DataPacket::file_info,new FileInfo(FileInfo::eof,comm.getSiteId()) );
-        int id = qMetaTypeId<DataPacket>();
-        emit active_threads.find(comm.getSiteId())->second->getSocket()->sendMessage(pkt);
-    }
     fileOpened.store(true);
 
 }
@@ -212,7 +181,7 @@ QString NetworkServer::to_string(std::vector<Symbol> symbles) {
 
 void NetworkServer::show_file(QString& fileName) {
 
-    std::cout<<"file: "<<fileName.toStdString()<<std::endl<<to_string(files.openFile(fileName)).toStdString()<<std::endl;
+    std::cout<<"file: "<<fileName.toStdString()<<std::endl<<to_string(*files.openFile(fileName)).toStdString()<<std::endl;
     files.closeFile(fileName);
 
 }

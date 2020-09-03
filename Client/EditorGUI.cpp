@@ -13,7 +13,7 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     setWindowTitle(QCoreApplication::applicationName());
     posLastChar = -1;
     timer = new QTimer(this);
-    curBlockerTimer = new QTimer();
+    curBlockerTimer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &EditorGUI::enableSendCursorPos);
     connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
@@ -298,6 +298,7 @@ void EditorGUI::drawLabel(RemoteCursor *cursor){
         cursor->labelName->show();
         cursor->labelName->move(curRect.left() + 5, curRect.top() - 5);
         connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
+        cursor->labelTimer->setParent(textEdit);
         cursor->labelTimer->start(5000);
     }
 }
@@ -306,6 +307,7 @@ void EditorGUI::deleteAllText() {
     signalBlocker = !signalBlocker;
     emit clear();
     signalBlocker = !signalBlocker;
+    remoteCursors.clear();
 }
 
 void EditorGUI::handleCursorPosChanged() {

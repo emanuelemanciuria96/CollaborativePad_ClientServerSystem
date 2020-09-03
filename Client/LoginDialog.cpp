@@ -33,6 +33,7 @@ void LoginDialog::setUpGUI() {
 //    labelUsername->setBuddy(editUsername);
 //    labelPassword->setText("Password");
 //    labelPassword->setBuddy(editPassword);
+    labelResult = new QLabel(this);
 
     //inizializzo buttons
     buttons = new QDialogButtonBox(this);
@@ -52,10 +53,11 @@ void LoginDialog::setUpGUI() {
 
     //posiziono gli elementi
 //    formGridLayout->addWidget(labelUsername,0,0);
-    formGridLayout->addWidget(editUsername,0,0);
+    formGridLayout->addWidget(editUsername,0,0,1,8);
 //    formGridLayout->addWidget(labelPassword,1,0);
-    formGridLayout->addWidget(editPassword,1,0);
-    formGridLayout->addWidget(buttons,2,0,1,2);
+    formGridLayout->addWidget(editPassword,1,0,1,8);
+    formGridLayout->addWidget(buttons,2,0,1,6, Qt::AlignHCenter);
+    formGridLayout->addWidget(labelResult, 3, 0, 1, 8);
 
     //imposto la grandezza della finestra
     //setMinimumSize(222,125);
@@ -88,3 +90,9 @@ void LoginDialog::slotSignIn() {
     emit signIn();
 }
 
+void LoginDialog::slotLoginError() {
+    QPalette palette;
+    palette.setColor(QPalette::WindowText, Qt::red);
+    labelResult->setPalette(palette);
+    labelResult->setText("Username or password is incorrect");
+}

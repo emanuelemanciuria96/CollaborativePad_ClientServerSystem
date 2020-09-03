@@ -24,7 +24,8 @@ public:
         find = 9,
         tree = 10,
         ls = 11,
-        ren = 12
+        ren = 12,
+        invite = 13,
     }cmd_t;
 
     Command(qint32 siteId, cmd_t cmd, QVector<QString> args);
@@ -41,6 +42,7 @@ public:
     QVector<qint32> renCommand(QString& connectionId);
 
     bool lsCommand(QString &connectionId);
+    bool inviteCommand(QString &connectionId);
 
 private:
     cmd_t _cmd;

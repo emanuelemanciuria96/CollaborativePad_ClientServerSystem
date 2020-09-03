@@ -249,7 +249,7 @@ bool Command::treeCommand(QString &connectionId) {
 
 bool Command::lsCommand(QString &connectionId) {
 
-    if( !_args.empty() )
+    if(!_args.empty())
         return false;
 
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
@@ -351,3 +351,56 @@ QVector<qint32> Command::renCommand(QString &connectionId) {
     return listId;
 }
 
+bool Command::inviteCommand(QString &connectionId) {
+    if(_args.size() != 3)
+        return false;
+
+    QSqlDatabase dbFiles = QSqlDatabase::database(connectionId+"_filesNEW");
+    dbFiles.setDatabaseName("db/files.db");
+
+    QSqlDatabase dbUsers = QSqlDatabase::database(connectionId+"_login");
+    dbUsers.setDatabaseName("login.db");
+
+    if (!dbFiles.open() || !dbUsers.open())
+        return false;
+
+    QString owner = _args.first();
+    QString name = _args.at(1);
+    QString username = _args.last();
+    _args.clear();
+    QSqlQuery queryFiles(dbFiles);
+    QSqlQuery queryUsers(dbUsers);
+
+    if(!queryUsers.exec("SELECT SITEID FROM LOGIN WHERE USER = '"+username+"';")){
+        dbUsers.close();
+        return false;
+    }
+
+    queryUsers.next();
+    auto siteId = queryUsers.value("SITEID").toInt();
+    dbUsers.close();
+
+    dbFiles.transaction();
+    if(!queryFiles.exec("SELECT FSNAME FROM FILES WHERE SITEID = '"+QString::number(_siteID)+"' AND NAME = '"+name+"' AND OWNER = '"+owner+"';")){
+        dbFiles.rollback();
+        dbFiles.close();
+        return false;
+    }
+
+    queryFiles.next();
+    auto fsName = queryFiles.value("FSNAME").toString();
+
+    if(!queryFiles.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('"+QString::number(siteId)+"', '"+name+"', '"+owner+"', '"+fsName+"');")){
+        dbFiles.rollback();
+        dbFiles.close();
+        return false;
+    }
+
+    if(!dbFiles.commit()){
+        dbFiles.rollback();
+        dbFiles.close();
+        return false;
+    }
+
+    return true;
+}

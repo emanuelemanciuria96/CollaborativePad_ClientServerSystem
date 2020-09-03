@@ -43,6 +43,7 @@ void ServerThread::run()
     }
 
     connect(socket.get(),&Socket::sendMessage,this,&ServerThread::sendPacket,Qt::QueuedConnection);
+    connect(socket.get(),&Socket::sendFile,this,&ServerThread::sendFile,Qt::QueuedConnection);
     connect(socket.get(), SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
     connect(socket.get(), SIGNAL(disconnected()), this, SLOT(disconnected()));
 
@@ -198,6 +199,15 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
             }
             break;
 
+        case LoginInfo::search_user_request:
+            if(!_username.isEmpty()) {
+                auto shr = std::make_shared<LoginInfo>(siteId, (LoginInfo::type_t) type, user);
+                packet.setPayload(shr);
+                shr->searchUser(threadId);
+                sendPacket(packet);
+            }
+            break;
+
         default:
             std::cout << "errore nella recvlogininfo" << std::endl;
             break;
@@ -217,7 +227,7 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
     auto *strMess = new StringMessages(formattedMessages,siteId);
     packet.setPayload(std::shared_ptr<StringMessages>(strMess));
 
-    std::cout<<" --- number of arrived messages at once "<<strMess->stringToMessages().size();
+    // std::cout<<" --- number of arrived messages at once "<<strMess->stringToMessages().size()<<std::endl;
 
     //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
     //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
@@ -329,6 +339,11 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         case (Command::ls):{
             command->lsCommand(threadId);
             sendPacket(packet);
+            break;
+        }
+
+        case (Command::invite):{
+            command->inviteCommand(threadId);
             break;
         }
 
@@ -507,6 +522,44 @@ void ServerThread::sendCursorPos(DataPacket &packet) {
     out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
         ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
         << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
+
+}
+
+void ServerThread::sendFile() {
+
+    std::vector<Message> vm;
+    int index = 0;
+
+    // comunico al client che sto inviando il file
+    {
+        DataPacket pkt( 0,0,DataPacket::file_info,new FileInfo(FileInfo::start,_siteID) );
+        sendFileInfo(pkt);
+    }
+
+    for (auto s: *_file) {
+        Message m(Message::insertion, 0, s, index++);
+
+        if ( vm.size()+1 >= 1000) {
+            std::cout<<" --- sending (1) "<<vm.size()<<" messages in once"<<std::endl;
+            DataPacket pkt( 0 , 0, DataPacket::textTyping, new StringMessages(vm, 0));
+            sendMessage(pkt);
+            std::cout<<" --- sending (2) "<<std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->stringToMessages().size()<<" messages in once"<<std::endl;
+            vm.clear();
+        }
+
+        vm.push_back(m);
+    }
+
+    if( !vm.empty() ){
+        DataPacket pkt( 0,0,DataPacket::textTyping,new StringMessages(vm, 0));
+        sendMessage(pkt);
+    }
+
+    // comunico al client che è terminato l'invio del file
+    {
+        DataPacket pkt(0,0,DataPacket::file_info,new FileInfo(FileInfo::eof,0) );
+        sendFileInfo(pkt);
+    }
 
 }
 

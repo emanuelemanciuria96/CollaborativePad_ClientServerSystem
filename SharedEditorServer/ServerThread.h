@@ -26,11 +26,12 @@ Q_OBJECT
 public:
     explicit ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent = 0);
     void run() override;
+    void setFile(std::shared_ptr<const std::vector<Symbol>> &file) { _file = file; }
     QString getOperatingFileName(){ return operatingFileName; }
     quint32 getSiteID(){ return _siteID; }
     QString& getUsername(){ return _username; }
     std::shared_ptr<Socket> getSocket(){ return socket; }
-    void registerToSocketsList();
+
 
 signals:
     void error(QTcpSocket::SocketError socketerror);    //slot che gestisce questo segnale da implementare
@@ -40,12 +41,14 @@ signals:
 public slots:
     void recvPacket();
     void sendPacket(DataPacket packet);
+    void sendFile();
     void disconnected();
 
 private:
     std::shared_ptr<Socket> socket;
     qintptr socketDescriptor;
     std::shared_ptr<MessageHandler> msgHandler;
+    std::shared_ptr<const std::vector<Symbol>> _file;
 
     static SocketsPool _sockets; // l'oggetto è thread safe
     QString _username;

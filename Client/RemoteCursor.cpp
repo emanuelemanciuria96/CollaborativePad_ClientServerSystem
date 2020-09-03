@@ -4,6 +4,9 @@
 
 #include "RemoteCursor.h"
 
+#include <memory>
+#include <iostream>
+
 RemoteCursor::RemoteCursor(QTextDocument *document, qint32 siteId) : _siteId(siteId), QTextCursor(document) {
     color.setNamedColor(getColor());
     labelName = new QLabel();
@@ -34,7 +37,10 @@ QString RemoteCursor::getColor(qint32 siteId) {
 }
 
 RemoteCursor::~RemoteCursor() {
-    labelName->deleteLater();
+//    if (labelTimer == nullptr)
+//        std::cout << "timer null" << std::endl;
+//    else
+//        std::cout << "timer not null" << std::endl;
     labelTimer->deleteLater();
 }
 

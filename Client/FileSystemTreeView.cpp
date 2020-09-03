@@ -45,29 +45,45 @@ void FileSystemTreeView::setupRightClickMenu() {
     rightClickMenu = new QMenu(this);
     auto actRn = new QAction("Rename");
     auto actRm = new QAction("Delete");
+    auto actInvite = new QAction("Invite");
 
     rightClickMenu->addAction(actRm);
     rightClickMenu->addAction(actRn);
+    rightClickMenu->addAction(actInvite);
 }
 
 void FileSystemTreeView::openCustomMenu(const QPoint &pos) {
 
     auto rightClickedNode = this->itemAt(pos);
 
-    if( !(rightClickedNode->flags() & Qt::ItemIsEditable) )
-        return;
+    if (rightClickedNode->parent() != root)
+        rightClickMenu->actions().at(2)->setDisabled(true);
+    else
+        rightClickMenu->actions().at(2)->setDisabled(false);
+
+    if (!(rightClickedNode->flags() & Qt::ItemIsEditable)) {
+        for (auto act: rightClickMenu->actions()) {
+            if (act->text() == "Delete" || act->text() == "Rename") {
+                act->setDisabled(true);
+            }
+        }
+    }
 
     auto selectedAction = rightClickMenu->exec(this->mapToGlobal(pos));
 
-    if( selectedAction == nullptr) return;
-
-    if( selectedAction->text() == "Delete" ){
+    if( selectedAction == nullptr){} // senza questo crasha dopo due right-click consecutivi
+    else if( selectedAction->text() == "Delete" ){
         removeFile(rightClickedNode);
     }
     else if( selectedAction->text() == "Rename" ){
         previousName = rightClickedNode->text(0);
         this->editItem(rightClickedNode,0);
+    } else if ( selectedAction->text() == "Invite" ) {
+        inviteUser(rightClickedNode);
     }
+
+    for(auto act:rightClickMenu->actions())
+        act->setDisabled(false);
 
 }
 
@@ -182,6 +198,8 @@ void FileSystemTreeView::editFileName(QString &oldName, QString &newName) {
 
     std::cout<<"renamed file from <"<<oldName.toStdString()<<"> to <"<<newName.toStdString()<<">"<<std::endl;
 
+    if(model.empty()) return;
+
     auto node = model.find(oldName);
     if( node == model.end() ){
         std::cout<<" ---Il file che si sta rinominando da remoto non è presente!!!";
@@ -196,6 +214,10 @@ void FileSystemTreeView::editFileName(QString &oldName, QString &newName) {
     model.insert(std::make_pair(newName,node->second));
     model.erase(node);
 
+}
+
+void FileSystemTreeView::inviteUser(QTreeWidgetItem *item) {
+        emit inviteRequest(item->text(0));
 }
 
 FileSystemTreeView::~FileSystemTreeView() {

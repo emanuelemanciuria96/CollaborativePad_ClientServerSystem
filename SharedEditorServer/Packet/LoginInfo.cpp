@@ -216,3 +216,28 @@ bool LoginInfo::signup(const QString &connectionId) {
     db.close();
     return true;
 }
+
+bool LoginInfo::searchUser(const QString &connectionId) {
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_login");
+    db.setDatabaseName("login.db");
+
+    if (!db.open())
+        return false;
+
+    QSqlQuery query(db);
+    if(!query.exec("SELECT COUNT(*) FROM LOGIN WHERE USER = '"+_user+"' AND SITEID != '"+QString::number(_siteID)+"';")) {
+        db.close();
+        return false;
+    }
+
+    query.next();
+
+    if (query.value("COUNT(*)").toInt() == 0) {
+        _type = LoginInfo::search_user_error;
+    } else {
+        _type = LoginInfo::search_user_ok;
+    }
+
+    db.close();
+    return true;
+}

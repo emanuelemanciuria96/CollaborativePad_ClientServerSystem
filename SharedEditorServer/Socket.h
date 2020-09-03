@@ -18,7 +18,7 @@ public:
 
 signals:
     void sendMessage(DataPacket pkt);
-
+    void sendFile();
 };
 
 

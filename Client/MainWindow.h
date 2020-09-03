@@ -13,6 +13,7 @@
 #include "InfoWidget.h"
 #include "InfoWidgetEdit.h"
 #include "SignInWidget.h"
+#include "AddUserWidget.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -34,6 +35,7 @@ private:
     QStackedWidget* centralWidget;
     QAction* highlightAction;
     SignInWidget *widgetSignIn;
+    AddUserWidget* addUserWidget;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -49,6 +51,7 @@ public slots:
     void loginFinished();
     void startSignIn();
     void backToLogIn();
+    void openAddUser(const QString& fileName);
 };
 
 
