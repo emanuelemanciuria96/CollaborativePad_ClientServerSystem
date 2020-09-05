@@ -19,6 +19,7 @@ public:
 signals:
     void sendMessage(DataPacket pkt);
     void sendFile();
+    void sendPendentDelete(QString fileName);
 };
 
 

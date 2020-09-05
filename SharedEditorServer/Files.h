@@ -22,6 +22,7 @@ public:
     ~Files();
     std::vector<Symbol> openFile(QString& fileName);
     void closeFile(QString& fileName);
+    void deleteFile(QString &fileName);
     void addSymbolInFile(QString& fileName, Symbol& sym);
     void rmvSymbolInFile(QString& fileName, Symbol& sym);
     void saveChanges(QString& fileName);

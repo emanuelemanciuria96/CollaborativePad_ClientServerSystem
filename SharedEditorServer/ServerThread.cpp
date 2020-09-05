@@ -14,6 +14,8 @@
 #include "NetworkServer.h"
 #include "Packet/LoginInfo.h"
 
+
+std::shared_mutex ServerThread::db_op_mtx;
 SocketsPool ServerThread::_sockets;
 qint32 fixedBytesWritten = sizeof(qint32)+sizeof(qint32)+sizeof(quint32)+sizeof(quint32)+sizeof(qint32);
 ///                                bytes     source        errcode      DataPacket::data_t   siteID
@@ -44,8 +46,10 @@ void ServerThread::run()
 
     connect(socket.get(),&Socket::sendMessage,this,&ServerThread::sendPacket,Qt::QueuedConnection);
     connect(socket.get(),&Socket::sendFile,this,&ServerThread::sendFile,Qt::QueuedConnection);
+    connect(socket.get(),&Socket::sendPendentDelete,this,&ServerThread::sendPendentDelete,Qt::QueuedConnection);
     connect(socket.get(), SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
     connect(socket.get(), SIGNAL(disconnected()), this, SLOT(disconnected()));
+
 
     setThreadId();
     QSqlDatabase::addDatabase("QSQLITE", threadId+"_login");
@@ -150,7 +154,13 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                     std::cout << "client "+user.toStdString()+" successfully logged!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
                     sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
 
-                    _sockets.recordSocket(_siteID,socket);
+                    DataPacket pkt(0, 0, DataPacket::command, new Command(_siteID, Command::ls, {}));
+                    {
+                        std::shared_lock sl(db_op_mtx);
+                        std::static_pointer_cast<Command>(pkt.getPayload())->lsCommand(threadId);
+                        _sockets.recordSocket(_siteID, socket);
+                    }
+                    sendPacket(pkt);
 
                     QPointer<QThread> th(this);
                     qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
@@ -186,7 +196,13 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                     std::cout << "client "+user.toStdString()+" successfully signed up!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
                     sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
 
-                    _sockets.recordSocket(_siteID,socket);
+                    DataPacket pkt(0, 0, DataPacket::command, new Command(_siteID, Command::ls, {}) );
+                    {
+                        std::shared_lock sl(db_op_mtx);
+                        std::static_pointer_cast<Command>(pkt.getPayload())->lsCommand(threadId);
+                        _sockets.recordSocket(_siteID, socket);
+                    }
+                    sendPacket(pkt);
 
                     QPointer<QThread> th(this);
                     qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
@@ -265,12 +281,14 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::ren):{
+            std::unique_lock ul(db_op_mtx);
             auto listId = command->renCommand(threadId);
             if( !listId.empty() ) {
                 _sockets.broadcast(listId,packet);
+                ul.unlock();
             }
             else
-                std::cout << "rename command failed!" << std::endl;
+                std::cout << "rename command isn't broadcasted" << std::endl;
             break;
         }
 
@@ -283,10 +301,25 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::rm):{
-            if(command->rmCommand(threadId))
-                std::cout << "rm command ok!" << std::endl;
-            else
-                std::cout << "mkdir command failed!" << std::endl;
+            auto owner = command->getArgs().first().split("/").first();
+            if(owner != _username) {
+                std::unique_lock ul(db_op_mtx);
+                if (command->rmCommand(threadId))
+                    ul.unlock();
+                else
+                    std::cout << "rm command failed!" << std::endl;
+            }
+            else{
+                std::unique_lock ul(db_op_mtx);
+                auto listId = command->rmAllCommand(threadId);
+                if (!listId.empty()) {
+                    msgHandler->submit(NetworkServer::processRmCommand,std::make_shared<Command>(*command));
+                    pendentDeleteList.insert(std::make_pair(command->getArgs().first(),std::move(listId)));
+                    ul.unlock();
+                }
+                else
+                    std::cout << "rm command failed!" << std::endl;
+            }
             break;
         }
 
@@ -299,20 +332,16 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::opn):{
+            std::shared_lock sl(db_op_mtx);
+
             if( command->srcCommand(threadId) ) {
                 QString fileName = command->getArgs().front();
-
-                if( operatingFileName != "" ) {
-                    _sockets.detachSocket(operatingFileName, _siteID);
-                    QVector<QString> vec = {operatingFileName};
-                    auto comm = std::make_shared<Command>(_siteID, Command::cls, vec);
-                    msgHandler->submit(&NetworkServer::processClsCommand,comm);
-                }
-
-                operatingFileName = fileName;
                 _sockets.attachSocket(fileName,_siteID,socket);
                 std::cout << fileName.toStdString() << std::endl;
                 msgHandler->submit(&NetworkServer::processOpnCommand, command);
+                sl.unlock();
+
+                operatingFileName = fileName;
 
             }else
                 std::cout << "opn command failed!" << std::endl;
@@ -327,22 +356,31 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::cls):{
-            if( operatingFileName!="" && command->srcCommand(threadId)) {
+            DataPacket pkt(_siteID, 0, DataPacket::cursorPos);
+            auto symbol = Symbol();
+            pkt.setPayload(std::make_shared<CursorPosition>(symbol,-1,_siteID));
+
+            if( operatingFileName!="" ) {
                 _sockets.detachSocket(operatingFileName, _siteID);
                 msgHandler->submit(&NetworkServer::processClsCommand, command);
+                _sockets.broadcast(operatingFileName,_siteID,pkt);
+                operatingFileName = "";
+
             }else
-                std::cout << "cls command failed!" << std::endl;
+                std::cout << "cls command failed! Maybe the file has been deleted" << std::endl;
 
             break;
         }
 
         case (Command::ls):{
+            std::shared_lock sl(db_op_mtx);
             command->lsCommand(threadId);
             sendPacket(packet);
             break;
         }
 
         case (Command::invite):{
+            std::unique_lock ul(db_op_mtx);
             command->inviteCommand(threadId);
             break;
         }
@@ -519,10 +557,21 @@ void ServerThread::sendCursorPos(DataPacket &packet) {
         << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex();
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
-    out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
-        ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
+    out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData()
+        << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
         << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
 
+}
+
+void ServerThread::sendPendentDelete(QString fileName) {
+
+    DataPacket pkt(_siteID, 0, DataPacket::command);
+    auto comm = std::make_shared<Command>(_siteID,Command::rm,QVector<QString>{fileName});
+    pkt.setPayload(comm);
+
+    auto i = pendentDeleteList.find(fileName);
+    if( i!=pendentDeleteList.end() )
+        _sockets.broadcast(i->second,pkt);
 }
 
 void ServerThread::sendFile() {
@@ -536,7 +585,7 @@ void ServerThread::sendFile() {
         sendFileInfo(pkt);
     }
 
-    for (auto s: *_file) {
+    for (auto s: _file) {
         Message m(Message::insertion, 0, s, index++);
 
         if ( vm.size()+1 >= 1000) {
@@ -555,7 +604,7 @@ void ServerThread::sendFile() {
         sendMessage(pkt);
     }
 
-    _file.reset();
+    _file.clear();
 
     // comunico al client che è terminato l'invio del file
     {
@@ -565,19 +614,21 @@ void ServerThread::sendFile() {
 
 }
 
-void ServerThread::disconnected()
-{
-    DataPacket packet(_siteID, 0, DataPacket::cursorPos);
-    auto symbol = Symbol();
-    packet.setPayload(std::make_shared<CursorPosition>(symbol,-1,_siteID));
-    _sockets.broadcast(operatingFileName,_siteID,packet);
+void ServerThread::disconnected(){
+
+    _sockets.discardSocket(_siteID);
 
     if( operatingFileName!=""){
-        _sockets.discardSocket(_siteID);
         _sockets.detachSocket(operatingFileName, _siteID);
         QVector<QString> vec = {operatingFileName};
         auto comm = std::make_shared<Command>(_siteID, Command::cls, vec);
         msgHandler->submit(&NetworkServer::processClsCommand,comm);
+
+        DataPacket packet(_siteID, 0, DataPacket::cursorPos);
+        auto symbol = Symbol();
+        packet.setPayload(std::make_shared<CursorPosition>(symbol,-1,_siteID));
+        _sockets.broadcast(operatingFileName,_siteID,packet);
+
     }
 
     socket->deleteLater();

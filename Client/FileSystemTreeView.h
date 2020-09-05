@@ -26,6 +26,7 @@ public slots:
     void removeFile(QTreeWidgetItem *item);
     void renameFile(QTreeWidgetItem *item, int column);
     void editFileName(QString &oldName, QString &newName);
+    void remoteFileDeletion(QString &fileName);
     void inviteUser(QTreeWidgetItem *item);
 
 signals:

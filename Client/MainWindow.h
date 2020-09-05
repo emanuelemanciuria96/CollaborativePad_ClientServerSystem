@@ -41,8 +41,7 @@ private:
     void infoWidgetsSettings();
     void highlightActionSetup();
 
- signals:
-    void fileSystemRequest();
+signals:
 
 public slots:
     void loginFinished();

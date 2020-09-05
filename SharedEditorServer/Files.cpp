@@ -52,6 +52,27 @@ void Files::closeFile(QString &fileName) {
 
 }
 
+void Files::deleteFile(QString &fileName) {
+
+    std::shared_mutex *tmp = nullptr;
+
+    std::unique_lock ul(files_mtx);
+    auto i = opened_files.find(fileName);
+    if ( i!=opened_files.end() ){
+        tmp = std::get<mutex>(i->second);
+        opened_files.erase(i);
+    }
+    ul.unlock();
+    delete tmp;
+
+    QFile file(".\\files\\"+fileName);
+    file.remove();
+    /*std::string command = "del .\\files\\"+fileName.toStdString();
+    system(command.c_str());
+*/
+}
+
+
 void Files::addSymbolInFile(QString& fileName, Symbol& sym){
 
     std::shared_lock sl(files_mtx);
@@ -129,7 +150,7 @@ void Files::QTsaveFileJson(const std::string& dir,std::vector<Symbol> _symbols){
 
 void Files::saveFileJson(std::string dir,std::vector<Symbol>& symbles){//vector<symbol> to json
     std::ofstream file_id;
-    file_id.open(dir);
+    file_id.open("./files/"+dir);
     Json::Value event;
     int index=0;
     for(auto itr: symbles) {
@@ -155,8 +176,10 @@ void Files::saveFileJson(std::string dir,std::vector<Symbol>& symbles){//vector<
 }
 
 
-void Files::loadFileJson(std::string dir,std::vector<Symbol>& symbles){//json to vector<symbol>
-    std::ifstream file_input(dir);
+void Files::loadFileJson(std::string dir,std::vector<Symbol>& symbles){ //json to vector<symbol>
+
+    std::ifstream file_input;
+    file_input.open("./files/"+dir);
     Json::Reader reader;
     Json::Value root;
     reader.parse(file_input, root);
@@ -174,7 +197,10 @@ void Files::loadFileJson(std::string dir,std::vector<Symbol>& symbles){//json to
         symbles.insert(symbles.end(),s);
     }
 
+    file_input.close();
+
 }
+
 
 Files::~Files() {
     // anche se successivamente a questo salvataggio ne dovesse essere chiamato qualcun altro
