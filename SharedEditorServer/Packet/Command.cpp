@@ -82,6 +82,7 @@ bool Command::mkdirCommand(QString& connectionId) {
     return true;
 }
 
+/*
 bool Command::rmCommand(QString& connectionId) {
     if(_args.size()!=1)
         return false;
@@ -95,7 +96,7 @@ bool Command::rmCommand(QString& connectionId) {
     }
 
     return false;
-}
+}*/
 
 bool Command::rmDir(QString &connectionId) {
     if(_args.size()!=1)
@@ -342,11 +343,80 @@ QVector<qint32> Command::renCommand(QString &connectionId) {
     }
 
     if(!query.exec("UPDATE FILES SET NAME='"+nameNew+"' WHERE NAME='"+nameOld+"' AND OWNER='"+owner+"'")){
+        db.rollback();
         db.close();
         return QVector<qint32>();
     }
 
-    query.exec("SELECT * FROM FILES");
+    return listId;
+}
+
+bool Command::rmCommand(QString& connectionId) { //la rmCommand elimina il file per il solo client richiedente
+
+    if(_args.size()!=1)
+        return false;
+
+    QString fileName = _args.first();
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
+    db.setDatabaseName("db/files.db");
+
+    auto list = _args[0].split("/");
+    QString owner = list.first();
+    QString name = list.last();
+
+    if (!db.open())
+        return false;
+
+    QSqlQuery query(db);
+    if(!query.exec("DELETE FROM FILES WHERE SITEID='"+QString::number(_siteID)+"' AND NAME='"+name+"' AND OWNER='"+owner+"'")){
+        db.rollback();
+        db.close();
+        return false;
+    }
+
+    return true;
+}
+
+QVector<qint32> Command::rmAllCommand(QString& connectionId) { //la rmAllCommand elimina il file a chiunque
+
+    if(_args.size()!=1)
+        return QVector<qint32>();
+
+    QString fileName = _args.first();
+    QVector<qint32> listId{};
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
+    db.setDatabaseName("db/files.db");
+
+    auto list = _args[0].split("/");
+    QString owner = list.first();
+    QString name = list.last();
+
+    if (!db.open())
+        return listId;
+
+    QSqlQuery query(db);
+    if(!query.exec("SELECT SITEID, FSNAME FROM FILES WHERE NAME='"+name+"' AND OWNER='"+owner+"'")){
+        db.close();
+        return QVector<qint32>();
+    }
+
+
+    while(query.next()){
+        qint32 siteId = query.value("SITEID").toInt();
+        if(siteId != _siteID)
+            listId.push_back(siteId);
+        else
+            _args.push_back(query.value("FSNAME").toString());
+    }
+
+    if(!query.exec("DELETE FROM FILES WHERE NAME='"+name+"' AND OWNER='"+owner+"'")){
+        db.rollback();
+        db.close();
+        return QVector<qint32>() ;
+    }
+
 
     return listId;
 }

@@ -26,6 +26,7 @@ public slots:
     void removeFile(QTreeWidgetItem *item);
     void renameFile(QTreeWidgetItem *item, int column);
     void editFileName(QString &oldName, QString &newName);
+    void remoteFileDeletion(QString &fileName);
     void inviteUser(QTreeWidgetItem *item);
 
 signals:
@@ -42,7 +43,7 @@ private:
     QIcon dir_open;
     QIcon dir_close;
     QIcon file_icn;
-    QMenu *rightClickMenu;
+    QMenu *rightClickMenu = nullptr;
     QString previousName;
 
     void setupRightClickMenu();

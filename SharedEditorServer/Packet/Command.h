@@ -37,6 +37,7 @@ public:
     bool cdCommand(QString& connectionId);
     bool mkdirCommand(QString& connectionId);
     bool rmCommand(QString& connectionId);
+    QVector<qint32> rmAllCommand(QString& connectionId);
     bool srcCommand(QString &connectionId);
     bool treeCommand(QString &connectionId);
     QVector<qint32> renCommand(QString& connectionId);

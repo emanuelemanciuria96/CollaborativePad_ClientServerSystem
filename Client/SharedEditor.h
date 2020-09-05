@@ -43,6 +43,7 @@ private:
     bool highlighting;
 
     qint32 getIndex(qint32 index, Symbol symbol);
+    void closeFile();
 
     void processMessages( StringMessages& strMess );
     void processLoginInfo( LoginInfo& logInf );
@@ -51,19 +52,20 @@ private:
     void processCdCommand( Command& cmd );
     void processLsCommand( Command& cmd );
     void processRenCommand( Command &cmd );
+    void processRmCommand(Command &cmd );
     void processCursorPos(CursorPosition& curPos);
 
 
 public slots:
     void loginSlot(QString& username, QString& password);
     void process(DataPacket pkt);
-    void requireFileSystem();
     void requireFile(QString fileName);
     void requireFileRename(QString before,QString after);
-    //void requireFileDeletion(QString before,QString after);
+    void requireFileDelete(QString fileName);
     void deleteThread();
     void clearText();
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
+    void sendRegisterRequest(QString& user, QString& password, QString& name, QString& email, QPixmap& image);
     void searchUser(const QString& user);
     void submit(const QString& file, const QString& user);
 
@@ -72,6 +74,7 @@ signals:
     void deleteAllText();
     void filePathsArrived(const QVector<QString> &paths);
     void fileNameEdited(QString &oldName, QString &newName);
+    void fileDeletion(QString &fileName);
     void loginAchieved();
     void userInfoArrived(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void remoteCursorPosChanged(qint32 pos, qint32 siteId);

@@ -105,15 +105,15 @@ void NetworkServer::processOpnCommand(Payload &pl) {
 
     std::cout<<"opening file: "<<fileName.toStdString()<<std::endl;
 
-    auto symbles = files.openFile(fileName);
+    std::vector<Symbol> symbles(files.openFile(fileName));
 
     auto th = active_threads.find(comm.getSiteId());
     if(th != active_threads.end()){
-        th->second->setFile(symbles);
+        th->second->setFile(std::move(symbles));
         emit th->second->getSocket()->sendFile();
-    }
 
-    fileOpened.store(true);
+        fileOpened.store(true);
+    }
 
 }
 
@@ -125,6 +125,23 @@ void NetworkServer::processClsCommand(Payload &pl) {
     std::cout<<"closing file: "<<fileName.toStdString()<<std::endl;
 
     files.closeFile(fileName);
+
+
+}
+
+void NetworkServer::processRmCommand(Payload &pl) {
+
+    Command &comm = dynamic_cast<Command &>(pl);
+    QString fileName = comm.getArgs().last();
+
+    files.deleteFile(fileName);
+
+    std::cout<<"deleting file: "+fileName.toStdString()<<std::endl;
+
+    fileName = comm.getArgs().first();
+    auto th = active_threads.find(comm.getSiteId());
+    if(th != active_threads.end())
+        emit th->second->getSocket()->sendPendentDelete(fileName);
 
 }
 
@@ -166,22 +183,3 @@ NetworkServer::~NetworkServer() {
     active_threads.clear();
 }
 
-QString NetworkServer::to_string(std::vector<Symbol> symbles) {
-    QString str;
-
-    std::for_each(symbles.begin(),symbles.end(),
-                  [&str](Symbol s){
-                      str += s.getValue();
-                  });
-
-    return str;
-
-}
-
-
-void NetworkServer::show_file(QString& fileName) {
-
-    std::cout<<"file: "<<fileName.toStdString()<<std::endl<<to_string(*files.openFile(fileName)).toStdString()<<std::endl;
-    files.closeFile(fileName);
-
-}

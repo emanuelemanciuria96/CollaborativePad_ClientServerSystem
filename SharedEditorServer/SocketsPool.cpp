@@ -39,10 +39,10 @@ void SocketsPool::detachSocket(QString &fileName, qint32 siteId) {
             }
         }
         else
-            std::cout<<"qui non si dovrebbe mai arrivare!"<<std::endl;
+            std::cout<<"qui non si dovrebbe mai arrivare! detachSocket"<<std::endl;
     }
     else
-        std::cout<<"qui non si dovrebbe mai arrivare!"<<std::endl;
+        std::cout<<"qui non si dovrebbe mai arrivare! detachSocket"<<std::endl;
 
     delete tmp;
 
@@ -62,7 +62,7 @@ void SocketsPool::broadcast(QString& fileName, qint32 siteId, DataPacket& pkt) {
         }
     }
     else
-        std::cout<<"qui non si dovrebbe mai arrivare!"<<std::endl;
+        std::cout<<"qui non si dovrebbe mai arrivare! Broadcast"<<std::endl;
 
 }
 

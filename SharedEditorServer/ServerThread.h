@@ -26,7 +26,7 @@ Q_OBJECT
 public:
     explicit ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent = 0);
     void run() override;
-    void setFile(std::shared_ptr<const std::vector<Symbol>> &file) { _file = file; }
+    void setFile(std::vector<Symbol> &&file) { _file = file; }
     QString getOperatingFileName(){ return operatingFileName; }
     quint32 getSiteID(){ return _siteID; }
     QString& getUsername(){ return _username; }
@@ -42,13 +42,16 @@ public slots:
     void recvPacket();
     void sendPacket(DataPacket packet);
     void sendFile();
+    void sendPendentDelete(QString fileName);
     void disconnected();
 
 private:
+    static std::shared_mutex db_op_mtx;
     std::shared_ptr<Socket> socket;
     qintptr socketDescriptor;
     std::shared_ptr<MessageHandler> msgHandler;
-    std::shared_ptr<const std::vector<Symbol>> _file;
+    std::vector<Symbol> _file;
+    std::map<QString,QVector<qint32>> pendentDeleteList;
 
     static SocketsPool _sockets; // l'oggetto è thread safe
     QString _username;

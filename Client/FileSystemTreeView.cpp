@@ -58,15 +58,10 @@ void FileSystemTreeView::openCustomMenu(const QPoint &pos) {
 
     if (rightClickedNode->parent() != root)
         rightClickMenu->actions().at(2)->setDisabled(true);
-    else
-        rightClickMenu->actions().at(2)->setDisabled(false);
 
     if (!(rightClickedNode->flags() & Qt::ItemIsEditable)) {
-        for (auto act: rightClickMenu->actions()) {
-            if (act->text() == "Delete" || act->text() == "Rename") {
-                act->setDisabled(true);
-            }
-        }
+        rightClickMenu->actions().at(0)->setDisabled(true);
+        rightClickMenu->actions().at(1)->setDisabled(true);
     }
 
     auto selectedAction = rightClickMenu->exec(this->mapToGlobal(pos));
@@ -191,7 +186,19 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
 }
 
 void FileSystemTreeView::removeFile(QTreeWidgetItem *item) {
-    //TODO: da capire se deve essere eliminato per tutti o solo per il client corrente
+
+    QString name = item->text(0);
+
+    auto parent = item->parent();
+    if( parent != root )
+        name = parent->text(0)+"/"+name;
+
+    parent->removeChild(item);
+    if( parent->childCount()==0 && parent!=root )
+        parent->parent()->removeChild(parent);
+    model.erase(name);
+
+    emit rmvFileRequest(name);
 }
 
 void FileSystemTreeView::editFileName(QString &oldName, QString &newName) {
@@ -213,6 +220,21 @@ void FileSystemTreeView::editFileName(QString &oldName, QString &newName) {
 
     model.insert(std::make_pair(newName,node->second));
     model.erase(node);
+
+}
+
+void FileSystemTreeView::remoteFileDeletion(QString &fileName) {
+
+    auto i = model.find(fileName);
+    if(i == model.end() )
+        return;
+
+    auto item = itemFromIndex(i->second);
+    auto parent = item->parent();;
+    parent->removeChild(item);
+    if( parent->childCount()==0 && parent!=root )
+        parent->parent()->removeChild(parent);
+    model.erase(fileName);
 
 }
 

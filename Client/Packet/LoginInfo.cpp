@@ -14,6 +14,13 @@ LoginInfo::LoginInfo(qint32 siteId, LoginInfo::type_t type,QString user, QString
     _email = QString();
 }
 
+LoginInfo::LoginInfo(qint32 siteId, type_t type, QString user, QString password, QString name, QString email,
+                     const QPixmap &image): Payload(siteId), _user(std::move(user)), _password(std::move(password)), _type(type) {
+    _image = QPixmap(image);
+    _name = QString(std::move(name));
+    _email = QString(std::move(email));
+}
+
 QString &LoginInfo::getUser(){
     return _user;
 }
