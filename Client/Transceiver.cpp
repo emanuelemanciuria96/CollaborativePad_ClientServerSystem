@@ -59,7 +59,7 @@ void Transceiver::recvPacket() {
     in.setDevice(this->socket);
     in.setVersion(QDataStream::Qt_5_5);
     while(this->socket->bytesAvailable()>0) {
-        std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
+//        std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
         if(this->socketSize==0) {
             in >> bytes;
             this->socketSize = bytes;
@@ -105,8 +105,8 @@ void Transceiver::recvPacket() {
                 break;
             }
         }
-        std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
-        std::cout<<std::endl;
+//        std::cout<<"--ending number of Available Bytes: "<<socket->bytesAvailable()<<std::endl;
+//        std::cout<<std::endl;
         this->socketSize=0;
     }
 }

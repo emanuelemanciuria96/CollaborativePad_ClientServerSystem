@@ -11,6 +11,8 @@
 #include <QtWidgets/QLabel>
 #include "CursorNames.h"
 #include <QTimer>
+#include <memory>
+#include <QtCore/QPointer>
 #include "CursorColors.h"
 
 class RemoteCursor : public QTextCursor{
@@ -20,7 +22,7 @@ private:
     QString getColor() const;
 public:
     QLabel* labelName;
-    QTimer* labelTimer;
+    QPointer<QTimer> labelTimer;
     QColor color;
     static QString getColor(qint32 siteId);
     RemoteCursor(): QTextCursor(){ _siteId = -1;};

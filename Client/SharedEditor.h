@@ -65,6 +65,7 @@ public slots:
     void deleteThread();
     void clearText();
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
+    void sendRegisterRequest(QString& user, QString& password, QString& name, QString& email, QPixmap& image);
     void searchUser(const QString& user);
     void submit(const QString& file, const QString& user);
 
