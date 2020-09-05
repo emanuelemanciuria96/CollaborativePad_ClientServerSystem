@@ -21,7 +21,7 @@ private:
     QString generateName() const;
     QString getColor() const;
 public:
-    QLabel* labelName;
+    QPointer<QLabel> labelName;
     QPointer<QTimer> labelTimer;
     QColor color;
     static QString getColor(qint32 siteId);
