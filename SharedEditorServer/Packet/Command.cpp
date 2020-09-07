@@ -261,7 +261,7 @@ bool Command::lsCommand(QString &connectionId) {
 
     QSqlQuery query(db);
 
-    if(!query.exec("SELECT NAME, OWNER FROM FILES WHERE SITEID='"+QString::number(_siteID)+"'")){
+    if(!query.exec("SELECT NAME, OWNER FROM FILES WHERE SITEID='"+QString::number(_siteID)+"' AND INVITE = '0'")){
         db.close();
         return false;
     }
@@ -295,7 +295,7 @@ bool Command::srcCommand(QString &connectionId){
     _args.clear();
     QSqlQuery query(db);
 
-    if(!query.exec("SELECT FSNAME FROM FILES WHERE NAME='"+name+"' AND SITEID='"+QString::number(_siteID)+"' AND OWNER='"+user+"'")){
+    if(!query.exec("SELECT FSNAME FROM FILES WHERE NAME='"+name+"' AND SITEID='"+QString::number(_siteID)+"' AND OWNER='"+user+"' AND INVITE = '0'")){
         db.close();
         return false;
     }
@@ -331,7 +331,7 @@ QVector<qint32> Command::renCommand(QString &connectionId) {
     auto nameOld = list1.last();
     auto nameNew = list2.last();
 
-    if(!query.exec("SELECT SITEID FROM FILES WHERE NAME='"+nameOld+"' AND OWNER='"+owner+"'")){
+    if(!query.exec("SELECT SITEID FROM FILES WHERE NAME='"+nameOld+"' AND OWNER='"+owner+"';")){
         db.close();
         return QVector<qint32>();
     }
@@ -422,6 +422,7 @@ QVector<qint32> Command::rmAllCommand(QString& connectionId) { //la rmAllCommand
 }
 
 bool Command::inviteCommand(QString &connectionId) {
+
     if(_args.size() != 3)
         return false;
 
@@ -460,7 +461,18 @@ bool Command::inviteCommand(QString &connectionId) {
     queryFiles.next();
     auto fsName = queryFiles.value("FSNAME").toString();
 
-    if(!queryFiles.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('"+QString::number(siteId)+"', '"+name+"', '"+owner+"', '"+fsName+"');")){
+    if(!queryFiles.exec("SELECT COUNT(*) FROM FILES WHERE SITEID = '"+QString::number(siteId)+"' AND NAME = '"+name+"' AND OWNER = '"+owner+"';")){
+        dbFiles.rollback();
+        dbFiles.close();
+        return false;
+    }
+
+    queryFiles.next();
+    if (queryFiles.value("COUNT(*)").toInt() != 0) {
+        return true;
+    }
+
+    if(!queryFiles.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('"+QString::number(siteId)+"', '"+name+"', '"+owner+"', '"+fsName+"', '1');")){
         dbFiles.rollback();
         dbFiles.close();
         return false;
@@ -472,5 +484,60 @@ bool Command::inviteCommand(QString &connectionId) {
         return false;
     }
 
+    _args.push_back(QString::number(siteId));
+    return true;
+}
+
+bool Command::lsInviteCommand(QString &connectionId) {
+    if(!_args.empty())
+        return false;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
+    db.setDatabaseName("db/files.db");
+
+    if (!db.open())
+        return false;
+
+    QSqlQuery query(db);
+
+    if(!query.exec("SELECT NAME, OWNER FROM FILES WHERE SITEID='"+QString::number(_siteID)+"' AND INVITE = '1';")){
+        db.close();
+        return false;
+    }
+
+    while(query.next()) {
+        QString name(query.value("NAME").toString());
+        QString owner(query.value("OWNER").toString());
+        _args.push_back(QString(owner+"/"+name));
+    }
+    return true;
+}
+
+bool Command::ctrlInviteCommand(QString &connectionId) {
+    if(_args.size() != 3)
+        return false;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
+    db.setDatabaseName("db/files.db");
+
+    if (!db.open())
+        return false;
+
+    QSqlQuery query(db);
+    auto mode = _args.first();
+    auto user = _args.at(1);
+    auto fileName = _args.last();
+
+    if (mode == "accept") {
+        if (!query.exec("UPDATE FILES SET INVITE = '0' WHERE SITEID = '"+QString::number(_siteID)+"' AND NAME = '"+fileName+ "' AND OWNER = '" +user+ "';")) {
+            db.close();
+            return false;
+        }
+    } else if (mode == "reject") {
+        if(!query.exec("DELETE FROM FILES WHERE SITEID = '"+QString::number(_siteID)+"' AND NAME = '"+fileName+"' AND OWNER = '"+user+"';")){
+            db.close();
+            return false;
+        }
+    }
     return true;
 }

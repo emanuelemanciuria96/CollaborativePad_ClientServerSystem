@@ -410,6 +410,11 @@ void SharedEditor::processCommand(Command& cmd){
             break;
         }
 
+        case (Command::lsInvite): {
+            processLsInviteCommand(cmd);
+            break;
+        }
+
         default:
             std::cout << "Coglione errore nel Command" << std::endl;
     }
@@ -461,6 +466,10 @@ void SharedEditor::processRenCommand(Command& cmd) {
     else
         std::cout<<" - Il Rename del file è fallito!"<<std::endl;
 
+}
+
+void SharedEditor::processLsInviteCommand(Command &cmd) {
+    emit inviteListArrived(cmd.getArgs());
 }
 
 void SharedEditor::clearText(){
@@ -569,6 +578,18 @@ void SharedEditor::submit(const QString& file, const QString& user) {
     DataPacket packet(_siteId, 0, DataPacket::command);
     packet.setPayload( std::make_shared<Command>( _siteId, Command::invite, args));
     emit transceiver->getSocket()->sendPacket(packet);
+}
+
+void SharedEditor::sendInviteAnswer(const QString& mode, const QString& user, const QString& filename) {
+    QVector<QString> args;
+    args.push_back(mode);
+    args.push_back(user);
+    args.push_back(filename);
+    DataPacket packet(_siteId, 0, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::ctrlInvite, args));
+    emit transceiver->getSocket()->sendPacket(packet);
+    if (mode == "accept")
+        emit filePathsArrived(QVector<QString>(1, QString(user+"/"+filename)));
 }
 
 QString SharedEditor::to_string() {

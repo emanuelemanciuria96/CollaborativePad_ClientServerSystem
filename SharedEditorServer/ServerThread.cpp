@@ -162,6 +162,12 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                     }
                     sendPacket(pkt);
 
+                    DataPacket cmdPacket(_siteID, 0, DataPacket::command);
+                    auto cmdPayload = std::make_shared<Command>( _siteID, Command::lsInvite, QVector<QString>());
+                    cmdPacket.setPayload(cmdPayload);
+                    cmdPayload->lsInviteCommand(threadId);
+                    sendPacket(cmdPacket);
+
                     QPointer<QThread> th(this);
                     qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
                     emit recordThread(th);
@@ -382,6 +388,20 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         case (Command::invite):{
             std::unique_lock ul(db_op_mtx);
             command->inviteCommand(threadId);
+            if (!command->getArgs().isEmpty()) {
+                auto userSiteID = command->getArgs().first().toInt();
+                DataPacket invitePacket(userSiteID, 0, DataPacket::command);
+                auto payload = std::make_shared<Command>(userSiteID, Command::lsInvite, QVector<QString>());
+                payload->lsInviteCommand(threadId);
+                invitePacket.setPayload(payload);
+                QVector<qint32> vector(1, userSiteID);
+                _sockets.broadcast(vector, invitePacket);
+            }
+            break;
+        }
+
+        case (Command::ctrlInvite): {
+            command->ctrlInviteCommand(threadId);
             break;
         }
 

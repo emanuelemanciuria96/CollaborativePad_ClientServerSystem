@@ -21,12 +21,14 @@ private:
     Ui::AddUserWidget *ui;
     QString file;
     QString user;
+    void closeEvent(QCloseEvent *event);
 
 public slots:
     void emitSearchUser();
     void emitSubmit();
     void searchUserResult(LoginInfo::type_t type);
     void closeWindow();
+    void editFileName(QString& oldName, QString& newName);
 
 signals:
     void searchUser(const QString& user);

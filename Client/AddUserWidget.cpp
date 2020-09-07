@@ -64,3 +64,15 @@ void AddUserWidget::closeWindow() {
     this->close();
 }
 
+void AddUserWidget::closeEvent (QCloseEvent *event){
+    ui->userEdit->clear();
+    ui->resultLabel->clear();
+    ui->submitButton->setDisabled(true);
+    this->close();
+}
+
+void AddUserWidget::editFileName(QString& oldName, QString& newName) {
+    if (!newName.contains("/"))
+        if (oldName == file)
+            file = newName;
+}

@@ -63,6 +63,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::searchUserResult, addUserWidget, &AddUserWidget::searchUserResult);
     connect(addUserWidget, &AddUserWidget::submit, shEditor, &SharedEditor::submit);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::openAddUser);
+    connect(shEditor, &SharedEditor::inviteListArrived, inviteUserWidget, &InviteUserWidget::inviteListArrived);
+    connect(inviteUserWidget, &InviteUserWidget::sendInviteAnswer, shEditor, &SharedEditor::sendInviteAnswer);
+    connect(shEditor, &SharedEditor::fileNameEdited, inviteUserWidget, &InviteUserWidget::editFileName);
+    connect(shEditor, &SharedEditor::fileNameEdited, addUserWidget, &AddUserWidget::editFileName);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -81,6 +85,7 @@ void MainWindow::loginFinished() {
     dockWidgetTree->show();
     widgetEditor->show();
     toolBar->show();
+    inviteUserWidget->show();
 }
 
 void MainWindow::loginSettings() {
@@ -145,6 +150,7 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
     layoutEditor->addWidget(editor);
     layoutEditor->setContentsMargins(100,0,100,0);
     addUserWidget = new AddUserWidget(this);
+    inviteUserWidget = new InviteUserWidget(this);
 
     widgetEditor->hide();
 

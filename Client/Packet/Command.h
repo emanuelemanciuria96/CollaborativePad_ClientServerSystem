@@ -26,6 +26,8 @@ public:
         ls = 11,
         ren = 12,
         invite = 13,
+        lsInvite = 14,
+        ctrlInvite = 15,
     }cmd_t;
 
     Command(qint32 siteId, cmd_t cmd, QVector<QString> args);

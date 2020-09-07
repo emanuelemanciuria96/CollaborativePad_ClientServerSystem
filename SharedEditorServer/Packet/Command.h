@@ -26,6 +26,8 @@ public:
         ls = 11,
         ren = 12,
         invite = 13,
+        lsInvite = 14,
+        ctrlInvite = 15,
     }cmd_t;
 
     Command(qint32 siteId, cmd_t cmd, QVector<QString> args);
@@ -44,6 +46,8 @@ public:
 
     bool lsCommand(QString &connectionId);
     bool inviteCommand(QString &connectionId);
+    bool lsInviteCommand(QString &connectionId);
+    bool ctrlInviteCommand(QString &connectionId);
 
 private:
     cmd_t _cmd;
