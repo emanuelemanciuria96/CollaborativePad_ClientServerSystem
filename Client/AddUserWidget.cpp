@@ -1,6 +1,7 @@
 #include "AddUserWidget.h"
 
 #include <utility>
+#include <iostream>
 #include "ui_adduserwidget.h"
 
 AddUserWidget::AddUserWidget(QWidget *parent)
@@ -8,6 +9,7 @@ AddUserWidget::AddUserWidget(QWidget *parent)
     , ui(new Ui::AddUserWidget)
 {
     ui->setupUi(this);
+    this->setWindowFlag(Qt::WindowStaysOnTopHint);
     connect(ui->searchButton, &QPushButton::clicked, this, &AddUserWidget::emitSearchUser);
     connect(ui->submitButton, &QPushButton::clicked, this, &AddUserWidget::emitSubmit);
     connect(ui->cancelButton, &QPushButton::clicked, this, &AddUserWidget::closeWindow);

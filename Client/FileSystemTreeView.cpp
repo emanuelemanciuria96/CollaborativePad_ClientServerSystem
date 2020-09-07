@@ -181,8 +181,8 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
         auto node = model.find(previousName);
         model.insert(std::make_pair(actualName, node->second));
         model.erase(node);
+        emit fileNameEdited(previousName, actualName);
     }
-
 }
 
 void FileSystemTreeView::removeFile(QTreeWidgetItem *item) {

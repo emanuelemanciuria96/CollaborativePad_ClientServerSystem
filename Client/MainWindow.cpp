@@ -67,6 +67,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(inviteUserWidget, &InviteUserWidget::sendInviteAnswer, shEditor, &SharedEditor::sendInviteAnswer);
     connect(shEditor, &SharedEditor::fileNameEdited, inviteUserWidget, &InviteUserWidget::editFileName);
     connect(shEditor, &SharedEditor::fileNameEdited, addUserWidget, &AddUserWidget::editFileName);
+    connect(treeView, &FileSystemTreeView::fileNameEdited, addUserWidget, &AddUserWidget::editFileName);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -191,7 +192,6 @@ void MainWindow::backToLogIn() {
 
 void MainWindow::openAddUser(const QString& fileName) {
     addUserWidget->setFile(fileName);
-    addUserWidget->setWindowFlag(Qt::WindowStaysOnTopHint);
     addUserWidget->show();
 }
 
