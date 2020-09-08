@@ -31,6 +31,8 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
     root->setIcon(0,home_dir);
     root->setExpanded(true);
 
+    root->
+
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &FileSystemTreeView::itemDoubleClicked, this, &FileSystemTreeView::openFile);
     connect(this, &FileSystemTreeView::itemDoubleClicked, [this](QTreeWidgetItem *itm, int column){ previousName=itm->text(0);} );
@@ -43,25 +45,31 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
 void FileSystemTreeView::setupRightClickMenu() {
 
     rightClickMenu = new QMenu(this);
-    auto actRn = new QAction("Rename");
-    auto actRm = new QAction("Delete");
-    auto actInvite = new QAction("Invite");
 
-    rightClickMenu->addAction(actRm);
-    rightClickMenu->addAction(actRn);
-    rightClickMenu->addAction(actInvite);
+    rightClickMenu->addAction(new QAction("Rename"));
+    rightClickMenu->addAction(new QAction("Delete"));
+    rightClickMenu->addAction(new QAction("Invite"));
+    rightClickMenu->addAction(new QAction("New File"));
+
 }
 
 void FileSystemTreeView::openCustomMenu(const QPoint &pos) {
 
     auto rightClickedNode = this->itemAt(pos);
 
-    if (rightClickedNode->parent() != root)
-        rightClickMenu->actions().at(2)->setDisabled(true);
-
-    if (!(rightClickedNode->flags() & Qt::ItemIsEditable)) {
+    if(rightClickedNode == nullptr ){
         rightClickMenu->actions().at(0)->setDisabled(true);
         rightClickMenu->actions().at(1)->setDisabled(true);
+        rightClickMenu->actions().at(2)->setDisabled(true);
+    }
+    else {
+        if (rightClickedNode->parent() != root)
+            rightClickMenu->actions().at(2)->setDisabled(true);
+
+        if (!(rightClickedNode->flags() & Qt::ItemIsEditable)) {
+            rightClickMenu->actions().at(0)->setDisabled(true);
+            rightClickMenu->actions().at(1)->setDisabled(true);
+        }
     }
 
     auto selectedAction = rightClickMenu->exec(this->mapToGlobal(pos));
@@ -73,8 +81,12 @@ void FileSystemTreeView::openCustomMenu(const QPoint &pos) {
     else if( selectedAction->text() == "Rename" ){
         previousName = rightClickedNode->text(0);
         this->editItem(rightClickedNode,0);
-    } else if ( selectedAction->text() == "Invite" ) {
+    }
+    else if ( selectedAction->text() == "Invite" ) {
         inviteUser(rightClickedNode);
+    }
+    else if( selectedAction->text() == "New File" ){
+        insertFile();
     }
 
     for(auto act:rightClickMenu->actions())
@@ -133,7 +145,7 @@ void FileSystemTreeView::constructFromPaths(const QVector<QString> &paths) {
 
 }
 
-bool FileSystemTreeView::isChild(QTreeWidgetItem *parent, QString name) {
+bool FileSystemTreeView::isChild(QTreeWidgetItem *parent, QString &name) {
 
     int i = 0;  // takeChildren non si deve chiamare perchè elimina tutti i children
     for( ; i<parent->childCount(); i++ )
@@ -141,6 +153,26 @@ bool FileSystemTreeView::isChild(QTreeWidgetItem *parent, QString name) {
             return true;
 
     return false;
+}
+
+void FileSystemTreeView::insertFile(){
+
+    QString defaultName = "new_file";
+
+    int i = 0;
+    auto tmp = defaultName;
+    while( isChild(root, tmp) )
+        tmp = defaultName+"("+QString::number(++i)+")";
+    defaultName = tmp;
+
+    auto newFile = addChild(root,defaultName,"FILE");
+    model.insert( std::make_pair(defaultName,indexFromItem(newFile)) );
+
+    emit newFileAdded(defaultName);
+
+    previousName = defaultName;
+    this->editItem(newFile,0);
+
 }
 
 void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
@@ -176,14 +208,14 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
         actualName = parent->text(0)+"/"+actualName;
     }
 
-    if( previousName != actualName ) {
-        emit renFileRequest(previousName, actualName);
-        auto node = model.find(previousName);
-        model.insert(std::make_pair(actualName, node->second));
-        model.erase(node);
-        emit fileNameEdited(previousName, actualName);
-    }
+    emit renFileRequest(previousName, actualName);
+    auto node = model.find(previousName);
+    model.insert(std::make_pair(actualName, node->second));
+    model.erase(node);
+    emit fileNameEdited(previousName, actualName);
+
 }
+
 
 void FileSystemTreeView::removeFile(QTreeWidgetItem *item) {
 

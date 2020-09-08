@@ -45,6 +45,7 @@ public:
     QVector<qint32> renCommand(QString& connectionId);
 
     bool lsCommand(QString &connectionId);
+    bool svCommand(QString &connectionId);
     bool inviteCommand(QString &connectionId);
     bool lsInviteCommand(QString &connectionId);
     bool ctrlInviteCommand(QString &connectionId);

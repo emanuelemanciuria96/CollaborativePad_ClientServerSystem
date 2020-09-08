@@ -348,8 +348,10 @@ QVector<qint32> Command::renCommand(QString &connectionId) {
         return QVector<qint32>();
     }
 
+
     return listId;
 }
+
 
 bool Command::rmCommand(QString& connectionId) { //la rmCommand elimina il file per il solo client richiedente
 
@@ -377,6 +379,39 @@ bool Command::rmCommand(QString& connectionId) { //la rmCommand elimina il file 
 
     return true;
 }
+
+bool Command::svCommand(QString& connectionId) { //la rmCommand elimina il file per il solo client richiedente
+
+    if(_args.size()!=1)
+        return false;
+
+    QString fileName = _args.first();
+
+    using namespace std::chrono;
+    auto ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+    QString serverFileName = connectionId+"_"+_args.first()+"_"+QString::number(ms.count())+".json";
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
+    db.setDatabaseName("db/files.db");
+
+    auto list = _args[0].split("/");
+    QString owner = list.first();
+    QString name = list.last();
+
+    if (!db.open())
+        return false;
+
+    QSqlQuery query(db);
+    if(!query.exec("INSERT INTO FILES (SITEID, NAME, OWNER, FSNAME, INVITE) "
+                   "VALUES ('"+QString::number(_siteID)+"', '"+name+"', '"+owner+"', '"+serverFileName+"', '0')")){
+        db.rollback();
+        db.close();
+        return false;
+    }
+
+    return true;
+}
+
 
 QVector<qint32> Command::rmAllCommand(QString& connectionId) { //la rmAllCommand elimina il file a chiunque
 
@@ -420,6 +455,7 @@ QVector<qint32> Command::rmAllCommand(QString& connectionId) { //la rmAllCommand
 
     return listId;
 }
+
 
 bool Command::inviteCommand(QString &connectionId) {
 
@@ -512,6 +548,7 @@ bool Command::lsInviteCommand(QString &connectionId) {
     }
     return true;
 }
+
 
 bool Command::ctrlInviteCommand(QString &connectionId) {
     if(_args.size() != 3)

@@ -497,7 +497,7 @@ void SharedEditor::requireFile(QString fileName) {
 
 
     /// quando si nasconderà l'editor, questo può essere tolto
-    if( !_symbols.empty() ) {
+    if( _symbols.size()>2 ) {
         clearText();
         _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
     }
@@ -513,6 +513,19 @@ void SharedEditor::requireFile(QString fileName) {
     packet.setPayload(cmd);
 
     int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
+}
+
+void SharedEditor::requireFileAdd(QString fileName) {
+
+    fileName = _user+"/"+fileName;
+    QVector<QString> vec = {std::move(fileName)};
+
+    auto cmd = std::make_shared<Command>(_siteId,Command::sv,vec);
+    DataPacket packet(_siteId,0,DataPacket::command);
+    packet.setPayload(cmd);
+
     emit transceiver->getSocket()->sendPacket(packet);
 
 }

@@ -62,6 +62,7 @@ public slots:
     void requireFile(QString fileName);
     void requireFileRename(QString before,QString after);
     void requireFileDelete(QString fileName);
+    void requireFileAdd(QString fileName);
     void deleteThread();
     void clearText();
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);

@@ -333,7 +333,8 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
             break;
         }
 
-        case (Command::mv):{
+        case (Command::sv):{
+            command->svCommand(threadId);
             break;
         }
 
@@ -401,6 +402,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::ctrlInvite): {
+            std::unique_lock ul(db_op_mtx);
             command->ctrlInviteCommand(threadId);
             break;
         }
