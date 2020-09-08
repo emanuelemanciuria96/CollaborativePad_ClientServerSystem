@@ -24,6 +24,7 @@ public slots:
     void inviteListArrived(const QVector<QString> &args);
     void emitSendInviteAnswer(QListWidgetItem* item, const QString& mode, const QString& user, const QString& filename);
     void editFileName(QString& oldName, QString& newName);
+    void processFileDeleted(QString& fileName);
 
 signals:
     void sendInviteAnswer(const QString& mode, const QString& user, const QString& filename);

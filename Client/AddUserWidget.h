@@ -29,6 +29,7 @@ public slots:
     void searchUserResult(LoginInfo::type_t type);
     void closeWindow();
     void editFileName(QString& oldName, QString& newName);
+    void processFileDeleted(QString fileName);
 
 signals:
     void searchUser(const QString& user);

@@ -53,3 +53,22 @@ void InviteUserWidget::editFileName(QString &oldName, QString &newName) {
         }
     }
 }
+
+void InviteUserWidget::processFileDeleted(QString &fileName) {
+    if (fileName.contains("/")) {
+        auto list = fileName.split("/");
+        auto user = list.first();
+        auto file = list.last();
+
+        for (int i = 0; i < ui->listWidget->count(); i++) {
+            QListWidgetItem *item = ui->listWidget->item(i);
+            auto widget = map[item];
+
+            if (widget->getUser() == user && widget->getFileName() == file) {
+                auto row = ui->listWidget->row(item);
+                ui->listWidget->takeItem(row);
+                return;
+            }
+        }
+    }
+}

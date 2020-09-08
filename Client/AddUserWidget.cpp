@@ -49,9 +49,6 @@ void AddUserWidget::searchUserResult(LoginInfo::type_t type) {
 
 void AddUserWidget::emitSubmit() {
     emit submit(file, user);
-    ui->userEdit->clear();
-    ui->resultLabel->clear();
-    ui->submitButton->setDisabled(true);
     this->close();
 }
 
@@ -60,9 +57,6 @@ void AddUserWidget::setFile(const QString &fileName) {
 }
 
 void AddUserWidget::closeWindow() {
-    ui->userEdit->clear();
-    ui->resultLabel->clear();
-    ui->submitButton->setDisabled(true);
     this->close();
 }
 
@@ -70,11 +64,16 @@ void AddUserWidget::closeEvent (QCloseEvent *event){
     ui->userEdit->clear();
     ui->resultLabel->clear();
     ui->submitButton->setDisabled(true);
-    this->close();
 }
 
 void AddUserWidget::editFileName(QString& oldName, QString& newName) {
     if (!newName.contains("/"))
         if (oldName == file)
             file = newName;
+}
+
+void AddUserWidget::processFileDeleted(QString fileName) {
+    if (!fileName.contains("/"))
+        if (fileName == file)
+            close();
 }
