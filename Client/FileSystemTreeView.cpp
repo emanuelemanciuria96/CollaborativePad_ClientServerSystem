@@ -31,8 +31,6 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
     root->setIcon(0,home_dir);
     root->setExpanded(true);
 
-    root->
-
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &FileSystemTreeView::itemDoubleClicked, this, &FileSystemTreeView::openFile);
     connect(this, &FileSystemTreeView::itemDoubleClicked, [this](QTreeWidgetItem *itm, int column){ previousName=itm->text(0);} );
