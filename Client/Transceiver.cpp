@@ -237,7 +237,7 @@ void Transceiver::sendAllMessages() {
 
     int num_mess = messages.size();
 
-    auto *strMess = new StringMessages(messages,_siteID);
+    auto strMess = std::make_shared<StringMessages>(messages,_siteID);
 
     num_mess-=messages.size();
 

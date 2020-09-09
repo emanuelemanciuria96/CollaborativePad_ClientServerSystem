@@ -22,9 +22,9 @@ qint32 fixedBytesWritten = sizeof(qint32)+sizeof(qint32)+sizeof(quint32)+sizeof(
 
 
 
-ServerThread::ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent):QThread(parent){
+ServerThread::ServerThread(qintptr socketDesc, std::shared_ptr<MessageHandler> msgHandler,QObject *parent):QThread(parent){
     this->socketDescriptor = socketDesc;
-    this->msgHandler = std::shared_ptr<MessageHandler>(msgHandler);
+    this->msgHandler = msgHandler;
     this->_username = "";
     this->_siteID = -1;
     this->operatingFileName = "";
@@ -148,34 +148,48 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
             if(_username.isEmpty()) {
                 auto shr = std::make_shared<LoginInfo>( -1, (LoginInfo::type_t)type, user, password);
                 packet.setPayload(shr);
-                if (shr->login(threadId)) {
-                    _siteID = shr->getSiteId();
-                    _username = user;
-                    std::cout << "client "+user.toStdString()+" successfully logged!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
-                    sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
 
-                    DataPacket pkt(0, 0, DataPacket::command, new Command(_siteID, Command::ls, {}));
-                    {
-                        std::shared_lock sl(db_op_mtx);
-                        std::static_pointer_cast<Command>(pkt.getPayload())->lsCommand(threadId);
-                        _sockets.recordSocket(_siteID, socket);
+                try {
+                    if (shr->login(threadId)) {
+                        _siteID = shr->getSiteId();
+                        _username = user;
+
+                        QPointer<QThread> th(this);
+                        qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
+                        emit recordThread(th);
+
+                        std::cout << "client " + user.toStdString() + " successfully logged!"
+                                  << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
+                        sendPacket(packet);            //non fa nulla, non risponde con messaggi di errore
+
+                        DataPacket pkt(0, 0, DataPacket::command, std::make_shared<Command>(_siteID, Command::ls, QVector<QString>{}) );
+                        {
+                            std::shared_lock sl(db_op_mtx);
+                            std::static_pointer_cast<Command>(pkt.getPayload())->lsCommand(threadId);
+                            _sockets.recordSocket(_siteID, socket);
+                        }
+                        sendPacket(pkt);
+
+                        DataPacket cmdPacket(_siteID, 0, DataPacket::command);
+                        auto cmdPayload = std::make_shared<Command>(_siteID, Command::lsInvite, QVector<QString>());
+                        cmdPacket.setPayload(cmdPayload);
+                        cmdPayload->lsInviteCommand(threadId);
+                        sendPacket(cmdPacket);
+
+                    } else {
+                        std::cout << "client not logged!" << std::endl;
+                        sendPacket(packet);
                     }
-                    sendPacket(pkt);
+                }catch( LoginException e ){
+                    std::cout<<e.what()<<endl;
 
-                    DataPacket cmdPacket(_siteID, 0, DataPacket::command);
-                    auto cmdPayload = std::make_shared<Command>( _siteID, Command::lsInvite, QVector<QString>());
-                    cmdPacket.setPayload(cmdPayload);
-                    cmdPayload->lsInviteCommand(threadId);
-                    sendPacket(cmdPacket);
-
-                    QPointer<QThread> th(this);
-                    qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
-                    emit recordThread(th);
-
-                } else {
-                    std::cout << "client not logged!" << std::endl;
+                    _username = "";
+                    _siteID = -1;
+                    shr->setSiteId(_siteID);
+                    shr->setType(LoginInfo::login_alconn_error);
                     sendPacket(packet);
                 }
+
             }
             break;
 
@@ -202,7 +216,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                     std::cout << "client "+user.toStdString()+" successfully signed up!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
                     sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
 
-                    DataPacket pkt(0, 0, DataPacket::command, new Command(_siteID, Command::ls, {}) );
+                    DataPacket pkt(0, 0, DataPacket::command,  std::make_shared<Command>(_siteID, Command::ls, QVector<QString>{}) );
                     {
                         std::shared_lock sl(db_op_mtx);
                         std::static_pointer_cast<Command>(pkt.getPayload())->lsCommand(threadId);
@@ -233,6 +247,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
         default:
             std::cout << "errore nella recvlogininfo" << std::endl;
             break;
+
     }
 }
 
@@ -603,7 +618,7 @@ void ServerThread::sendFile() {
 
     // comunico al client che sto inviando il file
     {
-        DataPacket pkt( 0,0,DataPacket::file_info,new FileInfo(FileInfo::start,_siteID) );
+        DataPacket pkt( 0,0,DataPacket::file_info, std::make_shared<FileInfo>(FileInfo::start,_siteID) );
         sendFileInfo(pkt);
     }
 
@@ -612,7 +627,7 @@ void ServerThread::sendFile() {
 
         if ( vm.size()+1 >= 1000) {
             std::cout<<" --- sending (1) "<<vm.size()<<" messages in once"<<std::endl;
-            DataPacket pkt( 0 , 0, DataPacket::textTyping, new StringMessages(vm, 0));
+            DataPacket pkt( 0 , 0, DataPacket::textTyping, std::make_shared<StringMessages>(vm, 0) );
             sendMessage(pkt);
             std::cout<<" --- sending (2) "<<std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->stringToMessages().size()<<" messages in once"<<std::endl;
             vm.clear();
@@ -622,7 +637,7 @@ void ServerThread::sendFile() {
     }
 
     if( !vm.empty() ){
-        DataPacket pkt( 0,0,DataPacket::textTyping,new StringMessages(vm, 0));
+        DataPacket pkt( 0,0,DataPacket::textTyping,std::make_shared<StringMessages>(vm, 0));
         sendMessage(pkt);
     }
 
@@ -630,7 +645,7 @@ void ServerThread::sendFile() {
 
     // comunico al client che è terminato l'invio del file
     {
-        DataPacket pkt(0,0,DataPacket::file_info,new FileInfo(FileInfo::eof,0) );
+        DataPacket pkt(0,0,DataPacket::file_info,std::make_shared<FileInfo>(FileInfo::eof,0) );
         sendFileInfo(pkt);
     }
 
@@ -638,7 +653,8 @@ void ServerThread::sendFile() {
 
 void ServerThread::disconnected(){
 
-    _sockets.discardSocket(_siteID);
+    if(_siteID != -1)
+        _sockets.discardSocket(_siteID);
 
     if( operatingFileName!=""){
         _sockets.detachSocket(operatingFileName, _siteID);

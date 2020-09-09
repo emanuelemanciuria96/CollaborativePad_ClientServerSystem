@@ -257,6 +257,11 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
             emit loginError();
             break;
 
+        case LoginInfo::login_alconn_error:
+            std::cout<<"user already logged error"<<std::endl;
+            emit loginError();
+            break;
+
         case LoginInfo::signup_error:
             std::cout << "client not signed up!" << std::endl;
             break;

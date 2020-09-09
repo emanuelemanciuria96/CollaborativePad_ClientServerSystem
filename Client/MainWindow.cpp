@@ -89,7 +89,8 @@ void MainWindow::loginFinished() {
     dockWidgetTree->show();
     widgetEditor->show();
     toolBar->show();
-    //inviteUserWidget->show();
+
+    inviteUserWidget->show();
 }
 
 void MainWindow::loginSettings() {
