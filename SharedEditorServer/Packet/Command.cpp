@@ -375,7 +375,7 @@ bool Command::uriCommand(QString &connectionId) {
     if (!db.open())
         return false;
 
-    QString fsName = _args.first().split("/").last();
+    QString fsName = QString(_args.first()+".json");
     _args.clear();
     QSqlQuery query(db);
 
@@ -392,14 +392,23 @@ bool Command::uriCommand(QString &connectionId) {
     auto name = query.value("NAME").toString();
     auto owner = query.value("OWNER").toString();
 
-    if(!query.exec("SELECT COUNT(*) FROM FILES WHERE SITEID = '"+QString::number(_siteID)+"' AND NAME = '"+name+"' AND OWNER = '"+owner+"';")){
+    if(!query.exec("SELECT INVITE FROM FILES WHERE SITEID = '"+QString::number(_siteID)+"' AND NAME = '"+name+"' AND OWNER = '"+owner+"';")){
         db.close();
         return false;
     }
 
-    query.next();
-    if (query.value("COUNT(*)").toInt() != 0) {
-        _args.push_back(QString("existing"));
+    if (query.next()){
+        if (query.value("INVITE").toInt() != 0) {
+            if (!query.exec("UPDATE FILES SET INVITE = '0' WHERE SITEID = '"+QString::number(_siteID)+"' AND NAME = '"+name+ "' AND OWNER = '" +owner+ "';")) {
+                db.close();
+                return false;
+            }
+            _args.push_back(QString("invite-existing"));
+            _args.push_back(QString(owner+"/"+name));
+            return true;
+        }
+        _args.push_back(QString("file-existing"));
+        _args.push_back(QString(owner+"/"+name));
         return true;
     }
 
@@ -409,5 +418,6 @@ bool Command::uriCommand(QString &connectionId) {
     }
 
     _args.push_back(QString("valid"));
+    _args.push_back(QString(owner+"/"+name));
     return true;
 }

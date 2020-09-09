@@ -401,6 +401,14 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
             std::unique_lock ul(db_op_mtx);
             command->uriCommand(threadId);
             sendPacket(packet);
+            if (command->getArgs().first() == "invite-existing") {
+                DataPacket invitePacket(_siteID, 0, DataPacket::command);
+                auto payload = std::make_shared<Command>(_siteID, Command::lsInvite, QVector<QString>());
+                payload->lsInviteCommand(threadId);
+                invitePacket.setPayload(payload);
+                QVector<qint32> vector(1, _siteID);
+                _sockets.broadcast(vector, invitePacket);
+            }
             break;
         }
 

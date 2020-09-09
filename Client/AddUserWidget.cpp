@@ -48,7 +48,7 @@ void AddUserWidget::searchUserResult(LoginInfo::type_t type) {
 }
 
 void AddUserWidget::emitSubmit() {
-    emit submit(file, user);
+    emit submitInvite(file, user);
     this->close();
 }
 

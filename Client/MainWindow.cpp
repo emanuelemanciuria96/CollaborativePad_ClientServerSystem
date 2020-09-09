@@ -13,7 +13,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 //    }
     setWindowTitle("Shared Editor");
     statusBar = new QStatusBar(this);
-    statusBar->showMessage ("StatusBar");
+    statusBar->showMessage ("");
     toolBar = new QToolBar("Toolbar",this);
     centralWidget = new QStackedWidget(this);
 
@@ -62,7 +62,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(widgetSignIn, &SignInWidget::registerRequest, shEditor, &SharedEditor::sendRegisterRequest);
     connect(addUserWidget, &AddUserWidget::searchUser, shEditor, &SharedEditor::searchUser);
     connect(shEditor, &SharedEditor::searchUserResult, addUserWidget, &AddUserWidget::searchUserResult);
-    connect(addUserWidget, &AddUserWidget::submit, shEditor, &SharedEditor::submit);
+    connect(addUserWidget, &AddUserWidget::submitInvite, shEditor, &SharedEditor::submitInvite);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::openAddUser);
     connect(shEditor, &SharedEditor::inviteListArrived, inviteUserWidget, &InviteUserWidget::inviteListArrived);
     connect(inviteUserWidget, &InviteUserWidget::sendInviteAnswer, shEditor, &SharedEditor::sendInviteAnswer);
@@ -71,6 +71,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::fileNameEdited, addUserWidget, &AddUserWidget::editFileName);
     connect(shEditor, &SharedEditor::fileDeletion, inviteUserWidget, &InviteUserWidget::processFileDeleted);
     connect(treeView, &FileSystemTreeView::rmvFileRequest, addUserWidget, &AddUserWidget::processFileDeleted);
+    connect(uriWidget, &UriWidget::submitUri, shEditor, &SharedEditor::submitUri);
+    connect(shEditor, &SharedEditor::uriResultArrived, uriWidget, &UriWidget::uriResultArrived);
+    connect(uriWidget, &UriWidget::setStatusBarText, statusBar, &QStatusBar::showMessage);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -90,7 +93,8 @@ void MainWindow::loginFinished() {
     widgetEditor->show();
     toolBar->show();
 
-    inviteUserWidget->show();
+    //inviteUserWidget->show();
+    uriWidget->show();
 }
 
 void MainWindow::loginSettings() {
@@ -156,6 +160,7 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
     layoutEditor->setContentsMargins(100,0,100,0);
     addUserWidget = new AddUserWidget(this);
     inviteUserWidget = new InviteUserWidget(this);
+    uriWidget = new UriWidget(this);
 
     widgetEditor->hide();
 

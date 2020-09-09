@@ -33,6 +33,6 @@ public slots:
 
 signals:
     void searchUser(const QString& user);
-    void submit(const QString& file, const QString& user);
+    void submitInvite(const QString& file, const QString& user);
 };
 #endif // ADDUSERWIDGET_H

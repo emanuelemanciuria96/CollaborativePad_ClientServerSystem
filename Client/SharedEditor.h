@@ -53,6 +53,7 @@ private:
     void processLsCommand( Command& cmd );
     void processRenCommand( Command &cmd );
     void processLsInviteCommand( Command& cmd );
+    void processUriCommand( Command &cmd );
     void processRmCommand(Command &cmd );
     void processCursorPos(CursorPosition& curPos);
 
@@ -68,8 +69,9 @@ public slots:
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
     void sendRegisterRequest(QString& user, QString& password, QString& name, QString& email, QPixmap& image);
     void searchUser(const QString& user);
-    void submit(const QString& file, const QString& user);
+    void submitInvite(const QString& file, const QString& user);
     void sendInviteAnswer(const QString& mode, const QString& user, const QString& filename);
+    void submitUri(const QString& file);
 
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
@@ -85,6 +87,7 @@ signals:
     void searchUserResult(LoginInfo::type_t type);
     void loginError();
     void inviteListArrived(const QVector<QString> &args);
+    void uriResultArrived(const QVector<QString> &args);
 
 public:
     explicit SharedEditor(QObject *parent = 0);

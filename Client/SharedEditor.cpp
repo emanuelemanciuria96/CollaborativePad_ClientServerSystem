@@ -390,22 +390,6 @@ void SharedEditor::processCommand(Command& cmd){
             break;
         }
 
-        case (Command::cp): {
-            break;
-        }
-
-        case (Command::mv): {
-            break;
-        }
-
-        case (Command::opn): {
-            break;
-        }
-
-        case (Command::cls): {
-            break;
-        }
-
         case (Command::ls): {
             processLsCommand(cmd);
             break;
@@ -417,6 +401,11 @@ void SharedEditor::processCommand(Command& cmd){
 
         case (Command::lsInvite): {
             processLsInviteCommand(cmd);
+            break;
+        }
+
+        case (Command::uri): {
+            processUriCommand(cmd);
             break;
         }
 
@@ -475,6 +464,14 @@ void SharedEditor::processRenCommand(Command& cmd) {
 
 void SharedEditor::processLsInviteCommand(Command &cmd) {
     emit inviteListArrived(cmd.getArgs());
+}
+
+void SharedEditor::processUriCommand(Command &cmd) {
+    auto result = cmd.getArgs().first();
+    auto path = cmd.getArgs().last();
+    emit uriResultArrived(cmd.getArgs());
+    if (result == "valid" || result == "invite-existing")
+        emit filePathsArrived(QVector<QString>(1, path));
 }
 
 void SharedEditor::clearText(){
@@ -588,7 +585,7 @@ void SharedEditor::searchUser(const QString &user) {
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
-void SharedEditor::submit(const QString& file, const QString& user) {
+void SharedEditor::submitInvite(const QString& file, const QString& user) {
     QVector<QString> args;
     args.push_back(_user);
     args.push_back(file);
@@ -608,6 +605,12 @@ void SharedEditor::sendInviteAnswer(const QString& mode, const QString& user, co
     emit transceiver->getSocket()->sendPacket(packet);
     if (mode == "accept")
         emit filePathsArrived(QVector<QString>(1, QString(user+"/"+filename)));
+}
+
+void SharedEditor::submitUri(const QString& file){
+    DataPacket packet(_siteId, 0, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::uri, QVector<QString>(1, file)));
+    emit transceiver->getSocket()->sendPacket(packet);
 }
 
 QString SharedEditor::to_string() {

@@ -14,8 +14,17 @@ class UriWidget : public QMainWindow
 public:
     UriWidget(QWidget *parent = nullptr);
     ~UriWidget();
+    void closeEvent(QCloseEvent *event);
 
 private:
     Ui::UriWidget *ui;
+
+public slots:
+    void checkUri();
+    void uriResultArrived(const QVector<QString> &args);
+
+signals:
+    void submitUri(const QString& file);
+    void setStatusBarText(const QString& text, int timeout);
 };
 #endif // URIWIDGET_H
