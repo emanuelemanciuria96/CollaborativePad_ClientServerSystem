@@ -71,7 +71,7 @@ void LoginInfo::setEmail(const QString &email) {
 
 bool LoginInfo::login(const QString& connectionId) {
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_login");
-    db.setDatabaseName("login.db");
+    db.setDatabaseName("db/login.db");
 
     if (!db.open()) {
         _type = LoginInfo::login_error;
@@ -120,7 +120,7 @@ bool LoginInfo::login(const QString& connectionId) {
 
 bool LoginInfo::updateInfo(const QString& connectionId) {
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_login");
-    db.setDatabaseName("login.db");
+    db.setDatabaseName("db/login.db");
 
     if (!db.open())
         return false;
@@ -145,7 +145,7 @@ bool LoginInfo::updateInfo(const QString& connectionId) {
 
 bool LoginInfo::signup(const QString &connectionId) {
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_login");
-    db.setDatabaseName("login.db");
+    db.setDatabaseName("db/login.db");
 
     if (!db.open()) {
         _type = LoginInfo::signup_error;
@@ -219,7 +219,7 @@ bool LoginInfo::signup(const QString &connectionId) {
 
 bool LoginInfo::searchUser(const QString &connectionId) {
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_login");
-    db.setDatabaseName("login.db");
+    db.setDatabaseName("db/login.db");
 
     if (!db.open())
         return false;

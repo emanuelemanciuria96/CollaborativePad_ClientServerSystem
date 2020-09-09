@@ -55,7 +55,6 @@ void ServerThread::run()
     QSqlDatabase::addDatabase("QSQLITE", threadId+"_login");
     QSqlDatabase::addDatabase("QSQLITE", threadId+"_directories");
     QSqlDatabase::addDatabase("QSQLITE", threadId+"_files");
-    QSqlDatabase::addDatabase("QSQLITE", threadId+"_filesNEW");
 
     exec(); //loop degli eventi attivato qui
 }
@@ -295,12 +294,6 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
     auto command = std::dynamic_pointer_cast<Command>(packet.getPayload());
 
     switch(cmd){
-        case (Command::cd):{
-            command->cdCommand(threadId);
-            sendPacket(packet);
-            break;
-        }
-
         case (Command::ren):{
             std::unique_lock ul(db_op_mtx);
             auto listId = command->renCommand(threadId);
@@ -310,14 +303,6 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
             }
             else
                 std::cout << "rename command isn't broadcasted" << std::endl;
-            break;
-        }
-
-        case (Command::mkdir):{
-            if(command->mkdirCommand(threadId))
-                std::cout << "mkdir command ok!" << std::endl;
-            else
-                std::cout << "mkdir command failed!" << std::endl;
             break;
         }
 
@@ -344,10 +329,6 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
             break;
         }
 
-        case (Command::cp):{
-            break;
-        }
-
         case (Command::sv):{
             command->svCommand(threadId);
             break;
@@ -368,12 +349,6 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
             }else
                 std::cout << "opn command failed!" << std::endl;
 
-            break;
-        }
-
-        case (Command::tree):{
-            command->treeCommand(threadId);
-            sendPacket(packet);
             break;
         }
 
