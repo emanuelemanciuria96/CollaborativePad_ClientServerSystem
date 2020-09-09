@@ -366,5 +366,48 @@ bool Command::ctrlInviteCommand(QString &connectionId) {
 
 bool Command::uriCommand(QString &connectionId) {
 
+    if(_args.size() != 1)
+        return false;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_files");
+    db.setDatabaseName("db/files.db");
+
+    if (!db.open())
+        return false;
+
+    QString fsName = _args.first().split("/").last();
+    _args.clear();
+    QSqlQuery query(db);
+
+    if(!query.exec("SELECT NAME, OWNER FROM FILES WHERE FSNAME = '"+fsName+"';")){
+        db.close();
+        return false;
+    }
+
+    if (!query.next()){
+        _args.push_back(QString("invalid"));
+        return true;
+    }
+
+    auto name = query.value("NAME").toString();
+    auto owner = query.value("OWNER").toString();
+
+    if(!query.exec("SELECT COUNT(*) FROM FILES WHERE SITEID = '"+QString::number(_siteID)+"' AND NAME = '"+name+"' AND OWNER = '"+owner+"';")){
+        db.close();
+        return false;
+    }
+
+    query.next();
+    if (query.value("COUNT(*)").toInt() != 0) {
+        _args.push_back(QString("existing"));
+        return true;
+    }
+
+    if(!query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('"+QString::number(_siteID)+"', '"+name+"', '"+owner+"', '"+fsName+"', '0');")){
+        db.close();
+        return false;
+    }
+
+    _args.push_back(QString("valid"));
     return true;
 }

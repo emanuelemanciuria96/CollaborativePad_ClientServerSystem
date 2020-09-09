@@ -397,6 +397,13 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
             break;
         }
 
+        case (Command::uri): {
+            std::unique_lock ul(db_op_mtx);
+            command->uriCommand(threadId);
+            sendPacket(packet);
+            break;
+        }
+
         default:
             std::cout << "Coglione errore nel Command" << std::endl;
     }
