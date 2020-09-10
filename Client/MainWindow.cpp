@@ -3,6 +3,7 @@
 //
 
 #include <QtWidgets/QGroupBox>
+#include <QtWidgets/QDockWidget>
 #include "MainWindow.h"
 
 
@@ -22,21 +23,21 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     this->addToolBar(toolBar);
     toolBar->setMovable(false);
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-
-    highlightActionSetup();
     toolBar->hide();
     setCentralWidget(centralWidget);
 
     menuBar()->addMenu("&Options");
 
+    // tree file system view creation
+    treeFileSystemSettings();
     // login creation
     loginSettings();
     // editor creation
     editorSettings(shEditor);
-    // tree file system view creation
-    treeFileSystemSettings();
     // widgetAccount creation
     infoWidgetsSettings();
+    //highlightSetup
+    highlightActionSetup();
     signInWidgetSetup();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
@@ -71,6 +72,11 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::fileNameEdited, addUserWidget, &AddUserWidget::editFileName);
     connect(shEditor, &SharedEditor::fileDeletion, inviteUserWidget, &InviteUserWidget::processFileDeleted);
     connect(treeView, &FileSystemTreeView::rmvFileRequest, addUserWidget, &AddUserWidget::processFileDeleted);
+    connect(treeShowAction, &QAction::triggered,[this](bool checked=false){
+                if(dockWidgetTree->isHidden())
+                    dockWidgetTree->show();
+                else dockWidgetTree->hide();
+            });
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -90,7 +96,7 @@ void MainWindow::loginFinished() {
     widgetEditor->show();
     toolBar->show();
 
-    inviteUserWidget->show();
+    //inviteUserWidget->show();
 }
 
 void MainWindow::loginSettings() {
@@ -137,7 +143,16 @@ void MainWindow::loginSettings() {
 void MainWindow::treeFileSystemSettings() {
     dockWidgetTree = new QDockWidget(tr("files"),this);
     dockWidgetTree->setAllowedAreas(Qt::LeftDockWidgetArea );
-    this->setAnimated(QMainWindow::AnimatedDocks);
+    dockWidgetTree->setFeatures(QDockWidget::DockWidgetClosable);
+    dockWidgetTree->setMouseTracking(true);
+
+    treeShowAction = new QAction();
+    treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
+    toolBar->addAction(treeShowAction);
+
+    auto voidWidget = new QWidget();
+    dockWidgetTree->setTitleBarWidget(voidWidget);
+
     treeView = new FileSystemTreeView(dockWidgetTree);
     dockWidgetTree->setWidget(treeView);
 
@@ -153,7 +168,7 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
     editor->setStyleSheet("QWidget { background: white; }");
     auto layoutEditor = new QVBoxLayout(widgetEditor);
     layoutEditor->addWidget(editor);
-    layoutEditor->setContentsMargins(100,0,100,0);
+    layoutEditor->setContentsMargins(0,0,0,0);
     addUserWidget = new AddUserWidget(this);
     inviteUserWidget = new InviteUserWidget(this);
 

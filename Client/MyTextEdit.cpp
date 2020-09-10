@@ -4,11 +4,13 @@
 
 #include <QtGui/QPainter>
 #include <iostream>
+#include <QPagedPaintDevice>
 #include "MyTextEdit.h"
 
 
 MyTextEdit::MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget *parent) : QTextEdit(parent){
     this->remoteCursors = std::shared_ptr<std::vector<RemoteCursor>>(remoteCursors);
+
 }
 
 void MyTextEdit::paintEvent(QPaintEvent *e) {

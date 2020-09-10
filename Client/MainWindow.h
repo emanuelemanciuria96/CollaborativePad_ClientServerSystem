@@ -35,6 +35,7 @@ private:
     InfoWidgetEdit* infoWidgetEdit;
     QStackedWidget* centralWidget;
     QAction* highlightAction;
+    QAction* treeShowAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
     InviteUserWidget* inviteUserWidget;
@@ -46,6 +47,13 @@ private:
     void highlightActionSetup();
     void signInWidgetSetup();
 
+private:
+    void resizeEvent(QResizeEvent * evt)  override {
+        QMainWindow::resizeEvent(evt);
+        dockWidgetTree->setMaximumWidth(this->size().width() / 4);
+        dockWidgetTree->setMinimumWidth(this->size().width() / 4);
+    }
+
 signals:
 
 public slots:
@@ -53,6 +61,11 @@ public slots:
     void startSignIn();
     void backToLogIn();
     void openAddUser(const QString& fileName);
+    void showHideTreeDock(bool checked=false){
+        if(dockWidgetTree->isHidden())
+            dockWidgetTree->show();
+        else dockWidgetTree->hide();
+    }
 };
 
 
