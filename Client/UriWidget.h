@@ -14,7 +14,7 @@ class UriWidget : public QMainWindow
 public:
     UriWidget(QWidget *parent = nullptr);
     ~UriWidget();
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     Ui::UriWidget *ui;

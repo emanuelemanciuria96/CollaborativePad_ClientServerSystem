@@ -176,7 +176,7 @@ bool Command::svCommand(QString& connectionId) { //la rmCommand elimina il file 
     auto ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
     QString serverFileName = connectionId+"_"+_args.first()+"_"+QString::number(ms.count())+".json";
 
-    QSqlDatabase db = QSqlDatabase::database(connectionId+"_filesNEW");
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_files");
     db.setDatabaseName("db/files.db");
 
     auto list = _args[0].split("/");
@@ -251,7 +251,7 @@ bool Command::inviteCommand(QString &connectionId) {
     dbFiles.setDatabaseName("db/files.db");
 
     QSqlDatabase dbUsers = QSqlDatabase::database(connectionId+"_login");
-    dbUsers.setDatabaseName("login.db");
+    dbUsers.setDatabaseName("db/login.db");
 
     if (!dbFiles.open() || !dbUsers.open())
         return false;
@@ -272,9 +272,23 @@ bool Command::inviteCommand(QString &connectionId) {
     auto siteId = queryUsers.value("SITEID").toInt();
     dbUsers.close();
 
-    dbFiles.transaction();
+    if(!queryFiles.exec("SELECT INVITE FROM FILES WHERE SITEID = '"+QString::number(siteId)+"' AND NAME = '"+name+"' AND OWNER = '"+owner+"';")){
+        dbFiles.close();
+        return false;
+    }
+
+    if (queryFiles.next()) {
+        if (queryFiles.value("INVITE").toInt() != 0) {
+            _args.push_back(QString("invite-existing"));
+            _args.push_back(QString::number(siteId));
+            return true;
+        }
+        _args.push_back(QString("file-existing"));
+        _args.push_back(QString::number(siteId));
+        return true;
+    }
+
     if(!queryFiles.exec("SELECT FSNAME FROM FILES WHERE SITEID = '"+QString::number(_siteID)+"' AND NAME = '"+name+"' AND OWNER = '"+owner+"';")){
-        dbFiles.rollback();
         dbFiles.close();
         return false;
     }
@@ -282,29 +296,12 @@ bool Command::inviteCommand(QString &connectionId) {
     queryFiles.next();
     auto fsName = queryFiles.value("FSNAME").toString();
 
-    if(!queryFiles.exec("SELECT COUNT(*) FROM FILES WHERE SITEID = '"+QString::number(siteId)+"' AND NAME = '"+name+"' AND OWNER = '"+owner+"';")){
-        dbFiles.rollback();
-        dbFiles.close();
-        return false;
-    }
-
-    queryFiles.next();
-    if (queryFiles.value("COUNT(*)").toInt() != 0) {
-        return true;
-    }
-
     if(!queryFiles.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('"+QString::number(siteId)+"', '"+name+"', '"+owner+"', '"+fsName+"', '1');")){
-        dbFiles.rollback();
         dbFiles.close();
         return false;
     }
 
-    if(!dbFiles.commit()){
-        dbFiles.rollback();
-        dbFiles.close();
-        return false;
-    }
-
+    _args.push_back(QString("ok"));
     _args.push_back(QString::number(siteId));
     return true;
 }
@@ -419,5 +416,31 @@ bool Command::uriCommand(QString &connectionId) {
 
     _args.push_back(QString("valid"));
     _args.push_back(QString(owner+"/"+name));
+    return true;
+}
+
+bool Command::fsNameCommand(QString &connectionId) {
+    if(_args.size() != 2)
+        return false;
+
+    QSqlDatabase db = QSqlDatabase::database(connectionId+"_files");
+    db.setDatabaseName("db/files.db");
+
+    if (!db.open())
+        return false;
+
+    QSqlQuery query(db);
+    auto owner = _args.first();
+    auto name = _args.last();
+    _args.clear();
+
+    if(!query.exec("SELECT FSNAME FROM FILES WHERE SITEID='"+QString::number(_siteID)+"' AND OWNER = '"+owner+"' AND NAME = '"+name+"';")){
+        db.close();
+        return false;
+    }
+
+    query.next();
+    auto fsName = query.value("FSNAME").toString();
+    _args.push_back(fsName.remove(fsName.size()-5, 5));
     return true;
 }

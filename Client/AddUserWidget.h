@@ -21,18 +21,21 @@ private:
     Ui::AddUserWidget *ui;
     QString file;
     QString user;
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
 
 public slots:
     void emitSearchUser();
     void emitSubmit();
     void searchUserResult(LoginInfo::type_t type);
-    void closeWindow();
     void editFileName(QString& oldName, QString& newName);
     void processFileDeleted(QString fileName);
+    void inviteResultArrived(const QString& result);
+    void fsNameArrived(const QString& fsName);
 
 signals:
     void searchUser(const QString& user);
     void submitInvite(const QString& file, const QString& user);
+    void setStatusBarText(const QString& text, int timeout);
+    void searchFsName(const QString& name);
 };
 #endif // ADDUSERWIDGET_H

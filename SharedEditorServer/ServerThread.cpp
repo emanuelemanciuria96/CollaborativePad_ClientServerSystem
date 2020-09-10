@@ -379,8 +379,9 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         case (Command::invite):{
             std::unique_lock ul(db_op_mtx);
             command->inviteCommand(threadId);
-            if (!command->getArgs().isEmpty()) {
-                auto userSiteID = command->getArgs().first().toInt();
+            sendPacket(packet);
+            if (command->getArgs().first() == "ok") {
+                auto userSiteID = command->getArgs().last().toInt();
                 DataPacket invitePacket(userSiteID, 0, DataPacket::command);
                 auto payload = std::make_shared<Command>(userSiteID, Command::lsInvite, QVector<QString>());
                 payload->lsInviteCommand(threadId);
@@ -409,6 +410,13 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                 QVector<qint32> vector(1, _siteID);
                 _sockets.broadcast(vector, invitePacket);
             }
+            break;
+        }
+
+        case (Command::fsName): {
+            std::unique_lock ul(db_op_mtx);
+            command->fsNameCommand(threadId);
+            sendPacket(packet);
             break;
         }
 
