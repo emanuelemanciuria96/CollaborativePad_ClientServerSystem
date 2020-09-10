@@ -15,6 +15,7 @@
 #include "SignInWidget.h"
 #include "AddUserWidget.h"
 #include "InviteUserWidget.h"
+#include "UriWidget.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -39,6 +40,7 @@ private:
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
     InviteUserWidget* inviteUserWidget;
+    UriWidget* uriWidget;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);

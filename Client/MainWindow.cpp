@@ -14,7 +14,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 //    }
     setWindowTitle("Shared Editor");
     statusBar = new QStatusBar(this);
-    statusBar->showMessage ("StatusBar");
+    statusBar->showMessage ("");
     toolBar = new QToolBar("Toolbar",this);
     centralWidget = new QStackedWidget(this);
 
@@ -63,7 +63,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(widgetSignIn, &SignInWidget::registerRequest, shEditor, &SharedEditor::sendRegisterRequest);
     connect(addUserWidget, &AddUserWidget::searchUser, shEditor, &SharedEditor::searchUser);
     connect(shEditor, &SharedEditor::searchUserResult, addUserWidget, &AddUserWidget::searchUserResult);
-    connect(addUserWidget, &AddUserWidget::submit, shEditor, &SharedEditor::submit);
+    connect(shEditor, &SharedEditor::inviteResultArrived, addUserWidget, &AddUserWidget::inviteResultArrived);
+    connect(addUserWidget, &AddUserWidget::setStatusBarText, statusBar, &QStatusBar::showMessage);
+    connect(addUserWidget, &AddUserWidget::submitInvite, shEditor, &SharedEditor::submitInvite);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::openAddUser);
     connect(shEditor, &SharedEditor::inviteListArrived, inviteUserWidget, &InviteUserWidget::inviteListArrived);
     connect(inviteUserWidget, &InviteUserWidget::sendInviteAnswer, shEditor, &SharedEditor::sendInviteAnswer);
@@ -77,6 +79,12 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
                     dockWidgetTree->show();
                 else dockWidgetTree->hide();
             });
+    connect(uriWidget, &UriWidget::submitUri, shEditor, &SharedEditor::submitUri);
+    connect(shEditor, &SharedEditor::uriResultArrived, uriWidget, &UriWidget::uriResultArrived);
+    connect(uriWidget, &UriWidget::setStatusBarText, statusBar, &QStatusBar::showMessage);
+    connect(shEditor, &SharedEditor::fsNameArrived, addUserWidget, &AddUserWidget::fsNameArrived);
+    connect(addUserWidget, &AddUserWidget::searchFsName, shEditor, &SharedEditor::searchFsName);
+
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -97,6 +105,8 @@ void MainWindow::loginFinished() {
     toolBar->show();
 
     //inviteUserWidget->show();
+    uriWidget->show();
+
 }
 
 void MainWindow::loginSettings() {
@@ -171,6 +181,7 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
     layoutEditor->setContentsMargins(0,0,0,0);
     addUserWidget = new AddUserWidget(this);
     inviteUserWidget = new InviteUserWidget(this);
+    uriWidget = new UriWidget(this);
 
     widgetEditor->hide();
 

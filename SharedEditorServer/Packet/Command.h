@@ -28,6 +28,8 @@ public:
         invite = 13,
         lsInvite = 14,
         ctrlInvite = 15,
+        uri = 16,
+        fsName = 17,
     }cmd_t;
 
     Command(qint32 siteId, cmd_t cmd, QVector<QString> args);
@@ -36,25 +38,21 @@ public:
     void setArgs(const QVector<QString> &args);
     cmd_t getCmd() const;
     void setCmd(cmd_t cmd);
-    bool cdCommand(QString& connectionId);
-    bool mkdirCommand(QString& connectionId);
     bool rmCommand(QString& connectionId);
     QVector<qint32> rmAllCommand(QString& connectionId);
     bool srcCommand(QString &connectionId);
-    bool treeCommand(QString &connectionId);
     QVector<qint32> renCommand(QString& connectionId);
-
     bool lsCommand(QString &connectionId);
     bool svCommand(QString &connectionId);
     bool inviteCommand(QString &connectionId);
     bool lsInviteCommand(QString &connectionId);
     bool ctrlInviteCommand(QString &connectionId);
+    bool uriCommand(QString &connectionId);
+    bool fsNameCommand(QString &connectionId);
 
 private:
     cmd_t _cmd;
     QVector<QString> _args;
-    bool rmDir(QString& connectionId);
-    bool rmFile(QString& connectionId);
 };
 
 
