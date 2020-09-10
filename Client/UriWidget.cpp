@@ -24,7 +24,7 @@ void UriWidget::checkUri() {
         return;
     }
 
-    emit submitUri(input.split("/").last());
+    emit submitUri(input.replace("http://www.sharededitor.com/", ""));
 }
 
 void UriWidget::closeEvent (QCloseEvent *event){
