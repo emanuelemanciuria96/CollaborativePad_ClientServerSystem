@@ -26,8 +26,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     toolBar->hide();
     setCentralWidget(centralWidget);
 
-    menuBar()->addMenu("&Options");
-
     // tree file system view creation
     treeFileSystemSettings();
     // login creation
@@ -84,6 +82,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(uriWidget, &UriWidget::setStatusBarText, statusBar, &QStatusBar::showMessage);
     connect(shEditor, &SharedEditor::fsNameArrived, addUserWidget, &AddUserWidget::fsNameArrived);
     connect(addUserWidget, &AddUserWidget::searchFsName, shEditor, &SharedEditor::searchFsName);
+    connect(treeView, &FileSystemTreeView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
@@ -103,9 +102,9 @@ void MainWindow::loginFinished() {
     dockWidgetTree->show();
     widgetEditor->show();
     toolBar->show();
-
+    createMenus();
     //inviteUserWidget->show();
-    uriWidget->show();
+    //uriWidget->show();
 
 }
 
@@ -184,7 +183,6 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
     uriWidget = new UriWidget(this);
 
     widgetEditor->hide();
-
 }
 
 void MainWindow::startSignIn() {
@@ -236,4 +234,12 @@ void MainWindow::highlightActionSetup() {
 
 void MainWindow::signInWidgetSetup() {
     widgetSignIn = new SignInWidget(this);
+}
+
+void MainWindow::createMenus() {
+    auto fileMenu = menuBar()->addMenu("&File");
+    auto PDFAct = new QAction(tr("&Export to PDF"), this);
+    PDFAct->setStatusTip(tr("Export current file to pdf"));
+    connect(PDFAct, &QAction::triggered, editor, &EditorGUI::exportToPdf);
+    fileMenu->addAction(PDFAct);
 }

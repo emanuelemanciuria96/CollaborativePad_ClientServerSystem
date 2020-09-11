@@ -48,6 +48,7 @@ private:
     void infoWidgetsSettings();
     void highlightActionSetup();
     void signInWidgetSetup();
+    void createMenus();
 
 private:
     void resizeEvent(QResizeEvent * evt)  override {

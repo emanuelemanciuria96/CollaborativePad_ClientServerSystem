@@ -11,12 +11,14 @@ find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Charts REQUIRED)
 find_package(Qt5Network REQUIRED)
+find_package(Qt5PrintSupport REQUIRED)
 list(APPEND LIBRARIES
         Qt5::Core
         Qt5::Gui
         Qt5::Widgets
         Qt5::Charts
-        Qt5::Network)
+        Qt5::Network
+        Qt5::PrintSupport)
 list(REMOVE_DUPLICATES LIBRARIES)
 add_executable(Client main.cpp Packet/Message.h Packet/Message.cpp SharedEditor.h SharedEditor.cpp Packet/Symbols/Symbol.h Packet/Symbols/Symbol.cpp Packet/Symbols/SymId.h Packet/LoginInfo.cpp Packet/LoginInfo.h
         Packet/Payload.cpp Packet/Payload.h Packet/DataPacket.h Packet/DataPacket.cpp LoginDialog.cpp LoginDialog.h EditorGUI.cpp EditorGUI.h Transceiver.cpp Transceiver.h Socket.h
