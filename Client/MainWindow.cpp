@@ -7,10 +7,13 @@
 
 
 MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(parent) {
-    QApplication::setStyle(QStyleFactory::create("fusion"));
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
 //    for(auto k : QStyleFactory::keys()){
 //        std::cout << k.toStdString() << std::endl;
 //    }
+    bkgnd = QPixmap("./textures/texture_clouds_background.png");
+    setStyleSheet();
+
     setWindowTitle("Shared Editor");
     statusBar = new QStatusBar(this);
     statusBar->showMessage ("StatusBar");
@@ -66,16 +69,17 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
 
-    centralWidget->addWidget(widgetLogin);
+    centralWidget->addWidget(loginDialog);
     centralWidget->addWidget(widgetInfoEditC);
     centralWidget->addWidget(widgetEditor);
     centralWidget->addWidget(widgetSignIn);
-//    this->setCentralWidget(widgetLogin);
 
+
+//    this->setCentralWidget(widgetLogin);
 }
 
 void MainWindow::loginFinished() {
-    widgetLogin->hide();
+//    widgetLogin->hide();
     emit fileSystemRequest();
     centralWidget->setCurrentWidget(widgetEditor);
     dockWidgetTree->show();
@@ -84,42 +88,34 @@ void MainWindow::loginFinished() {
 }
 
 void MainWindow::loginSettings() {
-
-    widgetLogin = new QWidget(this);
-
-    QPalette p1{};
-    QImage loginBackground = QImage("./textures/texture_clouds_background.png");
-    QBrush brush1(loginBackground);
-    p1.setBrush(QPalette::Window,brush1);
-    widgetLogin->setAutoFillBackground(true);
-    widgetLogin->setPalette(p1);
-    widgetLogin->setLayout( new QGridLayout(widgetLogin) );
-
-    auto *boxLogin = new QGroupBox(widgetLogin);
-    loginDialog = new LoginDialog(boxLogin);
-    boxLogin->setLayout(new QVBoxLayout());
+//    widgetLogin = new QWidget(this);
+//    widgetLogin->setLayout( new QGridLayout(widgetLogin) );
+//
+//    auto *boxLogin = new QGroupBox(widgetLogin);
+    loginDialog = new LoginDialog(this);
+//    boxLogin->setLayout(new QVBoxLayout());
 
     // pinting box
-    QRgb rgbColor = loginBackground.pixel(0,0);
+//    QRgb rgbColor = loginBackground.pixel(0,0);
 
-    QPalette p2{};
-    QLinearGradient grad(0,50,0,0);
-    grad.setColorAt(0,QColor(rgbColor));
-    grad.setColorAt(1,Qt::lightGray);
-    QBrush brush2(grad);
-    p2.setBrush(QPalette::Window,brush2);
-    boxLogin->setAutoFillBackground(true);
-    boxLogin->setPalette(p2);
+//    QPalette p2{};
+//    QLinearGradient grad(0,50,0,0);
+//    grad.setColorAt(0,QColor(rgbColor));
+//    grad.setColorAt(1,Qt::lightGray);
+//    QBrush brush2(grad);
+//    p2.setBrush(QPalette::Window,brush2);
+//    boxLogin->setAutoFillBackground(true);
+//    boxLogin->setPalette(p2);
 
     /*boxLogin->setStyleSheet("QGroupBox {border: 0px;"
                             "border-radius: 15px;"
                             "margin-top: 1ex;}");
                             */
-    boxLogin->setTitle("login");
+//    boxLogin->setTitle("login");
     //boxLogin->layout()->addWidget(new QLabel("Please insert your user and password in the following boxes",widgetLogin));
-    boxLogin->layout()->addWidget(loginDialog);
+//    boxLogin->layout()->addWidget(loginDialog);
 
-    dynamic_cast<QGridLayout*>(widgetLogin->layout())->addWidget(boxLogin,1,1,4,1,Qt::AlignCenter);
+//    dynamic_cast<QGridLayout*>(widgetLogin->layout())->addWidget(boxLogin,1,1,4,1,Qt::AlignCenter);
 
 }
 
@@ -180,7 +176,7 @@ void MainWindow::infoWidgetsSettings() {
 }
 
 void MainWindow::backToLogIn() {
-    centralWidget->setCurrentWidget(widgetLogin);
+    centralWidget->setCurrentWidget(loginDialog);
 }
 
 void MainWindow::openAddUser(const QString& fileName) {
@@ -200,4 +196,30 @@ void MainWindow::highlightActionSetup() {
 
 void MainWindow::signInWidgetSetup() {
     widgetSignIn = new SignInWidget(this);
+}
+
+void MainWindow::resizeEvent(QResizeEvent *evt) {
+    QWidget::resizeEvent(evt);
+    QPalette p = palette();
+    p.setBrush(QPalette::Window,bkgnd.scaled(centralWidget->size(), Qt::KeepAspectRatioByExpanding));
+
+    QLinearGradient grad(500,500,1000,1000);
+    grad.setColorAt(0,QColor("#4b71e3"));
+    grad.setColorAt(1,QColor("#87b5ff"));
+    QBrush brush2(grad);
+//    p.setBrush(QPalette::Window,brush2);
+
+    centralWidget->setAutoFillBackground(true);
+    centralWidget->setPalette(p);
+
+}
+
+void MainWindow::setStyleSheet() {
+    qApp->setStyleSheet("QWidget {font-family: helvetica}"
+                        "QPushButton {border-style: solid; border-width: 2px; border-color: #8fc1ed; border-radius: 12px; "
+                        "background-color: white; min-width: 4em; padding: 3px; padding-left: 10px; padding-right:10px; font: 9pt; color: #182c3d;}"
+                        "QPushButton:pressed {background-color: lightblue}"
+                        "QLabel {color: white; font: 14pt}");
+
+
 }

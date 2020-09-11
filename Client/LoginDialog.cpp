@@ -8,24 +8,26 @@
 LoginDialog::LoginDialog(QWidget *parent) : QWidget(parent){
     abort = true;
     setUpGUI();
-    //setWindowTitle("User login");
-
 }
 
 void LoginDialog::setUpGUI() {
     //imposto il layout
     auto formGridLayout = new QGridLayout(this);
+    auto innerWidget = new QWidget(this);
+    auto containerLayout = new QVBoxLayout(this);
 
     //inizializzo la LineEdit dell'username
     editUsername = new QLineEdit(this);
-    editUsername->setStyleSheet("QLineEdit { background: white; }");
+//    editUsername->setStyleSheet("QLineEdit { background: white; }");
     editUsername->setPlaceholderText("Username");
     //inizializzo la LineEdit della password
     editPassword = new QLineEdit(this);
-    editPassword->setStyleSheet("QLineEdit { background: white; }");
+//    editPassword->setStyleSheet("QLineEdit { background: white; }");
     editPassword->setEchoMode(QLineEdit::Password);
     editPassword->setPlaceholderText("Password");
 
+    auto title = new QLabel("Log in into your account");
+//    title->setStyleSheet("QLabel {color: white; font:14pt}");
     //inizializzo le labels
 //    labelUsername = new QLabel(this);
 //    labelPassword = new QLabel(this);
@@ -38,10 +40,10 @@ void LoginDialog::setUpGUI() {
     //inizializzo buttons
     buttons = new QDialogButtonBox(this);
     buttons->addButton(QDialogButtonBox::Ok);
-    signInButton = new QPushButton("Sign in", this);
+    signInButton = new QPushButton("Sign up", this);
     buttons->addButton(signInButton ,QDialogButtonBox::ActionRole);
-    buttons->button(QDialogButtonBox::Ok)->setText("Login");
-
+    buttons->button(QDialogButtonBox::Ok)->setText("Log in");
+//    signInButton->setStyleSheet("QPushButton {border-style: outset; border-width: 2px; border-color: beige}");
     //connect per chiudere la finestra
     //connect(buttons->button(QDialogButtonBox::cancel),SIGNAL(clicked()), this, SLOT(close()));
 
@@ -52,21 +54,23 @@ void LoginDialog::setUpGUI() {
     connect(signInButton,&QPushButton::clicked,this, &LoginDialog::slotSignIn);
 
     //posiziono gli elementi
-//    formGridLayout->addWidget(labelUsername,0,0);
-    formGridLayout->addWidget(editUsername,0,0,1,8);
-//    formGridLayout->addWidget(labelPassword,1,0);
-    formGridLayout->addWidget(editPassword,1,0,1,8);
-    formGridLayout->addWidget(buttons,2,0,1,6, Qt::AlignHCenter);
-    formGridLayout->addWidget(labelResult, 3, 0, 1, 8);
+    formGridLayout->addWidget(title, 0 ,0,1,1);
+    formGridLayout->setRowMinimumHeight(1,10);
+    formGridLayout->addWidget(editUsername,2,0,1,1);
+    formGridLayout->setRowMinimumHeight(3,10);
+    formGridLayout->addWidget(editPassword,4,0,1,1);
+    formGridLayout->setRowMinimumHeight(5,10);
+    formGridLayout->addWidget(buttons,6,0,1,1, Qt::AlignCenter);
+    formGridLayout->addWidget(labelResult, 7, 0, 1, 8);
 
     //imposto la grandezza della finestra
-    //setMinimumSize(222,125);
-    setMinimumSize(100,100);
-    auto size = QGuiApplication::primaryScreen()->size();
-    this->resize(size.width()*0.1,size.height()*0.1);
-    std::cout << this->size().width() << "x" << this->size().height() << std::endl;
-    setLayout(formGridLayout);
-
+    innerWidget->setMinimumSize(100,100);
+//    auto size = QGuiApplication::primaryScreen()->size();
+//    this->resize(size.width()*0.1,size.height()*0.1);
+//    std::cout << this->size().width() << "x" << this->size().height() << std::endl;
+    innerWidget->setLayout(formGridLayout);
+    containerLayout->addWidget(innerWidget,0,Qt::AlignCenter);
+    setLayout(containerLayout);
 }
 
 void LoginDialog::setUsername(QString &username) {

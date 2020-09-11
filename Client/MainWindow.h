@@ -36,6 +36,7 @@ private:
     QAction* highlightAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
+    QPixmap bkgnd;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -43,6 +44,8 @@ private:
     void infoWidgetsSettings();
     void highlightActionSetup();
     void signInWidgetSetup();
+    void resizeEvent(QResizeEvent *evt) override;
+    void setStyleSheet();
 
  signals:
     void fileSystemRequest();

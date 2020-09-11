@@ -22,6 +22,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Client.dir/Packet/Symbols/Symbol.cpp.obj"
   "CMakeFiles/Client.dir/RemoteCursor.cpp.obj"
   "CMakeFiles/Client.dir/SharedEditor.cpp.obj"
+  "CMakeFiles/Client.dir/SignInWidget.cpp.obj"
   "CMakeFiles/Client.dir/Transceiver.cpp.obj"
   "CMakeFiles/Client.dir/main.cpp.obj"
   "Client.exe"
