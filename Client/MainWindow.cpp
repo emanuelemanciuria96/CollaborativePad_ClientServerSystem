@@ -103,7 +103,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 void MainWindow::loginFinished() {
     widgetLogin->hide();
 //    widgetLogin->hide();
-    emit fileSystemRequest();
     centralWidget->setCurrentWidget(widgetEditor);
     dockWidgetTree->show();
     widgetEditor->show();

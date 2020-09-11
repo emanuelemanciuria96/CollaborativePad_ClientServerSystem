@@ -10,6 +10,8 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/FileSystemTreeView.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/FileSystemTreeView.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/InfoWidget.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/InfoWidget.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/InfoWidgetEdit.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/InfoWidgetEdit.cpp.obj"
+  "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/InviteUserWidget.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/InviteUserWidget.cpp.obj"
+  "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/InviteUserWidgetItem.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/MainWindow.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/MainWindow.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/MyTextEdit.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/MyTextEdit.cpp.obj"
@@ -26,6 +28,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SharedEditor.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SignInWidget.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/SignInWidget.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Transceiver.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Transceiver.cpp.obj"
+  "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UriWidget.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/UriWidget.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/main.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
@@ -36,6 +39,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
   "QT_CORE_LIB"
   "QT_GUI_LIB"
   "QT_NETWORK_LIB"
+  "QT_PRINTSUPPORT_LIB"
   "QT_WIDGETS_LIB"
   )
 
@@ -50,6 +54,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "C:/Qt/5.13.1/mingw73_64/include/QtWidgets"
   "C:/Qt/5.13.1/mingw73_64/include/QtCharts"
   "C:/Qt/5.13.1/mingw73_64/include/QtNetwork"
+  "C:/Qt/5.13.1/mingw73_64/include/QtPrintSupport"
   )
 
 # Targets to which this target links.

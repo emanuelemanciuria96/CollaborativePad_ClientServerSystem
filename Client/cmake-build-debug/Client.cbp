@@ -5,7 +5,7 @@
 		<Option title="Client"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\Qt\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5Core\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5Gui\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5Widgets\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5Charts\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5Network\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\Qt\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5Core\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5Gui\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5Widgets\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5Charts\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5Network\;CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5PrintSupport\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug"/>
@@ -29,6 +29,7 @@
 					<Add option="-DQT_WIDGETS_LIB"/>
 					<Add option="-DQT_CHARTS_LIB"/>
 					<Add option="-DQT_NETWORK_LIB"/>
+					<Add option="-DQT_PRINTSUPPORT_LIB"/>
 					<Add directory="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/include"/>
 					<Add directory="C:/Qt/5.13.1/mingw73_64/include"/>
 					<Add directory="C:/Qt/5.13.1/mingw73_64/include/QtCore"/>
@@ -38,6 +39,7 @@
 					<Add directory="C:/Qt/5.13.1/mingw73_64/include/QtWidgets"/>
 					<Add directory="C:/Qt/5.13.1/mingw73_64/include/QtCharts"/>
 					<Add directory="C:/Qt/5.13.1/mingw73_64/include/QtNetwork"/>
+					<Add directory="C:/Qt/5.13.1/mingw73_64/include/QtPrintSupport"/>
 					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
 					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
 					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
@@ -64,6 +66,7 @@
 					<Add option="-DQT_WIDGETS_LIB"/>
 					<Add option="-DQT_CHARTS_LIB"/>
 					<Add option="-DQT_NETWORK_LIB"/>
+					<Add option="-DQT_PRINTSUPPORT_LIB"/>
 					<Add directory="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/include"/>
 					<Add directory="C:/Qt/5.13.1/mingw73_64/include"/>
 					<Add directory="C:/Qt/5.13.1/mingw73_64/include/QtCore"/>
@@ -73,6 +76,7 @@
 					<Add directory="C:/Qt/5.13.1/mingw73_64/include/QtWidgets"/>
 					<Add directory="C:/Qt/5.13.1/mingw73_64/include/QtCharts"/>
 					<Add directory="C:/Qt/5.13.1/mingw73_64/include/QtNetwork"/>
+					<Add directory="C:/Qt/5.13.1/mingw73_64/include/QtPrintSupport"/>
 					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
 					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
 					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
@@ -152,6 +156,18 @@
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/InfoWidgetEdit.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/InviteUserWidget.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/InviteUserWidget.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/InviteUserWidgetItem.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/InviteUserWidgetItem.h">
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/LoginDialog.cpp">
@@ -256,6 +272,12 @@
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Transceiver.h">
 			<Option target="Client"/>
 		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UriWidget.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UriWidget.h">
+			<Option target="Client"/>
+		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/adduserwidget.ui">
 			<Option target="Client"/>
 		</Unit>
@@ -268,7 +290,16 @@
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/infowidgetedit.ui">
 			<Option target="Client"/>
 		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/inviteuserwidget.ui">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/inviteuserwidgetitem.ui">
+			<Option target="Client"/>
+		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/main.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/uriwidget.ui">
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/CMakeLists.txt">
@@ -369,6 +400,15 @@
 		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/../../../../../../Qt/5.13.1/mingw73_64/lib/cmake/Qt5Network/Qt5Network_QGenericEnginePlugin.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5Network\"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/../../../../../../Qt/5.13.1/mingw73_64/lib/cmake/Qt5PrintSupport/Qt5PrintSupportConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5PrintSupport\"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/../../../../../../Qt/5.13.1/mingw73_64/lib/cmake/Qt5PrintSupport/Qt5PrintSupportConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5PrintSupport\"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/../../../../../../Qt/5.13.1/mingw73_64/lib/cmake/Qt5PrintSupport/Qt5PrintSupport_QWindowsPrinterSupportPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\Qt\5.13.1\mingw73_64\lib\cmake\Qt5PrintSupport\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>
