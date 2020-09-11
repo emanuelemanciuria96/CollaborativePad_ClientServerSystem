@@ -196,6 +196,8 @@ void SharedEditor::process(DataPacket pkt) {
         case DataPacket::textTyping :
             if(isFileOpened)
                 processMessages(*std::dynamic_pointer_cast<StringMessages>(pkt.getPayload()));
+            else
+                std::cout<<"arrivati messaggi che non devono essere inviati"<<std::endl;
             break;
         case DataPacket::command :
             processCommand(*std::dynamic_pointer_cast<Command>(pkt.getPayload()));
@@ -204,7 +206,8 @@ void SharedEditor::process(DataPacket pkt) {
             processFileInfo(*std::dynamic_pointer_cast<FileInfo>(pkt.getPayload()));
             break;
         case DataPacket::cursorPos:
-            processCursorPos(*std::dynamic_pointer_cast<CursorPosition>(pkt.getPayload()));
+            if(isFileOpened)
+                processCursorPos(*std::dynamic_pointer_cast<CursorPosition>(pkt.getPayload()));
             break;
         default:
             throw std::exception();
@@ -251,6 +254,11 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
             break;
 
         case LoginInfo::login_error:
+            emit loginError();
+            break;
+
+        case LoginInfo::login_alconn_error:
+            std::cout<<"user already logged error"<<std::endl;
             emit loginError();
             break;
 
@@ -372,28 +380,8 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
 void SharedEditor::processCommand(Command& cmd){
 
     switch (cmd.getCmd()) {
-        case (Command::cd): {
-           processCdCommand(cmd);
-           break;
-        }
-
         case (Command::rm): {
-            break;
-        }
-
-        case (Command::cp): {
-            break;
-        }
-
-        case (Command::mv): {
-            break;
-        }
-
-        case (Command::opn): {
-            break;
-        }
-
-        case (Command::cls): {
+            processRmCommand(cmd);
             break;
         }
 
@@ -406,15 +394,29 @@ void SharedEditor::processCommand(Command& cmd){
             break;
         }
 
+        case (Command::invite): {
+            processInviteCommand(cmd);
+            break;
+        }
+
+        case (Command::lsInvite): {
+            processLsInviteCommand(cmd);
+            break;
+        }
+
+        case (Command::uri): {
+            processUriCommand(cmd);
+            break;
+        }
+
+        case (Command::fsName): {
+            processFsNameCommand(cmd);
+            break;
+        }
+
         default:
             std::cout << "Coglione errore nel Command" << std::endl;
     }
-}
-
-void SharedEditor::processCdCommand(Command& cmd){
-    std::cout << "cd args:" << std::endl;
-    for (auto &a: cmd.getArgs())
-        std::cout << a.toStdString() << std::endl;
 }
 
 void SharedEditor::processLsCommand(Command& cmd){
@@ -427,6 +429,21 @@ void SharedEditor::processLsCommand(Command& cmd){
     }
 
     emit filePathsArrived(args);
+}
+
+void SharedEditor::processRmCommand(Command &cmd) {
+    auto args = cmd.getArgs();
+
+    if(fileOpened == args.first() )
+        closeFile();
+
+    auto list = args.first().split("/");
+
+    if( _user == list[0] )
+            emit fileDeletion(list.last());
+    else
+            emit fileDeletion(args.first());
+
 }
 
 void SharedEditor::processRenCommand(Command& cmd) {
@@ -444,13 +461,63 @@ void SharedEditor::processRenCommand(Command& cmd) {
 
 }
 
+void SharedEditor::processLsInviteCommand(Command &cmd) {
+    emit inviteListArrived(cmd.getArgs());
+}
+
+void SharedEditor::processInviteCommand(Command& cmd) {
+    emit inviteResultArrived(cmd.getArgs().first());
+}
+
+void SharedEditor::processUriCommand(Command &cmd) {
+    auto result = cmd.getArgs().first();
+    auto path = cmd.getArgs().last();
+    emit uriResultArrived(cmd.getArgs());
+    if (result == "valid" || result == "invite-existing")
+        emit filePathsArrived(QVector<QString>(1, path));
+}
+
+void SharedEditor::processFsNameCommand(Command &cmd) {
+    emit fsNameArrived(cmd.getArgs().first());
+}
+
 void SharedEditor::clearText(){
     emit deleteAllText();
 }
 
-void SharedEditor::requireFileSystem() {
+void SharedEditor::requireFile(QString fileName) {
 
-    auto cmd = std::make_shared<Command>(_siteId,Command::ls,QVector<QString>());
+    if( fileName.split("/").size()==1 )
+        fileName = _user+"/"+fileName;
+
+    if( fileOpened == fileName ){
+        return;
+    }else if(fileOpened != ""){
+        QVector<QString> vec = {fileOpened};
+        auto cmd = std::make_shared<Command>(_siteId,Command::cls,vec);
+        DataPacket packet(_siteId,0,DataPacket::command);
+        packet.setPayload(cmd);
+
+        closeFile();
+
+        int id = qMetaTypeId<DataPacket>();
+        emit transceiver->getSocket()->sendPacket(packet);
+    }
+
+
+    /// quando si nasconderà l'editor, questo può essere tolto
+    if( _symbols.size()>2 ) {
+        clearText();
+        _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
+    }
+    /// fino a qui
+
+    fileOpened = fileName;
+    isFileOpened = false; // da questo momento fino all'arrivo del FileInfo deve stare a false
+    _counter = 0;
+
+    QVector<QString> vec = {std::move(fileName)};
+    auto cmd = std::make_shared<Command>(_siteId,Command::opn,vec);
     DataPacket packet(_siteId,0,DataPacket::command);
     packet.setPayload(cmd);
 
@@ -459,31 +526,15 @@ void SharedEditor::requireFileSystem() {
 
 }
 
-void SharedEditor::requireFile(QString fileName) {
+void SharedEditor::requireFileAdd(QString fileName) {
 
-    if( fileOpened == fileName.split("/").last() ){
-        return;
-    }else{
-        fileOpened = fileName.split("/").last();
-        isFileOpened = false;
-    }
-    if( fileName.split("/").size()==1 )
-        fileName = _user+"/"+fileName;
-
+    fileName = _user+"/"+fileName;
     QVector<QString> vec = {std::move(fileName)};
-    auto cmd = std::make_shared<Command>(_siteId,Command::opn,vec);
+
+    auto cmd = std::make_shared<Command>(_siteId,Command::sv,vec);
     DataPacket packet(_siteId,0,DataPacket::command);
     packet.setPayload(cmd);
 
-    if( !_symbols.empty() ) {
-        clearText();
-        _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
-    }
-
-
-    _counter = 0;
-
-    int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
 
 }
@@ -498,6 +549,25 @@ void SharedEditor::requireFileRename(QString before, QString after) {
     QVector<QString> vec = {std::move(before),std::move(after)};
 
     auto cmd = std::make_shared<Command>(_siteId,Command::ren,vec);
+    DataPacket packet(_siteId,0,DataPacket::command);
+    packet.setPayload(cmd);
+
+    int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
+}
+
+void SharedEditor::requireFileDelete(QString fileName) {
+
+    if( fileName.split("/").size()==1  )
+        fileName = _user + "/" + fileName;
+
+    if(fileOpened == fileName)
+        closeFile();
+
+    QVector<QString> vec = {std::move(fileName)};
+
+    auto cmd = std::make_shared<Command>(_siteId,Command::rm,vec);
     DataPacket packet(_siteId,0,DataPacket::command);
     packet.setPayload(cmd);
 
@@ -522,13 +592,40 @@ void SharedEditor::searchUser(const QString &user) {
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
-void SharedEditor::submit(const QString& file, const QString& user) {
+void SharedEditor::searchFsName(const QString& name){
+    QVector<QString> args;
+    args.push_back(_user);
+    args.push_back(name);
+    DataPacket packet(_siteId, 0, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::fsName, args));
+    emit transceiver->getSocket()->sendPacket(packet);
+}
+
+void SharedEditor::submitInvite(const QString& file, const QString& user) {
     QVector<QString> args;
     args.push_back(_user);
     args.push_back(file);
     args.push_back(user);
     DataPacket packet(_siteId, 0, DataPacket::command);
     packet.setPayload( std::make_shared<Command>( _siteId, Command::invite, args));
+    emit transceiver->getSocket()->sendPacket(packet);
+}
+
+void SharedEditor::sendInviteAnswer(const QString& mode, const QString& user, const QString& filename) {
+    QVector<QString> args;
+    args.push_back(mode);
+    args.push_back(user);
+    args.push_back(filename);
+    DataPacket packet(_siteId, 0, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::ctrlInvite, args));
+    emit transceiver->getSocket()->sendPacket(packet);
+    if (mode == "accept")
+        emit filePathsArrived(QVector<QString>(1, QString(user+"/"+filename)));
+}
+
+void SharedEditor::submitUri(const QString& file){
+    DataPacket packet(_siteId, 0, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::uri, QVector<QString>(1, file)));
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
@@ -569,4 +666,14 @@ bool SharedEditor::getHighlighting() {
     return highlighting;
 }
 
+void SharedEditor::closeFile() {
+
+    fileOpened = "";
+    isFileOpened = false;
+    if( !_symbols.empty() ) {
+        clearText();
+        _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
+    }
+
+}
 

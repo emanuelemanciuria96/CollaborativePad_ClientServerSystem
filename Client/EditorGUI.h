@@ -52,7 +52,6 @@ private:
    // void setupFileActions();
     void setupEditActions();
     void setupTextActions();
-    void setCurrentFileName(const QString &filename);
     bool load(const QString &f);
     void loadSymbols();
     void updateRemoteCursors(qint32 mySiteId, int pos, Message::action_t action);
@@ -78,6 +77,8 @@ public slots:
     void updateRemoteCursorPos(qint32 pos, qint32 siteId);
     void removeCursor(qint32 siteId);
     void highlight(qint32 pos, qint32 siteId);
+    void exportToPdf();
+    void setCurrentFileName(QString filename);
 
 signals:
     void clear();

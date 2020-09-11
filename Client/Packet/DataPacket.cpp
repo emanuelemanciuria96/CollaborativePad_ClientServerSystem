@@ -10,7 +10,7 @@ DataPacket::DataPacket() {
     errcode = 0;
 }
 
-DataPacket::DataPacket(qint32 source, quint32 errcode, data_t typeOfData, Payload* pl,QObject *parent)
+DataPacket::DataPacket(qint32 source, quint32 errcode, data_t typeOfData, std::shared_ptr<Payload> pl,QObject *parent)
         : source(source), errcode(errcode), type_of_data(typeOfData),payload(pl),QObject(parent) {}
 
 DataPacket::DataPacket(const DataPacket &packet) {

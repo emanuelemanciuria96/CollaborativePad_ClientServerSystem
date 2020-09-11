@@ -22,6 +22,7 @@ public:
         update_info = 202,
         login_error = 400,
         signup_error = 401,
+        login_alconn_error = 402,
         login_ok = 100,
         signup_ok = 101,
         search_user_request = 300,

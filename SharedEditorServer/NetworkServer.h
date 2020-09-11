@@ -36,6 +36,7 @@ public:
     static void localErase(Payload &pl);
     static void processOpnCommand(Payload &pl);
     static void processClsCommand(Payload &pl);
+    static void processRmCommand(Payload &pl);
 
 public slots:
     void deleteThread(QPointer<QThread> th);
@@ -53,10 +54,6 @@ private:
 
     void setThreadId();
     static std::shared_mutex sym_mutex;
-
-
-    static void show_file(QString& fileName);
-    static QString to_string(std::vector<Symbol> symbles);
 
 protected:
     void incomingConnection(qintptr socketDesc) Q_DECL_OVERRIDE;

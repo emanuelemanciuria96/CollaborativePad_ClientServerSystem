@@ -5,6 +5,7 @@
 #include <QtSql/QSqlDatabase>
 #include <QApplication>
 #include <QtCore/QBuffer>
+#include "MyExceptions/LoginException.h"
 
 
 std::shared_mutex NetworkServer::sym_mutex;
@@ -53,7 +54,7 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
     std::cout<<"NetworkServer::incomingConnection line 30, thread "<<std::this_thread::get_id()<<std::endl;
     qDebug()<< "Creating Thread";
 
-    ServerThread *thread = new ServerThread(socketDesc,msgHandler.get());
+    ServerThread *thread = new ServerThread(socketDesc,msgHandler);
     thread->moveToThread(thread);
 
     connect(thread,&ServerThread::deleteMe,this,&NetworkServer::deleteThread);
@@ -63,9 +64,8 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
                 qRegisterMetaType<QPointer<QThread>>("QPointer<QThread>");
                 emit thread->deleteMe(th);
             });
-    // adoperando una chiusura incapsulo il puntatore al thread, ciò mi permette di evitare
-    // di costruirmi una struttura dati che mi tenga traccia di tutti i thread creati
-    connect(thread,&ServerThread::recordThread,this,&NetworkServer::recordThread,Qt::QueuedConnection);
+    // adoperando una chiusura incapsulo il puntatore al thread
+    connect(thread,&ServerThread::recordThread,this,&NetworkServer::recordThread,Qt::DirectConnection);
 
     thread->start();
 }
@@ -105,15 +105,15 @@ void NetworkServer::processOpnCommand(Payload &pl) {
 
     std::cout<<"opening file: "<<fileName.toStdString()<<std::endl;
 
-    auto symbles = files.openFile(fileName);
+    std::vector<Symbol> symbles(files.openFile(fileName));
 
     auto th = active_threads.find(comm.getSiteId());
     if(th != active_threads.end()){
-        th->second->setFile(symbles);
+        th->second->setFile(std::move(symbles));
         emit th->second->getSocket()->sendFile();
-    }
 
-    fileOpened.store(true);
+        fileOpened.store(true);
+    }
 
 }
 
@@ -125,6 +125,23 @@ void NetworkServer::processClsCommand(Payload &pl) {
     std::cout<<"closing file: "<<fileName.toStdString()<<std::endl;
 
     files.closeFile(fileName);
+
+
+}
+
+void NetworkServer::processRmCommand(Payload &pl) {
+
+    Command &comm = dynamic_cast<Command &>(pl);
+    QString fileName = comm.getArgs().last();
+
+    files.deleteFile(fileName);
+
+    std::cout<<"deleting file: "+fileName.toStdString()<<std::endl;
+
+    fileName = comm.getArgs().first();
+    auto th = active_threads.find(comm.getSiteId());
+    if(th != active_threads.end())
+        emit th->second->getSocket()->sendPendentDelete(fileName);
 
 }
 
@@ -138,6 +155,9 @@ void NetworkServer::saveAllFiles() {
 
 void NetworkServer::recordThread(QPointer<QThread> th) {
     auto thread = dynamic_cast<ServerThread*>(th.data());
+    if( active_threads.find(thread->getSiteID()) != active_threads.end() )
+        throw LoginException("User already logged !");
+
     std::shared_ptr<ServerThread> thread_ptr(thread,[](ServerThread *thread){ thread -> deleteLater(); }); // è necessario ridefinire il distruttore per il tipo ServerThread
     active_threads.insert(std::make_pair(thread->getSiteID(),thread_ptr));
 }
@@ -166,22 +186,3 @@ NetworkServer::~NetworkServer() {
     active_threads.clear();
 }
 
-QString NetworkServer::to_string(std::vector<Symbol> symbles) {
-    QString str;
-
-    std::for_each(symbles.begin(),symbles.end(),
-                  [&str](Symbol s){
-                      str += s.getValue();
-                  });
-
-    return str;
-
-}
-
-
-void NetworkServer::show_file(QString& fileName) {
-
-    std::cout<<"file: "<<fileName.toStdString()<<std::endl<<to_string(*files.openFile(fileName)).toStdString()<<std::endl;
-    files.closeFile(fileName);
-
-}

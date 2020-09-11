@@ -14,6 +14,8 @@
 #include "InfoWidgetEdit.h"
 #include "SignInWidget.h"
 #include "AddUserWidget.h"
+#include "InviteUserWidget.h"
+#include "UriWidget.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -34,8 +36,11 @@ private:
     InfoWidgetEdit* infoWidgetEdit;
     QStackedWidget* centralWidget;
     QAction* highlightAction;
+    QAction* treeShowAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
+    InviteUserWidget* inviteUserWidget;
+    UriWidget* uriWidget;
     QPixmap bkgnd;
 
     void loginSettings();
@@ -46,15 +51,27 @@ private:
     void signInWidgetSetup();
     void resizeEvent(QResizeEvent *evt) override;
     void setStyleSheet();
+    void createMenus();
 
- signals:
-    void fileSystemRequest();
+private:
+    void resizeEvent(QResizeEvent * evt)  override {
+        QMainWindow::resizeEvent(evt);
+        dockWidgetTree->setMaximumWidth(this->size().width() / 4);
+        dockWidgetTree->setMinimumWidth(this->size().width() / 4);
+    }
+
+signals:
 
 public slots:
     void loginFinished();
     void startSignIn();
     void backToLogIn();
     void openAddUser(const QString& fileName);
+    void showHideTreeDock(bool checked=false){
+        if(dockWidgetTree->isHidden())
+            dockWidgetTree->show();
+        else dockWidgetTree->hide();
+    }
 };
 
 

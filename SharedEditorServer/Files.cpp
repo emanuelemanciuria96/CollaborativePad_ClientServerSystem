@@ -9,26 +9,26 @@
 enum{file,counter,mutex,dirty_bit};
 
 
-std::shared_ptr<const std::vector<Symbol>> Files::openFile(QString& fileName) {
+std::vector<Symbol> Files::openFile(QString& fileName) {
 
     std::vector<Symbol> symbles;
-    std::shared_ptr<const std::vector<Symbol>> copy_syms;
 
     std::unique_lock ul(files_mtx);
     auto i = opened_files.find(fileName);
     if ( i!=opened_files.end() ){
         std::unique_lock ul_sym(*std::get<mutex>(i->second));
         std::get<counter>(i->second)++;
-        copy_syms = std::shared_ptr<const std::vector<Symbol>>(new std::vector<Symbol>(std::get<file>(i->second)) );
+        symbles = std::get<file>(i->second);
     }
     else{
-        loadFileJson(fileName.toStdString(),symbles);
-        copy_syms = std::shared_ptr<const std::vector<Symbol>>(new std::vector<Symbol>(symbles) );
-        opened_files.insert( std::make_pair( fileName,std::make_tuple(symbles,1,new std::shared_mutex(),false) ) );
+        auto i = opened_files.insert( std::make_pair( fileName,std::make_tuple(std::vector<Symbol>(),1,new std::shared_mutex(),false) ) ).first;
+        loadFileJson(fileName.toStdString(),std::get<file>(i->second));
+        symbles = std::get<file>(i->second);
     }
+
     ul.unlock();
 
-    return copy_syms;
+    return std::move(symbles);
 }
 
 void Files::closeFile(QString &fileName) {
@@ -46,10 +46,32 @@ void Files::closeFile(QString &fileName) {
             opened_files.erase(i);
         }
     }
+    ul.unlock();
 
     delete tmp;
 
 }
+
+void Files::deleteFile(QString &fileName) {
+
+    std::shared_mutex *tmp = nullptr;
+
+    std::unique_lock ul(files_mtx);
+    auto i = opened_files.find(fileName);
+    if ( i!=opened_files.end() ){
+        tmp = std::get<mutex>(i->second);
+        opened_files.erase(i);
+    }
+    ul.unlock();
+    delete tmp;
+
+    QFile file(".\\files\\"+fileName);
+    file.remove();
+    /*std::string command = "del .\\files\\"+fileName.toStdString();
+    system(command.c_str());
+*/
+}
+
 
 void Files::addSymbolInFile(QString& fileName, Symbol& sym){
 
@@ -93,7 +115,6 @@ void Files::saveAll() {
     std::shared_lock sl(files_mtx);
     for( auto of: opened_files ) {
         std::shared_lock sl_sym(*std::get<mutex>(of.second));
-        std::cout<<" ---- actual number of inserted symbles: "<<std::get<file>(of.second).size()<<std::endl;
         if (!std::get<dirty_bit>(of.second))
             continue;
         saveFileJson(of.first.toStdString(), std::get<file>(of.second));
@@ -127,12 +148,12 @@ void Files::QTsaveFileJson(const std::string& dir,std::vector<Symbol> _symbols){
 }
 */
 
-void Files::saveFileJson(std::string dir,std::vector<Symbol>& _symbols){//vector<symbol> to json
+void Files::saveFileJson(std::string dir,std::vector<Symbol>& symbles){//vector<symbol> to json
     std::ofstream file_id;
-    file_id.open(dir);
+    file_id.open("./files/"+dir);
     Json::Value event;
     int index=0;
-    for(auto itr:_symbols) {
+    for(auto itr: symbles) {
         event[index]["index"] = index;
         event[index]["char"] = (uint)itr.getValue().unicode();
         event[index]["symId"]["siteId"] = itr.getSymId().getSiteId();
@@ -155,8 +176,10 @@ void Files::saveFileJson(std::string dir,std::vector<Symbol>& _symbols){//vector
 }
 
 
-void Files::loadFileJson(std::string dir, std::vector<Symbol> &symbles){//json to vector<symbol>
-    std::ifstream file_input(dir);
+void Files::loadFileJson(std::string dir,std::vector<Symbol>& symbles){ //json to vector<symbol>
+
+    std::ifstream file_input;
+    file_input.open("./files/"+dir);
     Json::Reader reader;
     Json::Value root;
     reader.parse(file_input, root);
@@ -174,16 +197,19 @@ void Files::loadFileJson(std::string dir, std::vector<Symbol> &symbles){//json t
         symbles.insert(symbles.end(),s);
     }
 
+    file_input.close();
+
 }
+
 
 Files::~Files() {
     // anche se successivamente a questo salvataggio ne dovesse essere chiamato qualcun altro
-    // non cambierebbe nulla, anzi, sarebbe ben accetto. L'importante è che, al momento della
+    // non cambierebbe nulla. L'importante è che, al momento della
     // distruzione, ci sia un punto di salvataggio
     saveAll();
     std::unique_lock ul(files_mtx);
-    for( auto item: opened_files ){
-        delete std::get<mutex>(item.second);
-    }
+    for(auto i:opened_files)
+        delete std::get<mutex>(i.second);
     opened_files.clear();
+
 }

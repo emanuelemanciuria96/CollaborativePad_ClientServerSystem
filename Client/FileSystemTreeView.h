@@ -26,12 +26,15 @@ public slots:
     void removeFile(QTreeWidgetItem *item);
     void renameFile(QTreeWidgetItem *item, int column);
     void editFileName(QString &oldName, QString &newName);
+    void remoteFileDeletion(QString &fileName);
     void inviteUser(QTreeWidgetItem *item);
 
 signals:
     void opnFileRequest(QString fileName);
     void rmvFileRequest(QString fileName);
+    void newFileAdded(QString fileName);
     void renFileRequest(QString before, QString after);
+    void fileNameEdited(QString &oldName, QString &newName);
     void inviteRequest(const QString& fileName);
 
 private:
@@ -42,12 +45,13 @@ private:
     QIcon dir_open;
     QIcon dir_close;
     QIcon file_icn;
-    QMenu *rightClickMenu;
+    QMenu *rightClickMenu = nullptr;
     QString previousName;
 
     void setupRightClickMenu();
+    void insertFile();
     QTreeWidgetItem* addChild(QTreeWidgetItem *parent, QString name,QString description);
-    bool isChild(QTreeWidgetItem *parent, QString name);
+    bool isChild(QTreeWidgetItem *parent, QString &name);
 
 };
 

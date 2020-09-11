@@ -155,13 +155,10 @@ void Transceiver::recvMessage(DataPacket& pkt, QDataStream& in) {
 
     pkt.setPayload(std::make_shared<StringMessages>(formattedMessages,siteId));
 
-    std::cout<<" --- number of arrived messages at once "
-        <<std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->stringToMessages().size()<<std::endl;
-
+    auto num = std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->stringToMessages().size();
+    std::cout<<" --- number of arrived messages at once "<<num <<std::endl;
 
     emit readyToProcess(pkt);
-
-    std::cout<<"receaving some messages"<<std::endl;
 
 }
 
@@ -240,7 +237,7 @@ void Transceiver::sendAllMessages() {
 
     int num_mess = messages.size();
 
-    auto *strMess = new StringMessages(messages,_siteID);
+    auto strMess = std::make_shared<StringMessages>(messages,_siteID);
 
     num_mess-=messages.size();
 

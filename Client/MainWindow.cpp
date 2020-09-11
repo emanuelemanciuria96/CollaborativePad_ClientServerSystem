@@ -3,6 +3,7 @@
 //
 
 #include <QtWidgets/QGroupBox>
+#include <QtWidgets/QDockWidget>
 #include "MainWindow.h"
 
 
@@ -16,7 +17,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
     setWindowTitle("Shared Editor");
     statusBar = new QStatusBar(this);
-    statusBar->showMessage ("StatusBar");
+    statusBar->showMessage ("");
     toolBar = new QToolBar("Toolbar",this);
     centralWidget = new QStackedWidget(this);
 
@@ -25,27 +26,28 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     this->addToolBar(toolBar);
     toolBar->setMovable(false);
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-
-    highlightActionSetup();
     toolBar->hide();
     setCentralWidget(centralWidget);
 
-    menuBar()->addMenu("&Options");
-
+    // tree file system view creation
+    treeFileSystemSettings();
     // login creation
     loginSettings();
     // editor creation
     editorSettings(shEditor);
-    // tree file system view creation
-    treeFileSystemSettings();
     // widgetAccount creation
     infoWidgetsSettings();
+    //highlightSetup
+    highlightActionSetup();
     signInWidgetSetup();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
     connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
+    connect(treeView, &FileSystemTreeView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
+    connect(treeView, &FileSystemTreeView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
     connect(shEditor, &SharedEditor::fileNameEdited, treeView, &FileSystemTreeView::editFileName);
+    connect(shEditor, &SharedEditor::fileDeletion, treeView, &FileSystemTreeView::remoteFileDeletion);
     connect(shEditor, &SharedEditor::loginAchieved, this, &MainWindow::loginFinished);
     connect(shEditor, &SharedEditor::loginError, loginDialog, &LoginDialog::slotLoginError);
     connect(shEditor, &SharedEditor::symbolsChanged, editor, &EditorGUI::updateSymbols);
@@ -53,7 +55,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::removeCursor, editor, &EditorGUI::removeCursor);
     connect(shEditor, &SharedEditor::deleteAllText, editor, &EditorGUI::deleteAllText);
     connect(shEditor, &SharedEditor::filePathsArrived, treeView, &FileSystemTreeView::constructFromPaths);
-    connect(this, &MainWindow::fileSystemRequest, shEditor, &SharedEditor::requireFileSystem);
     connect(shEditor, &SharedEditor::userInfoArrived, infoWidget, &InfoWidget::loadData);
     connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
     connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::startSignIn);
@@ -63,8 +64,29 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(widgetSignIn, &SignInWidget::registerRequest, shEditor, &SharedEditor::sendRegisterRequest);
     connect(addUserWidget, &AddUserWidget::searchUser, shEditor, &SharedEditor::searchUser);
     connect(shEditor, &SharedEditor::searchUserResult, addUserWidget, &AddUserWidget::searchUserResult);
-    connect(addUserWidget, &AddUserWidget::submit, shEditor, &SharedEditor::submit);
+    connect(shEditor, &SharedEditor::inviteResultArrived, addUserWidget, &AddUserWidget::inviteResultArrived);
+    connect(addUserWidget, &AddUserWidget::setStatusBarText, statusBar, &QStatusBar::showMessage);
+    connect(addUserWidget, &AddUserWidget::submitInvite, shEditor, &SharedEditor::submitInvite);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::openAddUser);
+    connect(shEditor, &SharedEditor::inviteListArrived, inviteUserWidget, &InviteUserWidget::inviteListArrived);
+    connect(inviteUserWidget, &InviteUserWidget::sendInviteAnswer, shEditor, &SharedEditor::sendInviteAnswer);
+    connect(shEditor, &SharedEditor::fileNameEdited, inviteUserWidget, &InviteUserWidget::editFileName);
+    connect(shEditor, &SharedEditor::fileNameEdited, addUserWidget, &AddUserWidget::editFileName);
+    connect(treeView, &FileSystemTreeView::fileNameEdited, addUserWidget, &AddUserWidget::editFileName);
+    connect(shEditor, &SharedEditor::fileDeletion, inviteUserWidget, &InviteUserWidget::processFileDeleted);
+    connect(treeView, &FileSystemTreeView::rmvFileRequest, addUserWidget, &AddUserWidget::processFileDeleted);
+    connect(treeShowAction, &QAction::triggered,[this](bool checked=false){
+                if(dockWidgetTree->isHidden())
+                    dockWidgetTree->show();
+                else dockWidgetTree->hide();
+            });
+    connect(uriWidget, &UriWidget::submitUri, shEditor, &SharedEditor::submitUri);
+    connect(shEditor, &SharedEditor::uriResultArrived, uriWidget, &UriWidget::uriResultArrived);
+    connect(uriWidget, &UriWidget::setStatusBarText, statusBar, &QStatusBar::showMessage);
+    connect(shEditor, &SharedEditor::fsNameArrived, addUserWidget, &AddUserWidget::fsNameArrived);
+    connect(addUserWidget, &AddUserWidget::searchFsName, shEditor, &SharedEditor::searchFsName);
+    connect(treeView, &FileSystemTreeView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
+
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -79,12 +101,17 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 }
 
 void MainWindow::loginFinished() {
+    widgetLogin->hide();
 //    widgetLogin->hide();
     emit fileSystemRequest();
     centralWidget->setCurrentWidget(widgetEditor);
     dockWidgetTree->show();
     widgetEditor->show();
     toolBar->show();
+    createMenus();
+    //inviteUserWidget->show();
+    //uriWidget->show();
+
 }
 
 void MainWindow::loginSettings() {
@@ -123,7 +150,16 @@ void MainWindow::loginSettings() {
 void MainWindow::treeFileSystemSettings() {
     dockWidgetTree = new QDockWidget(tr("files"),this);
     dockWidgetTree->setAllowedAreas(Qt::LeftDockWidgetArea );
-    this->setAnimated(QMainWindow::AnimatedDocks);
+    dockWidgetTree->setFeatures(QDockWidget::DockWidgetClosable);
+    dockWidgetTree->setMouseTracking(true);
+
+    treeShowAction = new QAction();
+    treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
+    toolBar->addAction(treeShowAction);
+
+    auto voidWidget = new QWidget();
+    dockWidgetTree->setTitleBarWidget(voidWidget);
+
     treeView = new FileSystemTreeView(dockWidgetTree);
     dockWidgetTree->setWidget(treeView);
 
@@ -139,11 +175,12 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
     editor->setStyleSheet("QWidget { background: white; }");
     auto layoutEditor = new QVBoxLayout(widgetEditor);
     layoutEditor->addWidget(editor);
-    layoutEditor->setContentsMargins(100,0,100,0);
+    layoutEditor->setContentsMargins(0,0,0,0);
     addUserWidget = new AddUserWidget(this);
+    inviteUserWidget = new InviteUserWidget(this);
+    uriWidget = new UriWidget(this);
 
     widgetEditor->hide();
-
 }
 
 void MainWindow::startSignIn() {
@@ -181,7 +218,6 @@ void MainWindow::backToLogIn() {
 
 void MainWindow::openAddUser(const QString& fileName) {
     addUserWidget->setFile(fileName);
-    addUserWidget->setWindowFlag(Qt::WindowStaysOnTopHint);
     addUserWidget->show();
 }
 
@@ -197,6 +233,15 @@ void MainWindow::highlightActionSetup() {
 void MainWindow::signInWidgetSetup() {
     widgetSignIn = new SignInWidget(this);
 }
+
+void MainWindow::createMenus() {
+    auto fileMenu = menuBar()->addMenu("&File");
+    auto PDFAct = new QAction(tr("&Export to PDF"), this);
+    PDFAct->setStatusTip(tr("Export current file to pdf"));
+    connect(PDFAct, &QAction::triggered, editor, &EditorGUI::exportToPdf);
+    fileMenu->addAction(PDFAct);
+}
+
 
 void MainWindow::resizeEvent(QResizeEvent *evt) {
     QWidget::resizeEvent(evt);
