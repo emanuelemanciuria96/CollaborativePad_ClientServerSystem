@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EditorGUI_t {
-    QByteArrayData data[21];
-    char stringdata0[243];
+    QByteArrayData data[24];
+    char stringdata0[283];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -52,7 +52,10 @@ QT_MOC_LITERAL(16, 177, 6), // "action"
 QT_MOC_LITERAL(17, 184, 13), // "deleteAllText"
 QT_MOC_LITERAL(18, 198, 21), // "updateRemoteCursorPos"
 QT_MOC_LITERAL(19, 220, 12), // "removeCursor"
-QT_MOC_LITERAL(20, 233, 9) // "highlight"
+QT_MOC_LITERAL(20, 233, 9), // "highlight"
+QT_MOC_LITERAL(21, 243, 11), // "exportToPdf"
+QT_MOC_LITERAL(22, 255, 18), // "setCurrentFileName"
+QT_MOC_LITERAL(23, 274, 8) // "filename"
 
     },
     "EditorGUI\0clear\0\0contentsChange\0pos\0"
@@ -61,7 +64,8 @@ QT_MOC_LITERAL(20, 233, 9) // "highlight"
     "enableSendCursorPos\0updateSymbols\0s\0"
     "siteId\0Message::action_t\0action\0"
     "deleteAllText\0updateRemoteCursorPos\0"
-    "removeCursor\0highlight"
+    "removeCursor\0highlight\0exportToPdf\0"
+    "setCurrentFileName\0filename"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,7 +75,7 @@ static const uint qt_meta_data_EditorGUI[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -79,19 +83,21 @@ static const uint qt_meta_data_EditorGUI[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   69,    2, 0x06 /* Public */,
+       1,    0,   79,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    3,   70,    2, 0x08 /* Private */,
-       7,    0,   77,    2, 0x08 /* Private */,
-       8,    1,   78,    2, 0x08 /* Private */,
-      10,    0,   81,    2, 0x08 /* Private */,
-      11,    0,   82,    2, 0x08 /* Private */,
-      12,    4,   83,    2, 0x0a /* Public */,
-      17,    0,   92,    2, 0x0a /* Public */,
-      18,    2,   93,    2, 0x0a /* Public */,
-      19,    1,   98,    2, 0x0a /* Public */,
-      20,    2,  101,    2, 0x0a /* Public */,
+       3,    3,   80,    2, 0x08 /* Private */,
+       7,    0,   87,    2, 0x08 /* Private */,
+       8,    1,   88,    2, 0x08 /* Private */,
+      10,    0,   91,    2, 0x08 /* Private */,
+      11,    0,   92,    2, 0x08 /* Private */,
+      12,    4,   93,    2, 0x0a /* Public */,
+      17,    0,  102,    2, 0x0a /* Public */,
+      18,    2,  103,    2, 0x0a /* Public */,
+      19,    1,  108,    2, 0x0a /* Public */,
+      20,    2,  111,    2, 0x0a /* Public */,
+      21,    0,  116,    2, 0x0a /* Public */,
+      22,    1,  117,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -107,6 +113,8 @@ static const uint qt_meta_data_EditorGUI[] = {
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    4,   14,
     QMetaType::Void, QMetaType::Int,   14,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    4,   14,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   23,
 
        0        // eod
 };
@@ -128,6 +136,8 @@ void EditorGUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 8: _t->updateRemoteCursorPos((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< qint32(*)>(_a[2]))); break;
         case 9: _t->removeCursor((*reinterpret_cast< qint32(*)>(_a[1]))); break;
         case 10: _t->highlight((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< qint32(*)>(_a[2]))); break;
+        case 11: _t->exportToPdf(); break;
+        case 12: _t->setCurrentFileName((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -171,13 +181,13 @@ int EditorGUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 13)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 13;
     }
     return _id;
 }

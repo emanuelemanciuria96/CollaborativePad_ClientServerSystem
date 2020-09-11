@@ -53,13 +53,6 @@ private:
     void setStyleSheet();
     void createMenus();
 
-private:
-    void resizeEvent(QResizeEvent * evt)  override {
-        QMainWindow::resizeEvent(evt);
-        dockWidgetTree->setMaximumWidth(this->size().width() / 4);
-        dockWidgetTree->setMinimumWidth(this->size().width() / 4);
-    }
-
 signals:
 
 public slots:

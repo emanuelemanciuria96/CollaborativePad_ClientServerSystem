@@ -101,11 +101,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 }
 
 void MainWindow::loginFinished() {
-    widgetLogin->hide();
-//    widgetLogin->hide();
     centralWidget->setCurrentWidget(widgetEditor);
     dockWidgetTree->show();
-    widgetEditor->show();
     toolBar->show();
     createMenus();
     //inviteUserWidget->show();
@@ -255,6 +252,9 @@ void MainWindow::resizeEvent(QResizeEvent *evt) {
 
     centralWidget->setAutoFillBackground(true);
     centralWidget->setPalette(p);
+
+    dockWidgetTree->setMaximumWidth(this->size().width() / 4);
+    dockWidgetTree->setMinimumWidth(this->size().width() / 4);
 
 }
 

@@ -4,6 +4,8 @@
 #include "EWIEGA46WW/moc_FileSystemTreeView.cpp"
 #include "EWIEGA46WW/moc_InfoWidget.cpp"
 #include "EWIEGA46WW/moc_InfoWidgetEdit.cpp"
+#include "EWIEGA46WW/moc_InviteUserWidget.cpp"
+#include "EWIEGA46WW/moc_InviteUserWidgetItem.cpp"
 #include "EWIEGA46WW/moc_LoginDialog.cpp"
 #include "EWIEGA46WW/moc_MainWindow.cpp"
 #include "EWIEGA46WW/moc_MyTextEdit.cpp"
@@ -12,3 +14,4 @@
 #include "EWIEGA46WW/moc_SignInWidget.cpp"
 #include "EWIEGA46WW/moc_Socket.cpp"
 #include "EWIEGA46WW/moc_Transceiver.cpp"
+#include "EWIEGA46WW/moc_UriWidget.cpp"

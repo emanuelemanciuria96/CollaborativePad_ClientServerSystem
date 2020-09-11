@@ -65,6 +65,7 @@ void LoginDialog::setUpGUI() {
 
     //imposto la grandezza della finestra
     innerWidget->setMinimumSize(100,100);
+
 //    auto size = QGuiApplication::primaryScreen()->size();
 //    this->resize(size.width()*0.1,size.height()*0.1);
 //    std::cout << this->size().width() << "x" << this->size().height() << std::endl;

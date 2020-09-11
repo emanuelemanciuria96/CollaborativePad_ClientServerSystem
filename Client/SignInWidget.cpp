@@ -60,7 +60,7 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
 
     middleLayout->addSpacing(10);
     middleLayout->addLayout(imageLayout,0);
-    middleLayout->addSpacing(30);
+    middleLayout->addSpacing(40);
     middleLayout->addLayout(fieldsLayout);
     middleLayout->addSpacing(10);
 
@@ -68,7 +68,7 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     outerLayout->addLayout(middleLayout);
     outerLayout->addWidget(buttons,0, Qt::AlignCenter);
     innerWidget->setLayout(outerLayout);
-    innerWidget->setFixedSize(500,350);
+    innerWidget->setFixedSize(450,350);
 
     containerLayout->addWidget(innerWidget,0, Qt::AlignCenter);
     setLayout(containerLayout);
