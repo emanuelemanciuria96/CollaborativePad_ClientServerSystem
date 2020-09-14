@@ -241,6 +241,12 @@
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SharedEditor.h">
 			<Option target="Client"/>
 		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SignInWidget.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SignInWidget.h">
+			<Option target="Client"/>
+		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Socket.h">
 			<Option target="Client"/>
 		</Unit>

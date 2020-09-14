@@ -36,6 +36,7 @@ private:
     QAction* highlightAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
+    QLabel *numUsers;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -51,6 +52,7 @@ public slots:
     void startSignIn();
     void backToLogIn();
     void openAddUser(const QString& fileName);
+    void setNumUsers(int n);
 };
 
 

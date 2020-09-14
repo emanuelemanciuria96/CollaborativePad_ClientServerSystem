@@ -13,7 +13,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 //    }
     setWindowTitle("Shared Editor");
     statusBar = new QStatusBar(this);
-    statusBar->showMessage ("StatusBar");
+    numUsers = new QLabel(statusBar);
+//    numUsers->setText("Users connected: 0");
+    statusBar->addPermanentWidget(numUsers);
+
     toolBar = new QToolBar("Toolbar",this);
     centralWidget = new QStackedWidget(this);
 
@@ -63,6 +66,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::searchUserResult, addUserWidget, &AddUserWidget::searchUserResult);
     connect(addUserWidget, &AddUserWidget::submit, shEditor, &SharedEditor::submit);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::openAddUser);
+    connect(editor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -200,4 +204,10 @@ void MainWindow::highlightActionSetup() {
 
 void MainWindow::signInWidgetSetup() {
     widgetSignIn = new SignInWidget(this);
+}
+
+void MainWindow::setNumUsers(int n) {
+    auto string = QString("Users online: ");
+    string.append(QString::number(n));
+    numUsers->setText(string);
 }

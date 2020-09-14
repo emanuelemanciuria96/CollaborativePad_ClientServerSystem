@@ -81,7 +81,7 @@ public slots:
 
 signals:
     void clear();
-
+    void setNumUsers(int n);
 public:
     EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);
