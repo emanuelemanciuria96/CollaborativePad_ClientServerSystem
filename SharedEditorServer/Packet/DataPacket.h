@@ -23,7 +23,7 @@ public:
     }data_t;
 
     DataPacket();
-    DataPacket(qint32 source, quint32 errcode, data_t typeOfData,Payload* pl= nullptr,QObject *parent = 0);
+    DataPacket(qint32 source, quint32 errcode, data_t typeOfData,std::shared_ptr<Payload> pl= nullptr,QObject *parent = 0);
     DataPacket(const DataPacket& packet);
     ~DataPacket() = default;
 

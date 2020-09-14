@@ -3,14 +3,18 @@
 //
 
 #include <QtWidgets/QGroupBox>
+#include <QtWidgets/QDockWidget>
 #include "MainWindow.h"
 
 
 MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(parent) {
-    QApplication::setStyle(QStyleFactory::create("fusion"));
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
 //    for(auto k : QStyleFactory::keys()){
 //        std::cout << k.toStdString() << std::endl;
 //    }
+    bkgnd = QPixmap("./textures/texture_clouds_background.png");
+    setStyleSheet();
+
     setWindowTitle("Shared Editor");
     statusBar = new QStatusBar(this);
     numUsers = new QLabel(statusBar);
@@ -25,27 +29,26 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     this->addToolBar(toolBar);
     toolBar->setMovable(false);
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-
-    highlightActionSetup();
     toolBar->hide();
     setCentralWidget(centralWidget);
 
-    menuBar()->addMenu("&Options");
-
+    // tree file system view creation
+    treeFileSystemSettings();
     // login creation
     loginSettings();
     // editor creation
     editorSettings(shEditor);
-    // tree file system view creation
-    treeFileSystemSettings();
     // widgetAccount creation
     infoWidgetsSettings();
+    //highlightSetup
+    highlightActionSetup();
     signInWidgetSetup();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
     connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
     connect(treeView, &FileSystemTreeView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
+    connect(treeView, &FileSystemTreeView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
     connect(shEditor, &SharedEditor::fileNameEdited, treeView, &FileSystemTreeView::editFileName);
     connect(shEditor, &SharedEditor::fileDeletion, treeView, &FileSystemTreeView::remoteFileDeletion);
     connect(shEditor, &SharedEditor::loginAchieved, this, &MainWindow::loginFinished);
@@ -64,66 +67,82 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(widgetSignIn, &SignInWidget::registerRequest, shEditor, &SharedEditor::sendRegisterRequest);
     connect(addUserWidget, &AddUserWidget::searchUser, shEditor, &SharedEditor::searchUser);
     connect(shEditor, &SharedEditor::searchUserResult, addUserWidget, &AddUserWidget::searchUserResult);
-    connect(addUserWidget, &AddUserWidget::submit, shEditor, &SharedEditor::submit);
+    connect(shEditor, &SharedEditor::inviteResultArrived, addUserWidget, &AddUserWidget::inviteResultArrived);
+    connect(addUserWidget, &AddUserWidget::setStatusBarText, statusBar, &QStatusBar::showMessage);
+    connect(addUserWidget, &AddUserWidget::submitInvite, shEditor, &SharedEditor::submitInvite);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::openAddUser);
+    connect(shEditor, &SharedEditor::inviteListArrived, inviteUserWidget, &InviteUserWidget::inviteListArrived);
+    connect(inviteUserWidget, &InviteUserWidget::sendInviteAnswer, shEditor, &SharedEditor::sendInviteAnswer);
+    connect(shEditor, &SharedEditor::fileNameEdited, inviteUserWidget, &InviteUserWidget::editFileName);
+    connect(shEditor, &SharedEditor::fileNameEdited, addUserWidget, &AddUserWidget::editFileName);
+    connect(treeView, &FileSystemTreeView::fileNameEdited, addUserWidget, &AddUserWidget::editFileName);
+    connect(shEditor, &SharedEditor::fileDeletion, inviteUserWidget, &InviteUserWidget::processFileDeleted);
+    connect(treeView, &FileSystemTreeView::rmvFileRequest, addUserWidget, &AddUserWidget::processFileDeleted);
+    connect(treeShowAction, &QAction::triggered,[this](bool checked=false){
+                if(dockWidgetTree->isHidden())
+                    dockWidgetTree->show();
+                else dockWidgetTree->hide();
+            });
+    connect(uriWidget, &UriWidget::submitUri, shEditor, &SharedEditor::submitUri);
+    connect(shEditor, &SharedEditor::uriResultArrived, uriWidget, &UriWidget::uriResultArrived);
+    connect(uriWidget, &UriWidget::setStatusBarText, statusBar, &QStatusBar::showMessage);
+    connect(shEditor, &SharedEditor::fsNameArrived, addUserWidget, &AddUserWidget::fsNameArrived);
+    connect(addUserWidget, &AddUserWidget::searchFsName, shEditor, &SharedEditor::searchFsName);
+    connect(treeView, &FileSystemTreeView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
+
     connect(editor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
 
-    centralWidget->addWidget(widgetLogin);
+    centralWidget->addWidget(loginDialog);
     centralWidget->addWidget(widgetInfoEditC);
     centralWidget->addWidget(widgetEditor);
     centralWidget->addWidget(widgetSignIn);
-//    this->setCentralWidget(widgetLogin);
 
+
+//    this->setCentralWidget(widgetLogin);
 }
 
 void MainWindow::loginFinished() {
-    widgetLogin->hide();
     centralWidget->setCurrentWidget(widgetEditor);
     dockWidgetTree->show();
-    widgetEditor->show();
     toolBar->show();
+    createMenus();
+    //inviteUserWidget->show();
+    //uriWidget->show();
+
 }
 
 void MainWindow::loginSettings() {
-
-    widgetLogin = new QWidget(this);
-
-    QPalette p1{};
-    QImage loginBackground = QImage("./textures/texture_clouds_background.png");
-    QBrush brush1(loginBackground);
-    p1.setBrush(QPalette::Window,brush1);
-    widgetLogin->setAutoFillBackground(true);
-    widgetLogin->setPalette(p1);
-    widgetLogin->setLayout( new QGridLayout(widgetLogin) );
-
-    auto *boxLogin = new QGroupBox(widgetLogin);
-    loginDialog = new LoginDialog(boxLogin);
-    boxLogin->setLayout(new QVBoxLayout());
+//    widgetLogin = new QWidget(this);
+//    widgetLogin->setLayout( new QGridLayout(widgetLogin) );
+//
+//    auto *boxLogin = new QGroupBox(widgetLogin);
+    loginDialog = new LoginDialog(this);
+//    boxLogin->setLayout(new QVBoxLayout());
 
     // pinting box
-    QRgb rgbColor = loginBackground.pixel(0,0);
+//    QRgb rgbColor = loginBackground.pixel(0,0);
 
-    QPalette p2{};
-    QLinearGradient grad(0,50,0,0);
-    grad.setColorAt(0,QColor(rgbColor));
-    grad.setColorAt(1,Qt::lightGray);
-    QBrush brush2(grad);
-    p2.setBrush(QPalette::Window,brush2);
-    boxLogin->setAutoFillBackground(true);
-    boxLogin->setPalette(p2);
+//    QPalette p2{};
+//    QLinearGradient grad(0,50,0,0);
+//    grad.setColorAt(0,QColor(rgbColor));
+//    grad.setColorAt(1,Qt::lightGray);
+//    QBrush brush2(grad);
+//    p2.setBrush(QPalette::Window,brush2);
+//    boxLogin->setAutoFillBackground(true);
+//    boxLogin->setPalette(p2);
 
     /*boxLogin->setStyleSheet("QGroupBox {border: 0px;"
                             "border-radius: 15px;"
                             "margin-top: 1ex;}");
                             */
-    boxLogin->setTitle("login");
+//    boxLogin->setTitle("login");
     //boxLogin->layout()->addWidget(new QLabel("Please insert your user and password in the following boxes",widgetLogin));
-    boxLogin->layout()->addWidget(loginDialog);
+//    boxLogin->layout()->addWidget(loginDialog);
 
-    dynamic_cast<QGridLayout*>(widgetLogin->layout())->addWidget(boxLogin,1,1,4,1,Qt::AlignCenter);
+//    dynamic_cast<QGridLayout*>(widgetLogin->layout())->addWidget(boxLogin,1,1,4,1,Qt::AlignCenter);
 
 }
 
@@ -131,7 +150,16 @@ void MainWindow::loginSettings() {
 void MainWindow::treeFileSystemSettings() {
     dockWidgetTree = new QDockWidget(tr("files"),this);
     dockWidgetTree->setAllowedAreas(Qt::LeftDockWidgetArea );
-    this->setAnimated(QMainWindow::AnimatedDocks);
+    dockWidgetTree->setFeatures(QDockWidget::DockWidgetClosable);
+    dockWidgetTree->setMouseTracking(true);
+
+    treeShowAction = new QAction();
+    treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
+    toolBar->addAction(treeShowAction);
+
+    auto voidWidget = new QWidget();
+    dockWidgetTree->setTitleBarWidget(voidWidget);
+
     treeView = new FileSystemTreeView(dockWidgetTree);
     dockWidgetTree->setWidget(treeView);
 
@@ -147,11 +175,12 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
     editor->setStyleSheet("QWidget { background: white; }");
     auto layoutEditor = new QVBoxLayout(widgetEditor);
     layoutEditor->addWidget(editor);
-    layoutEditor->setContentsMargins(100,0,100,0);
+    layoutEditor->setContentsMargins(0,0,0,0);
     addUserWidget = new AddUserWidget(this);
+    inviteUserWidget = new InviteUserWidget(this);
+    uriWidget = new UriWidget(this);
 
     widgetEditor->hide();
-
 }
 
 void MainWindow::startSignIn() {
@@ -184,12 +213,11 @@ void MainWindow::infoWidgetsSettings() {
 }
 
 void MainWindow::backToLogIn() {
-    centralWidget->setCurrentWidget(widgetLogin);
+    centralWidget->setCurrentWidget(loginDialog);
 }
 
 void MainWindow::openAddUser(const QString& fileName) {
     addUserWidget->setFile(fileName);
-    addUserWidget->setWindowFlag(Qt::WindowStaysOnTopHint);
     addUserWidget->show();
 }
 
@@ -205,6 +233,45 @@ void MainWindow::highlightActionSetup() {
 void MainWindow::signInWidgetSetup() {
     widgetSignIn = new SignInWidget(this);
 }
+
+void MainWindow::createMenus() {
+    auto fileMenu = menuBar()->addMenu("&File");
+    auto PDFAct = new QAction(tr("&Export to PDF"), this);
+    PDFAct->setStatusTip(tr("Export current file to pdf"));
+    connect(PDFAct, &QAction::triggered, editor, &EditorGUI::exportToPdf);
+    fileMenu->addAction(PDFAct);
+}
+
+
+void MainWindow::resizeEvent(QResizeEvent *evt) {
+    QWidget::resizeEvent(evt);
+    QPalette p = palette();
+    p.setBrush(QPalette::Window,bkgnd.scaled(centralWidget->size(), Qt::KeepAspectRatioByExpanding));
+
+    QLinearGradient grad(500,500,1000,1000);
+    grad.setColorAt(0,QColor("#4b71e3"));
+    grad.setColorAt(1,QColor("#87b5ff"));
+    QBrush brush2(grad);
+//    p.setBrush(QPalette::Window,brush2);
+
+    centralWidget->setAutoFillBackground(true);
+    centralWidget->setPalette(p);
+
+    dockWidgetTree->setMaximumWidth(this->size().width() / 4);
+    dockWidgetTree->setMinimumWidth(this->size().width() / 4);
+
+}
+
+void MainWindow::setStyleSheet() {
+    qApp->setStyleSheet("QWidget {font-family: helvetica}"
+                        "QPushButton {border-style: solid; border-width: 2px; border-color: #8fc1ed; border-radius: 12px; "
+                        "background-color: white; min-width: 4em; padding: 3px; padding-left: 10px; padding-right:10px; font: 9pt; color: #182c3d;}"
+                        "QPushButton:pressed {background-color: lightblue}"
+                        "QLabel {color: white; font: 14pt}");
+
+
+}
+
 
 void MainWindow::setNumUsers(int n) {
     auto string = QString("Users online: ");

@@ -17,7 +17,7 @@ static bool initializeDb()
     QSqlDatabase::addDatabase("QSQLITE", "initialize");
     {
         QSqlDatabase db = QSqlDatabase::database("initialize");
-        db.setDatabaseName("login.db");
+        db.setDatabaseName("db/login.db");
         if (!db.open()) {
             QMessageBox::critical(nullptr, QObject::tr("Cannot open database"),
                                   QObject::tr("Unable to establish a database connection.\n"
@@ -53,88 +53,6 @@ static bool initializeDb()
         db.close();
     }
 
-    std::cout << "----------TABELLE VECCHIE----------" << std::endl;
-
-    {
-        QSqlDatabase db = QSqlDatabase::database("initialize");
-        db.setDatabaseName("directories.db");
-        if (!db.open()) {
-            QMessageBox::critical(nullptr, QObject::tr("Cannot open database"),
-                                  QObject::tr("Unable to establish a database connection.\n"
-                                              "This example needs SQLite support. Please read "
-                                              "the Qt SQL driver documentation for information how "
-                                              "to build it.\n\n"
-                                              "Click Cancel to exit."), QMessageBox::Cancel);
-            return false;
-        }
-
-        QSqlQuery query(db);
-        query.exec("CREATE TABLE DIRECTORIES ("  \
-         "SITEID         INT," \
-         "DIRECTORY      TEXT," \
-         "SUBF           TEXT, PRIMARY KEY (SITEID, DIRECTORY, SUBF));");
-        query.exec("DELETE FROM DIRECTORIES");
-        query.exec("INSERT INTO DIRECTORIES ('SITEID', 'DIRECTORY', 'SUBF') VALUES ('1', '', '/Cartella1>D');");
-        query.exec("INSERT INTO DIRECTORIES ('SITEID', 'DIRECTORY', 'SUBF') VALUES ('1', '/Cartella1', '/Cartella1/Sottocartella1>D');");
-        query.exec("INSERT INTO DIRECTORIES ('SITEID', 'DIRECTORY', 'SUBF') VALUES ('1', '/Cartella1', '/Cartella1/Sottocartella2>D');");
-        query.exec("INSERT INTO DIRECTORIES ('SITEID', 'DIRECTORY', 'SUBF') VALUES ('1', '', '/prova1>F');");
-        query.exec("INSERT INTO DIRECTORIES ('SITEID', 'DIRECTORY', 'SUBF') VALUES ('1', '', '/prova2>F');");
-        query.exec("INSERT INTO DIRECTORIES ('SITEID', 'DIRECTORY', 'SUBF') VALUES ('1', '', '/Cartella2>D');");
-        query.exec("INSERT INTO DIRECTORIES ('SITEID', 'DIRECTORY', 'SUBF') VALUES ('2', '', '/prova1>F');");
-        query.exec("INSERT INTO DIRECTORIES ('SITEID', 'DIRECTORY', 'SUBF') VALUES ('2', '', '/prova2>F');");
-        query.exec("SELECT * FROM DIRECTORIES");
-
-        std::cout << "SITEID" << "\t\t\t\t" << "DIR" << "\t\t\t\t" << "SUBDIR" << std::endl;
-
-        while (query.next()) {
-            qint32 siteId = query.value(0).toInt();
-            QString name = query.value(1).toString();
-            QString sub = query.value(2).toString();
-            std::cout << siteId << "\t\t\t\t" << name.toStdString() << "\t\t\t\t" << sub.toStdString() << std::endl;
-        }
-        std::cout << std::endl;
-        db.close();
-    }
-
-    {
-        QSqlDatabase db = QSqlDatabase::database("initialize");
-        db.setDatabaseName("files.db");
-        if (!db.open()) {
-            QMessageBox::critical(nullptr, QObject::tr("Cannot open database"),
-                                  QObject::tr("Unable to establish a database connection.\n"
-                                              "This example needs SQLite support. Please read "
-                                              "the Qt SQL driver documentation for information how "
-                                              "to build it.\n\n"
-                                              "Click Cancel to exit."), QMessageBox::Cancel);
-            return false;
-        }
-
-        QSqlQuery query(db);
-        query.exec("CREATE TABLE FILES ("  \
-         "SITEID      INT," \
-         "FILEID      TEXT NOT NULL," \
-         "DIR         TEXT NOT NULL, PRIMARY KEY (SITEID, FILEID));");
-        query.exec("DELETE FROM FILES");
-        query.exec("INSERT INTO FILES ('SITEID', 'FILEID', 'DIR') VALUES ('1', 'prova1.json', '/prova1>F');");
-        query.exec("INSERT INTO FILES ('SITEID', 'FILEID', 'DIR') VALUES ('1', 'prova2.json', '/prova2>F');");
-        query.exec("INSERT INTO FILES ('SITEID', 'FILEID', 'DIR') VALUES ('2', 'prova1.json', '/prova1>F');");
-        query.exec("INSERT INTO FILES ('SITEID', 'FILEID', 'DIR') VALUES ('2', 'prova2.json', '/prova2>F');");
-        query.exec("SELECT * FROM FILES");
-
-        std::cout << "SITEID" << "\t\t\t\t" << "FILEID" << "\t\t\t\t\t" << "DIR" << std::endl;
-
-        while (query.next()) {
-            qint32 siteId = query.value(0).toInt();
-            QString name = query.value(1).toString();
-            QString sub = query.value(2).toString();
-            std::cout << siteId << "\t\t\t\t" << name.toStdString() << "\t\t\t\t" << sub.toStdString() << std::endl;
-        }
-        std::cout << std::endl;
-        db.close();
-    }
-    std::cout << "----------------------------------" << std::endl;
-    std::cout << "----------TABELLE NUOVE----------" << std::endl;
-
     {
         QSqlDatabase db = QSqlDatabase::database("initialize");
         db.setDatabaseName("db/files.db");
@@ -153,12 +71,12 @@ static bool initializeDb()
          "SITEID         INT," \
          "NAME           TEXT," \
          "OWNER          TEXT," \
-         "FSNAME         TEXT, PRIMARY KEY (SITEID, NAME, OWNER));");
+         "FSNAME         TEXT," \
+         "INVITE         INT, PRIMARY KEY (SITEID, NAME, OWNER));");
         query.exec("DELETE FROM FILES");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('1', 'prova1', 'q', 'prova1.json');");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('1', 'prova2', 'q', 'prova2.json');");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('2', 'prova1', 'q', 'prova1.json');");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME') VALUES ('2', 'prova2', 'q', 'prova2.json');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova1', 'q', 'prova1.json', '0');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova2', 'q', 'prova2.json', '0');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('2', 'prova1', 'q', 'prova1.json', '1');");
         query.exec("SELECT * FROM FILES");
 
         std::cout << "SITEID" << "\t\t\t\t" << "NAME" << "\t\t\t\t" << "OWNER" << "\t\t\t\t" << "FSNAME" << std::endl;
@@ -174,7 +92,6 @@ static bool initializeDb()
         db.close();
     }
 
-    std::cout << "---------------------------------" << std::endl;
     QSqlDatabase::removeDatabase("initialize");
     return true;
 }

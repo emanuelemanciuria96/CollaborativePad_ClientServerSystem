@@ -3,6 +3,8 @@
 //
 
 #include <QtGui/QPainter>
+#include <QtWidgets/QFileDialog>
+#include <QtPrintSupport/QPrinter>
 #include "EditorGUI.h"
 
 EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
@@ -18,6 +20,9 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
+    textEdit->setStyleSheet("padding: 65");
+    textEdit->setMaximumWidth(880);
+    textEdit->setMinimumWidth(880);
 }
 
 
@@ -27,7 +32,8 @@ void EditorGUI::setUpGUI() {
     textEdit = new MyTextEdit(&remoteCursors,this);
     setLayout(new QVBoxLayout(this));
     this->layout()->addWidget(textEdit);
-    this->layout()->setContentsMargins(0,0,0,0);
+    this->layout()->setAlignment(Qt::AlignHCenter);
+    this->layout()->setContentsMargins(0,20,0,0);
 
     connect(this,SIGNAL(clear()),textEdit,SLOT(clear()));
 
@@ -61,7 +67,7 @@ bool EditorGUI::load(const QString &f) {
 //    QString str = codec->toUnicode(data);
 //    textEdit->setPlainText(QString::fromUtf8(data));
     textEdit->setPlainText(str);
-    setCurrentFileName(f);
+    //setCurrentFileName(f);
     return true;
 }
 
@@ -111,18 +117,8 @@ void EditorGUI::setupTextActions() {
     //TODO
 }
 
-void EditorGUI::setCurrentFileName(const QString &filename) {
+void EditorGUI::setCurrentFileName(QString filename) {
     this->fileName = filename;
-    textEdit->document()->setModified(false);
-
-    QString showName;
-    if(fileName.isEmpty())
-        showName = "untitled.txt";
-    else
-        showName = QFileInfo(fileName).fileName();
-
-    setWindowTitle(showName + " - " + QCoreApplication::applicationName());
-    setWindowModified(false);
 }
 
 void EditorGUI::setModel(SharedEditor* _model) {
@@ -382,4 +378,23 @@ QTextCharFormat EditorGUI::getFormat(qint32 siteId) {
     format.setBackground(QBrush(color));
 
     return format;
+}
+
+void EditorGUI::exportToPdf() {
+    if (!fileName.isEmpty()) {
+
+        QString defaultName{};
+        if (fileName.contains("/"))
+            defaultName = fileName.replace("/", "_");
+        else
+            defaultName = fileName;
+        QString name = QFileDialog::getSaveFileName(this, "Export PDF", defaultName, "*.pdf");
+        if (QFileInfo(name).suffix().isEmpty()) { name.append(".pdf"); }
+
+        QPrinter printer(QPrinter::PrinterResolution);
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setPaperSize(QPrinter::A4);
+        printer.setOutputFileName(name);
+        textEdit->print(&printer);
+    }
 }

@@ -19,19 +19,19 @@
 #include "Socket.h"
 #include "SocketsPool.h"
 #include "Packet/CursorPosition.h"
+#include "MyExceptions/LoginException.h"
 
 class ServerThread : public QThread{
 Q_OBJECT
 
 public:
-    explicit ServerThread(qintptr socketDesc, MessageHandler *msgHandler,QObject *parent = 0);
+    explicit ServerThread(qintptr socketDesc, std::shared_ptr<MessageHandler> msgHandler,QObject *parent = 0);
     void run() override;
     void setFile(std::vector<Symbol> &&file) { _file = file; }
     QString getOperatingFileName(){ return operatingFileName; }
     quint32 getSiteID(){ return _siteID; }
     QString& getUsername(){ return _username; }
     std::shared_ptr<Socket> getSocket(){ return socket; }
-
 
 signals:
     void error(QTcpSocket::SocketError socketerror);    //slot che gestisce questo segnale da implementare

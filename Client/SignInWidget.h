@@ -20,7 +20,6 @@ private:
     QLineEdit *nameEdit;
     QLineEdit *emailEdit;
     QLabel *imageLabel;
-//    QPixmap *profileImage;
     QPushButton *loadImageButton;
     QDialogButtonBox *buttons;
     void openFileDialog();

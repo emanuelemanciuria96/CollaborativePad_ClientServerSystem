@@ -49,12 +49,14 @@ private:
     void processLoginInfo( LoginInfo& logInf );
     void processFileInfo( FileInfo& filInf );
     void processCommand( Command& cmd );
-    void processCdCommand( Command& cmd );
     void processLsCommand( Command& cmd );
     void processRenCommand( Command &cmd );
+    void processLsInviteCommand( Command& cmd );
+    void processInviteCommand( Command& cmd );
+    void processFsNameCommand( Command& cmd );
+    void processUriCommand( Command &cmd );
     void processRmCommand(Command &cmd );
     void processCursorPos(CursorPosition& curPos);
-
 
 public slots:
     void loginSlot(QString& username, QString& password);
@@ -62,12 +64,16 @@ public slots:
     void requireFile(QString fileName);
     void requireFileRename(QString before,QString after);
     void requireFileDelete(QString fileName);
+    void requireFileAdd(QString fileName);
     void deleteThread();
     void clearText();
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
     void sendRegisterRequest(QString& user, QString& password, QString& name, QString& email, QPixmap& image);
     void searchUser(const QString& user);
-    void submit(const QString& file, const QString& user);
+    void searchFsName(const QString& name);
+    void submitInvite(const QString& file, const QString& user);
+    void sendInviteAnswer(const QString& mode, const QString& user, const QString& filename);
+    void submitUri(const QString& file);
 
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
@@ -82,6 +88,10 @@ signals:
     void highlight(qint32 pos, qint32 siteId);
     void searchUserResult(LoginInfo::type_t type);
     void loginError();
+    void inviteListArrived(const QVector<QString> &args);
+    void inviteResultArrived(const QString& result);
+    void uriResultArrived(const QVector<QString> &args);
+    void fsNameArrived(const QString& fsName);
 
 public:
     explicit SharedEditor(QObject *parent = 0);

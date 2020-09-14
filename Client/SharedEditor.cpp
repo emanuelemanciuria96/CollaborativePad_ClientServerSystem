@@ -257,6 +257,11 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
             emit loginError();
             break;
 
+        case LoginInfo::login_alconn_error:
+            std::cout<<"user already logged error"<<std::endl;
+            emit loginError();
+            break;
+
         case LoginInfo::signup_error:
             std::cout << "client not signed up!" << std::endl;
             break;
@@ -375,29 +380,8 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
 void SharedEditor::processCommand(Command& cmd){
 
     switch (cmd.getCmd()) {
-        case (Command::cd): {
-           processCdCommand(cmd);
-           break;
-        }
-
         case (Command::rm): {
             processRmCommand(cmd);
-            break;
-        }
-
-        case (Command::cp): {
-            break;
-        }
-
-        case (Command::mv): {
-            break;
-        }
-
-        case (Command::opn): {
-            break;
-        }
-
-        case (Command::cls): {
             break;
         }
 
@@ -410,15 +394,29 @@ void SharedEditor::processCommand(Command& cmd){
             break;
         }
 
+        case (Command::invite): {
+            processInviteCommand(cmd);
+            break;
+        }
+
+        case (Command::lsInvite): {
+            processLsInviteCommand(cmd);
+            break;
+        }
+
+        case (Command::uri): {
+            processUriCommand(cmd);
+            break;
+        }
+
+        case (Command::fsName): {
+            processFsNameCommand(cmd);
+            break;
+        }
+
         default:
             std::cout << "Coglione errore nel Command" << std::endl;
     }
-}
-
-void SharedEditor::processCdCommand(Command& cmd){
-    std::cout << "cd args:" << std::endl;
-    for (auto &a: cmd.getArgs())
-        std::cout << a.toStdString() << std::endl;
 }
 
 void SharedEditor::processLsCommand(Command& cmd){
@@ -463,6 +461,26 @@ void SharedEditor::processRenCommand(Command& cmd) {
 
 }
 
+void SharedEditor::processLsInviteCommand(Command &cmd) {
+    emit inviteListArrived(cmd.getArgs());
+}
+
+void SharedEditor::processInviteCommand(Command& cmd) {
+    emit inviteResultArrived(cmd.getArgs().first());
+}
+
+void SharedEditor::processUriCommand(Command &cmd) {
+    auto result = cmd.getArgs().first();
+    auto path = cmd.getArgs().last();
+    emit uriResultArrived(cmd.getArgs());
+    if (result == "valid" || result == "invite-existing")
+        emit filePathsArrived(QVector<QString>(1, path));
+}
+
+void SharedEditor::processFsNameCommand(Command &cmd) {
+    emit fsNameArrived(cmd.getArgs().first());
+}
+
 void SharedEditor::clearText(){
     emit deleteAllText();
 }
@@ -488,7 +506,7 @@ void SharedEditor::requireFile(QString fileName) {
 
 
     /// quando si nasconderà l'editor, questo può essere tolto
-    if( !_symbols.empty() ) {
+    if( _symbols.size()>2 ) {
         clearText();
         _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
     }
@@ -504,6 +522,19 @@ void SharedEditor::requireFile(QString fileName) {
     packet.setPayload(cmd);
 
     int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
+}
+
+void SharedEditor::requireFileAdd(QString fileName) {
+
+    fileName = _user+"/"+fileName;
+    QVector<QString> vec = {std::move(fileName)};
+
+    auto cmd = std::make_shared<Command>(_siteId,Command::sv,vec);
+    DataPacket packet(_siteId,0,DataPacket::command);
+    packet.setPayload(cmd);
+
     emit transceiver->getSocket()->sendPacket(packet);
 
 }
@@ -561,13 +592,40 @@ void SharedEditor::searchUser(const QString &user) {
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
-void SharedEditor::submit(const QString& file, const QString& user) {
+void SharedEditor::searchFsName(const QString& name){
+    QVector<QString> args;
+    args.push_back(_user);
+    args.push_back(name);
+    DataPacket packet(_siteId, 0, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::fsName, args));
+    emit transceiver->getSocket()->sendPacket(packet);
+}
+
+void SharedEditor::submitInvite(const QString& file, const QString& user) {
     QVector<QString> args;
     args.push_back(_user);
     args.push_back(file);
     args.push_back(user);
     DataPacket packet(_siteId, 0, DataPacket::command);
     packet.setPayload( std::make_shared<Command>( _siteId, Command::invite, args));
+    emit transceiver->getSocket()->sendPacket(packet);
+}
+
+void SharedEditor::sendInviteAnswer(const QString& mode, const QString& user, const QString& filename) {
+    QVector<QString> args;
+    args.push_back(mode);
+    args.push_back(user);
+    args.push_back(filename);
+    DataPacket packet(_siteId, 0, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::ctrlInvite, args));
+    emit transceiver->getSocket()->sendPacket(packet);
+    if (mode == "accept")
+        emit filePathsArrived(QVector<QString>(1, QString(user+"/"+filename)));
+}
+
+void SharedEditor::submitUri(const QString& file){
+    DataPacket packet(_siteId, 0, DataPacket::command);
+    packet.setPayload( std::make_shared<Command>( _siteId, Command::uri, QVector<QString>(1, file)));
     emit transceiver->getSocket()->sendPacket(packet);
 }
 

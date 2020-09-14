@@ -8,6 +8,7 @@
 #include "SignInWidget.h"
 
 SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
+    auto innerWidget = new QWidget(this);
     userEdit = new QLineEdit(this);
     passwordEdit = new QLineEdit(this);
     nameEdit = new QLineEdit(this);
@@ -15,12 +16,13 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     imageLabel = new QLabel(this);
     buttons = new QDialogButtonBox(this);
     loadImageButton = new QPushButton(this);
-//    profileImage = new QPixmap();
+    auto title = new QLabel("Create Account");
 
     auto middleLayout = new QHBoxLayout();
     auto outerLayout = new QVBoxLayout();
     auto fieldsLayout = new QVBoxLayout();
     auto imageLayout = new QVBoxLayout();
+    auto containerLayout = new QHBoxLayout();
 
     userEdit->setPlaceholderText("Username");
     passwordEdit->setPlaceholderText("Password");
@@ -34,7 +36,7 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
 
     buttons->addButton(QDialogButtonBox::Cancel);
     buttons->addButton(QDialogButtonBox::Ok);
-    buttons->button(QDialogButtonBox::Ok)->setText("Sign in");
+    buttons->button(QDialogButtonBox::Ok)->setText("Sign up");
     connect(buttons->button(QDialogButtonBox::Ok),&QPushButton::clicked, this, &SignInWidget::signIn);
     connect(buttons->button(QDialogButtonBox::Cancel),&QPushButton::clicked, this, &SignInWidget::cancel);
 
@@ -42,25 +44,46 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     connect(loadImageButton, &QPushButton::clicked, this, &SignInWidget::openFileDialog);
 
     fieldsLayout->addWidget(userEdit);
+    fieldsLayout->addSpacing(10);
     fieldsLayout->addWidget(passwordEdit);
+    fieldsLayout->addSpacing(10);
     fieldsLayout->addWidget(nameEdit);
+    fieldsLayout->addSpacing(10);
     fieldsLayout->addWidget(emailEdit);
+    fieldsLayout->addSpacing(10);
+    fieldsLayout->setAlignment(Qt::AlignTop);
 
     imageLayout->addWidget(imageLabel);
-    imageLayout->addWidget(loadImageButton);
+    imageLayout->addSpacing(10);
+    imageLayout->addWidget(loadImageButton,0, Qt::AlignCenter);
+    imageLayout->setAlignment(Qt::AlignTop);
 
     middleLayout->addSpacing(10);
-    middleLayout->addLayout(imageLayout);
-    middleLayout->addSpacing(10);
+    middleLayout->addLayout(imageLayout,0);
+    middleLayout->addSpacing(40);
     middleLayout->addLayout(fieldsLayout);
     middleLayout->addSpacing(10);
 
+    outerLayout->addWidget(title, 0 , Qt::AlignCenter);
     outerLayout->addLayout(middleLayout);
-    outerLayout->addWidget(buttons);
+    outerLayout->addWidget(buttons,0, Qt::AlignCenter);
+    innerWidget->setLayout(outerLayout);
+    innerWidget->setFixedSize(450,350);
 
-    setLayout(outerLayout);
+    containerLayout->addWidget(innerWidget,0, Qt::AlignCenter);
+    setLayout(containerLayout);
 
-    setMaximumSize(400,300);
+//    QPalette p1{};
+//    QImage loginBackground = QImage("./textures/texture_clouds_background.png");
+//    QBrush brush1(loginBackground);
+//    QRgb rgbColor = loginBackground.pixel(0,0);
+//    QLinearGradient grad(0,100,0,0);
+//    grad.setColorAt(0,rgbColor);
+//    grad.setColorAt(1, Qt::white);
+//    QBrush b(grad);
+//    p1.setBrush(QPalette::Window,b);
+//    setAutoFillBackground(true);
+//    setPalette(p1);
 }
 
 void SignInWidget::openFileDialog() {
