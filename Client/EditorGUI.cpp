@@ -257,8 +257,7 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
         remoteCursors.emplace_back(textEdit->document(), siteId);
         cursor = &remoteCursors.back();
         connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
-        auto size = int(remoteCursors.size());
-        emit setNumUsers(size -1);
+        emit setNumUsers(++nUsers);
     } else
         cursor = (&(*it));
     return cursor;
@@ -272,7 +271,7 @@ void EditorGUI::removeCursor(qint32 siteId) {
         remoteCursors.erase(it);
         std::cout << "Remove cursor " << siteId << std::endl;
         textEdit->update();
-        emit setNumUsers(remoteCursors.size()-1);
+        emit setNumUsers(--nUsers);
     }
 }
 
@@ -309,7 +308,7 @@ void EditorGUI::deleteAllText() {
     emit clear();
     signalBlocker = !signalBlocker;
     remoteCursors.clear();
-    emit setNumUsers(0);
+    emit setNumUsers(nUsers=0);
 }
 
 void EditorGUI::handleCursorPosChanged() {

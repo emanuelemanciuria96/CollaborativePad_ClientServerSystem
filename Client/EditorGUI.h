@@ -47,6 +47,7 @@ private:
     bool selected= false;
     bool myCursorPosUpdateBlocker;
     QTimer* curBlockerTimer;
+    uint nUsers = 0;
 
     void setUpGUI();
    // void setupFileActions();

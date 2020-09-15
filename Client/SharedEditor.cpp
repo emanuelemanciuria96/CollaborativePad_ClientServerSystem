@@ -29,7 +29,6 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
     connect(transceiver,&Transceiver::readyToProcess,this,&SharedEditor::process,Qt::QueuedConnection);
     connect(transceiver,&Transceiver::deleteText,this,&SharedEditor::clearText,Qt::QueuedConnection);
 
-
     transceiver->start();
 
     //creo due delimitatori, servono a gestire l'inserimento
@@ -56,6 +55,7 @@ quint32 intermediateValue(quint32 prev,quint32 next,double factor){
     }
     return val;
 }
+
 void generateNewPosition2(std::vector<quint32>& prev, std::vector<quint32>& next, std::vector<quint32>& newPos){
     quint32 max=UINT32_MAX;
     double factor=0.001;
@@ -362,6 +362,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
 void SharedEditor::processFileInfo(FileInfo &filInf) {
     switch ( filInf.getFileInfo()  ){
         case FileInfo::start: {
+            emit setNumUsers(0);
             isFileOpened = true;
             isArrivingFile = true;
             break;

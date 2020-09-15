@@ -13,13 +13,13 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 //        std::cout << k.toStdString() << std::endl;
 //    }
     bkgnd = QPixmap("./textures/texture_clouds_background.png");
-    setStyleSheet();
 
     setWindowTitle("Shared Editor");
     statusBar = new QStatusBar(this);
     numUsers = new QLabel(statusBar);
-//    numUsers->setText("Users connected: 0");
+    numUsers->setText("Users connected: 0");
     statusBar->addPermanentWidget(numUsers);
+    numUsers->hide();
 
     toolBar = new QToolBar("Toolbar",this);
     centralWidget = new QStackedWidget(this);
@@ -89,8 +89,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::fsNameArrived, addUserWidget, &AddUserWidget::fsNameArrived);
     connect(addUserWidget, &AddUserWidget::searchFsName, shEditor, &SharedEditor::searchFsName);
     connect(treeView, &FileSystemTreeView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
-
     connect(editor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
+    connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
+
+    setStyleSheet();
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -278,4 +280,6 @@ void MainWindow::setNumUsers(int n) {
     auto string = QString("Users online: ");
     string.append(QString::number(n));
     numUsers->setText(string);
+    if(numUsers->isHidden())
+        numUsers->show();
 }
