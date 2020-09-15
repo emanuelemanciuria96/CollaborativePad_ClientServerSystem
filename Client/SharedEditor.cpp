@@ -675,6 +675,7 @@ void SharedEditor::closeFile() {
         clearText();
         _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
     }
+    emit hideNumUsers();
 
 }
 

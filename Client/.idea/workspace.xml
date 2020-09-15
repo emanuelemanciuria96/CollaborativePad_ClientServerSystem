@@ -17,13 +17,11 @@
   <component name="ChangeListManager">
     <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EditorGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/EditorGUI.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EditorGUI.h" beforeDir="false" afterPath="$PROJECT_DIR$/EditorGUI.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SharedEditor.h" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/EditorGUI.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/EditorGUI.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/SharedEditor.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.exe" afterDir="false" />
@@ -70,17 +68,17 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.Client">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Client" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Client" TARGET_NAME="Client" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Client" RUN_TARGET_NAME="Client">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="Client_autogen" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Client" TARGET_NAME="Client_autogen" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -161,6 +159,7 @@
       <workItem from="1600154675799" duration="9431000" />
       <workItem from="1600176877971" duration="2055000" />
       <workItem from="1600179247406" duration="2505000" />
+      <workItem from="1600181958797" duration="517000" />
     </task>
     <servers />
   </component>
@@ -180,22 +179,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="479" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1597247491161" />
-    <state width="1493" height="194" key="GridCell.Tab.0.bottom" timestamp="1600181791482">
+    <state width="724" height="196" key="GridCell.Tab.0.bottom" timestamp="1600182492899">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="194" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600181791482" />
-    <state width="1493" height="194" key="GridCell.Tab.0.center" timestamp="1600181791482">
+    <state width="724" height="196" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600182492899" />
+    <state width="724" height="196" key="GridCell.Tab.0.center" timestamp="1600182492899">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="194" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600181791482" />
-    <state width="1493" height="194" key="GridCell.Tab.0.left" timestamp="1600181791482">
+    <state width="724" height="196" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600182492899" />
+    <state width="724" height="196" key="GridCell.Tab.0.left" timestamp="1600182492899">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="194" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600181791482" />
-    <state width="1493" height="194" key="GridCell.Tab.0.right" timestamp="1600181791482">
+    <state width="724" height="196" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600182492899" />
+    <state width="724" height="196" key="GridCell.Tab.0.right" timestamp="1600182492899">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="194" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600181791482" />
+    <state width="724" height="196" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600182492899" />
     <state width="1493" height="212" key="GridCell.Tab.1.bottom" timestamp="1600166180126">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

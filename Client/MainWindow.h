@@ -67,6 +67,7 @@ public slots:
         else dockWidgetTree->hide();
     }
     void setNumUsers(int n);
+    void hideNumUsers();
 };
 
 

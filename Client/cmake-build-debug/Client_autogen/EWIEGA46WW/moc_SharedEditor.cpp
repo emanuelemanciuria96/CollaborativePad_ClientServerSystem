@@ -23,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_SharedEditor_t {
-    QByteArrayData data[66];
-    char stringdata0[721];
+    QByteArrayData data[67];
+    char stringdata0[734];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -73,32 +73,33 @@ QT_MOC_LITERAL(36, 403, 13), // "fsNameArrived"
 QT_MOC_LITERAL(37, 417, 6), // "fsName"
 QT_MOC_LITERAL(38, 424, 11), // "setNumUsers"
 QT_MOC_LITERAL(39, 436, 1), // "n"
-QT_MOC_LITERAL(40, 438, 9), // "loginSlot"
-QT_MOC_LITERAL(41, 448, 8), // "username"
-QT_MOC_LITERAL(42, 457, 8), // "password"
-QT_MOC_LITERAL(43, 466, 7), // "process"
-QT_MOC_LITERAL(44, 474, 10), // "DataPacket"
-QT_MOC_LITERAL(45, 485, 3), // "pkt"
-QT_MOC_LITERAL(46, 489, 11), // "requireFile"
-QT_MOC_LITERAL(47, 501, 17), // "requireFileRename"
-QT_MOC_LITERAL(48, 519, 6), // "before"
-QT_MOC_LITERAL(49, 526, 5), // "after"
-QT_MOC_LITERAL(50, 532, 17), // "requireFileDelete"
-QT_MOC_LITERAL(51, 550, 14), // "requireFileAdd"
-QT_MOC_LITERAL(52, 565, 12), // "deleteThread"
-QT_MOC_LITERAL(53, 578, 9), // "clearText"
-QT_MOC_LITERAL(54, 588, 15), // "sendUpdatedInfo"
-QT_MOC_LITERAL(55, 604, 19), // "sendRegisterRequest"
-QT_MOC_LITERAL(56, 624, 4), // "user"
-QT_MOC_LITERAL(57, 629, 8), // "QPixmap&"
-QT_MOC_LITERAL(58, 638, 10), // "searchUser"
-QT_MOC_LITERAL(59, 649, 12), // "searchFsName"
-QT_MOC_LITERAL(60, 662, 12), // "submitInvite"
-QT_MOC_LITERAL(61, 675, 4), // "file"
-QT_MOC_LITERAL(62, 680, 16), // "sendInviteAnswer"
-QT_MOC_LITERAL(63, 697, 4), // "mode"
-QT_MOC_LITERAL(64, 702, 8), // "filename"
-QT_MOC_LITERAL(65, 711, 9) // "submitUri"
+QT_MOC_LITERAL(40, 438, 12), // "hideNumUsers"
+QT_MOC_LITERAL(41, 451, 9), // "loginSlot"
+QT_MOC_LITERAL(42, 461, 8), // "username"
+QT_MOC_LITERAL(43, 470, 8), // "password"
+QT_MOC_LITERAL(44, 479, 7), // "process"
+QT_MOC_LITERAL(45, 487, 10), // "DataPacket"
+QT_MOC_LITERAL(46, 498, 3), // "pkt"
+QT_MOC_LITERAL(47, 502, 11), // "requireFile"
+QT_MOC_LITERAL(48, 514, 17), // "requireFileRename"
+QT_MOC_LITERAL(49, 532, 6), // "before"
+QT_MOC_LITERAL(50, 539, 5), // "after"
+QT_MOC_LITERAL(51, 545, 17), // "requireFileDelete"
+QT_MOC_LITERAL(52, 563, 14), // "requireFileAdd"
+QT_MOC_LITERAL(53, 578, 12), // "deleteThread"
+QT_MOC_LITERAL(54, 591, 9), // "clearText"
+QT_MOC_LITERAL(55, 601, 15), // "sendUpdatedInfo"
+QT_MOC_LITERAL(56, 617, 19), // "sendRegisterRequest"
+QT_MOC_LITERAL(57, 637, 4), // "user"
+QT_MOC_LITERAL(58, 642, 8), // "QPixmap&"
+QT_MOC_LITERAL(59, 651, 10), // "searchUser"
+QT_MOC_LITERAL(60, 662, 12), // "searchFsName"
+QT_MOC_LITERAL(61, 675, 12), // "submitInvite"
+QT_MOC_LITERAL(62, 688, 4), // "file"
+QT_MOC_LITERAL(63, 693, 16), // "sendInviteAnswer"
+QT_MOC_LITERAL(64, 710, 4), // "mode"
+QT_MOC_LITERAL(65, 715, 8), // "filename"
+QT_MOC_LITERAL(66, 724, 9) // "submitUri"
 
     },
     "SharedEditor\0symbolsChanged\0\0pos\0s\0"
@@ -113,15 +114,15 @@ QT_MOC_LITERAL(65, 711, 9) // "submitUri"
     "type\0loginError\0inviteListArrived\0"
     "args\0inviteResultArrived\0result\0"
     "uriResultArrived\0fsNameArrived\0fsName\0"
-    "setNumUsers\0n\0loginSlot\0username\0"
-    "password\0process\0DataPacket\0pkt\0"
-    "requireFile\0requireFileRename\0before\0"
-    "after\0requireFileDelete\0requireFileAdd\0"
-    "deleteThread\0clearText\0sendUpdatedInfo\0"
-    "sendRegisterRequest\0user\0QPixmap&\0"
-    "searchUser\0searchFsName\0submitInvite\0"
-    "file\0sendInviteAnswer\0mode\0filename\0"
-    "submitUri"
+    "setNumUsers\0n\0hideNumUsers\0loginSlot\0"
+    "username\0password\0process\0DataPacket\0"
+    "pkt\0requireFile\0requireFileRename\0"
+    "before\0after\0requireFileDelete\0"
+    "requireFileAdd\0deleteThread\0clearText\0"
+    "sendUpdatedInfo\0sendRegisterRequest\0"
+    "user\0QPixmap&\0searchUser\0searchFsName\0"
+    "submitInvite\0file\0sendInviteAnswer\0"
+    "mode\0filename\0submitUri"
 };
 #undef QT_MOC_LITERAL
 
@@ -131,48 +132,49 @@ static const uint qt_meta_data_SharedEditor[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      32,   14, // methods
+      33,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      17,       // signalCount
+      18,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    4,  174,    2, 0x06 /* Public */,
-       8,    0,  183,    2, 0x06 /* Public */,
-       9,    1,  184,    2, 0x06 /* Public */,
-      12,    2,  187,    2, 0x06 /* Public */,
-      16,    1,  192,    2, 0x06 /* Public */,
-      18,    0,  195,    2, 0x06 /* Public */,
-      19,    4,  196,    2, 0x06 /* Public */,
-      24,    2,  205,    2, 0x06 /* Public */,
-      25,    1,  210,    2, 0x06 /* Public */,
-      26,    2,  213,    2, 0x06 /* Public */,
-      27,    1,  218,    2, 0x06 /* Public */,
-      30,    0,  221,    2, 0x06 /* Public */,
-      31,    1,  222,    2, 0x06 /* Public */,
-      33,    1,  225,    2, 0x06 /* Public */,
-      35,    1,  228,    2, 0x06 /* Public */,
-      36,    1,  231,    2, 0x06 /* Public */,
-      38,    1,  234,    2, 0x06 /* Public */,
+       1,    4,  179,    2, 0x06 /* Public */,
+       8,    0,  188,    2, 0x06 /* Public */,
+       9,    1,  189,    2, 0x06 /* Public */,
+      12,    2,  192,    2, 0x06 /* Public */,
+      16,    1,  197,    2, 0x06 /* Public */,
+      18,    0,  200,    2, 0x06 /* Public */,
+      19,    4,  201,    2, 0x06 /* Public */,
+      24,    2,  210,    2, 0x06 /* Public */,
+      25,    1,  215,    2, 0x06 /* Public */,
+      26,    2,  218,    2, 0x06 /* Public */,
+      27,    1,  223,    2, 0x06 /* Public */,
+      30,    0,  226,    2, 0x06 /* Public */,
+      31,    1,  227,    2, 0x06 /* Public */,
+      33,    1,  230,    2, 0x06 /* Public */,
+      35,    1,  233,    2, 0x06 /* Public */,
+      36,    1,  236,    2, 0x06 /* Public */,
+      38,    1,  239,    2, 0x06 /* Public */,
+      40,    0,  242,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      40,    2,  237,    2, 0x0a /* Public */,
-      43,    1,  242,    2, 0x0a /* Public */,
-      46,    1,  245,    2, 0x0a /* Public */,
-      47,    2,  248,    2, 0x0a /* Public */,
-      50,    1,  253,    2, 0x0a /* Public */,
-      51,    1,  256,    2, 0x0a /* Public */,
-      52,    0,  259,    2, 0x0a /* Public */,
-      53,    0,  260,    2, 0x0a /* Public */,
-      54,    3,  261,    2, 0x0a /* Public */,
-      55,    5,  268,    2, 0x0a /* Public */,
-      58,    1,  279,    2, 0x0a /* Public */,
-      59,    1,  282,    2, 0x0a /* Public */,
-      60,    2,  285,    2, 0x0a /* Public */,
-      62,    3,  290,    2, 0x0a /* Public */,
-      65,    1,  297,    2, 0x0a /* Public */,
+      41,    2,  243,    2, 0x0a /* Public */,
+      44,    1,  248,    2, 0x0a /* Public */,
+      47,    1,  251,    2, 0x0a /* Public */,
+      48,    2,  254,    2, 0x0a /* Public */,
+      51,    1,  259,    2, 0x0a /* Public */,
+      52,    1,  262,    2, 0x0a /* Public */,
+      53,    0,  265,    2, 0x0a /* Public */,
+      54,    0,  266,    2, 0x0a /* Public */,
+      55,    3,  267,    2, 0x0a /* Public */,
+      56,    5,  274,    2, 0x0a /* Public */,
+      59,    1,  285,    2, 0x0a /* Public */,
+      60,    1,  288,    2, 0x0a /* Public */,
+      61,    2,  291,    2, 0x0a /* Public */,
+      63,    3,  296,    2, 0x0a /* Public */,
+      66,    1,  303,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Int, 0x80000000 | 6,    3,    4,    5,    7,
@@ -192,23 +194,24 @@ static const uint qt_meta_data_SharedEditor[] = {
     QMetaType::Void, 0x80000000 | 10,   32,
     QMetaType::Void, QMetaType::QString,   37,
     QMetaType::Void, QMetaType::Int,   39,
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 13, 0x80000000 | 13,   41,   42,
-    QMetaType::Void, 0x80000000 | 44,   45,
+    QMetaType::Void, 0x80000000 | 13, 0x80000000 | 13,   42,   43,
+    QMetaType::Void, 0x80000000 | 45,   46,
     QMetaType::Void, QMetaType::QString,   17,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,   48,   49,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,   49,   50,
     QMetaType::Void, QMetaType::QString,   17,
     QMetaType::Void, QMetaType::QString,   17,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QPixmap, QMetaType::QString, QMetaType::QString,   20,   22,   23,
-    QMetaType::Void, 0x80000000 | 13, 0x80000000 | 13, 0x80000000 | 13, 0x80000000 | 13, 0x80000000 | 57,   56,   42,   22,   23,   20,
-    QMetaType::Void, QMetaType::QString,   56,
+    QMetaType::Void, 0x80000000 | 13, 0x80000000 | 13, 0x80000000 | 13, 0x80000000 | 13, 0x80000000 | 58,   57,   43,   22,   23,   20,
+    QMetaType::Void, QMetaType::QString,   57,
     QMetaType::Void, QMetaType::QString,   22,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,   61,   56,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,   63,   56,   64,
-    QMetaType::Void, QMetaType::QString,   61,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,   62,   57,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,   64,   57,   65,
+    QMetaType::Void, QMetaType::QString,   62,
 
        0        // eod
 };
@@ -236,21 +239,22 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 14: _t->uriResultArrived((*reinterpret_cast< const QVector<QString>(*)>(_a[1]))); break;
         case 15: _t->fsNameArrived((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 16: _t->setNumUsers((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 17: _t->loginSlot((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 18: _t->process((*reinterpret_cast< DataPacket(*)>(_a[1]))); break;
-        case 19: _t->requireFile((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 20: _t->requireFileRename((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 21: _t->requireFileDelete((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 22: _t->requireFileAdd((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 23: _t->deleteThread(); break;
-        case 24: _t->clearText(); break;
-        case 25: _t->sendUpdatedInfo((*reinterpret_cast< const QPixmap(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
-        case 26: _t->sendRegisterRequest((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QPixmap(*)>(_a[5]))); break;
-        case 27: _t->searchUser((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 28: _t->searchFsName((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 29: _t->submitInvite((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 30: _t->sendInviteAnswer((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
-        case 31: _t->submitUri((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 17: _t->hideNumUsers(); break;
+        case 18: _t->loginSlot((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 19: _t->process((*reinterpret_cast< DataPacket(*)>(_a[1]))); break;
+        case 20: _t->requireFile((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 21: _t->requireFileRename((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 22: _t->requireFileDelete((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 23: _t->requireFileAdd((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 24: _t->deleteThread(); break;
+        case 25: _t->clearText(); break;
+        case 26: _t->sendUpdatedInfo((*reinterpret_cast< const QPixmap(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
+        case 27: _t->sendRegisterRequest((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QPixmap(*)>(_a[5]))); break;
+        case 28: _t->searchUser((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 29: _t->searchFsName((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 30: _t->submitInvite((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 31: _t->sendInviteAnswer((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
+        case 32: _t->submitUri((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -277,7 +281,7 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<QString> >(); break;
             }
             break;
-        case 18:
+        case 19:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -406,6 +410,13 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
                 return;
             }
         }
+        {
+            using _t = void (SharedEditor::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::hideNumUsers)) {
+                *result = 17;
+                return;
+            }
+        }
     }
 }
 
@@ -438,13 +449,13 @@ int SharedEditor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 32)
+        if (_id < 33)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 32;
+        _id -= 33;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 32)
+        if (_id < 33)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 32;
+        _id -= 33;
     }
     return _id;
 }
@@ -563,6 +574,12 @@ void SharedEditor::setNumUsers(int _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 16, _a);
+}
+
+// SIGNAL 17
+void SharedEditor::hideNumUsers()
+{
+    QMetaObject::activate(this, &staticMetaObject, 17, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

@@ -91,7 +91,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
     connect(editor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
     connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
-
+    connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::hideNumUsers);
     setStyleSheet();
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
@@ -282,4 +282,8 @@ void MainWindow::setNumUsers(int n) {
     numUsers->setText(string);
     if(numUsers->isHidden())
         numUsers->show();
+}
+
+void MainWindow::hideNumUsers() {
+    numUsers->hide();
 }

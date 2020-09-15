@@ -93,6 +93,7 @@ signals:
     void uriResultArrived(const QVector<QString> &args);
     void fsNameArrived(const QString& fsName);
     void setNumUsers(int n);
+    void hideNumUsers();
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );
