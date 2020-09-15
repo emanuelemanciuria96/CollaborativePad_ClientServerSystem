@@ -266,8 +266,9 @@ void MainWindow::setStyleSheet() {
     qApp->setStyleSheet("QWidget {font-family: helvetica}"
                         "QPushButton {border-style: solid; border-width: 2px; border-color: #8fc1ed; border-radius: 12px; "
                         "background-color: white; min-width: 4em; padding: 3px; padding-left: 10px; padding-right:10px; font: 9pt; color: #182c3d;}"
-                        "QPushButton:pressed {background-color: lightblue}"
-                        "QLabel {color: white; font: 14pt}");
+                        "QPushButton:pressed {background-color: lightblue}");
+
+//    "QLabel {color: white; font: 14pt}");
 
 
 }

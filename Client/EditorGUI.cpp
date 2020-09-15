@@ -6,10 +6,11 @@
 #include <QtWidgets/QFileDialog>
 #include <QtPrintSupport/QPrinter>
 #include "EditorGUI.h"
+#include <QScrollBar>
 
 EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     signalBlocker = false;
-    updateCursorBlocker = false;
+    myCursorPosUpdateBlocker = false;
     setModel(model);
     setUpGUI();
     setWindowTitle(QCoreApplication::applicationName());
@@ -20,30 +21,34 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
-    textEdit->setStyleSheet("padding: 65");
-    textEdit->setMaximumWidth(880);
-    textEdit->setMinimumWidth(880);
+
 }
 
 
 void EditorGUI::setUpGUI() {
 //    inizializzo gli elementi
 //    setupFileActions();
-    textEdit = new MyTextEdit(&remoteCursors,this);
+
+    textEdit = new MyTextEdit(&remoteCursors, this);
     setLayout(new QVBoxLayout(this));
     this->layout()->addWidget(textEdit);
     this->layout()->setAlignment(Qt::AlignHCenter);
-    this->layout()->setContentsMargins(0,20,0,0);
+    this->layout()->setContentsMargins(0, 20, 0, 0);
+    textEdit->setStyleSheet("QTextEdit {padding: 65}");
+    textEdit->setMaximumWidth(880);
+//    textEdit->setMinimumWidth(880);
+//    textEdit->setFixedWidth(880);
 
-    connect(this,SIGNAL(clear()),textEdit,SLOT(clear()));
+    connect(this, SIGNAL(clear()), textEdit, SLOT(clear()));
 
     textEdit->setFocus();
     setCurrentFileName(QString());
 
-    connect(textEdit->document(), SIGNAL(contentsChange(int, int, int)), this, SLOT(contentsChange(int,int,int)));
+    connect(textEdit->document(), SIGNAL(contentsChange(int, int, int)), this, SLOT(contentsChange(int, int, int)));
     connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
 //    load("./file.txt");
     loadSymbols();
+
 }
 
 
@@ -129,7 +134,7 @@ void EditorGUI::setModel(SharedEditor* _model) {
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i = 0;
     if (!signalBlocker) {
-        updateCursorBlocker = true;
+        myCursorPosUpdateBlocker = true;
         curBlockerTimer->start(500);
         auto blocks = textEdit->document()->blockCount();
         auto pages = textEdit->document()->pageCount();
@@ -147,15 +152,15 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             for (i = 0; i < charsRemoved; i++) {
                 model->localErase(pos);
             }
-//            updateRemoteCursors(model->getSiteId(),pos,Message::removal);
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
             //std::cout << "Inserimento carattere " << index << std::endl;
             for (i = 0; i < charsAdded; i++) {
                 model->localInsert(pos + i, textEdit->document()->characterAt(pos + i));
             }
-//            updateRemoteCursors(model->getSiteId(),index,Message::insertion);
         }
+        updateRemoteCursors(model->getSiteId(),pos);
+
     }
 }
 
@@ -165,10 +170,10 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
 
     cursor = getRemoteCursor(siteId);
 //    std::cout << "Inseriti da siteId: " << siteId << std::endl;
-//    if(!cursor->labelTimer->isActive()) {
-//        updateCursorBlocker = true;
-//        curBlockerTimer->start(1000);
-//    }
+    ///blocco l'invio della posizione del mio cursore quando ricevo modifiche
+    myCursorPosUpdateBlocker = true;
+    curBlockerTimer->start(500);
+
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
     if(model->getHighlighting())
@@ -176,8 +181,7 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
     cursor->insertText(value);
     //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
     signalBlocker = !signalBlocker;
-    if(!updateCursorBlocker)
-        drawLabel(cursor);
+    drawLabel(cursor);
 //    updateRemoteCursors(siteId,index, Message::insertion);
 }
 
@@ -190,20 +194,17 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     RemoteCursor *cursor;
 
     cursor = getRemoteCursor(siteId);
+    ///blocco l'invio della posizione del mio cursore quando ricevo modifiche
+    myCursorPosUpdateBlocker = true;
+    curBlockerTimer->start(500);
 
-//    std::cout << "position:" << index << std::endl;
-//    if(!cursor->labelTimer->isActive()) {
-//        updateCursorBlocker = true;
-//        curBlockerTimer->start(1000);
-//    }
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     cursor->setPosition(pos + n, QTextCursor::KeepAnchor);
     signalBlocker = !signalBlocker;
     cursor->removeSelectedText();
     //std::cout << "Rimosso " << index << std::endl;
     signalBlocker = !signalBlocker;
-    if(!updateCursorBlocker)
-        drawLabel(cursor);
+    drawLabel(cursor);
 //    updateRemoteCursors(siteId,index, Message::removal);
 }
 
@@ -224,12 +225,13 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::act
     }
 }
 
-void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos, Message::action_t action) {
+void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos) {
     // aggiorno la posizione degli altri cursori
 
     for (auto & remoteCursor : remoteCursors) {
-        if (remoteCursor.getSiteId() != mySiteId) {
-            drawLabel(&remoteCursor);
+        if (remoteCursor.getSiteId() != mySiteId && remoteCursor.getSiteId()>0) {
+            if(!remoteCursor.labelName->isHidden())
+                drawLabel(&remoteCursor);
 //            auto newPosition = it->position();
 //            if (newPosition > index) {
 //                if (action == Message::insertion)
@@ -274,15 +276,6 @@ void EditorGUI::removeCursor(qint32 siteId) {
     }
 }
 
-void EditorGUI::fileNew() {
-//    TODO
-}
-
-void EditorGUI::fileOpen() {
-//    TODO
-}
-
-
 void EditorGUI::flushInsertQueue() {
     if (insertQueue.empty())
         return;
@@ -305,8 +298,7 @@ void EditorGUI::drawLabel(RemoteCursor *cursor){
 
         cursor->labelName->setParent(textEdit);
         cursor->labelName->show();
-        cursor->labelName->move(curRect.left() + 5, curRect.top() - 5);
-        connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
+        cursor->labelName->move( std::min(curRect.left()+70,  int(textEdit->document()->pageSize().width()+65)), curRect.top() + 60);
         cursor->labelTimer->setParent(textEdit);
         cursor->labelTimer->start(5000);
     }
@@ -327,22 +319,23 @@ void EditorGUI::handleCursorPosChanged() {
 //        qint32 end = textEdit->textCursor().selectionEnd();
 //    }
     pos = textEdit->textCursor().position();
-    std::cout << "cursor index:" << pos << std::endl;
-    if (model->getSiteId() != -1 && !updateCursorBlocker) {
+//    std::cout << "cursor index:" << pos << std::endl;
+    if (model->getSiteId() != -1 && !myCursorPosUpdateBlocker) {
         model->sendCursorPos(pos);
     }
 }
 
 void EditorGUI::updateRemoteCursorPos(qint32 pos, qint32 siteId) {
-//    std::cout << "draw in " << pos << " siteID: " << siteId << std::endl;
+    std::cout << "draw in " << pos << " siteID: " << siteId << std::endl;
     auto cursor = getRemoteCursor(siteId);
     cursor->setPosition(pos, QTextCursor::MoveAnchor);
+
     drawLabel(cursor);
     textEdit->update();
 }
 
 void EditorGUI::enableSendCursorPos() {
-    updateCursorBlocker = false;
+    myCursorPosUpdateBlocker = false;
 }
 
 void EditorGUI::highlight(qint32 pos, qint32 siteId) {

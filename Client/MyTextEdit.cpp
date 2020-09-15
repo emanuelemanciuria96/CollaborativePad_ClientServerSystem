@@ -24,15 +24,18 @@ void MyTextEdit::paintEvent(QPaintEvent *e) {
             pen.setColor(remoteCursor.color);
             pen.setWidth(2);
             painter.setPen(pen);
-//        if (remoteCursor.labelTimer->isActive())
-//            remoteCursor.labelTimer->stop();
-//        std::cout << remoteCursor.getSiteId() << std::endl;
+
             const QRect curRect = cursorRect(remoteCursor);
             painter.drawLine(curRect.topLeft(), curRect.bottomLeft());
-//        remoteCursor.labelName->setParent(this);
-//        remoteCursor.labelName->show();
-//        remoteCursor.labelName->move(curRect.left()+5,curRect.top()-5);
-//        remoteCursor.labelTimer->start(5000);
+
+//            if (remoteCursor.labelTimer->isActive())
+//                remoteCursor.labelTimer->stop();
+
+//            remoteCursor.labelName->setParent(this);
+//            remoteCursor.labelName->show();
+//            remoteCursor.labelName->move(curRect.left() +  70, curRect.top() + 60);
+//            remoteCursor.labelTimer->setParent(this);
+//            remoteCursor.labelTimer->start(5000);
         }
     }
 }

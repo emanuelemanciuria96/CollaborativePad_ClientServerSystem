@@ -398,6 +398,48 @@ CMakeFiles/Client.dir/AddUserWidget.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/AddUserWidget.cpp.s"
 	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\AddUserWidget.cpp -o CMakeFiles\Client.dir\AddUserWidget.cpp.s
 
+CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.obj: CMakeFiles/Client.dir/flags.make
+CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
+CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.obj: ../InviteUserWidgetItem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\InviteUserWidgetItem.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\InviteUserWidgetItem.cpp
+
+CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.i"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\InviteUserWidgetItem.cpp > CMakeFiles\Client.dir\InviteUserWidgetItem.cpp.i
+
+CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.s"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\InviteUserWidgetItem.cpp -o CMakeFiles\Client.dir\InviteUserWidgetItem.cpp.s
+
+CMakeFiles/Client.dir/InviteUserWidget.cpp.obj: CMakeFiles/Client.dir/flags.make
+CMakeFiles/Client.dir/InviteUserWidget.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
+CMakeFiles/Client.dir/InviteUserWidget.cpp.obj: ../InviteUserWidget.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/Client.dir/InviteUserWidget.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\InviteUserWidget.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\InviteUserWidget.cpp
+
+CMakeFiles/Client.dir/InviteUserWidget.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/InviteUserWidget.cpp.i"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\InviteUserWidget.cpp > CMakeFiles\Client.dir\InviteUserWidget.cpp.i
+
+CMakeFiles/Client.dir/InviteUserWidget.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/InviteUserWidget.cpp.s"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\InviteUserWidget.cpp -o CMakeFiles\Client.dir\InviteUserWidget.cpp.s
+
+CMakeFiles/Client.dir/UriWidget.cpp.obj: CMakeFiles/Client.dir/flags.make
+CMakeFiles/Client.dir/UriWidget.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
+CMakeFiles/Client.dir/UriWidget.cpp.obj: ../UriWidget.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/Client.dir/UriWidget.cpp.obj"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\UriWidget.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UriWidget.cpp
+
+CMakeFiles/Client.dir/UriWidget.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/UriWidget.cpp.i"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UriWidget.cpp > CMakeFiles\Client.dir\UriWidget.cpp.i
+
+CMakeFiles/Client.dir/UriWidget.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/UriWidget.cpp.s"
+	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UriWidget.cpp -o CMakeFiles\Client.dir\UriWidget.cpp.s
+
 # Object files for target Client
 Client_OBJECTS = \
 "CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" \
@@ -422,7 +464,10 @@ Client_OBJECTS = \
 "CMakeFiles/Client.dir/InfoWidgetEdit.cpp.obj" \
 "CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj" \
 "CMakeFiles/Client.dir/SignInWidget.cpp.obj" \
-"CMakeFiles/Client.dir/AddUserWidget.cpp.obj"
+"CMakeFiles/Client.dir/AddUserWidget.cpp.obj" \
+"CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.obj" \
+"CMakeFiles/Client.dir/InviteUserWidget.cpp.obj" \
+"CMakeFiles/Client.dir/UriWidget.cpp.obj"
 
 # External object files for target Client
 Client_EXTERNAL_OBJECTS =
@@ -450,16 +495,20 @@ Client.exe: CMakeFiles/Client.dir/InfoWidgetEdit.cpp.obj
 Client.exe: CMakeFiles/Client.dir/Packet/FileInfo.cpp.obj
 Client.exe: CMakeFiles/Client.dir/SignInWidget.cpp.obj
 Client.exe: CMakeFiles/Client.dir/AddUserWidget.cpp.obj
+Client.exe: CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.obj
+Client.exe: CMakeFiles/Client.dir/InviteUserWidget.cpp.obj
+Client.exe: CMakeFiles/Client.dir/UriWidget.cpp.obj
 Client.exe: CMakeFiles/Client.dir/build.make
 Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Chartsd.a
 Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Networkd.a
+Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5PrintSupportd.a
 Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Widgetsd.a
 Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Guid.a
 Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Cored.a
 Client.exe: CMakeFiles/Client.dir/linklibs.rsp
 Client.exe: CMakeFiles/Client.dir/objects1.rsp
 Client.exe: CMakeFiles/Client.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Linking CXX executable Client.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Linking CXX executable Client.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Client.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
