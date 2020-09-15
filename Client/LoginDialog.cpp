@@ -27,7 +27,7 @@ void LoginDialog::setUpGUI() {
     editPassword->setPlaceholderText("Password");
 
     auto title = new QLabel("Log in into your account");
-//    title->setStyleSheet("QLabel {color: white; font:14pt}");
+    title->setStyleSheet("QLabel {color: white; font:14pt}");
     //inizializzo le labels
 //    labelUsername = new QLabel(this);
 //    labelPassword = new QLabel(this);
@@ -100,4 +100,11 @@ void LoginDialog::slotLoginError() {
     palette.setColor(QPalette::WindowText, Qt::red);
     labelResult->setPalette(palette);
     labelResult->setText("Username or password is incorrect");
+}
+
+void LoginDialog::keyPressEvent(QKeyEvent *e) {
+    QWidget::keyPressEvent(e);
+    if (e->key() == Qt::Key_Enter || Qt::Key_Escape){
+        slotAcceptLogin();
+    }
 }

@@ -15,6 +15,7 @@
 #include <QDebug>
 #include <QGuiApplication>
 #include <QScreen>
+#include <QKeyEvent>
 
 
 class LoginDialog: public QWidget {
@@ -36,6 +37,7 @@ private:
     QDialogButtonBox* buttons;
     QPushButton* signInButton;
     void setUpGUI();
+    void keyPressEvent(QKeyEvent *e) override;
 
 signals:
     void acceptLogin(QString& username, QString& password);

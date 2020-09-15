@@ -13,11 +13,14 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 //        std::cout << k.toStdString() << std::endl;
 //    }
     bkgnd = QPixmap("./textures/texture_clouds_background.png");
-    setStyleSheet();
 
     setWindowTitle("Shared Editor");
     statusBar = new QStatusBar(this);
-    statusBar->showMessage ("");
+    numUsers = new QLabel(statusBar);
+    numUsers->setText("Users connected: 0");
+    statusBar->addPermanentWidget(numUsers);
+    numUsers->hide();
+
     toolBar = new QToolBar("Toolbar",this);
     centralWidget = new QStackedWidget(this);
 
@@ -86,7 +89,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::fsNameArrived, addUserWidget, &AddUserWidget::fsNameArrived);
     connect(addUserWidget, &AddUserWidget::searchFsName, shEditor, &SharedEditor::searchFsName);
     connect(treeView, &FileSystemTreeView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
-
+    connect(editor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
+    connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
+    connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::hideNumUsers);
+    setStyleSheet();
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -262,8 +268,22 @@ void MainWindow::setStyleSheet() {
     qApp->setStyleSheet("QWidget {font-family: helvetica}"
                         "QPushButton {border-style: solid; border-width: 2px; border-color: #8fc1ed; border-radius: 12px; "
                         "background-color: white; min-width: 4em; padding: 3px; padding-left: 10px; padding-right:10px; font: 9pt; color: #182c3d;}"
-                        "QPushButton:pressed {background-color: lightblue}"
-                        "QLabel {color: white; font: 14pt}");
+                        "QPushButton:pressed {background-color: lightblue}");
+
+//    "QLabel {color: white; font: 14pt}");
 
 
+}
+
+
+void MainWindow::setNumUsers(int n) {
+    auto string = QString("Users online: ");
+    string.append(QString::number(n));
+    numUsers->setText(string);
+    if(numUsers->isHidden())
+        numUsers->show();
+}
+
+void MainWindow::hideNumUsers() {
+    numUsers->hide();
 }

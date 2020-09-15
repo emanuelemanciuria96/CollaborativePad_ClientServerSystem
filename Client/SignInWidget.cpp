@@ -17,6 +17,7 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     buttons = new QDialogButtonBox(this);
     loadImageButton = new QPushButton(this);
     auto title = new QLabel("Create Account");
+    title->setStyleSheet("QLabel {color: white; font:14pt}");
 
     auto middleLayout = new QHBoxLayout();
     auto outerLayout = new QVBoxLayout();

@@ -42,6 +42,7 @@ private:
     InviteUserWidget* inviteUserWidget;
     UriWidget* uriWidget;
     QPixmap bkgnd;
+    QLabel *numUsers;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -65,6 +66,8 @@ public slots:
             dockWidgetTree->show();
         else dockWidgetTree->hide();
     }
+    void setNumUsers(int n);
+    void hideNumUsers();
 };
 
 

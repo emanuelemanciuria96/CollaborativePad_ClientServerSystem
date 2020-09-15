@@ -76,7 +76,7 @@ static bool initializeDb()
         query.exec("DELETE FROM FILES");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova1', 'q', 'prova1.json', '0');");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova2', 'q', 'prova2.json', '0');");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('2', 'prova1', 'q', 'prova1.json', '1');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('2', 'prova1', 'q', 'prova1.json', '0');");
         query.exec("SELECT * FROM FILES");
 
         std::cout << "SITEID" << "\t\t\t\t" << "NAME" << "\t\t\t\t" << "OWNER" << "\t\t\t\t" << "FSNAME" << std::endl;
