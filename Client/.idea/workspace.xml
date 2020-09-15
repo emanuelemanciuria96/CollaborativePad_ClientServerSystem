@@ -11,23 +11,31 @@
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_PREFIX_PATH=C:\Qt\5.13.1\mingw73_64\lib\cmake" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_PREFIX_PATH=D:\Qt\5.12.3\mingw73_64\lib\cmake" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AddUserWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/AddUserWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FileSystemGridView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemGridView.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FileSystemGridView.h" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemGridView.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FileSystemGridView.ui" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemGridView.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FileSystemTreeView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemTreeView.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_Socket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_Socket.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_Transceiver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_Transceiver.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/G2NQOARGLM/moc_DataPacket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/G2NQOARGLM/moc_DataPacket.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SharedEditorServer/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,8 +169,23 @@
       <workItem from="1599835183312" duration="3576000" />
       <workItem from="1599838988855" duration="186000" />
       <workItem from="1599839232751" duration="820000" />
-      <workItem from="1600162732483" duration="482000" />
+      <workItem from="1600162732483" duration="12794000" />
     </task>
+    <task id="LOCAL-00001" summary="test">
+      <created>1600163227831</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1600163227831</updated>
+    </task>
+    <task id="LOCAL-00002" summary="test">
+      <created>1600163256003</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1600163256003</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,7 +193,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add files" />
-    <option name="LAST_COMMIT_MESSAGE" value="add files" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
   <component name="WindowStateProjectService">
     <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597338903660">
@@ -181,26 +205,30 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="672" y="165" key="#xdebugger.XInspectDialog/0.0.1536.824@0.0.1536.824" timestamp="1597590313280" />
+    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1600163255120">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600163255120" />
     <state width="479" height="438" key="DebuggerActiveHint" timestamp="1597247491161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="479" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1597247491161" />
-    <state width="1481" height="196" key="GridCell.Tab.0.bottom" timestamp="1600162287100">
+    <state width="1481" height="195" key="GridCell.Tab.0.bottom" timestamp="1600190992102">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="196" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600162287100" />
-    <state width="1481" height="196" key="GridCell.Tab.0.center" timestamp="1600162287099">
+    <state width="1481" height="195" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600190992102" />
+    <state width="1481" height="195" key="GridCell.Tab.0.center" timestamp="1600190992102">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="196" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600162287099" />
-    <state width="1481" height="196" key="GridCell.Tab.0.left" timestamp="1600162287099">
+    <state width="1481" height="195" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600190992102" />
+    <state width="1481" height="195" key="GridCell.Tab.0.left" timestamp="1600190992102">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="196" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600162287099" />
-    <state width="1481" height="196" key="GridCell.Tab.0.right" timestamp="1600162287099">
+    <state width="1481" height="195" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600190992102" />
+    <state width="1481" height="195" key="GridCell.Tab.0.right" timestamp="1600190992102">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="196" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600162287099" />
+    <state width="1481" height="195" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600190992102" />
     <state width="1493" height="213" key="GridCell.Tab.1.bottom" timestamp="1599840066971">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -225,14 +253,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="350" y="280" width="879" height="466" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1599839149405" />
-    <state x="277" y="57" key="SettingsEditor" timestamp="1597759724571">
+    <state x="277" y="0" key="SettingsEditor" timestamp="1600163354322">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1597759724571" />
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1600162186077">
+    <state x="277" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1600163354322" />
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1600163259611">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600162186077" />
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600163259611" />
     <state x="649" y="198" key="refactoring.ChangeSignatureDialog" timestamp="1597340248913">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -251,7 +279,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/MainWindow.cpp</url>
-          <line>103</line>
+          <line>113</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

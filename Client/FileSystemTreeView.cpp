@@ -183,7 +183,6 @@ void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
             path = item->parent()->text(0)+"/"+item->text(0);
         else
             path = item->text(0);
-
         emit opnFileRequest(path);
     }
 

@@ -31,6 +31,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
     // tree file system view creation
     treeFileSystemSettings();
+    // grid file system view creation
+    gridFileSystemSettings();
     // login creation
     loginSettings();
     // editor creation
@@ -40,9 +42,12 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     //highlightSetup
     highlightActionSetup();
     signInWidgetSetup();
+    closeButtonSetup();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
+    connect(gridView, &FileSystemGridView::opnFileRequest,this, &MainWindow::opnFileGrid);
+    connect(gridView, &FileSystemGridView::opnFileRequest,shEditor , &SharedEditor::requireFile);
     connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
     connect(treeView, &FileSystemTreeView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
     connect(treeView, &FileSystemTreeView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
@@ -55,11 +60,14 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::removeCursor, editor, &EditorGUI::removeCursor);
     connect(shEditor, &SharedEditor::deleteAllText, editor, &EditorGUI::deleteAllText);
     connect(shEditor, &SharedEditor::filePathsArrived, treeView, &FileSystemTreeView::constructFromPaths);
+    connect(shEditor, &SharedEditor::filePathsArrived, gridView, &FileSystemGridView::constructFromPaths);
     connect(shEditor, &SharedEditor::userInfoArrived, infoWidget, &InfoWidget::loadData);
     connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
     connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::startSignIn);
     connect(widgetSignIn, &SignInWidget::backToLogIn, this, &MainWindow::backToLogIn);
     connect(highlightAction, &QAction::triggered, shEditor, &SharedEditor::highlightSymbols);
+    connect(closeAction, &QAction::triggered, this, &MainWindow::clsFile);
+    //connect(closeAction, &QAction::triggered, shEditor, &SharedEditor::closeFile);
     connect(shEditor, &SharedEditor::highlight, editor, &EditorGUI::highlight);
     connect(widgetSignIn, &SignInWidget::registerRequest, shEditor, &SharedEditor::sendRegisterRequest);
     connect(addUserWidget, &AddUserWidget::searchUser, shEditor, &SharedEditor::searchUser);
@@ -95,21 +103,32 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     centralWidget->addWidget(widgetInfoEditC);
     centralWidget->addWidget(widgetEditor);
     centralWidget->addWidget(widgetSignIn);
+    centralWidget->addWidget(gridView);
 
 
 //    this->setCentralWidget(widgetLogin);
 }
 
 void MainWindow::loginFinished() {
+    centralWidget->setCurrentWidget(gridView);
     centralWidget->setCurrentWidget(widgetEditor);
+    widgetEditor->hide();
+    toolBar->hide();
+    gridView->show();
+    createMenus();
+}
+void MainWindow::opnFileGrid(QString fileName) {
+    widgetEditor->show();
     dockWidgetTree->show();
     toolBar->show();
-    createMenus();
-    //inviteUserWidget->show();
-    //uriWidget->show();
-
+    gridView->hide();
 }
-
+void MainWindow::clsFile() {
+    widgetEditor->hide();
+    dockWidgetTree->hide();
+    toolBar->hide();
+    gridView->show();
+}
 void MainWindow::loginSettings() {
 //    widgetLogin = new QWidget(this);
 //    widgetLogin->setLayout( new QGridLayout(widgetLogin) );
@@ -162,7 +181,9 @@ void MainWindow::treeFileSystemSettings() {
     this->addDockWidget(Qt::LeftDockWidgetArea,dockWidgetTree);
     dockWidgetTree->hide();
 }
-
+void MainWindow::gridFileSystemSettings() {
+    gridView = new FileSystemGridView();
+}
 
 void MainWindow::editorSettings(SharedEditor* shEditor) {
     widgetEditor = new QWidget(this);
@@ -224,6 +245,11 @@ void MainWindow::highlightActionSetup() {
     highlightAction->setStatusTip("Highlight the text entered by different users");
     highlightAction->setIcon(QIcon("./icons/icons8-spotlight-64.png"));
     highlightAction->font().setPointSize(10);
+}
+void MainWindow::closeButtonSetup() {
+    closeAction = new QAction();
+    closeAction->setIcon(QIcon("./icons/close.png"));
+    toolBar->addAction(closeAction);
 }
 
 void MainWindow::signInWidgetSetup() {

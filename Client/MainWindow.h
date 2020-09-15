@@ -10,6 +10,7 @@
 #include "EditorGUI.h"
 #include "LoginDialog.h"
 #include "FileSystemTreeView.h"
+#include "FileSystemGridView.h"
 #include "InfoWidget.h"
 #include "InfoWidgetEdit.h"
 #include "SignInWidget.h"
@@ -28,6 +29,7 @@ private:
     QWidget *widgetEditor;
     QWidget *widgetInfoEditC;
     FileSystemTreeView *treeView;
+    FileSystemGridView *gridView;
     EditorGUI *editor;
     LoginDialog *loginDialog;
     QStatusBar* statusBar;
@@ -36,6 +38,7 @@ private:
     InfoWidgetEdit* infoWidgetEdit;
     QStackedWidget* centralWidget;
     QAction* highlightAction;
+    QAction* closeAction;
     QAction* treeShowAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
@@ -46,9 +49,11 @@ private:
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
     void treeFileSystemSettings();
+    void gridFileSystemSettings();
     void infoWidgetsSettings();
     void highlightActionSetup();
     void signInWidgetSetup();
+    void closeButtonSetup();
     void resizeEvent(QResizeEvent *evt) override;
     void setStyleSheet();
     void createMenus();
@@ -59,6 +64,8 @@ public slots:
     void loginFinished();
     void startSignIn();
     void backToLogIn();
+    void opnFileGrid(QString fileName);
+    void clsFile();
     void openAddUser(const QString& fileName);
     void showHideTreeDock(bool checked=false){
         if(dockWidgetTree->isHidden())

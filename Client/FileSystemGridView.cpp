@@ -7,26 +7,14 @@
 #include <QMenu>
 #include <QInputDialog>
 
-FileSystemGridView::FileSystemGridView(QWidget *parent,QString fs) :
+FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &paths) :
         QWidget(parent),
         ui(new Ui::FileSystemGridView)
 {
-    QStringList folders = fs.split( "-" );
-    for(auto s:folders){
-        QStringList files = s.split( "," );
-        QVector<QString> V;
-        qint32 count=0;
-        for(auto f:files){
-            if(count>0){
-                V.append(f);
-            }
-            count++;
-        }
-        this->fileSystem.insert(files[0],V);
-    }
+
+    //constructFromPaths(paths);
     ui->setupUi(this);
-    ui->label->setText(this->mainFolder);
-    ui->label->setFont(QFont( "Helvetica", 12 ));
+    label=this->mainFolder;
     ui->listWidget->setFlow(QListView::LeftToRight);
 
     ui->listWidget->setResizeMode(QListView::Adjust);
@@ -56,19 +44,42 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,QString fs) :
 }
 
 
-
-////////////////////////////////////////////////////////////////////////////
-
 FileSystemGridView::~FileSystemGridView()
 {
     delete ui;
 }
-
+void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
+    this->fileSystem.clear();
+    for(auto p:paths){
+        QVector<QString> V;
+        QString folder;
+        if(p.count("/")>0){
+            folder=p.split("/")[0];
+        }else{
+            folder=this->mainFolder;
+        }
+        this->fileSystem.insert(folder,V);
+    }
+    for(auto p:paths){
+        QVector<QString> V;
+        QString folder;
+        QString file;
+        if(p.count("/")>0){
+            folder=p.split("/")[0];
+            file=p.split("/")[1];
+        }else{
+            folder=this->mainFolder;
+            file=p;
+        }
+        fileSystem[folder].push_back(file);
+    }
+    reload(this->mainFolder,false);
+}
 void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
     if(fileSystem.keys().count(item->text())>0){
         qDebug()<<"Open folder "<<item->text();
-        ui->label->setText(this->mainFolder+"/"+item->text());
+        label=this->mainFolder+"/"+item->text();
         reload(item->text(),true);
     }else{
         if(item->text()==""){
@@ -121,7 +132,7 @@ void FileSystemGridView::on_listWidget_itemClicked(QListWidgetItem *item)
 {
     if(item->text()==""){
         qDebug()<<"Back";
-        ui->label->setText(this->mainFolder);
+        label=this->mainFolder;
         reload("",false);
     }
 }
@@ -191,6 +202,11 @@ void FileSystemGridView::openFile(QString file)
     QString nameFile=file.split("/")[1];
     QString folder=file.split("/")[0];
     qDebug()<<"Open "+nameFile;
+    if(folder==mainFolder){
+        emit opnFileRequest(nameFile);
+    }else {
+        emit opnFileRequest(file);
+    }
 }
 
 void FileSystemGridView::deleteFile(QString file)

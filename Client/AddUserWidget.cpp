@@ -1,5 +1,4 @@
 #include "AddUserWidget.h"
-
 #include <utility>
 #include <iostream>
 #include "ui_adduserwidget.h"

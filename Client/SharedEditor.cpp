@@ -499,7 +499,6 @@ void SharedEditor::requireFile(QString fileName) {
         packet.setPayload(cmd);
 
         closeFile();
-
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
     }
