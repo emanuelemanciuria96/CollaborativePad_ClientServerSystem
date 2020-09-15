@@ -487,6 +487,9 @@ void SharedEditor::clearText(){
 
 void SharedEditor::requireFile(QString fileName) {
 
+    std::cout<<"porcoddio sto aprendo "<<fileName.toStdString()<<std::endl;
+
+
     if( fileName.split("/").size()==1 )
         fileName = _user+"/"+fileName;
 
@@ -519,6 +522,25 @@ void SharedEditor::requireFile(QString fileName) {
     auto cmd = std::make_shared<Command>(_siteId,Command::opn,vec);
     DataPacket packet(_siteId,0,DataPacket::command);
     packet.setPayload(cmd);
+
+    int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
+}
+
+void SharedEditor::requireFileClose() {
+
+    if(!isFileOpened) return;
+
+    if( fileOpened.split("/").size()==1 )
+        fileOpened = _user+"/"+fileOpened;
+
+    QVector<QString> vec = {fileOpened};
+    auto cmd = std::make_shared<Command>(_siteId,Command::cls,vec);
+    DataPacket packet(_siteId,0,DataPacket::command);
+    packet.setPayload(cmd);
+
+    closeFile();
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);

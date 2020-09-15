@@ -62,6 +62,7 @@ public slots:
     void loginSlot(QString& username, QString& password);
     void process(DataPacket pkt);
     void requireFile(QString fileName);
+    void requireFileClose();
     void requireFileRename(QString before,QString after);
     void requireFileDelete(QString fileName);
     void requireFileAdd(QString fileName);
