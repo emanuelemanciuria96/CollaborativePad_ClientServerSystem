@@ -1,12 +1,11 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'SharedEditor.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.13.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.7)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include <memory>
 #include "../../../SharedEditor.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
@@ -14,7 +13,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'SharedEditor.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.13.1. It"
+#error "This file was generated using the moc from 5.9.7. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -125,7 +124,7 @@ QT_MOC_LITERAL(63, 697, 9) // "submitUri"
 static const uint qt_meta_data_SharedEditor[] = {
 
  // content:
-       8,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
       31,   14, // methods
@@ -211,7 +210,7 @@ static const uint qt_meta_data_SharedEditor[] = {
 void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<SharedEditor *>(_o);
+        SharedEditor *_t = static_cast<SharedEditor *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->symbolsChanged((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< qint32(*)>(_a[3])),(*reinterpret_cast< Message::action_t(*)>(_a[4]))); break;
@@ -282,112 +281,112 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (SharedEditor::*)(qint32 , const QString & , qint32 , Message::action_t );
+            typedef void (SharedEditor::*_t)(qint32 , const QString & , qint32 , Message::action_t );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::symbolsChanged)) {
                 *result = 0;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)();
+            typedef void (SharedEditor::*_t)();
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::deleteAllText)) {
                 *result = 1;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)(const QVector<QString> & );
+            typedef void (SharedEditor::*_t)(const QVector<QString> & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::filePathsArrived)) {
                 *result = 2;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)(QString & , QString & );
+            typedef void (SharedEditor::*_t)(QString & , QString & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::fileNameEdited)) {
                 *result = 3;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)(QString & );
+            typedef void (SharedEditor::*_t)(QString & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::fileDeletion)) {
                 *result = 4;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)();
+            typedef void (SharedEditor::*_t)();
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::loginAchieved)) {
                 *result = 5;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)(const QPixmap & , const QString & , const QString & , const QString & );
+            typedef void (SharedEditor::*_t)(const QPixmap & , const QString & , const QString & , const QString & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::userInfoArrived)) {
                 *result = 6;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)(qint32 , qint32 );
+            typedef void (SharedEditor::*_t)(qint32 , qint32 );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::remoteCursorPosChanged)) {
                 *result = 7;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)(qint32 );
+            typedef void (SharedEditor::*_t)(qint32 );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::removeCursor)) {
                 *result = 8;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)(qint32 , qint32 );
+            typedef void (SharedEditor::*_t)(qint32 , qint32 );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::highlight)) {
                 *result = 9;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)(LoginInfo::type_t );
+            typedef void (SharedEditor::*_t)(LoginInfo::type_t );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::searchUserResult)) {
                 *result = 10;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)();
+            typedef void (SharedEditor::*_t)();
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::loginError)) {
                 *result = 11;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)(const QVector<QString> & );
+            typedef void (SharedEditor::*_t)(const QVector<QString> & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::inviteListArrived)) {
                 *result = 12;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)(const QString & );
+            typedef void (SharedEditor::*_t)(const QString & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::inviteResultArrived)) {
                 *result = 13;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)(const QVector<QString> & );
+            typedef void (SharedEditor::*_t)(const QVector<QString> & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::uriResultArrived)) {
                 *result = 14;
                 return;
             }
         }
         {
-            using _t = void (SharedEditor::*)(const QString & );
+            typedef void (SharedEditor::*_t)(const QString & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SharedEditor::fsNameArrived)) {
                 *result = 15;
                 return;
@@ -396,14 +395,10 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject SharedEditor::staticMetaObject = { {
-    &QObject::staticMetaObject,
-    qt_meta_stringdata_SharedEditor.data,
-    qt_meta_data_SharedEditor,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
+const QMetaObject SharedEditor::staticMetaObject = {
+    { &QObject::staticMetaObject, qt_meta_stringdata_SharedEditor.data,
+      qt_meta_data_SharedEditor,  qt_static_metacall, nullptr, nullptr}
+};
 
 
 const QMetaObject *SharedEditor::metaObject() const
@@ -439,7 +434,7 @@ int SharedEditor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void SharedEditor::symbolsChanged(qint32 _t1, const QString & _t2, qint32 _t3, Message::action_t _t4)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t4))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
@@ -452,21 +447,21 @@ void SharedEditor::deleteAllText()
 // SIGNAL 2
 void SharedEditor::filePathsArrived(const QVector<QString> & _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 
 // SIGNAL 3
 void SharedEditor::fileNameEdited(QString & _t1, QString & _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 3, _a);
 }
 
 // SIGNAL 4
 void SharedEditor::fileDeletion(QString & _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);
 }
 
@@ -479,35 +474,35 @@ void SharedEditor::loginAchieved()
 // SIGNAL 6
 void SharedEditor::userInfoArrived(const QPixmap & _t1, const QString & _t2, const QString & _t3, const QString & _t4)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t4))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
     QMetaObject::activate(this, &staticMetaObject, 6, _a);
 }
 
 // SIGNAL 7
 void SharedEditor::remoteCursorPosChanged(qint32 _t1, qint32 _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 7, _a);
 }
 
 // SIGNAL 8
 void SharedEditor::removeCursor(qint32 _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 8, _a);
 }
 
 // SIGNAL 9
 void SharedEditor::highlight(qint32 _t1, qint32 _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 9, _a);
 }
 
 // SIGNAL 10
 void SharedEditor::searchUserResult(LoginInfo::type_t _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 10, _a);
 }
 
@@ -520,28 +515,28 @@ void SharedEditor::loginError()
 // SIGNAL 12
 void SharedEditor::inviteListArrived(const QVector<QString> & _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 12, _a);
 }
 
 // SIGNAL 13
 void SharedEditor::inviteResultArrived(const QString & _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 13, _a);
 }
 
 // SIGNAL 14
 void SharedEditor::uriResultArrived(const QVector<QString> & _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 14, _a);
 }
 
 // SIGNAL 15
 void SharedEditor::fsNameArrived(const QString & _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 15, _a);
 }
 QT_WARNING_POP
