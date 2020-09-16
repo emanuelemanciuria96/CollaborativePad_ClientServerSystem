@@ -17,24 +17,15 @@
   <component name="ChangeListManager">
     <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddUserWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/AddUserWidget.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FileSystemGridView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemGridView.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FileSystemGridView.h" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemGridView.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileSystemGridView.ui" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemGridView.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FileSystemTreeView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemTreeView.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_LoginDialog.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_Socket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_Socket.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_Transceiver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_Transceiver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/G2NQOARGLM/moc_DataPacket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/G2NQOARGLM/moc_DataPacket.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/icons/grid_back_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/icons/grid_back_icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SharedEditorServer/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../SharedEditorServer/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,11 +40,10 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="master" />
+        <entry key="$PROJECT_DIR$/.." value="GridView" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="ProjectId" id="1bBKCIx8ekS6ORSWnAdiA1BK2HF" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -169,7 +159,9 @@
       <workItem from="1599835183312" duration="3576000" />
       <workItem from="1599838988855" duration="186000" />
       <workItem from="1599839232751" duration="820000" />
-      <workItem from="1600162732483" duration="12794000" />
+      <workItem from="1600162732483" duration="14857000" />
+      <workItem from="1600242626749" duration="9408000" />
+      <workItem from="1600253269481" duration="10748000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1600163227831</created>
@@ -185,7 +177,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600163256003</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="closeButton">
+      <created>1600191700350</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1600191700350</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -194,41 +193,42 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add files" />
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="closeButton" />
+    <option name="LAST_COMMIT_MESSAGE" value="closeButton" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597338903660">
+    <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600244901484">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1597338903659" />
+    <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1600244901484" />
     <state x="672" y="165" key="#xdebugger.XInspectDialog" timestamp="1597590313280">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="672" y="165" key="#xdebugger.XInspectDialog/0.0.1536.824@0.0.1536.824" timestamp="1597590313280" />
-    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1600163255120">
+    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1600191696834">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600163255120" />
+    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600191696834" />
     <state width="479" height="438" key="DebuggerActiveHint" timestamp="1597247491161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="479" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1597247491161" />
-    <state width="1481" height="195" key="GridCell.Tab.0.bottom" timestamp="1600190992102">
+    <state width="1481" height="194" key="GridCell.Tab.0.bottom" timestamp="1600271488507">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="195" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600190992102" />
-    <state width="1481" height="195" key="GridCell.Tab.0.center" timestamp="1600190992102">
+    <state width="1481" height="194" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600271488507" />
+    <state width="1481" height="194" key="GridCell.Tab.0.center" timestamp="1600271488507">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="195" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600190992102" />
-    <state width="1481" height="195" key="GridCell.Tab.0.left" timestamp="1600190992102">
+    <state width="1481" height="194" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600271488507" />
+    <state width="1481" height="194" key="GridCell.Tab.0.left" timestamp="1600271488507">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="195" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600190992102" />
-    <state width="1481" height="195" key="GridCell.Tab.0.right" timestamp="1600190992102">
+    <state width="1481" height="194" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600271488507" />
+    <state width="1481" height="194" key="GridCell.Tab.0.right" timestamp="1600271488507">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="195" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600190992102" />
+    <state width="1481" height="194" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600271488507" />
     <state width="1493" height="213" key="GridCell.Tab.1.bottom" timestamp="1599840066971">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -245,10 +245,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="213" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1599840066971" />
-    <state x="169" y="130" key="MergeDialog" timestamp="1599839149383">
+    <state x="169" y="129" key="MergeDialog" timestamp="1600242736604">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="169" y="130" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1599839149383" />
+    <state x="169" y="129" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1600242736604" />
     <state x="350" y="280" width="879" height="466" key="MultipleFileMergeDialog" timestamp="1599839149405">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -257,10 +257,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1600163354322" />
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1600163259611">
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1600242684852">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600163259611" />
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600242684852" />
     <state x="649" y="198" key="refactoring.ChangeSignatureDialog" timestamp="1597340248913">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -275,15 +275,6 @@
     <state x="814" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1598631634204" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/MainWindow.cpp</url>
-          <line>113</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="_a" />

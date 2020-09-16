@@ -116,7 +116,7 @@ QTreeWidgetItem* FileSystemTreeView::addChild(QTreeWidgetItem *parent, QString n
 }
 
 void FileSystemTreeView::constructFromPaths(const QVector<QString> &paths) {
-
+    model.clear();
     for(auto path: paths){
         auto strs = path.split("/");
         auto itm = root;

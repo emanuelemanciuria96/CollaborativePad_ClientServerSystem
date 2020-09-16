@@ -39,6 +39,9 @@ private:
     QStackedWidget* centralWidget;
     QAction* highlightAction;
     QAction* closeAction;
+    QAction* addAction;
+    QAction* backAction;
+    QAction* inviteAction;
     QAction* treeShowAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
@@ -51,12 +54,15 @@ private:
     void treeFileSystemSettings();
     void gridFileSystemSettings();
     void infoWidgetsSettings();
-    void highlightActionSetup();
     void signInWidgetSetup();
-    void closeButtonSetup();
     void resizeEvent(QResizeEvent *evt) override;
     void setStyleSheet();
     void createMenus();
+    void setToolBar();
+    void setToolBarEditor();
+    void setToolBarGrid();
+    void setToolBarFolderGrid(QString folder);
+    void changeInviteAction(bool state);
 
 signals:
 
