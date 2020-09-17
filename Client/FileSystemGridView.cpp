@@ -13,7 +13,6 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
 
 
     ui->setupUi(this);
-    label = this->mainFolder;
     ui->label->setText(this->mainFolder.split(".")[1]);
     ui->label_2->hide();
     ui->listWidget->setFlow(QListView::LeftToRight);
@@ -31,30 +30,13 @@ FileSystemGridView::~FileSystemGridView()
     delete ui;
 }
 
-QVector<QString> FileSystemGridView::getVector() {
-    QVector<QString> V;
-    for(auto folder:this->fileSystem.keys()){
-        for(auto file:this->fileSystem[folder]) {
-            if(folder==this->mainFolder) {
-                V.push_back(file);
-                qDebug()<<file;
-            }else{
-                V.push_back(folder+"/"+file);
-                qDebug()<<folder+"/"+file;
-            }
-        }
-    }
-    return V;
-}
-
-
 void FileSystemGridView::reload(const QString folder,bool isFolder)
 {
     ui->listWidget->clear();
     if(isFolder){
         emit openFolder(folder);
         ui->label->setStyleSheet("QLabel {font: 16pt 'Consolas';color: grey;}");
-        ui->label->setText(this->mainFolder.split(".")[1]+">");
+        ui->label->setText(this->mainFolder.split(".")[1]+"> ");
         ui->label_2->setText(folder);
         ui->label_2->show();
         for(auto file:this->fileSystem[folder]){
@@ -126,7 +108,6 @@ void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
     if(item->statusTip()=="folder"){
         qDebug()<<"Open folder "<<item->text();
-        label=this->mainFolder+"/"+item->text();
         reload(item->text(),true);
     }else{
         if(item->text()==""){
@@ -147,7 +128,6 @@ void FileSystemGridView::on_listWidget_itemSelectionChanged(){
 
 void FileSystemGridView::reloadBack(){
     qDebug() << "Back";
-    label = this->mainFolder;
     reload("", false);
 }
 

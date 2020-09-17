@@ -17,7 +17,6 @@ public:
 public slots:
     void constructFromPaths(const QVector<QString> &paths);
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
-    //void on_listWidget_itemClicked(QListWidgetItem *item);
     void on_listWidget_itemSelectionChanged();
     void on_listWidget_customContextMenuRequested(const QPoint &pos);
 
@@ -27,7 +26,6 @@ public slots:
     void deleteFile(QString file);
     void renameFile(QString oldFile,QString newFile);
     void reloadBack();
-    QVector<QString> getVector();
     QString getState();
     QString getMainFolder();
 
@@ -48,7 +46,6 @@ private:
     void itemProperties(QListWidgetItem *item);
     QString format=".png";
     Ui::FileSystemGridView *ui;
-    QString label;
     void reload(const QString folder,bool isFolder);
 
 /*
