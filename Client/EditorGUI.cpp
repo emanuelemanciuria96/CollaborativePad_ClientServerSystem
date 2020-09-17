@@ -7,6 +7,7 @@
 #include <QtPrintSupport/QPrinter>
 #include "EditorGUI.h"
 #include <QScrollBar>
+#include <QtWidgets/QStyle>
 
 EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     signalBlocker = false;
@@ -31,13 +32,14 @@ void EditorGUI::setUpGUI() {
 
     textEdit = new MyTextEdit(&remoteCursors, this);
     setLayout(new QVBoxLayout(this));
+    this->layout()->setAlignment(Qt::AlignCenter);
+    this->layout()->setContentsMargins(0, 0, 0, 0);
     this->layout()->addWidget(textEdit);
-    this->layout()->setAlignment(Qt::AlignHCenter);
-    this->layout()->setContentsMargins(0, 20, 0, 0);
-    textEdit->setStyleSheet("QTextEdit {padding: 65}");
+
+    textEdit->document()->setDocumentMargin(65);
+    textEdit->setLineWrapMode(QTextEdit::FixedPixelWidth);
+    textEdit->setLineWrapColumnOrWidth(880);
     textEdit->setMaximumWidth(880);
-//    textEdit->setMinimumWidth(880);
-//    textEdit->setFixedWidth(880);
 
     connect(this, SIGNAL(clear()), textEdit, SLOT(clear()));
 
@@ -48,7 +50,6 @@ void EditorGUI::setUpGUI() {
     connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
 //    load("./file.txt");
     loadSymbols();
-
 }
 
 

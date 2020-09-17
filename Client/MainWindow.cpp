@@ -99,7 +99,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
     centralWidget->addWidget(loginDialog);
     centralWidget->addWidget(widgetInfoEditC);
-    centralWidget->addWidget(widgetEditor);
+    centralWidget->addWidget(editor);
     centralWidget->addWidget(widgetSignIn);
 
 
@@ -107,10 +107,13 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 }
 
 void MainWindow::loginFinished() {
-    centralWidget->setCurrentWidget(widgetEditor);
+    centralWidget->setCurrentWidget(editor);
     dockWidgetTree->show();
     toolBar->show();
     createMenus();
+    auto p = QPalette();
+    p.setBrush(QPalette::Window, QBrush(QColor("lightgray")) );
+    centralWidget->setPalette(p);
     //inviteUserWidget->show();
     //uriWidget->show();
 
@@ -171,18 +174,13 @@ void MainWindow::treeFileSystemSettings() {
 
 
 void MainWindow::editorSettings(SharedEditor* shEditor) {
-    widgetEditor = new QWidget(this);
-    widgetEditor->setStyleSheet("QWidget { background: lightGray; }");
-    editor = new EditorGUI(shEditor, widgetEditor);
-    editor->setStyleSheet("QWidget { background: white; }");
-    auto layoutEditor = new QVBoxLayout(widgetEditor);
-    layoutEditor->addWidget(editor);
-    layoutEditor->setContentsMargins(0,0,0,0);
+    editor = new EditorGUI(shEditor, this);
+
     addUserWidget = new AddUserWidget(this);
     inviteUserWidget = new InviteUserWidget(this);
     uriWidget = new UriWidget(this);
 
-    widgetEditor->hide();
+//    widgetEditor->hide();
 }
 
 void MainWindow::startSignIn() {
@@ -247,18 +245,19 @@ void MainWindow::createMenus() {
 
 void MainWindow::resizeEvent(QResizeEvent *evt) {
     QWidget::resizeEvent(evt);
-    QPalette p = palette();
-    p.setBrush(QPalette::Window,bkgnd.scaled(centralWidget->size(), Qt::KeepAspectRatioByExpanding));
+    if(centralWidget->currentWidget() != editor) {
+        QPalette p = palette();
+        p.setBrush(QPalette::Window, bkgnd.scaled(centralWidget->size(), Qt::KeepAspectRatioByExpanding));
 
-    QLinearGradient grad(500,500,1000,1000);
-    grad.setColorAt(0,QColor("#4b71e3"));
-    grad.setColorAt(1,QColor("#87b5ff"));
-    QBrush brush2(grad);
+        QLinearGradient grad(500, 500, 1000, 1000);
+        grad.setColorAt(0, QColor("#4b71e3"));
+        grad.setColorAt(1, QColor("#87b5ff"));
+        QBrush brush2(grad);
 //    p.setBrush(QPalette::Window,brush2);
 
-    centralWidget->setAutoFillBackground(true);
-    centralWidget->setPalette(p);
-
+        centralWidget->setAutoFillBackground(true);
+        centralWidget->setPalette(p);
+    }
     dockWidgetTree->setMaximumWidth(this->size().width() / 4);
     dockWidgetTree->setMinimumWidth(this->size().width() / 4);
 
