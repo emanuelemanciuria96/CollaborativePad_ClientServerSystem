@@ -95,9 +95,13 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::rmvFileRequest, addUserWidget, &AddUserWidget::processFileDeleted);
     connect(gridView, &FileSystemGridView::rmvFileRequest, addUserWidget, &AddUserWidget::processFileDeleted);
     connect(treeShowAction, &QAction::triggered,[this](bool checked=false){
-                if(dockWidgetTree->isHidden())
+                if(dockWidgetTree->isHidden()) {
                     dockWidgetTree->show();
-                else dockWidgetTree->hide();
+                    treeShowAction->setToolTip("Hide tree");
+                }else {
+                    dockWidgetTree->hide();
+                    treeShowAction->setToolTip("Show tree");
+                }
             });
     connect(uriWidget, &UriWidget::submitUri, shEditor, &SharedEditor::submitUri);
     connect(shEditor, &SharedEditor::uriResultArrived, uriWidget, &UriWidget::uriResultArrived);
@@ -138,6 +142,11 @@ void MainWindow::opnFileGrid(QString fileName) {
 }
 void MainWindow::changeInviteAction(bool state){
     inviteAction->setDisabled(!state);
+    if(state){
+        inviteAction->setToolTip("Invite user");
+    }else{
+        inviteAction->setToolTip("");
+    }
 }
 void MainWindow::clsFile() {
     if(gridView->getState()==gridView->getMainFolder()){
@@ -206,6 +215,7 @@ void MainWindow::setToolBar() {
     treeShowAction = new QAction();
     treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
     treeShowAction->setVisible(false);
+    treeShowAction->setToolTip("Hide tree");
     toolBar->addAction(treeShowAction);
 
     highlightAction = toolBar->addAction("Highlight");
@@ -214,28 +224,33 @@ void MainWindow::setToolBar() {
     highlightAction->setStatusTip("Highlight the text entered by different users");
     highlightAction->setIcon(QIcon("./icons/icons8-spotlight-64.png"));
     highlightAction->font().setPointSize(10);
+    highlightAction->setToolTip("Highlight the text entered by different users");
     highlightAction->setVisible(false);
 
     closeAction = new QAction();
     closeAction->setIcon(QIcon("./icons/close.png"));
     closeAction->setVisible(false);
+    closeAction->setToolTip("Close file");
     toolBar->addAction(closeAction);
 
     //GridToolbar
     addAction = new QAction();
     addAction->setIcon(QIcon("./icons/grid_add_icon.png"));
     addAction->setVisible(false);
+    addAction->setToolTip("New file");
     toolBar->addAction(addAction);
 
     backAction = new QAction();
     backAction->setIcon(QIcon("./icons/grid_back_icon.png"));
     backAction->setVisible(false);
+    backAction->setToolTip("Back");
     toolBar->addAction(backAction);
 
     inviteAction = new QAction();
     inviteAction->setIcon(QIcon("./icons/grid_invite_icon.png"));
     inviteAction->setVisible(false);
     toolBar->addAction(inviteAction);
+
 }
 void MainWindow::setToolBarEditor() {
     backAction->setVisible(false);

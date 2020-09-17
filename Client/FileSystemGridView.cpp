@@ -15,6 +15,8 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     //constructFromPaths(paths);
     ui->setupUi(this);
     label=this->mainFolder;
+    ui->label->setText(this->mainFolder.split(".")[1]);
+    ui->label_2->hide();
     ui->listWidget->setFlow(QListView::LeftToRight);
 
     ui->listWidget->setResizeMode(QListView::Adjust);
@@ -69,6 +71,10 @@ void FileSystemGridView::reload(const QString folder,bool isFolder)
     ui->listWidget->clear();
     if(isFolder){
         emit openFolder(folder);
+        ui->label->setStyleSheet("QLabel {font: 16pt 'Consolas';color: grey;}");
+        ui->label->setText(this->mainFolder.split(".")[1]+">");
+        ui->label_2->setText(folder);
+        ui->label_2->show();
         for(auto file:this->fileSystem[folder]){
             QListWidgetItem *item=new QListWidgetItem;
             item->setText(file);
@@ -79,6 +85,9 @@ void FileSystemGridView::reload(const QString folder,bool isFolder)
         this->state=folder;
     }else{
         emit back();
+        ui->label->setStyleSheet("QLabel {font: 75 16pt 'Consolas';color: black;}");
+        ui->label->setText(this->mainFolder.split(".")[1]);
+        ui->label_2->hide();
         for(auto folder:this->fileSystem.keys()){
             if(folder==this->mainFolder){
                 continue;
@@ -156,6 +165,10 @@ void FileSystemGridView::reloadBack(){
 }
 void FileSystemGridView::invite(){
     QListWidgetItem *item=ui->listWidget->currentItem();
+    if(this->fileSystem.count(item->text())>0){
+        emit canInvite(false);
+        return;
+    }
     qDebug() << "invite "<<item->text();
     emit inviteRequest(item->text());
 }
@@ -180,6 +193,18 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
 {
     QModelIndex t = ui->listWidget->indexAt(pos);
     if(t.row()<0){
+        if(this->state!=this->mainFolder){
+            return;
+        }
+        QPoint globalPos = ui->listWidget->mapToGlobal(pos);
+        QMenu* myMenu=new QMenu();
+
+        myMenu->addAction("New file");
+        auto selectedAction = myMenu->exec(globalPos);
+        if( selectedAction == nullptr){} // senza questo crasha dopo due right-click consecutivi
+        else if( selectedAction->text() == "New File"){
+            addFile();
+        }
         return;
     }
     QListWidgetItem *item=ui->listWidget->currentItem();
