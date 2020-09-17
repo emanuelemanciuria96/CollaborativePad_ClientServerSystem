@@ -43,7 +43,7 @@ signals:
 
 private:
     QMap<QString,QVector<QString>> fileSystem;
-    QString mainFolder="..mydoc";
+    QString mainFolder="-.My files ";
     QString state=this->mainFolder;
     void itemProperties(QListWidgetItem *item);
     QString format=".png";
