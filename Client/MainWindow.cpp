@@ -138,7 +138,6 @@ void MainWindow::opnFileGrid(QString fileName) {
     widgetEditor->show();
     dockWidgetTree->show();
     gridView->hide();
-
 }
 void MainWindow::changeInviteAction(bool state){
     inviteAction->setDisabled(!state);

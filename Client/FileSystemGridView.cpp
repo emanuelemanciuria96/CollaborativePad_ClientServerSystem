@@ -9,12 +9,11 @@
 
 FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &paths) :
         QWidget(parent),
-        ui(new Ui::FileSystemGridView)
-{
+        ui(new Ui::FileSystemGridView) {
 
-    //constructFromPaths(paths);
+
     ui->setupUi(this);
-    label=this->mainFolder;
+    label = this->mainFolder;
     ui->label->setText(this->mainFolder.split(".")[1]);
     ui->label_2->hide();
     ui->listWidget->setFlow(QListView::LeftToRight);
@@ -23,29 +22,10 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     ui->listWidget->setViewMode(QListView::IconMode);
     ui->listWidget->setMovement(QListView::Static);
     ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-    ui->listWidget->setIconSize(QSize(130,130));
-    ui->listWidget->setFont(QFont( "Helvetica", 12 ));
-
-    for(auto folder:this->fileSystem.keys()){
-        if(folder==this->mainFolder){
-            continue;
-        }
-        QListWidgetItem *item=new QListWidgetItem;
-        item->setText(folder);
-        item->setIcon(*folderIcon);
-        itemProperties(item);
-        ui->listWidget->addItem(item);
-    }
-    for(auto file:this->fileSystem[this->mainFolder]){
-        QListWidgetItem *item=new QListWidgetItem;
-        item->setText(file);
-        item->setIcon(*textIcon);
-        itemProperties(item);
-        ui->listWidget->addItem(item);
-    }
+    ui->listWidget->setIconSize(QSize(130, 130));
+    ui->listWidget->setFont(QFont("Helvetica", 12));
+    constructFromPaths(paths);
 }
-
-
 FileSystemGridView::~FileSystemGridView()
 {
     delete ui;
@@ -66,6 +46,7 @@ QVector<QString> FileSystemGridView::getVector() {
     return V;
 }
 
+
 void FileSystemGridView::reload(const QString folder,bool isFolder)
 {
     ui->listWidget->clear();
@@ -79,6 +60,7 @@ void FileSystemGridView::reload(const QString folder,bool isFolder)
             QListWidgetItem *item=new QListWidgetItem;
             item->setText(file);
             item->setIcon(*textIcon);
+            item->setStatusTip("file");
             item->setSizeHint(QSize(200, 180));
             ui->listWidget->addItem(item);
         }
@@ -95,6 +77,7 @@ void FileSystemGridView::reload(const QString folder,bool isFolder)
             QListWidgetItem *item=new QListWidgetItem;
             item->setText(folder);
             item->setIcon(*folderIcon);
+            item->setStatusTip("folder");
             itemProperties(item);
             ui->listWidget->addItem(item);
         }
@@ -102,6 +85,7 @@ void FileSystemGridView::reload(const QString folder,bool isFolder)
             QListWidgetItem *item=new QListWidgetItem;
             item->setText(file);
             item->setIcon(*textIcon);
+            item->setStatusTip("file");
             itemProperties(item);
             ui->listWidget->addItem(item);
         }
@@ -137,7 +121,7 @@ void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
 }
 void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
-    if(fileSystem.keys().count(item->text())>0){
+    if(item->statusTip()=="folder"){
         qDebug()<<"Open folder "<<item->text();
         label=this->mainFolder+"/"+item->text();
         reload(item->text(),true);
@@ -150,9 +134,7 @@ void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 }
 void FileSystemGridView::on_listWidget_itemSelectionChanged(){
     QListWidgetItem *item=ui->listWidget->currentItem();
-    if(this->state!=mainFolder){
-        emit canInvite(false);
-    }else if(fileSystem.keys().count(item->text())==0){
+    if(item->statusTip()=="file"){
         emit canInvite(true);//file clicked
     }else{
         emit canInvite(false);//folder clicked
@@ -211,7 +193,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
     if(item->text()==""){
         return;
     }
-    if(fileSystem.keys().count(item->text())>0){
+    if(item->statusTip()=="folder"){
         QPoint globalPos = ui->listWidget->mapToGlobal(pos);
         QMenu* myMenu=new QMenu();
 
