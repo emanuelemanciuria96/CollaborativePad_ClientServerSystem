@@ -48,6 +48,7 @@ FileSystemGridView::~FileSystemGridView()
 {
     delete ui;
 }
+
 QVector<QString> FileSystemGridView::getVector() {
     QVector<QString> V;
     for(auto folder:this->fileSystem.keys()){
@@ -99,6 +100,7 @@ void FileSystemGridView::reload(const QString folder,bool isFolder)
         state=this->mainFolder;
     }
 }
+
 void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
     this->fileSystem.clear();
     for(auto p:paths){
@@ -126,6 +128,7 @@ void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
     }
     reload(this->mainFolder,false);
 }
+
 void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
     if(fileSystem.keys().count(item->text())>0){
@@ -139,6 +142,7 @@ void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
         openFile(this->state+"/"+item->text());
     }
 }
+
 void FileSystemGridView::on_listWidget_itemSelectionChanged(){
     QListWidgetItem *item=ui->listWidget->currentItem();
     if(this->state!=mainFolder){
@@ -149,16 +153,19 @@ void FileSystemGridView::on_listWidget_itemSelectionChanged(){
         emit canInvite(false);//folder clicked
     }
 }
+
 void FileSystemGridView::reloadBack(){
     qDebug() << "Back";
     label = this->mainFolder;
     reload("", false);
 }
+
 void FileSystemGridView::invite(){
     QListWidgetItem *item=ui->listWidget->currentItem();
     qDebug() << "invite "<<item->text();
     emit inviteRequest(item->text());
 }
+
 void FileSystemGridView::addFile(){
     bool ok;
     QString newNameFile = QInputDialog::getText(0, "",

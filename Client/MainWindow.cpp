@@ -48,14 +48,15 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
+    connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
+    connect(treeView, &FileSystemTreeView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
+    connect(treeView, &FileSystemTreeView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
     connect(gridView, &FileSystemGridView::opnFileRequest,this, &MainWindow::opnFileGrid);
     connect(gridView, &FileSystemGridView::opnFileRequest,shEditor , &SharedEditor::requireFile);
     connect(gridView, &FileSystemGridView::openFolder,this, &MainWindow::setToolBarFolderGrid);
     connect(gridView, &FileSystemGridView::back,this, &MainWindow::setToolBarGrid);
     connect(gridView, &FileSystemGridView::canInvite,this, &MainWindow::changeInviteAction);
-    connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
     connect(gridView, &FileSystemGridView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
-    connect(treeView, &FileSystemTreeView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
     connect(gridView, &FileSystemGridView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
     connect(shEditor, &SharedEditor::fileNameEdited, treeView, &FileSystemTreeView::editFileName);
     connect(shEditor, &SharedEditor::fileDeletion, treeView, &FileSystemTreeView::remoteFileDeletion);
@@ -132,7 +133,7 @@ void MainWindow::opnFileGrid(QString fileName) {
     //treeView->constructFromPaths(gridView->getVector());
     setToolBarEditor();
     widgetEditor->show();
-    dockWidgetTree->show();
+    //dockWidgetTree->show();
     gridView->hide();
 
 }
@@ -198,9 +199,11 @@ void MainWindow::treeFileSystemSettings() {
     this->addDockWidget(Qt::LeftDockWidgetArea,dockWidgetTree);
     dockWidgetTree->hide();
 }
+
 void MainWindow::gridFileSystemSettings() {
     gridView = new FileSystemGridView();
 }
+
 void MainWindow::setToolBar() {
     //EditorToolbar
     treeShowAction = new QAction();
