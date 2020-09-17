@@ -17,9 +17,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileSystemGridView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemGridView.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileSystemGridView.ui" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemGridView.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +150,7 @@
       <workItem from="1600253269481" duration="13974000" />
       <workItem from="1600329385037" duration="6992000" />
       <workItem from="1600339760873" duration="1083000" />
-      <workItem from="1600346476601" duration="9633000" />
+      <workItem from="1600346476601" duration="9982000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1600163227831</created>
@@ -190,7 +187,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600340752827</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="fix inviteButtonAction">
+      <created>1600357364937</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1600357364937</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,7 +206,8 @@
     <MESSAGE value="closeButton" />
     <MESSAGE value="inviteButton" />
     <MESSAGE value="pathBar" />
-    <option name="LAST_COMMIT_MESSAGE" value="pathBar" />
+    <MESSAGE value="fix inviteButtonAction" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix inviteButtonAction" />
   </component>
   <component name="WindowStateProjectService">
     <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600244901484">
@@ -213,30 +218,30 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="672" y="165" key="#xdebugger.XInspectDialog/0.0.1536.824@0.0.1536.824" timestamp="1597590313280" />
-    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1600340751295">
+    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1600357363523">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600340751295" />
+    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600357363523" />
     <state width="479" height="438" key="DebuggerActiveHint" timestamp="1597247491161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="479" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1597247491161" />
-    <state width="1481" height="191" key="GridCell.Tab.0.bottom" timestamp="1600357327211">
+    <state width="1481" height="191" key="GridCell.Tab.0.bottom" timestamp="1600357696001">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="191" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600357327211" />
-    <state width="1481" height="191" key="GridCell.Tab.0.center" timestamp="1600357327211">
+    <state width="1481" height="191" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600357696001" />
+    <state width="1481" height="191" key="GridCell.Tab.0.center" timestamp="1600357696001">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="191" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600357327211" />
-    <state width="1481" height="191" key="GridCell.Tab.0.left" timestamp="1600357327210">
+    <state width="1481" height="191" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600357696001" />
+    <state width="1481" height="191" key="GridCell.Tab.0.left" timestamp="1600357696001">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="191" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600357327210" />
-    <state width="1481" height="191" key="GridCell.Tab.0.right" timestamp="1600357327211">
+    <state width="1481" height="191" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600357696001" />
+    <state width="1481" height="191" key="GridCell.Tab.0.right" timestamp="1600357696001">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="191" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600357327211" />
+    <state width="1481" height="191" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600357696001" />
     <state width="1493" height="213" key="GridCell.Tab.1.bottom" timestamp="1599840066971">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -265,10 +270,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1600163354322" />
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1600340811348">
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1600357370206">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600340811348" />
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600357370206" />
     <state x="649" y="198" key="refactoring.ChangeSignatureDialog" timestamp="1597340248913">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
