@@ -79,21 +79,26 @@ void FileSystemGridView::reload(const QString folder,bool isFolder)
 }
 
 void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
+    QStringList folders;
     for(auto p:paths){
-        QVector<QString> V;
         QString folder;
         if(p.count("/")>0){
             folder=p.split("/")[0];
         }else{
             folder=this->mainFolder;
         }
+        folders.push_back(folder);
+    }
+    folders.sort();
+    for(auto folder:folders){
         if(this->fileSystem.keys().count(folder)>0){
             continue;
         }
+        QStringList V;
         this->fileSystem.insert(folder,V);
     }
     for(auto p:paths){
-        QVector<QString> V;
+        QStringList V;
         QString folder;
         QString file;
         if(p.count("/")>0){
@@ -107,6 +112,10 @@ void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
             return;
         }
         fileSystem[folder].push_back(file);
+    }
+
+    for(auto folder:folders){
+        this->fileSystem[folder].sort();
     }
     if(this->state==this->mainFolder) {
         reload(this->mainFolder, false);

@@ -43,7 +43,7 @@ signals:
     void canInvite(bool state);
 
 private:
-    QMap<QString,QVector<QString>> fileSystem;
+    QMap<QString,QStringList> fileSystem;
     QString mainFolder="-.My files ";
     QString state=this->mainFolder;
     void itemProperties(QListWidgetItem *item);
