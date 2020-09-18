@@ -21,7 +21,6 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
-
 }
 
 
@@ -390,3 +389,4 @@ void EditorGUI::exportToPdf() {
         textEdit->print(&printer);
     }
 }
+

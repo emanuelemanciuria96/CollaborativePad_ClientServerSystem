@@ -63,6 +63,7 @@ private:
     void drawLabel(RemoteCursor *cursor);
     void keyPressEvent(QKeyEvent *e) override;
     QTextCharFormat getFormat(qint32 siteId);
+
 private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);
     void flushInsertQueue();

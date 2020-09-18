@@ -27,6 +27,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Client.dir/SignInWidget.cpp.obj"
   "CMakeFiles/Client.dir/Transceiver.cpp.obj"
   "CMakeFiles/Client.dir/UriWidget.cpp.obj"
+  "CMakeFiles/Client.dir/UsersList.cpp.obj"
   "CMakeFiles/Client.dir/main.cpp.obj"
   "Client.exe"
   "Client.exe.manifest"

@@ -16,6 +16,7 @@
 #include "AddUserWidget.h"
 #include "InviteUserWidget.h"
 #include "UriWidget.h"
+#include "UsersList.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -24,7 +25,6 @@ public:
 
 private:
     QDockWidget *dockWidgetTree;
-    QWidget *widgetLogin;
     QWidget *widgetEditor;
     QWidget *widgetInfoEditC;
     FileSystemTreeView *treeView;
@@ -43,6 +43,9 @@ private:
     UriWidget* uriWidget;
     QPixmap bkgnd;
     QLabel *numUsers;
+    UsersList *usersList;
+    QDockWidget *dockWidgetUsers;
+
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -53,7 +56,7 @@ private:
     void resizeEvent(QResizeEvent *evt) override;
     void setStyleSheet();
     void createMenus();
-
+    void setUsersList();
 signals:
 
 public slots:

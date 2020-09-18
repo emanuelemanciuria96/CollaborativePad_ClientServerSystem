@@ -43,6 +43,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     //highlightSetup
     highlightActionSetup();
     signInWidgetSetup();
+    setUsersList();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
@@ -286,4 +287,25 @@ void MainWindow::setNumUsers(int n) {
 
 void MainWindow::hideNumUsers() {
     numUsers->hide();
+}
+
+void MainWindow::setUsersList() {
+    usersList = new UsersList(this);
+
+    dockWidgetUsers = new QDockWidget("Users connected",this);
+    dockWidgetUsers->setAllowedAreas(Qt::RightDockWidgetArea );
+    dockWidgetUsers->setFeatures(QDockWidget::DockWidgetClosable);
+    dockWidgetUsers->setMouseTracking(true);
+
+//    treeShowAction = new QAction();
+//    treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
+//    toolBar->addAction(treeShowAction);
+
+//    auto voidWidget = new QWidget();
+//    dockWidgetTree->setTitleBarWidget(voidWidget);
+
+    treeView = new FileSystemTreeView(dockWidgetTree);
+    dockWidgetUsers->setWidget(usersList);
+
+    this->addDockWidget(Qt::RightDockWidgetArea,dockWidgetUsers);
 }
