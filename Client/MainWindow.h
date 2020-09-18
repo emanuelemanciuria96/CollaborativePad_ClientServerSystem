@@ -17,6 +17,7 @@
 #include "InviteUserWidget.h"
 #include "UriWidget.h"
 #include "UsersList.h"
+#include <QScrollArea>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT

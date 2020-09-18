@@ -28,6 +28,8 @@
 #include <QTextEdit>
 #include "MyTextEdit.h"
 #include <QKeyEvent>
+#include <QScrollArea>
+#include <QAbstractTextDocumentLayout>
 
 class EditorGUI: public QWidget {
     Q_OBJECT
