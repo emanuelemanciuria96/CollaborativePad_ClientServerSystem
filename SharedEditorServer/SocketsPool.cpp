@@ -62,7 +62,7 @@ void SocketsPool::broadcast(QString& fileName, qint32 siteId, DataPacket& pkt) {
         }
     }
     else
-        std::cout<<"qui non si dovrebbe mai arrivare! Broadcast"<<std::endl;
+        std::cout<<"il broadcast non e' avvenuto"<<std::endl;
 
 }
 
@@ -96,7 +96,7 @@ void SocketsPool::broadcast(QVector<qint32> &siteId_list, DataPacket &pkt) {
         if( i != online_sockets.end() ){
             emit i->second->sendMessage(pkt);
         }else{
-            std::cout<<"lo user con site id "<<id<<" non e' al momento registrato, la preghiamo di provare piu' tardi"<<std::endl;
+            std::cout<<"lo user con site id "<<id<<" non e' registrato"<<std::endl; // il fatto che non sia registrato non ha alcun effetto
         }
     }
 

@@ -111,7 +111,7 @@ void MainWindow::loginFinished() {
     dockWidgetTree->show();
     toolBar->show();
     createMenus();
-    //inviteUserWidget->show();
+    inviteUserWidget->show();
     //uriWidget->show();
 
 }

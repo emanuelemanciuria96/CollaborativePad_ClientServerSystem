@@ -23,6 +23,7 @@
 #include "Packet/LoginInfo.h"
 #include "Packet/Command.h"
 #include "Packet/CursorPosition.h"
+#include "Packet/UserInfo.h"
 #include <vector>
 #include <algorithm>
 #include <QtCore/QTimer>
@@ -48,6 +49,7 @@ private:
     void processMessages( StringMessages& strMess );
     void processLoginInfo( LoginInfo& logInf );
     void processFileInfo( FileInfo& filInf );
+    void processUserInfo( UserInfo& userInfo);
     void processCommand( Command& cmd );
     void processLsCommand( Command& cmd );
     void processRenCommand( Command &cmd );

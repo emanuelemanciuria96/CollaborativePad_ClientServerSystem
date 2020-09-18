@@ -209,6 +209,10 @@ void SharedEditor::process(DataPacket pkt) {
             if(isFileOpened)
                 processCursorPos(*std::dynamic_pointer_cast<CursorPosition>(pkt.getPayload()));
             break;
+        case DataPacket::user_info:
+            if(isFileOpened)
+                processUserInfo(*std::dynamic_pointer_cast<UserInfo>(pkt.getPayload()) );
+            break;
         default:
             throw std::exception();
     }
@@ -357,6 +361,17 @@ void SharedEditor::processMessages(StringMessages &strMess) {
         }
     }
 
+}
+
+void SharedEditor::processUserInfo(UserInfo &userInfo) {
+    if(userInfo.getType() == UserInfo::disconnect )
+        std::cout<<"si e' disconnesso dal file lo user:\n"
+                 <<" - site ID:"<<userInfo.getSiteId()<<"\n"
+                 <<" - user:"<<userInfo.getUsername().toStdString()<<std::endl;
+    else
+        std::cout<<"sta partecipando al file lo user:\n"
+                <<" - site ID:"<<userInfo.getSiteId()<<"\n"
+                <<" - user:"<<userInfo.getUsername().toStdString()<<std::endl;
 }
 
 void SharedEditor::processFileInfo(FileInfo &filInf) {

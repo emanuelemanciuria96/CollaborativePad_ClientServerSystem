@@ -20,6 +20,7 @@ public:
         command = 3,
         file_info = 4,
         cursorPos = 5,
+        user_info = 6,
     }data_t;
 
     DataPacket();

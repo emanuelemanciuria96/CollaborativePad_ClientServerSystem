@@ -8,6 +8,7 @@
 #include <QtCore/QBuffer>
 #include "Transceiver.h"
 #include "Packet/Command.h"
+#include "Packet/UserInfo.h"
 
 qint32 fixedBytesWritten = sizeof(qint32)+sizeof(qint32)+sizeof(quint32)+sizeof(quint32)+sizeof(qint32);
                         ///      bytes     source        errcode      DataPacket::data_t   siteID
@@ -100,6 +101,11 @@ void Transceiver::recvPacket() {
                 break;
             }
 
+            case (DataPacket::user_info): {
+                recvUserInfo(packet, in);
+                break;
+            }
+
             default: {
                 std::cout << "Coglione c'e' un errore" << std::endl;
                 break;
@@ -188,6 +194,20 @@ void Transceiver::recvCursorPos(DataPacket &pkt, QDataStream &in) {
     auto symbol = Symbol(ch,symbol_siteId,count,pos_std);
 
     pkt.setPayload(std::make_shared<CursorPosition>(symbol,index,siteId));
+
+    emit readyToProcess(pkt);
+
+}
+
+void Transceiver::recvUserInfo(DataPacket &pkt, QDataStream &in) {
+    qint32 siteId;
+    qint32 type;
+    QString username;
+    QPixmap image;
+
+    in >> siteId >> type >> username >> image;
+
+    pkt.setPayload(std::make_shared<UserInfo>(siteId,(UserInfo::info_t)type,username,image));
 
     emit readyToProcess(pkt);
 
