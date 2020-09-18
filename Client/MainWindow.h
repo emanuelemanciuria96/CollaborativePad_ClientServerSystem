@@ -16,6 +16,7 @@
 #include "AddUserWidget.h"
 #include "InviteUserWidget.h"
 #include "UriWidget.h"
+#include <QScrollArea>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -24,7 +25,6 @@ public:
 
 private:
     QDockWidget *dockWidgetTree;
-    QWidget *widgetLogin;
     QWidget *widgetEditor;
     QWidget *widgetInfoEditC;
     FileSystemTreeView *treeView;
