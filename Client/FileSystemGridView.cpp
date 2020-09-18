@@ -15,7 +15,7 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
 
 
     ui->setupUi(this);
-    ui->label->setStyleSheet("font: 18pt;");
+    ui->label->setStyleSheet("font: 18pt; ");
     ui->label->setText(this->mainFolder.split(".")[1]);
     ui->label_2->setStyleSheet("font: 18pt; color: rgba(0,0,0,1);font-family: 'Consolas'");
     ui->label_2->hide();
@@ -26,8 +26,7 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     ui->listWidget->setMovement(QListView::Static);
     ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget->setIconSize(QSize(130, 130));
-    ui->listWidget->setFont(QFont("Arial", 12));
-    ui->listWidget->setStyleSheet("background-color: transparent;");
+    ui->listWidget->setStyleSheet("background-color: transparent;font: 12pt;font-family: 'Verdana';");
     constructFromPaths(paths);
 }
 FileSystemGridView::~FileSystemGridView()
