@@ -366,7 +366,7 @@ void FileSystemGridView::deleteFile(QString file)
         emit rmvFileRequest(file);
     }
 }
-void FileSystemGridView::remoteDeleteFile(QString file)
+void FileSystemGridView::localDeleteFile(QString file)
 {
     QString nameFile=file.split("/")[1];
     QString folder=file.split("/")[0];
@@ -412,7 +412,7 @@ void FileSystemGridView::renameFile(QString oldFile,QString newFile)
         emit renFileRequest(oldFile, newFile);
     }
 }
-void FileSystemGridView::remoteRenameFile(QString oldFile,QString newFile) {
+void FileSystemGridView::localRenameFile(QString oldFile,QString newFile) {
     QString oldNameFile=oldFile.split("/")[1];
     QString newNameFile=newFile.split("/")[1];
     QString folder=newFile.split("/")[0];
