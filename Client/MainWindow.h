@@ -43,6 +43,7 @@ private:
     QAction* backAction;
     QAction* inviteAction;
     QAction* treeShowAction;
+    QAction* pdfAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
     InviteUserWidget* inviteUserWidget;

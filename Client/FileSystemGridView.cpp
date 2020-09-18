@@ -15,7 +15,9 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
 
 
     ui->setupUi(this);
+    ui->label->setStyleSheet("font: 18pt;");
     ui->label->setText(this->mainFolder.split(".")[1]);
+    ui->label_2->setStyleSheet("font: 18pt; color: rgba(0,0,0,1);font-family: 'Consolas'");
     ui->label_2->hide();
     ui->listWidget->setFlow(QListView::LeftToRight);
 
@@ -24,7 +26,8 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     ui->listWidget->setMovement(QListView::Static);
     ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget->setIconSize(QSize(130, 130));
-    ui->listWidget->setFont(QFont("Helvetica", 12));
+    ui->listWidget->setFont(QFont("Arial", 12));
+    ui->listWidget->setStyleSheet("background-color: transparent;");
     constructFromPaths(paths);
 }
 FileSystemGridView::~FileSystemGridView()
@@ -37,9 +40,9 @@ void FileSystemGridView::reload(const QString folder,bool isFolder)
     ui->listWidget->clear();
     if(isFolder){
         emit openFolder(folder);
-        ui->label->setStyleSheet("QLabel {font: 16pt 'Consolas';color: grey;}");
+        ui->label->setStyleSheet("font: 18pt;color: rgba(0,0,0,0.3);font-family: 'Consolas'");
         ui->label->setText(this->mainFolder.split(".")[1]+"> ");
-        ui->label_2->setText(folder);
+        ui->label_2->setText(" "+folder);
         ui->label_2->show();
         for(auto file:this->fileSystem[folder]){
             QListWidgetItem *item=new QListWidgetItem;
@@ -52,7 +55,7 @@ void FileSystemGridView::reload(const QString folder,bool isFolder)
         this->state=folder;
     }else{
         emit back();
-        ui->label->setStyleSheet("QLabel {font: 75 16pt 'Consolas';color: black;}");
+        ui->label->setStyleSheet("font: 18pt;color: rgba(0,0,0,1);font-family: 'Consolas'");
         ui->label->setText(this->mainFolder.split(".")[1]);
         ui->label_2->hide();
         for(auto folder:this->fileSystem.keys()){

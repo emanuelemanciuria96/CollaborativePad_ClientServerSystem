@@ -25,7 +25,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     this->setStatusBar(statusBar);
     this->addToolBar(toolBar);
     toolBar->setMovable(false);
-    toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    toolBar->setMinimumHeight(45);
+    toolBar->setIconSize(QSize(45, 45));
     toolBar->hide();
     setCentralWidget(centralWidget);
     // tree file system view creation
@@ -223,20 +224,26 @@ void MainWindow::setToolBar() {
     treeShowAction->setToolTip("Hide tree");
     toolBar->addAction(treeShowAction);
 
-    highlightAction = toolBar->addAction("Highlight");
+    highlightAction=new QAction();
     highlightAction->setCheckable(true);
     highlightAction->setShortcut(QKeySequence::Replace); //equivale a Ctrl+H
-    highlightAction->setStatusTip("Highlight the text entered by different users");
-    highlightAction->setIcon(QIcon("./icons/icons8-spotlight-64.png"));
+    highlightAction->setIcon(QIcon("./icons/pdf.png"));
     highlightAction->font().setPointSize(10);
     highlightAction->setToolTip("Highlight the text entered by different users");
     highlightAction->setVisible(false);
+    toolBar->addAction(highlightAction);
 
     closeAction = new QAction();
     closeAction->setIcon(QIcon("./icons/close.png"));
     closeAction->setVisible(false);
     closeAction->setToolTip("Close file");
     toolBar->addAction(closeAction);
+
+    pdfAction = new QAction();
+    pdfAction->setIcon(QIcon("./icons/pdf.png"));
+    pdfAction->setVisible(false);
+    pdfAction->setToolTip("Save as pdf");
+    toolBar->addAction(pdfAction);
 
     //GridToolbar
     addAction = new QAction();
@@ -265,11 +272,13 @@ void MainWindow::setToolBarEditor() {
     treeShowAction->setVisible(true);
     highlightAction->setVisible(true);
     closeAction->setVisible(true);
+    pdfAction->setVisible(true);
 }
 void MainWindow::setToolBarGrid() {
     treeShowAction->setVisible(false);
     highlightAction->setVisible(false);
     closeAction->setVisible(false);
+    pdfAction->setVisible(false);
 
     backAction->setVisible(false);
     addAction->setVisible(true);

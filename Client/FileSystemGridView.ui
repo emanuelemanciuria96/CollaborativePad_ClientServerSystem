@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(255, 255, 255);</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item alignment="Qt::AlignLeft">
@@ -75,8 +75,7 @@ color: rgb(0, 0, 0);</string>
    <item>
     <widget class="QListWidget" name="listWidget">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);
-border:0px;</string>
+      <string notr="true"/>
      </property>
     </widget>
    </item>
