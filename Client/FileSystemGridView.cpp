@@ -6,6 +6,8 @@
 #include <QFont>
 #include <QMenu>
 #include <QInputDialog>
+#include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QMessageBox>
 
 FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &paths) :
         QWidget(parent),
@@ -152,18 +154,49 @@ void FileSystemGridView::invite(){
 
 void FileSystemGridView::addFile(){
     bool ok;
-    QString newNameFile = QInputDialog::getText(0, "",
+    QString newNameFile = QInputDialog::getText(0, "New file",
                                                 "Add new file", QLineEdit::Normal,
                                                 "", &ok);
-    if(!ok || newNameFile.size()==0){
+    if(!ok){
         return;
     }
     for(auto file:fileSystem[this->mainFolder]){
         if(file==newNameFile){
-            qDebug() << "Questo nome esiste già";
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("New File");
+            msgBox.setText("This name already exists.");
+            msgBox.setStandardButtons(QMessageBox::Ok  );
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            msgBox.exec();
             return;
         }
     }
+    if(newNameFile.size()==0){
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("New File");
+        msgBox.setText("Empty name. No files have been added.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+        return;
+    }
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("New File");
+    msgBox.setText("Do you want to create a new file named "+newNameFile+"?");
+    msgBox.setStandardButtons(QMessageBox::Ok  | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Cancel);
+    msgBox.setMinimumSize(600, 1000);
+    int ret = msgBox.exec();
+    switch (ret) {
+        case QMessageBox::Ok:
+            break;
+        case QMessageBox::Cancel:
+            return;
+        default:
+            return;
+    }
+
+
     qDebug() << "addFile";
     emit newFileAdded(newNameFile);
     QVector<QString> newFile{newNameFile};
@@ -229,11 +262,37 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         QString nameFolder=this->state;
         QString oldNameFile=item->text();
         bool ok;
-        QString newNameFile = QInputDialog::getText(0, "",
+        QString newNameFile = QInputDialog::getText(0, "Rename file",
                                                     "Rename "+oldNameFile, QLineEdit::Normal,
                                                     "", &ok);
-        if(!ok || oldNameFile==newNameFile || newNameFile.size()==0){
+        if(!ok){
             return;
+        }
+        if(oldNameFile==newNameFile){
+            return;
+        }
+        if(newNameFile.size()==0){
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Rename file");
+            msgBox.setText("Empty name.");
+            msgBox.setStandardButtons(QMessageBox::Ok );
+            return;
+        }
+
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Rename file");
+        msgBox.setText("Do you want to rename "+oldNameFile+" with "+newNameFile+"?");
+        msgBox.setStandardButtons(QMessageBox::Ok  | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Cancel);
+        msgBox.setMinimumSize(600, 1000);
+        int ret = msgBox.exec();
+        switch (ret) {
+            case QMessageBox::Ok:
+                break;
+            case QMessageBox::Cancel:
+                return;
+            default:
+                return;
         }
         renameFile(this->state+"/"+oldNameFile,this->state+"/"+newNameFile);
     }else if( selectedAction->text() == "Open "+item->text()){
@@ -264,7 +323,21 @@ void FileSystemGridView::deleteFile(QString file)
 {
     QString nameFile=file.split("/")[1];
     QString folder=file.split("/")[0];
-
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Delete file");
+    msgBox.setText("Do you want to delete "+nameFile+"?");
+    msgBox.setStandardButtons(QMessageBox::Ok  | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Cancel);
+    msgBox.setMinimumSize(600, 1000);
+    int ret = msgBox.exec();
+    switch (ret) {
+        case QMessageBox::Ok:
+            break;
+        case QMessageBox::Cancel:
+            return;
+        default:
+            return;
+    }
     int index=0;
     for(auto f:fileSystem[folder]){
         if(f==nameFile){
