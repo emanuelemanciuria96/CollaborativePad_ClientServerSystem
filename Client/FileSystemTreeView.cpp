@@ -250,7 +250,6 @@ void FileSystemTreeView::editFileName(QString &oldName, QString &newName) {
 
     model.insert(std::make_pair(newName,node->second));
     model.erase(node);
-
 }
 
 void FileSystemTreeView::remoteFileDeletion(QString &fileName) {
@@ -260,12 +259,11 @@ void FileSystemTreeView::remoteFileDeletion(QString &fileName) {
         return;
 
     auto item = itemFromIndex(i->second);
-    auto parent = item->parent();;
+    auto parent = item->parent();
     parent->removeChild(item);
     if( parent->childCount()==0 && parent!=root )
         parent->parent()->removeChild(parent);
     model.erase(fileName);
-
 }
 
 void FileSystemTreeView::inviteUser(QTreeWidgetItem *item) {

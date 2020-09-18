@@ -77,7 +77,6 @@ void FileSystemGridView::reload(const QString folder,bool isFolder)
 }
 
 void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
-    this->fileSystem.clear();
     for(auto p:paths){
         QVector<QString> V;
         QString folder;
@@ -85,6 +84,9 @@ void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
             folder=p.split("/")[0];
         }else{
             folder=this->mainFolder;
+        }
+        if(this->fileSystem.keys().count(folder)>0){
+            continue;
         }
         this->fileSystem.insert(folder,V);
     }
@@ -99,9 +101,16 @@ void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
             folder=this->mainFolder;
             file=p;
         }
+        if(this->fileSystem[folder].count(file)>0){
+            return;
+        }
         fileSystem[folder].push_back(file);
     }
-    reload(this->mainFolder,false);
+    if(this->state==this->mainFolder) {
+        reload(this->mainFolder, false);
+    }else{
+        reload(this->state, true);
+    }
 }
 
 void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
@@ -149,8 +158,17 @@ void FileSystemGridView::addFile(){
     if(!ok || newNameFile.size()==0){
         return;
     }
+    for(auto file:fileSystem[this->mainFolder]){
+        if(file==newNameFile){
+            qDebug() << "Questo nome esiste già";
+            return;
+        }
+    }
     qDebug() << "addFile";
     emit newFileAdded(newNameFile);
+    QVector<QString> newFile{newNameFile};
+    this->constructFromPaths(newFile);
+    emit newFileUpdateTree(newFile);
 }
 
 void FileSystemGridView::itemProperties(QListWidgetItem *item)
@@ -171,7 +189,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         myMenu->addAction("New file");
         auto selectedAction = myMenu->exec(globalPos);
         if( selectedAction == nullptr){} // senza questo crasha dopo due right-click consecutivi
-        else if( selectedAction->text() == "New File"){
+        else if( selectedAction->text() == "New file"){
             addFile();
         }
         return;
@@ -266,6 +284,28 @@ void FileSystemGridView::deleteFile(QString file)
         emit rmvFileRequest(file);
     }
 }
+void FileSystemGridView::remoteDeleteFile(QString file)
+{
+    QString nameFile=file.split("/")[1];
+    QString folder=file.split("/")[0];
+
+    int index=0;
+    for(auto f:fileSystem[folder]){
+        if(f==nameFile){
+            fileSystem[folder].removeAt(index);
+            break;
+        }
+        index++;
+    }
+    if(folder!=this->state){
+        return;
+    }
+    if(folder==this->mainFolder){
+        reload(folder,false);
+    }else{
+        reload(folder,true);
+    }
+}
 void FileSystemGridView::renameFile(QString oldFile,QString newFile)
 {
     QString oldNameFile=oldFile.split("/")[1];
@@ -290,7 +330,27 @@ void FileSystemGridView::renameFile(QString oldFile,QString newFile)
         emit renFileRequest(oldFile, newFile);
     }
 }
-
+void FileSystemGridView::remoteRenameFile(QString oldFile,QString newFile) {
+    QString oldNameFile=oldFile.split("/")[1];
+    QString newNameFile=newFile.split("/")[1];
+    QString folder=newFile.split("/")[0];
+    int index=0;
+    for(auto file:fileSystem[folder]){
+        if(file==oldNameFile){
+            fileSystem[folder][index]=newNameFile;
+            break;
+        }
+        index++;
+    }
+    if(folder!=this->state){
+        return;
+    }
+    if(folder==this->mainFolder){
+        reload(folder,false);
+    }else{
+        reload(folder,true);
+    }
+}
 
 
 

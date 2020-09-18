@@ -24,7 +24,9 @@ public slots:
     void addFile();
     void invite();
     void deleteFile(QString file);
+    void remoteDeleteFile(QString file);
     void renameFile(QString oldFile,QString newFile);
+    void remoteRenameFile(QString oldFile,QString newFile);
     void reloadBack();
     QString getState();
     QString getMainFolder();
@@ -35,8 +37,9 @@ signals:
     void back();
     void inviteRequest(QString file);
     void newFileAdded(QString fileName);
-    void rmvFileRequest(QString fileName);
-    void renFileRequest(QString before, QString after);
+    void newFileUpdateTree(QVector<QString> fileName);
+    void rmvFileRequest(QString& fileName);
+    void renFileRequest(QString& before, QString& after);
     void canInvite(bool state);
 
 private:
@@ -47,7 +50,6 @@ private:
     QString format=".png";
     Ui::FileSystemGridView *ui;
     void reload(const QString folder,bool isFolder);
-
 /*
     QIcon* textIcon=new QIcon("D:/Desktop/untitled/icons/grid_text_icon"+this->format);
     QIcon* folderIcon=new QIcon("D:/Desktop/untitled/icons/grid_folder_icon"+this->format);
