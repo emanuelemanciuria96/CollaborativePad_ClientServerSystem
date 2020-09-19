@@ -51,6 +51,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
     connect(treeView, &FileSystemTreeView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
     connect(treeView, &FileSystemTreeView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
+    connect(treeView, &FileSystemTreeView::newFileUpdateGrid, gridView, &FileSystemGridView::constructFromPaths);
+    connect(treeView, &FileSystemTreeView::renFileRequest,gridView , &FileSystemGridView::localRenameFile);
+    connect(treeView, &FileSystemTreeView::rmvFileRequest,gridView , &FileSystemGridView::localDeleteFile);
     connect(gridView, &FileSystemGridView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
     connect(gridView, &FileSystemGridView::opnFileRequest,this, &MainWindow::opnFileGrid);
     connect(gridView, &FileSystemGridView::opnFileRequest,shEditor , &SharedEditor::requireFile);

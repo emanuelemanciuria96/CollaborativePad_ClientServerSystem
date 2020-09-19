@@ -157,6 +157,7 @@ bool FileSystemTreeView::isChild(QTreeWidgetItem *parent, QString &name) {
 void FileSystemTreeView::insertFile(){
 
     QString defaultName = "new_file";
+    QVector<QString> vec;
 
     int i = 0;
     auto tmp = defaultName;
@@ -168,6 +169,8 @@ void FileSystemTreeView::insertFile(){
     model.insert( std::make_pair(defaultName,indexFromItem(newFile)) );
 
     emit newFileAdded(defaultName);
+    vec.push_back(defaultName);
+    emit newFileUpdateGrid(vec);
 
     previousName = defaultName;
     this->editItem(newFile,0);
