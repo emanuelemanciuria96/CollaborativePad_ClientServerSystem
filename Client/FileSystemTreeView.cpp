@@ -140,7 +140,7 @@ void FileSystemTreeView::constructFromPaths(const QVector<QString> &paths) {
         }
     }
 
-    this->sortItems(0,Qt::DescendingOrder);
+    this->sortItems(0,Qt::AscendingOrder);
 
 }
 
@@ -174,6 +174,8 @@ void FileSystemTreeView::insertFile(){
 
     previousName = defaultName;
     this->editItem(newFile,0);
+
+    this->sortItems(0,Qt::AscendingOrder);
 
 }
 
@@ -214,6 +216,8 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
     model.insert(std::make_pair(actualName, node->second));
     model.erase(node);
     emit fileNameEdited(previousName, actualName);
+
+    this->sortItems(0,Qt::AscendingOrder);
 
 }
 
