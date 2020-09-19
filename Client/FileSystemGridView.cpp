@@ -26,7 +26,7 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     ui->listWidget->setMovement(QListView::Static);
     ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget->setIconSize(QSize(130, 130));
-    ui->listWidget->setStyleSheet("background-color: transparent;font: 12pt;font-family: 'Verdana';");
+    ui->listWidget->setStyleSheet(" padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;font-family: 'Verdana';");
     constructFromPaths(paths);
 }
 FileSystemGridView::~FileSystemGridView()
@@ -370,8 +370,16 @@ void FileSystemGridView::deleteFile(QString file)
 }
 void FileSystemGridView::localDeleteFile(QString file)
 {
-    QString nameFile=file.split("/")[1];
-    QString folder=file.split("/")[0];
+    QString nameFile;
+    QString folder;
+    if(file.count("/")>0){
+        nameFile=file.split("/")[1];
+        folder=file.split("/")[0];
+    }else{
+        nameFile=file;
+        folder=this->mainFolder;
+    }
+
 
     int index=0;
     for(auto f:fileSystem[folder]){
@@ -415,9 +423,19 @@ void FileSystemGridView::renameFile(QString oldFile,QString newFile)
     }
 }
 void FileSystemGridView::localRenameFile(QString oldFile,QString newFile) {
-    QString oldNameFile=oldFile.split("/")[1];
-    QString newNameFile=newFile.split("/")[1];
-    QString folder=newFile.split("/")[0];
+    QString oldNameFile;
+    QString newNameFile;
+    QString folder;
+    if(oldFile.count("/")>0){
+        oldNameFile=oldFile.split("/")[1];
+        newNameFile=newFile.split("/")[1];
+        folder=newFile.split("/")[0];
+    }else{
+        oldNameFile=oldFile;
+        newNameFile=newFile;
+        folder=this->mainFolder;
+    }
+
     int index=0;
     for(auto file:fileSystem[folder]){
         if(file==oldNameFile){
