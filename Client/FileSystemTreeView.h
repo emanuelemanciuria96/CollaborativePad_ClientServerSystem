@@ -30,12 +30,12 @@ public slots:
     void inviteUser(QTreeWidgetItem *item);
 
 signals:
-    void opnFileRequest(QString fileName);
-    void rmvFileRequest(QString fileName);
-    void newFileAdded(QString fileName);
+    void opnFileRequest(QString& fileName);
+    void rmvFileRequest(QString& fileName);
+    void newFileAdded(QString& fileName);
     void newFileUpdateGrid(QVector<QString>& path);
-    void renFileRequest(QString before, QString after);
-    void fileNameEdited(QString &oldName, QString &newName);
+    void renFileRequest(QString& before, QString& after);
+    void fileNameEdited(QString& oldName, QString& newName);
     void inviteRequest(const QString& fileName);
 
 private:

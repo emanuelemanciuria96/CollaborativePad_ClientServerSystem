@@ -24,20 +24,20 @@ public slots:
     void addFile();
     void invite();
     void deleteFile(QString file);
-    void localDeleteFile(QString file);
+    void localDeleteFile(const QString& file);
     void renameFile(QString oldFile,QString newFile);
-    void localRenameFile(QString oldFile,QString newFile);
+    void localRenameFile(const QString& oldFile,const QString& newFile);
     void reloadBack();
     QString getState();
     QString getMainFolder();
 
 signals:
-    void opnFileRequest(QString fileName);
+    void opnFileRequest(QString& fileName);
     void openFolder(QString folder);
     void back();
     void inviteRequest(QString file);
-    void newFileAdded(QString fileName);
-    void newFileUpdateTree(QVector<QString> fileName);
+    void newFileAdded(QString& fileName);
+    void newFileUpdateTree(QVector<QString>& fileName);
     void rmvFileRequest(QString& fileName);
     void renFileRequest(QString& before, QString& after);
     void canInvite(bool state);

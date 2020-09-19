@@ -223,7 +223,7 @@ void MainWindow::setToolBar() {
     //EditorToolbar
     treeShowAction = new QAction();
     treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
-    treeShowAction->setVisible(false);
+    //treeShowAction->setVisible(false);
     treeShowAction->setToolTip("Hide tree");
     toolBar->addAction(treeShowAction);
 
@@ -278,7 +278,7 @@ void MainWindow::setToolBarEditor() {
     pdfAction->setVisible(true);
 }
 void MainWindow::setToolBarGrid() {
-    treeShowAction->setVisible(false);
+    //treeShowAction->setVisible(false);
     highlightAction->setVisible(false);
     closeAction->setVisible(false);
     pdfAction->setVisible(false);
@@ -289,7 +289,7 @@ void MainWindow::setToolBarGrid() {
     inviteAction->setDisabled(true);
 }
 void MainWindow::setToolBarFolderGrid(QString folder) {
-    treeShowAction->setVisible(false);
+    //treeShowAction->setVisible(false);
     highlightAction->setVisible(false);
     closeAction->setVisible(false);
 
@@ -380,8 +380,8 @@ void MainWindow::resizeEvent(QResizeEvent *evt) {
     centralWidget->setAutoFillBackground(true);
     centralWidget->setPalette(p);
 
-    dockWidgetTree->setMaximumWidth(this->size().width() / 4);
-    dockWidgetTree->setMinimumWidth(this->size().width() / 4);
+    dockWidgetTree->setMaximumWidth(this->size().width() / 5);
+    dockWidgetTree->setMinimumWidth(this->size().width() / 5);
 
 }
 

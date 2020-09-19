@@ -61,11 +61,11 @@ private:
 public slots:
     void loginSlot(QString& username, QString& password);
     void process(DataPacket pkt);
-    void requireFile(QString fileName);
+    void requireFile(QString& fileName);
     void requireFileClose();
-    void requireFileRename(QString before,QString after);
-    void requireFileDelete(QString fileName);
-    void requireFileAdd(QString fileName);
+    void requireFileRename(const QString& before,const QString& after);
+    void requireFileDelete(const QString& fileName);
+    void requireFileAdd(const QString& fileName);
     void deleteThread();
     void clearText();
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
@@ -79,9 +79,9 @@ public slots:
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void deleteAllText();
-    void filePathsArrived(const QVector<QString> &paths);
-    void fileNameEdited(QString &oldName, QString &newName);
-    void fileDeletion(QString &fileName);
+    void filePathsArrived(const QVector<QString>& paths);
+    void fileNameEdited(QString& oldName, QString& newName);
+    void fileDeletion(QString& fileName);
     void loginAchieved();
     void userInfoArrived(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void remoteCursorPosChanged(qint32 pos, qint32 siteId);
