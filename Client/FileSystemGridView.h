@@ -24,9 +24,9 @@ public slots:
     void addFile();
     void invite();
     void deleteFile(QString file);
-    void localDeleteFile(const QString& file);
+    void remoteDeleteFile(const QString& file);
     void renameFile(QString oldFile,QString newFile);
-    void localRenameFile(const QString& oldFile,const QString& newFile);
+    void remoteRenameFile(const QString& oldFile,const QString& newFile);
     void reloadBack();
     QString getState();
     QString getMainFolder();

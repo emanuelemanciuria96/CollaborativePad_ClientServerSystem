@@ -292,6 +292,7 @@ void MainWindow::setToolBarFolderGrid(QString folder) {
     //treeShowAction->setVisible(false);
     highlightAction->setVisible(false);
     closeAction->setVisible(false);
+    pdfAction->setVisible(false);
 
     addAction->setVisible(false);
     backAction->setVisible(true);
