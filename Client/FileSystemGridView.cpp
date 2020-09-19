@@ -123,6 +123,9 @@ void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
     for(auto folder:folders){
         this->fileSystem[folder].sort();
     }
+    if(paths.size()==1 && paths[0].count("/")==0){
+        return;
+    }
     if(this->state==this->mainFolder) {
         reload(this->mainFolder, false);
     }else{
@@ -398,14 +401,6 @@ void FileSystemGridView::remoteDeleteFile(const QString& file)
         }
         index++;
     }
-    if(folder!=this->state){
-        return;
-    }
-    if(folder==this->mainFolder){
-        reload(folder,false);
-    }else{
-        reload(folder,true);
-    }
 }
 void FileSystemGridView::renameFile(QString oldFile,QString newFile)
 {
@@ -453,18 +448,6 @@ void FileSystemGridView::remoteRenameFile(const QString& oldFile,const QString& 
             break;
         }
         index++;
-    }
-    if(folder!=this->state){
-        return;
-    }
-    if(folder==this->mainFolder){
-        reload(folder,false);
-    }else{
-        if(fileSystem[folder].size()==0){
-            reload(this->mainFolder,false);
-        }else {
-            reload(folder, true);
-        }
     }
 }
 

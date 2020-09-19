@@ -193,7 +193,7 @@ static const uint qt_meta_data_SharedEditor[] = {
  // slots: parameters
     QMetaType::Void, 0x80000000 | 13, 0x80000000 | 13,   39,   40,
     QMetaType::Void, 0x80000000 | 42,   43,
-    QMetaType::Void, QMetaType::QString,   17,
+    QMetaType::Void, 0x80000000 | 13,   17,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString, QMetaType::QString,   47,   48,
     QMetaType::Void, QMetaType::QString,   17,
@@ -237,9 +237,9 @@ void SharedEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 17: _t->process((*reinterpret_cast< DataPacket(*)>(_a[1]))); break;
         case 18: _t->requireFile((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 19: _t->requireFileClose(); break;
-        case 20: _t->requireFileRename((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 21: _t->requireFileDelete((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 22: _t->requireFileAdd((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 20: _t->requireFileRename((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 21: _t->requireFileDelete((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 22: _t->requireFileAdd((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 23: _t->deleteThread(); break;
         case 24: _t->clearText(); break;
         case 25: _t->sendUpdatedInfo((*reinterpret_cast< const QPixmap(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
