@@ -52,8 +52,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
     connect(treeView, &FileSystemTreeView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
     connect(treeView, &FileSystemTreeView::newFileUpdateGrid, gridView, &FileSystemGridView::constructFromPaths);
-    connect(treeView, &FileSystemTreeView::renFileRequest,gridView , &FileSystemGridView::localRenameFile);
-    connect(treeView, &FileSystemTreeView::rmvFileRequest,gridView , &FileSystemGridView::localDeleteFile);
+    connect(treeView, &FileSystemTreeView::renFileRequest,gridView , &FileSystemGridView::remoteRenameFile);
+    connect(treeView, &FileSystemTreeView::rmvFileRequest,gridView , &FileSystemGridView::remoteDeleteFile);
     connect(gridView, &FileSystemGridView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
     connect(gridView, &FileSystemGridView::opnFileRequest,this, &MainWindow::opnFileGrid);
     connect(gridView, &FileSystemGridView::opnFileRequest,shEditor , &SharedEditor::requireFile);
@@ -223,7 +223,7 @@ void MainWindow::setToolBar() {
     //EditorToolbar
     treeShowAction = new QAction();
     treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
-    //treeShowAction->setVisible(false);
+    treeShowAction->setVisible(false);
     treeShowAction->setToolTip("Hide tree");
     toolBar->addAction(treeShowAction);
 
@@ -278,7 +278,7 @@ void MainWindow::setToolBarEditor() {
     pdfAction->setVisible(true);
 }
 void MainWindow::setToolBarGrid() {
-    //treeShowAction->setVisible(false);
+    treeShowAction->setVisible(false);
     highlightAction->setVisible(false);
     closeAction->setVisible(false);
     pdfAction->setVisible(false);
@@ -289,7 +289,7 @@ void MainWindow::setToolBarGrid() {
     inviteAction->setDisabled(true);
 }
 void MainWindow::setToolBarFolderGrid(QString folder) {
-    //treeShowAction->setVisible(false);
+    treeShowAction->setVisible(false);
     highlightAction->setVisible(false);
     closeAction->setVisible(false);
     pdfAction->setVisible(false);
