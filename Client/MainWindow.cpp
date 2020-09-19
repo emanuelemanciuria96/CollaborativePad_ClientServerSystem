@@ -141,7 +141,6 @@ void MainWindow::loginFinished() {
     createMenus();
 }
 void MainWindow::opnFileGrid(QString fileName) {
-    //treeView->constructFromPaths(gridView->getVector());
     setToolBarEditor();
     widgetEditor->show();
     //dockWidgetTree->show();
@@ -156,14 +155,14 @@ void MainWindow::changeInviteAction(bool state){
     }
 }
 void MainWindow::clsFile() {
+    widgetEditor->hide();
+    dockWidgetTree->hide();
     if(gridView->getState()==gridView->getMainFolder()){
         setToolBarGrid();
         inviteAction->setDisabled(false);
     }else{
         setToolBarFolderGrid(gridView->getState());
     }
-    widgetEditor->hide();
-    dockWidgetTree->hide();
     gridView->show();
 }
 void MainWindow::loginSettings() {
@@ -278,26 +277,30 @@ void MainWindow::setToolBarEditor() {
     pdfAction->setVisible(true);
 }
 void MainWindow::setToolBarGrid() {
-    treeShowAction->setVisible(false);
-    highlightAction->setVisible(false);
-    closeAction->setVisible(false);
-    pdfAction->setVisible(false);
+    if(widgetEditor->isHidden()) {
+        treeShowAction->setVisible(false);
+        highlightAction->setVisible(false);
+        closeAction->setVisible(false);
+        pdfAction->setVisible(false);
 
-    backAction->setVisible(false);
-    addAction->setVisible(true);
-    inviteAction->setVisible(true);
-    inviteAction->setDisabled(true);
+        backAction->setVisible(false);
+        addAction->setVisible(true);
+        inviteAction->setVisible(true);
+        inviteAction->setDisabled(true);
+    }
 }
 void MainWindow::setToolBarFolderGrid(QString folder) {
-    treeShowAction->setVisible(false);
-    highlightAction->setVisible(false);
-    closeAction->setVisible(false);
-    pdfAction->setVisible(false);
+    if(widgetEditor->isHidden()) {
+        treeShowAction->setVisible(false);
+        highlightAction->setVisible(false);
+        closeAction->setVisible(false);
+        pdfAction->setVisible(false);
 
-    addAction->setVisible(false);
-    backAction->setVisible(true);
-    inviteAction->setVisible(true);
-    inviteAction->setDisabled(true);
+        addAction->setVisible(false);
+        backAction->setVisible(true);
+        inviteAction->setVisible(true);
+        inviteAction->setDisabled(true);
+    }
 }
 
 void MainWindow::editorSettings(SharedEditor* shEditor) {

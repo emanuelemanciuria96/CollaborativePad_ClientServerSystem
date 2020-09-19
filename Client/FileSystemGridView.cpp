@@ -27,7 +27,7 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget->setIconSize(QSize(130, 130));
     ui->listWidget->setStyleSheet(" padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;font-family: 'Verdana';");
-    constructFromPaths(paths);
+    this->constructFromPaths(paths);
 }
 
 FileSystemGridView::~FileSystemGridView()
@@ -123,14 +123,12 @@ void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
     for(auto folder:folders){
         this->fileSystem[folder].sort();
     }
-    if(paths.size()==1 && paths[0].count("/")==0){
-        return;
-    }
-    if(this->state==this->mainFolder) {
-        reload(this->mainFolder, false);
-    }else{
-        reload(this->state, true);
-    }
+
+        if (this->state == this->mainFolder) {
+            reload(this->mainFolder, false);
+        } else {
+            reload(this->state, true);
+        }
 }
 
 void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)

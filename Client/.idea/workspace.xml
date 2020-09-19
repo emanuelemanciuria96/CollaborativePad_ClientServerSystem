@@ -18,7 +18,7 @@
     <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FileSystemGridView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemGridView.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -271,7 +271,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600509268899</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="fix toolBar">
+      <created>1600513853868</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1600513853868</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,7 +301,8 @@
     <MESSAGE value="fix local functions" />
     <MESSAGE value="rename local to remote" />
     <MESSAGE value="hide empty folder" />
-    <option name="LAST_COMMIT_MESSAGE" value="hide empty folder" />
+    <MESSAGE value="fix toolBar" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix toolBar" />
   </component>
   <component name="WindowStateProjectService">
     <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600244901484">
@@ -305,30 +313,30 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="672" y="165" key="#xdebugger.XInspectDialog/0.0.1536.824@0.0.1536.824" timestamp="1597590313280" />
-    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1600509267057">
+    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1600513852547">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600509267057" />
+    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600513852547" />
     <state width="479" height="438" key="DebuggerActiveHint" timestamp="1597247491161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="479" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1597247491161" />
-    <state width="1481" height="191" key="GridCell.Tab.0.bottom" timestamp="1600513727107">
+    <state width="1481" height="191" key="GridCell.Tab.0.bottom" timestamp="1600514691315">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="191" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600513727107" />
-    <state width="1481" height="191" key="GridCell.Tab.0.center" timestamp="1600513727106">
+    <state width="1481" height="191" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600514691315" />
+    <state width="1481" height="191" key="GridCell.Tab.0.center" timestamp="1600514691315">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="191" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600513727106" />
-    <state width="1481" height="191" key="GridCell.Tab.0.left" timestamp="1600513727106">
+    <state width="1481" height="191" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600514691315" />
+    <state width="1481" height="191" key="GridCell.Tab.0.left" timestamp="1600514691315">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="191" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600513727106" />
-    <state width="1481" height="191" key="GridCell.Tab.0.right" timestamp="1600513727107">
+    <state width="1481" height="191" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600514691315" />
+    <state width="1481" height="191" key="GridCell.Tab.0.right" timestamp="1600514691315">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="191" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600513727107" />
+    <state width="1481" height="191" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600514691315" />
     <state width="1493" height="213" key="GridCell.Tab.1.bottom" timestamp="1599840066971">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -357,10 +365,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1600363251866" />
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1600512208723">
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1600513857364">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600512208723" />
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600513857364" />
     <state x="546" y="307" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600512389063">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -387,7 +395,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/FileSystemGridView.cpp</url>
-          <line>450</line>
+          <line>448</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
