@@ -61,6 +61,9 @@ void FileSystemGridView::reload(const QString folder,bool isFolder)
             if(folder==this->mainFolder){
                 continue;
             }
+            if(fileSystem[folder].size()==0){
+                continue;
+            }
             QListWidgetItem *item=new QListWidgetItem;
             item->setText(folder);
             item->setIcon(*folderIcon);
@@ -364,7 +367,11 @@ void FileSystemGridView::deleteFile(QString file)
         reload(folder,false);
         emit rmvFileRequest(nameFile);
     }else{
-        reload(folder,true);
+        if(fileSystem[folder].size()==0){
+            reload(this->mainFolder,false);
+        }else {
+            reload(folder, true);
+        }
         emit rmvFileRequest(file);
     }
 }
@@ -450,7 +457,11 @@ void FileSystemGridView::remoteRenameFile(QString oldFile,QString newFile) {
     if(folder==this->mainFolder){
         reload(folder,false);
     }else{
-        reload(folder,true);
+        if(fileSystem[folder].size()==0){
+            reload(this->mainFolder,false);
+        }else {
+            reload(folder, true);
+        }
     }
 }
 
