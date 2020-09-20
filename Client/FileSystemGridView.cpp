@@ -35,11 +35,13 @@ FileSystemGridView::~FileSystemGridView()
     delete ui;
 }
 
-void FileSystemGridView::reload(const QString folder,bool isFolder)
+void FileSystemGridView::reload(const QString folder,bool isFolder,bool changeToolbar=true)
 {
     ui->listWidget->clear();
     if(isFolder){
-        emit openFolder(folder);
+        if(changeToolbar) {
+            emit openFolder(folder);
+        }
         ui->label->setStyleSheet("font: 18pt;color: rgba(0,0,0,0.3);font-family: 'Consolas'");
         ui->label->setText(this->mainFolder.split(".")[1]+"> ");
         ui->label_2->setText(" "+folder);
@@ -54,7 +56,9 @@ void FileSystemGridView::reload(const QString folder,bool isFolder)
         }
         this->state=folder;
     }else{
-        emit back();
+        if(changeToolbar) {
+            emit back();
+        }
         ui->label->setStyleSheet("font: 18pt;color: rgba(0,0,0,1);font-family: 'Consolas'");
         ui->label->setText(this->mainFolder.split(".")[1]);
         ui->label_2->hide();
@@ -473,14 +477,6 @@ void FileSystemGridView::renameFile(QString oldFile,QString newFile)
         reload(folder,true);
         emit renFileRequest(oldFile, newFile);
     }
-    for(int i = 0; i < ui->listWidget->count(); ++i)
-    {
-        QListWidgetItem* item = ui->listWidget->item(i);
-        if(item->statusTip()=="file" && item->text()==newNameFile){
-            ui->listWidget->setCurrentItem(item);
-            break;
-        }
-    }
 }
 
 void FileSystemGridView::remoteRenameFile(const QString& oldFile,const QString& newFile) {
@@ -496,7 +492,6 @@ void FileSystemGridView::remoteRenameFile(const QString& oldFile,const QString& 
         newNameFile=newFile;
         folder=this->mainFolder;
     }
-
     int index=0;
     for(auto file:fileSystem[folder]){
         if(file==oldNameFile){
@@ -504,6 +499,21 @@ void FileSystemGridView::remoteRenameFile(const QString& oldFile,const QString& 
             break;
         }
         index++;
+    }
+    QListWidgetItem *item=ui->listWidget->currentItem();
+    QString tmpName=item->text();
+    if(folder==this->mainFolder){
+        reload(folder,false);
+    }else{
+        reload(folder,true);
+    }
+    for(int i = 0; i < ui->listWidget->count(); ++i)
+    {
+        QListWidgetItem* item = ui->listWidget->item(i);
+        if(item->statusTip()=="file" && item->text()==tmpName){
+            ui->listWidget->setCurrentItem(item);
+            break;
+        }
     }
 }
 

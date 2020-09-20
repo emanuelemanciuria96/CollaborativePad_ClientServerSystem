@@ -50,7 +50,7 @@ private:
     void itemProperties(QListWidgetItem *item);
     QString format=".png";
     Ui::FileSystemGridView *ui;
-    void reload(const QString folder,bool isFolder);
+    void reload(const QString folder,bool isFolder,bool changeToolbar);
 /*
     QIcon* textIcon=new QIcon("D:/Desktop/untitled/icons/grid_text_icon"+this->format);
     QIcon* folderIcon=new QIcon("D:/Desktop/untitled/icons/grid_folder_icon"+this->format);
