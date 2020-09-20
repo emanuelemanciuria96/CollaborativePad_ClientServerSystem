@@ -595,7 +595,6 @@ void SharedEditor::requireFileRename(const QString& oldFileName, const QString& 
 }
 
 void SharedEditor::requireFileDelete(const QString& fileName) {
-
     QString file = fileName;
 
     if( file.split("/").size()==1  )
@@ -714,6 +713,5 @@ void SharedEditor::closeFile() {
         _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
     }
     emit hideNumUsers();
-
 }
 

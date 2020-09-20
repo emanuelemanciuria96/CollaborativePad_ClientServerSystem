@@ -80,7 +80,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(widgetSignIn, &SignInWidget::backToLogIn, this, &MainWindow::backToLogIn);
     connect(highlightAction, &QAction::triggered, shEditor, &SharedEditor::highlightSymbols);
     connect(closeAction, &QAction::triggered, this, &MainWindow::clsFile);
+    connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::clsFile);
     connect(closeAction, &QAction::triggered, shEditor, &SharedEditor::requireFileClose);
+    connect(pdfAction, &QAction::triggered, editor, &EditorGUI::exportToPdf);
     connect(addAction, &QAction::triggered, gridView, &FileSystemGridView::addFile);
     connect(backAction, &QAction::triggered, gridView, &FileSystemGridView::reloadBack);
     connect(shEditor, &SharedEditor::highlight, editor, &EditorGUI::highlight);
@@ -139,7 +141,6 @@ void MainWindow::loginFinished() {
     //widgetEditor->hide();
     toolBar->show();
     gridView->show();
-    createMenus();
     auto p = QPalette();
     p.setBrush(QPalette::Window, QBrush(QColor("lightgray")) );
     centralWidget->setPalette(p);
@@ -359,13 +360,7 @@ void MainWindow::signInWidgetSetup() {
     widgetSignIn = new SignInWidget(this);
 }
 
-void MainWindow::createMenus() {
-    auto fileMenu = menuBar()->addMenu("&File");
-    auto PDFAct = new QAction(tr("&Export to PDF"), this);
-    PDFAct->setStatusTip(tr("Export current file to pdf"));
-    connect(PDFAct, &QAction::triggered, editor, &EditorGUI::exportToPdf);
-    fileMenu->addAction(PDFAct);
-}
+
 
 
 void MainWindow::resizeEvent(QResizeEvent *evt) {

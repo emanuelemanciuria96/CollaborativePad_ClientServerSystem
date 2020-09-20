@@ -222,7 +222,6 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
 
 }
 
-
 void FileSystemTreeView::removeFile(QTreeWidgetItem *item) {
 
     QString name = item->text(0);

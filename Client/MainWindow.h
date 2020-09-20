@@ -58,7 +58,6 @@ private:
     void signInWidgetSetup();
     void resizeEvent(QResizeEvent *evt) override;
     void setStyleSheet();
-    void createMenus();
     void setToolBar();
     void setToolBarEditor();
     void setToolBarGrid();
