@@ -278,20 +278,37 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         QString nameFolder=this->state;
         QString oldNameFile=item->text();
         bool ok;
-        QString newNameFile = QInputDialog::getText(0, "Rename file",
-                                                    "Rename "+oldNameFile, QLineEdit::Normal,
-                                                    "", &ok);
-        if(!ok){
-            return;
-        }
-        if(oldNameFile==newNameFile){
-            return;
-        }
+        QString newNameFile;
+        bool sameName=false;
+        do {
+            newNameFile = QInputDialog::getText(0, "Rename file",
+                                                        "Rename " + oldNameFile, QLineEdit::Normal,
+                                                        "", &ok);
+            if (!ok) {
+                return;
+            }
+            if(oldNameFile==newNameFile){
+                return;
+            }
+            for (int i = 0; i < ui->listWidget->count(); ++i) {
+                QListWidgetItem *item = ui->listWidget->item(i);
+                if (item->text() == newNameFile) {
+                    QMessageBox msgBox;
+                    msgBox.setWindowTitle("Rename file");
+                    msgBox.setText("A file with this name already exists.");
+                    msgBox.setStandardButtons(QMessageBox::Ok);
+                    msgBox.exec();
+                    sameName=true;
+                    break;
+                }
+            }
+        }while(sameName);
         if(newNameFile.size()==0){
             QMessageBox msgBox;
             msgBox.setWindowTitle("Rename file");
             msgBox.setText("Empty name.");
             msgBox.setStandardButtons(QMessageBox::Ok );
+            msgBox.exec();
             return;
         }
 
@@ -413,6 +430,7 @@ void FileSystemGridView::renameFile(QString oldFile,QString newFile)
         }
         index++;
     }
+    this->fileSystem[folder].sort();
     if(folder!=this->state){
         return;
     }
@@ -422,6 +440,14 @@ void FileSystemGridView::renameFile(QString oldFile,QString newFile)
     }else{
         reload(folder,true);
         emit renFileRequest(oldFile, newFile);
+    }
+    for(int i = 0; i < ui->listWidget->count(); ++i)
+    {
+        QListWidgetItem* item = ui->listWidget->item(i);
+        if(item->statusTip()=="file" && item->text()==newNameFile){
+            //item->setSelected(true);
+            break;
+        }
     }
 }
 
