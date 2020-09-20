@@ -201,7 +201,7 @@ void FileSystemGridView::addFile(){
             QMessageBox msgBox;
             msgBox.setWindowTitle("New File");
             msgBox.setText("This name already exists.");
-            msgBox.setStandardButtons(QMessageBox::Ok  );
+            msgBox.setStandardButtons(QMessageBox::Ok );
             msgBox.setDefaultButton(QMessageBox::Ok);
             msgBox.exec();
             return;
@@ -220,7 +220,7 @@ void FileSystemGridView::addFile(){
     msgBox.setWindowTitle("New File");
     msgBox.setText("Do you want to create a new file named "+newNameFile+"?");
     msgBox.setStandardButtons(QMessageBox::Ok  | QMessageBox::Cancel);
-    msgBox.setDefaultButton(QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Ok);
     msgBox.setMinimumSize(600, 1000);
     int ret = msgBox.exec();
     switch (ret) {
@@ -369,7 +369,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         msgBox.setWindowTitle("Rename file");
         msgBox.setText("Do you want to rename "+oldNameFile+" with "+newNameFile+"?");
         msgBox.setStandardButtons(QMessageBox::Ok  | QMessageBox::Cancel);
-        msgBox.setDefaultButton(QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.setMinimumSize(600, 1000);
         int ret = msgBox.exec();
         switch (ret) {
@@ -413,7 +413,7 @@ void FileSystemGridView::deleteFile(QString file)
     msgBox.setWindowTitle("Delete file");
     msgBox.setText("Do you want to delete "+nameFile+"?");
     msgBox.setStandardButtons(QMessageBox::Ok  | QMessageBox::Cancel);
-    msgBox.setDefaultButton(QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Ok);
     msgBox.setMinimumSize(600, 1000);
     int ret = msgBox.exec();
     switch (ret) {
