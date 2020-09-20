@@ -500,6 +500,7 @@ void FileSystemGridView::remoteRenameFile(const QString& oldFile,const QString& 
         }
         index++;
     }
+    this->fileSystem[folder].sort();
     QListWidgetItem *item=ui->listWidget->currentItem();
     QString tmpName=item->text();
     if(folder==this->mainFolder){
