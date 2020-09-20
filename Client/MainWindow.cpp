@@ -134,7 +134,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
 void MainWindow::loginFinished() {
     centralWidget->setCurrentWidget(gridView);
-    centralWidget->setCurrentWidget(editor);
+    //centralWidget->setCurrentWidget(editor);
     //widgetEditor->hide();
     toolBar->show();
     gridView->show();
@@ -145,9 +145,10 @@ void MainWindow::loginFinished() {
 }
 void MainWindow::opnFileGrid(QString fileName) {
     setToolBarEditor();
+    centralWidget->setCurrentWidget(editor);
     //widgetEditor->show();
     //dockWidgetTree->show();
-    gridView->hide();
+    //gridView->hide();
 }
 void MainWindow::changeInviteAction(bool state){
     inviteAction->setDisabled(!state);
@@ -158,7 +159,7 @@ void MainWindow::changeInviteAction(bool state){
     }
 }
 void MainWindow::clsFile() {
-    //widgetEditor->hide();
+    centralWidget->setCurrentWidget(gridView);
     dockWidgetTree->hide();
     if(gridView->getState()==gridView->getMainFolder()){
         setToolBarGrid();
@@ -279,7 +280,7 @@ void MainWindow::setToolBarEditor() {
     pdfAction->setVisible(true);
 }
 void MainWindow::setToolBarGrid() {
-    if(true) {
+    if(centralWidget->currentWidget() != editor) {
         treeShowAction->setVisible(false);
         highlightAction->setVisible(false);
         closeAction->setVisible(false);
@@ -292,7 +293,7 @@ void MainWindow::setToolBarGrid() {
     }
 }
 void MainWindow::setToolBarFolderGrid(QString folder) {
-    if(true) {
+    if(centralWidget->currentWidget() != editor) {
         treeShowAction->setVisible(false);
         highlightAction->setVisible(false);
         closeAction->setVisible(false);
