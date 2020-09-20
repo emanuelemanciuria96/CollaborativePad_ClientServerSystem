@@ -217,6 +217,14 @@ void FileSystemGridView::addFile(){
     emit newFileAdded(newNameFile);
     QVector<QString> newFile{newNameFile};
     this->constructFromPaths(newFile);
+    for(int i = 0; i < ui->listWidget->count(); ++i)
+    {
+        QListWidgetItem* item = ui->listWidget->item(i);
+        if(item->statusTip()=="file" && item->text()==newNameFile){
+            ui->listWidget->setCurrentItem(item);
+            break;
+        }
+    }
     emit newFileUpdateTree(newFile);
 }
 
@@ -445,7 +453,7 @@ void FileSystemGridView::renameFile(QString oldFile,QString newFile)
     {
         QListWidgetItem* item = ui->listWidget->item(i);
         if(item->statusTip()=="file" && item->text()==newNameFile){
-            //item->setSelected(true);
+            ui->listWidget->setCurrentItem(item);
             break;
         }
     }
