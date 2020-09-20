@@ -228,13 +228,13 @@ void MainWindow::setToolBar() {
     treeShowAction = new QAction();
     treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
     treeShowAction->setVisible(false);
-    treeShowAction->setToolTip("Hide tree");
+    treeShowAction->setToolTip("Show tree");
     toolBar->addAction(treeShowAction);
 
     highlightAction=new QAction();
     highlightAction->setCheckable(true);
     highlightAction->setShortcut(QKeySequence::Replace); //equivale a Ctrl+H
-    highlightAction->setIcon(QIcon("./icons/icons8-spotlight-64.png"));
+    highlightAction->setIcon(QIcon("./icons/highlight.png"));
     highlightAction->font().setPointSize(10);
     highlightAction->setToolTip("Highlight the text entered by different users");
     highlightAction->setVisible(false);

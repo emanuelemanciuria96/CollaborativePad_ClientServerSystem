@@ -15,11 +15,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/FileSystemGridView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemGridView.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+    <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="fix highlight icon">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/icons/icons8-spotlight-64.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +200,21 @@
       <option name="project" value="LOCAL" />
       <updated>1600621182320</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="fix reload after modification">
+      <created>1600622858800</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1600622858800</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fix highlight icon">
+      <created>1600623145288</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1600623145288</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,7 +226,9 @@
     <MESSAGE value="reload grid after open file in tree" />
     <MESSAGE value="fix reload" />
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="fix reload after modification" />
+    <MESSAGE value="fix highlight icon" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix highlight icon" />
   </component>
   <component name="WindowStateProjectService">
     <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597338903660">
@@ -223,30 +239,30 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="672" y="165" key="#xdebugger.XInspectDialog/0.0.1536.824@0.0.1536.824" timestamp="1597590313280" />
-    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1600621179503">
+    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1600623365928">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600621179503" />
+    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600623365928" />
     <state width="479" height="438" key="DebuggerActiveHint" timestamp="1597247491161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="479" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1597247491161" />
-    <state width="1481" height="191" key="GridCell.Tab.0.bottom" timestamp="1600622825829">
+    <state width="1481" height="191" key="GridCell.Tab.0.bottom" timestamp="1600623316895">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="191" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600622825829" />
-    <state width="1481" height="191" key="GridCell.Tab.0.center" timestamp="1600622825829">
+    <state width="1481" height="191" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600623316895" />
+    <state width="1481" height="191" key="GridCell.Tab.0.center" timestamp="1600623316895">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="191" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600622825829" />
-    <state width="1481" height="191" key="GridCell.Tab.0.left" timestamp="1600622825829">
+    <state width="1481" height="191" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600623316895" />
+    <state width="1481" height="191" key="GridCell.Tab.0.left" timestamp="1600623316894">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="191" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600622825829" />
-    <state width="1481" height="191" key="GridCell.Tab.0.right" timestamp="1600622825829">
+    <state width="1481" height="191" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600623316894" />
+    <state width="1481" height="191" key="GridCell.Tab.0.right" timestamp="1600623316895">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="191" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600622825829" />
+    <state width="1481" height="191" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600623316895" />
     <state width="725" height="210" key="GridCell.Tab.1.bottom" timestamp="1600339293525">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -275,10 +291,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1600595104491" />
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1600621191268">
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1600623148611">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600621191268" />
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600623148611" />
     <state x="649" y="198" key="refactoring.ChangeSignatureDialog" timestamp="1597340248913">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
