@@ -501,21 +501,24 @@ void FileSystemGridView::remoteRenameFile(const QString& oldFile,const QString& 
         index++;
     }
     this->fileSystem[folder].sort();
-    QListWidgetItem *item=ui->listWidget->currentItem();
-    QString tmpName=item->text();
-    if(folder==this->mainFolder){
-        reload(folder,false);
-    }else{
-        reload(folder,true);
-    }
-    for(int i = 0; i < ui->listWidget->count(); ++i)
-    {
-        QListWidgetItem* item = ui->listWidget->item(i);
-        if(item->statusTip()=="file" && item->text()==tmpName){
-            ui->listWidget->setCurrentItem(item);
-            break;
+    QListWidgetItem *item;
+    if( (item=ui->listWidget->currentItem()) != nullptr ) {
+        QString tmpName = item->text();
+        for (int i = 0; i < ui->listWidget->count(); ++i) {
+            QListWidgetItem *item = ui->listWidget->item(i);
+            if (item->statusTip() == "file" && item->text() == tmpName) {
+                ui->listWidget->setCurrentItem(item);
+                break;
+            }
         }
     }
+
+    if (folder == this->mainFolder) {
+        reload(folder, false);
+    } else {
+        reload(folder, true);
+    }
+
 }
 
 
