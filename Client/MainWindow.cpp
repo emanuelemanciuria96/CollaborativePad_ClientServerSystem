@@ -1,7 +1,7 @@
 //
 // Created by utente on 06/08/2020.
 //
-
+//ccccc
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QDockWidget>
 #include "MainWindow.h"
