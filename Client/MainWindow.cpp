@@ -234,7 +234,7 @@ void MainWindow::setToolBar() {
     highlightAction=new QAction();
     highlightAction->setCheckable(true);
     highlightAction->setShortcut(QKeySequence::Replace); //equivale a Ctrl+H
-    highlightAction->setIcon(QIcon("./icons/pdf.png"));
+    highlightAction->setIcon(QIcon("./icons/icons8-spotlight-64.png"));
     highlightAction->font().setPointSize(10);
     highlightAction->setToolTip("Highlight the text entered by different users");
     highlightAction->setVisible(false);
