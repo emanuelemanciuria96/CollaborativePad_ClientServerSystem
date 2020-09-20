@@ -127,12 +127,28 @@ void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
     for(auto folder:folders){
         this->fileSystem[folder].sort();
     }
-
+    bool error=false;
+    QListWidgetItem *item=ui->listWidget->currentItem();
+    QString tmpName;
+    if(item== nullptr) {
+        error=true;
+    }else {
+        tmpName=item->text();
+    }
         if (this->state == this->mainFolder) {
             reload(this->mainFolder, false);
         } else {
             reload(this->state, true);
         }
+    if(!error) {
+        for (int i = 0; i < ui->listWidget->count(); ++i) {
+            QListWidgetItem *item = ui->listWidget->item(i);
+            if (item->statusTip() == "file" && item->text() == tmpName) {
+                ui->listWidget->setCurrentItem(item);
+                break;
+            }
+        }
+    }
 }
 
 void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
@@ -268,6 +284,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         if(this->state!=this->mainFolder){
             return;
         }
+        ui->listWidget->clearSelection();
         QPoint globalPos = ui->listWidget->mapToGlobal(pos);
         QMenu* myMenu=new QMenu();
 
@@ -452,6 +469,28 @@ void FileSystemGridView::remoteDeleteFile(const QString& file)
         }
         index++;
     }
+    bool error=false;
+    QListWidgetItem *item=ui->listWidget->currentItem();
+    QString tmpName;
+    if(item== nullptr) {
+        error=true;
+    }else {
+        tmpName=item->text();
+    }
+    if (this->state == this->mainFolder) {
+        reload(this->mainFolder, false);
+    } else {
+        reload(this->state, true);
+    }
+    if(!error) {
+        for (int i = 0; i < ui->listWidget->count(); ++i) {
+            QListWidgetItem *item = ui->listWidget->item(i);
+            if (item->statusTip() == "file" && item->text() == tmpName) {
+                ui->listWidget->setCurrentItem(item);
+                break;
+            }
+        }
+    }
 }
 void FileSystemGridView::renameFile(QString oldFile,QString newFile)
 {
@@ -501,9 +540,20 @@ void FileSystemGridView::remoteRenameFile(const QString& oldFile,const QString& 
         index++;
     }
     this->fileSystem[folder].sort();
-    QListWidgetItem *item;
-    if( (item=ui->listWidget->currentItem()) != nullptr ) {
-        QString tmpName = item->text();
+    bool error=false;
+    QListWidgetItem *item=ui->listWidget->currentItem();
+    QString tmpName;
+    if(item== nullptr) {
+        error=true;
+    }else {
+        tmpName=item->text();
+    }
+    if (this->state == this->mainFolder) {
+        reload(this->mainFolder, false);
+    } else {
+        reload(this->state, true);
+    }
+    if(!error) {
         for (int i = 0; i < ui->listWidget->count(); ++i) {
             QListWidgetItem *item = ui->listWidget->item(i);
             if (item->statusTip() == "file" && item->text() == tmpName) {
@@ -512,13 +562,6 @@ void FileSystemGridView::remoteRenameFile(const QString& oldFile,const QString& 
             }
         }
     }
-
-    if (folder == this->mainFolder) {
-        reload(folder, false);
-    } else {
-        reload(folder, true);
-    }
-
 }
 
 
