@@ -124,7 +124,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
     centralWidget->addWidget(loginDialog);
     centralWidget->addWidget(widgetInfoEditC);
-    centralWidget->addWidget(widgetEditor);
+    centralWidget->addWidget(editor);
     centralWidget->addWidget(widgetSignIn);
     centralWidget->addWidget(gridView);
 
@@ -134,15 +134,18 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
 void MainWindow::loginFinished() {
     centralWidget->setCurrentWidget(gridView);
-    centralWidget->setCurrentWidget(widgetEditor);
-    widgetEditor->hide();
+    centralWidget->setCurrentWidget(editor);
+    //widgetEditor->hide();
     toolBar->show();
     gridView->show();
     createMenus();
+    auto p = QPalette();
+    p.setBrush(QPalette::Window, QBrush(QColor("lightgray")) );
+    centralWidget->setPalette(p);
 }
 void MainWindow::opnFileGrid(QString fileName) {
     setToolBarEditor();
-    widgetEditor->show();
+    //widgetEditor->show();
     //dockWidgetTree->show();
     gridView->hide();
 }
@@ -155,7 +158,7 @@ void MainWindow::changeInviteAction(bool state){
     }
 }
 void MainWindow::clsFile() {
-    widgetEditor->hide();
+    //widgetEditor->hide();
     dockWidgetTree->hide();
     if(gridView->getState()==gridView->getMainFolder()){
         setToolBarGrid();
@@ -264,7 +267,6 @@ void MainWindow::setToolBar() {
     inviteAction->setIcon(QIcon("./icons/grid_invite_icon.png"));
     inviteAction->setVisible(false);
     toolBar->addAction(inviteAction);
-
 }
 void MainWindow::setToolBarEditor() {
     backAction->setVisible(false);
@@ -277,7 +279,7 @@ void MainWindow::setToolBarEditor() {
     pdfAction->setVisible(true);
 }
 void MainWindow::setToolBarGrid() {
-    if(widgetEditor->isHidden()) {
+    if(true) {
         treeShowAction->setVisible(false);
         highlightAction->setVisible(false);
         closeAction->setVisible(false);
@@ -290,7 +292,7 @@ void MainWindow::setToolBarGrid() {
     }
 }
 void MainWindow::setToolBarFolderGrid(QString folder) {
-    if(widgetEditor->isHidden()) {
+    if(true) {
         treeShowAction->setVisible(false);
         highlightAction->setVisible(false);
         closeAction->setVisible(false);
@@ -304,18 +306,12 @@ void MainWindow::setToolBarFolderGrid(QString folder) {
 }
 
 void MainWindow::editorSettings(SharedEditor* shEditor) {
-    widgetEditor = new QWidget(this);
-    widgetEditor->setStyleSheet("QWidget { background: lightGray; }");
-    editor = new EditorGUI(shEditor, widgetEditor);
-    editor->setStyleSheet("QWidget { background: white; }");
-    auto layoutEditor = new QVBoxLayout(widgetEditor);
-    layoutEditor->addWidget(editor);
-    layoutEditor->setContentsMargins(0,0,0,0);
+    editor = new EditorGUI(shEditor, this);
     addUserWidget = new AddUserWidget(this);
     inviteUserWidget = new InviteUserWidget(this);
     uriWidget = new UriWidget(this);
 
-    widgetEditor->hide();
+    //widgetEditor->hide();
 }
 
 void MainWindow::startSignIn() {
@@ -372,17 +368,19 @@ void MainWindow::createMenus() {
 
 void MainWindow::resizeEvent(QResizeEvent *evt) {
     QWidget::resizeEvent(evt);
-    QPalette p = palette();
-    p.setBrush(QPalette::Window,bkgnd.scaled(centralWidget->size(), Qt::KeepAspectRatioByExpanding));
+    if(centralWidget->currentWidget() != editor) {
+        QPalette p = palette();
+        p.setBrush(QPalette::Window, bkgnd.scaled(centralWidget->size(), Qt::KeepAspectRatioByExpanding));
 
-    QLinearGradient grad(500,500,1000,1000);
-    grad.setColorAt(0,QColor("#4b71e3"));
-    grad.setColorAt(1,QColor("#87b5ff"));
-    QBrush brush2(grad);
+        QLinearGradient grad(500, 500, 1000, 1000);
+        grad.setColorAt(0, QColor("#4b71e3"));
+        grad.setColorAt(1, QColor("#87b5ff"));
+        QBrush brush2(grad);
 //    p.setBrush(QPalette::Window,brush2);
 
-    centralWidget->setAutoFillBackground(true);
-    centralWidget->setPalette(p);
+        centralWidget->setAutoFillBackground(true);
+        centralWidget->setPalette(p);
+    }
 
     dockWidgetTree->setMaximumWidth(this->size().width() / 5);
     dockWidgetTree->setMinimumWidth(this->size().width() / 5);

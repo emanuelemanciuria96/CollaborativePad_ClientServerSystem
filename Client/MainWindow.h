@@ -7,6 +7,7 @@
 
 #include <QtWidgets>
 #include <QGroupBox>
+#include <QScrollArea>
 #include "EditorGUI.h"
 #include "LoginDialog.h"
 #include "FileSystemTreeView.h"
@@ -25,7 +26,6 @@ public:
 
 private:
     QDockWidget *dockWidgetTree;
-    QWidget *widgetLogin;
     QWidget *widgetEditor;
     QWidget *widgetInfoEditC;
     FileSystemTreeView *treeView;
