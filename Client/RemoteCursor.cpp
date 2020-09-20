@@ -41,6 +41,7 @@ RemoteCursor::~RemoteCursor() {
 //        std::cout << "timer null" << std::endl;
 //    else
 //        std::cout << "timer not null" << std::endl;
+    labelName->deleteLater();
     labelTimer->deleteLater();
 }
 

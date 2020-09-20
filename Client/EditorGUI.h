@@ -28,6 +28,8 @@
 #include <QTextEdit>
 #include "MyTextEdit.h"
 #include <QKeyEvent>
+#include <QScrollArea>
+#include <QAbstractTextDocumentLayout>
 
 class EditorGUI: public QWidget {
     Q_OBJECT
@@ -45,8 +47,9 @@ private:
     qint32 posLastChar;
     QTimer* timer;
     bool selected= false;
-    bool updateCursorBlocker;
+    bool myCursorPosUpdateBlocker;
     QTimer* curBlockerTimer;
+    uint nUsers = 0;
 
     void setUpGUI();
    // void setupFileActions();
@@ -54,10 +57,8 @@ private:
     void setupTextActions();
     bool load(const QString &f);
     void loadSymbols();
-    void updateRemoteCursors(qint32 mySiteId, int pos, Message::action_t action);
+    void updateRemoteCursors(qint32 mySiteId, int pos);
     RemoteCursor* getRemoteCursor(qint32 siteId);
-    void fileNew();
-    void fileOpen();
     void insertText(qint32 pos, const QString& value, qint32 siteId);
     void deleteText(qint32 pos, qint32 siteId,qint32 n);
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
@@ -82,7 +83,7 @@ public slots:
 
 signals:
     void clear();
-
+    void setNumUsers(int n);
 public:
     EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);

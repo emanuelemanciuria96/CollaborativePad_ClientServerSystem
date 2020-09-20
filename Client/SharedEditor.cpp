@@ -29,7 +29,6 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
     connect(transceiver,&Transceiver::readyToProcess,this,&SharedEditor::process,Qt::QueuedConnection);
     connect(transceiver,&Transceiver::deleteText,this,&SharedEditor::clearText,Qt::QueuedConnection);
 
-
     transceiver->start();
 
     //creo due delimitatori, servono a gestire l'inserimento
@@ -56,6 +55,7 @@ quint32 intermediateValue(quint32 prev,quint32 next,double factor){
     }
     return val;
 }
+
 void generateNewPosition2(std::vector<quint32>& prev, std::vector<quint32>& next, std::vector<quint32>& newPos){
     quint32 max=UINT32_MAX;
     double factor=0.001;
@@ -209,6 +209,10 @@ void SharedEditor::process(DataPacket pkt) {
             if(isFileOpened)
                 processCursorPos(*std::dynamic_pointer_cast<CursorPosition>(pkt.getPayload()));
             break;
+        case DataPacket::user_info:
+            if(isFileOpened)
+                processUserInfo(*std::dynamic_pointer_cast<UserInfo>(pkt.getPayload()) );
+            break;
         default:
             throw std::exception();
     }
@@ -359,9 +363,21 @@ void SharedEditor::processMessages(StringMessages &strMess) {
 
 }
 
+void SharedEditor::processUserInfo(UserInfo &userInfo) {
+    if(userInfo.getType() == UserInfo::disconnect )
+        std::cout<<"si e' disconnesso dal file lo user:\n"
+                 <<" - site ID:"<<userInfo.getSiteId()<<"\n"
+                 <<" - user:"<<userInfo.getUsername().toStdString()<<std::endl;
+    else
+        std::cout<<"sta partecipando al file lo user:\n"
+                <<" - site ID:"<<userInfo.getSiteId()<<"\n"
+                <<" - user:"<<userInfo.getUsername().toStdString()<<std::endl;
+}
+
 void SharedEditor::processFileInfo(FileInfo &filInf) {
     switch ( filInf.getFileInfo()  ){
         case FileInfo::start: {
+            emit setNumUsers(0);
             isFileOpened = true;
             isArrivingFile = true;
             break;
@@ -697,6 +713,7 @@ void SharedEditor::closeFile() {
         clearText();
         _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
     }
+    emit hideNumUsers();
 
 }
 

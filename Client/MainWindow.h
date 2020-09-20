@@ -17,6 +17,7 @@
 #include "AddUserWidget.h"
 #include "InviteUserWidget.h"
 #include "UriWidget.h"
+#include <QScrollArea>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -25,7 +26,6 @@ public:
 
 private:
     QDockWidget *dockWidgetTree;
-    QWidget *widgetLogin;
     QWidget *widgetEditor;
     QWidget *widgetInfoEditC;
     FileSystemTreeView *treeView;
@@ -49,6 +49,7 @@ private:
     InviteUserWidget* inviteUserWidget;
     UriWidget* uriWidget;
     QPixmap bkgnd;
+    QLabel *numUsers;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -79,6 +80,8 @@ public slots:
             dockWidgetTree->show();
         else dockWidgetTree->hide();
     }
+    void setNumUsers(int n);
+    void hideNumUsers();
 };
 
 

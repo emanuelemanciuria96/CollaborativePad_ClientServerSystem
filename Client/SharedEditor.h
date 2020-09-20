@@ -23,6 +23,7 @@
 #include "Packet/LoginInfo.h"
 #include "Packet/Command.h"
 #include "Packet/CursorPosition.h"
+#include "Packet/UserInfo.h"
 #include <vector>
 #include <algorithm>
 #include <QtCore/QTimer>
@@ -48,6 +49,7 @@ private:
     void processMessages( StringMessages& strMess );
     void processLoginInfo( LoginInfo& logInf );
     void processFileInfo( FileInfo& filInf );
+    void processUserInfo( UserInfo& userInfo);
     void processCommand( Command& cmd );
     void processLsCommand( Command& cmd );
     void processRenCommand( Command &cmd );
@@ -93,7 +95,8 @@ signals:
     void inviteResultArrived(const QString& result);
     void uriResultArrived(const QVector<QString> &args);
     void fsNameArrived(const QString& fsName);
-
+    void setNumUsers(int n);
+    void hideNumUsers();
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );
