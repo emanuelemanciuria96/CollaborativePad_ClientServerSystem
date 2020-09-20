@@ -27,6 +27,7 @@ public slots:
     void remoteDeleteFile(const QString& file);
     void renameFile(QString oldFile,QString newFile);
     void remoteRenameFile(const QString& oldFile,const QString& newFile);
+    void selectFile(QString& file);
     void reloadBack();
     QString getState();
     QString getMainFolder();

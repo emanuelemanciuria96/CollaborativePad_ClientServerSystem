@@ -227,7 +227,31 @@ void FileSystemGridView::addFile(){
     }
     emit newFileUpdateTree(newFile);
 }
-
+void FileSystemGridView::selectFile(QString &file) {
+    QString folder=this->mainFolder;
+    QString filename=file.split("/")[1];
+    for(auto fol:fileSystem.keys()){
+        if(fol==file.split("/")[0]){
+            folder=file.split("/")[0];
+            break;
+        }
+    }
+    if(state!=folder){
+        if(folder==mainFolder) {
+            reload(folder,false);
+        }else{
+            reload(folder,true);
+        }
+    }
+    for(int i = 0; i < ui->listWidget->count(); ++i)
+    {
+        QListWidgetItem* item = ui->listWidget->item(i);
+        if(item->statusTip()=="file" && item->text()==filename){
+            ui->listWidget->setCurrentItem(item);
+            break;
+        }
+    }
+}
 void FileSystemGridView::itemProperties(QListWidgetItem *item)
 {
     item->setSizeHint(QSize(200, 180));
