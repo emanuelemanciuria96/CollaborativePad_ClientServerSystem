@@ -50,6 +50,7 @@ private:
     QString previousName;
 
     void setupRightClickMenu();
+    virtual void mousePressEvent(QMouseEvent *ev);
     void insertFile();
     QTreeWidgetItem* addChild(QTreeWidgetItem *parent, QString name,QString description);
     bool isChild(QTreeWidgetItem *parent, QString &name);
