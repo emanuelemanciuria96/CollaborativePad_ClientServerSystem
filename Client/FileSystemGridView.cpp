@@ -165,6 +165,9 @@ void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 }
 
 void FileSystemGridView::on_listWidget_itemSelectionChanged(){
+    if(state!=mainFolder){
+        return;
+    }
     QListWidgetItem *item=ui->listWidget->currentItem();
     if(item->statusTip()=="file"){
         emit canInvite(true);//file clicked
