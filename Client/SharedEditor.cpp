@@ -450,8 +450,10 @@ void SharedEditor::processLsCommand(Command& cmd){
 void SharedEditor::processRmCommand(Command &cmd) {
     auto args = cmd.getArgs();
 
-    if(fileOpened == args.first() )
+    if(fileOpened == args.first() ){
+        emit returnToGrid();
         closeFile();
+        }
 
     auto list = args.first().split("/");
 

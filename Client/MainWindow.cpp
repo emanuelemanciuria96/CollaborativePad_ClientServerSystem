@@ -80,7 +80,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(widgetSignIn, &SignInWidget::backToLogIn, this, &MainWindow::backToLogIn);
     connect(highlightAction, &QAction::triggered, shEditor, &SharedEditor::highlightSymbols);
     connect(closeAction, &QAction::triggered, this, &MainWindow::clsFile);
-    connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::clsFile);
+    connect(shEditor, &SharedEditor::returnToGrid, this, &MainWindow::clsFile);
     connect(closeAction, &QAction::triggered, shEditor, &SharedEditor::requireFileClose);
     connect(pdfAction, &QAction::triggered, editor, &EditorGUI::exportToPdf);
     connect(addAction, &QAction::triggered, gridView, &FileSystemGridView::addFile);

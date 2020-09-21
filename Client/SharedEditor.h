@@ -97,6 +97,7 @@ signals:
     void fsNameArrived(const QString& fsName);
     void setNumUsers(int n);
     void hideNumUsers();
+    void returnToGrid();
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );
