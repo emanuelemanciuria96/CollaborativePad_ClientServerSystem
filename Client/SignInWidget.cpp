@@ -5,6 +5,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QFileDialog>
 #include <iostream>
+#include <QtGui/QRegExpValidator>
 #include "SignInWidget.h"
 
 SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
@@ -14,10 +15,18 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     nameEdit = new QLineEdit(this);
     emailEdit = new QLineEdit(this);
     imageLabel = new QLabel(this);
+    errorLabel = new QLabel(this);
     buttons = new QDialogButtonBox(this);
     loadImageButton = new QPushButton(this);
     auto title = new QLabel("Create Account");
     title->setStyleSheet("QLabel {color: white; font:14pt}");
+
+    QRegExp stdExpr(R"(^(?!\.)(?!com[0-9]$)(?!con$)(?!lpt[0-9]$)(?!nul$)(?!prn$)[^\|\*\?\\:<>/$"]*[^\.\|\*\?\\:<>/$"]+$)");
+    auto *v = new QRegExpValidator(stdExpr, this);
+    userEdit->setValidator(v);
+    userEdit->setMaxLength(20);
+    nameEdit->setValidator(v);
+    nameEdit->setMaxLength(20);
 
     auto middleLayout = new QHBoxLayout();
     auto outerLayout = new QVBoxLayout();
@@ -30,6 +39,8 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     passwordEdit->setEchoMode(QLineEdit::Password);
     nameEdit->setPlaceholderText("Name");
     emailEdit->setPlaceholderText("E-mail");
+    errorLabel->setStyleSheet("color: red");
+    errorLabel->setAlignment(Qt::AlignCenter);
 
     imageLabel->setFixedSize(150,150);
     imageLabel->setPixmap(QPixmap("images/profile.jpg"));
@@ -51,6 +62,8 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     fieldsLayout->addWidget(nameEdit);
     fieldsLayout->addSpacing(10);
     fieldsLayout->addWidget(emailEdit);
+    fieldsLayout->addSpacing(10);
+    fieldsLayout->addWidget(errorLabel);
     fieldsLayout->addSpacing(10);
     fieldsLayout->setAlignment(Qt::AlignTop);
 
@@ -117,6 +130,22 @@ void SignInWidget::signIn() {
     auto password = passwordEdit->text();
     auto name = nameEdit->text();
     auto email = emailEdit->text();
+    if (user.isEmpty() || password.isEmpty() || name.isEmpty() || email.isEmpty()){
+        errorLabel->setText("Please fill all fields");
+        return;
+    }
+    QRegularExpression emailExpr("^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$");
+
+    if(!emailExpr.match(email).hasMatch()) {
+        errorLabel->setText("Invalid email address");
+        return;
+    }
+
+    if (password.length() < 8 || password.length() > 16) {
+        errorLabel->setText("Password must be 8-12 characters");
+        return;
+    }
+
     QPixmap image{};
     if (*(imageLabel->pixmap()) != QPixmap("images/profile.jpg"))
         image = *(imageLabel->pixmap());

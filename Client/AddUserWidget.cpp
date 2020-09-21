@@ -1,6 +1,7 @@
 #include "AddUserWidget.h"
 #include <utility>
 #include <iostream>
+#include <QtGui/QRegExpValidator>
 #include "ui_adduserwidget.h"
 
 AddUserWidget::AddUserWidget(QWidget *parent)
@@ -8,6 +9,10 @@ AddUserWidget::AddUserWidget(QWidget *parent)
     , ui(new Ui::AddUserWidget)
 {
     ui->setupUi(this);
+    QRegExp expr(R"(^(?!\.)(?!com[0-9]$)(?!con$)(?!lpt[0-9]$)(?!nul$)(?!prn$)[^\|\*\?\\:<>/$"]*[^\.\|\*\?\\:<>/$"]+$)");
+    auto *v = new QRegExpValidator(expr, this);
+    ui->userEdit->setValidator(v);
+    ui->userEdit->setMaxLength(20);
     this->setWindowFlag(Qt::WindowStaysOnTopHint);
     connect(ui->searchButton, &QPushButton::clicked, this, &AddUserWidget::emitSearchUser);
     connect(ui->submitButton, &QPushButton::clicked, this, &AddUserWidget::emitSubmit);

@@ -19,6 +19,7 @@ private:
     QLineEdit *passwordEdit;
     QLineEdit *nameEdit;
     QLineEdit *emailEdit;
+    QLabel *errorLabel;
     QLabel *imageLabel;
     QPushButton *loadImageButton;
     QDialogButtonBox *buttons;

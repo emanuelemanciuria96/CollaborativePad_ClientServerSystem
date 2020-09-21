@@ -18,10 +18,12 @@ void LoginDialog::setUpGUI() {
 
     //inizializzo la LineEdit dell'username
     editUsername = new QLineEdit(this);
+    editUsername->setMaxLength(20);
 //    editUsername->setStyleSheet("QLineEdit { background: white; }");
     editUsername->setPlaceholderText("Username");
     //inizializzo la LineEdit della password
     editPassword = new QLineEdit(this);
+    editPassword->setMaxLength(16);
 //    editPassword->setStyleSheet("QLineEdit { background: white; }");
     editPassword->setEchoMode(QLineEdit::Password);
     editPassword->setPlaceholderText("Password");

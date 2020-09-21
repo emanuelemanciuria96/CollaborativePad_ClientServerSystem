@@ -20,14 +20,12 @@
 #include "UriWidget.h"
 
 class MainWindow : public QMainWindow {
-Q_OBJECT
+    Q_OBJECT
 public:
     MainWindow(SharedEditor* shEditor, QWidget* parent = 0);
 
 private:
     QDockWidget *dockWidgetTree;
-    QWidget *widgetEditor;
-    QWidget *widgetInfoEditC;
     FileSystemTreeView *treeView;
     FileSystemGridView *gridView;
     EditorGUI *editor;
@@ -35,7 +33,6 @@ private:
     QStatusBar* statusBar;
     QToolBar* toolBar;
     InfoWidget* infoWidget;
-    InfoWidgetEdit* infoWidgetEdit;
     QStackedWidget* centralWidget;
     QAction* highlightAction;
     QAction* closeAction;
@@ -54,7 +51,6 @@ private:
     void editorSettings(SharedEditor* shEditor);
     void treeFileSystemSettings();
     void gridFileSystemSettings();
-    void infoWidgetsSettings();
     void signInWidgetSetup();
     void resizeEvent(QResizeEvent *evt) override;
     void setStyleSheet();

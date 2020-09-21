@@ -1,7 +1,7 @@
 //
 // Created by utente on 06/08/2020.
 //
-//ccccc
+
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QDockWidget>
 #include "MainWindow.h"
@@ -127,7 +127,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     this->resize(size.width()*0.7,size.height()*0.7);
 
     centralWidget->addWidget(loginDialog);
-    centralWidget->addWidget(widgetInfoEditC);
     centralWidget->addWidget(editor);
     centralWidget->addWidget(widgetSignIn);
     centralWidget->addWidget(gridView);
@@ -311,6 +310,8 @@ void MainWindow::setToolBarFolderGrid(QString folder) {
 
 void MainWindow::editorSettings(SharedEditor* shEditor) {
     editor = new EditorGUI(shEditor, this);
+
+    infoWidget = new InfoWidget(this);
     addUserWidget = new AddUserWidget(this);
     inviteUserWidget = new InviteUserWidget(this);
     uriWidget = new UriWidget(this);
@@ -320,31 +321,6 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
 
 void MainWindow::startSignIn() {
     centralWidget->setCurrentWidget(widgetSignIn);
-}
-
-void MainWindow::infoWidgetsSettings() {
-    infoWidget = new InfoWidget(this);
-    widgetInfoEditC = new QWidget(this);
-
-    infoWidget->hide();
-//    QPalette p1{};
-//    QImage loginBackground = QImage("./textures/texture_clouds_background.png");
-//    QBrush brush1(loginBackground);
-//    p1.setBrush(QPalette::Window,brush1);
-//    widgetInfoEditC->setPalette(p1);
-
-//    QGroupBox *box = new QGroupBox(widgetInfoEditC);
-    infoWidgetEdit = new InfoWidgetEdit(widgetInfoEditC);
-
-//    box->setLayout(new QVBoxLayout());
-//    box->layout()->addWidget(infoWidgetEdit);
-//    box->layout()->addWidget(new QLabel("prova",box,Qt::Widget));
-    auto boxLayout = new QVBoxLayout(widgetInfoEditC);
-    boxLayout->addWidget(infoWidgetEdit);
-    widgetInfoEditC->setLayout(boxLayout);
-//    dynamic_cast<QGridLayout*>(widgetInfoEditC->layout())->addWidget(infoWidgetEdit,0,1,Qt::AlignCenter);
-//    dynamic_cast<QGridLayout*>(widgetInfoEditC->layout())->addWidget(new QLabel("prova",widgetInfoEditC,Qt::Widget),0,0,Qt::AlignCenter);
-//    dynamic_cast<QGridLayout*>(widgetInfoEditC->layout())->addWidget(new QLabel("prova",widgetInfoEditC,Qt::Widget),0,2,Qt::AlignCenter);
 }
 
 void MainWindow::backToLogIn() {

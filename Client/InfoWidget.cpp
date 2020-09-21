@@ -4,32 +4,33 @@
 #include "InfoWidgetEdit.h"
 
 InfoWidget::InfoWidget(QWidget *parent)
-    : QWidget(parent)
+    : QMainWindow(parent)
     , ui(new Ui::InfoWidget)
 {
     ui->setupUi(this);
     infoWidgetEdit = new InfoWidgetEdit(this);
     QPixmap image("images/profile.jpg");
-    ui->immagine->setScaledContents(true);
-    ui->immagine->setPixmap(image);
+    ui->imageLabel->setScaledContents(true);
+    ui->imageLabel->setPixmap(image);
 }
 
 void InfoWidget::loadData(const QPixmap& image, const QString& nickname, const QString& name, const QString& email) {
     if(!image.isNull())
-        ui->immagine->setPixmap(image);
+        ui->imageLabel->setPixmap(image);
     if (!name.isNull())
-        ui->nome->setText(name);
+        ui->nameLabel->setText(name);
     if (!email.isNull())
-        ui->email->setText(email);
-    ui->nickname->setText(nickname);
-    connect(ui->modifica, &QPushButton::clicked, this, &InfoWidget::openInfoEdit);
+        ui->emailLabel->setText(email);
+    ui->nicknameLabel->setText(nickname);
+    connect(ui->editButton, &QPushButton::clicked, this, &InfoWidget::openInfoEdit);
     connect(infoWidgetEdit, &InfoWidgetEdit::updateInfo, this, &InfoWidget::updateInfo);
-    infoWidgetEdit->setImage(ui->immagine->pixmap());
-    infoWidgetEdit->setName(ui->nome->text());
-    infoWidgetEdit->setEmail(ui->email->text());
+    connect(ui->cancelButton, &QPushButton::clicked, this, &QWidget::close);
 }
 
 void InfoWidget::openInfoEdit() {
+    infoWidgetEdit->setImage(ui->imageLabel->pixmap());
+    infoWidgetEdit->setName(ui->nameLabel->text());
+    infoWidgetEdit->setEmail(ui->emailLabel->text());
     this->hide();
     infoWidgetEdit->show();
 }
@@ -40,22 +41,22 @@ InfoWidget::~InfoWidget()
 }
 
 const QPixmap *InfoWidget::getImage() {
-    return ui->immagine->pixmap();
+    return ui->imageLabel->pixmap();
 }
 
 QString InfoWidget::getNickname() {
-    return std::move(ui->nickname->text());
+    return std::move(ui->nicknameLabel->text());
 }
 
 QString InfoWidget::getName() {
-    return std::move(ui->nome->text());
+    return std::move(ui->nameLabel->text());
 }
 
 void InfoWidget::updateInfo(const QPixmap& image, const QString& name, const QString& email) {
-    if (*(ui->immagine->pixmap()) != image || ui->nome->text() != name || ui->email->text() != email) {
-        ui->immagine->setPixmap(image);
-        ui->nome->setText(name);
-        ui->email->setText(email);
+    if (*(ui->imageLabel->pixmap()) != image || ui->nameLabel->text() != name || ui->emailLabel->text() != email) {
+        ui->imageLabel->setPixmap(image);
+        ui->nameLabel->setText(name);
+        ui->emailLabel->setText(email);
         emit sendUpdatedInfo(image, name, email);
     }
     infoWidgetEdit->close();
