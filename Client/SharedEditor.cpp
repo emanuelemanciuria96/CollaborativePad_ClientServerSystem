@@ -450,10 +450,8 @@ void SharedEditor::processLsCommand(Command& cmd){
 void SharedEditor::processRmCommand(Command &cmd) {
     auto args = cmd.getArgs();
 
-    if(fileOpened == args.first() ){
-        emit returnToGrid();
+    if(fileOpened == args.first() )
         closeFile();
-        }
 
     auto list = args.first().split("/");
 
@@ -602,9 +600,10 @@ void SharedEditor::requireFileDelete(const QString& fileName) {
     if( file.split("/").size()==1  )
         file = _user + "/" + file;
 
-    if(fileOpened == file)
+    if(fileOpened == file) {
+        emit returnToGrid();
         closeFile();
-
+    }
     QVector<QString> vec = {std::move(file)};
 
     auto cmd = std::make_shared<Command>(_siteId,Command::rm,vec);
