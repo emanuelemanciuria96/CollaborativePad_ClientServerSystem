@@ -298,6 +298,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
             return;
         }
         ui->listWidget->clearSelection();
+        emit canInvite(false);
         QPoint globalPos = ui->listWidget->mapToGlobal(pos);
         QMenu* myMenu=new QMenu();
 
