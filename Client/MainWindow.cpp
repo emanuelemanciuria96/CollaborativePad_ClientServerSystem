@@ -37,9 +37,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     loginSettings();
     // editor creation
     editorSettings(shEditor);
-    // widgetAccount creation
-    infoWidgetsSettings();
-    //highlightSetup
 
     signInWidgetSetup();
 

@@ -365,6 +365,17 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
             return;
         }
 
+        QRegularExpression expr(R"(^(?!\.)(?!com[0-9]$)(?!con$)(?!lpt[0-9]$)(?!nul$)(?!prn$)[^\|\*\?\\:<>/$"]*[^\.\|\*\?\\:<>/$"]+$)");
+
+        if(!expr.match(newNameFile).hasMatch() || newNameFile.length() > 20) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Rename file");
+            msgBox.setText("Invalid name.");
+            msgBox.setStandardButtons(QMessageBox::Ok );
+            msgBox.exec();
+            return;
+        }
+
         QMessageBox msgBox;
         msgBox.setWindowTitle("Rename file");
         msgBox.setText("Do you want to rename "+oldNameFile+" with "+newNameFile+"?");
