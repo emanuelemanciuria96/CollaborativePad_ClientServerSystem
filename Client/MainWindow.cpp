@@ -170,7 +170,7 @@ void MainWindow::clsFile() {
         setToolBarFolderGrid(gridView->getState());
     }
     gridView->show();
-    if(false && highlightAction->isChecked()){
+    if(highlightAction->isChecked()){
         highlightAction->trigger();
         highlightAction->setChecked(false);
     }
