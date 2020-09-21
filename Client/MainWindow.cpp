@@ -359,6 +359,7 @@ void MainWindow::backToLogIn() {
 
 void MainWindow::openAddUser(const QString& fileName) {
     addUserWidget->setFile(fileName);
+    addUserWidget->setWindowTitle("Invite user to file "+fileName);
     addUserWidget->show();
 }
 
