@@ -15,8 +15,10 @@ InfoWidget::InfoWidget(QWidget *parent)
 }
 
 void InfoWidget::loadData(const QPixmap& image, const QString& nickname, const QString& name, const QString& email) {
-    if(!image.isNull())
+    if(!image.isNull()) {
         ui->imageLabel->setPixmap(image);
+        emit imageChanged(image);
+    }
     if (!name.isNull())
         ui->nameLabel->setText(name);
     if (!email.isNull())
@@ -54,6 +56,8 @@ QString InfoWidget::getName() {
 
 void InfoWidget::updateInfo(const QPixmap& image, const QString& name, const QString& email) {
     if (*(ui->imageLabel->pixmap()) != image || ui->nameLabel->text() != name || ui->emailLabel->text() != email) {
+        if(*(ui->imageLabel->pixmap()) != image)
+                emit imageChanged(image);
         ui->imageLabel->setPixmap(image);
         ui->nameLabel->setText(name);
         ui->emailLabel->setText(email);
