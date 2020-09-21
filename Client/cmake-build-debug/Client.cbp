@@ -293,12 +293,6 @@
 		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/infowidget.ui">
-			<Option target="Client"/>
-		</Unit>
-		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/infowidgetedit.ui">
-			<Option target="Client"/>
-		</Unit>
 		<Unit filename="D:/Desktop/SharedEditor_MalnatiProject/Client/inviteuserwidget.ui">
 			<Option target="Client"/>
 		</Unit>
