@@ -198,10 +198,9 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
     if( !isRenaming ) return;
 
     QString actualName = item->text(0);
-
     QRegularExpression expr(R"(^(?!\.)(?!com[0-9]$)(?!con$)(?!lpt[0-9]$)(?!nul$)(?!prn$)[^\|\*\?\\:<>/$"]*[^\.\|\*\?\\:<>/$"]+$)");
 
-    if(!expr.match(actualName).hasMatch() || actualName.length() > 20 || actualName.isEmpty()) {
+    if(!expr.match(actualName).hasMatch() || actualName.length() > 20 || actualName.isEmpty() || model.find(actualName) != model.end()) {
         isRenaming = false;
         item->setText(0,previousName);
         isRenaming = true;
