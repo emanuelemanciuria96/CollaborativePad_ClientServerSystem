@@ -167,6 +167,10 @@ void MainWindow::clsFile() {
         setToolBarFolderGrid(gridView->getState());
     }
     gridView->show();
+    if(highlightAction->isChecked()){
+        highlightAction->trigger();
+        highlightAction->setChecked(false);
+    }
 }
 void MainWindow::loginSettings() {
 //    widgetLogin = new QWidget(this);
@@ -233,7 +237,6 @@ void MainWindow::setToolBar() {
     highlightAction->setCheckable(true);
     highlightAction->setShortcut(QKeySequence::Replace); //equivale a Ctrl+H
     highlightAction->setIcon(QIcon("./icons/highlight.png"));
-    highlightAction->font().setPointSize(10);
     highlightAction->setToolTip("Highlight the text entered by different users");
     highlightAction->setVisible(false);
     toolBar->addAction(highlightAction);
