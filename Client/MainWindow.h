@@ -41,6 +41,9 @@ private:
     QAction* inviteAction;
     QAction* treeShowAction;
     QAction* pdfAction;
+    QAction* uriAction;
+    QAction* inviteListAction;
+    QAction* userInfoAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
     InviteUserWidget* inviteUserWidget;
@@ -74,6 +77,7 @@ public slots:
             dockWidgetTree->show();
         else dockWidgetTree->hide();
     }
+    void changeToolbarProfileImage(const QPixmap& image);
 };
 
 

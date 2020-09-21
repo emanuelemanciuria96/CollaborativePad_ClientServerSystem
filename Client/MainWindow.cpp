@@ -118,7 +118,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
     connect(gridView, &FileSystemGridView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
     connect(treeView, &FileSystemTreeView::opnFileRequest, gridView, &FileSystemGridView::selectFile);
-
+    connect(uriAction, &QAction::triggered, uriWidget, &QWidget::show);
+    connect(inviteListAction, &QAction::triggered, inviteUserWidget, &QWidget::show);
+    connect(userInfoAction, &QAction::triggered, infoWidget, &QWidget::show);
+    connect(infoWidget, &InfoWidget::imageChanged, this, &MainWindow::changeToolbarProfileImage);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -270,6 +273,29 @@ void MainWindow::setToolBar() {
     inviteAction->setIcon(QIcon("./icons/grid_invite_icon.png"));
     inviteAction->setVisible(false);
     toolBar->addAction(inviteAction);
+
+    //entrambe
+    uriAction = new QAction();
+    uriAction->setIcon(QIcon("./icons/uri_icon.png"));
+    uriAction->setVisible(true);
+    uriAction->setToolTip("Add a file inserting a URI");
+    toolBar->addAction(uriAction);
+
+    inviteListAction = new QAction();
+    inviteListAction->setIcon(QIcon("./icons/invite_list_icon.png"));
+    inviteListAction->setVisible(true);
+    inviteListAction->setToolTip("Show invites list");
+    toolBar->addAction(inviteListAction);
+
+    userInfoAction = new QAction();
+    userInfoAction->setIcon(QIcon("./images/profile.jpg"));
+    userInfoAction->setVisible(true);
+    userInfoAction->setToolTip("Show or edit user's info");
+    auto *spacerWidget = new QWidget(this);
+    spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    spacerWidget->setVisible(true);
+    toolBar->addWidget(spacerWidget);
+    toolBar->addAction(userInfoAction);
 }
 void MainWindow::setToolBarEditor() {
     backAction->setVisible(false);
@@ -308,6 +334,10 @@ void MainWindow::setToolBarFolderGrid(QString folder) {
     }
 }
 
+void MainWindow::changeToolbarProfileImage(const QPixmap& image) {
+    userInfoAction->setIcon(QIcon(image));
+}
+
 void MainWindow::editorSettings(SharedEditor* shEditor) {
     editor = new EditorGUI(shEditor, this);
 
@@ -329,16 +359,13 @@ void MainWindow::backToLogIn() {
 
 void MainWindow::openAddUser(const QString& fileName) {
     addUserWidget->setFile(fileName);
+    addUserWidget->setWindowTitle("Invite user to file "+fileName);
     addUserWidget->show();
 }
-
 
 void MainWindow::signInWidgetSetup() {
     widgetSignIn = new SignInWidget(this);
 }
-
-
-
 
 void MainWindow::resizeEvent(QResizeEvent *evt) {
     QWidget::resizeEvent(evt);

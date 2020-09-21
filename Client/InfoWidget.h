@@ -32,5 +32,6 @@ public slots:
 
 signals:
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
+    void imageChanged(const QPixmap& image);
 };
 #endif // INFOWIDGET_H
