@@ -5,6 +5,8 @@
 #include <QListWidgetItem>
 #include <QlistWidget>
 #include <iostream>
+#include <QMouseEvent>
+#include <QDebug>
 
 class MyListWidget: public QListWidget{
     Q_OBJECT
@@ -19,8 +21,7 @@ protected:
 
 namespace Ui {class FileSystemGridView;}
 
-class FileSystemGridView : public QWidget
-{
+class FileSystemGridView : public QWidget{
 Q_OBJECT
 
 public:
@@ -64,6 +65,7 @@ private:
     QString format=".png";
     Ui::FileSystemGridView *ui;
     void reload(const QString folder,bool isFolder,bool changeToolbar);
+    void keyPressEvent(QKeyEvent *event) override;
 /*
     QIcon* textIcon=new QIcon("D:/Desktop/untitled/icons/grid_text_icon"+this->format);
     QIcon* folderIcon=new QIcon("D:/Desktop/untitled/icons/grid_folder_icon"+this->format);
@@ -72,7 +74,6 @@ private:
     QIcon* textIcon=new QIcon("./icons/grid_text_icon"+this->format);
     QIcon* folderIcon=new QIcon("./icons/grid_folder_icon"+this->format);
     QIcon* backIcon=new QIcon("./icons/grid_back_icon"+this->format);
-
 
 };
 

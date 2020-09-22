@@ -14,14 +14,13 @@
 FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &paths) :
         QWidget(parent),
         ui(new Ui::FileSystemGridView) {
-
     ui->setupUi(this);
+
     ui->label->setStyleSheet("font: 18pt; ");
     ui->label->setText(this->mainFolder.split(".")[1]);
     ui->label_2->setStyleSheet("font: 18pt; color: rgba(0,0,0,1);font-family: 'Consolas'");
     ui->label_2->hide();
     ui->listWidget->setFlow(QListView::LeftToRight);
-
     ui->listWidget->setResizeMode(QListView::Adjust);
     ui->listWidget->setViewMode(QListView::IconMode);
     ui->listWidget->setMovement(QListView::Static);
@@ -29,6 +28,7 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     ui->listWidget->setIconSize(QSize(130, 130));
     ui->listWidget->setStyleSheet(" padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;font-family: 'Verdana';");
     this->constructFromPaths(paths);
+
 
     ui->listWidget->setAttribute(Qt::WA_NoMousePropagation,false);
     ui->listWidget->setParent(this);
@@ -156,7 +156,19 @@ void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
         }
     }
 }
-
+void FileSystemGridView::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+        QListWidgetItem *item=ui->listWidget->currentItem();
+        if(item!= nullptr){
+            on_listWidget_itemDoubleClicked(item);
+        }
+    }else if (event->key() == Qt::Key_Delete) {
+        QListWidgetItem *item=ui->listWidget->currentItem();
+        if(item!= nullptr){
+            deleteFile(this->state+"/"+item->text());
+        }
+    }
+}
 void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
     if(item->statusTip()=="folder"){
@@ -169,7 +181,6 @@ void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
         openFile(this->state+"/"+item->text());
     }
 }
-
 void FileSystemGridView::on_listWidget_itemSelectionChanged(){
     if(state!=mainFolder){
         return;
@@ -300,7 +311,6 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
 {
     QModelIndex t = ui->listWidget->indexAt(pos);
     if(t.row()<0){
-        ui->listWidget->clearSelection();
         if(this->state!=this->mainFolder){
             return;
         }
@@ -314,6 +324,8 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         else if( selectedAction->text() == "New file"){
             addFile();
         }
+        ui->listWidget->selectionModel()->clear();
+        ui->listWidget->clearSelection();
         return;
     }
     QListWidgetItem *item=ui->listWidget->currentItem();
