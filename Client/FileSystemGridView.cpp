@@ -18,7 +18,7 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
 
     ui->label->setStyleSheet("font: 18pt; ");
     ui->label->setText(this->mainFolder.split(".")[1]);
-    ui->label_2->setStyleSheet("font: 18pt; color: rgba(0,0,0,1);font-family: 'Consolas'");
+    ui->label_2->setStyleSheet("font: 18pt; color: rgba(0,0,0,1);font-family: 'Consolas';");
     ui->label_2->hide();
     ui->listWidget->setFlow(QListView::LeftToRight);
     ui->listWidget->setResizeMode(QListView::Adjust);
@@ -26,16 +26,22 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     ui->listWidget->setMovement(QListView::Static);
     ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget->setIconSize(QSize(130, 130));
-    ui->listWidget->setStyleSheet(" padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;font-family: 'Verdana';");
+    ui->listWidget->setStyleSheet("padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;font-family: 'Verdana';");
     this->constructFromPaths(paths);
 
-
-    ui->listWidget->setAttribute(Qt::WA_NoMousePropagation,false);
-    ui->listWidget->setParent(this);
-    this->installEventFilter(this);
-
+    ui->listWidget->viewport()->installEventFilter(this);
 }
-
+bool FileSystemGridView::eventFilter(QObject *target, QEvent *event)
+{
+    if(target == ui->listWidget->viewport()){
+        if(event->type() == QEvent::MouseButtonPress)
+        {
+            event->ignore();
+            this->clearSelection();
+        }
+    }
+    return QWidget::eventFilter(target, event);
+}
 FileSystemGridView::~FileSystemGridView()
 {
     delete ui;
@@ -311,7 +317,6 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
 {
     QModelIndex t = ui->listWidget->indexAt(pos);
     if(t.row()<0){
-        this->clearSelection();
         if(this->state!=this->mainFolder){
             return;
         }
