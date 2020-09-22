@@ -63,9 +63,11 @@ private:
     void setToolBarFolderGrid(QString folder);
     void changeInviteAction(bool state);
 
+
 signals:
 
 public slots:
+
     void loginFinished();
     void startSignIn();
     void backToLogIn();

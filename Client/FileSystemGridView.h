@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QListWidgetItem>
+#include <QlistWidget>
 #include <iostream>
 
 class MyListWidget: public QListWidget{
