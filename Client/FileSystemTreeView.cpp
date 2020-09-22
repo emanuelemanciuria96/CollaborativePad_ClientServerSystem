@@ -281,3 +281,11 @@ void FileSystemTreeView::inviteUser(QTreeWidgetItem *item) {
 FileSystemTreeView::~FileSystemTreeView() {
     delete root;
 }
+
+void FileSystemTreeView::mousePressEvent(QMouseEvent *ev) {
+    auto item = this->itemAt(ev->pos());
+    if( item == nullptr)
+        this->clearSelection();
+    QTreeView::mousePressEvent(ev);
+}
+
