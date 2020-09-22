@@ -250,8 +250,6 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
     }
 }
 
-
-
 void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
     qint32 siteId;
     QString formattedMessages;
@@ -335,8 +333,8 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::opn):{
-            std::shared_lock sl(db_op_mtx);
 
+            std::shared_lock sl(db_op_mtx);
             if( command->srcCommand(threadId) ) {
                 QString fileName = command->getArgs().front();
                 _sockets.attachSocket(fileName,_siteID,socket);
@@ -346,6 +344,14 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
                 operatingFileName = fileName;
 
+                auto shr = std::make_shared<UserInfo>(_siteID,UserInfo::conn_broad,_username);
+                DataPacket pkt( 0,0,DataPacket::user_info, shr);
+                std::cout<<"user: "+_username.toStdString()+" appena connesso al file "+fileName.toStdString()<<std::endl;
+                if(shr->obtainImage(threadId))
+                    _sockets.broadcast(fileName,_siteID,pkt);
+                else
+                    std::cout<<"Casino pazzesco, errore assolutamente da gestire!"<<std::endl;
+
             }else
                 std::cout << "opn command failed!" << std::endl;
 
@@ -353,14 +359,18 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::cls):{
-            DataPacket pkt(_siteID, 0, DataPacket::cursorPos);
+            DataPacket pkt1(_siteID, 0, DataPacket::cursorPos);
             auto symbol = Symbol();
-            pkt.setPayload(std::make_shared<CursorPosition>(symbol,-1,_siteID));
+            pkt1.setPayload(std::make_shared<CursorPosition>(symbol,-1,_siteID));
+
+            DataPacket pkt2(_siteID, 0, DataPacket::user_info);
+            pkt2.setPayload(std::make_shared<UserInfo>(_siteID,UserInfo::disconnect,_username));
 
             if( operatingFileName!="" ) {
                 _sockets.detachSocket(operatingFileName, _siteID);
                 msgHandler->submit(&NetworkServer::processClsCommand, command);
-                _sockets.broadcast(operatingFileName,_siteID,pkt);
+                _sockets.broadcast(operatingFileName,_siteID,pkt1);
+                _sockets.broadcast(operatingFileName,_siteID,pkt2);
                 operatingFileName = "";
 
             }else
@@ -478,6 +488,12 @@ void ServerThread::sendPacket(DataPacket packet){
             sendCursorPos(packet);
             break;
         }
+
+        case (DataPacket::user_info): {
+            sendUserInfo(packet);
+            break;
+        }
+
         default: {
             std::cout<<"Coglione c'è un errore"<<std::endl;
         }
@@ -572,8 +588,44 @@ void ServerThread::sendFileInfo(DataPacket& packet){
 
 }
 
+void ServerThread::sendUserInfo(DataPacket &packet) {
+
+    QDataStream out;
+    out.setDevice(socket.get());
+    out.setVersion(QDataStream::Qt_5_5);
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+
+    auto ptr = std::dynamic_pointer_cast<UserInfo>(packet.getPayload());
+
+    // quando devo inviare uno UserInfo controllo se è un broadcast o un acknowledgment
+    // se è broadcast devo ritornare un ACK
+    if(ptr->getType() == UserInfo::conn_broad){
+
+        auto shr = std::make_shared<UserInfo>(_siteID,UserInfo::conn_ack,_username);
+        DataPacket pkt( 0,0,DataPacket::user_info, shr);
+        if(shr->obtainImage(threadId)) {
+            QVector<qint32> vec;
+            vec.push_back(ptr->getSiteId());
+            _sockets.broadcast(vec, pkt);
+        }
+        else
+            std::cout<<"Casino pazzesco, errore assolutamente da gestire!"<<std::endl;
+    }
+
+    tmp << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage();
+
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
+    out << bytes<<packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage();
+    socket->waitForBytesWritten(-1);
+
+}
 
 void ServerThread::sendCursorPos(DataPacket &packet) {
+
     QDataStream out;
     out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
@@ -590,11 +642,13 @@ void ServerThread::sendCursorPos(DataPacket &packet) {
 
     tmp << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
         << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex();
+
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
     out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData()
         << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
         << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
+    socket->waitForBytesWritten(-1);
 
 }
 
@@ -660,10 +714,14 @@ void ServerThread::disconnected(){
         auto comm = std::make_shared<Command>(_siteID, Command::cls, vec);
         msgHandler->submit(&NetworkServer::processClsCommand,comm);
 
-        DataPacket packet(_siteID, 0, DataPacket::cursorPos);
+        DataPacket pkt1(_siteID, 0, DataPacket::cursorPos);
         auto symbol = Symbol();
-        packet.setPayload(std::make_shared<CursorPosition>(symbol,-1,_siteID));
-        _sockets.broadcast(operatingFileName,_siteID,packet);
+        pkt1.setPayload(std::make_shared<CursorPosition>(symbol,-1,_siteID));
+
+        DataPacket pkt2(_siteID, 0, DataPacket::user_info);
+        pkt2.setPayload(std::make_shared<UserInfo>(_siteID,UserInfo::disconnect,_username));
+        _sockets.broadcast(operatingFileName,_siteID,pkt1);
+        _sockets.broadcast(operatingFileName,_siteID,pkt2);
 
     }
 

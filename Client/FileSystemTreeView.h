@@ -30,11 +30,12 @@ public slots:
     void inviteUser(QTreeWidgetItem *item);
 
 signals:
-    void opnFileRequest(QString fileName);
-    void rmvFileRequest(QString fileName);
-    void newFileAdded(QString fileName);
-    void renFileRequest(QString before, QString after);
-    void fileNameEdited(QString &oldName, QString &newName);
+    void opnFileRequest(QString& fileName);
+    void rmvFileRequest(QString& fileName);
+    void newFileAdded(QString& fileName);
+    void newFileUpdateGrid(QVector<QString>& path);
+    void renFileRequest(QString& before, QString& after);
+    void fileNameEdited(QString& oldName, QString& newName);
     void inviteRequest(const QString& fileName);
 
 private:
@@ -49,6 +50,7 @@ private:
     QString previousName;
 
     void setupRightClickMenu();
+    virtual void mousePressEvent(QMouseEvent *ev);
     void insertFile();
     QTreeWidgetItem* addChild(QTreeWidgetItem *parent, QString name,QString description);
     bool isChild(QTreeWidgetItem *parent, QString &name);

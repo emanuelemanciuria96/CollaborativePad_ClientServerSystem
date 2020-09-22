@@ -20,6 +20,7 @@
 #include "SocketsPool.h"
 #include "Packet/CursorPosition.h"
 #include "MyExceptions/LoginException.h"
+#include "Packet/UserInfo.h"
 
 class ServerThread : public QThread{
 Q_OBJECT
@@ -64,12 +65,14 @@ private:
     void recvMessage(DataPacket& packet,QDataStream& in);
     void recvCommand(DataPacket& packet,QDataStream& in);
     void recvCursorPos(DataPacket& packet, QDataStream& in);
+    void recvUserInfo(DataPacket& packet, QDataStream& in);
 
     void sendLoginInfo(DataPacket& packet);
     void sendMessage(DataPacket& packet);
     void sendCommand(DataPacket& packet);
     void sendCursorPos(DataPacket& packet);
     void sendFileInfo(DataPacket& packet);
+    void sendUserInfo(DataPacket& packet);
 
     void setThreadId();
 

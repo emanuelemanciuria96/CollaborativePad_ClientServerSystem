@@ -23,6 +23,7 @@
 #include "Packet/LoginInfo.h"
 #include "Packet/Command.h"
 #include "Packet/CursorPosition.h"
+#include "Packet/UserInfo.h"
 #include <vector>
 #include <algorithm>
 #include <QtCore/QTimer>
@@ -48,6 +49,7 @@ private:
     void processMessages( StringMessages& strMess );
     void processLoginInfo( LoginInfo& logInf );
     void processFileInfo( FileInfo& filInf );
+    void processUserInfo( UserInfo& userInfo);
     void processCommand( Command& cmd );
     void processLsCommand( Command& cmd );
     void processRenCommand( Command &cmd );
@@ -61,10 +63,11 @@ private:
 public slots:
     void loginSlot(QString& username, QString& password);
     void process(DataPacket pkt);
-    void requireFile(QString fileName);
-    void requireFileRename(QString before,QString after);
-    void requireFileDelete(QString fileName);
-    void requireFileAdd(QString fileName);
+    void requireFile(QString& fileName);
+    void requireFileClose();
+    void requireFileRename(const QString& before,const QString& after);
+    void requireFileDelete(const QString& fileName);
+    void requireFileAdd(const QString& fileName);
     void deleteThread();
     void clearText();
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
@@ -78,9 +81,9 @@ public slots:
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void deleteAllText();
-    void filePathsArrived(const QVector<QString> &paths);
-    void fileNameEdited(QString &oldName, QString &newName);
-    void fileDeletion(QString &fileName);
+    void filePathsArrived(const QVector<QString>& paths);
+    void fileNameEdited(QString& oldName, QString& newName);
+    void fileDeletion(QString& fileName);
     void loginAchieved();
     void userInfoArrived(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void remoteCursorPosChanged(qint32 pos, qint32 siteId);
@@ -94,6 +97,7 @@ signals:
     void fsNameArrived(const QString& fsName);
     void setNumUsers(int n);
     void hideNumUsers();
+    void returnToGrid();
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );

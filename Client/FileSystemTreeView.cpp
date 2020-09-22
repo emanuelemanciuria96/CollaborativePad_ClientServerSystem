@@ -31,6 +31,7 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
     root->setIcon(0,home_dir);
     root->setExpanded(true);
 
+
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &FileSystemTreeView::itemDoubleClicked, this, &FileSystemTreeView::openFile);
     connect(this, &FileSystemTreeView::itemDoubleClicked, [this](QTreeWidgetItem *itm, int column){ previousName=itm->text(0);} );
@@ -116,7 +117,6 @@ QTreeWidgetItem* FileSystemTreeView::addChild(QTreeWidgetItem *parent, QString n
 }
 
 void FileSystemTreeView::constructFromPaths(const QVector<QString> &paths) {
-
     for(auto path: paths){
         auto strs = path.split("/");
         auto itm = root;
@@ -141,7 +141,7 @@ void FileSystemTreeView::constructFromPaths(const QVector<QString> &paths) {
         }
     }
 
-    this->sortItems(0,Qt::DescendingOrder);
+    this->sortItems(0,Qt::AscendingOrder);
 
 }
 
@@ -158,6 +158,7 @@ bool FileSystemTreeView::isChild(QTreeWidgetItem *parent, QString &name) {
 void FileSystemTreeView::insertFile(){
 
     QString defaultName = "new_file";
+    QVector<QString> vec;
 
     int i = 0;
     auto tmp = defaultName;
@@ -169,9 +170,13 @@ void FileSystemTreeView::insertFile(){
     model.insert( std::make_pair(defaultName,indexFromItem(newFile)) );
 
     emit newFileAdded(defaultName);
+    vec.push_back(defaultName);
+    emit newFileUpdateGrid(vec);
 
     previousName = defaultName;
     this->editItem(newFile,0);
+
+    this->sortItems(0,Qt::AscendingOrder);
 
 }
 
@@ -183,7 +188,6 @@ void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
             path = item->parent()->text(0)+"/"+item->text(0);
         else
             path = item->text(0);
-
         emit opnFileRequest(path);
     }
 
@@ -194,8 +198,9 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
     if( !isRenaming ) return;
 
     QString actualName = item->text(0);
+    QRegularExpression expr(R"(^(?!\.)(?!com[0-9]$)(?!con$)(?!lpt[0-9]$)(?!nul$)(?!prn$)[^\|\*\?\\:<>/$"]*[^\.\|\*\?\\:<>/$"]+$)");
 
-    if(actualName == ""){
+    if(!expr.match(actualName).hasMatch() || actualName.length() > 20 || actualName.isEmpty() || model.find(actualName) != model.end()) {
         isRenaming = false;
         item->setText(0,previousName);
         isRenaming = true;
@@ -214,8 +219,9 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
     model.erase(node);
     emit fileNameEdited(previousName, actualName);
 
-}
+    this->sortItems(0,Qt::AscendingOrder);
 
+}
 
 void FileSystemTreeView::removeFile(QTreeWidgetItem *item) {
 
@@ -252,7 +258,6 @@ void FileSystemTreeView::editFileName(QString &oldName, QString &newName) {
 
     model.insert(std::make_pair(newName,node->second));
     model.erase(node);
-
 }
 
 void FileSystemTreeView::remoteFileDeletion(QString &fileName) {
@@ -262,12 +267,11 @@ void FileSystemTreeView::remoteFileDeletion(QString &fileName) {
         return;
 
     auto item = itemFromIndex(i->second);
-    auto parent = item->parent();;
+    auto parent = item->parent();
     parent->removeChild(item);
     if( parent->childCount()==0 && parent!=root )
         parent->parent()->removeChild(parent);
     model.erase(fileName);
-
 }
 
 void FileSystemTreeView::inviteUser(QTreeWidgetItem *item) {
@@ -277,3 +281,11 @@ void FileSystemTreeView::inviteUser(QTreeWidgetItem *item) {
 FileSystemTreeView::~FileSystemTreeView() {
     delete root;
 }
+
+void FileSystemTreeView::mousePressEvent(QMouseEvent *ev) {
+    auto item = this->itemAt(ev->pos());
+    if( item == nullptr)
+        this->clearSelection();
+    QTreeView::mousePressEvent(ev);
+}
+

@@ -209,6 +209,10 @@ void SharedEditor::process(DataPacket pkt) {
             if(isFileOpened)
                 processCursorPos(*std::dynamic_pointer_cast<CursorPosition>(pkt.getPayload()));
             break;
+        case DataPacket::user_info:
+            if(isFileOpened)
+                processUserInfo(*std::dynamic_pointer_cast<UserInfo>(pkt.getPayload()) );
+            break;
         default:
             throw std::exception();
     }
@@ -359,6 +363,17 @@ void SharedEditor::processMessages(StringMessages &strMess) {
 
 }
 
+void SharedEditor::processUserInfo(UserInfo &userInfo) {
+    if(userInfo.getType() == UserInfo::disconnect )
+        std::cout<<"si e' disconnesso dal file lo user:\n"
+                 <<" - site ID:"<<userInfo.getSiteId()<<"\n"
+                 <<" - user:"<<userInfo.getUsername().toStdString()<<std::endl;
+    else
+        std::cout<<"sta partecipando al file lo user:\n"
+                <<" - site ID:"<<userInfo.getSiteId()<<"\n"
+                <<" - user:"<<userInfo.getUsername().toStdString()<<std::endl;
+}
+
 void SharedEditor::processFileInfo(FileInfo &filInf) {
     switch ( filInf.getFileInfo()  ){
         case FileInfo::start: {
@@ -486,7 +501,7 @@ void SharedEditor::clearText(){
     emit deleteAllText();
 }
 
-void SharedEditor::requireFile(QString fileName) {
+void SharedEditor::requireFile(QString& fileName) {
 
     if( fileName.split("/").size()==1 )
         fileName = _user+"/"+fileName;
@@ -500,7 +515,6 @@ void SharedEditor::requireFile(QString fileName) {
         packet.setPayload(cmd);
 
         closeFile();
-
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
     }
@@ -517,7 +531,7 @@ void SharedEditor::requireFile(QString fileName) {
     isFileOpened = false; // da questo momento fino all'arrivo del FileInfo deve stare a false
     _counter = 0;
 
-    QVector<QString> vec = {std::move(fileName)};
+    QVector<QString> vec = {fileName};
     auto cmd = std::make_shared<Command>(_siteId,Command::opn,vec);
     DataPacket packet(_siteId,0,DataPacket::command);
     packet.setPayload(cmd);
@@ -527,10 +541,29 @@ void SharedEditor::requireFile(QString fileName) {
 
 }
 
-void SharedEditor::requireFileAdd(QString fileName) {
+void SharedEditor::requireFileClose() {
 
-    fileName = _user+"/"+fileName;
-    QVector<QString> vec = {std::move(fileName)};
+    if(!isFileOpened) return;
+
+    if( fileOpened.split("/").size()==1 )
+        fileOpened = _user+"/"+fileOpened;
+
+    QVector<QString> vec = {fileOpened};
+    auto cmd = std::make_shared<Command>(_siteId,Command::cls,vec);
+    DataPacket packet(_siteId,0,DataPacket::command);
+    packet.setPayload(cmd);
+
+    closeFile();
+
+    int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
+}
+
+void SharedEditor::requireFileAdd(const QString& fileName) {
+
+    QString file = _user+"/"+fileName;
+    QVector<QString> vec = {std::move(file)};
 
     auto cmd = std::make_shared<Command>(_siteId,Command::sv,vec);
     DataPacket packet(_siteId,0,DataPacket::command);
@@ -540,7 +573,10 @@ void SharedEditor::requireFileAdd(QString fileName) {
 
 }
 
-void SharedEditor::requireFileRename(QString before, QString after) {
+void SharedEditor::requireFileRename(const QString& oldFileName, const QString& newFileName) {
+
+    QString before=oldFileName;
+    QString after=newFileName;
 
     if( before.split("/").size()==1  ) {
         before = _user + "/" + before;
@@ -558,15 +594,17 @@ void SharedEditor::requireFileRename(QString before, QString after) {
 
 }
 
-void SharedEditor::requireFileDelete(QString fileName) {
+void SharedEditor::requireFileDelete(const QString& fileName) {
+    QString file = fileName;
 
-    if( fileName.split("/").size()==1  )
-        fileName = _user + "/" + fileName;
+    if( file.split("/").size()==1  )
+        file = _user + "/" + file;
 
-    if(fileOpened == fileName)
+    if(fileOpened == file) {
+        emit returnToGrid();
         closeFile();
-
-    QVector<QString> vec = {std::move(fileName)};
+    }
+    QVector<QString> vec = {std::move(file)};
 
     auto cmd = std::make_shared<Command>(_siteId,Command::rm,vec);
     DataPacket packet(_siteId,0,DataPacket::command);
@@ -676,6 +714,5 @@ void SharedEditor::closeFile() {
         _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
     }
     emit hideNumUsers();
-
 }
 

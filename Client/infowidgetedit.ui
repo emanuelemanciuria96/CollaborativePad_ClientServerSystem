@@ -1,114 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>InfoWidgetEdit</class>
- <widget class="QWidget" name="InfoWidgetEdit">
+ <widget class="QMainWindow" name="InfoWidgetEdit">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>319</width>
-    <height>241</height>
+    <width>418</width>
+    <height>203</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>InfoWidgetEdit</string>
+   <string>Edit user info</string>
   </property>
-  <widget class="QWidget" name="verticalLayoutWidget_2">
-   <property name="geometry">
-    <rect>
-     <x>9</x>
-     <y>9</y>
-     <width>301</width>
-     <height>221</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QLabel" name="immagine">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>100</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>100</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="imageLabel">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>100</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>100</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="name">
+            <property name="text">
+             <string>Name</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="editName">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="email">
+            <property name="text">
+             <string>Email</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="editEmail"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="errorLabel">
+            <property name="styleSheet">
+             <string notr="true">color: red</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <property name="leftMargin">
-         <number>10</number>
-        </property>
-        <property name="topMargin">
-         <number>10</number>
-        </property>
-        <property name="rightMargin">
-         <number>10</number>
-        </property>
-        <property name="bottomMargin">
-         <number>10</number>
-        </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QLabel" name="nome">
+         <widget class="QPushButton" name="changeImageButton">
           <property name="text">
-           <string>Nome</string>
+           <string>Change image</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="editname">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="email">
+         <widget class="QPushButton" name="saveButton">
           <property name="text">
-           <string>Email</string>
+           <string>Save</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="editemail"/>
+         <widget class="QPushButton" name="cancelButton">
+          <property name="text">
+           <string>Cancel</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
      </layout>
-    </item>
-    <item>
-     <widget class="QPushButton" name="cambiaimmagine">
-      <property name="text">
-       <string>Cambia immagine</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="salva">
-      <property name="text">
-       <string>Salva</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="annulla">
-      <property name="text">
-       <string>Annulla</string>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>

@@ -10,6 +10,7 @@
 #include "EditorGUI.h"
 #include "LoginDialog.h"
 #include "FileSystemTreeView.h"
+#include "FileSystemGridView.h"
 #include "InfoWidget.h"
 #include "InfoWidgetEdit.h"
 #include "SignInWidget.h"
@@ -27,24 +28,29 @@ public:
     MainWindow(SharedEditor* shEditor, QWidget* parent = 0);
 private:
     QDockWidget *dockWidgetTree;
-    QWidget *widgetEditor;
-    QWidget *widgetInfoEditC;
     FileSystemTreeView *treeView;
+    FileSystemGridView *gridView;
     EditorGUI *editor;
     LoginDialog *loginDialog;
     QStatusBar* statusBar;
     QToolBar* toolBar;
     InfoWidget* infoWidget;
-    InfoWidgetEdit* infoWidgetEdit;
     QStackedWidget* centralWidget;
     QAction* highlightAction;
+    QAction* closeAction;
+    QAction* addAction;
+    QAction* backAction;
+    QAction* inviteAction;
     QAction* treeShowAction;
+    QAction* pdfAction;
+    QAction* uriAction;
+    QAction* inviteListAction;
+    QAction* userInfoAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
     InviteUserWidget* inviteUserWidget;
     UriWidget* uriWidget;
     QPixmap bkgnd;
-    QLabel *numUsers;
     UsersListView *usersView;
     QDockWidget *dockWidgetUsers;
     UsersListModel *usersModel;
@@ -53,12 +59,15 @@ private:
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
     void treeFileSystemSettings();
-    void infoWidgetsSettings();
-    void highlightActionSetup();
+    void gridFileSystemSettings();
     void signInWidgetSetup();
     void resizeEvent(QResizeEvent *evt) override;
     void setStyleSheet();
-    void createMenus();
+    void setToolBar();
+    void setToolBarEditor();
+    void setToolBarGrid();
+    void setToolBarFolderGrid(QString folder);
+    void changeInviteAction(bool state);
     void setUsersList();
     void setMainPalette();
 signals:
@@ -67,14 +76,15 @@ public slots:
     void loginFinished();
     void startSignIn();
     void backToLogIn();
+    void opnFileGrid(QString fileName);
+    void clsFile();
     void openAddUser(const QString& fileName);
     void showHideTreeDock(bool checked=false){
         if(dockWidgetTree->isHidden())
             dockWidgetTree->show();
         else dockWidgetTree->hide();
     }
-    void setNumUsers(int n);
-    void hideNumUsers();
+    void changeToolbarProfileImage(const QPixmap& image);
 };
 
 

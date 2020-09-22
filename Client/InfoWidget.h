@@ -10,7 +10,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class InfoWidget; }
 QT_END_NAMESPACE
 
-class InfoWidget : public QWidget
+class InfoWidget : public QMainWindow
 {
     Q_OBJECT
 
@@ -32,5 +32,6 @@ public slots:
 
 signals:
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
+    void imageChanged(const QPixmap& image);
 };
 #endif // INFOWIDGET_H

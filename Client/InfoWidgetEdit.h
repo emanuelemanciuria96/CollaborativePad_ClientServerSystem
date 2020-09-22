@@ -7,7 +7,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class InfoWidgetEdit; }
 QT_END_NAMESPACE
 
-class InfoWidgetEdit : public QWidget
+class InfoWidgetEdit : public QMainWindow
 {
     Q_OBJECT
 
@@ -28,6 +28,5 @@ public slots:
 
 signals:
     void updateInfo(QPixmap image, QString name, QString email);
-    void backToLogIn();
 };
 #endif // INFOWIDGETEDIT_H

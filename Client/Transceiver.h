@@ -58,6 +58,7 @@ private:
 
     void recvLoginInfo(DataPacket& pkt, QDataStream& in);
     void recvFileInfo(DataPacket& pkt, QDataStream& in);
+    void recvUserInfo(DataPacket& pkt, QDataStream& in);
     void recvMessage(DataPacket& pkt,QDataStream& in);
 
     void rollBack();
