@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QListWidgetItem>
+#include <QlistWidget>
+
 
 namespace Ui {class FileSystemGridView;}
 

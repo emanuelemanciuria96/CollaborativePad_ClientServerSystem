@@ -13,7 +13,6 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
         QWidget(parent),
         ui(new Ui::FileSystemGridView) {
 
-
     ui->setupUi(this);
     ui->label->setStyleSheet("font: 18pt; ");
     ui->label->setText(this->mainFolder.split(".")[1]);
@@ -294,10 +293,10 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
 {
     QModelIndex t = ui->listWidget->indexAt(pos);
     if(t.row()<0){
+        ui->listWidget->clearSelection();
         if(this->state!=this->mainFolder){
             return;
         }
-        ui->listWidget->clearSelection();
         emit canInvite(false);
         QPoint globalPos = ui->listWidget->mapToGlobal(pos);
         QMenu* myMenu=new QMenu();
