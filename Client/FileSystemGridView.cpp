@@ -1,4 +1,4 @@
-#include "filesystemgridview.h"
+#include "FileSystemGridView.h"
 #include "./ui_filesystemgridview.h"
 #include <QGridLayout>
 #include <QListWidgetItem>
@@ -8,6 +8,8 @@
 #include <QInputDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QMessageBox>
+#include <QMouseEvent>
+#include <iostream>
 
 FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &paths) :
         QWidget(parent),
@@ -28,6 +30,11 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     ui->listWidget->setIconSize(QSize(130, 130));
     ui->listWidget->setStyleSheet(" padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;font-family: 'Verdana';");
     this->constructFromPaths(paths);
+
+    ui->listWidget->setAttribute(Qt::WA_NoMousePropagation,false);
+    ui->listWidget->setParent(this);
+    this->installEventFilter(this);
+
 }
 
 FileSystemGridView::~FileSystemGridView()
@@ -587,6 +594,3 @@ void FileSystemGridView::remoteRenameFile(const QString& oldFile,const QString& 
         }
     }
 }
-
-
-

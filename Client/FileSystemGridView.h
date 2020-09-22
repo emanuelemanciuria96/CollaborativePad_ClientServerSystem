@@ -3,6 +3,18 @@
 
 #include <QWidget>
 #include <QListWidgetItem>
+#include <iostream>
+
+class MyListWidget: public QListWidget{
+    Q_OBJECT
+public:
+    MyListWidget(QWidget *parent = nullptr):QListWidget(parent){}
+
+protected:
+    virtual void mousePressEvent(QMouseEvent *ev){
+        std::cout<<"mouse is pressed"<<std::endl;
+    }
+};
 
 namespace Ui {class FileSystemGridView;}
 
@@ -59,6 +71,7 @@ private:
     QIcon* textIcon=new QIcon("./icons/grid_text_icon"+this->format);
     QIcon* folderIcon=new QIcon("./icons/grid_folder_icon"+this->format);
     QIcon* backIcon=new QIcon("./icons/grid_back_icon"+this->format);
+
 
 };
 

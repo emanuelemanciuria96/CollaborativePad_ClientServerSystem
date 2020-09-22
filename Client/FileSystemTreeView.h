@@ -51,6 +51,7 @@ private:
 
     void setupRightClickMenu();
     virtual void mousePressEvent(QMouseEvent *ev);
+    virtual void keyPressEvent(QKeyEvent *ev);
     void insertFile();
     QTreeWidgetItem* addChild(QTreeWidgetItem *parent, QString name,QString description);
     bool isChild(QTreeWidgetItem *parent, QString &name);

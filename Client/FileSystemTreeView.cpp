@@ -289,3 +289,20 @@ void FileSystemTreeView::mousePressEvent(QMouseEvent *ev) {
     QTreeView::mousePressEvent(ev);
 }
 
+void FileSystemTreeView::keyPressEvent(QKeyEvent *ev) {
+    if( ev->key() == Qt::Key_Delete){
+        auto items = this->selectedItems();
+        for(auto i : items) {
+            removeFile(i);
+        }
+    }
+
+    if(ev->key() == Qt::Key_Return){
+
+        auto items = this->selectedItems();
+        if( items.size() == 1 )
+            openFile(items.first(),0);
+    }
+    QTreeView::keyPressEvent(ev);
+}
+
