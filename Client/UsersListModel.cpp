@@ -7,9 +7,9 @@
 #include <utility>
 
 UsersListModel::UsersListModel(QObject *parent) : QAbstractListModel(parent) {
-    addUser(1, "Piero", QIcon("./images/profile.jpg"));
-    addUser(2, "Giacomo", QIcon("./images/profile.jpg"));
-    removeUser(2);
+//    addUser(1, "Piero", QIcon("./images/profile.jpg"));
+//    addUser(2, "Giacomo", QIcon("./images/profile.jpg"));
+//    removeUser(2);
 }
 
 int UsersListModel::rowCount(const QModelIndex &parent) const {
@@ -19,23 +19,30 @@ int UsersListModel::rowCount(const QModelIndex &parent) const {
 QVariant UsersListModel::data(const QModelIndex &index, int role) const {
     if(index.isValid()){
         if(role == Qt::DisplayRole)
-            return mData[index.row()].name;
-        if(role == Qt::DecorationRole)
-            return mData[index.row()].icon;
+            return mData[index.row()].getUsername();
+        if(role == Qt::DecorationRole) {
+            if (mData[index.row()].getImage().isNull())
+                return QIcon("./images/profile.jpg");
+            else
+                return mData[index.row()].getImage();
+        }
+        if(role == Qt::BackgroundRole)
+            return QColor(RemoteCursor::getColor(mData[index.row()].getSiteId()));
+
     }
     return QVariant();
 }
 
 
-void UsersListModel::addUser(qint32 siteId, QString name, QIcon icon) {
+void UsersListModel::addUser(const UserInfo& user) {
     beginInsertRows(QModelIndex(),mData.size(),mData.size());
-    mData.append(User(siteId, std::move(name), std::move(icon)));
+    mData.append(user);
     endInsertRows();
 }
 
-void UsersListModel::removeUser(qint32 siteId) {
+void UsersListModel::removeUser(const UserInfo& user) {
     for(auto i = 0; i<mData.size(); i++) {
-        if(mData[i].siteId==siteId) {
+        if(mData[i].getSiteId()==user.getSiteId()) {
             beginRemoveRows(QModelIndex(), i, i);
             mData.removeAt(i);
             endRemoveRows();

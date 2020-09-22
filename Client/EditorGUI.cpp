@@ -137,6 +137,9 @@ void EditorGUI::setModel(SharedEditor* _model) {
 //chiamata quando si effettuano modifiche sul editor
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i = 0;
+    if(model->getHighlighting()){
+        textEdit->setCurrentCharFormat(getFormat(model->getSiteId()));
+    }
     if (!signalBlocker) {
         myCursorPosUpdateBlocker = true;
         curBlockerTimer->start(500);
@@ -250,6 +253,7 @@ void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos) {
 
 RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     RemoteCursor *cursor;
+    /// da gestire con una eccezione
     if(siteId < 0)
         return nullptr;
 //    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
@@ -301,7 +305,7 @@ void EditorGUI::drawLabel(RemoteCursor *cursor){
 
         cursor->labelName->setParent(textEdit);
         cursor->labelName->show();
-        cursor->labelName->move( std::min(curRect.left()+70,  int(textEdit->document()->pageSize().width()+65)), curRect.top() + 60);
+        cursor->labelName->move( std::min(curRect.left()+5,  int(textEdit->document()->pageSize().width())), curRect.top() -5);
         cursor->labelTimer->setParent(textEdit);
         cursor->labelTimer->start(5000);
     }

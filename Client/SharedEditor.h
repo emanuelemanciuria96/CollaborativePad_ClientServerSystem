@@ -27,7 +27,7 @@
 #include <vector>
 #include <algorithm>
 #include <QtCore/QTimer>
-
+#include <QIcon>
 
 class SharedEditor: public QObject {
     Q_OBJECT
@@ -98,6 +98,9 @@ signals:
     void setNumUsers(int n);
     void hideNumUsers();
     void returnToGrid();
+    void addUser(UserInfo user);
+    void removeUser(UserInfo user);
+
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );

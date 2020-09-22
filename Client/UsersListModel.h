@@ -6,20 +6,21 @@
 #define CLIENT_USERSLISTMODEL_H
 
 #include <QAbstractListModel>
-#include "User.h"
+#include "Packet/UserInfo.h"
 #include <QIcon>
+#include "RemoteCursor.h"
 
 class UsersListModel : public QAbstractListModel {
     Q_OBJECT
 private:
-    QList< User> mData;
+    QList<UserInfo> mData;
 public:
     explicit UsersListModel(QObject *parent = nullptr);
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;
 public slots:
-    void removeUser(qint32 siteId);
-    void addUser(qint32 siteId, QString name, QIcon icon);
+    void removeUser(const UserInfo& user);
+    void addUser(const UserInfo& user);
 };
 
 

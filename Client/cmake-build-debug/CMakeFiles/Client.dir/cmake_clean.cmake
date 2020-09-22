@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Client.dir/AddUserWidget.cpp.obj"
   "CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj"
   "CMakeFiles/Client.dir/EditorGUI.cpp.obj"
+  "CMakeFiles/Client.dir/FileSystemGridView.cpp.obj"
   "CMakeFiles/Client.dir/FileSystemTreeView.cpp.obj"
   "CMakeFiles/Client.dir/InfoWidget.cpp.obj"
   "CMakeFiles/Client.dir/InfoWidgetEdit.cpp.obj"

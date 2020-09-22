@@ -55,6 +55,7 @@ private:
     QDockWidget *dockWidgetUsers;
     UsersListModel *usersModel;
     QPalette mainPalette;
+    QLabel *numUsers;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -79,12 +80,9 @@ public slots:
     void opnFileGrid(QString fileName);
     void clsFile();
     void openAddUser(const QString& fileName);
-    void showHideTreeDock(bool checked=false){
-        if(dockWidgetTree->isHidden())
-            dockWidgetTree->show();
-        else dockWidgetTree->hide();
-    }
     void changeToolbarProfileImage(const QPixmap& image);
+    void setNumUsers(int n);
+    void hideNumUsers();
 };
 
 

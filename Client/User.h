@@ -13,19 +13,22 @@ class User {
 public:
     qint32 siteId;
     QString name;
-    QIcon icon;
-    User() : siteId(-1), name(QString()), icon("./images/profile.jpg"){};
+    QIcon icon = QIcon("./images/profile.jpg");
+    User() : siteId(-1), name(QString()){};
     User(User&& user)   noexcept : siteId(user.siteId), name(std::move(user.name)), icon(std::move(user.icon)) {};
     User(const User& user) = default;
     User& operator=(const User& user){
         if(this!=&user){
             siteId = user.siteId;
             name = user.siteId;
-            icon = user.icon;
+            if(!user.icon.isNull())
+                icon = user.icon;
         }
         return *this;
     };
-    User(qint32 siteId, QString  name, QIcon icon) : siteId(siteId), name(std::move(name)), icon(std::move(icon)){};
+    User(qint32 siteId, QString  name, QIcon icon) : siteId(siteId), name(std::move(name)), icon(std::move(icon)){
+
+    };
 };
 
 

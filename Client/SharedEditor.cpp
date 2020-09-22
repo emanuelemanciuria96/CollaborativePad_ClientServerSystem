@@ -364,14 +364,18 @@ void SharedEditor::processMessages(StringMessages &strMess) {
 }
 
 void SharedEditor::processUserInfo(UserInfo &userInfo) {
-    if(userInfo.getType() == UserInfo::disconnect )
-        std::cout<<"si e' disconnesso dal file lo user:\n"
-                 <<" - site ID:"<<userInfo.getSiteId()<<"\n"
-                 <<" - user:"<<userInfo.getUsername().toStdString()<<std::endl;
-    else
-        std::cout<<"sta partecipando al file lo user:\n"
-                <<" - site ID:"<<userInfo.getSiteId()<<"\n"
-                <<" - user:"<<userInfo.getUsername().toStdString()<<std::endl;
+    if(userInfo.getType() == UserInfo::disconnect ) {
+        std::cout << "si e' disconnesso dal file lo user:\n"
+                  << " - site ID:" << userInfo.getSiteId() << "\n"
+                  << " - user:" << userInfo.getUsername().toStdString() << std::endl;
+        emit removeUser(userInfo);
+    }
+    else {
+        std::cout << "sta partecipando al file lo user:\n"
+                  << " - site ID:" << userInfo.getSiteId() << "\n"
+                  << " - user:" << userInfo.getUsername().toStdString() << std::endl;
+        emit addUser(userInfo);
+    }
 }
 
 void SharedEditor::processFileInfo(FileInfo &filInf) {

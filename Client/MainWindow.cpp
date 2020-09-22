@@ -131,6 +131,12 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(inviteListAction, &QAction::triggered, inviteUserWidget, &QWidget::show);
     connect(userInfoAction, &QAction::triggered, infoWidget, &QWidget::show);
     connect(infoWidget, &InfoWidget::imageChanged, this, &MainWindow::changeToolbarProfileImage);
+    connect(editor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
+    connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
+    connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::hideNumUsers);
+    connect(shEditor, &SharedEditor::addUser, usersModel, &UsersListModel::addUser);
+    connect(shEditor, &SharedEditor::removeUser, usersModel, &UsersListModel::removeUser);
+
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -140,18 +146,13 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     centralWidget->addWidget(widgetSignIn);
     centralWidget->addWidget(gridView);
 
-
-//    this->setCentralWidget(widgetLogin);
 }
 
 void MainWindow::loginFinished() {
     centralWidget->setCurrentWidget(gridView);
-    //centralWidget->setCurrentWidget(editor);
-    //widgetEditor->hide();
     toolBar->show();
     gridView->show();
     dockWidgetUsers->show();
-    createMenus();
     auto p = QPalette();
     p.setBrush(QPalette::Window, QBrush(QColor("lightgray")) );
     centralWidget->setPalette(p);
@@ -187,35 +188,7 @@ void MainWindow::clsFile() {
     }
 }
 void MainWindow::loginSettings() {
-//    widgetLogin = new QWidget(this);
-//    widgetLogin->setLayout( new QGridLayout(widgetLogin) );
-//
-//    auto *boxLogin = new QGroupBox(widgetLogin);
     loginDialog = new LoginDialog(this);
-//    boxLogin->setLayout(new QVBoxLayout());
-
-    // pinting box
-//    QRgb rgbColor = loginBackground.pixel(0,0);
-
-//    QPalette p2{};
-//    QLinearGradient grad(0,50,0,0);
-//    grad.setColorAt(0,QColor(rgbColor));
-//    grad.setColorAt(1,Qt::lightGray);
-//    QBrush brush2(grad);
-//    p2.setBrush(QPalette::Window,brush2);
-//    boxLogin->setAutoFillBackground(true);
-//    boxLogin->setPalette(p2);
-
-    /*boxLogin->setStyleSheet("QGroupBox {border: 0px;"
-                            "border-radius: 15px;"
-                            "margin-top: 1ex;}");
-                            */
-//    boxLogin->setTitle("login");
-    //boxLogin->layout()->addWidget(new QLabel("Please insert your user and password in the following boxes",widgetLogin));
-//    boxLogin->layout()->addWidget(loginDialog);
-
-//    dynamic_cast<QGridLayout*>(widgetLogin->layout())->addWidget(boxLogin,1,1,4,1,Qt::AlignCenter);
-
 }
 
 
@@ -380,35 +353,6 @@ void MainWindow::signInWidgetSetup() {
 
 void MainWindow::resizeEvent(QResizeEvent *evt) {
     QWidget::resizeEvent(evt);
-    if(centralWidget->currentWidget() != editor) {
-        QPalette p = palette();
-        p.setBrush(QPalette::Window, bkgnd.scaled(centralWidget->size(), Qt::KeepAspectRatioByExpanding));
-
-        QLinearGradient grad(500, 500, 1000, 1000);
-        grad.setColorAt(0, QColor("#4b71e3"));
-        grad.setColorAt(1, QColor("#87b5ff"));
-        QBrush brush2(grad);
-//    p.setBrush(QPalette::Window,brush2);
-
-        centralWidget->setAutoFillBackground(true);
-        centralWidget->setPalette(p);
-    }
-
-    dockWidgetTree->setMaximumWidth(this->size().width() / 5);
-    dockWidgetTree->setMinimumWidth(this->size().width() / 5);
-//    if(centralWidget->currentWidget() != editor) {
-//        QPalette p = palette();
-//        p.setBrush(QPalette::Window, bkgnd.scaled(centralWidget->size(), Qt::KeepAspectRatioByExpanding));
-//
-//        QLinearGradient grad(500, 500, 1000, 1000);
-//        grad.setColorAt(0, QColor("#4b71e3"));
-//        grad.setColorAt(1, QColor("#87b5ff"));
-//        QBrush brush2(grad);
-////    p.setBrush(QPalette::Window,brush2);
-//
-//        centralWidget->setAutoFillBackground(true);
-//        centralWidget->setPalette(p);
-//    }
     dockWidgetTree->setMaximumWidth(this->size().width() / 4);
     dockWidgetTree->setMinimumWidth(this->size().width() / 4);
 
@@ -421,9 +365,6 @@ void MainWindow::setStyleSheet() {
 //                        "QPushButton:pressed {background-color: lightblue}");
 
 //    "QLabel {color: white; font: 14pt}");
-
-
-}
 
 
 }
@@ -472,4 +413,16 @@ void MainWindow::setMainPalette() {
 
 
 
+}
+
+void MainWindow::setNumUsers(int n) {
+    auto string = QString("Users online: ");
+    string.append(QString::number(n));
+    numUsers->setText(string);
+    if(numUsers->isHidden())
+        numUsers->show();
+}
+
+void MainWindow::hideNumUsers() {
+    numUsers->hide();
 }
