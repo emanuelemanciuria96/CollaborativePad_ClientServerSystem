@@ -62,6 +62,7 @@ private:
     QString mainFolder="-.My files ";
     QString state=this->mainFolder;
     void itemProperties(QListWidgetItem *item);
+    void clearSelection();
     QString format=".png";
     Ui::FileSystemGridView *ui;
     void reload(const QString folder,bool isFolder,bool changeToolbar);

@@ -311,10 +311,10 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
 {
     QModelIndex t = ui->listWidget->indexAt(pos);
     if(t.row()<0){
+        this->clearSelection();
         if(this->state!=this->mainFolder){
             return;
         }
-        emit canInvite(false);
         QPoint globalPos = ui->listWidget->mapToGlobal(pos);
         QMenu* myMenu=new QMenu();
 
@@ -324,8 +324,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         else if( selectedAction->text() == "New file"){
             addFile();
         }
-        ui->listWidget->selectionModel()->clear();
-        ui->listWidget->clearSelection();
+        this->clearSelection();
         return;
     }
     QListWidgetItem *item=ui->listWidget->currentItem();
@@ -604,4 +603,10 @@ void FileSystemGridView::remoteRenameFile(const QString& oldFile,const QString& 
             }
         }
     }
+}
+
+void FileSystemGridView::clearSelection() {
+    ui->listWidget->selectionModel()->clear();
+    ui->listWidget->clearSelection();
+    emit canInvite(false);
 }
