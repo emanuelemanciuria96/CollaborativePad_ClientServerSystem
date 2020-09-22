@@ -41,6 +41,10 @@ void EditorGUI::setUpGUI() {
     textEdit->setMaximumWidth(880);
 
     connect(this, SIGNAL(clear()), textEdit, SLOT(clear()));
+    auto palette = this->palette();
+    palette.setColor(QPalette::Window,QColor("lightgray"));
+    palette.setColor(QPalette::Base,QColor("white"));
+    setPalette(palette);
 
     textEdit->setFocus();
     setCurrentFileName(QString());

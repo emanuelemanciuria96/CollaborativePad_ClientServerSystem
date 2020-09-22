@@ -17,7 +17,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     setWindowTitle("Shared Editor");
     statusBar = new QStatusBar(this);
     numUsers = new QLabel(statusBar);
-    numUsers->setText("Users connected: 0");
+    numUsers->setText("User connected: 0");
     statusBar->addPermanentWidget(numUsers);
     numUsers->hide();
 
@@ -44,6 +44,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     highlightActionSetup();
     signInWidgetSetup();
     setUsersList();
+
+    setMainPalette();
+    qApp->setPalette(mainPalette);
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
@@ -111,6 +114,7 @@ void MainWindow::loginFinished() {
     centralWidget->setCurrentWidget(editor);
     dockWidgetTree->show();
     toolBar->show();
+    dockWidgetUsers->show();
     createMenus();
     auto p = QPalette();
     p.setBrush(QPalette::Window, QBrush(QColor("lightgray")) );
@@ -246,29 +250,29 @@ void MainWindow::createMenus() {
 
 void MainWindow::resizeEvent(QResizeEvent *evt) {
     QWidget::resizeEvent(evt);
-    if(centralWidget->currentWidget() != editor) {
-        QPalette p = palette();
-        p.setBrush(QPalette::Window, bkgnd.scaled(centralWidget->size(), Qt::KeepAspectRatioByExpanding));
-
-        QLinearGradient grad(500, 500, 1000, 1000);
-        grad.setColorAt(0, QColor("#4b71e3"));
-        grad.setColorAt(1, QColor("#87b5ff"));
-        QBrush brush2(grad);
-//    p.setBrush(QPalette::Window,brush2);
-
-        centralWidget->setAutoFillBackground(true);
-        centralWidget->setPalette(p);
-    }
+//    if(centralWidget->currentWidget() != editor) {
+//        QPalette p = palette();
+//        p.setBrush(QPalette::Window, bkgnd.scaled(centralWidget->size(), Qt::KeepAspectRatioByExpanding));
+//
+//        QLinearGradient grad(500, 500, 1000, 1000);
+//        grad.setColorAt(0, QColor("#4b71e3"));
+//        grad.setColorAt(1, QColor("#87b5ff"));
+//        QBrush brush2(grad);
+////    p.setBrush(QPalette::Window,brush2);
+//
+//        centralWidget->setAutoFillBackground(true);
+//        centralWidget->setPalette(p);
+//    }
     dockWidgetTree->setMaximumWidth(this->size().width() / 4);
     dockWidgetTree->setMinimumWidth(this->size().width() / 4);
 
 }
 
 void MainWindow::setStyleSheet() {
-    qApp->setStyleSheet("QWidget {font-family: helvetica}"
-                        "QPushButton {border-style: solid; border-width: 2px; border-color: #8fc1ed; border-radius: 12px; "
-                        "background-color: white; min-width: 4em; padding: 3px; padding-left: 10px; padding-right:10px; font: 9pt; color: #182c3d;}"
-                        "QPushButton:pressed {background-color: lightblue}");
+//    qApp->setStyleSheet("QWidget {font-family: helvetica}"
+//                        "QPushButton {border-style: solid; border-width: 2px; border-color: #8fc1ed; border-radius: 12px; "
+//                        "min-width: 4em; padding: 3px; padding-left: 10px; padding-right:10px; font: 9pt; }");
+//                        "QPushButton:pressed {background-color: lightblue}");
 
 //    "QLabel {color: white; font: 14pt}");
 
@@ -289,7 +293,9 @@ void MainWindow::hideNumUsers() {
 }
 
 void MainWindow::setUsersList() {
-    usersList = new UsersList(this);
+    usersView = new UsersListView(this);
+    usersModel  = new UsersListModel(this);
+    usersView->setModel(usersModel);
 
     dockWidgetUsers = new QDockWidget("Users connected",this);
     dockWidgetUsers->setAllowedAreas(Qt::RightDockWidgetArea );
@@ -303,8 +309,31 @@ void MainWindow::setUsersList() {
 //    auto voidWidget = new QWidget();
 //    dockWidgetTree->setTitleBarWidget(voidWidget);
 
-    treeView = new FileSystemTreeView(dockWidgetTree);
-    dockWidgetUsers->setWidget(usersList);
+    dockWidgetUsers->setWidget(usersView);
 
     this->addDockWidget(Qt::RightDockWidgetArea,dockWidgetUsers);
+    dockWidgetUsers->hide();
+}
+
+void MainWindow::setMainPalette() {
+
+//    .dark-primary-color    { background: #303F9F; }
+//            .default-primary-color { background: #3F51B5; }
+//                .light-primary-color   { background: #C5CAE9; }
+//                            .text-primary-color    { color: #FFFFFF; }
+//                            .accent-color          { background: #FF9800; }
+//                            .primary-text-color    { color: #212121; }
+//                            .secondary-text-color  { color: #757575; }
+//                            .divider-color         { border-color: #BDBDBD; }
+
+    mainPalette = QGuiApplication::palette();
+    mainPalette.setColor(QPalette::Window,QColor("#3F51B5"));
+    mainPalette.setColor(QPalette::WindowText,QColor("black"));
+    mainPalette.setColor(QPalette::Base,QColor("#C5CAE9"));
+    mainPalette.setColor(QPalette::BrightText,QColor("#FF9800"));
+    mainPalette.setColor(QPalette::ButtonText,QColor("white"));
+    mainPalette.setColor(QPalette::Button,QColor("#FF9800"));
+
+
+
 }

@@ -29,7 +29,8 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/SignInWidget.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/SignInWidget.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/Transceiver.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/Transceiver.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UriWidget.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/UriWidget.cpp.obj"
-  "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersList.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/UsersList.cpp.obj"
+  "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersListModel.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/UsersListModel.cpp.obj"
+  "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersListView.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/UsersListView.cpp.obj"
   "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/main.cpp" "C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

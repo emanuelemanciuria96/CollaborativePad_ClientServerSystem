@@ -16,14 +16,15 @@
 #include "AddUserWidget.h"
 #include "InviteUserWidget.h"
 #include "UriWidget.h"
-#include "UsersList.h"
+#include "UsersListView.h"
+#include "UsersListModel.h"
 #include <QScrollArea>
+
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     MainWindow(SharedEditor* shEditor, QWidget* parent = 0);
-
 private:
     QDockWidget *dockWidgetTree;
     QWidget *widgetEditor;
@@ -44,9 +45,10 @@ private:
     UriWidget* uriWidget;
     QPixmap bkgnd;
     QLabel *numUsers;
-    UsersList *usersList;
+    UsersListView *usersView;
     QDockWidget *dockWidgetUsers;
-
+    UsersListModel *usersModel;
+    QPalette mainPalette;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -58,6 +60,7 @@ private:
     void setStyleSheet();
     void createMenus();
     void setUsersList();
+    void setMainPalette();
 signals:
 
 public slots:

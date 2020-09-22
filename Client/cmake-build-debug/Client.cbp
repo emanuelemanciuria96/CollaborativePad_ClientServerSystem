@@ -278,10 +278,19 @@
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UriWidget.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersList.cpp">
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/User.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersList.h">
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersListModel.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersListModel.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersListView.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersListView.h">
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/adduserwidget.ui">
