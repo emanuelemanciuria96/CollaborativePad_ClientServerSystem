@@ -352,8 +352,19 @@ void MainWindow::setToolBarFolderGrid(QString folder) {
     }
 }
 
-void MainWindow::changeToolbarProfileImage(const QPixmap& image) {
-    userInfoAction->setIcon(QIcon(image));
+void MainWindow::changeToolbarProfileImage(const QPixmap& orig) {
+    int size = qMax(orig.width(), orig.height());
+    QPixmap rounded = QPixmap(size, size);
+    rounded.fill(Qt::transparent);
+    QPainterPath path;
+    path.addEllipse(rounded.rect());
+    QPainter painter(&rounded);
+    painter.setClipPath(path);
+    painter.fillRect(rounded.rect(), Qt::black);
+    int x = qAbs(orig.width() - size) / 2;
+    int y = qAbs(orig.height() - size) / 2;
+    painter.drawPixmap(x, y, orig.width(), orig.height(), orig);
+    userInfoAction->setIcon(QIcon(rounded));
 }
 
 void MainWindow::editorSettings(SharedEditor* shEditor) {
