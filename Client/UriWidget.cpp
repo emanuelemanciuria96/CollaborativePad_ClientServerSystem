@@ -2,7 +2,7 @@
 #include "./ui_uriwidget.h"
 
 UriWidget::UriWidget(QWidget *parent)
-    : QMainWindow(parent)
+    : QWidget(parent)
     , ui(new Ui::UriWidget)
 {
     ui->setupUi(this);

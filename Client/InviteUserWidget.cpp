@@ -3,7 +3,7 @@
 #include "./ui_inviteuserwidget.h"
 
 InviteUserWidget::InviteUserWidget(QWidget *parent)
-    : QMainWindow(parent)
+    : QWidget(parent)
     , ui(new Ui::InviteUserWidget)
 {
     ui->setupUi(this);

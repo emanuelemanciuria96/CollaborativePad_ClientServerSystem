@@ -24,8 +24,10 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(SharedEditor* shEditor, QWidget* parent = 0);
 
+    enum dock_type{tree,invitelist,uri};
+
 private:
-    QDockWidget *dockWidgetTree;
+    QVector<QDockWidget*> leftDockWidgets;
     FileSystemTreeView *treeView;
     FileSystemGridView *gridView;
     EditorGUI *editor;
@@ -54,7 +56,9 @@ private:
     void editorSettings(SharedEditor* shEditor);
     void treeFileSystemSettings();
     void gridFileSystemSettings();
+    void inviteUserListSetup();
     void signInWidgetSetup();
+    void uriWidgetSetup();
     void resizeEvent(QResizeEvent *evt) override;
     void setStyleSheet();
     void setToolBar();
@@ -62,7 +66,7 @@ private:
     void setToolBarGrid();
     void setToolBarFolderGrid(QString folder);
     void changeInviteAction(bool state);
-
+    void showHideLeftDock(dock_type dock);
 
 signals:
 
@@ -73,11 +77,6 @@ public slots:
     void opnFileGrid(QString fileName);
     void clsFile();
     void openAddUser(const QString& fileName);
-    void showHideTreeDock(bool checked=false){
-        if(dockWidgetTree->isHidden())
-            dockWidgetTree->show();
-        else dockWidgetTree->hide();
-    }
     void changeToolbarProfileImage(const QPixmap& image);
     void transparentForMouse(bool var);
 };

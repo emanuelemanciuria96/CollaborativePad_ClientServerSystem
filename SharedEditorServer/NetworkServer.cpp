@@ -8,7 +8,6 @@
 #include "MyExceptions/LoginException.h"
 
 
-std::shared_mutex NetworkServer::sym_mutex;
 Files NetworkServer::files;
 std::map<quint32,std::shared_ptr<ServerThread>> NetworkServer::active_threads;
 QString NetworkServer::threadId;

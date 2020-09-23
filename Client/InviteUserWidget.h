@@ -8,7 +8,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class InviteUserWidget; }
 QT_END_NAMESPACE
 
-class InviteUserWidget : public QMainWindow
+class InviteUserWidget : public QWidget
 {
     Q_OBJECT
 

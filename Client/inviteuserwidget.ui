@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>InviteUserWidget</class>
- <widget class="QMainWindow" name="InviteUserWidget">
+ <widget class="QWidget" name="InviteUserWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,18 +11,13 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Invites list</string>
+   <string>InviteUserWidget</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true"/>
-  </property>
-  <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QListWidget" name="listWidget"/>
-    </item>
-   </layout>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QListWidget" name="listWidget"/>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

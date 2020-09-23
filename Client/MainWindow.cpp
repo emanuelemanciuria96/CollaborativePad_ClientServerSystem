@@ -6,6 +6,7 @@
 #include <QtWidgets/QDockWidget>
 #include "MainWindow.h"
 
+QVector<QString> msgs = {"tree","invite list", "uri insertion"};
 
 MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(parent) {
     QApplication::setStyle(QStyleFactory::create("Fusion"));
@@ -37,6 +38,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     loginSettings();
     // editor creation
     editorSettings(shEditor);
+    // invite list creation
+    inviteUserListSetup();
+    // uri widget creation
+    uriWidgetSetup();
 
     signInWidgetSetup();
 
@@ -101,15 +106,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::rmvFileRequest, addUserWidget, &AddUserWidget::processFileDeleted);
     connect(gridView, &FileSystemGridView::rmvFileRequest, addUserWidget, &AddUserWidget::processFileDeleted);
     connect(gridView, &FileSystemGridView::rmvFileRequest, treeView, &FileSystemTreeView::remoteFileDeletion);
-    connect(treeShowAction, &QAction::triggered,[this](bool checked=false){
-        if(dockWidgetTree->isHidden()) {
-            dockWidgetTree->show();
-            treeShowAction->setToolTip("Hide tree");
-        }else {
-            dockWidgetTree->hide();
-            treeShowAction->setToolTip("Show tree");
-        }
-    });
     connect(uriWidget, &UriWidget::submitUri, shEditor, &SharedEditor::submitUri);
     connect(shEditor, &SharedEditor::uriResultArrived, uriWidget, &UriWidget::uriResultArrived);
     connect(uriWidget, &UriWidget::setStatusBarText, statusBar, &QStatusBar::showMessage);
@@ -118,10 +114,12 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
     connect(gridView, &FileSystemGridView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
     connect(treeView, &FileSystemTreeView::opnFileRequest, gridView, &FileSystemGridView::selectFile);
-    connect(uriAction, &QAction::triggered, uriWidget, &QWidget::show);
-    connect(inviteListAction, &QAction::triggered, inviteUserWidget, &QWidget::show);
+    connect(uriAction, &QAction::triggered, [this](){showHideLeftDock(uri);} );
     connect(userInfoAction, &QAction::triggered, infoWidget, &QWidget::show);
     connect(infoWidget, &InfoWidget::imageChanged, this, &MainWindow::changeToolbarProfileImage);
+    connect(inviteListAction, &QAction::triggered, [this](){showHideLeftDock(invitelist);});
+    connect(treeShowAction, &QAction::triggered,[this](){showHideLeftDock(tree);});
+
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -130,7 +128,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     centralWidget->addWidget(editor);
     centralWidget->addWidget(widgetSignIn);
     centralWidget->addWidget(gridView);
-
+    setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
 
 //    this->setCentralWidget(widgetLogin);
 }
@@ -151,6 +150,7 @@ void MainWindow::loginFinished() {
     p.setBrush(QPalette::Window, QBrush(QColor("lightgray")) );
     centralWidget->setPalette(p);
 }
+
 void MainWindow::opnFileGrid(QString fileName) {
     setToolBarEditor();
     centralWidget->setCurrentWidget(editor);
@@ -158,6 +158,7 @@ void MainWindow::opnFileGrid(QString fileName) {
     //dockWidgetTree->show();
     //gridView->hide();
 }
+
 void MainWindow::changeInviteAction(bool state){
     inviteAction->setDisabled(!state);
     if(state){
@@ -166,9 +167,10 @@ void MainWindow::changeInviteAction(bool state){
         inviteAction->setToolTip("");
     }
 }
+
 void MainWindow::clsFile() {
     centralWidget->setCurrentWidget(gridView);
-    dockWidgetTree->hide();
+    leftDockWidgets[tree]->hide();
     if(gridView->getState()==gridView->getMainFolder()){
         setToolBarGrid();
         inviteAction->setDisabled(false);
@@ -181,6 +183,7 @@ void MainWindow::clsFile() {
         highlightAction->setChecked(false);
     }
 }
+
 void MainWindow::loginSettings() {
 //    widgetLogin = new QWidget(this);
 //    widgetLogin->setLayout( new QGridLayout(widgetLogin) );
@@ -215,19 +218,46 @@ void MainWindow::loginSettings() {
 
 
 void MainWindow::treeFileSystemSettings() {
-    dockWidgetTree = new QDockWidget(tr("files"),this);
-    dockWidgetTree->setAllowedAreas(Qt::LeftDockWidgetArea );
-    dockWidgetTree->setFeatures(QDockWidget::DockWidgetClosable);
-    dockWidgetTree->setMouseTracking(true);
+    leftDockWidgets.insert( tree, new QDockWidget(tr("files"),this) );
+    leftDockWidgets[tree]->setAllowedAreas(Qt::LeftDockWidgetArea );
+    leftDockWidgets[tree]->setFeatures(QDockWidget::DockWidgetClosable);
+    leftDockWidgets[tree]->setMouseTracking(true);
 
-    auto voidWidget = new QWidget();
-    dockWidgetTree->setTitleBarWidget(voidWidget);
+    leftDockWidgets[tree]->setTitleBarWidget(new QWidget());
 
-    treeView = new FileSystemTreeView(dockWidgetTree);
-    dockWidgetTree->setWidget(treeView);
+    treeView = new FileSystemTreeView(leftDockWidgets[tree]);
+    leftDockWidgets[tree]->setWidget(treeView);
 
-    this->addDockWidget(Qt::LeftDockWidgetArea,dockWidgetTree);
-    dockWidgetTree->hide();
+    this->addDockWidget(Qt::LeftDockWidgetArea,leftDockWidgets[tree]);
+    leftDockWidgets[tree]->hide();
+}
+
+void MainWindow::inviteUserListSetup() {
+    leftDockWidgets.insert(invitelist,new QDockWidget(tr("invite"),this));
+    leftDockWidgets[invitelist]->setAllowedAreas(Qt::LeftDockWidgetArea );
+    leftDockWidgets[invitelist]->setFeatures(QDockWidget::DockWidgetClosable);
+    leftDockWidgets[invitelist]->setMouseTracking(true);
+
+    leftDockWidgets[invitelist]->setTitleBarWidget(new QWidget());
+    inviteUserWidget = new InviteUserWidget(this);
+    leftDockWidgets[invitelist]->setWidget(inviteUserWidget);
+
+    this->addDockWidget(Qt::LeftDockWidgetArea,leftDockWidgets[invitelist]);
+    leftDockWidgets[invitelist]->hide();
+}
+
+void MainWindow::uriWidgetSetup() {
+    leftDockWidgets.insert(uri,new QDockWidget(tr("uri"),this));
+    leftDockWidgets[uri]->setAllowedAreas(Qt::LeftDockWidgetArea );
+    leftDockWidgets[uri]->setFeatures(QDockWidget::DockWidgetClosable);
+    leftDockWidgets[uri]->setMouseTracking(true);
+
+    leftDockWidgets[uri]->setTitleBarWidget(new QWidget());
+    uriWidget = new UriWidget(this);
+    leftDockWidgets[uri]->setWidget(uriWidget);
+
+    this->addDockWidget(Qt::LeftDockWidgetArea,leftDockWidgets[uri]);
+    leftDockWidgets[uri]->hide();
 }
 
 void MainWindow::gridFileSystemSettings() {
@@ -315,6 +345,7 @@ void MainWindow::setToolBar() {
     toolBar->addWidget(spacerWidget);
     toolBar->addAction(userInfoAction);
 }
+
 void MainWindow::setToolBarEditor() {
     backAction->setVisible(false);
     addAction->setVisible(false);
@@ -325,6 +356,7 @@ void MainWindow::setToolBarEditor() {
     closeAction->setVisible(true);
     pdfAction->setVisible(true);
 }
+
 void MainWindow::setToolBarGrid() {
     if(centralWidget->currentWidget() != editor) {
         treeShowAction->setVisible(false);
@@ -338,6 +370,7 @@ void MainWindow::setToolBarGrid() {
         inviteAction->setDisabled(true);
     }
 }
+
 void MainWindow::setToolBarFolderGrid(QString folder) {
     if(centralWidget->currentWidget() != editor) {
         treeShowAction->setVisible(false);
@@ -372,8 +405,6 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
 
     infoWidget = new InfoWidget(this);
     addUserWidget = new AddUserWidget(this);
-    inviteUserWidget = new InviteUserWidget(this);
-    uriWidget = new UriWidget(this);
 
     //widgetEditor->hide();
 }
@@ -412,8 +443,14 @@ void MainWindow::resizeEvent(QResizeEvent *evt) {
         centralWidget->setPalette(p);
     }
 
-    dockWidgetTree->setMaximumWidth(this->size().width() / 5);
-    dockWidgetTree->setMinimumWidth(this->size().width() / 5);
+    leftDockWidgets[tree]->setMaximumWidth(this->size().width() / 5);
+    leftDockWidgets[tree]->setMinimumWidth(this->size().width() / 5);
+    leftDockWidgets[invitelist]->setMaximumWidth(this->size().width() / 3);
+    leftDockWidgets[invitelist]->setMinimumWidth(this->size().width() / 3);
+    leftDockWidgets[uri]->setMaximumWidth(this->size().width() / 5);
+    leftDockWidgets[uri]->setMinimumWidth(this->size().width() / 5);
+    leftDockWidgets[uri]->setMaximumHeight(this->size().height() / 5);
+    leftDockWidgets[uri]->setMinimumHeight(this->size().height() / 5);
 
 }
 
@@ -424,5 +461,16 @@ void MainWindow::setStyleSheet() {
                         "QPushButton:pressed {background-color: lightblue}"
                         "QLabel {color: white; font: 14pt}");
 
+}
 
+void MainWindow::showHideLeftDock(dock_type dock) {
+
+    if(leftDockWidgets[dock]->isHidden()) {
+        for( auto d:leftDockWidgets) d->hide();
+        leftDockWidgets[dock]->show();
+        treeShowAction->setToolTip("Show "+msgs[dock]);
+    }else {
+        leftDockWidgets[dock]->hide();
+        treeShowAction->setToolTip("Hide "+msgs[dock]);
+    }
 }

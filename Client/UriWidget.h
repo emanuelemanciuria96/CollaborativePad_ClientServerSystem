@@ -7,7 +7,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class UriWidget; }
 QT_END_NAMESPACE
 
-class UriWidget : public QMainWindow
+class UriWidget : public QWidget
 {
     Q_OBJECT
 
