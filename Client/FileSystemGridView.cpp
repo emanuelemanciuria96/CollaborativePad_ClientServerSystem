@@ -228,6 +228,8 @@ void FileSystemGridView::invite(){
 
 void FileSystemGridView::addFile(){
     bool ok;
+    QInputDialog d();
+
     QString newNameFile = QInputDialog::getText(0, "New file",
                                                 "Add new file", QLineEdit::Normal,
                                                 "", &ok);

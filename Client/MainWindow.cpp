@@ -135,6 +135,12 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 //    this->setCentralWidget(widgetLogin);
 }
 
+void MainWindow::transparentForMouse(bool var) {
+    toolBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
+    gridView->setAttribute(Qt::WA_TransparentForMouseEvents, var);
+    treeView->setAttribute(Qt::WA_TransparentForMouseEvents, var);
+}
+
 void MainWindow::loginFinished() {
     centralWidget->setCurrentWidget(gridView);
     //centralWidget->setCurrentWidget(editor);

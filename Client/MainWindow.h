@@ -67,7 +67,6 @@ private:
 signals:
 
 public slots:
-
     void loginFinished();
     void startSignIn();
     void backToLogIn();
@@ -80,6 +79,7 @@ public slots:
         else dockWidgetTree->hide();
     }
     void changeToolbarProfileImage(const QPixmap& image);
+    void transparentForMouse(bool var);
 };
 
 
