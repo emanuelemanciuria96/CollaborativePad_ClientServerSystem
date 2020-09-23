@@ -181,6 +181,10 @@ void FileSystemGridView::keyPressEvent(QKeyEvent *event) {
         if(item!= nullptr){
             deleteFile(this->state+"/"+item->text());
         }
+    }else  if(event->key()==Qt::Key_Escape){
+        if(state!=mainFolder){
+            reloadBack();
+        }
     }
 }
 void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
