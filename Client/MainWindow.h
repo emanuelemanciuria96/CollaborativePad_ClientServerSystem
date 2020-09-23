@@ -7,7 +7,6 @@
 
 #include <QtWidgets>
 #include <QGroupBox>
-#include <QScrollArea>
 #include "EditorGUI.h"
 #include "LoginDialog.h"
 #include "FileSystemTreeView.h"
@@ -18,6 +17,10 @@
 #include "AddUserWidget.h"
 #include "InviteUserWidget.h"
 #include "UriWidget.h"
+#include "UsersListView.h"
+#include "UsersListModel.h"
+#include <QScrollArea>
+
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -51,6 +54,11 @@ private:
     InviteUserWidget* inviteUserWidget;
     UriWidget* uriWidget;
     QPixmap bkgnd;
+    UsersListView *usersView;
+    QDockWidget *dockWidgetUsers;
+    UsersListModel *usersModel;
+    QPalette mainPalette;
+    QLabel *numUsers;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -68,7 +76,8 @@ private:
     void changeInviteAction(bool state);
     void showHideLeftDock(dock_type dock);
 
-signals:
+    void setUsersList();
+    void setMainPalette();
 
 public slots:
     void loginFinished();
@@ -78,6 +87,8 @@ public slots:
     void clsFile();
     void openAddUser(const QString& fileName);
     void changeToolbarProfileImage(const QPixmap& image);
+    void setNumUsers(int n);
+    void hideNumUsers();
     void transparentForMouse(bool var);
 };
 
