@@ -29,19 +29,27 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     ui->listWidget->setStyleSheet("padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;font-family: 'Verdana';");
     this->constructFromPaths(paths);
 
+    this->installEventFilter(this);
     ui->listWidget->viewport()->installEventFilter(this);
 }
-bool FileSystemGridView::eventFilter(QObject *target, QEvent *event)
-{
-    if(target == ui->listWidget->viewport()){
-        if(event->type() == QEvent::MouseButtonPress)
-        {
+bool lastEventisFromBorder=true;
+bool FileSystemGridView::eventFilter(QObject *target, QEvent *event){
+    if(event->type() == QEvent::MouseButtonPress) {
+        if (target == ui->listWidget->viewport()) {
             event->ignore();
             this->clearSelection();
+            lastEventisFromBorder = false;
+        } else {
+            if (lastEventisFromBorder) {
+                event->ignore();
+                this->clearSelection();
+            }
+            lastEventisFromBorder = true;
         }
     }
-    return QWidget::eventFilter(target, event);
+    return false;
 }
+
 FileSystemGridView::~FileSystemGridView()
 {
     delete ui;

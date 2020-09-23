@@ -5,6 +5,7 @@
 #include <QListWidgetItem>
 #include <QlistWidget>
 #include <iostream>
+#include <QDebug>
 
 
 namespace Ui {class FileSystemGridView;}
@@ -55,7 +56,7 @@ private:
     Ui::FileSystemGridView *ui;
     void reload(const QString folder,bool isFolder,bool changeToolbar);
     void keyPressEvent(QKeyEvent *event) override;
-
+    int count=0;
     bool eventFilter(QObject *target, QEvent *event);
 /*
     QIcon* textIcon=new QIcon("D:/Desktop/untitled/icons/grid_text_icon"+this->format);
