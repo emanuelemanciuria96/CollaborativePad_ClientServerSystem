@@ -22,26 +22,27 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
-
 }
 
 
 void EditorGUI::setUpGUI() {
 //    inizializzo gli elementi
-//    setupFileActions();
-
     textEdit = new MyTextEdit(&remoteCursors, this);
     setLayout(new QVBoxLayout(this));
     this->layout()->setAlignment(Qt::AlignCenter);
-    this->layout()->setContentsMargins(0, 0, 0, 0);
+    this->layout()->setContentsMargins(30, 0, 30, 0);
     this->layout()->addWidget(textEdit);
 
     textEdit->document()->setDocumentMargin(65);
     textEdit->setLineWrapMode(QTextEdit::FixedPixelWidth);
     textEdit->setLineWrapColumnOrWidth(880);
-    textEdit->setMaximumWidth(880);
+    textEdit->setMaximumWidth(885);
 
     connect(this, SIGNAL(clear()), textEdit, SLOT(clear()));
+    auto palette = this->palette();
+    palette.setColor(QPalette::Window,QColor("lightgray"));
+    palette.setColor(QPalette::Base,QColor("white"));
+    this->setPalette(palette);
 
     textEdit->setFocus();
     setCurrentFileName(QString());
@@ -50,31 +51,6 @@ void EditorGUI::setUpGUI() {
     connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
 //    load("./file.txt");
     loadSymbols();
-}
-
-
-bool EditorGUI::load(const QString &f) {
-    QString f1 = R"(C:\Users\Windows\Documents\POLITO\Programmazione di sistema\Progetto\MyTest\file.txt)";
-    if(!QFile::exists(f1)){
-        std::cout << "File non esiste";
-        return false;
-    }
-    QFile file(f1);
-
-    if(!file.open(QFile::ReadOnly)) {
-        std::cout << "File non aperto";
-        return false;
-    }
-
-    QTextStream in(&file);
-    QString str = in.readAll();
-//    QByteArray data = file.readAll();
-//    QTextCodec *codec = Qt::codecForHtml(data);
-//    QString str = codec->toUnicode(data);
-//    textEdit->setPlainText(QString::fromUtf8(data));
-    textEdit->setPlainText(str);
-    //setCurrentFileName(f);
-    return true;
 }
 
 
@@ -115,13 +91,6 @@ void EditorGUI::setupFileActions() {
 }
 */
 
-void EditorGUI::setupEditActions() {
-    //TODO
-}
-
-void EditorGUI::setupTextActions() {
-    //TODO
-}
 
 void EditorGUI::setCurrentFileName(QString filename) {
     this->fileName = filename;
@@ -134,6 +103,9 @@ void EditorGUI::setModel(SharedEditor* _model) {
 //chiamata quando si effettuano modifiche sul editor
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i = 0;
+    if(model->getHighlighting()){
+        textEdit->setCurrentCharFormat(getFormat(model->getSiteId()));
+    }
     if (!signalBlocker) {
         myCursorPosUpdateBlocker = true;
         curBlockerTimer->start(500);
@@ -247,6 +219,7 @@ void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos) {
 
 RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     RemoteCursor *cursor;
+    /// da gestire con una eccezione
     if(siteId < 0)
         return nullptr;
 //    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
@@ -298,7 +271,7 @@ void EditorGUI::drawLabel(RemoteCursor *cursor){
 
         cursor->labelName->setParent(textEdit);
         cursor->labelName->show();
-        cursor->labelName->move( std::min(curRect.left()+70,  int(textEdit->document()->pageSize().width()+65)), curRect.top() + 60);
+        cursor->labelName->move( std::min(curRect.left()+5,  int(textEdit->document()->pageSize().width())), curRect.top() -5);
         cursor->labelTimer->setParent(textEdit);
         cursor->labelTimer->start(5000);
     }
@@ -391,3 +364,4 @@ void EditorGUI::exportToPdf() {
         textEdit->print(&printer);
     }
 }
+

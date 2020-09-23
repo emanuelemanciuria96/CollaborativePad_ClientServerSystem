@@ -40,7 +40,6 @@ private:
     SharedEditor* model;
     bool signalBlocker;
     std::vector<RemoteCursor> remoteCursors;
-    QAction* actionSave;
     std::queue<QChar> insertQueue;
     qint32 siteIdQueue;
     qint32 posQueue;
@@ -52,10 +51,6 @@ private:
     uint nUsers = 0;
 
     void setUpGUI();
-   // void setupFileActions();
-    void setupEditActions();
-    void setupTextActions();
-    bool load(const QString &f);
     void loadSymbols();
     void updateRemoteCursors(qint32 mySiteId, int pos);
     RemoteCursor* getRemoteCursor(qint32 siteId);
@@ -65,6 +60,7 @@ private:
     void drawLabel(RemoteCursor *cursor);
     void keyPressEvent(QKeyEvent *e) override;
     QTextCharFormat getFormat(qint32 siteId);
+
 private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);
     void flushInsertQueue();
