@@ -17,7 +17,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileSystemGridView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemGridView.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -163,7 +163,7 @@
       <workItem from="1600674821693" duration="6348000" />
       <workItem from="1600685073352" duration="10477000" />
       <workItem from="1600721143288" duration="64000" />
-      <workItem from="1600765574194" duration="30856000" />
+      <workItem from="1600765574194" duration="32187000" />
     </task>
     <task id="LOCAL-00001" summary="add sameName dialog in rename slot">
       <created>1600596879145</created>
@@ -347,7 +347,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600846615775</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="add grid escape key">
+      <created>1600847094752</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1600847094752</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,7 +381,8 @@
     <MESSAGE value="implement unselected item" />
     <MESSAGE value="implement grid deselect item" />
     <MESSAGE value="fix grid deselect item" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix grid deselect item" />
+    <MESSAGE value="add grid escape key" />
+    <option name="LAST_COMMIT_MESSAGE" value="add grid escape key" />
   </component>
   <component name="WindowStateProjectService">
     <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597338903660">
@@ -385,30 +393,30 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="672" y="165" key="#xdebugger.XInspectDialog/0.0.1536.824@0.0.1536.824" timestamp="1597590313280" />
-    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1600846610441">
+    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1600847090691">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600846610441" />
+    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600847090691" />
     <state width="479" height="438" key="DebuggerActiveHint" timestamp="1597247491161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="479" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1597247491161" />
-    <state width="1481" height="253" key="GridCell.Tab.0.bottom" timestamp="1600847042673">
+    <state width="1481" height="253" key="GridCell.Tab.0.bottom" timestamp="1600847895498">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="253" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600847042673" />
-    <state width="1481" height="253" key="GridCell.Tab.0.center" timestamp="1600847042672">
+    <state width="1481" height="253" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600847895498" />
+    <state width="1481" height="253" key="GridCell.Tab.0.center" timestamp="1600847895498">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="253" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600847042672" />
-    <state width="1481" height="253" key="GridCell.Tab.0.left" timestamp="1600847042672">
+    <state width="1481" height="253" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600847895498" />
+    <state width="1481" height="253" key="GridCell.Tab.0.left" timestamp="1600847895498">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="253" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600847042672" />
-    <state width="1481" height="253" key="GridCell.Tab.0.right" timestamp="1600847042673">
+    <state width="1481" height="253" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600847895498" />
+    <state width="1481" height="253" key="GridCell.Tab.0.right" timestamp="1600847895498">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="253" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600847042673" />
+    <state width="1481" height="253" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600847895498" />
     <state width="1481" height="245" key="GridCell.Tab.1.bottom" timestamp="1600809071635">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -437,10 +445,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1600774556579" />
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1600846619542">
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1600847098444">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600846619542" />
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600847098444" />
     <state x="546" y="307" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600783321932">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
