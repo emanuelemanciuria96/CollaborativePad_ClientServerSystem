@@ -306,6 +306,8 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
         case (Command::rm):{
             auto owner = command->getArgs().first().split("/").first();
+            if( operatingFileName == command->getArgs().first().split("/").last() )
+                operatingFileName = "";
             if(owner != _username) {
                 std::unique_lock ul(db_op_mtx);
                 if (command->rmCommand(threadId))
@@ -560,6 +562,9 @@ void ServerThread::sendCommand(DataPacket& packet){
 
     auto ptr = std::dynamic_pointer_cast<Command>(packet.getPayload());
     tmp << (quint32) ptr->getCmd() << ptr->getArgs();
+
+    if( ptr->getCmd() == Command::rm )
+        operatingFileName = "";
 
     qint32 bytes = fixedBytesWritten + buf.data().size();
 

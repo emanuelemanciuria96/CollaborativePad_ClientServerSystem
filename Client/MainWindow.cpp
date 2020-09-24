@@ -77,6 +77,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(gridView, &FileSystemGridView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
     connect(shEditor, &SharedEditor::fileNameEdited, treeView, &FileSystemTreeView::editFileName);
     connect(shEditor, &SharedEditor::fileDeletion, treeView, &FileSystemTreeView::remoteFileDeletion);
+    connect(shEditor, &SharedEditor::fileDeletion, gridView, &FileSystemGridView::remoteDeleteFile);
     connect(shEditor, &SharedEditor::loginAchieved, this, &MainWindow::loginFinished);
     connect(shEditor, &SharedEditor::loginError, loginDialog, &LoginDialog::slotLoginError);
     connect(shEditor, &SharedEditor::symbolsChanged, editor, &EditorGUI::updateSymbols);
@@ -419,18 +420,6 @@ void MainWindow::signInWidgetSetup() {
 
 void MainWindow::resizeEvent(QResizeEvent *evt) {
     QWidget::resizeEvent(evt);
-    dockWidgetTree->setMaximumWidth(this->size().width() / 4);
-    dockWidgetTree->setMinimumWidth(this->size().width() / 4);
-
-}
-
-void MainWindow::setStyleSheet() {
-//    qApp->setStyleSheet("QWidget {font-family: helvetica}"
-//                        "QPushButton {border-style: solid; border-width: 2px; border-color: #8fc1ed; border-radius: 12px; "
-//                        "min-width: 4em; padding: 3px; padding-left: 10px; padding-right:10px; font: 9pt; }");
-//                        "QPushButton:pressed {background-color: lightblue}");
-
-//    "QLabel {color: white; font: 14pt}");
 
     leftDockWidgets[tree]->setMaximumWidth(this->size().width() / 5);
     leftDockWidgets[tree]->setMinimumWidth(this->size().width() / 5);
@@ -440,6 +429,15 @@ void MainWindow::setStyleSheet() {
     leftDockWidgets[uri]->setMinimumWidth(this->size().width() / 5);
     leftDockWidgets[uri]->setMaximumHeight(this->size().height() / 5);
     leftDockWidgets[uri]->setMinimumHeight(this->size().height() / 5);
+}
+
+void MainWindow::setStyleSheet() {
+//    qApp->setStyleSheet("QWidget {font-family: helvetica}"
+//                        "QPushButton {border-style: solid; border-width: 2px; border-color: #8fc1ed; border-radius: 12px; "
+//                        "min-width: 4em; padding: 3px; padding-left: 10px; padding-right:10px; font: 9pt; }");
+//                        "QPushButton:pressed {background-color: lightblue}");
+
+//    "QLabel {color: white; font: 14pt}");
 
 }
 
