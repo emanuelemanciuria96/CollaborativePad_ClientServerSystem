@@ -7,8 +7,7 @@ UriWidget::UriWidget(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowFlag(Qt::WindowStaysOnTopHint);
-    connect(ui->submit, &QPushButton::clicked, this, &UriWidget::checkUri);
-    connect(ui->cancel, &QPushButton::clicked, this, &UriWidget::close);
+    connect(ui->submitButton, &QPushButton::clicked, this, &UriWidget::checkUri);
 }
 
 UriWidget::~UriWidget()
@@ -27,7 +26,7 @@ void UriWidget::checkUri() {
     emit submitUri(input.replace("http://www.sharededitor.com/", ""));
 }
 
-void UriWidget::closeEvent (QCloseEvent *event){
+void UriWidget::hideEvent (QHideEvent *event){
     ui->uriEdit->clear();
     ui->errorLabel->clear();
 }

@@ -90,7 +90,7 @@ public slots:
     void changeToolbarProfileImage(const QPixmap& image);
     void setNumUsers(int n);
     void hideNumUsers();
-    void transparentForMouse(bool var);
+    void transparentForMouse();
 };
 
 

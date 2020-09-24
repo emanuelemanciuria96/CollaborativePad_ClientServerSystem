@@ -34,7 +34,6 @@ signals:
     void newFileAdded(QString& fileName);
     void newFileUpdateGrid(QVector<QString>& path);
     void renFileRequest(QString& before, QString& after);
-    void fileNameEdited(QString& oldName, QString& newName);
     void inviteRequest(const QString& fileName);
 
 private:

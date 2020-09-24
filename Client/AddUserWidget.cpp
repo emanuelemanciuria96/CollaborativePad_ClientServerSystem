@@ -65,18 +65,13 @@ void AddUserWidget::closeEvent (QCloseEvent *event){
     ui->userEdit->clear();
     ui->resultLabel->clear();
     ui->submitButton->setDisabled(true);
+    closing();
 }
 
 void AddUserWidget::editFileName(QString& oldName, QString& newName) {
     if (!newName.contains("/"))
         if (oldName == file)
             file = newName;
-}
-
-void AddUserWidget::processFileDeleted(QString fileName) {
-    if (!fileName.contains("/"))
-        if (fileName == file)
-            close();
 }
 
 void AddUserWidget::inviteResultArrived(const QString &result) {
