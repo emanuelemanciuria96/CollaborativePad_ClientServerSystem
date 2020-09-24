@@ -454,8 +454,10 @@ void SharedEditor::processLsCommand(Command& cmd){
 void SharedEditor::processRmCommand(Command &cmd) {
     auto args = cmd.getArgs();
 
-    if(fileOpened == args.first() )
+    if(fileOpened == args.first() ) {
+        emit returnToGrid();
         closeFile();
+    }
 
     auto list = args.first().split("/");
 
@@ -561,6 +563,7 @@ void SharedEditor::requireFileClose() {
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
+    emit returnToGrid();
 
 }
 
@@ -605,6 +608,7 @@ void SharedEditor::requireFileDelete(const QString& fileName) {
         file = _user + "/" + file;
 
     if(fileOpened == file) {
+        emit returnToGrid();
         closeFile();
     }
     QVector<QString> vec = {std::move(file)};
@@ -717,6 +721,6 @@ void SharedEditor::closeFile() {
         _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
     }
     emit hideNumUsers();
-    emit returnToGrid();
+
 }
 
