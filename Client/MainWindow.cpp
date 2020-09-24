@@ -308,7 +308,7 @@ void MainWindow::setToolBar() {
     toolBar->addAction(uriAction);
 
     inviteListAction = new QAction();
-    inviteListAction->setIcon(QIcon("./icons/invite_list_icon.png"));
+    setInviteListIcon();
     inviteListAction->setVisible(true);
     inviteListAction->setToolTip("Show invites list");
     toolBar->addAction(inviteListAction);
@@ -375,7 +375,33 @@ void MainWindow::setToolBarFolderGrid(QString folder) {
         inviteAction->setDisabled(true);
     }
 }
+void MainWindow::setInviteListIcon(int num) {
+    QString path="./icons/invite_list_icon.png";
+    QString path2="./icons/bedge_invite_list_icon.png";
+    if(num<1){
+        inviteListAction->setIcon(QIcon(path));
+        return;
+    }
+    const QImage orig = QImage(path2);
+    int size = qMax(orig.width(), orig.height());
+    QPixmap rounded = QPixmap(size, size);
+    rounded.fill(Qt::transparent);
+    QPainter painter(&rounded);
+    painter.drawImage(QRect(0, -5, orig.width(), orig.height()), orig);
+    painter.setPen(Qt::white);
+    QFont font = painter.font();
+    font.setPointSize(font.pointSize() * 5);
+    painter.setFont(font);
+    if(num>99) {
+        painter.drawText(168, 75, QString::number(99));
+    }else if(num>9){
+        painter.drawText(168, 75, QString::number(num));
+    }else{
+        painter.drawText(187, 75, QString::number(num));
+    }
 
+    inviteListAction->setIcon(QIcon(rounded));
+}
 void MainWindow::changeToolbarProfileImage(const QPixmap& orig) {
     int size = qMax(orig.width(), orig.height());
     QPixmap rounded = QPixmap(size, size);

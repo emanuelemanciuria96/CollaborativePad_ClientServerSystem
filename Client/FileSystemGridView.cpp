@@ -26,7 +26,7 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     ui->listWidget->setMovement(QListView::Static);
     ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget->setIconSize(QSize(130, 130));
-//    ui->listWidget->setStyleSheet("padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;font-family: 'Verdana';");
+    ui->listWidget->setStyleSheet("padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;font-family: 'Verdana';");
     this->constructFromPaths(paths);
 
     this->installEventFilter(this);
@@ -540,7 +540,11 @@ void FileSystemGridView::remoteDeleteFile(const QString& file)
     if (this->state == this->mainFolder) {
         reload(this->mainFolder, false);
     } else {
-        reload(this->state, true);
+        if(fileSystem[folder].size()==0){
+            reload(this->mainFolder,false);
+        }else {
+            reload(folder, true);
+        }
     }
     if(!error) {
         for (int i = 0; i < ui->listWidget->count(); ++i) {

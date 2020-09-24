@@ -75,6 +75,7 @@ private:
     void setToolBarFolderGrid(QString folder);
     void changeInviteAction(bool state);
     void showHideLeftDock(dock_type dock);
+    void setInviteListIcon(int num=0);
 
     void setUsersList();
     void setMainPalette();
