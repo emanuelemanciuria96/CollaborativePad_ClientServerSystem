@@ -124,13 +124,14 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
             model->localErase(pos,charsRemoved);
-
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
             //std::cout << "Inserimento carattere " << index << std::endl;
+            QString str = "";
             for (i = 0; i < charsAdded; i++) {
-                model->localInsert(pos + i, textEdit->document()->characterAt(pos + i));
+                str+=textEdit->document()->characterAt(pos + i);
             }
+            model->localInsert(pos, str);
         }
         updateRemoteCursors(model->getSiteId(),pos);
 

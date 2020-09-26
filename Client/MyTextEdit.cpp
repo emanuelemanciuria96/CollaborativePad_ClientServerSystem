@@ -49,8 +49,10 @@ bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
         auto pos = event->pos();
         QTextCursor curs = this->cursorForPosition(pos);
         int posInText = curs.position();
-        if( !curs.atEnd() && posInText!=0 &&
-            curs.columnNumber() && document()->characterAt(posInText).unicode()!=8233 ) {
+        QTextCursor tmp = curs;
+        tmp.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor);
+        if( !curs.atEnd() && posInText!=0 && tmp.columnNumber() &&
+                curs.columnNumber() && document()->characterAt(posInText).unicode()!=8233 ) {
 
             emit tipRequest(posInText);
         }
