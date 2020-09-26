@@ -336,14 +336,17 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             lastErase=true;
             vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
             //_symbols.erase(_symbols.begin()+pos);
-            if(i!=strM.size()-1 && strM[i+1].getAction()==Message::insertion ){
-                    _symbols.erase(_symbols.begin()+tmpPos,_symbols.begin()+tmpPos+numChar);
-                    lastErase=false;
-                    numChar=0;
-            }else if(i!=strM.size()-1 &&strM[i+1].getSiteId()==strM[i].getSiteId()&& strM[i+1].getLocalIndex()<strM[i].getLocalIndex()){
-                _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
-                lastErase=false;
-                numChar=0;
+            if(i != strM.size() - 1 ) {
+                if (strM[i + 1].getAction() == Message::insertion) {
+                    _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
+                    lastErase = false;
+                    numChar = 0;
+                } else if (strM[i + 1].getSiteId() == strM[i].getSiteId() &&
+                           strM[i + 1].getLocalIndex() < strM[i].getLocalIndex()) {
+                    _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
+                    lastErase = false;
+                    numChar = 0;
+                }
             }
         }
     }
