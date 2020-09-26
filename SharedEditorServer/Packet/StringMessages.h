@@ -33,9 +33,12 @@ public:
     QString messagesToString(std::vector<Message> &vm); // message vector to string
     QString appendMessage(Message &m);
     QString getFormattedMessages(){ return formattedMessages; }
+    QString getFileToModify(){ return fileToModify; }
+    void setFileToModify( QString &file ){ fileToModify = file; }
 
 private:
     QString messageToString(Message& m); // functions for
+    QString fileToModify;
     Message stringToMessage(QString s);  //      single message
 
     const QString messages_separator ="@%";   // separatore dei messaggi

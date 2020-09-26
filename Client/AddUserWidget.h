@@ -28,7 +28,6 @@ public slots:
     void emitSubmit();
     void searchUserResult(LoginInfo::type_t type);
     void editFileName(QString& oldName, QString& newName);
-    void processFileDeleted(QString fileName);
     void inviteResultArrived(const QString& result);
     void fsNameArrived(const QString& fsName);
 
@@ -37,5 +36,6 @@ signals:
     void submitInvite(const QString& file, const QString& user);
     void setStatusBarText(const QString& text, int timeout);
     void searchFsName(const QString& name);
+    void closing();
 };
 #endif // ADDUSERWIDGET_H
