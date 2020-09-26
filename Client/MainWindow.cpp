@@ -182,6 +182,7 @@ void MainWindow::changeInviteAction(bool state){
 }
 
 void MainWindow::clsFile() {
+    dockWidgetUsers->hide();
     centralWidget->setCurrentWidget(gridView);
     leftDockWidgets[tree]->hide();
     if(gridView->getState()==gridView->getMainFolder()){
