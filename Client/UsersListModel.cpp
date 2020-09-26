@@ -6,11 +6,7 @@
 
 #include <utility>
 
-UsersListModel::UsersListModel(QObject *parent) : QAbstractListModel(parent) {
-//    addUser(1, "Piero", QIcon("./images/profile.jpg"));
-//    addUser(2, "Giacomo", QIcon("./images/profile.jpg"));
-//    removeUser(2);
-}
+UsersListModel::UsersListModel(QObject *parent) : QAbstractListModel(parent) {}
 
 int UsersListModel::rowCount(const QModelIndex &parent) const {
     return mData.size();
@@ -28,11 +24,9 @@ QVariant UsersListModel::data(const QModelIndex &index, int role) const {
         }
         if(role == Qt::BackgroundRole)
             return QColor(RemoteCursor::getColor(mData[index.row()].getSiteId()));
-
     }
     return QVariant();
 }
-
 
 void UsersListModel::addUser(const UserInfo& user) {
     beginInsertRows(QModelIndex(),mData.size(),mData.size());
@@ -48,7 +42,8 @@ void UsersListModel::removeUser(const UserInfo& user) {
             endRemoveRows();
         }
     }
-
 }
 
-
+void UsersListModel::clear() {
+    mData.clear();
+}

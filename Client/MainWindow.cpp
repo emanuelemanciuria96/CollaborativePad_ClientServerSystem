@@ -17,7 +17,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     setStyleSheet();
     setMainPalette();
     setWindowTitle("Shared Editor");
-
+    installEventFilter(this);
     //statusBar initialize
     statusBar = new QStatusBar(this);
     numUsers = new QLabel(statusBar);
@@ -92,6 +92,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::startSignIn);
     connect(widgetSignIn, &SignInWidget::backToLogIn, this, &MainWindow::backToLogIn);
     connect(highlightAction, &QAction::triggered, shEditor, &SharedEditor::highlightSymbols);
+    connect(highlightAction, &QAction::triggered, editor, &EditorGUI::setCharFormat);
     connect(closeAction, &QAction::triggered, this, &MainWindow::clsFile);
     connect(shEditor, &SharedEditor::returnToGrid, this, &MainWindow::clsFile);
     connect(closeAction, &QAction::triggered, shEditor, &SharedEditor::requireFileClose);
@@ -201,6 +202,7 @@ void MainWindow::clsFile() {
         highlightAction->trigger();
         highlightAction->setChecked(false);
     }
+    usersModel->clear();
 }
 
 void MainWindow::loginSettings() {
@@ -480,14 +482,19 @@ void MainWindow::setUsersList() {
 
     dockWidgetUsers = new QDockWidget(this);
     dockWidgetUsers->setAllowedAreas(Qt::RightDockWidgetArea );
-    dockWidgetUsers->setFeatures(QDockWidget::DockWidgetVerticalTitleBar);
-    dockWidgetUsers->setMouseTracking(true);
+    dockWidgetUsers->setFeatures(QDockWidget::NoDockWidgetFeatures);
+//    dockWidgetUsers->setMouseTracking(true);
 
 //    treeShowAction = new QAction();
 //    treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
 //    toolBar->addAction(treeShowAction);
-
-    dockWidgetUsers->setWindowTitle("Users connected");
+//    auto w = new  QWidget(dockWidgetUsers);
+    auto l = new QLabel("Users connected");
+//    w->setLayout(new QVBoxLayout(w));
+//    w->layout()->addWidget(l);
+//    dockWidgetUsers->setWindowTitle("Users connected");
+    dockWidgetUsers->setTitleBarWidget(l);
+    dockWidgetUsers->titleBarWidget()->setStyleSheet("background-color:red");
     dockWidgetUsers->setWidget(usersView);
     dockWidgetUsers->setPalette(mainPalette);
     auto p = dockWidgetUsers->palette();
@@ -515,7 +522,6 @@ void MainWindow::setMainPalette() {
     mainPalette.setColor(QPalette::BrightText,QColor("#FF9800"));
     mainPalette.setColor(QPalette::ButtonText,QColor("black"));
     mainPalette.setColor(QPalette::Button,QColor("#FF9800"));
-
 }
 
 void MainWindow::setNumUsers(int n) {
@@ -541,3 +547,5 @@ void MainWindow::showHideLeftDock(dock_type dock) {
         treeShowAction->setToolTip("Hide "+msgs[dock]);
     }
 }
+
+
