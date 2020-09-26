@@ -222,15 +222,10 @@ void SharedEditor::process(DataPacket pkt) {
 
 void SharedEditor::processCursorPos(CursorPosition &curPos) {
     if (curPos.getSiteId() > 0) {
-        if (curPos.getIndex() == -1) {
-            //il client si è disconnesso
-            emit removeCursor(curPos.getSiteId());
-        } else {
-            auto index = curPos.getIndex();
-            auto symbol = curPos.getSymbol();
-            auto pos = getIndex(index, symbol);
-            emit remoteCursorPosChanged(pos, curPos.getSiteId());
-        }
+        auto index = curPos.getIndex();
+        auto symbol = curPos.getSymbol();
+        auto pos = getIndex(index, symbol);
+        emit remoteCursorPosChanged(pos, curPos.getSiteId());
     }
 }
 
@@ -368,6 +363,7 @@ void SharedEditor::processUserInfo(UserInfo &userInfo) {
                   << " - site ID:" << userInfo.getSiteId() << "\n"
                   << " - user:" << userInfo.getUsername().toStdString() << std::endl;
         emit removeUser(userInfo);
+        emit removeCursor(userInfo.getSiteId());
     }
     else if(userInfo.getType() == UserInfo::user_request){
         QString str = userInfo.getUsername();
@@ -705,11 +701,12 @@ qint32 SharedEditor::getSiteId() {
 void SharedEditor::highlightSymbols(bool checked) {
     for(auto s : _symbols){
         auto siteId = s.getSymId().getSiteId();
-        auto pos = getIndex(-1,s);
+        qint32 pos = getIndex(-1,s);
         if(siteId>0)
             emit highlight(pos, siteId);
     }
     highlighting = checked;
+
 }
 
 bool SharedEditor::getHighlighting() {
@@ -733,7 +730,6 @@ void SharedEditor::obtainUser(qint32 siteId) {
 }
 
 void SharedEditor::closeFile() {
-
     fileOpened = "";
     isFileOpened = false;
     if( !_symbols.empty() ) {

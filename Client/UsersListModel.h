@@ -18,9 +18,11 @@ public:
     explicit UsersListModel(QObject *parent = nullptr);
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;
+    void clear();
 public slots:
     void removeUser(const UserInfo& user);
     void addUser(const UserInfo& user);
+
 };
 
 

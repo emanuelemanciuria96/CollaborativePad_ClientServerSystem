@@ -366,17 +366,12 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::cls):{
-            DataPacket pkt1(_siteID, 0, DataPacket::cursorPos);
-            auto symbol = Symbol();
-            pkt1.setPayload(std::make_shared<CursorPosition>(symbol,-1,_siteID));
-
             DataPacket pkt2(_siteID, 0, DataPacket::user_info);
             pkt2.setPayload(std::make_shared<UserInfo>(_siteID,UserInfo::disconnect,_username));
 
             if( operatingFileName!="" ) {
                 _sockets.detachSocket(operatingFileName, _siteID);
                 msgHandler->submit(&NetworkServer::processClsCommand, command);
-                _sockets.broadcast(operatingFileName,_siteID,pkt1);
                 _sockets.broadcast(operatingFileName,_siteID,pkt2);
                 operatingFileName = "";
 
