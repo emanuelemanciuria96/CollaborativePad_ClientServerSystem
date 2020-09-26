@@ -131,10 +131,13 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(inviteListAction, &QAction::triggered, [this](){showHideLeftDock(invitelist);});
     connect(treeShowAction, &QAction::triggered,[this](){showHideLeftDock(tree);});
     connect(editor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
+    connect(editor, &EditorGUI::userQuery,shEditor,&SharedEditor::obtainUser);
     connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
     connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::hideNumUsers);
     connect(shEditor, &SharedEditor::addUser, usersModel, &UsersListModel::addUser);
     connect(shEditor, &SharedEditor::removeUser, usersModel, &UsersListModel::removeUser);
+    connect(shEditor, &SharedEditor::userNameArrived, editor, &EditorGUI::recordUserWriter);
+    connect(shEditor, &SharedEditor::flushFileWriters, editor, &EditorGUI::flushFileWriters);
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();

@@ -77,7 +77,6 @@ void NetworkServer::localInsert(Payload &pl) {
     Symbol sym = m.getSymbol();
     QString fileName = active_threads.find(m.getSiteId())->second->getOperatingFileName();
     if( fileName != "" ) {
-        std::cout<<"adding symbol in: "+fileName.toStdString()<<std::endl;
         files.addSymbolInFile(fileName, sym);
         //show_file(fileName);
     }

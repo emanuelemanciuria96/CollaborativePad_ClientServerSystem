@@ -236,6 +236,11 @@ void Transceiver::sendPacket(DataPacket pkt){
             break;
         }
 
+        case (DataPacket::user_info):{
+            sendUserInfo(pkt);
+            break;
+        }
+
         default: {
             std::cout<<"Coglione c'è un errore"<<std::endl;
         }
@@ -330,7 +335,7 @@ void Transceiver::sendCommand(DataPacket& packet){
 
 }
 
-void Transceiver::sendCursorPos(DataPacket &packet) {
+void Transceiver::sendCursorPos(DataPacket &pkt) {
     QDataStream out;
     out.setDevice(socket);
     out.setVersion(QDataStream::Qt_5_5);
@@ -338,7 +343,7 @@ void Transceiver::sendCursorPos(DataPacket &packet) {
     buf.open(QBuffer::WriteOnly);
     QDataStream tmp(&buf);
 
-    auto ptr = std::dynamic_pointer_cast<CursorPosition>(packet.getPayload());
+    auto ptr = std::dynamic_pointer_cast<CursorPosition>(pkt.getPayload());
     auto vector = QVector<quint32>();
     for (auto p : ptr->getSymbol().getPos()){
         vector.push_back(p);
@@ -348,12 +353,32 @@ void Transceiver::sendCursorPos(DataPacket &packet) {
         << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex();
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
-    out << bytes << packet.getSource() << packet.getErrcode() << packet.getTypeOfData()
+    out << bytes << pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData()
         << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
         << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
 
     //std::cout << "sending cursor index " << ptr->getSiteId() << " " << ptr->getIndex() << std::endl;
 
+    socket->waitForBytesWritten(-1);
+}
+
+void Transceiver::sendUserInfo(DataPacket &pkt) {
+
+    QDataStream out;
+    out.setDevice(socket);
+    out.setVersion(QDataStream::Qt_5_5);
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+
+    auto ptr = std::dynamic_pointer_cast<UserInfo>(pkt.getPayload());
+
+    tmp << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage();
+
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
+    out << bytes<<pkt.getSource() << pkt.getErrcode() << (quint32)pkt.getTypeOfData();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage();
     socket->waitForBytesWritten(-1);
 }
 

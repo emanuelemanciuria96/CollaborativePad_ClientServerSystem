@@ -172,7 +172,6 @@ void SharedEditor::localErase(qint32 index) {
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
-    this->to_string();
 
 }
 
@@ -370,11 +369,17 @@ void SharedEditor::processUserInfo(UserInfo &userInfo) {
                   << " - user:" << userInfo.getUsername().toStdString() << std::endl;
         emit removeUser(userInfo);
     }
+    else if(userInfo.getType() == UserInfo::user_request){
+        QString str = userInfo.getUsername();
+        emit userNameArrived(userInfo.getSiteId(),str);
+    }
     else {
         std::cout << "sta partecipando al file lo user:\n"
                   << " - site ID:" << userInfo.getSiteId() << "\n"
                   << " - user:" << userInfo.getUsername().toStdString() << std::endl;
         emit addUser(userInfo);
+        QString str = userInfo.getUsername();
+        emit userNameArrived(userInfo.getSiteId(),str, true);
     }
 }
 
@@ -684,8 +689,7 @@ QString SharedEditor::to_string() {
                   });
 
 
-//    std::cout<<"Local editor: "<<str.toStdString()<<std::endl;
-    return str;
+   return str;
 }
 
 
@@ -712,6 +716,22 @@ bool SharedEditor::getHighlighting() {
     return highlighting;
 }
 
+void SharedEditor::obtainUser(qint32 siteId) {
+    QString str = "";
+
+    if( siteId==_siteId){
+        userNameArrived(siteId,_user);
+        return;
+    }
+
+    auto ptr = std::make_shared<UserInfo>( siteId,UserInfo::user_request,str);
+    DataPacket packet(_siteId,0,DataPacket::user_info);
+    packet.setPayload(ptr);
+
+    emit transceiver->getSocket()->sendPacket(packet);
+
+}
+
 void SharedEditor::closeFile() {
 
     fileOpened = "";
@@ -721,6 +741,7 @@ void SharedEditor::closeFile() {
         _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
     }
     emit hideNumUsers();
+    emit flushFileWriters();
 
 }
 

@@ -77,6 +77,7 @@ public slots:
     void submitInvite(const QString& file, const QString& user);
     void sendInviteAnswer(const QString& mode, const QString& user, const QString& filename);
     void submitUri(const QString& file);
+    void obtainUser(qint32 siteId);
 
 signals:
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
@@ -98,18 +99,22 @@ signals:
     void setNumUsers(int n);
     void hideNumUsers();
     void returnToGrid();
-    void addUser(UserInfo user);
-    void removeUser(UserInfo user);
+    void addUser(UserInfo& user);
+    void removeUser(UserInfo& user);
+    void userNameArrived(qint32 siteId, QString& user, bool connected=false);
+    void flushFileWriters();
 
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );
     void localErase( qint32 index );
-    QString to_string();
     qint32 getSiteId();
     void sendCursorPos(qint32 index);
     void highlightSymbols(bool checked);
     bool getHighlighting();
+    const Symbol fromPosToSymbol(int pos){ return _symbols[pos]; }
+    QString to_string();
+
 };
 
 

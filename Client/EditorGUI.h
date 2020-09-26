@@ -49,6 +49,7 @@ private:
     bool myCursorPosUpdateBlocker;
     QTimer* curBlockerTimer;
     uint nUsers = 0;
+    std::map<qint32,QString> file_writers;
 
     void setUpGUI();
     void loadSymbols();
@@ -76,10 +77,15 @@ public slots:
     void highlight(qint32 pos, qint32 siteId);
     void exportToPdf();
     void setCurrentFileName(QString filename);
+    void highlightedTip(int pos);
+    void recordUserWriter(qint32 siteId,QString& user,bool connection=false);
+    void flushFileWriters();
 
 signals:
     void clear();
     void setNumUsers(int n);
+    void userQuery(qint32 siteId);
+
 public:
     EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);

@@ -21,6 +21,7 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     connect(timer, &QTimer::timeout, this, &EditorGUI::enableSendCursorPos);
     connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
+    connect(textEdit, &MyTextEdit::tipRequest, this,&EditorGUI::highlightedTip);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
@@ -336,10 +337,10 @@ void EditorGUI::keyPressEvent(QKeyEvent *e) {
 QTextCharFormat EditorGUI::getFormat(qint32 siteId) {
     auto format = QTextCharFormat();
     auto color = QColor();
-    if (siteId == model->getSiteId())
-        color.setNamedColor(RemoteCursor::getColor(model->getSiteId()));
-    else
-        color = getRemoteCursor(siteId)->color;
+    //if (siteId == model->getSiteId())
+        color.setNamedColor(RemoteCursor::getColor(siteId));
+    //else
+      //  color = getRemoteCursor(siteId)->color;
     color.setAlpha(124);
     format.setBackground(QBrush(color));
 
@@ -365,3 +366,27 @@ void EditorGUI::exportToPdf() {
     }
 }
 
+void EditorGUI::highlightedTip(int pos) {
+    if(!model->getHighlighting()) return;
+    auto sym = model->fromPosToSymbol(pos+1);
+    qint32 siteId = sym.getSymId().getSiteId();
+    auto i = file_writers.find(siteId);
+    if( i != file_writers.end() ){
+        std::cout<<"Disegnare l'etichetta con lo user: "<<i->second.toStdString()<<std::endl;
+    }
+    else
+        emit userQuery(siteId);
+}
+
+void EditorGUI::recordUserWriter(qint32 siteId, QString& user,bool connection){
+    auto i = file_writers.find(siteId);
+    if( i == file_writers.end() )
+        file_writers.insert(std::make_pair(siteId,user)); // salvo in "cache"
+
+    if(!connection)
+        std::cout<<"Disegnare l'etichetta con lo user: "<<user.toStdString()<<std::endl;
+}
+
+void EditorGUI::flushFileWriters() {
+    file_writers.clear();
+}

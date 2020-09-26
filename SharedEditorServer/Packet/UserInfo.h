@@ -14,6 +14,7 @@ public:
         conn_broad,
         conn_ack,
         disconnect,
+        user_reqest,
     }info_t;
 
     UserInfo(qint32 siteId, info_t type, QString& user_name):
@@ -23,6 +24,7 @@ public:
     QString getUsername(){ return _username; }
     QPixmap getImage(){ return _image; }
     bool obtainImage(QString& connectionId);
+    bool obtainUser(QString& connectionId);
 
 private:
 

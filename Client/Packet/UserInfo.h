@@ -15,6 +15,7 @@ public:
         conn_broad,
         conn_ack,
         disconnect,
+        user_request,
     }info_t;
 
     UserInfo(qint32 siteId, info_t type, QString& user_name, QPixmap&  image):

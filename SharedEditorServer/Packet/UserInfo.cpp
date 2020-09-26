@@ -29,3 +29,25 @@ bool UserInfo::obtainImage(QString &connectionId) {
 
     return true;
 }
+
+bool UserInfo::obtainUser(QString &connectionId) {
+    auto db = QSqlDatabase::database(connectionId+"_login");
+    db.setDatabaseName("db/login.db");
+
+    if (!db.open()) {
+        return false;
+    }
+
+    QSqlQuery query(db);
+    if(!query.exec("SELECT USER FROM LOGIN WHERE SITEID='"+QString::number(_siteID)+"'"))
+        return false;
+
+    db.close();
+
+    if(query.first())
+        _username = query.value("USER").toString();
+    else
+        return false;
+
+    return true;
+}

@@ -17,7 +17,12 @@ private:
 public:
     MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget* parent = 0);
 protected:
+    bool eventFilter(QObject *obj, QEvent *evt);
     void paintEvent(QPaintEvent *e) override;
+
+signals:
+    void tipRequest(int pos);
+
 };
 
 

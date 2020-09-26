@@ -110,6 +110,11 @@ void ServerThread::recvPacket() {
                 break;
             }
 
+            case (DataPacket::user_info): {
+                recvUserInfo(packet, in);
+                break;
+            }
+
             default: {
                 std::cout << "il dato in arrivo è corrotto, necessario un riallineamento dei dati" << std::endl;
                 packet.setErrcode(-1);
@@ -455,6 +460,28 @@ void ServerThread::recvCursorPos(DataPacket &packet, QDataStream &in) {
     packet.setPayload(std::make_shared<CursorPosition>(symbol,index,siteId));
 
     _sockets.broadcast(operatingFileName, siteId,packet);
+}
+
+void ServerThread::recvUserInfo(DataPacket &packet, QDataStream &in) {
+
+    qint32 siteId;
+    qint32 type;
+    QString user;
+    QPixmap image;
+
+    in >> siteId >> type >> user >> image;
+
+    if(type == UserInfo::user_reqest) {
+        auto ptr = std::make_shared<UserInfo>(siteId, (UserInfo::info_t) type, user);
+        packet.setPayload(ptr);
+
+        ptr->obtainUser(threadId);
+
+        std::cout<<"obtained user: "<<ptr->getUsername().toStdString()<<" from siteId: "<<ptr->getSiteId()<<std::endl;
+
+        sendPacket(packet);
+    }
+
 }
 
 void ServerThread::sendPacket(DataPacket packet){

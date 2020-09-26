@@ -53,7 +53,8 @@ private:
     void sendLoginInfo(DataPacket& pkt);
     void sendMessage(DataPacket& pkt);
     void sendCommand(DataPacket& pkt);
-    void sendCursorPos(DataPacket& packet);
+    void sendCursorPos(DataPacket& pkt);
+    void sendUserInfo(DataPacket& pkt);
 
 
     void recvLoginInfo(DataPacket& pkt, QDataStream& in);

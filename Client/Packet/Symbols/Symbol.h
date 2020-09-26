@@ -31,7 +31,7 @@ public:
     std::vector<quint32> getPos(){ return _pos; }
     void setPos(std::vector<quint32>& pos){ _pos = pos; }
     QChar getValue() { return _ch; }
-    SymId getSymId() { return _symId; }
+    SymId getSymId() const { return _symId; }
 //    Symbol& operator=(const Symbol& s){
 //        if(this != &s){
 //            this->_ch =s._ch;

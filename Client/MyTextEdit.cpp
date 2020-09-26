@@ -6,10 +6,12 @@
 #include <iostream>
 #include <QPagedPaintDevice>
 #include "MyTextEdit.h"
+#include <QMouseEvent>
 
 
 MyTextEdit::MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget *parent) : QTextEdit(parent){
     this->remoteCursors = std::shared_ptr<std::vector<RemoteCursor>>(remoteCursors);
+    this->installEventFilter(this);
 
 }
 
@@ -40,3 +42,18 @@ void MyTextEdit::paintEvent(QPaintEvent *e) {
     }
 }
 
+bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
+
+    if( obj == this && ev->type() == QEvent::ToolTip ){
+        auto event = dynamic_cast<QHelpEvent*>(ev);
+        auto pos = event->pos();
+        QTextCursor curs = this->cursorForPosition(pos);
+        int posInText = curs.position();
+        if( !curs.atEnd() && posInText!=0 &&
+            curs.columnNumber() && document()->characterAt(posInText).unicode()!=8233 ) {
+
+            emit tipRequest(posInText);
+        }
+    }
+    return false;
+}
