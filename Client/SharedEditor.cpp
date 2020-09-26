@@ -159,19 +159,22 @@ void SharedEditor::localInsert(qint32 index, QChar value) {
 
 }
 
-void SharedEditor::localErase(qint32 index) {
+void SharedEditor::localErase(qint32 index, qint32 num) {
     if ( index > _symbols.size() - 2 ){
         throw "fuori dai limiti"; //da implementare classe eccezione
     }
+
     index++;
-    Symbol s = _symbols[index];
-    _symbols.erase(_symbols.begin()+index);
+    auto s = _symbols.begin()+index;
+    for( ;s<_symbols.begin()+index+num; s++ ) {
+        DataPacket packet(_siteId, -1, DataPacket::textTyping);
+        packet.setPayload(std::make_shared<Message>(Message::removal, _siteId, *s, index));
 
-    DataPacket packet(_siteId, -1, DataPacket::textTyping);
-    packet.setPayload( std::make_shared<Message>(Message::removal,_siteId,s,index) );
+        int id = qMetaTypeId<DataPacket>();
+        emit transceiver->getSocket()->sendPacket(packet);
+    }
 
-    int id = qMetaTypeId<DataPacket>();
-    emit transceiver->getSocket()->sendPacket(packet);
+    _symbols.erase(_symbols.begin()+index,_symbols.begin()+index+num);
 
 }
 

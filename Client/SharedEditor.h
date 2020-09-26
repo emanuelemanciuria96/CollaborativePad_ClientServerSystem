@@ -107,7 +107,7 @@ signals:
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar value );
-    void localErase( qint32 index );
+    void localErase( qint32 index, qint32 num);
     qint32 getSiteId();
     void sendCursorPos(qint32 index);
     void highlightSymbols(bool checked);
