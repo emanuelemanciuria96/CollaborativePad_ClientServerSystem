@@ -112,10 +112,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(inviteUserWidget, &InviteUserWidget::sendInviteAnswer, shEditor, &SharedEditor::sendInviteAnswer);
     connect(shEditor, &SharedEditor::fileNameEdited, inviteUserWidget, &InviteUserWidget::editFileName);
     connect(shEditor, &SharedEditor::fileNameEdited, addUserWidget, &AddUserWidget::editFileName);
-    connect(treeView, &FileSystemTreeView::fileNameEdited, addUserWidget, &AddUserWidget::editFileName);
     connect(shEditor, &SharedEditor::fileDeletion, inviteUserWidget, &InviteUserWidget::processFileDeleted);
-    connect(treeView, &FileSystemTreeView::rmvFileRequest, addUserWidget, &AddUserWidget::processFileDeleted);
-    connect(gridView, &FileSystemGridView::rmvFileRequest, addUserWidget, &AddUserWidget::processFileDeleted);
     connect(gridView, &FileSystemGridView::rmvFileRequest, treeView, &FileSystemTreeView::remoteFileDeletion);
     connect(uriWidget, &UriWidget::submitUri, shEditor, &SharedEditor::submitUri);
     connect(shEditor, &SharedEditor::uriResultArrived, uriWidget, &UriWidget::uriResultArrived);
@@ -138,6 +135,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::removeUser, usersModel, &UsersListModel::removeUser);
     connect(shEditor, &SharedEditor::userNameArrived, editor, &EditorGUI::recordUserWriter);
     connect(shEditor, &SharedEditor::flushFileWriters, editor, &EditorGUI::flushFileWriters);
+    connect(inviteAction, &QAction::triggered, this, &MainWindow::transparentForMouse);
+    connect(addUserWidget, &AddUserWidget::closing, this, &MainWindow::transparentForMouse);
+    connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::transparentForMouse);
+    connect(gridView, &FileSystemGridView::inviteRequest, this, &MainWindow::transparentForMouse);
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
@@ -153,7 +154,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
 }
 
-void MainWindow::transparentForMouse(bool var) {
+void MainWindow::transparentForMouse() {
+    bool var = !toolBar->testAttribute(Qt::WA_TransparentForMouseEvents);
     toolBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     gridView->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     treeView->setAttribute(Qt::WA_TransparentForMouseEvents, var);
@@ -185,6 +187,7 @@ void MainWindow::changeInviteAction(bool state){
 }
 
 void MainWindow::clsFile() {
+    dockWidgetUsers->hide();
     centralWidget->setCurrentWidget(gridView);
     leftDockWidgets[tree]->hide();
     if(gridView->getState()==gridView->getMainFolder()){

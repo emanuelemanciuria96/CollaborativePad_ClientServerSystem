@@ -11,6 +11,10 @@ InviteUserWidgetItem::InviteUserWidgetItem(QListWidgetItem* item, QString user, 
     connect(ui->acceptButton, &QPushButton::clicked, this, &InviteUserWidgetItem::emitAcceptInvite);
     connect(ui->rejectButton, &QPushButton::clicked, this, &InviteUserWidgetItem::emitRejectInvite);
     ui->textLabel->setText(QString("User "+_user+" invited you to modify document \""+_fileName+"\"."));
+    ui->acceptButton->setIcon(QIcon("./icons/invite_accept_icon.png"));
+    ui->acceptButton->setIconSize(QSize(30, 30));
+    ui->rejectButton->setIcon(QIcon("./icons/invite_reject_icon.png"));
+    ui->rejectButton->setIconSize(QSize(30, 30));
 }
 
 InviteUserWidgetItem::~InviteUserWidgetItem()
