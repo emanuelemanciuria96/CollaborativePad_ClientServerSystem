@@ -38,6 +38,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     toolBar->setMinimumHeight(45);
     toolBar->setIconSize(QSize(45, 45));
     toolBar->hide();
+    toolBar->setStyleSheet({"background-color:white;"});
     setCentralWidget(centralWidget);
     // tree file system view creation
     treeFileSystemSettings();
@@ -72,6 +73,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(gridView, &FileSystemGridView::openFolder,this, &MainWindow::setToolBarFolderGrid);
     connect(gridView, &FileSystemGridView::back,this, &MainWindow::setToolBarGrid);
     connect(gridView, &FileSystemGridView::canInvite,this, &MainWindow::changeInviteAction);
+    connect(gridView, &FileSystemGridView::canDelete,this, &MainWindow::changeDeleteAction);
     connect(gridView, &FileSystemGridView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
     connect(gridView, &FileSystemGridView::renFileRequest,treeView , &FileSystemTreeView::editFileName);
     connect(gridView, &FileSystemGridView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
@@ -108,6 +110,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(addUserWidget, &AddUserWidget::submitInvite, shEditor, &SharedEditor::submitInvite);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::openAddUser);
     connect(inviteAction, &QAction::triggered, gridView, &FileSystemGridView::invite);
+    connect(deleteAction, &QAction::triggered, gridView, &FileSystemGridView::deleteCurrent);
     connect(gridView, &FileSystemGridView::inviteRequest, this, &MainWindow::openAddUser);
     connect(shEditor, &SharedEditor::inviteListArrived, inviteUserWidget, &InviteUserWidget::inviteListArrived);
     connect(inviteUserWidget, &InviteUserWidget::sendInviteAnswer, shEditor, &SharedEditor::sendInviteAnswer);
@@ -136,7 +139,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::removeUser, usersModel, &UsersListModel::removeUser);
     connect(shEditor, &SharedEditor::userNameArrived, editor, &EditorGUI::recordUserWriter);
     connect(shEditor, &SharedEditor::flushFileWriters, editor, &EditorGUI::flushFileWriters);
-    connect(inviteAction, &QAction::triggered, this, &MainWindow::transparentForMouse);
     connect(addUserWidget, &AddUserWidget::closing, this, &MainWindow::transparentForMouse);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::transparentForMouse);
     connect(gridView, &FileSystemGridView::inviteRequest, this, &MainWindow::transparentForMouse);
@@ -184,6 +186,14 @@ void MainWindow::changeInviteAction(bool state){
         inviteAction->setToolTip("Invite user");
     }else{
         inviteAction->setToolTip("");
+    }
+}
+void MainWindow::changeDeleteAction(bool state){
+    deleteAction->setDisabled(!state);
+    if(state){
+        deleteAction->setToolTip("Delete file");
+    }else{
+        deleteAction->setToolTip("");
     }
 }
 
@@ -264,6 +274,33 @@ void MainWindow::gridFileSystemSettings() {
 
 void MainWindow::setToolBar() {
     //EditorToolbar
+    backAction = new QAction();
+    backAction->setIcon(QIcon("./icons/grid_back_icon.png"));
+    backAction->setVisible(false);
+    backAction->setToolTip("Back");
+    toolBar->addAction(backAction);
+
+    addAction = new QAction();
+    addAction->setIcon(QIcon("./icons/add_file_icon.png"));
+    addAction->setVisible(false);
+    addAction->setToolTip("New file");
+    toolBar->addAction(addAction);
+
+    deleteAction = new QAction();
+    deleteAction->setIcon(QIcon("./icons/delete_file_icon.png"));
+    deleteAction->setVisible(false);
+    deleteAction->setToolTip("Delete file");
+    toolBar->addAction(deleteAction);
+
+    closeAction = new QAction();
+    closeAction->setIcon(QIcon("./icons/close.png"));
+    closeAction->setVisible(false);
+    closeAction->setToolTip("Close file");
+    toolBar->addAction(closeAction);
+
+    QAction* separator1 = toolBar->addSeparator();
+    separator1->setObjectName("separator1");
+
     treeShowAction = new QAction();
     treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
     treeShowAction->setVisible(false);
@@ -278,12 +315,6 @@ void MainWindow::setToolBar() {
     highlightAction->setVisible(false);
     toolBar->addAction(highlightAction);
 
-    closeAction = new QAction();
-    closeAction->setIcon(QIcon("./icons/close.png"));
-    closeAction->setVisible(false);
-    closeAction->setToolTip("Close file");
-    toolBar->addAction(closeAction);
-
     pdfAction = new QAction();
     pdfAction->setIcon(QIcon("./icons/pdf.png"));
     pdfAction->setVisible(false);
@@ -291,17 +322,6 @@ void MainWindow::setToolBar() {
     toolBar->addAction(pdfAction);
 
     //GridToolbar
-    addAction = new QAction();
-    addAction->setIcon(QIcon("./icons/grid_add_icon.png"));
-    addAction->setVisible(false);
-    addAction->setToolTip("New file");
-    toolBar->addAction(addAction);
-
-    backAction = new QAction();
-    backAction->setIcon(QIcon("./icons/grid_back_icon.png"));
-    backAction->setVisible(false);
-    backAction->setToolTip("Back");
-    toolBar->addAction(backAction);
 
     inviteAction = new QAction();
     inviteAction->setIcon(QIcon("./icons/grid_invite_icon.png"));
@@ -347,9 +367,10 @@ void MainWindow::setToolBar() {
 
 void MainWindow::setToolBarEditor() {
     backAction->setVisible(false);
-    addAction->setVisible(false);
     inviteAction->setVisible(false);
 
+    addAction->setVisible(true);
+    deleteAction->setVisible(true);
     treeShowAction->setVisible(true);
     highlightAction->setVisible(true);
     closeAction->setVisible(true);
@@ -365,6 +386,8 @@ void MainWindow::setToolBarGrid() {
 
         backAction->setVisible(false);
         addAction->setVisible(true);
+        deleteAction->setVisible(true);
+        deleteAction->setDisabled(true);
         inviteAction->setVisible(true);
         inviteAction->setDisabled(true);
     }
@@ -378,6 +401,9 @@ void MainWindow::setToolBarFolderGrid(QString folder) {
         pdfAction->setVisible(false);
 
         addAction->setVisible(false);
+        deleteAction->setVisible(true);
+        deleteAction->setDisabled(true);
+
         backAction->setVisible(true);
         inviteAction->setVisible(true);
         inviteAction->setDisabled(true);
@@ -398,14 +424,14 @@ void MainWindow::setInviteListIcon(int num) {
     painter.drawImage(QRect(0, -5, orig.width(), orig.height()), orig);
     painter.setPen(Qt::white);
     QFont font = painter.font();
-    font.setPointSize(font.pointSize() * 5);
+    font.setPointSize(font.pointSize() * 4.5);
     painter.setFont(font);
     if(num>99) {
-        painter.drawText(168, 75, QString::number(99));
+        painter.drawText(120, 65, QString::number(99));
     }else if(num>9){
-        painter.drawText(168, 75, QString::number(num));
+        painter.drawText(120, 65, QString::number(num));
     }else{
-        painter.drawText(187, 75, QString::number(num));
+        painter.drawText(140, 65, QString::number(num));
     }
 
     inviteListAction->setIcon(QIcon(rounded));
@@ -542,10 +568,15 @@ void MainWindow::showHideLeftDock(dock_type dock) {
         for( auto d:leftDockWidgets) d->hide();
         leftDockWidgets[dock]->show();
         treeShowAction->setToolTip("Show "+msgs[dock]);
+        treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
+
     }else {
         leftDockWidgets[dock]->hide();
         treeShowAction->setToolTip("Hide "+msgs[dock]);
+        treeShowAction->setIcon(QIcon("./icons/hide_left_tree_menu.png"));
     }
 }
+
+
 
 

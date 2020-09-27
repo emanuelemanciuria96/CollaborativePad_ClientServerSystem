@@ -78,3 +78,4 @@ void MyTextEdit::showToolTip(qint32 siteId, QPoint globalPos, QString name) {
     QToolTip::showText(globalPos,name);
 
 }
+
