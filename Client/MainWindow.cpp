@@ -307,6 +307,12 @@ void MainWindow::setToolBar() {
     treeShowAction->setToolTip("Show tree");
     toolBar->addAction(treeShowAction);
 
+    inviteListAction = new QAction();
+    setInviteListIcon();
+    inviteListAction->setVisible(true);
+    inviteListAction->setToolTip("Show invites list");
+    toolBar->addAction(inviteListAction);
+
     highlightAction=new QAction();
     highlightAction->setCheckable(true);
     highlightAction->setShortcut(QKeySequence::Replace); //equivale a Ctrl+H
@@ -315,31 +321,25 @@ void MainWindow::setToolBar() {
     highlightAction->setVisible(false);
     toolBar->addAction(highlightAction);
 
-    pdfAction = new QAction();
-    pdfAction->setIcon(QIcon("./icons/pdf.png"));
-    pdfAction->setVisible(false);
-    pdfAction->setToolTip("Save as pdf");
-    toolBar->addAction(pdfAction);
-
-    //GridToolbar
-
-    inviteAction = new QAction();
-    inviteAction->setIcon(QIcon("./icons/grid_invite_icon.png"));
-    inviteAction->setVisible(false);
-    toolBar->addAction(inviteAction);
-
-    //entrambe
     uriAction = new QAction();
     uriAction->setIcon(QIcon("./icons/uri_icon.png"));
     uriAction->setVisible(true);
     uriAction->setToolTip("Add a file inserting a URI");
     toolBar->addAction(uriAction);
 
-    inviteListAction = new QAction();
-    setInviteListIcon();
-    inviteListAction->setVisible(true);
-    inviteListAction->setToolTip("Show invites list");
-    toolBar->addAction(inviteListAction);
+    inviteAction = new QAction();
+    inviteAction->setIcon(QIcon("./icons/grid_invite_icon.png"));
+    toolBar->addAction(inviteAction);
+
+
+    QAction* separator3 = toolBar->addSeparator();
+    separator1->setObjectName("separator3");
+
+    pdfAction = new QAction();
+    pdfAction->setIcon(QIcon("./icons/pdf.png"));
+    pdfAction->setVisible(false);
+    pdfAction->setToolTip("Save as pdf");
+    toolBar->addAction(pdfAction);
 
     userInfoAction = new QAction();
     const QPixmap orig = QPixmap("./images/profile.jpg");
@@ -367,7 +367,6 @@ void MainWindow::setToolBar() {
 
 void MainWindow::setToolBarEditor() {
     backAction->setVisible(false);
-    inviteAction->setVisible(false);
 
     addAction->setVisible(true);
     deleteAction->setVisible(true);
@@ -388,7 +387,6 @@ void MainWindow::setToolBarGrid() {
         addAction->setVisible(true);
         deleteAction->setVisible(true);
         deleteAction->setDisabled(true);
-        inviteAction->setVisible(true);
         inviteAction->setDisabled(true);
     }
 }
@@ -405,7 +403,6 @@ void MainWindow::setToolBarFolderGrid(QString folder) {
         deleteAction->setDisabled(true);
 
         backAction->setVisible(true);
-        inviteAction->setVisible(true);
         inviteAction->setDisabled(true);
     }
 }
