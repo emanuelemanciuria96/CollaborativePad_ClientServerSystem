@@ -16,6 +16,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     bkgnd = QPixmap("./textures/texture_clouds_background.png");
     setStyleSheet();
     setMainPalette();
+    setPalette(mainPalette);
+    setAutoFillBackground(true);
     setWindowTitle("Shared Editor");
     installEventFilter(this);
     //statusBar initialize
@@ -25,7 +27,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     statusBar->addPermanentWidget(numUsers);
     numUsers->hide();
     statusBar->showMessage ("");
-    statusBar->setPalette(mainPalette);
 //    statusBar->setStyleSheet(statusBar->styleSheet().append("background-color:#3F51B5"));
 
     toolBar = new QToolBar("Toolbar",this);
@@ -145,7 +146,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
 
-    setPalette(mainPalette);
+
     centralWidget->addWidget(loginDialog);
     centralWidget->addWidget(editor);
     centralWidget->addWidget(widgetSignIn);
@@ -175,7 +176,7 @@ void MainWindow::opnFileGrid(QString fileName) {
     auto palette = this->palette();
     palette.setColor(QPalette::Window,QColor("lightgray"));
     palette.setColor(QPalette::Base,QColor("white"));
-    setPalette(palette);
+//    setPalette(palette);
 }
 
 void MainWindow::changeInviteAction(bool state){
@@ -207,7 +208,6 @@ void MainWindow::clsFile() {
 
 void MainWindow::loginSettings() {
     loginDialog = new LoginDialog(this);
-    loginDialog->setPalette(mainPalette);
 }
 
 
@@ -224,7 +224,7 @@ void MainWindow::treeFileSystemSettings() {
 
     this->addDockWidget(Qt::LeftDockWidgetArea,leftDockWidgets[tree]);
     leftDockWidgets[tree]->hide();
-    leftDockWidgets[tree]->setPalette(mainPalette);
+//    leftDockWidgets[tree]->setPalette(mainPalette);
 
 }
 
@@ -259,7 +259,7 @@ void MainWindow::uriWidgetSetup() {
 
 void MainWindow::gridFileSystemSettings() {
     gridView = new FileSystemGridView();
-    gridView->setPalette(mainPalette);
+//    gridView->setPalette(mainPalette);
 }
 
 void MainWindow::setToolBar() {
@@ -342,7 +342,7 @@ void MainWindow::setToolBar() {
     spacerWidget->setVisible(true);
     toolBar->addWidget(spacerWidget);
     toolBar->addAction(userInfoAction);
-    toolBar->setPalette(mainPalette);
+//    toolBar->setPalette(mainPalette);
 }
 
 void MainWindow::setToolBarEditor() {
@@ -463,6 +463,13 @@ void MainWindow::resizeEvent(QResizeEvent *evt) {
     leftDockWidgets[uri]->setMinimumWidth(this->size().width() / 5);
     leftDockWidgets[uri]->setMaximumHeight(this->size().height() / 5);
     leftDockWidgets[uri]->setMinimumHeight(this->size().height() / 5);
+    auto p = palette();
+
+    gradient->setCenter(size().width()/2,size().height()/2);
+
+    auto brush = QBrush(*gradient);
+    p.setBrush(QPalette::Window,brush);
+    setPalette(p);
 }
 
 void MainWindow::setStyleSheet() {
@@ -494,34 +501,34 @@ void MainWindow::setUsersList() {
 //    w->layout()->addWidget(l);
 //    dockWidgetUsers->setWindowTitle("Users connected");
     dockWidgetUsers->setTitleBarWidget(l);
-    dockWidgetUsers->titleBarWidget()->setStyleSheet("background-color:red");
+//    dockWidgetUsers->titleBarWidget()->setStyleSheet("background-color:red");
     dockWidgetUsers->setWidget(usersView);
-    dockWidgetUsers->setPalette(mainPalette);
+//    dockWidgetUsers->setPalette(mainPalette);
     auto p = dockWidgetUsers->palette();
-    p.setColor(QPalette::Window,QColor("red"));
-    dockWidgetUsers->setPalette(p);
+//    p.setColor(QPalette::Window,QColor("red"));
+//    dockWidgetUsers->setPalette(p);
 
     this->addDockWidget(Qt::RightDockWidgetArea,dockWidgetUsers);
     dockWidgetUsers->hide();
 }
 
 void MainWindow::setMainPalette() {
-//    .dark-primary-color    { background: #303F9F; }
-//            .default-primary-color { background: #3F51B5; }
-//                .light-primary-color   { background: #C5CAE9; }
-//                            .text-primary-color    { color: #FFFFFF; }
-//                            .accent-color          { background: #FF9800; }
-//                            .primary-text-color    { color: #212121; }
-//                            .secondary-text-color  { color: #757575; }
-//                            .divider-color         { border-color: #BDBDBD; }
-
     mainPalette = QGuiApplication::palette();
-    mainPalette.setColor(QPalette::Window,QColor("#3F51B5"));
-    mainPalette.setColor(QPalette::WindowText,QColor("white"));
-    mainPalette.setColor(QPalette::Base,QColor("#C5CAE9"));
-    mainPalette.setColor(QPalette::BrightText,QColor("#FF9800"));
-    mainPalette.setColor(QPalette::ButtonText,QColor("black"));
-    mainPalette.setColor(QPalette::Button,QColor("#FF9800"));
+
+//    mainPalette.setColor(QPalette::WindowText,QColor("white"));
+    mainPalette.setColor(QPalette::Base,QColor("#E1ECF8"));
+//    mainPalette.setColor(QPalette::BrightText,QColor("#FF9800"));
+//    mainPalette.setColor(QPalette::ButtonText,QColor("black"));
+    mainPalette.setColor(QPalette::Button,QColor("#90e0ef"));
+
+    gradient = new QConicalGradient(QPointF(size().width()/2,size().height()/2),45);
+    gradient->setColorAt(0, QColor("#E6D0E2")); //rosso
+    gradient->setColorAt(0.25, QColor("#D0D7E6"));  //blu
+    gradient->setColorAt(0.75, QColor("#D0E6D4"));  //verde
+    gradient->setColorAt(0.5, QColor("#E6DFD0")); //giallo
+    gradient->setColorAt(1, QColor("#E6D0E2"));
+//    brush = new QBrush(*gradient);
+//    mainPalette.setBrush(QPalette::Window,*brush);
 }
 
 void MainWindow::setNumUsers(int n) {

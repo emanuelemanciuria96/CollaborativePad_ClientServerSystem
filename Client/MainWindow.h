@@ -58,6 +58,7 @@ private:
     QDockWidget *dockWidgetUsers;
     UsersListModel *usersModel;
     QPalette mainPalette;
+    QConicalGradient* gradient;
     QLabel *numUsers;
 
     void loginSettings();
