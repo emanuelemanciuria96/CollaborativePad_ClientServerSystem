@@ -332,6 +332,38 @@ void MainWindow::setToolBar() {
     inviteAction->setIcon(QIcon("./icons/grid_invite_icon.png"));
     toolBar->addAction(inviteAction);
 
+    QAction* separator2 = toolBar->addSeparator();
+    separator1->setObjectName("separator2");
+
+    undoAction = new QAction();
+    undoAction->setIcon(QIcon("./icons/undo_icon.png"));
+    undoAction->setVisible(true);
+    undoAction->setToolTip("Undo");
+    toolBar->addAction(undoAction);
+
+    redoAction = new QAction();
+    redoAction->setIcon(QIcon("./icons/redo_icon.png"));
+    redoAction->setVisible(true);
+    redoAction->setToolTip("Redo");
+    toolBar->addAction(redoAction);
+
+    cutAction = new QAction();
+    cutAction->setIcon(QIcon("./icons/cut_icon.png"));
+    cutAction->setVisible(true);
+    cutAction->setToolTip("Cut");
+    toolBar->addAction(cutAction);
+
+    copyAction = new QAction();
+    copyAction->setIcon(QIcon("./icons/copy_icon.png"));
+    copyAction->setVisible(true);
+    copyAction->setToolTip("Copy");
+    toolBar->addAction(copyAction);
+
+    pasteAction = new QAction();
+    pasteAction->setIcon(QIcon("./icons/paste_icon.png"));
+    pasteAction->setVisible(true);
+    pasteAction->setToolTip("Paste");
+    toolBar->addAction(pasteAction);
 
     QAction* separator3 = toolBar->addSeparator();
     separator1->setObjectName("separator3");
@@ -375,6 +407,12 @@ void MainWindow::setToolBarEditor() {
     highlightAction->setVisible(true);
     closeAction->setVisible(true);
     pdfAction->setVisible(true);
+
+    undoAction->setVisible(true);
+    redoAction->setVisible(true);
+    cutAction->setVisible(true);
+    copyAction->setVisible(true);
+    pasteAction->setVisible(true);
 }
 
 void MainWindow::setToolBarGrid() {
@@ -389,6 +427,12 @@ void MainWindow::setToolBarGrid() {
         deleteAction->setVisible(true);
         deleteAction->setDisabled(true);
         inviteAction->setDisabled(true);
+
+        undoAction->setVisible(false);
+        redoAction->setVisible(false);
+        cutAction->setVisible(false);
+        copyAction->setVisible(false);
+        pasteAction->setVisible(false);
     }
 }
 
@@ -405,6 +449,12 @@ void MainWindow::setToolBarFolderGrid(QString folder) {
 
         backAction->setVisible(true);
         inviteAction->setDisabled(true);
+
+        undoAction->setVisible(false);
+        redoAction->setVisible(false);
+        cutAction->setVisible(false);
+        copyAction->setVisible(false);
+        pasteAction->setVisible(false);
     }
 }
 void MainWindow::setInviteListIcon(int num) {
@@ -565,13 +615,14 @@ void MainWindow::showHideLeftDock(dock_type dock) {
     if(leftDockWidgets[dock]->isHidden()) {
         for( auto d:leftDockWidgets) d->hide();
         leftDockWidgets[dock]->show();
-        treeShowAction->setToolTip("Show "+msgs[dock]);
-        treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
+        treeShowAction->setToolTip("Hide "+msgs[dock]);
+        treeShowAction->setIcon(QIcon("./icons/hide_left_tree_menu.png"));
 
     }else {
         leftDockWidgets[dock]->hide();
-        treeShowAction->setToolTip("Hide "+msgs[dock]);
-        treeShowAction->setIcon(QIcon("./icons/hide_left_tree_menu.png"));
+
+        treeShowAction->setToolTip("Show "+msgs[dock]);
+        treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
     }
 }
 

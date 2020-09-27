@@ -49,6 +49,12 @@ private:
     QAction* pdfAction;
     QAction* uriAction;
     QAction* inviteListAction;
+    QAction* undoAction;
+    QAction* redoAction;
+    QAction* cutAction;
+    QAction* copyAction;
+    QAction* pasteAction;
+
     QAction* userInfoAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
