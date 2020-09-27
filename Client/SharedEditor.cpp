@@ -48,10 +48,10 @@ quint32 intermediateValue(quint32 prev,quint32 next,double factor){
     // calcolo del valore intermedio
     double tmp=(next-prev)*factor;
     quint32 val=prev+tmp;
-    if(val==next){
-        val--;
-    } else if (val==prev){
+    if(val==prev){
         val++;
+    } else if (val==next){
+        val--;
     }
     return val;
 }
@@ -149,7 +149,7 @@ void SharedEditor::localInsert(qint32 index, QString& str) {
     int i = 0;
     for(auto value: str) {
         std::vector<quint32> newPos;
-        generateNewPosition(prev, next, newPos);
+        generateNewPosition2(prev, next, newPos);
         prev = newPos;
 
         Symbol s(value, _siteId, _counter++, newPos);
