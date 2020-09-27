@@ -1,4 +1,7 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Client_autogen.dir/AutogenUsed.txt"
+  "CMakeFiles/Client_autogen.dir/ParseCache.txt"
+  "Client_autogen"
   "CMakeFiles/Client.dir/AddUserWidget.cpp.obj"
   "CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj"
   "CMakeFiles/Client.dir/EditorGUI.cpp.obj"
@@ -31,9 +34,6 @@ file(REMOVE_RECURSE
   "Client.exe"
   "Client.exe.manifest"
   "Client.pdb"
-  "CMakeFiles/Client_autogen.dir/AutogenUsed.txt"
-  "CMakeFiles/Client_autogen.dir/ParseCache.txt"
-  "Client_autogen"
   "libClient.dll.a"
 )
 

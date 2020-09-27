@@ -8,6 +8,7 @@
 #include "EditorGUI.h"
 #include <QScrollBar>
 #include <QtWidgets/QStyle>
+#include <QtWidgets/QToolTip>
 
 EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     signalBlocker = false;
@@ -104,14 +105,18 @@ void EditorGUI::setModel(SharedEditor* _model) {
 //chiamata quando si effettuano modifiche sul editor
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i = 0;
-    if(model->getHighlighting()){
-        textEdit->setCurrentCharFormat(getFormat(model->getSiteId()));
-    }
     if (!signalBlocker) {
+//        if(model->getHighlighting())
+//            textEdit->setCurrentCharFormat(getFormat(model->getSiteId()));
+//        else {
+//            auto format = textEdit->currentCharFormat();
+//            format.setBackground(QBrush("white"));
+//            textEdit->setCurrentCharFormat(format);
+//        }
         myCursorPosUpdateBlocker = true;
         curBlockerTimer->start(500);
-        auto blocks = textEdit->document()->blockCount();
-        auto pages = textEdit->document()->pageCount();
+//        auto blocks = textEdit->document()->blockCount();
+//        auto pages = textEdit->document()->pageCount();
 //        std::cout << "Numero blocchi: " << blocks << " Numero pagine: " << pages << std::endl;
         if (!selected && pos == 0 && charsRemoved > 0 && charsAdded > 1) {
             charsAdded -= charsRemoved;
@@ -124,16 +129,16 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
             model->localErase(pos,charsRemoved);
-
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
             //std::cout << "Inserimento carattere " << index << std::endl;
+            QString str = "";
             for (i = 0; i < charsAdded; i++) {
-                model->localInsert(pos + i, textEdit->document()->characterAt(pos + i));
+                str+=textEdit->document()->characterAt(pos + i);
             }
+            model->localInsert(pos, str);
         }
         updateRemoteCursors(model->getSiteId(),pos);
-
     }
 }
 
@@ -151,6 +156,7 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
     signalBlocker = !signalBlocker;
     if(model->getHighlighting())
         cursor->setCharFormat(getFormat(siteId));
+
     cursor->insertText(value);
     //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
     signalBlocker = !signalBlocker;
@@ -230,8 +236,8 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     if (it == remoteCursors.end()) {
         remoteCursors.emplace_back(textEdit->document(), siteId);
         cursor = &remoteCursors.back();
-        connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
-        emit setNumUsers(++nUsers);
+        if(siteId!=0)
+            connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
     } else
         cursor = (&(*it));
     return cursor;
@@ -332,14 +338,11 @@ void EditorGUI::keyPressEvent(QKeyEvent *e) {
 
 }
 
-
 QTextCharFormat EditorGUI::getFormat(qint32 siteId) {
     auto format = QTextCharFormat();
     auto color = QColor();
-    //if (siteId == model->getSiteId())
-        color.setNamedColor(RemoteCursor::getColor(siteId));
-    //else
-      //  color = getRemoteCursor(siteId)->color;
+
+    color.setNamedColor(RemoteCursor::getColor(siteId));
     color.setAlpha(124);
     format.setBackground(QBrush(color));
 
@@ -365,16 +368,17 @@ void EditorGUI::exportToPdf() {
     }
 }
 
-void EditorGUI::highlightedTip(int pos) {
+void EditorGUI::highlightedTip(int pos, QPoint globalPos) {
     if(!model->getHighlighting()) return;
     auto sym = model->fromPosToSymbol(pos+1);
     qint32 siteId = sym.getSymId().getSiteId();
     auto i = file_writers.find(siteId);
-    if( i != file_writers.end() ){
-        std::cout<<"Disegnare l'etichetta con lo user: "<<i->second.toStdString()<<std::endl;
-    }
-    else
+    if( i != file_writers.end() )
+        showToolTip(siteId, globalPos);
+    else {
+        lastToolTipPos = globalPos;
         emit userQuery(siteId);
+    }
 }
 
 void EditorGUI::recordUserWriter(qint32 siteId, QString& user,bool connection){
@@ -383,9 +387,28 @@ void EditorGUI::recordUserWriter(qint32 siteId, QString& user,bool connection){
         file_writers.insert(std::make_pair(siteId,user)); // salvo in "cache"
 
     if(!connection)
-        std::cout<<"Disegnare l'etichetta con lo user: "<<user.toStdString()<<std::endl;
+        showToolTip(siteId,lastToolTipPos);
 }
 
 void EditorGUI::flushFileWriters() {
     file_writers.clear();
+}
+
+void EditorGUI::showToolTip(qint32 siteId, QPoint globalPos) {
+    auto palette = QPalette();
+    palette.setColor(QPalette::ToolTipBase,RemoteCursor::getColor(siteId));
+    QToolTip::setPalette(palette);
+    auto name = file_writers.find(siteId)->second;
+    QToolTip::showText(globalPos,name, textEdit);
+//    textEdit->showToolTip(siteId,globalPos,name);
+}
+
+void EditorGUI::setCharFormat(bool checked) {
+    if (checked)
+        textEdit->setCurrentCharFormat(getFormat(model->getSiteId()));
+    else {
+        auto format = textEdit->currentCharFormat();
+        format.setBackground(QBrush("white"));
+        textEdit->setCurrentCharFormat(format);
+    }
 }

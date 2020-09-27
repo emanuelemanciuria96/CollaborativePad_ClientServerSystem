@@ -136,26 +136,33 @@ void SharedEditor::sendRegisterRequest(QString& user, QString& password, QString
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
-void SharedEditor::localInsert(qint32 index, QChar value) {
+void SharedEditor::localInsert(qint32 index, QString& str) {
 
     if ( index > _symbols.size() - 2 ){
         throw "fuori dai limiti"; //da implementare classe eccezione
     }
-
     index++;
-    std::vector<quint32> newPos;
-    std::vector<quint32> prev = _symbols[index-1].getPos();
+
+    std::vector<quint32> prev = _symbols[index - 1].getPos();
     std::vector<quint32> next = _symbols[index].getPos();
-    generateNewPosition(prev,next,newPos);
-    Symbol s(value,_siteId,_counter++,newPos);
-    _symbols.insert(_symbols.begin()+index,s);
+    std::vector<Symbol> syms;
+    int i = 0;
+    for(auto value: str) {
+        std::vector<quint32> newPos;
+        generateNewPosition(prev, next, newPos);
+        prev = newPos;
 
-    DataPacket packet(_siteId, -1, DataPacket::textTyping);
-    packet.setPayload(std::make_shared<Message>(Message::insertion,_siteId,s,index));
+        Symbol s(value, _siteId, _counter++, newPos);
+        syms.push_back(s);
 
-    int id = qMetaTypeId<DataPacket>();
-    emit transceiver->getSocket()->sendPacket(packet);
-//    this->to_string();
+        DataPacket packet(_siteId, -1, DataPacket::textTyping);
+        packet.setPayload(std::make_shared<Message>(Message::insertion, _siteId, s, i+index));
+
+        int id = qMetaTypeId<DataPacket>();
+        emit transceiver->getSocket()->sendPacket(packet);
+    }
+
+    _symbols.insert(_symbols.begin()+index,syms.begin(),syms.end());
 
 }
 
@@ -225,15 +232,10 @@ void SharedEditor::process(DataPacket pkt) {
 
 void SharedEditor::processCursorPos(CursorPosition &curPos) {
     if (curPos.getSiteId() > 0) {
-        if (curPos.getIndex() == -1) {
-            //il client si è disconnesso
-            emit removeCursor(curPos.getSiteId());
-        } else {
-            auto index = curPos.getIndex();
-            auto symbol = curPos.getSymbol();
-            auto pos = getIndex(index, symbol);
-            emit remoteCursorPosChanged(pos, curPos.getSiteId());
-        }
+        auto index = curPos.getIndex();
+        auto symbol = curPos.getSymbol();
+        auto pos = getIndex(index, symbol);
+        emit remoteCursorPosChanged(pos, curPos.getSiteId());
     }
 }
 
@@ -394,6 +396,7 @@ void SharedEditor::processUserInfo(UserInfo &userInfo) {
                   << " - site ID:" << userInfo.getSiteId() << "\n"
                   << " - user:" << userInfo.getUsername().toStdString() << std::endl;
         emit removeUser(userInfo);
+        emit removeCursor(userInfo.getSiteId());
     }
     else if(userInfo.getType() == UserInfo::user_request){
         QString str = userInfo.getUsername();
@@ -555,14 +558,6 @@ void SharedEditor::requireFile(QString& fileName) {
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
     }
-
-
-    /// quando si nasconderà l'editor, questo può essere tolto
-    if( _symbols.size()>2 ) {
-        clearText();
-        _symbols.erase(_symbols.begin()+1,_symbols.end()-1);
-    }
-    /// fino a qui
 
     fileOpened = fileName;
     isFileOpened = false; // da questo momento fino all'arrivo del FileInfo deve stare a false
@@ -731,11 +726,12 @@ qint32 SharedEditor::getSiteId() {
 void SharedEditor::highlightSymbols(bool checked) {
     for(auto s : _symbols){
         auto siteId = s.getSymId().getSiteId();
-        auto pos = getIndex(-1,s);
+        qint32 pos = getIndex(-1,s);
         if(siteId>0)
             emit highlight(pos, siteId);
     }
     highlighting = checked;
+
 }
 
 bool SharedEditor::getHighlighting() {
@@ -759,7 +755,6 @@ void SharedEditor::obtainUser(qint32 siteId) {
 }
 
 void SharedEditor::closeFile() {
-
     fileOpened = "";
     isFileOpened = false;
     if( !_symbols.empty() ) {
