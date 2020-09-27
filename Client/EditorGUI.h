@@ -88,6 +88,7 @@ signals:
     void setNumUsers(int n);
     void userQuery(qint32 siteId);
 
+
 public:
     MyTextEdit* textEdit;
     EditorGUI(SharedEditor *model, QWidget *parent = nullptr);

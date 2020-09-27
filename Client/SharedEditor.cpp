@@ -542,9 +542,9 @@ void SharedEditor::clearText(){
 }
 
 void SharedEditor::requireFile(QString& fileName) {
-
-    if( fileName.split("/").size()==1 )
-        fileName = _user+"/"+fileName;
+    if( fileName.split("/").size()==1 ) {
+        fileName = _user + "/" + fileName;
+    }
 
     if( fileOpened == fileName ){
         return;
@@ -570,7 +570,6 @@ void SharedEditor::requireFile(QString& fileName) {
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
-
 }
 
 void SharedEditor::requireFileClose() {

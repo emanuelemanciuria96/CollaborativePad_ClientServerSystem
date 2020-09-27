@@ -73,6 +73,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(gridView, &FileSystemGridView::openFolder,this, &MainWindow::setToolBarFolderGrid);
     connect(gridView, &FileSystemGridView::back,this, &MainWindow::setToolBarGrid);
     connect(gridView, &FileSystemGridView::canInvite,this, &MainWindow::changeInviteAction);
+    connect(treeView, &FileSystemTreeView::canInvite,this, &MainWindow::changeInviteAction);
     connect(gridView, &FileSystemGridView::canDelete,this, &MainWindow::changeDeleteAction);
     connect(gridView, &FileSystemGridView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
     connect(gridView, &FileSystemGridView::renFileRequest,treeView , &FileSystemTreeView::editFileName);
