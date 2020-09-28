@@ -66,6 +66,7 @@ private:
     QDockWidget *dockWidgetUsers;
     UsersListModel *usersModel;
     QPalette mainPalette;
+    QConicalGradient* gradient;
     QLabel *numUsers;
     QWidget *lastCentral;
     QDockWidget *lastDock;

@@ -6,7 +6,10 @@
 #include <QtWidgets/QFileDialog>
 #include <iostream>
 #include <QtGui/QRegExpValidator>
+#include <QtWidgets/QGraphicsDropShadowEffect>
+#include <QtGui/QGuiApplication>
 #include "SignInWidget.h"
+#include <QScreen>
 
 SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     auto innerWidget = new QWidget(this);
@@ -19,7 +22,6 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     buttons = new QDialogButtonBox(this);
     loadImageButton = new QPushButton(this);
     auto title = new QLabel("Create Account");
-    title->setStyleSheet("QLabel {color: white; font:14pt}");
 
     QRegExp stdExpr(R"(^(?!\.)(?!com[0-9]$)(?!con$)(?!lpt[0-9]$)(?!nul$)(?!prn$)[^\|\*\?\\:<>/$"]*[^\.\|\*\?\\:<>/$"]+$)");
     auto *v = new QRegExpValidator(stdExpr, this);
@@ -78,26 +80,36 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     middleLayout->addLayout(fieldsLayout);
     middleLayout->addSpacing(10);
 
-    outerLayout->addWidget(title, 0 , Qt::AlignCenter);
-    outerLayout->addLayout(middleLayout);
-    outerLayout->addWidget(buttons,0, Qt::AlignCenter);
+    outerLayout->addWidget(title, 1 , Qt::AlignLeft);
+    outerLayout->addSpacing(15);
+    outerLayout->addLayout(middleLayout,2);
+    outerLayout->addSpacing(15);
+    outerLayout->addWidget(buttons,1, Qt::AlignRight);
     innerWidget->setLayout(outerLayout);
-    innerWidget->setFixedSize(450,350);
+    innerWidget->setContentsMargins(40,40,40,40);
+
+    //imposto grandezza widget
+    auto size = QGuiApplication::primaryScreen()->size();
+    innerWidget->setFixedSize(size.width()/3, size.height()/2.3);
 
     containerLayout->addWidget(innerWidget,0, Qt::AlignCenter);
     setLayout(containerLayout);
 
-//    QPalette p1{};
-//    QImage loginBackground = QImage("./textures/texture_clouds_background.png");
-//    QBrush brush1(loginBackground);
-//    QRgb rgbColor = loginBackground.pixel(0,0);
-//    QLinearGradient grad(0,100,0,0);
-//    grad.setColorAt(0,rgbColor);
-//    grad.setColorAt(1, Qt::white);
-//    QBrush b(grad);
-//    p1.setBrush(QPalette::Window,b);
-//    setAutoFillBackground(true);
-//    setPalette(p1);
+    //sezione grafica
+    title->setStyleSheet("QLabel {color: black; font: 18pt}");
+    auto style = innerWidget->styleSheet();
+    style.append("QWidget{background-color: #FAFAFA; font-family:helvetica }"
+                 "QLineEdit{font:9pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray}"
+                 "QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+    innerWidget->setStyleSheet(style);
+    loadImageButton->setStyleSheet("font: 9pt; padding: 8; padding-right:15; padding-left:15; border-style: solid; border-width:1px; "
+                                   "border-color:#3A70D5; background:white; color:#3A70D5}");
+    auto effect = new QGraphicsDropShadowEffect;
+    effect->setBlurRadius(30);
+    effect->setXOffset(0);
+    effect->setYOffset(0);
+    effect->setColor(Qt::lightGray);
+    innerWidget->setGraphicsEffect(effect);
 }
 
 void SignInWidget::openFileDialog() {
