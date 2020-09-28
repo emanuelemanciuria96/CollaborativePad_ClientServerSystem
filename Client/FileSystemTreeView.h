@@ -35,6 +35,7 @@ signals:
     void newFileUpdateGrid(QVector<QString>& path);
     void renFileRequest(QString& before, QString& after);
     void inviteRequest(const QString& fileName);
+    void canInvite(bool state);
 
 private:
     QTreeWidgetItem *root;

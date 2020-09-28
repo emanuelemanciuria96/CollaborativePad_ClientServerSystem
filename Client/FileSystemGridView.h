@@ -27,6 +27,7 @@ public slots:
     void addFile();
     void invite();
     void deleteFile(QString file);
+    void deleteCurrent();
     void remoteDeleteFile(const QString& file);
     void renameFile(QString oldFile,QString newFile);
     void remoteRenameFile(const QString& oldFile,const QString& newFile);
@@ -45,6 +46,7 @@ signals:
     void rmvFileRequest(QString& fileName);
     void renFileRequest(QString& before, QString& after);
     void canInvite(bool state);
+    void canDelete(bool state);
 
 private:
     QMap<QString,QStringList> fileSystem;

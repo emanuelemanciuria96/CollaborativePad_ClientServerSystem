@@ -48,10 +48,10 @@ quint32 intermediateValue(quint32 prev,quint32 next,double factor){
     // calcolo del valore intermedio
     double tmp=(next-prev)*factor;
     quint32 val=prev+tmp;
-    if(val==next){
-        val--;
-    } else if (val==prev){
+    if(val==prev){
         val++;
+    } else if (val==next){
+        val--;
     }
     return val;
 }
@@ -149,7 +149,7 @@ void SharedEditor::localInsert(qint32 index, QString& str) {
     int i = 0;
     for(auto value: str) {
         std::vector<quint32> newPos;
-        generateNewPosition(prev, next, newPos);
+        generateNewPosition2(prev, next, newPos);
         prev = newPos;
 
         Symbol s(value, _siteId, _counter++, newPos);
@@ -313,27 +313,50 @@ qint32 SharedEditor::getIndex(qint32 index, Symbol symbol ) {
 void SharedEditor::processMessages(StringMessages &strMess) {
 
     std::vector<std::tuple<qint32,bool, QChar,qint32>> vt;
-
-    for( auto m: strMess.stringToMessages() ) {
+    auto strM=strMess.stringToMessages();
+    bool lastErase=false;
+    qint32 tmpPos=0;
+    qint32 numChar=0;
+    for( int i=0;i<strM.size();i++ ) {
+        auto m=strM[i];
         // calcolo del counter al volo
         if(isArrivingFile && m.getSymbol().getSymId().getSiteId()==_siteId){
             if(_counter<m.getSymbol().getSymId().getCount()){
                 _counter = m.getSymbol().getSymId().getCount();
             }
         }
-
         qint32 pos = getIndex(m.getLocalIndex(), m.getSymbol());
 //        std::cout << "insert da siteId " << m.getSymbol().getSymId().getSiteId() << std::endl;
         if(m.getAction()==Message::insertion && !(m.getSymbol()==_symbols[pos])){
-            _symbols.insert(_symbols.begin()+pos,m.getSymbol());
+            _symbols.insert(_symbols.begin()+pos+numChar,m.getSymbol());
             vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(pos,1,m.getSymbol().getValue(),m.getSiteId()));
         }else if(_symbols[pos]==m.getSymbol()){
-            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(pos, 0, m.getSymbol().getValue(),m.getSiteId()));
-            _symbols.erase(_symbols.begin()+pos);
+            if(!lastErase){
+                tmpPos=pos;
+            }
+            numChar++;
+            lastErase=true;
+            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
+            //_symbols.erase(_symbols.begin()+pos);
+            if(i != strM.size() - 1 ) {
+                if (strM[i + 1].getAction() == Message::insertion) {
+                    _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
+                    lastErase = false;
+                    numChar = 0;
+                } else if (strM[i + 1].getSiteId() == strM[i].getSiteId() &&
+                           strM[i + 1].getLocalIndex() < strM[i].getLocalIndex()) {
+                    _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
+                    lastErase = false;
+                    numChar = 0;
+                }
+            }
         }
     }
-    //Refresh GUI
 
+    if(lastErase){
+        _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
+    }
+    //Refresh GUI
     if(vt.size()<1){
         return;
     }
@@ -519,9 +542,9 @@ void SharedEditor::clearText(){
 }
 
 void SharedEditor::requireFile(QString& fileName) {
-
-    if( fileName.split("/").size()==1 )
-        fileName = _user+"/"+fileName;
+    if( fileName.split("/").size()==1 ) {
+        fileName = _user + "/" + fileName;
+    }
 
     if( fileOpened == fileName ){
         return;
@@ -547,7 +570,6 @@ void SharedEditor::requireFile(QString& fileName) {
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
-
 }
 
 void SharedEditor::requireFileClose() {

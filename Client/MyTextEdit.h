@@ -9,12 +9,13 @@
 #include <QtWidgets/QTextEdit>
 #include "RemoteCursor.h"
 #include <memory>
+#include <QApplication>
 #include <QEvent>
-
 class MyTextEdit : public QTextEdit{
     Q_OBJECT
 private:
     std::shared_ptr<std::vector<RemoteCursor>> remoteCursors;
+    QClipboard *clipboard;
     QPalette toolTipPalette;
 
 public:

@@ -184,11 +184,17 @@ void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
 
     if( item->flags() & Qt::ItemIsEditable ) {
         QString path = "";
-        if( item->parent() != root)
-            path = item->parent()->text(0)+"/"+item->text(0);
-        else
+        if( item->parent() != root) {
+            path = item->parent()->text(0) + "/" + item->text(0);
+        }else {
             path = item->text(0);
+        }
         emit opnFileRequest(path);
+        if( item->parent() != root) {
+            emit canInvite(false);
+        }else {
+            emit canInvite(true);
+        }
     }
 
 }
