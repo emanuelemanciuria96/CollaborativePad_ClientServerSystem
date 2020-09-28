@@ -7,11 +7,13 @@
 #include <QPagedPaintDevice>
 #include "MyTextEdit.h"
 #include <QMouseEvent>
+#include <QtGui/QClipboard>
 
 
 MyTextEdit::MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget *parent) : QTextEdit(parent){
     this->remoteCursors = std::shared_ptr<std::vector<RemoteCursor>>(remoteCursors);
     this->installEventFilter(this);
+    clipboard = QApplication::clipboard();
 
 }
 
@@ -43,6 +45,17 @@ void MyTextEdit::paintEvent(QPaintEvent *e) {
 }
 
 bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
+
+    if( obj==this && ev->type() == QEvent::KeyPress){
+        auto event = dynamic_cast<QKeyEvent*>(ev);
+        QTextCursor curs = this->textCursor();
+        if( (curs.selectionEnd()==0 || curs.selectionStart()==0) && event->matches(QKeySequence::Paste)) {
+            curs.removeSelectedText();
+            curs.insertText(clipboard->text(QClipboard::Clipboard));
+            return true;
+        }
+        return false;
+    }
 
     if( obj == this && ev->type() == QEvent::ToolTip ){
         auto event = dynamic_cast<QHelpEvent*>(ev);

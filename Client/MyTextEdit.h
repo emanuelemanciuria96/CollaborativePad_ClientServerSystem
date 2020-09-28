@@ -9,11 +9,13 @@
 #include <QtWidgets/QTextEdit>
 #include "RemoteCursor.h"
 #include <memory>
+#include <QApplication>
 
 class MyTextEdit : public QTextEdit{
     Q_OBJECT
 private:
     std::shared_ptr<std::vector<RemoteCursor>> remoteCursors;
+    QClipboard *clipboard;
 public:
     MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget* parent = 0);
 protected:
@@ -22,6 +24,7 @@ protected:
 
 signals:
     void tipRequest(int pos);
+    void selectionReplacement(QString& oldText, QString& newText);
 
 };
 

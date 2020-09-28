@@ -113,13 +113,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
         auto blocks = textEdit->document()->blockCount();
         auto pages = textEdit->document()->pageCount();
 //        std::cout << "Numero blocchi: " << blocks << " Numero pagine: " << pages << std::endl;
-        if (!selected && pos == 0 && charsRemoved > 0 && charsAdded > 1) {
-            charsAdded -= charsRemoved;
-            charsRemoved = 0;
-        } else if (selected && pos == 0 && charsRemoved > 0 && charsAdded > 1) {
-            charsRemoved--;
-            charsAdded--;
-        }
+
         //std::cout << "invio caratteri" << std::endl;
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
