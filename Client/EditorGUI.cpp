@@ -128,7 +128,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             }
             model->localInsert(pos, str);
         }
-        updateRemoteCursors(model->getSiteId(),pos);
+//        updateRemoteCursors(model->getSiteId(),pos);
     }
 }
 
