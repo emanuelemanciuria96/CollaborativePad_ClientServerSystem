@@ -6,3 +6,6 @@ Client/.idea/workspace.xml
 Client/cmake-build-debug/Client_autogen
 Client/cmake-build-debug/CMakeFiles
 Client/cmake-build-debug/icons/
+*.obj
+Client/.idea/workspace.xml
+Client/cmake-build-debug/Client.exe

@@ -325,7 +325,6 @@ void EditorGUI::highlight(qint32 pos, qint32 siteId) {
 void EditorGUI::keyPressEvent(QKeyEvent *e) {
     QWidget::keyPressEvent(e);
 //    std::cout << "dentro keypress" << std::endl;
-
 }
 
 QTextCharFormat EditorGUI::getFormat(qint32 siteId) {
