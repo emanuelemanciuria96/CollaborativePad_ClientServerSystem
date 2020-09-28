@@ -26,8 +26,6 @@ protected:
     void paintEvent(QPaintEvent *e) override;
 
 signals:
-    void tipRequest(int pos);
-    void selectionReplacement(QString& oldText, QString& newText);
     void tipRequest(int pos,QPoint globalPos);
 
 };
