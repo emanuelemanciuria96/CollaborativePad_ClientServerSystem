@@ -92,7 +92,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::startSignIn);
     connect(widgetSignIn, &SignInWidget::backToLogIn, this, &MainWindow::backToLogIn);
     connect(highlightAction, &QAction::triggered, shEditor, &SharedEditor::highlightSymbols);
-    connect(highlightAction, &QAction::triggered, editor, &EditorGUI::setCharFormat);
+    connect(shEditor, &SharedEditor::setCharFormat, editor, &EditorGUI::setCharFormat);
     connect(closeAction, &QAction::triggered, this, &MainWindow::clsFile);
     connect(shEditor, &SharedEditor::returnToGrid, this, &MainWindow::clsFile);
     connect(closeAction, &QAction::triggered, shEditor, &SharedEditor::requireFileClose);

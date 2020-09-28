@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EditorGUI_t {
-    QByteArrayData data[36];
-    char stringdata0[413];
+    QByteArrayData data[39];
+    char stringdata0[447];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,33 +48,37 @@ QT_MOC_LITERAL(12, 108, 11), // "setSelected"
 QT_MOC_LITERAL(13, 120, 3), // "yes"
 QT_MOC_LITERAL(14, 124, 22), // "handleCursorPosChanged"
 QT_MOC_LITERAL(15, 147, 19), // "enableSendCursorPos"
-QT_MOC_LITERAL(16, 167, 13), // "updateSymbols"
-QT_MOC_LITERAL(17, 181, 1), // "s"
-QT_MOC_LITERAL(18, 183, 17), // "Message::action_t"
-QT_MOC_LITERAL(19, 201, 6), // "action"
-QT_MOC_LITERAL(20, 208, 13), // "deleteAllText"
-QT_MOC_LITERAL(21, 222, 21), // "updateRemoteCursorPos"
-QT_MOC_LITERAL(22, 244, 12), // "removeCursor"
-QT_MOC_LITERAL(23, 257, 9), // "highlight"
-QT_MOC_LITERAL(24, 267, 11), // "exportToPdf"
-QT_MOC_LITERAL(25, 279, 18), // "setCurrentFileName"
-QT_MOC_LITERAL(26, 298, 8), // "filename"
-QT_MOC_LITERAL(27, 307, 14), // "highlightedTip"
-QT_MOC_LITERAL(28, 322, 9), // "globalPos"
-QT_MOC_LITERAL(29, 332, 16), // "recordUserWriter"
-QT_MOC_LITERAL(30, 349, 8), // "QString&"
-QT_MOC_LITERAL(31, 358, 4), // "user"
-QT_MOC_LITERAL(32, 363, 10), // "connection"
-QT_MOC_LITERAL(33, 374, 16), // "flushFileWriters"
-QT_MOC_LITERAL(34, 391, 13), // "setCharFormat"
-QT_MOC_LITERAL(35, 405, 7) // "checked"
+QT_MOC_LITERAL(16, 167, 15), // "checkCharFormat"
+QT_MOC_LITERAL(17, 183, 15), // "QTextCharFormat"
+QT_MOC_LITERAL(18, 199, 1), // "f"
+QT_MOC_LITERAL(19, 201, 13), // "updateSymbols"
+QT_MOC_LITERAL(20, 215, 1), // "s"
+QT_MOC_LITERAL(21, 217, 17), // "Message::action_t"
+QT_MOC_LITERAL(22, 235, 6), // "action"
+QT_MOC_LITERAL(23, 242, 13), // "deleteAllText"
+QT_MOC_LITERAL(24, 256, 21), // "updateRemoteCursorPos"
+QT_MOC_LITERAL(25, 278, 12), // "removeCursor"
+QT_MOC_LITERAL(26, 291, 9), // "highlight"
+QT_MOC_LITERAL(27, 301, 11), // "exportToPdf"
+QT_MOC_LITERAL(28, 313, 18), // "setCurrentFileName"
+QT_MOC_LITERAL(29, 332, 8), // "filename"
+QT_MOC_LITERAL(30, 341, 14), // "highlightedTip"
+QT_MOC_LITERAL(31, 356, 9), // "globalPos"
+QT_MOC_LITERAL(32, 366, 16), // "recordUserWriter"
+QT_MOC_LITERAL(33, 383, 8), // "QString&"
+QT_MOC_LITERAL(34, 392, 4), // "user"
+QT_MOC_LITERAL(35, 397, 10), // "connection"
+QT_MOC_LITERAL(36, 408, 16), // "flushFileWriters"
+QT_MOC_LITERAL(37, 425, 13), // "setCharFormat"
+QT_MOC_LITERAL(38, 439, 7) // "checked"
 
     },
     "EditorGUI\0clear\0\0setNumUsers\0n\0userQuery\0"
     "siteId\0contentsChange\0pos\0charsRemoved\0"
     "charsAdded\0flushInsertQueue\0setSelected\0"
     "yes\0handleCursorPosChanged\0"
-    "enableSendCursorPos\0updateSymbols\0s\0"
+    "enableSendCursorPos\0checkCharFormat\0"
+    "QTextCharFormat\0f\0updateSymbols\0s\0"
     "Message::action_t\0action\0deleteAllText\0"
     "updateRemoteCursorPos\0removeCursor\0"
     "highlight\0exportToPdf\0setCurrentFileName\0"
@@ -91,7 +95,7 @@ static const uint qt_meta_data_EditorGUI[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      21,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -99,28 +103,29 @@ static const uint qt_meta_data_EditorGUI[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  114,    2, 0x06 /* Public */,
-       3,    1,  115,    2, 0x06 /* Public */,
-       5,    1,  118,    2, 0x06 /* Public */,
+       1,    0,  119,    2, 0x06 /* Public */,
+       3,    1,  120,    2, 0x06 /* Public */,
+       5,    1,  123,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    3,  121,    2, 0x08 /* Private */,
-      11,    0,  128,    2, 0x08 /* Private */,
-      12,    1,  129,    2, 0x08 /* Private */,
-      14,    0,  132,    2, 0x08 /* Private */,
-      15,    0,  133,    2, 0x08 /* Private */,
-      16,    4,  134,    2, 0x0a /* Public */,
-      20,    0,  143,    2, 0x0a /* Public */,
-      21,    2,  144,    2, 0x0a /* Public */,
-      22,    1,  149,    2, 0x0a /* Public */,
-      23,    2,  152,    2, 0x0a /* Public */,
-      24,    0,  157,    2, 0x0a /* Public */,
-      25,    1,  158,    2, 0x0a /* Public */,
-      27,    2,  161,    2, 0x0a /* Public */,
-      29,    3,  166,    2, 0x0a /* Public */,
-      29,    2,  173,    2, 0x2a /* Public | MethodCloned */,
-      33,    0,  178,    2, 0x0a /* Public */,
-      34,    1,  179,    2, 0x0a /* Public */,
+       7,    3,  126,    2, 0x08 /* Private */,
+      11,    0,  133,    2, 0x08 /* Private */,
+      12,    1,  134,    2, 0x08 /* Private */,
+      14,    0,  137,    2, 0x08 /* Private */,
+      15,    0,  138,    2, 0x08 /* Private */,
+      16,    1,  139,    2, 0x08 /* Private */,
+      19,    4,  142,    2, 0x0a /* Public */,
+      23,    0,  151,    2, 0x0a /* Public */,
+      24,    2,  152,    2, 0x0a /* Public */,
+      25,    1,  157,    2, 0x0a /* Public */,
+      26,    2,  160,    2, 0x0a /* Public */,
+      27,    0,  165,    2, 0x0a /* Public */,
+      28,    1,  166,    2, 0x0a /* Public */,
+      30,    2,  169,    2, 0x0a /* Public */,
+      32,    3,  174,    2, 0x0a /* Public */,
+      32,    2,  181,    2, 0x2a /* Public | MethodCloned */,
+      36,    0,  186,    2, 0x0a /* Public */,
+      37,    1,  187,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -133,18 +138,19 @@ static const uint qt_meta_data_EditorGUI[] = {
     QMetaType::Void, QMetaType::Bool,   13,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Int, 0x80000000 | 18,    8,   17,    6,   19,
+    QMetaType::Void, 0x80000000 | 17,   18,
+    QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Int, 0x80000000 | 21,    8,   20,    6,   22,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    8,    6,
     QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    8,    6,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   26,
-    QMetaType::Void, QMetaType::Int, QMetaType::QPoint,    8,   28,
-    QMetaType::Void, QMetaType::Int, 0x80000000 | 30, QMetaType::Bool,    6,   31,   32,
-    QMetaType::Void, QMetaType::Int, 0x80000000 | 30,    6,   31,
+    QMetaType::Void, QMetaType::QString,   29,
+    QMetaType::Void, QMetaType::Int, QMetaType::QPoint,    8,   31,
+    QMetaType::Void, QMetaType::Int, 0x80000000 | 33, QMetaType::Bool,    6,   34,   35,
+    QMetaType::Void, QMetaType::Int, 0x80000000 | 33,    6,   34,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Bool,   35,
+    QMetaType::Void, QMetaType::Bool,   38,
 
        0        // eod
 };
@@ -163,18 +169,19 @@ void EditorGUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 5: _t->setSelected((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 6: _t->handleCursorPosChanged(); break;
         case 7: _t->enableSendCursorPos(); break;
-        case 8: _t->updateSymbols((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< qint32(*)>(_a[3])),(*reinterpret_cast< Message::action_t(*)>(_a[4]))); break;
-        case 9: _t->deleteAllText(); break;
-        case 10: _t->updateRemoteCursorPos((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< qint32(*)>(_a[2]))); break;
-        case 11: _t->removeCursor((*reinterpret_cast< qint32(*)>(_a[1]))); break;
-        case 12: _t->highlight((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< qint32(*)>(_a[2]))); break;
-        case 13: _t->exportToPdf(); break;
-        case 14: _t->setCurrentFileName((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 15: _t->highlightedTip((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QPoint(*)>(_a[2]))); break;
-        case 16: _t->recordUserWriter((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
-        case 17: _t->recordUserWriter((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 18: _t->flushFileWriters(); break;
-        case 19: _t->setCharFormat((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 8: _t->checkCharFormat((*reinterpret_cast< const QTextCharFormat(*)>(_a[1]))); break;
+        case 9: _t->updateSymbols((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< qint32(*)>(_a[3])),(*reinterpret_cast< Message::action_t(*)>(_a[4]))); break;
+        case 10: _t->deleteAllText(); break;
+        case 11: _t->updateRemoteCursorPos((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< qint32(*)>(_a[2]))); break;
+        case 12: _t->removeCursor((*reinterpret_cast< qint32(*)>(_a[1]))); break;
+        case 13: _t->highlight((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< qint32(*)>(_a[2]))); break;
+        case 14: _t->exportToPdf(); break;
+        case 15: _t->setCurrentFileName((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 16: _t->highlightedTip((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QPoint(*)>(_a[2]))); break;
+        case 17: _t->recordUserWriter((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
+        case 18: _t->recordUserWriter((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 19: _t->flushFileWriters(); break;
+        case 20: _t->setCharFormat((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -232,13 +239,13 @@ int EditorGUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 21)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 21;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 20)
+        if (_id < 21)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 20;
+        _id -= 21;
     }
     return _id;
 }

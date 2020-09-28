@@ -50,7 +50,7 @@ void MyTextEdit::paintEvent(QPaintEvent *e) {
 }
 
 bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev) {
-    std::cout << "filtro evento del tipo: "<< ev->type() << std::endl;
+//    std::cout << "filtro evento del tipo: "<< ev->type() << std::endl;
     if(obj == this && ev->type() == QEvent::ToolTip){
         auto event = dynamic_cast<QHelpEvent*>(ev);
         auto pos = event->pos();
@@ -62,7 +62,7 @@ bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev) {
             curs.columnNumber() && document()->characterAt(posInText).unicode()!=8233 ){
 
             emit tipRequest(posInText, event->globalPos());
-            std::cout << "moved in position" << posInText << std::endl;
+//            std::cout << "moved in position" << posInText << std::endl;
         }
     }
     else

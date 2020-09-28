@@ -694,7 +694,7 @@ void SharedEditor::deleteThread() {
     exit(0);
 }
 
-qint32 SharedEditor::getSiteId() {
+qint32 SharedEditor::getSiteId() const {
     return _siteId;
 }
 
@@ -706,10 +706,10 @@ void SharedEditor::highlightSymbols(bool checked) {
             emit highlight(pos, siteId);
     }
     highlighting = checked;
-
+    emit setCharFormat(checked);
 }
 
-bool SharedEditor::getHighlighting() {
+bool SharedEditor::getHighlighting() const {
     return highlighting;
 }
 

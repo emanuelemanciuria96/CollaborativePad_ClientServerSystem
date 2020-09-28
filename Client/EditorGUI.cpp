@@ -23,6 +23,8 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     connect(textEdit, &MyTextEdit::tipRequest, this,&EditorGUI::highlightedTip);
+    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
+
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
@@ -51,6 +53,7 @@ void EditorGUI::setUpGUI() {
 
     connect(textEdit->document(), SIGNAL(contentsChange(int, int, int)), this, SLOT(contentsChange(int, int, int)));
     connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
+
 //    load("./file.txt");
     loadSymbols();
 }
@@ -106,8 +109,11 @@ void EditorGUI::setModel(SharedEditor* _model) {
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     int i = 0;
     if (!signalBlocker) {
-//        if(model->getHighlighting())
-//            textEdit->setCurrentCharFormat(getFormat(model->getSiteId()));
+//        if(model->getHighlighting()) {
+//            auto cursor = textEdit->textCursor();
+//            cursor.setCharFormat(getFormat(model->getSiteId()));
+//            textEdit->setTextCursor(cursor);
+//        }
 //        else {
 //            auto format = textEdit->currentCharFormat();
 //            format.setBackground(QBrush("white"));
@@ -404,11 +410,20 @@ void EditorGUI::showToolTip(qint32 siteId, QPoint globalPos) {
 }
 
 void EditorGUI::setCharFormat(bool checked) {
-    if (checked)
+    if (checked) {
+//        std::cout << "setCharFormat true" << std::endl;
         textEdit->setCurrentCharFormat(getFormat(model->getSiteId()));
+    }
     else {
+//        std::cout << "setCharFormat false" << std::endl;
         auto format = textEdit->currentCharFormat();
-        format.setBackground(QBrush("white"));
+        format.setBackground(QColor("white"));
         textEdit->setCurrentCharFormat(format);
     }
+}
+
+void EditorGUI::checkCharFormat(const QTextCharFormat &f) {
+    if(model->getHighlighting())
+        textEdit->setCurrentCharFormat(getFormat(model->getSiteId()));
+
 }

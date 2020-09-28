@@ -69,6 +69,7 @@ private slots:
     void setSelected(bool yes){ selected = yes;}
     void handleCursorPosChanged();
     void enableSendCursorPos();
+    void checkCharFormat(const QTextCharFormat &f);
 
 public slots:
     void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
@@ -82,6 +83,7 @@ public slots:
     void recordUserWriter(qint32 siteId,QString& user,bool connection=false);
     void flushFileWriters();
     void setCharFormat(bool checked);
+
 
 signals:
     void clear();
