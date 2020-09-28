@@ -83,12 +83,3 @@ bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
     return false;
 }
 
-void MyTextEdit::showToolTip(qint32 siteId, QPoint globalPos, QString name) {
-    auto palette = QPalette();
-    auto oldPalette = QToolTip::palette();
-    palette.setColor(QPalette::ToolTipBase,RemoteCursor::getColor(siteId));
-    QToolTip::setPalette(palette);
-    QToolTip::showText(globalPos,name);
-
-}
-

@@ -21,7 +21,6 @@ private:
 public:
     MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget* parent = 0);
     bool eventFilter(QObject *obj, QEvent *ev) override;
-    void showToolTip(qint32 siteId,QPoint globalPos, QString name);
 protected:
     void paintEvent(QPaintEvent *e) override;
 

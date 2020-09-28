@@ -27,6 +27,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     statusBar->addPermanentWidget(numUsers);
     numUsers->hide();
     statusBar->showMessage ("");
+    statusBar->hide();
 
     toolBar = new QToolBar("Toolbar",this);
     centralWidget = new QStackedWidget(this);
@@ -168,7 +169,9 @@ void MainWindow::transparentForMouse() {
 void MainWindow::loginFinished() {
     centralWidget->setCurrentWidget(gridView);
     toolBar->show();
+    statusBar->show();
     gridView->show();
+
 }
 
 void MainWindow::opnFileGrid(QString fileName) {
@@ -394,7 +397,6 @@ void MainWindow::setToolBar() {
     spacerWidget->setVisible(true);
     toolBar->addWidget(spacerWidget);
     toolBar->addAction(userInfoAction);
-//    toolBar->setPalette(mainPalette);
 }
 
 void MainWindow::setToolBarEditor() {
@@ -543,7 +545,8 @@ void MainWindow::resizeEvent(QResizeEvent *evt) {
 }
 
 void MainWindow::setStyleSheet() {
-    qApp->setStyleSheet("QToolBar {background:#FAFAFA}");
+    qApp->setStyleSheet("QToolBar {background:#F1F1F1}"
+                        "QStatusBar {background-color: #F1F1F1;}");
 
 }
 
@@ -557,21 +560,10 @@ void MainWindow::setUsersList() {
     dockWidgetUsers->setFeatures(QDockWidget::NoDockWidgetFeatures);
 //    dockWidgetUsers->setMouseTracking(true);
 
-//    treeShowAction = new QAction();
-//    treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
-//    toolBar->addAction(treeShowAction);
-//    auto w = new  QWidget(dockWidgetUsers);
     auto l = new QLabel("Users connected");
-//    w->setLayout(new QVBoxLayout(w));
-//    w->layout()->addWidget(l);
-//    dockWidgetUsers->setWindowTitle("Users connected");
     dockWidgetUsers->setTitleBarWidget(l);
 //    dockWidgetUsers->titleBarWidget()->setStyleSheet("background-color:red");
     dockWidgetUsers->setWidget(usersView);
-//    dockWidgetUsers->setPalette(mainPalette);
-    auto p = dockWidgetUsers->palette();
-//    p.setColor(QPalette::Window,QColor("red"));
-//    dockWidgetUsers->setPalette(p);
 
     this->addDockWidget(Qt::RightDockWidgetArea,dockWidgetUsers);
     dockWidgetUsers->hide();
@@ -581,10 +573,10 @@ void MainWindow::setMainPalette() {
     mainPalette = QGuiApplication::palette();
 
 //    mainPalette.setColor(QPalette::WindowText,QColor("white"));
-    mainPalette.setColor(QPalette::Base,QColor("#E1ECF8"));
+//    mainPalette.setColor(QPalette::Base,QColor("#F1F1F1"));
 //    mainPalette.setColor(QPalette::BrightText,QColor("#FF9800"));
 //    mainPalette.setColor(QPalette::ButtonText,QColor("black"));
-    mainPalette.setColor(QPalette::Button,QColor("#90e0ef"));
+//    mainPalette.setColor(QPalette::Button,QColor("#90e0ef"));
 
     gradient = new QConicalGradient(QPointF(size().width()/2,size().height()/2),45);
     gradient->setColorAt(0, QColor("#E6D0E2")); //rosso

@@ -35,7 +35,6 @@ void EditorGUI::setUpGUI() {
     this->layout()->addWidget(textEdit);
     this->layout()->setAlignment(Qt::AlignCenter);
 
-//    this->setStyleSheet("background:red");
 //    this->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 //    this->setBaseSize(800,800);
 //    textEdit->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
@@ -46,14 +45,14 @@ void EditorGUI::setUpGUI() {
     textEdit->setLineWrapColumnOrWidth(880);
     textEdit->setMaximumWidth(903);
     textEdit->setAlignment(Qt::AlignCenter);
-//    textEdit->setFixedWidth(881);
-//    textEdit->setMinimumWidth(880);
 
     connect(this, SIGNAL(clear()), textEdit, SLOT(clear()));
-    auto palette = this->palette();
-    palette.setColor(QPalette::Window,QColor("lightgray"));
-    palette.setColor(QPalette::Base,QColor("white"));
-    this->setPalette(palette);
+//    auto palette = this->palette();
+//    palette.setColor(QPalette::Window,QColor("lightgray"));
+//    palette.setColor(QPalette::Base,QColor("white"));
+//    this->setPalette(palette);
+    auto style = styleSheet();
+//    setStyleSheet(style.append("border-style:none"));
 
     textEdit->setFocus();
     setCurrentFileName(QString());

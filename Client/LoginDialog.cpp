@@ -30,19 +30,6 @@ void LoginDialog::setUpGUI() {
     editPassword->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
     auto title = new QLabel("Log in");
 
-    //sezione grafica
-    title->setStyleSheet("QLabel {color: black; font: 18pt}");
-    auto style = innerWidget->styleSheet();
-    style.append("QWidget{background-color: #FAFAFA; text-family:helvetica }"
-                 "QLineEdit{font:9pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray}");
-    innerWidget->setStyleSheet(style);
-    auto effect = new QGraphicsDropShadowEffect;
-    effect->setBlurRadius(30);
-    effect->setXOffset(0);
-    effect->setYOffset(0);
-    effect->setColor(Qt::lightGray);
-    innerWidget->setGraphicsEffect(effect);
-
     //inizializzo le labels
     labelResult = new QLabel(this);
 
@@ -54,8 +41,6 @@ void LoginDialog::setUpGUI() {
     buttons->button(QDialogButtonBox::Ok)->setText("Log in");
     buttons->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     buttons->setBaseSize(innerWidget->size());
-
-    buttons->setStyleSheet("QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
 
     //connect per login
     connect(buttons->button(QDialogButtonBox::Ok), SIGNAL(clicked()),this, SLOT(slotAcceptLogin()));
@@ -75,9 +60,22 @@ void LoginDialog::setUpGUI() {
 
     formGridLayout->setContentsMargins(50,50,50,50);
 
+    //sezione grafica
+    title->setStyleSheet("QLabel {color: black; font: 18pt}");
+//    auto style = innerWidget->styleSheet();
+//    style.append();
+    innerWidget->setStyleSheet("QWidget{background-color: #FAFAFA; font-family:helvetica }"
+                               "QLineEdit{font:9pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray}");
+    auto effect = new QGraphicsDropShadowEffect;
+    effect->setBlurRadius(30);
+    effect->setXOffset(0);
+    effect->setYOffset(0);
+    effect->setColor(Qt::lightGray);
+    innerWidget->setGraphicsEffect(effect);
+    buttons->setStyleSheet("QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+
     //imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
-
     innerWidget->setFixedSize(size.width()/4, size.height()/3);
 //    auto size = QGuiApplication::primaryScreen()->size();
 //    this->resize(size.width()*0.1,size.height()*0.1);
