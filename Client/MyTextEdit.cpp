@@ -53,7 +53,6 @@ void MyTextEdit::paintEvent(QPaintEvent *e) {
 }
 
 bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
-
     if( obj==this && ev->type() == QEvent::KeyPress){
         auto event = dynamic_cast<QKeyEvent*>(ev);
         QTextCursor curs = this->textCursor();
@@ -65,7 +64,7 @@ bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
         return false;
     }
 
-    if( obj == this && ev->type() == QEvent::ToolTip ){
+    if(obj == this && ev->type() == QEvent::ToolTip){
         auto event = dynamic_cast<QHelpEvent*>(ev);
         auto pos = event->pos();
         QTextCursor curs = cursorForPosition(pos);

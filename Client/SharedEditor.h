@@ -103,15 +103,16 @@ signals:
     void removeUser(UserInfo& user);
     void userNameArrived(qint32 siteId, QString& user, bool connected=false);
     void flushFileWriters();
+    void setCharFormat(bool);
 
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QString& str );
     void localErase( qint32 index, qint32 num);
-    qint32 getSiteId();
+    qint32 getSiteId() const;
     void sendCursorPos(qint32 index);
     void highlightSymbols(bool checked);
-    bool getHighlighting();
+    bool getHighlighting() const;
     const Symbol fromPosToSymbol(int pos){ return _symbols[pos]; }
     QString to_string();
 
