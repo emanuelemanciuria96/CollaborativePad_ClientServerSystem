@@ -31,14 +31,23 @@ void EditorGUI::setUpGUI() {
 //    inizializzo gli elementi
     textEdit = new MyTextEdit(&remoteCursors, this);
     setLayout(new QVBoxLayout(this));
-    this->layout()->setAlignment(Qt::AlignCenter);
     this->layout()->setContentsMargins(30, 0, 30, 0);
     this->layout()->addWidget(textEdit);
+    this->layout()->setAlignment(Qt::AlignCenter);
 
+//    this->setStyleSheet("background:red");
+//    this->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+//    this->setBaseSize(800,800);
+//    textEdit->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     textEdit->document()->setDocumentMargin(65);
+    textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+//    textEdit->document()->setPageSize(QSizeF(880,480));
     textEdit->setLineWrapMode(QTextEdit::FixedPixelWidth);
     textEdit->setLineWrapColumnOrWidth(880);
-    textEdit->setMaximumWidth(885);
+    textEdit->setMaximumWidth(903);
+    textEdit->setAlignment(Qt::AlignCenter);
+//    textEdit->setFixedWidth(881);
+//    textEdit->setMinimumWidth(880);
 
     connect(this, SIGNAL(clear()), textEdit, SLOT(clear()));
     auto palette = this->palette();

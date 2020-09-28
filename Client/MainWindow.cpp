@@ -9,7 +9,7 @@
 QVector<QString> msgs = {"tree","invite list", "uri insertion"};
 
 MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(parent) {
-    QApplication::setStyle(QStyleFactory::create("Fusion"));
+    QApplication::setStyle(QStyleFactory::create("window"));
 //    for(auto k : QStyleFactory::keys()){
 //        std::cout << k.toStdString() << std::endl;
 //    }
@@ -427,11 +427,8 @@ void MainWindow::changeToolbarProfileImage(const QPixmap& orig) {
 
 void MainWindow::editorSettings(SharedEditor* shEditor) {
     editor = new EditorGUI(shEditor, this);
-
     infoWidget = new InfoWidget(this);
     addUserWidget = new AddUserWidget(this);
-
-    //widgetEditor->hide();
 }
 
 void MainWindow::startSignIn() {
