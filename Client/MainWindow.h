@@ -42,12 +42,19 @@ private:
     QAction* highlightAction;
     QAction* closeAction;
     QAction* addAction;
+    QAction* deleteAction;
     QAction* backAction;
     QAction* inviteAction;
     QAction* treeShowAction;
     QAction* pdfAction;
     QAction* uriAction;
     QAction* inviteListAction;
+    QAction* undoAction;
+    QAction* redoAction;
+    QAction* cutAction;
+    QAction* copyAction;
+    QAction* pasteAction;
+
     QAction* userInfoAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
@@ -74,6 +81,7 @@ private:
     void setToolBarGrid();
     void setToolBarFolderGrid(QString folder);
     void changeInviteAction(bool state);
+    void changeDeleteAction(bool state);
     void showHideLeftDock(dock_type dock);
     void setInviteListIcon(int num=0);
 

@@ -5,7 +5,10 @@
 #include <QtGui/QPainter>
 #include <iostream>
 #include <QPagedPaintDevice>
+#include <QtGui/QHelpEvent>
 #include "MyTextEdit.h"
+#include "RemoteCursor.h"
+#include <QToolTip>
 #include <QMouseEvent>
 #include <QtGui/QClipboard>
 
@@ -14,6 +17,10 @@ MyTextEdit::MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget *parent
     this->remoteCursors = std::shared_ptr<std::vector<RemoteCursor>>(remoteCursors);
     this->installEventFilter(this);
     clipboard = QApplication::clipboard();
+
+    setMouseTracking(true);
+    installEventFilter(this);
+    toolTipPalette = QToolTip::palette();
 
 }
 
@@ -60,15 +67,28 @@ bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
     if( obj == this && ev->type() == QEvent::ToolTip ){
         auto event = dynamic_cast<QHelpEvent*>(ev);
         auto pos = event->pos();
-        QTextCursor curs = this->cursorForPosition(pos);
+        QTextCursor curs = cursorForPosition(pos);
         int posInText = curs.position();
         QTextCursor tmp = curs;
         tmp.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor);
         if( !curs.atEnd() && posInText!=0 && tmp.columnNumber() &&
-                curs.columnNumber() && document()->characterAt(posInText).unicode()!=8233 ) {
+            curs.columnNumber() && document()->characterAt(posInText).unicode()!=8233 ){
 
-            emit tipRequest(posInText);
+            emit tipRequest(posInText, event->globalPos());
+            std::cout << "moved in position" << posInText << std::endl;
         }
     }
+    else
+        QToolTip::setPalette(toolTipPalette);
     return false;
 }
+
+void MyTextEdit::showToolTip(qint32 siteId, QPoint globalPos, QString name) {
+    auto palette = QPalette();
+    auto oldPalette = QToolTip::palette();
+    palette.setColor(QPalette::ToolTipBase,RemoteCursor::getColor(siteId));
+    QToolTip::setPalette(palette);
+    QToolTip::showText(globalPos,name);
+
+}
+

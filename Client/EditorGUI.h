@@ -35,7 +35,6 @@ class EditorGUI: public QWidget {
     Q_OBJECT
 
 private:
-    MyTextEdit* textEdit;
     QString fileName;
     SharedEditor* model;
     bool signalBlocker;
@@ -50,6 +49,7 @@ private:
     QTimer* curBlockerTimer;
     uint nUsers = 0;
     std::map<qint32,QString> file_writers;
+    QPoint lastToolTipPos;
 
     void setUpGUI();
     void loadSymbols();
@@ -60,7 +60,8 @@ private:
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
     void drawLabel(RemoteCursor *cursor);
     void keyPressEvent(QKeyEvent *e) override;
-    QTextCharFormat getFormat(qint32 siteId);
+    static QTextCharFormat getFormat(qint32 siteId);
+    void showToolTip(qint32 siteId, QPoint globalPos);
 
 private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);
@@ -77,16 +78,19 @@ public slots:
     void highlight(qint32 pos, qint32 siteId);
     void exportToPdf();
     void setCurrentFileName(QString filename);
-    void highlightedTip(int pos);
+    void highlightedTip(int pos,QPoint globalPos);
     void recordUserWriter(qint32 siteId,QString& user,bool connection=false);
     void flushFileWriters();
+    void setCharFormat(bool checked);
 
 signals:
     void clear();
     void setNumUsers(int n);
     void userQuery(qint32 siteId);
 
+
 public:
+    MyTextEdit* textEdit;
     EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);
 

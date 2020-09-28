@@ -200,10 +200,15 @@ void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     }
 }
 void FileSystemGridView::on_listWidget_itemSelectionChanged(){
+    QListWidgetItem *item=ui->listWidget->currentItem();
+    if(item->statusTip()=="file"){
+        emit canDelete(true);//file clicked
+    }else{
+        emit canDelete(false);//folder clicked
+    }
     if(state!=mainFolder){
         return;
     }
-    QListWidgetItem *item=ui->listWidget->currentItem();
     if(item->statusTip()=="file"){
         emit canInvite(true);//file clicked
     }else{
@@ -224,6 +229,10 @@ void FileSystemGridView::invite(){
     }
     qDebug() << "invite "<<item->text();
     emit inviteRequest(item->text());
+}
+void FileSystemGridView::deleteCurrent(){
+    QListWidgetItem *item=ui->listWidget->currentItem();
+    deleteFile(this->state+"/"+item->text());
 }
 
 void FileSystemGridView::addFile(){
@@ -632,4 +641,5 @@ void FileSystemGridView::clearSelection() {
     ui->listWidget->selectionModel()->clear();
     ui->listWidget->clearSelection();
     emit canInvite(false);
+    emit canDelete(false);
 }

@@ -10,21 +10,25 @@
 #include "RemoteCursor.h"
 #include <memory>
 #include <QApplication>
-
+#include <QEvent>
 class MyTextEdit : public QTextEdit{
     Q_OBJECT
 private:
     std::shared_ptr<std::vector<RemoteCursor>> remoteCursors;
     QClipboard *clipboard;
+    QPalette toolTipPalette;
+
 public:
     MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget* parent = 0);
+    bool eventFilter(QObject *obj, QEvent *ev) override;
+    void showToolTip(qint32 siteId,QPoint globalPos, QString name);
 protected:
-    bool eventFilter(QObject *obj, QEvent *evt);
     void paintEvent(QPaintEvent *e) override;
 
 signals:
     void tipRequest(int pos);
     void selectionReplacement(QString& oldText, QString& newText);
+    void tipRequest(int pos,QPoint globalPos);
 
 };
 
