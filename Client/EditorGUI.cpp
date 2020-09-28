@@ -40,6 +40,7 @@ void EditorGUI::setUpGUI() {
 //    textEdit->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     textEdit->document()->setDocumentMargin(65);
     textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 //    textEdit->document()->setPageSize(QSizeF(880,480));
     textEdit->setLineWrapMode(QTextEdit::FixedPixelWidth);
     textEdit->setLineWrapColumnOrWidth(880);
@@ -47,12 +48,15 @@ void EditorGUI::setUpGUI() {
     textEdit->setAlignment(Qt::AlignCenter);
 
     connect(this, SIGNAL(clear()), textEdit, SLOT(clear()));
-//    auto palette = this->palette();
-//    palette.setColor(QPalette::Window,QColor("lightgray"));
-//    palette.setColor(QPalette::Base,QColor("white"));
-//    this->setPalette(palette);
-    auto style = styleSheet();
-//    setStyleSheet(style.append("border-style:none"));
+
+    textEdit->setStyleSheet("QTextEdit{border-style:none}"
+                    "QScrollBar:vertical {background:white; width:8px; margin: 0px 0px 0px 0px;}"
+                    "QScrollBar::handle:vertical {background: #ECECEC; border:0px solid lightgray; border-radius:4px;}"
+//                  "QScrollBar::add-line:vertical{height:0px; subcontrol-position: bottom; subcontrol-origin: margin;"
+//                  "QScrollBar::sub-line:vertical {height: 0px width:0px; subcontrol-position: top; subcontrol-origin: margin; "
+                    "QScrollBar:horizontal {background:white; height:8px; margin: 0px 0px 0px 0px;}"
+                    "QScrollBar::handle:horizontal {background: #ECECEC; border:0px solid lightgray; border-radius: 4px}"
+                  );
 
     textEdit->setFocus();
     setCurrentFileName(QString());
