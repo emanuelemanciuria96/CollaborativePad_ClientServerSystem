@@ -38,6 +38,7 @@ private:
     QStatusBar* statusBar;
     QToolBar* toolBar;
     InfoWidget* infoWidget;
+    InfoWidgetEdit* infoWidgetEdit;
     QStackedWidget* centralWidget;
     QAction* highlightAction;
     QAction* closeAction;
@@ -66,6 +67,8 @@ private:
     UsersListModel *usersModel;
     QPalette mainPalette;
     QLabel *numUsers;
+    QWidget *lastCentral;
+    QDockWidget *lastDock;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -99,6 +102,8 @@ public slots:
     void setNumUsers(int n);
     void hideNumUsers();
     void transparentForMouse();
+    void setInfoWidget();
+    void openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
 };
 
 

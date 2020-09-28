@@ -1,11 +1,12 @@
 #include <QtWidgets/QFileDialog>
 #include <iostream>
 #include <QtGui/QRegExpValidator>
+#include <QtGui/QPainter>
 #include "InfoWidgetEdit.h"
 #include "ui_infowidgetedit.h"
 
 InfoWidgetEdit::InfoWidgetEdit(QWidget *parent)
-    : QMainWindow(parent)
+    : QWidget(parent)
     , ui(new Ui::InfoWidgetEdit)
 {
     ui->setupUi(this);
@@ -38,7 +39,19 @@ void InfoWidgetEdit::openFileDialog() {
         auto rect = QRect((image.width() - imgsize) / 2,(image.height() - imgsize) / 2, imgsize, imgsize);
         auto crop = image.copy(rect);
         crop.save("images/temp.jpg", "JPG", 50);
-        ui->imageLabel->setPixmap(QPixmap("images/temp.jpg"));
+        QPixmap orig("images/temp.jpg");
+        int size = qMax(orig.width(), orig.height());
+        QPixmap rounded = QPixmap(size, size);
+        rounded.fill(Qt::transparent);
+        QPainterPath path;
+        path.addEllipse(rounded.rect());
+        QPainter painter(&rounded);
+        painter.setClipPath(path);
+        painter.fillRect(rounded.rect(), Qt::black);
+        int x = qAbs(orig.width() - size) / 2;
+        int y = qAbs(orig.height() - size) / 2;
+        painter.drawPixmap(x, y, orig.width(), orig.height(), orig);
+        ui->imageLabel->setPixmap(rounded);
         QFile::remove("images/temp.jpg");
     }
 }
@@ -58,6 +71,7 @@ void InfoWidgetEdit::emitUpdateInfo() {
     }
     ui->errorLabel->clear();
     emit updateInfo(*(ui->imageLabel->pixmap()), std::move(ui->editName->text()), std::move(ui->editEmail->text()));
+    emit backToInfoWidget();
 }
 
 void InfoWidgetEdit::setImage(const QPixmap *image) {
@@ -73,8 +87,11 @@ void InfoWidgetEdit::setEmail(const QString &email) {
     ui->editEmail->setText(email);
 }
 
+void InfoWidgetEdit::setUser(const QString &user) {
+    ui->editUser->setText(user);
+}
+
 void InfoWidgetEdit::closeEdit() {
     ui->errorLabel->clear();
-    parentWidget()->show();
-    this->close();
+    emit backToInfoWidget();
 }

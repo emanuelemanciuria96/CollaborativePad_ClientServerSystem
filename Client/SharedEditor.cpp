@@ -764,4 +764,3 @@ void SharedEditor::closeFile() {
     emit flushFileWriters();
 
 }
-

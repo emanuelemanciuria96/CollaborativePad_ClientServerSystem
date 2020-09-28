@@ -127,7 +127,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
     connect(gridView, &FileSystemGridView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
     connect(treeView, &FileSystemTreeView::opnFileRequest, gridView, &FileSystemGridView::selectFile);
-    connect(userInfoAction, &QAction::triggered, infoWidget, &QWidget::show);
+    connect(userInfoAction, &QAction::triggered, this, &MainWindow::setInfoWidget);
     connect(uriAction, &QAction::triggered, [this](){showHideLeftDock(uri);} );
     connect(infoWidget, &InfoWidget::imageChanged, this, &MainWindow::changeToolbarProfileImage);
     connect(inviteListAction, &QAction::triggered, [this](){showHideLeftDock(invitelist);});
@@ -143,6 +143,11 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(addUserWidget, &AddUserWidget::closing, this, &MainWindow::transparentForMouse);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::transparentForMouse);
     connect(gridView, &FileSystemGridView::inviteRequest, this, &MainWindow::transparentForMouse);
+    connect(infoWidget, &InfoWidget::backPressed, this, &MainWindow::setInfoWidget);
+    connect(infoWidget, &InfoWidget::openInfoEdit, this, &MainWindow::openInfoEdit);
+    connect(infoWidgetEdit, &InfoWidgetEdit::updateInfo, infoWidget, &InfoWidget::updateInfo);
+    connect(infoWidgetEdit, &InfoWidgetEdit::backToInfoWidget, this, [this](){centralWidget->setCurrentWidget(infoWidget);});
+    connect(inviteUserWidget, &InviteUserWidget::inviteNumberModified, this, [this](int n){setInviteListIcon(n);});
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
@@ -151,11 +156,14 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     setPalette(mainPalette);
     centralWidget->addWidget(loginDialog);
     centralWidget->addWidget(editor);
+    centralWidget->addWidget(infoWidget);
+    centralWidget->addWidget(infoWidgetEdit);
     centralWidget->addWidget(widgetSignIn);
     centralWidget->addWidget(gridView);
     setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
     setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
-
+    lastCentral = nullptr;
+    lastDock = nullptr;
 }
 
 void MainWindow::transparentForMouse() {
@@ -457,6 +465,7 @@ void MainWindow::setToolBarFolderGrid(QString folder) {
         pasteAction->setVisible(false);
     }
 }
+
 void MainWindow::setInviteListIcon(int num) {
     QString path="./icons/invite_list_icon.png";
     QString path2="./icons/bedge_invite_list_icon.png";
@@ -481,9 +490,9 @@ void MainWindow::setInviteListIcon(int num) {
     }else{
         painter.drawText(140, 65, QString::number(num));
     }
-
     inviteListAction->setIcon(QIcon(rounded));
 }
+
 void MainWindow::changeToolbarProfileImage(const QPixmap& orig) {
     int size = qMax(orig.width(), orig.height());
     QPixmap rounded = QPixmap(size, size);
@@ -503,9 +512,8 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
     editor = new EditorGUI(shEditor, this);
 
     infoWidget = new InfoWidget(this);
+    infoWidgetEdit = new InfoWidgetEdit(this);
     addUserWidget = new AddUserWidget(this);
-
-    //widgetEditor->hide();
 }
 
 void MainWindow::startSignIn() {
@@ -617,15 +625,38 @@ void MainWindow::showHideLeftDock(dock_type dock) {
         leftDockWidgets[dock]->show();
         treeShowAction->setToolTip("Hide "+msgs[dock]);
         treeShowAction->setIcon(QIcon("./icons/hide_left_tree_menu.png"));
-
+        lastDock = leftDockWidgets[dock];
     }else {
         leftDockWidgets[dock]->hide();
 
         treeShowAction->setToolTip("Show "+msgs[dock]);
         treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
+        lastDock = nullptr;
     }
 }
 
+void MainWindow::setInfoWidget() {
+    if(centralWidget->currentWidget() != infoWidget) {
+        lastCentral = centralWidget->currentWidget();
+        centralWidget->setCurrentWidget(infoWidget);
+        toolBar->hide();
+        dockWidgetUsers->hide();
+        if (lastDock != nullptr)
+            lastDock->hide();
+    } else {
+        centralWidget->setCurrentWidget(lastCentral);
+        toolBar->show();
+        if (lastCentral == editor)
+            dockWidgetUsers->show();
+        if (lastDock != nullptr)
+            lastDock->show();
+    }
+}
 
-
-
+void MainWindow::openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email) {
+    infoWidgetEdit->setImage(&image);
+    infoWidgetEdit->setName(name);
+    infoWidgetEdit->setEmail(email);
+    infoWidgetEdit->setUser(nickname);
+    centralWidget->setCurrentWidget(infoWidgetEdit);
+}

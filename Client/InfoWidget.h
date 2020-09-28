@@ -10,28 +10,27 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class InfoWidget; }
 QT_END_NAMESPACE
 
-class InfoWidget : public QMainWindow
+class InfoWidget : public QWidget
 {
     Q_OBJECT
 
 public:
     InfoWidget(QWidget *parent = nullptr);
-    const QPixmap *getImage();
-    QString getNickname();
-    QString getName();
     ~InfoWidget();
 
 private:
     Ui::InfoWidget *ui;
-    InfoWidgetEdit *infoWidgetEdit;
 
 public slots:
     void loadData(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
-    void openInfoEdit();
+    void emitOpenInfoEdit();
     void updateInfo(const QPixmap& image, const QString& name, const QString& email);
+    void emitBackPressed();
 
 signals:
     void sendUpdatedInfo(const QPixmap& image, const QString& name, const QString& email);
     void imageChanged(const QPixmap& image);
+    void backPressed();
+    void openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
 };
 #endif // INFOWIDGET_H

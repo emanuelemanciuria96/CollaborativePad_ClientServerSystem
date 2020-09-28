@@ -1,13 +1,11 @@
 #ifndef INFOWIDGETEDIT_H
 #define INFOWIDGETEDIT_H
 
-#include <QMainWindow>
-
 QT_BEGIN_NAMESPACE
 namespace Ui { class InfoWidgetEdit; }
 QT_END_NAMESPACE
 
-class InfoWidgetEdit : public QMainWindow
+class InfoWidgetEdit : public QWidget
 {
     Q_OBJECT
 
@@ -17,6 +15,7 @@ public:
     void setImage(const QPixmap* image);
     void setName(const QString& name);
     void setEmail(const QString& email);
+    void setUser(const QString& user);
 
 private:
     Ui::InfoWidgetEdit *ui;
@@ -28,5 +27,6 @@ public slots:
 
 signals:
     void updateInfo(QPixmap image, QString name, QString email);
+    void backToInfoWidget();
 };
 #endif // INFOWIDGETEDIT_H

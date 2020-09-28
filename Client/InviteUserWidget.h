@@ -28,5 +28,6 @@ public slots:
 
 signals:
     void sendInviteAnswer(const QString& mode, const QString& user, const QString& filename);
+    void inviteNumberModified(int n);
 };
 #endif // INVITEUSERWIDGET_H

@@ -27,12 +27,14 @@ void InviteUserWidget::inviteListArrived(const QVector<QString> &args) {
         ui->listWidget->setItemWidget(item, widget);
         map.insert(item, widget);
     }
+    emit inviteNumberModified(ui->listWidget->count());
 }
 
 void InviteUserWidget::emitSendInviteAnswer(QListWidgetItem* item, const QString &mode, const QString &user, const QString &filename) {
     emit sendInviteAnswer(mode, user, filename);
     auto row = ui->listWidget->row(item);
     ui->listWidget->takeItem(row);
+    emit inviteNumberModified(ui->listWidget->count());
 }
 
 void InviteUserWidget::editFileName(QString &oldName, QString &newName) {
@@ -70,5 +72,6 @@ void InviteUserWidget::processFileDeleted(QString &fileName) {
                 return;
             }
         }
+        emit inviteNumberModified(ui->listWidget->count());
     }
 }
