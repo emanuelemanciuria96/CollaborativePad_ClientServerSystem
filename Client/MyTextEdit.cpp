@@ -11,6 +11,7 @@
 #include <QToolTip>
 #include <QMouseEvent>
 #include <QtGui/QClipboard>
+#include <QMenu>
 
 
 MyTextEdit::MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget *parent) : QTextEdit(parent){
@@ -75,7 +76,7 @@ bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
             curs.columnNumber() && document()->characterAt(posInText).unicode()!=8233 ){
 
             emit tipRequest(posInText, event->globalPos());
-            std::cout << "moved in position" << posInText << std::endl;
+
         }
     }
     else
@@ -90,5 +91,23 @@ void MyTextEdit::showToolTip(qint32 siteId, QPoint globalPos, QString name) {
     QToolTip::setPalette(palette);
     QToolTip::showText(globalPos,name);
 
+}
+
+void MyTextEdit::contextMenuEvent(QContextMenuEvent *e) {
+    auto menu = createStandardContextMenu();
+    auto point = e->pos();
+    auto curs = cursorForPosition(point);
+    int pos = curs.position();
+    if( !( (pos >= textCursor().selectionStart() && pos <= textCursor().selectionEnd()) ||
+            (pos >= textCursor().selectionEnd() && pos <= textCursor().selectionStart() ) ) ) {
+        this->setTextCursor(cursorForPosition(point));
+    }
+
+    menu->actions().at(5)->disconnect();
+    connect(menu->actions().at(5),&QAction::triggered,[this](bool chk = false){
+        auto keyEv = new QKeyEvent(QEvent::KeyPress,86,Qt::ControlModifier,47,86,2);
+        QApplication::postEvent(this, keyEv);});
+    menu->exec(e->globalPos());
+    delete menu;
 }
 

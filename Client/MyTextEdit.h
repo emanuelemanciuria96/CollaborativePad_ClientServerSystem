@@ -24,7 +24,7 @@ public:
     void showToolTip(qint32 siteId,QPoint globalPos, QString name);
 protected:
     void paintEvent(QPaintEvent *e) override;
-
+    void contextMenuEvent(QContextMenuEvent *e) override;
 signals:
     void tipRequest(int pos,QPoint globalPos);
 
