@@ -27,7 +27,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     statusBar->addPermanentWidget(numUsers);
     numUsers->hide();
     statusBar->showMessage ("");
-//    statusBar->setStyleSheet(statusBar->styleSheet().append("background-color:#3F51B5"));
 
     toolBar = new QToolBar("Toolbar",this);
     centralWidget = new QStackedWidget(this);
@@ -470,12 +469,7 @@ void MainWindow::resizeEvent(QResizeEvent *evt) {
 }
 
 void MainWindow::setStyleSheet() {
-//    qApp->setStyleSheet("QWidget {font-family: helvetica}"
-//                        "QPushButton {border-style: solid; border-width: 2px; border-color: #8fc1ed; border-radius: 12px; "
-//                        "min-width: 4em; padding: 3px; padding-left: 10px; padding-right:10px; font: 9pt; }");
-//                        "QPushButton:pressed {background-color: lightblue}");
-
-//    "QLabel {color: white; font: 14pt}");
+    qApp->setStyleSheet("QToolBar {background:#FAFAFA}");
 
 }
 
