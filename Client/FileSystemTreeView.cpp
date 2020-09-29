@@ -9,6 +9,7 @@
 #include <QIconEngine>
 #include <QApplication>
 #include <QAction>
+#include <QtWidgets/QMessageBox>
 
 
 FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
@@ -30,12 +31,14 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
     this->insertTopLevelItem(0,root);
     root->setIcon(0,home_dir);
     root->setExpanded(true);
-
+    root->setFlags(root->flags() & (~Qt::ItemIsSelectable));
+    this->setRootIsDecorated(false);
 
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &FileSystemTreeView::itemDoubleClicked, this, &FileSystemTreeView::openFile);
     connect(this, &FileSystemTreeView::itemDoubleClicked, [this](QTreeWidgetItem *itm, int column){ previousName=itm->text(0);} );
     connect(this, &FileSystemTreeView::itemClicked, [this](QTreeWidgetItem *itm, int column){ previousName=itm->text(0);} );
+    connect(this, &FileSystemTreeView::itemCollapsed, [this](QTreeWidgetItem *itm){ if(itm == root) root->setExpanded(true);} );
     connect(this, &QWidget::customContextMenuRequested, this, &FileSystemTreeView::openCustomMenu);
     connect(this, &FileSystemTreeView::itemChanged, this, &FileSystemTreeView::renameFile);
 
@@ -190,11 +193,7 @@ void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
             path = item->text(0);
         }
         emit opnFileRequest(path);
-        if( item->parent() != root) {
-            emit canInvite(false);
-        }else {
-            emit canInvite(true);
-        }
+        emit canInvite( item->parent()==root );
     }
 
 }
@@ -231,6 +230,22 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
 void FileSystemTreeView::removeFile(QTreeWidgetItem *item) {
 
     QString name = item->text(0);
+
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Delete file");
+    msgBox.setText("Do you want to delete "+name+"?");
+    msgBox.setStandardButtons(QMessageBox::Ok  | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.setMinimumSize(600, 1000);
+    int ret = msgBox.exec();
+    switch (ret) {
+        case QMessageBox::Ok:
+            break;
+        case QMessageBox::Cancel:
+            return;
+        default:
+            return;
+    }
 
     auto parent = item->parent();
     if( parent != root )
