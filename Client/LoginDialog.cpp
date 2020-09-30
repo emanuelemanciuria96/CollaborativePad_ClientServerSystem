@@ -64,7 +64,7 @@ void LoginDialog::setUpGUI() {
     title->setStyleSheet("QLabel {color: black; font: 18pt}");
 //    auto style = innerWidget->styleSheet();
 //    style.append();
-    innerWidget->setStyleSheet("QWidget{background-color: #FAFAFA; font-family:helvetica }"
+    innerWidget->setStyleSheet("QWidget{background-color: #FAFAFA;}"
                                "QLineEdit{font:9pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray}");
     auto effect = new QGraphicsDropShadowEffect;
     effect->setBlurRadius(30);

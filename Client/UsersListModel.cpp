@@ -24,6 +24,7 @@ QVariant UsersListModel::data(const QModelIndex &index, int role) const {
         }
         if(role == Qt::BackgroundRole)
             return QColor(RemoteCursor::getColor(mData[index.row()].getSiteId()));
+
     }
     return QVariant();
 }

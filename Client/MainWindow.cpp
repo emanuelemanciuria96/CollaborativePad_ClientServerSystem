@@ -14,7 +14,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 //        std::cout << k.toStdString() << std::endl;
 //    }
     bkgnd = QPixmap("./textures/texture_clouds_background.png");
-    setStyleSheet();
     setMainPalette();
     setPalette(mainPalette);
     setAutoFillBackground(true);
@@ -39,7 +38,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     toolBar->setMinimumHeight(45);
     toolBar->setIconSize(QSize(45, 45));
     toolBar->hide();
-    toolBar->setStyleSheet({"background-color:white;"});
     setCentralWidget(centralWidget);
     // tree file system view creation
     treeFileSystemSettings();
@@ -59,6 +57,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
     setToolBar();
     setToolBarGrid();
+
+    setStyleSheet();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
@@ -149,7 +149,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
 
-
     centralWidget->addWidget(loginDialog);
     centralWidget->addWidget(editor);
     centralWidget->addWidget(widgetSignIn);
@@ -171,7 +170,6 @@ void MainWindow::loginFinished() {
     toolBar->show();
     statusBar->show();
     gridView->show();
-
 }
 
 void MainWindow::opnFileGrid(QString fileName) {
@@ -179,9 +177,9 @@ void MainWindow::opnFileGrid(QString fileName) {
     centralWidget->setCurrentWidget(editor);
     dockWidgetUsers->show();
     auto palette = this->palette();
-    palette.setColor(QPalette::Window,QColor("lightgray"));
+//    palette.setColor(QPalette::Window,QColor("lightgray"));
     palette.setColor(QPalette::Base,QColor("white"));
-//    setPalette(palette);
+    setPalette(palette);
 }
 
 void MainWindow::changeInviteAction(bool state){
@@ -237,7 +235,6 @@ void MainWindow::treeFileSystemSettings() {
 
     this->addDockWidget(Qt::LeftDockWidgetArea,leftDockWidgets[tree]);
     leftDockWidgets[tree]->hide();
-//    leftDockWidgets[tree]->setPalette(mainPalette);
 
 }
 
@@ -458,6 +455,7 @@ void MainWindow::setToolBarFolderGrid(QString folder) {
         pasteAction->setVisible(false);
     }
 }
+
 void MainWindow::setInviteListIcon(int num) {
     QString path="./icons/invite_list_icon.png";
     QString path2="./icons/bedge_invite_list_icon.png";
@@ -535,19 +533,25 @@ void MainWindow::resizeEvent(QResizeEvent *evt) {
     leftDockWidgets[uri]->setMinimumWidth(this->size().width() / 5);
     leftDockWidgets[uri]->setMaximumHeight(this->size().height() / 5);
     leftDockWidgets[uri]->setMinimumHeight(this->size().height() / 5);
+
     auto p = palette();
-
-    gradient->setCenter(size().width()/2,size().height()/2);
-
+    gradient->setCenter(size().width() / 2, size().height() / 2);
     auto brush = QBrush(*gradient);
-    p.setBrush(QPalette::Window,brush);
+    p.setBrush(QPalette::Window, brush);
     setPalette(p);
 }
 
 void MainWindow::setStyleSheet() {
-    qApp->setStyleSheet("QToolBar {background:#F1F1F1}"
-                        "QStatusBar {background-color: #F1F1F1;}");
+    qApp->setStyleSheet("QWidget {font-family: helvetica}"
+                        "QToolBar {background:#F1F1F1}"
+                        "QStatusBar {background-color: #F1F1F1; border-top:1px solid #d2d2d2}");
 
+    dockWidgetUsers->titleBarWidget()->setStyleSheet("font:9pt; ");
+    dockWidgetUsers->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8");
+    inviteUserWidget->setStyleSheet("padding:0; margin:0;");
+    for(auto d : leftDockWidgets) {
+        d->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8;");
+    }
 }
 
 void MainWindow::setUsersList() {
@@ -562,9 +566,7 @@ void MainWindow::setUsersList() {
 
     auto l = new QLabel("Users connected");
     dockWidgetUsers->setTitleBarWidget(l);
-//    dockWidgetUsers->titleBarWidget()->setStyleSheet("background-color:red");
     dockWidgetUsers->setWidget(usersView);
-
     this->addDockWidget(Qt::RightDockWidgetArea,dockWidgetUsers);
     dockWidgetUsers->hide();
 }
@@ -581,9 +583,10 @@ void MainWindow::setMainPalette() {
     gradient = new QConicalGradient(QPointF(size().width()/2,size().height()/2),45);
     gradient->setColorAt(0, QColor("#E6D0E2")); //rosso
     gradient->setColorAt(0.25, QColor("#D0D7E6"));  //blu
-    gradient->setColorAt(0.75, QColor("#D0E6D4"));  //verde
     gradient->setColorAt(0.5, QColor("#E6DFD0")); //giallo
+    gradient->setColorAt(0.75, QColor("#D0E6D4"));  //verde
     gradient->setColorAt(1, QColor("#E6D0E2"));
+
 //    brush = new QBrush(*gradient);
 //    mainPalette.setBrush(QPalette::Window,*brush);
 }
