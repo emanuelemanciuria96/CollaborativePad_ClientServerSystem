@@ -136,7 +136,7 @@ void SharedEditor::sendRegisterRequest(QString& user, QString& password, QString
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
-void SharedEditor::localInsert(qint32 index, QString& str) {
+void SharedEditor::localInsert(qint32 index, QString& str, const QTextCharFormat& format) {
 
     if ( index > _symbols.size() - 2 ){
         throw "fuori dai limiti"; //da implementare classe eccezione

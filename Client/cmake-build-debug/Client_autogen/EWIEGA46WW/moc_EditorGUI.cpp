@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EditorGUI_t {
-    QByteArrayData data[39];
-    char stringdata0[447];
+    QByteArrayData data[40];
+    char stringdata0[455];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -70,7 +70,8 @@ QT_MOC_LITERAL(34, 392, 4), // "user"
 QT_MOC_LITERAL(35, 397, 10), // "connection"
 QT_MOC_LITERAL(36, 408, 16), // "flushFileWriters"
 QT_MOC_LITERAL(37, 425, 13), // "setCharFormat"
-QT_MOC_LITERAL(38, 439, 7) // "checked"
+QT_MOC_LITERAL(38, 439, 7), // "checked"
+QT_MOC_LITERAL(39, 447, 7) // "setBold"
 
     },
     "EditorGUI\0clear\0\0setNumUsers\0n\0userQuery\0"
@@ -85,7 +86,7 @@ QT_MOC_LITERAL(38, 439, 7) // "checked"
     "filename\0highlightedTip\0globalPos\0"
     "recordUserWriter\0QString&\0user\0"
     "connection\0flushFileWriters\0setCharFormat\0"
-    "checked"
+    "checked\0setBold"
 };
 #undef QT_MOC_LITERAL
 
@@ -95,7 +96,7 @@ static const uint qt_meta_data_EditorGUI[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      21,   14, // methods
+      22,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -103,29 +104,30 @@ static const uint qt_meta_data_EditorGUI[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  119,    2, 0x06 /* Public */,
-       3,    1,  120,    2, 0x06 /* Public */,
-       5,    1,  123,    2, 0x06 /* Public */,
+       1,    0,  124,    2, 0x06 /* Public */,
+       3,    1,  125,    2, 0x06 /* Public */,
+       5,    1,  128,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    3,  126,    2, 0x08 /* Private */,
-      11,    0,  133,    2, 0x08 /* Private */,
-      12,    1,  134,    2, 0x08 /* Private */,
-      14,    0,  137,    2, 0x08 /* Private */,
-      15,    0,  138,    2, 0x08 /* Private */,
-      16,    1,  139,    2, 0x08 /* Private */,
-      19,    4,  142,    2, 0x0a /* Public */,
-      23,    0,  151,    2, 0x0a /* Public */,
-      24,    2,  152,    2, 0x0a /* Public */,
-      25,    1,  157,    2, 0x0a /* Public */,
-      26,    2,  160,    2, 0x0a /* Public */,
-      27,    0,  165,    2, 0x0a /* Public */,
-      28,    1,  166,    2, 0x0a /* Public */,
-      30,    2,  169,    2, 0x0a /* Public */,
-      32,    3,  174,    2, 0x0a /* Public */,
-      32,    2,  181,    2, 0x2a /* Public | MethodCloned */,
-      36,    0,  186,    2, 0x0a /* Public */,
-      37,    1,  187,    2, 0x0a /* Public */,
+       7,    3,  131,    2, 0x08 /* Private */,
+      11,    0,  138,    2, 0x08 /* Private */,
+      12,    1,  139,    2, 0x08 /* Private */,
+      14,    0,  142,    2, 0x08 /* Private */,
+      15,    0,  143,    2, 0x08 /* Private */,
+      16,    1,  144,    2, 0x08 /* Private */,
+      19,    4,  147,    2, 0x0a /* Public */,
+      23,    0,  156,    2, 0x0a /* Public */,
+      24,    2,  157,    2, 0x0a /* Public */,
+      25,    1,  162,    2, 0x0a /* Public */,
+      26,    2,  165,    2, 0x0a /* Public */,
+      27,    0,  170,    2, 0x0a /* Public */,
+      28,    1,  171,    2, 0x0a /* Public */,
+      30,    2,  174,    2, 0x0a /* Public */,
+      32,    3,  179,    2, 0x0a /* Public */,
+      32,    2,  186,    2, 0x2a /* Public | MethodCloned */,
+      36,    0,  191,    2, 0x0a /* Public */,
+      37,    1,  192,    2, 0x0a /* Public */,
+      39,    1,  195,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -150,6 +152,7 @@ static const uint qt_meta_data_EditorGUI[] = {
     QMetaType::Void, QMetaType::Int, 0x80000000 | 33, QMetaType::Bool,    6,   34,   35,
     QMetaType::Void, QMetaType::Int, 0x80000000 | 33,    6,   34,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Bool,   38,
     QMetaType::Void, QMetaType::Bool,   38,
 
        0        // eod
@@ -182,6 +185,7 @@ void EditorGUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 18: _t->recordUserWriter((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 19: _t->flushFileWriters(); break;
         case 20: _t->setCharFormat((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 21: _t->setBold((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -239,13 +243,13 @@ int EditorGUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 21)
+        if (_id < 22)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 21;
+        _id -= 22;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 21)
+        if (_id < 22)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 21;
+        _id -= 22;
     }
     return _id;
 }

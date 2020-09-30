@@ -138,7 +138,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             for (i = 0; i < charsAdded; i++) {
                 str+=textEdit->document()->characterAt(pos + i);
             }
-            model->localInsert(pos, str);
+            model->localInsert(pos, str, textEdit->currentCharFormat());
         }
 //        updateRemoteCursors(model->getSiteId(),pos);
     }
@@ -157,7 +157,7 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
     if(model->getHighlighting())
-        cursor->setCharFormat(getFormat(siteId));
+        cursor->setCharFormat(getHighlightFormat(siteId));
 
     cursor->insertText(value);
     //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
@@ -325,12 +325,13 @@ void EditorGUI::highlight(qint32 pos, qint32 siteId) {
     auto format = QTextCharFormat();
 
     if (!model->getHighlighting())
-        format = getFormat(siteId);
-
+        format = getHighlightFormat(siteId);
+    else
+        format.setBackground(QColor("white"));
     signalBlocker = !signalBlocker;
     cursor->setPosition(pos - 1, QTextCursor::MoveAnchor);
     cursor->setPosition(pos, QTextCursor::KeepAnchor);
-    cursor->setCharFormat(format);
+    cursor->mergeCharFormat(format);
     signalBlocker = !signalBlocker;
 }
 
@@ -339,7 +340,7 @@ void EditorGUI::keyPressEvent(QKeyEvent *e) {
 //    std::cout << "dentro keypress" << std::endl;
 }
 
-QTextCharFormat EditorGUI::getFormat(qint32 siteId) {
+QTextCharFormat EditorGUI::getHighlightFormat(qint32 siteId) {
     auto format = QTextCharFormat();
     auto color = QColor();
 
@@ -407,18 +408,26 @@ void EditorGUI::showToolTip(qint32 siteId, QPoint globalPos) {
 void EditorGUI::setCharFormat(bool checked) {
     if (checked) {
 //        std::cout << "setCharFormat true" << std::endl;
-        textEdit->setCurrentCharFormat(getFormat(model->getSiteId()));
+        textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
     }
     else {
 //        std::cout << "setCharFormat false" << std::endl;
-        auto format = textEdit->currentCharFormat();
+        auto format = QTextCharFormat();
         format.setBackground(QColor("white"));
-        textEdit->setCurrentCharFormat(format);
+        textEdit->mergeCurrentCharFormat(format);
     }
 }
 
 void EditorGUI::checkCharFormat(const QTextCharFormat &f) {
     if(model->getHighlighting())
-        textEdit->setCurrentCharFormat(getFormat(model->getSiteId()));
+        textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
+}
 
+void EditorGUI::setBold(bool checked) const {
+    auto f = QTextCharFormat();
+    if(checked)
+        f.setFontWeight(QFont::Bold);
+    else
+        f.setFontWeight(QFont::Normal);
+    textEdit->mergeCurrentCharFormat(f);
 }
