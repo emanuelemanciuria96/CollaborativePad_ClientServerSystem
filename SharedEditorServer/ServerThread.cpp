@@ -346,7 +346,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                 auto shr = std::make_shared<UserInfo>(_siteID,UserInfo::conn_broad,_username);
                 DataPacket pkt( 0,0,DataPacket::user_info, shr);
                 std::cout<<"user: "+_username.toStdString()+" appena connesso al file "+fileName.toStdString()<<std::endl;
-                if(shr->obtainImage(threadId))
+                if(shr->obtainInfo(threadId))
                     _sockets.broadcast(fileName,_siteID,pkt);
                 else
                     std::cout<<"Casino pazzesco, errore assolutamente da gestire!"<<std::endl;
@@ -455,8 +455,10 @@ void ServerThread::recvUserInfo(DataPacket &packet, QDataStream &in) {
     qint32 type;
     QString user;
     QPixmap image;
+    QString name;
+    QString email;
 
-    in >> siteId >> type >> user >> image;
+    in >> siteId >> type >> user >> image >> name >> email;
 
     if(type == UserInfo::user_reqest) {
         auto ptr = std::make_shared<UserInfo>(siteId, (UserInfo::info_t) type, user);
@@ -624,7 +626,7 @@ void ServerThread::sendUserInfo(DataPacket &packet) {
 
         auto shr = std::make_shared<UserInfo>(_siteID,UserInfo::conn_ack,_username);
         DataPacket pkt( 0,0,DataPacket::user_info, shr);
-        if(shr->obtainImage(threadId)) {
+        if(shr->obtainInfo(threadId)) {
             QVector<qint32> vec;
             vec.push_back(ptr->getSiteId());
             _sockets.broadcast(vec, pkt);
@@ -633,12 +635,12 @@ void ServerThread::sendUserInfo(DataPacket &packet) {
             std::cout<<"Casino pazzesco, errore assolutamente da gestire!"<<std::endl;
     }
 
-    tmp << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage();
+    tmp << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
 
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
     out << bytes<<packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData();
-    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
     socket->waitForBytesWritten(-1);
 
 }

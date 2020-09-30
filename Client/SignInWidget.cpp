@@ -10,6 +10,7 @@
 #include <QtGui/QGuiApplication>
 #include "SignInWidget.h"
 #include <QScreen>
+#include <QtGui/QPainter>
 
 SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     auto innerWidget = new QWidget(this);
@@ -45,7 +46,19 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     errorLabel->setAlignment(Qt::AlignCenter);
 
     imageLabel->setFixedSize(150,150);
-    imageLabel->setPixmap(QPixmap("images/profile.jpg"));
+    QPixmap orig("images/profile.jpg");
+    int sizeR = qMax(orig.width(), orig.height());
+    QPixmap rounded = QPixmap(sizeR, sizeR);
+    rounded.fill(Qt::transparent);
+    QPainterPath path;
+    path.addEllipse(rounded.rect());
+    QPainter painter(&rounded);
+    painter.setClipPath(path);
+    painter.fillRect(rounded.rect(), Qt::black);
+    int x = qAbs(orig.width() - sizeR) / 2;
+    int y = qAbs(orig.height() - sizeR) / 2;
+    painter.drawPixmap(x, y, orig.width(), orig.height(), orig);
+    imageLabel->setPixmap(rounded);
     imageLabel->setScaledContents(true);
 
     buttons->addButton(QDialogButtonBox::Cancel);
@@ -127,7 +140,19 @@ void SignInWidget::openFileDialog() {
         auto rect = QRect((image.width() - imgsize) / 2,(image.height() - imgsize) / 2, imgsize, imgsize);
         auto crop = image.copy(rect);
         crop.save("images/temp.jpg", "JPG", 50);
-        imageLabel->setPixmap(QPixmap("images/temp.jpg"));
+        QPixmap orig("images/temp.jpg");
+        int size = qMax(orig.width(), orig.height());
+        QPixmap rounded = QPixmap(size, size);
+        rounded.fill(Qt::transparent);
+        QPainterPath path;
+        path.addEllipse(rounded.rect());
+        QPainter painter(&rounded);
+        painter.setClipPath(path);
+        painter.fillRect(rounded.rect(), Qt::black);
+        int x = qAbs(orig.width() - size) / 2;
+        int y = qAbs(orig.height() - size) / 2;
+        painter.drawPixmap(x, y, orig.width(), orig.height(), orig);
+        imageLabel->setPixmap(rounded);
         QFile::remove("images/temp.jpg");
     }
 }

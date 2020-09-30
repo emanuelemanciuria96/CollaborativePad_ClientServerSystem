@@ -204,10 +204,12 @@ void Transceiver::recvUserInfo(DataPacket &pkt, QDataStream &in) {
     qint32 type;
     QString username;
     QPixmap image;
+    QString name;
+    QString email;
 
-    in >> siteId >> type >> username >> image;
+    in >> siteId >> type >> username >> image >> name >> email;
 
-    pkt.setPayload(std::make_shared<UserInfo>(siteId,(UserInfo::info_t)type,username,image));
+    pkt.setPayload(std::make_shared<UserInfo>(siteId,(UserInfo::info_t)type,username,image, name, email));
 
     emit readyToProcess(pkt);
 
@@ -378,12 +380,12 @@ void Transceiver::sendUserInfo(DataPacket &pkt) {
 
     auto ptr = std::dynamic_pointer_cast<UserInfo>(pkt.getPayload());
 
-    tmp << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage();
+    tmp << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
 
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
     out << bytes<<pkt.getSource() << pkt.getErrcode() << (quint32)pkt.getTypeOfData();
-    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
     socket->waitForBytesWritten(-1);
 }
 
