@@ -1,6 +1,7 @@
 #include "InviteUserWidgetItem.h"
 
 #include <utility>
+#include <QtWidgets/QGraphicsDropShadowEffect>
 #include "./ui_inviteuserwidgetitem.h"
 
 InviteUserWidgetItem::InviteUserWidgetItem(QListWidgetItem* item, QString user, QString fileName, QWidget *parent)
@@ -15,10 +16,16 @@ InviteUserWidgetItem::InviteUserWidgetItem(QListWidgetItem* item, QString user, 
     ui->acceptButton->setIconSize(QSize(30, 30));
     ui->rejectButton->setIcon(QIcon("./icons/invite_reject_icon.png"));
     ui->rejectButton->setIconSize(QSize(30, 30));
+    auto effect = new QGraphicsDropShadowEffect;
+    effect->setBlurRadius(30);
+    effect->setXOffset(0);
+    effect->setYOffset(0);
+    effect->setColor(Qt::gray);
+    ui->frame->setGraphicsEffect(effect);
+    ui->frame->setStyleSheet("font:9pt; background:#FAFAFA; border-radius: 15px");
 }
 
-InviteUserWidgetItem::~InviteUserWidgetItem()
-{
+InviteUserWidgetItem::~InviteUserWidgetItem() {
     delete ui;
 }
 

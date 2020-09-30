@@ -5,9 +5,9 @@
 #include "UsersListView.h"
 
 UsersListView::UsersListView(QWidget  *parent) : QListView(parent){
-//    auto icon = QIcon("./images/profile.jpg");
-//    addItem(new QListWidgetItem( icon ,"Piero",this));
-//    addItem(new QListWidgetItem(icon,"Giuseppe",this));
+    auto s = styleSheet();
+    s.append("QListView::item{border-radius:8px}");
+    setStyleSheet(s);
 }
 
 
