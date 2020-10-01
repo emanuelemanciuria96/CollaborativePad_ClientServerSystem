@@ -5,7 +5,6 @@
 #include <iostream>
 #include <QtGui/QPainter>
 #include "UsersList.h"
-#include "UsersListItem.h"
 #include "RemoteCursor.h"
 
 UsersList::UsersList(QWidget *parent) : QListWidget(parent){

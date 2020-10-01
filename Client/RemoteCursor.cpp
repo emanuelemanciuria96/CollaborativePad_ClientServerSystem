@@ -27,11 +27,6 @@ qint32 RemoteCursor::getSiteId() const {
     return _siteId;
 }
 
-QString RemoteCursor::generateName() const {
-    auto num = (_siteId*13) % ANIMALS->size();
-    return ANIMALS[num];
-}
-
 QString RemoteCursor::getColor() const {
     auto num = (_siteId*13) % COLORS->size();
     return COLORS[num];

@@ -440,38 +440,10 @@ CMakeFiles/Client.dir/UriWidget.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/UriWidget.cpp.s"
 	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UriWidget.cpp -o CMakeFiles\Client.dir\UriWidget.cpp.s
 
-CMakeFiles/Client.dir/UsersListView.cpp.obj: CMakeFiles/Client.dir/flags.make
-CMakeFiles/Client.dir/UsersListView.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
-CMakeFiles/Client.dir/UsersListView.cpp.obj: ../UsersListView.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/Client.dir/UsersListView.cpp.obj"
-	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\UsersListView.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UsersListView.cpp
-
-CMakeFiles/Client.dir/UsersListView.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/UsersListView.cpp.i"
-	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UsersListView.cpp > CMakeFiles\Client.dir\UsersListView.cpp.i
-
-CMakeFiles/Client.dir/UsersListView.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/UsersListView.cpp.s"
-	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UsersListView.cpp -o CMakeFiles\Client.dir\UsersListView.cpp.s
-
-CMakeFiles/Client.dir/UsersListModel.cpp.obj: CMakeFiles/Client.dir/flags.make
-CMakeFiles/Client.dir/UsersListModel.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
-CMakeFiles/Client.dir/UsersListModel.cpp.obj: ../UsersListModel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/Client.dir/UsersListModel.cpp.obj"
-	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\UsersListModel.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UsersListModel.cpp
-
-CMakeFiles/Client.dir/UsersListModel.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/UsersListModel.cpp.i"
-	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UsersListModel.cpp > CMakeFiles\Client.dir\UsersListModel.cpp.i
-
-CMakeFiles/Client.dir/UsersListModel.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/UsersListModel.cpp.s"
-	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UsersListModel.cpp -o CMakeFiles\Client.dir\UsersListModel.cpp.s
-
 CMakeFiles/Client.dir/FileSystemGridView.cpp.obj: CMakeFiles/Client.dir/flags.make
 CMakeFiles/Client.dir/FileSystemGridView.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
 CMakeFiles/Client.dir/FileSystemGridView.cpp.obj: ../FileSystemGridView.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/Client.dir/FileSystemGridView.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/Client.dir/FileSystemGridView.cpp.obj"
 	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\FileSystemGridView.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\FileSystemGridView.cpp
 
 CMakeFiles/Client.dir/FileSystemGridView.cpp.i: cmake_force
@@ -485,7 +457,7 @@ CMakeFiles/Client.dir/FileSystemGridView.cpp.s: cmake_force
 CMakeFiles/Client.dir/UsersList.cpp.obj: CMakeFiles/Client.dir/flags.make
 CMakeFiles/Client.dir/UsersList.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
 CMakeFiles/Client.dir/UsersList.cpp.obj: ../UsersList.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/Client.dir/UsersList.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/Client.dir/UsersList.cpp.obj"
 	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\UsersList.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UsersList.cpp
 
 CMakeFiles/Client.dir/UsersList.cpp.i: cmake_force
@@ -495,20 +467,6 @@ CMakeFiles/Client.dir/UsersList.cpp.i: cmake_force
 CMakeFiles/Client.dir/UsersList.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/UsersList.cpp.s"
 	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UsersList.cpp -o CMakeFiles\Client.dir\UsersList.cpp.s
-
-CMakeFiles/Client.dir/UsersListItem.cpp.obj: CMakeFiles/Client.dir/flags.make
-CMakeFiles/Client.dir/UsersListItem.cpp.obj: CMakeFiles/Client.dir/includes_CXX.rsp
-CMakeFiles/Client.dir/UsersListItem.cpp.obj: ../UsersListItem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/Client.dir/UsersListItem.cpp.obj"
-	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Client.dir\UsersListItem.cpp.obj -c C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UsersListItem.cpp
-
-CMakeFiles/Client.dir/UsersListItem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Client.dir/UsersListItem.cpp.i"
-	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UsersListItem.cpp > CMakeFiles\Client.dir\UsersListItem.cpp.i
-
-CMakeFiles/Client.dir/UsersListItem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Client.dir/UsersListItem.cpp.s"
-	C:\PROGRA~1\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\UsersListItem.cpp -o CMakeFiles\Client.dir\UsersListItem.cpp.s
 
 # Object files for target Client
 Client_OBJECTS = \
@@ -538,11 +496,8 @@ Client_OBJECTS = \
 "CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.obj" \
 "CMakeFiles/Client.dir/InviteUserWidget.cpp.obj" \
 "CMakeFiles/Client.dir/UriWidget.cpp.obj" \
-"CMakeFiles/Client.dir/UsersListView.cpp.obj" \
-"CMakeFiles/Client.dir/UsersListModel.cpp.obj" \
 "CMakeFiles/Client.dir/FileSystemGridView.cpp.obj" \
-"CMakeFiles/Client.dir/UsersList.cpp.obj" \
-"CMakeFiles/Client.dir/UsersListItem.cpp.obj"
+"CMakeFiles/Client.dir/UsersList.cpp.obj"
 
 # External object files for target Client
 Client_EXTERNAL_OBJECTS =
@@ -573,11 +528,8 @@ Client.exe: CMakeFiles/Client.dir/AddUserWidget.cpp.obj
 Client.exe: CMakeFiles/Client.dir/InviteUserWidgetItem.cpp.obj
 Client.exe: CMakeFiles/Client.dir/InviteUserWidget.cpp.obj
 Client.exe: CMakeFiles/Client.dir/UriWidget.cpp.obj
-Client.exe: CMakeFiles/Client.dir/UsersListView.cpp.obj
-Client.exe: CMakeFiles/Client.dir/UsersListModel.cpp.obj
 Client.exe: CMakeFiles/Client.dir/FileSystemGridView.cpp.obj
 Client.exe: CMakeFiles/Client.dir/UsersList.cpp.obj
-Client.exe: CMakeFiles/Client.dir/UsersListItem.cpp.obj
 Client.exe: CMakeFiles/Client.dir/build.make
 Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Chartsd.a
 Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Networkd.a
@@ -588,7 +540,7 @@ Client.exe: C:/Qt/5.13.1/mingw73_64/lib/libQt5Cored.a
 Client.exe: CMakeFiles/Client.dir/linklibs.rsp
 Client.exe: CMakeFiles/Client.dir/objects1.rsp
 Client.exe: CMakeFiles/Client.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Linking CXX executable Client.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Windows\Documents\GitHub\SharedEditor_MalnatiProject\Client\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Linking CXX executable Client.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Client.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
