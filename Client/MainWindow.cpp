@@ -149,7 +149,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(infoWidgetEdit, &InfoWidgetEdit::updateInfo, infoWidget, &InfoWidget::updateInfo);
     connect(infoWidgetEdit, &InfoWidgetEdit::backToInfoWidget, this, [this](){centralWidget->setCurrentWidget(infoWidget);});
     connect(inviteUserWidget, &InviteUserWidget::inviteNumberModified, this, [this](int n){setInviteListIcon(n);});
-
+    connect(editor->textEdit, &MyTextEdit::copyAvailable, this,[this](bool b){copyAction->setDisabled(!b);cutAction->setDisabled(!b);});
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -357,12 +357,14 @@ void MainWindow::setToolBar() {
     cutAction = new QAction();
     cutAction->setIcon(QIcon("./icons/cut_icon.png"));
     cutAction->setVisible(true);
+    cutAction->setDisabled(true);
     cutAction->setToolTip("Cut");
     toolBar->addAction(cutAction);
 
     copyAction = new QAction();
     copyAction->setIcon(QIcon("./icons/copy_icon.png"));
     copyAction->setVisible(true);
+    copyAction->setDisabled(true);
     copyAction->setToolTip("Copy");
     toolBar->addAction(copyAction);
 

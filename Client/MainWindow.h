@@ -93,6 +93,9 @@ private:
     void setMainPalette();
 
 public slots:
+    void test(bool b){
+    qDebug()<<b;
+};
     void loginFinished();
     void startSignIn();
     void backToLogIn();
