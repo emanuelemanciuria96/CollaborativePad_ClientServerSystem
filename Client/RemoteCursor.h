@@ -9,7 +9,6 @@
 #include <QtCore/QtGlobal>
 #include <QTextCursor>
 #include <QtWidgets/QLabel>
-#include "CursorNames.h"
 #include <QTimer>
 #include <memory>
 #include <QtCore/QPointer>
@@ -18,7 +17,6 @@
 class RemoteCursor : public QTextCursor{
 private:
     qint32 _siteId;
-    QString generateName() const;
     QString getColor() const;
 public:
     QPointer<QLabel> labelName;
@@ -27,8 +25,9 @@ public:
     static QString getColor(qint32 siteId);
     RemoteCursor(): QTextCursor(){ _siteId = -1;};
     explicit RemoteCursor(qint32 siteId) : _siteId(siteId), QTextCursor() {};
-    RemoteCursor(QTextDocument *document, qint32 siteId);
+    RemoteCursor(QTextDocument *document, qint32 siteId, const QString& username);
     qint32 getSiteId() const;
+    static int isDarkColor(const QColor& background);
 
     virtual ~RemoteCursor();
 

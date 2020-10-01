@@ -58,7 +58,7 @@ private:
     void insertText(qint32 pos, const QString& value, qint32 siteId);
     void deleteText(qint32 pos, qint32 siteId,qint32 n);
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
-    void drawLabel(RemoteCursor *cursor);
+    void drawLabel(RemoteCursor *cursor) const;
     void keyPressEvent(QKeyEvent *e) override;
     static QTextCharFormat getFormat(qint32 siteId);
     void showToolTip(qint32 siteId, QPoint globalPos);

@@ -17,9 +17,8 @@
 #include "AddUserWidget.h"
 #include "InviteUserWidget.h"
 #include "UriWidget.h"
-#include "UsersListView.h"
-#include "UsersListModel.h"
 #include <QScrollArea>
+#include "UsersList.h"
 
 
 class MainWindow : public QMainWindow {
@@ -62,9 +61,8 @@ private:
     InviteUserWidget* inviteUserWidget;
     UriWidget* uriWidget;
     QPixmap bkgnd;
-    UsersListView *usersView;
     QDockWidget *dockWidgetUsers;
-    UsersListModel *usersModel;
+    UsersList *usersList;
     QPalette mainPalette;
     QConicalGradient* gradient;
     QLabel *numUsers;
