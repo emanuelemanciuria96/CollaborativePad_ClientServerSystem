@@ -6,12 +6,18 @@
 
 #include <memory>
 #include <iostream>
+#include <QtMath>
 
-RemoteCursor::RemoteCursor(QTextDocument *document, qint32 siteId) : _siteId(siteId), QTextCursor(document) {
+RemoteCursor::RemoteCursor(QTextDocument *document, qint32 siteId, const QString& username) : _siteId(siteId), QTextCursor(document) {
     color.setNamedColor(getColor());
     labelName = new QLabel();
-    labelName->setText(generateName());
-    labelName->setStyleSheet("QLabel {background-color: "+ color.name() + "}") ;
+    labelName->setText(username);
+    auto textColor = QColor();
+    if(isDarkColor(color) < 130)
+        textColor.setNamedColor("white");
+    else
+        textColor.setNamedColor("black");
+    labelName->setStyleSheet("QLabel {border-radius:3px; padding:0.5; background-color: "+ color.name() + "; color: " + textColor.name() + "}") ;
     labelTimer = new QTimer();
     labelTimer->setSingleShot(true);
 }
@@ -45,4 +51,6 @@ RemoteCursor::~RemoteCursor() {
     labelTimer->deleteLater();
 }
 
-
+int RemoteCursor::isDarkColor(const QColor& back) {
+    return qSqrt(back.redF()*back.redF()*0.241 + back.greenF()*back.greenF()*0.691 + back.blueF()*back.blueF()*0.068);
+}

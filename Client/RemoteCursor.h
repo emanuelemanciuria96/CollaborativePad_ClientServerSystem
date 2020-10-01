@@ -27,8 +27,9 @@ public:
     static QString getColor(qint32 siteId);
     RemoteCursor(): QTextCursor(){ _siteId = -1;};
     explicit RemoteCursor(qint32 siteId) : _siteId(siteId), QTextCursor() {};
-    RemoteCursor(QTextDocument *document, qint32 siteId);
+    RemoteCursor(QTextDocument *document, qint32 siteId, const QString& username);
     qint32 getSiteId() const;
+    static int isDarkColor(const QColor& background);
 
     virtual ~RemoteCursor();
 

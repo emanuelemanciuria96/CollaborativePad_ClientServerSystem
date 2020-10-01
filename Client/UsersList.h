@@ -13,7 +13,6 @@ class UsersList : public QListWidget{
     Q_OBJECT
 public:
     UsersList(QWidget* parent);
-
 public slots:
     void removeUser(const UserInfo& user);
     void addUser(const UserInfo& user);

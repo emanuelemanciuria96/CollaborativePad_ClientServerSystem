@@ -240,7 +240,9 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
         return (c.getSiteId() == siteId);
     });
     if (it == remoteCursors.end()) {
-        remoteCursors.emplace_back(textEdit->document(), siteId);
+        auto username = QString();
+        username = (siteId>0) ? file_writers.at(siteId) : "me";
+        remoteCursors.emplace_back(textEdit->document(), siteId, username);
         cursor = &remoteCursors.back();
         if(siteId!=0)
             connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
@@ -274,7 +276,7 @@ void EditorGUI::flushInsertQueue() {
     posLastChar = -1;
 }
 
-void EditorGUI::drawLabel(RemoteCursor *cursor){
+void EditorGUI::drawLabel(RemoteCursor *cursor) const{
     if(cursor->getSiteId() > 0) {
         if (cursor->labelTimer->isActive())
             cursor->labelTimer->stop();
@@ -283,7 +285,7 @@ void EditorGUI::drawLabel(RemoteCursor *cursor){
 
         cursor->labelName->setParent(textEdit);
         cursor->labelName->show();
-        cursor->labelName->move( std::min(curRect.left()+5,  int(textEdit->document()->pageSize().width())), curRect.top() -5);
+        cursor->labelName->move( std::min(curRect.left()+3,  int(textEdit->document()->pageSize().width())), curRect.top() -10);
         cursor->labelTimer->setParent(textEdit);
         cursor->labelTimer->start(5000);
     }

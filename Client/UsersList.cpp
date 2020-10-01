@@ -35,14 +35,20 @@ void UsersList::addUser(const UserInfo &user) {
     painter.drawPixmap(x, y, orig.width(), orig.height(), orig);
     newItem->setIcon(QIcon(rounded));
 
+    auto backColor = RemoteCursor::getColor(user.getSiteId());
     QPixmap backgrnd = QPixmap(134,40);
     backgrnd.fill(Qt::transparent);
     QPainter backPainter(&backgrnd);
     backPainter.setRenderHint(QPainter::Antialiasing);
     backPainter.setClipPath(roundRect(134,40),Qt::ReplaceClip);
-    backPainter.fillRect(backgrnd.rect(), RemoteCursor::getColor(user.getSiteId()));
+    backPainter.fillRect(backgrnd.rect(), backColor);
     backPainter.drawPixmap(0,0,backgrnd.width(), backgrnd.height(),backgrnd);
     newItem->setBackground(backgrnd);
+
+    if(RemoteCursor::isDarkColor(backColor) < 130)
+        newItem->setForeground(QColor("white"));
+    else
+        newItem->setForeground(QColor("black"));
 
     addItem(newItem);
 }
