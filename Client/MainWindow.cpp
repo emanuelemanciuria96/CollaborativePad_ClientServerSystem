@@ -148,11 +148,12 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(infoWidgetEdit, &InfoWidgetEdit::updateInfo, infoWidget, &InfoWidget::updateInfo);
     connect(infoWidgetEdit, &InfoWidgetEdit::backToInfoWidget, this, [this](){centralWidget->setCurrentWidget(infoWidget);});
     connect(inviteUserWidget, &InviteUserWidget::inviteNumberModified, this, [this](int n){setInviteListIcon(n);});
+
     connect(editor->textEdit, &MyTextEdit::copyAvailable, this,[this](bool b){copyAction->setDisabled(!b);cutAction->setDisabled(!b);});
     connect(QApplication::clipboard(), &QClipboard::dataChanged, this, &MainWindow::clipboardDataChanged);
     connect(editor->textEdit->document(), &QTextDocument::undoAvailable,undoAction, &QAction::setEnabled);
     connect(editor->textEdit->document(), &QTextDocument::redoAvailable,redoAction, &QAction::setEnabled);
-    connect(pasteAction, &QAction::triggered, editor->textEdit, &QTextEdit::paste);
+    //connect(pasteAction, &QAction::triggered, editor->textEdit, &QTextEdit::paste);
     connect(copyAction, &QAction::triggered, editor->textEdit, &QTextEdit::copy);
     connect(cutAction, &QAction::triggered, editor->textEdit, &QTextEdit::cut);
     connect(redoAction, &QAction::triggered, editor->textEdit, &QTextEdit::redo);
