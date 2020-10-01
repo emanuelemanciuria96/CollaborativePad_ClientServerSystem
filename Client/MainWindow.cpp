@@ -104,7 +104,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(widgetSignIn, &SignInWidget::backToLogIn, this, &MainWindow::backToLogIn);
     connect(highlightAction, &QAction::triggered, shEditor, &SharedEditor::highlightSymbols);
     connect(shEditor, &SharedEditor::setCharFormat, editor, &EditorGUI::setCharFormat);
-    connect(closeAction, &QAction::triggered, this, &MainWindow::clsFile);
     connect(shEditor, &SharedEditor::returnToGrid, this, &MainWindow::clsFile);
     connect(closeAction, &QAction::triggered, shEditor, &SharedEditor::requireFileClose);
     connect(pdfAction, &QAction::triggered, editor, &EditorGUI::exportToPdf);
@@ -144,8 +143,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(editor, &EditorGUI::userQuery,shEditor,&SharedEditor::obtainUser);
     connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
     connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::hideNumUsers);
-    connect(shEditor, &SharedEditor::addUser, usersModel, &UsersListModel::addUser);
-    connect(shEditor, &SharedEditor::removeUser, usersModel, &UsersListModel::removeUser);
+    connect(shEditor, &SharedEditor::addUser, usersList, &UsersList::addUser);
+    connect(shEditor, &SharedEditor::removeUser, usersList, &UsersList::removeUser);
     connect(shEditor, &SharedEditor::userNameArrived, editor, &EditorGUI::recordUserWriter);
     connect(shEditor, &SharedEditor::flushFileWriters, editor, &EditorGUI::flushFileWriters);
     connect(addUserWidget, &AddUserWidget::closing, this, &MainWindow::transparentForMouse);
@@ -156,6 +155,17 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(infoWidgetEdit, &InfoWidgetEdit::updateInfo, infoWidget, &InfoWidget::updateInfo);
     connect(infoWidgetEdit, &InfoWidgetEdit::backToInfoWidget, this, [this](){centralWidget->setCurrentWidget(infoWidget);});
     connect(inviteUserWidget, &InviteUserWidget::inviteNumberModified, this, [this](int n){setInviteListIcon(n);});
+
+    connect(editor->textEdit, &MyTextEdit::copyAvailable, this,[this](bool b){copyAction->setDisabled(!b);cutAction->setDisabled(!b);});
+    connect(QApplication::clipboard(), &QClipboard::dataChanged, this, &MainWindow::clipboardDataChanged);
+    connect(editor->textEdit->document(), &QTextDocument::undoAvailable,undoAction, &QAction::setEnabled);
+    connect(editor->textEdit->document(), &QTextDocument::redoAvailable,redoAction, &QAction::setEnabled);
+    //connect(pasteAction, &QAction::triggered, editor->textEdit, &QTextEdit::paste);
+    connect(copyAction, &QAction::triggered, editor->textEdit, &QTextEdit::copy);
+    connect(cutAction, &QAction::triggered, editor->textEdit, &QTextEdit::cut);
+    connect(redoAction, &QAction::triggered, editor->textEdit, &QTextEdit::redo);
+    connect(undoAction, &QAction::triggered, editor->textEdit, &QTextEdit::undo);
+
     connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
@@ -232,7 +242,7 @@ void MainWindow::clsFile() {
         highlightAction->trigger();
         highlightAction->setChecked(false);
     }
-    usersModel->clear();
+    usersList->clear();
 }
 
 void MainWindow::loginSettings() {
@@ -355,30 +365,35 @@ void MainWindow::setToolBar() {
     undoAction = new QAction();
     undoAction->setIcon(QIcon("./icons/undo_icon.png"));
     undoAction->setVisible(true);
+    undoAction->setDisabled(true);
     undoAction->setToolTip("Undo");
     toolBar->addAction(undoAction);
 
     redoAction = new QAction();
     redoAction->setIcon(QIcon("./icons/redo_icon.png"));
     redoAction->setVisible(true);
+    redoAction->setDisabled(true);
     redoAction->setToolTip("Redo");
     toolBar->addAction(redoAction);
 
     cutAction = new QAction();
     cutAction->setIcon(QIcon("./icons/cut_icon.png"));
     cutAction->setVisible(true);
+    cutAction->setDisabled(true);
     cutAction->setToolTip("Cut");
     toolBar->addAction(cutAction);
 
     copyAction = new QAction();
     copyAction->setIcon(QIcon("./icons/copy_icon.png"));
     copyAction->setVisible(true);
+    copyAction->setDisabled(true);
     copyAction->setToolTip("Copy");
     toolBar->addAction(copyAction);
 
     pasteAction = new QAction();
     pasteAction->setIcon(QIcon("./icons/paste_icon.png"));
     pasteAction->setVisible(true);
+    clipboardDataChanged();
     pasteAction->setToolTip("Paste");
     toolBar->addAction(pasteAction);
 
@@ -565,7 +580,7 @@ void MainWindow::setStyleSheet() {
                         "QToolBar {background:#F1F1F1}"
                         "QStatusBar {background-color: #F1F1F1; border-top:1px solid #d2d2d2}");
 
-    dockWidgetUsers->titleBarWidget()->setStyleSheet("font:9pt; ");
+    dockWidgetUsers->titleBarWidget()->setStyleSheet("font:10pt; font-family: helvetica; color:#4F78C3");
     dockWidgetUsers->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8");
     inviteUserWidget->setStyleSheet("padding:0; margin:0;");
     for(auto d : leftDockWidgets) {
@@ -574,18 +589,17 @@ void MainWindow::setStyleSheet() {
 }
 
 void MainWindow::setUsersList() {
-    usersView = new UsersListView(this);
-    usersModel  = new UsersListModel(this);
-    usersView->setModel(usersModel);
+    usersList = new UsersList(this);
 
     dockWidgetUsers = new QDockWidget(this);
     dockWidgetUsers->setAllowedAreas(Qt::RightDockWidgetArea );
     dockWidgetUsers->setFeatures(QDockWidget::NoDockWidgetFeatures);
+    dockWidgetUsers->setFixedWidth(150);
 //    dockWidgetUsers->setMouseTracking(true);
 
     auto l = new QLabel("Users connected");
     dockWidgetUsers->setTitleBarWidget(l);
-    dockWidgetUsers->setWidget(usersView);
+    dockWidgetUsers->setWidget(usersList);
     this->addDockWidget(Qt::RightDockWidgetArea,dockWidgetUsers);
     dockWidgetUsers->hide();
 }
