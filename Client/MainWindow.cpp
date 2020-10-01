@@ -152,6 +152,11 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(QApplication::clipboard(), &QClipboard::dataChanged, this, &MainWindow::clipboardDataChanged);
     connect(editor->textEdit->document(), &QTextDocument::undoAvailable,undoAction, &QAction::setEnabled);
     connect(editor->textEdit->document(), &QTextDocument::redoAvailable,redoAction, &QAction::setEnabled);
+    connect(pasteAction, &QAction::triggered, editor->textEdit, &QTextEdit::paste);
+    connect(copyAction, &QAction::triggered, editor->textEdit, &QTextEdit::copy);
+    connect(cutAction, &QAction::triggered, editor->textEdit, &QTextEdit::cut);
+    connect(redoAction, &QAction::triggered, editor->textEdit, &QTextEdit::redo);
+    connect(undoAction, &QAction::triggered, editor->textEdit, &QTextEdit::undo);
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
