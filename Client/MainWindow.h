@@ -93,9 +93,13 @@ private:
     void setMainPalette();
 
 public slots:
-    void test(bool b){
-    qDebug()<<b;
-};
+    void clipboardDataChanged()
+    {
+#ifndef QT_NO_CLIPBOARD
+        if (const QMimeData *md = QApplication::clipboard()->mimeData())
+            pasteAction->setEnabled(md->hasText());
+#endif
+    }
     void loginFinished();
     void startSignIn();
     void backToLogIn();
