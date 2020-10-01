@@ -15,10 +15,9 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
         QWidget(parent),
         ui(new Ui::FileSystemGridView) {
     ui->setupUi(this);
-
     ui->label->setStyleSheet("font: 18pt; ");
     ui->label->setText(this->mainFolder.split(".")[1]);
-    ui->label_2->setStyleSheet("font: 18pt; color: rgba(0,0,0,1);font-family: 'Consolas';");
+    ui->label_2->setStyleSheet("font: 18pt; color: rgba(0,0,0,1);");
     ui->label_2->hide();
     ui->listWidget->setFlow(QListView::LeftToRight);
     ui->listWidget->setResizeMode(QListView::Adjust);
@@ -26,7 +25,7 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     ui->listWidget->setMovement(QListView::Static);
     ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget->setIconSize(QSize(130, 130));
-    ui->listWidget->setStyleSheet("padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;font-family: 'Verdana';");
+    ui->listWidget->setStyleSheet("padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;");
     this->constructFromPaths(paths);
 
     this->installEventFilter(this);
@@ -62,7 +61,7 @@ void FileSystemGridView::reload(const QString folder,bool isFolder,bool changeTo
         if(changeToolbar) {
             emit openFolder(folder);
         }
-        ui->label->setStyleSheet("font: 18pt;color: rgba(0,0,0,0.3);font-family: 'Consolas'");
+        ui->label->setStyleSheet("font: 18pt;color: rgba(0,0,0,0.3);");
         ui->label->setText(this->mainFolder.split(".")[1]+"> ");
         ui->label_2->setText(" "+folder);
         ui->label_2->show();
@@ -79,7 +78,7 @@ void FileSystemGridView::reload(const QString folder,bool isFolder,bool changeTo
         if(changeToolbar) {
             emit back();
         }
-        ui->label->setStyleSheet("font: 18pt;color: rgba(0,0,0,1);font-family: 'Consolas'");
+        ui->label->setStyleSheet("font: 18pt;color: rgba(0,0,0,1);");
         ui->label->setText(this->mainFolder.split(".")[1]);
         ui->label_2->hide();
         for(auto folder:this->fileSystem.keys()){

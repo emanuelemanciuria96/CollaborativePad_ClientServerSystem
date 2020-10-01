@@ -38,12 +38,12 @@ public:
     void setType(info_t type){ _type = type; }
     info_t getType(){ return _type; }
     QString getUsername() const{ return _username; }
-    QIcon getImage() const { return _image; }
+    QPixmap getImage() const { return _image; }
 
 private:
     info_t _type;
     QString _username;
-    QIcon _image;
+    QPixmap _image;
 
 };
 
