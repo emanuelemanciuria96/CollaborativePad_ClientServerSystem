@@ -16,18 +16,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/UsersList.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UsersList.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UsersListItem.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UsersListItem.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileSystemGridView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileSystemGridView.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InviteUserWidgetItem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/InviteUserWidgetItem.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LoginDialog.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LoginDialog.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SignInWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SignInWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UsersListModel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListModel.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UsersListView.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/UsersListView.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/LoginDialog.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packet/UserInfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Packet/UserInfo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects1.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects1.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inviteuserwidget.ui" beforeDir="false" afterPath="$PROJECT_DIR$/inviteuserwidget.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +96,11 @@
     <configuration name="Client_autogen" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Client" TARGET_NAME="Client_autogen" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
@@ -180,6 +197,8 @@
       <workItem from="1601308206056" duration="4086000" />
       <workItem from="1601367740112" duration="21751000" />
       <workItem from="1601399241526" duration="532000" />
+      <workItem from="1601462712642" duration="17916000" />
+      <workItem from="1601558867460" duration="326000" />
     </task>
     <task id="LOCAL-00001" summary="add sameName dialog in rename slot">
       <created>1600596879145</created>
@@ -441,38 +460,46 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="479" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1597247491161" />
-    <state width="1493" height="198" key="GridCell.Tab.0.bottom" timestamp="1601399157393">
+    <state width="1493" height="208" key="GridCell.Tab.0.bottom" timestamp="1601488458856">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601399157393" />
-    <state width="1493" height="198" key="GridCell.Tab.0.center" timestamp="1601399157393">
+    <state width="1493" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601488458856" />
+    <state width="1493" height="115" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601481101262" />
+    <state width="1493" height="208" key="GridCell.Tab.0.center" timestamp="1601488458856">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1601399157393" />
-    <state width="1493" height="198" key="GridCell.Tab.0.left" timestamp="1601399157393">
+    <state width="1493" height="208" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601488458856" />
+    <state width="1493" height="115" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1601481101261" />
+    <state width="1493" height="208" key="GridCell.Tab.0.left" timestamp="1601488458856">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1601399157393" />
-    <state width="1493" height="198" key="GridCell.Tab.0.right" timestamp="1601399157393">
+    <state width="1493" height="208" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601488458856" />
+    <state width="1493" height="115" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1601481101261" />
+    <state width="1493" height="208" key="GridCell.Tab.0.right" timestamp="1601488458856">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1601399157393" />
-    <state width="1493" height="198" key="GridCell.Tab.1.bottom" timestamp="1601399157393">
+    <state width="1493" height="208" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601488458856" />
+    <state width="1493" height="115" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1601481101262" />
+    <state width="1493" height="208" key="GridCell.Tab.1.bottom" timestamp="1601488458856">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601399157393" />
-    <state width="1493" height="198" key="GridCell.Tab.1.center" timestamp="1601399157393">
+    <state width="1493" height="208" key="GridCell.Tab.1.bottom/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601488458856" />
+    <state width="1493" height="208" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601466411169" />
+    <state width="1493" height="208" key="GridCell.Tab.1.center" timestamp="1601488458856">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1601399157393" />
-    <state width="1493" height="198" key="GridCell.Tab.1.left" timestamp="1601399157393">
+    <state width="1493" height="208" key="GridCell.Tab.1.center/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601488458856" />
+    <state width="1493" height="208" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1601466411169" />
+    <state width="1493" height="208" key="GridCell.Tab.1.left" timestamp="1601488458856">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1601399157393" />
-    <state width="1493" height="198" key="GridCell.Tab.1.right" timestamp="1601399157393">
+    <state width="1493" height="208" key="GridCell.Tab.1.left/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601488458856" />
+    <state width="1493" height="208" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1601466411169" />
+    <state width="1493" height="208" key="GridCell.Tab.1.right" timestamp="1601488458856">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1601399157393" />
+    <state width="1493" height="208" key="GridCell.Tab.1.right/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601488458856" />
+    <state width="1493" height="208" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1601466411169" />
     <state x="169" y="130" key="MergeDialog" timestamp="1599839149383">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -501,10 +528,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="41" y="190" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1601371083979" />
-    <state x="814" y="145" width="840" height="678" key="search.everywhere.popup" timestamp="1601308606515">
+    <state x="814" y="145" width="840" height="678" key="search.everywhere.popup" timestamp="1601480286839">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="814" y="145" width="840" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1601308606515" />
+    <state x="814" y="145" width="840" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1601480286839" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -513,6 +540,16 @@
           <url>file://$PROJECT_DIR$/EditorGUI.cpp</url>
           <line>136</line>
           <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/UsersList.cpp</url>
+          <line>16</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/UsersList.cpp</url>
+          <line>50</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

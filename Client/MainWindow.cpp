@@ -137,8 +137,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(editor, &EditorGUI::userQuery,shEditor,&SharedEditor::obtainUser);
     connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
     connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::hideNumUsers);
-    connect(shEditor, &SharedEditor::addUser, usersModel, &UsersListModel::addUser);
-    connect(shEditor, &SharedEditor::removeUser, usersModel, &UsersListModel::removeUser);
+    connect(shEditor, &SharedEditor::addUser, usersList, &UsersList::addUser);
+    connect(shEditor, &SharedEditor::removeUser, usersList, &UsersList::removeUser);
     connect(shEditor, &SharedEditor::userNameArrived, editor, &EditorGUI::recordUserWriter);
     connect(shEditor, &SharedEditor::flushFileWriters, editor, &EditorGUI::flushFileWriters);
     connect(addUserWidget, &AddUserWidget::closing, this, &MainWindow::transparentForMouse);
@@ -214,7 +214,7 @@ void MainWindow::clsFile() {
         highlightAction->trigger();
         highlightAction->setChecked(false);
     }
-    usersModel->clear();
+    usersList->clear();
 }
 
 void MainWindow::loginSettings() {
@@ -546,7 +546,7 @@ void MainWindow::setStyleSheet() {
                         "QToolBar {background:#F1F1F1}"
                         "QStatusBar {background-color: #F1F1F1; border-top:1px solid #d2d2d2}");
 
-    dockWidgetUsers->titleBarWidget()->setStyleSheet("font:9pt; ");
+    dockWidgetUsers->titleBarWidget()->setStyleSheet("font:10pt; font-family: helvetica; color:#4F78C3");
     dockWidgetUsers->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8");
     inviteUserWidget->setStyleSheet("padding:0; margin:0;");
     for(auto d : leftDockWidgets) {
@@ -555,18 +555,20 @@ void MainWindow::setStyleSheet() {
 }
 
 void MainWindow::setUsersList() {
-    usersView = new UsersListView(this);
-    usersModel  = new UsersListModel(this);
-    usersView->setModel(usersModel);
+//    usersView = new UsersListView(this);
+    usersList = new UsersList(this);
+//    usersModel  = new UsersListModel(this);
+//    usersView->setModel(usersModel);
 
     dockWidgetUsers = new QDockWidget(this);
     dockWidgetUsers->setAllowedAreas(Qt::RightDockWidgetArea );
     dockWidgetUsers->setFeatures(QDockWidget::NoDockWidgetFeatures);
+    dockWidgetUsers->setFixedWidth(150);
 //    dockWidgetUsers->setMouseTracking(true);
 
     auto l = new QLabel("Users connected");
     dockWidgetUsers->setTitleBarWidget(l);
-    dockWidgetUsers->setWidget(usersView);
+    dockWidgetUsers->setWidget(usersList);
     this->addDockWidget(Qt::RightDockWidgetArea,dockWidgetUsers);
     dockWidgetUsers->hide();
 }

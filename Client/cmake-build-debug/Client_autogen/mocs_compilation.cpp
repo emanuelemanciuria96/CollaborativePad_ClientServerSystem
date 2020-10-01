@@ -16,4 +16,5 @@
 #include "EWIEGA46WW/moc_Socket.cpp"
 #include "EWIEGA46WW/moc_Transceiver.cpp"
 #include "EWIEGA46WW/moc_UriWidget.cpp"
+#include "EWIEGA46WW/moc_UsersList.cpp"
 #include "EWIEGA46WW/moc_UsersListModel.cpp"

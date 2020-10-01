@@ -20,6 +20,7 @@
 #include "UsersListView.h"
 #include "UsersListModel.h"
 #include <QScrollArea>
+#include "UsersList.h"
 
 
 class MainWindow : public QMainWindow {
@@ -63,7 +64,8 @@ private:
     QPixmap bkgnd;
     UsersListView *usersView;
     QDockWidget *dockWidgetUsers;
-    UsersListModel *usersModel;
+//    UsersListModel *usersModel;
+    UsersList *usersList;
     QPalette mainPalette;
     QConicalGradient* gradient;
     QLabel *numUsers;
