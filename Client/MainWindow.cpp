@@ -151,6 +151,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(inviteUserWidget, &InviteUserWidget::inviteNumberModified, this, [this](int n){setInviteListIcon(n);});
     connect(editor->textEdit, &MyTextEdit::copyAvailable, this,[this](bool b){copyAction->setDisabled(!b);cutAction->setDisabled(!b);});
     connect(QApplication::clipboard(), &QClipboard::dataChanged, this, &MainWindow::clipboardDataChanged);
+    connect(editor->textEdit->document(), &QTextDocument::undoAvailable,undoAction, &QAction::setEnabled);
+    connect(editor->textEdit->document(), &QTextDocument::redoAvailable,redoAction, &QAction::setEnabled);
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
@@ -347,12 +349,14 @@ void MainWindow::setToolBar() {
     undoAction = new QAction();
     undoAction->setIcon(QIcon("./icons/undo_icon.png"));
     undoAction->setVisible(true);
+    undoAction->setDisabled(true);
     undoAction->setToolTip("Undo");
     toolBar->addAction(undoAction);
 
     redoAction = new QAction();
     redoAction->setIcon(QIcon("./icons/redo_icon.png"));
     redoAction->setVisible(true);
+    redoAction->setDisabled(true);
     redoAction->setToolTip("Redo");
     toolBar->addAction(redoAction);
 
