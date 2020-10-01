@@ -263,24 +263,16 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
 
     in >> siteId  >> formattedMessages;
 
-    auto *strMess = new StringMessages(formattedMessages,siteId);
-    packet.setPayload(std::shared_ptr<StringMessages>(strMess));
+    auto strMess = std::make_shared<StringMessages>(formattedMessages,siteId);
+    packet.setPayload(strMess);
 
     // std::cout<<" --- number of arrived messages at once "<<strMess->stringToMessages().size()<<std::endl;
 
     //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
     //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
     if(!_username.isEmpty()) {
-
-        for (auto msg: strMess->stringToMessages()) {
-
-            std::shared_ptr<Message> m = std::make_shared<Message>(msg);
-            if (msg.getAction() == Message::insertion) {
-                msgHandler->submit(NetworkServer::localInsert, m);
-            } else {
-                msgHandler->submit(NetworkServer::localErase, m);
-            }
-        }
+        strMess->setFileToModify(operatingFileName);
+        msgHandler->submit(&NetworkServer::localModification,strMess);
         _sockets.broadcast(operatingFileName,_siteID,packet);
     }
 

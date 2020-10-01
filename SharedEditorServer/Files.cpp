@@ -75,28 +75,34 @@ void Files::deleteFile(QString &fileName) {
 
 void Files::addSymbolInFile(QString& fileName, Symbol& sym){
 
+    if(fileName=="") return;
+
     std::shared_lock sl(files_mtx);
     auto i = opened_files.find(fileName);
 
-    std::unique_lock ul_sym(*std::get<mutex>(i->second));
-    auto pos = std::lower_bound(std::get<file>(i->second).begin(), std::get<file>(i->second).end(), sym);
-    std::get<file>(i->second).insert(pos, sym);
-    std::get<dirty_bit>(i->second) = true;
-
+    if(i != opened_files.end()) {
+        std::unique_lock ul_sym(*std::get<mutex>(i->second));
+        auto pos = std::lower_bound(std::get<file>(i->second).begin(), std::get<file>(i->second).end(), sym);
+        std::get<file>(i->second).insert(pos, sym);
+        std::get<dirty_bit>(i->second) = true;
+    }
 }
 
 void Files::rmvSymbolInFile(QString& fileName, Symbol& sym){
 
+    if(fileName=="") return;
+
     std::shared_lock sl(files_mtx);
     auto i = opened_files.find(fileName);
 
-    std::unique_lock ul_sym(*std::get<mutex>(i->second));
-    auto pos = std::lower_bound(std::get<file>(i->second).begin(), std::get<file>(i->second).end(), sym);
-    if (*pos == sym ) {
-        std::get<file>(i->second).erase(pos);
-        std::get<dirty_bit>(i->second) = true;
+    if(i != opened_files.end()) {
+        std::unique_lock ul_sym(*std::get<mutex>(i->second));
+        auto pos = std::lower_bound(std::get<file>(i->second).begin(), std::get<file>(i->second).end(), sym);
+        if (*pos == sym) {
+            std::get<file>(i->second).erase(pos);
+            std::get<dirty_bit>(i->second) = true;
+        }
     }
-
 }
 
 void Files::saveChanges(QString &fileName) {

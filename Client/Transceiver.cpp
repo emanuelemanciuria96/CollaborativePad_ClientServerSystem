@@ -250,6 +250,8 @@ void Transceiver::sendPacket(DataPacket pkt){
 
 void Transceiver::sendAllMessages() {
 
+    if( messages.empty() ) return;
+
     firstMessage = true;
 
     QDataStream out;
@@ -328,6 +330,9 @@ void Transceiver::sendCommand(DataPacket& packet){
     tmp << (quint32) ptr->getCmd() << ptr->getArgs();
 
     qint32 bytes = fixedBytesWritten + buf.data().size();
+
+    while(!messages.empty())
+        sendAllMessages();
 
     out <<bytes<< packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData();
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();

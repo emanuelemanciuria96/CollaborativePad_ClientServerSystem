@@ -503,7 +503,8 @@ void SharedEditor::processRmCommand(Command &cmd) {
 }
 
 void SharedEditor::processRenCommand(Command& cmd) {
-    auto args = cmd.getArgs();
+
+   auto args = cmd.getArgs();
     auto list1 = args[0].split("/");
     auto list2 = args[1].split("/");
     if( list1.size()==2 && list1[0]==list2[0]) {

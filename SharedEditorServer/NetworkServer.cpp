@@ -69,31 +69,21 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
     thread->start();
 }
 
+void NetworkServer::localModification(Payload &pl) {
+    StringMessages& msgs = dynamic_cast<StringMessages&>(pl);
 
-void NetworkServer::localInsert(Payload &pl) {
-    //std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localInsert"<<std::endl;
+    QString file = msgs.getFileToModify();
+    for (auto msg: msgs.stringToMessages()) {
 
-    Message& m = dynamic_cast<Message&>(pl);
-    Symbol sym = m.getSymbol();
-    QString fileName = active_threads.find(m.getSiteId())->second->getOperatingFileName();
-    if( fileName != "" ) {
-        files.addSymbolInFile(fileName, sym);
-        //show_file(fileName);
+        std::shared_ptr<Message> m = std::make_shared<Message>(msg);
+        if (msg.getAction() == Message::insertion) {
+            auto s = m->getSymbol();
+            files.addSymbolInFile(file,s);
+        } else {
+            auto s = m->getSymbol();
+            files.rmvSymbolInFile(file,s);
+        }
     }
-
-}
-
-void NetworkServer::localErase(Payload &pl) {
-    //std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
-
-    Message& m = dynamic_cast<Message&>(pl);
-    Symbol sym = m.getSymbol();
-    QString fileName = active_threads.find(m.getSiteId())->second->getOperatingFileName();
-    if( fileName != "" ) {
-        files.rmvSymbolInFile(fileName, sym);
-        //show_file(fileName);
-    }
-
 }
 
 
@@ -184,4 +174,3 @@ NetworkServer::~NetworkServer() {
         emit i.second->getSocket()->disconnected();
     active_threads.clear();
 }
-

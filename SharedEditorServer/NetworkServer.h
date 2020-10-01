@@ -34,6 +34,7 @@ public:
 
     static void localInsert(Payload &pl);
     static void localErase(Payload &pl);
+    static void localModification(Payload &pl);
     static void processOpnCommand(Payload &pl);
     static void processClsCommand(Payload &pl);
     static void processRmCommand(Payload &pl);

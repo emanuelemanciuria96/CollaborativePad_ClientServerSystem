@@ -24,7 +24,7 @@ public slots:
     void openFile(QTreeWidgetItem *item, int column);
     void removeFile(QTreeWidgetItem *item);
     void renameFile(QTreeWidgetItem *item, int column);
-    void editFileName(QString &oldName, QString &newName);
+    void editFileName(const QString &oldName,const QString &newName);
     void remoteFileDeletion(QString &fileName);
     void inviteUser(QTreeWidgetItem *item);
 
@@ -54,6 +54,7 @@ private:
     void insertFile();
     QTreeWidgetItem* addChild(QTreeWidgetItem *parent, QString name,QString description);
     bool isChild(QTreeWidgetItem *parent, QString &name);
+    void sort();
 
 };
 

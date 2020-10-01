@@ -74,10 +74,10 @@ static bool initializeDb()
          "FSNAME         TEXT," \
          "INVITE         INT, PRIMARY KEY (SITEID, NAME, OWNER));");
         query.exec("DELETE FROM FILES");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova1', 'q', 'prova1.json', '0');");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova2', 'q', 'prova2.json', '0');");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova3', 'q', 'prova3.json', '0');");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova4', 'q', 'prova4.json', '0');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova3', 'q', 'prova1.json', '0');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova1', 'q', 'prova2.json', '0');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova4', 'q', 'prova3.json', '0');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova2', 'q', 'prova4.json', '0');");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('2', 'prova1', 'q', 'prova1.json', '1');");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('2', 'prova2', 'q', 'prova2.json', '1');");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('2', 'prova3', 'q', 'prova3.json', '1');");
