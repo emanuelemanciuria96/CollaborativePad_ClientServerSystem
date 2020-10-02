@@ -21,6 +21,10 @@ private:
 public:
     MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget* parent = 0);
     bool eventFilter(QObject *obj, QEvent *ev) override;
+
+public slots:
+    void paste();
+
 protected:
     void paintEvent(QPaintEvent *e) override;
     void contextMenuEvent(QContextMenuEvent *e) override;
