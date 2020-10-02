@@ -38,6 +38,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     toolBar->setMinimumHeight(45);
     toolBar->setIconSize(QSize(45, 45));
     toolBar->hide();
+
+    nullWidg = new QWidget(this);
     setCentralWidget(centralWidget);
     // tree file system view creation
     treeFileSystemSettings();
@@ -62,6 +64,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
+    connect(treeView, &FileSystemTreeView::opnFileRequest,[this](QString& name){ centralWidget->setCurrentWidget(nullWidg); });
     connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
     connect(treeView, &FileSystemTreeView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
     connect(treeView, &FileSystemTreeView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
@@ -69,7 +72,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::renFileRequest,gridView , &FileSystemGridView::remoteRenameFile);
     connect(treeView, &FileSystemTreeView::rmvFileRequest,gridView , &FileSystemGridView::remoteDeleteFile);
     connect(gridView, &FileSystemGridView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
-    connect(gridView, &FileSystemGridView::opnFileRequest,this, &MainWindow::opnFileGrid);
     connect(gridView, &FileSystemGridView::opnFileRequest,shEditor , &SharedEditor::requireFile);
     connect(gridView, &FileSystemGridView::openFolder,this, &MainWindow::setToolBarFolderGrid);
     connect(gridView, &FileSystemGridView::back,this, &MainWindow::setToolBarGrid);
@@ -79,6 +81,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(gridView, &FileSystemGridView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
     connect(gridView, &FileSystemGridView::renFileRequest,treeView , &FileSystemTreeView::editFileName);
     connect(gridView, &FileSystemGridView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
+    connect(shEditor, &SharedEditor::openTextEditor,this, &MainWindow::opnFileGrid);
+    connect(shEditor, &SharedEditor::transparentForMouse,this, &MainWindow::transparentForMouse);
     connect(shEditor, &SharedEditor::fileNameEdited, treeView, &FileSystemTreeView::editFileName);
     connect(shEditor, &SharedEditor::fileDeletion, treeView, &FileSystemTreeView::remoteFileDeletion);
     connect(shEditor, &SharedEditor::fileDeletion, gridView, &FileSystemGridView::remoteDeleteFile);
@@ -170,6 +174,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     centralWidget->addWidget(infoWidgetEdit);
     centralWidget->addWidget(widgetSignIn);
     centralWidget->addWidget(gridView);
+    centralWidget->addWidget(nullWidg);
     setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
     setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
     lastCentral = nullptr;
@@ -190,7 +195,7 @@ void MainWindow::loginFinished() {
     gridView->show();
 }
 
-void MainWindow::opnFileGrid(QString fileName) {
+void MainWindow::opnFileGrid(QString &fileName) {
     setToolBarEditor();
     centralWidget->setCurrentWidget(editor);
     dockWidgetUsers->show();

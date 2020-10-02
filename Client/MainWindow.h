@@ -68,6 +68,7 @@ private:
     QLabel *numUsers;
     QWidget *lastCentral;
     QDockWidget *lastDock;
+    QWidget *nullWidg;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -101,7 +102,7 @@ public slots:
     void loginFinished();
     void startSignIn();
     void backToLogIn();
-    void opnFileGrid(QString fileName);
+    void opnFileGrid(QString& fileName);
     void clsFile();
     void openAddUser(const QString& fileName);
     void changeToolbarProfileImage(const QPixmap& image);

@@ -75,8 +75,6 @@ void Files::deleteFile(QString &fileName) {
 
 void Files::addSymbolInFile(QString& fileName, Symbol& sym){
 
-    if(fileName=="") return;
-
     std::shared_lock sl(files_mtx);
     auto i = opened_files.find(fileName);
 
@@ -89,8 +87,6 @@ void Files::addSymbolInFile(QString& fileName, Symbol& sym){
 }
 
 void Files::rmvSymbolInFile(QString& fileName, Symbol& sym){
-
-    if(fileName=="") return;
 
     std::shared_lock sl(files_mtx);
     auto i = opened_files.find(fileName);

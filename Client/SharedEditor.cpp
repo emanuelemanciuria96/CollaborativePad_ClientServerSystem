@@ -18,7 +18,6 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
     isLogged = false;
     fileOpened = "";
     isFileOpened = false;
-    isArrivingFile = false;
     highlighting = false;
     _user = "";
 
@@ -319,12 +318,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     qint32 numChar=0;
     for( int i=0;i<strM.size();i++ ) {
         auto m=strM[i];
-        // calcolo del counter al volo
-        if(isArrivingFile && m.getSymbol().getSymId().getSiteId()==_siteId){
-            if(_counter<m.getSymbol().getSymId().getCount()){
-                _counter = m.getSymbol().getSymId().getCount();
-            }
-        }
+
         qint32 pos = getIndex(m.getLocalIndex(), m.getSymbol());
 //        std::cout << "insert da siteId " << m.getSymbol().getSymId().getSiteId() << std::endl;
         if(m.getAction()==Message::insertion && !(m.getSymbol()==_symbols[pos])){
@@ -417,14 +411,13 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
         case FileInfo::start: {
             emit setNumUsers(0);
             isFileOpened = true;
-            isArrivingFile = true;
             break;
         }
         case FileInfo::eof: {
-            //findCounter();
-            isArrivingFile = false;
+            findCounter();
             std::cout<<" - counter found: "<<_counter<<std::endl;
-            // TODO: inserire qui segnale di apertura editor
+            emit openTextEditor(fileOpened);
+            emit transparentForMouse();
             break;
         }
     }
@@ -548,6 +541,7 @@ void SharedEditor::requireFile(QString& fileName) {
     }
 
     if( fileOpened == fileName ){
+        emit openTextEditor(fileOpened);
         return;
     }else if(fileOpened != ""){
         QVector<QString> vec = {fileOpened};
@@ -559,6 +553,8 @@ void SharedEditor::requireFile(QString& fileName) {
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
     }
+
+    emit transparentForMouse();
 
     fileOpened = fileName;
     isFileOpened = false; // da questo momento fino all'arrivo del FileInfo deve stare a false
@@ -763,5 +759,14 @@ void SharedEditor::closeFile() {
     }
     emit hideNumUsers();
     emit flushFileWriters();
+
+}
+
+void SharedEditor::findCounter() {
+
+    for(auto s:_symbols)
+        if (s.getSymId().getSiteId() == _siteId)
+            if (_counter < s.getSymId().getCount())
+                _counter = s.getSymId().getCount();
 
 }

@@ -45,6 +45,7 @@ private:
 
     qint32 getIndex(qint32 index, Symbol symbol);
     void closeFile();
+    void findCounter();
 
     void processMessages( StringMessages& strMess );
     void processLoginInfo( LoginInfo& logInf );
@@ -80,6 +81,8 @@ public slots:
     void obtainUser(qint32 siteId);
 
 signals:
+    void openTextEditor(QString &fileName);
+    void transparentForMouse();
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
     void deleteAllText();
     void filePathsArrived(const QVector<QString>& paths);

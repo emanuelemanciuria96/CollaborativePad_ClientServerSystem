@@ -209,6 +209,7 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
         isRenaming = false;
         item->setText(0,previousName);
         isRenaming = true;
+        previousName = "";
         return;
     }
 
@@ -222,6 +223,7 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
     auto node = model.find(previousName);
     model.insert(std::make_pair(actualName, node->second));
     model.erase(node);
+    previousName = "";
 
     sort();
 
@@ -305,8 +307,10 @@ FileSystemTreeView::~FileSystemTreeView() {
 
 void FileSystemTreeView::mousePressEvent(QMouseEvent *ev) {
     auto item = this->itemAt(ev->pos());
-    if( item == nullptr)
+    if( item == nullptr) {
         this->clearSelection();
+        previousName="";
+    }
     QTreeView::mousePressEvent(ev);
 }
 
@@ -321,7 +325,7 @@ void FileSystemTreeView::keyPressEvent(QKeyEvent *ev) {
     if(ev->key() == Qt::Key_Return){
 
         auto items = this->selectedItems();
-        if( items.size() == 1 )
+        if( items.size() == 1 && previousName!=items.first()->text(0) )
             openFile(items.first(),0);
     }
     QTreeView::keyPressEvent(ev);
@@ -337,10 +341,14 @@ void FileSystemTreeView::sort() {
                 (children[j]->text(1)==children[j+1]->text(1) && children[j]->text(0)>children[j+1]->text(0)) ) {
                 children.swap(j,j+1);
             }
-            if( children[j]->text(1)=="DIR")
-                children[j]->sortChildren(0,Qt::AscendingOrder);
         }
     }
+
+    for(auto c: children)
+        if( c->text(1)=="DIR")
+            c->sortChildren(0,Qt::AscendingOrder);
+
+
     root->insertChildren(0,children);
 
 }

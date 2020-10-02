@@ -73,6 +73,9 @@ void NetworkServer::localModification(Payload &pl) {
     StringMessages& msgs = dynamic_cast<StringMessages&>(pl);
 
     QString file = msgs.getFileToModify();
+
+    if( file=="") return;
+
     for (auto msg: msgs.stringToMessages()) {
 
         std::shared_ptr<Message> m = std::make_shared<Message>(msg);
