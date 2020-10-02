@@ -153,8 +153,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(infoWidgetEdit, &InfoWidgetEdit::updateInfo, infoWidget, &InfoWidget::updateInfo);
     connect(infoWidgetEdit, &InfoWidgetEdit::backToInfoWidget, this, [this](){centralWidget->setCurrentWidget(infoWidget);});
     connect(inviteUserWidget, &InviteUserWidget::inviteNumberModified, this, [this](int n){setInviteListIcon(n);});
-    connect(usersView, &QListView::doubleClicked, usersModel, &UsersListModel::itemDoubleClicked);
-    connect(usersModel, &UsersListModel::openInfoUsers, this, &MainWindow::setInfoUsersListWidget);
+    connect(usersList, &UsersList::setUserInfo, this, &MainWindow::setInfoUsersListWidget);
     connect(infoUsersListWidget, &InfoUsersListWidget::backPressed, this, &MainWindow::setInfoUsersListWidget);
 
     connect(editor->textEdit, &MyTextEdit::copyAvailable, this,[this](bool b){copyAction->setDisabled(!b);cutAction->setDisabled(!b);});
