@@ -723,11 +723,11 @@ qint32 SharedEditor::getSiteId() const {
 }
 
 void SharedEditor::highlightSymbols(bool checked) {
-    for(auto s : _symbols){
-        auto siteId = s.getSymId().getSiteId();
-        qint32 pos = getIndex(-1,s);
+    for(auto i=0; i<_symbols.size(); i++){
+        auto siteId = _symbols[i].getSymId().getSiteId();
+//        qint32 pos = getIndex(-1,s);
         if(siteId>0)
-            emit highlight(pos, siteId);
+            emit highlight(i, siteId);
     }
     highlighting = checked;
     emit setCharFormat(checked);

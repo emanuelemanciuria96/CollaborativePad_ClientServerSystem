@@ -37,16 +37,12 @@ void EditorGUI::setUpGUI() {
     this->layout()->addWidget(textEdit);
     this->layout()->setAlignment(Qt::AlignCenter);
 
-//    this->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-//    this->setBaseSize(800,800);
-//    textEdit->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     textEdit->document()->setDocumentMargin(65);
     textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-//    textEdit->document()->setPageSize(QSizeF(880,480));
     textEdit->setLineWrapMode(QTextEdit::FixedPixelWidth);
     textEdit->setLineWrapColumnOrWidth(880);
-    textEdit->setMaximumWidth(903);
+    textEdit->setMaximumWidth(888);
     textEdit->setAlignment(Qt::AlignCenter);
 
     connect(this, SIGNAL(clear()), textEdit, SLOT(clear()));

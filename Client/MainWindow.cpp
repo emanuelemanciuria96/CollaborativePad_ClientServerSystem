@@ -35,13 +35,14 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     //    aggiungo gli elementi alla finestra
     this->setStatusBar(statusBar);
     this->addToolBar(toolBar);
+    addToolBarBreak(Qt::TopToolBarArea);
     this->addToolBar(richTextBar);
     toolBar->setMovable(false);
     toolBar->setMinimumHeight(45);
     toolBar->setIconSize(QSize(45, 45));
     toolBar->hide();
     richTextBar->setMovable(false);
-    richTextBar->setAllowedAreas(Qt::TopToolBarArea);
+    richTextBar->setIconSize(QSize(25,25));
     richTextBar->move(toolBar->rect().bottomLeft());
     richTextBar->hide();
 
@@ -580,8 +581,9 @@ void MainWindow::resizeEvent(QResizeEvent *evt) {
 
 void MainWindow::setStyleSheet() {
     qApp->setStyleSheet("QWidget {font-family: helvetica}"
-                        "QToolBar {background:#F1F1F1}"
-                        "QStatusBar {background-color: #F1F1F1; border-top:1px solid #d2d2d2}");
+                        "QToolBar {background:#F1F1F1; }"
+                        "QStatusBar {background-color: #F1F1F1; border-top:1px solid #d2d2d2}"
+                        "QToolButton {padding:4}");
 
     dockWidgetUsers->titleBarWidget()->setStyleSheet("font:10pt; font-family: helvetica; color:#4F78C3");
     dockWidgetUsers->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8");
@@ -590,6 +592,7 @@ void MainWindow::setStyleSheet() {
         d->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8;");
     }
 }
+
 
 void MainWindow::setUsersList() {
     usersList = new UsersList(this);
