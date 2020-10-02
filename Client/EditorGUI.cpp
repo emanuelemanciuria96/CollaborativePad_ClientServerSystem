@@ -361,13 +361,15 @@ void EditorGUI::exportToPdf() {
         else
             defaultName = fileName;
         QString name = QFileDialog::getSaveFileName(this, "Export PDF", defaultName, "*.pdf");
-        if (QFileInfo(name).suffix().isEmpty()) { name.append(".pdf"); }
+        if (!name.isEmpty()) {
+            if (QFileInfo(name).suffix().isEmpty()) { name.append(".pdf"); }
 
-        QPrinter printer(QPrinter::PrinterResolution);
-        printer.setOutputFormat(QPrinter::PdfFormat);
-        printer.setPaperSize(QPrinter::A4);
-        printer.setOutputFileName(name);
-        textEdit->print(&printer);
+            QPrinter printer(QPrinter::PrinterResolution);
+            printer.setOutputFormat(QPrinter::PdfFormat);
+            printer.setPaperSize(QPrinter::A4);
+            printer.setOutputFileName(name);
+            textEdit->print(&printer);
+        }
     }
 }
 
