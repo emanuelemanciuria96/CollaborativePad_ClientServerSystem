@@ -13,7 +13,7 @@ RemoteCursor::RemoteCursor(QTextDocument *document, qint32 siteId, const QString
     labelName = new QLabel();
     labelName->setText(username);
     auto textColor = QColor();
-    if(isDarkColor(color) < 130)
+    if(isDarkColor(color))
         textColor.setNamedColor("white");
     else
         textColor.setNamedColor("black");
@@ -46,6 +46,6 @@ RemoteCursor::~RemoteCursor() {
     labelTimer->deleteLater();
 }
 
-int RemoteCursor::isDarkColor(const QColor& back) {
-    return qSqrt(back.redF()*back.redF()*0.241 + back.greenF()*back.greenF()*0.691 + back.blueF()*back.blueF()*0.068);
+bool RemoteCursor::isDarkColor(const QColor& back) {
+    return back.value()<130;
 }

@@ -60,7 +60,7 @@ private:
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
     void drawLabel(RemoteCursor *cursor) const;
     void keyPressEvent(QKeyEvent *e) override;
-    static QTextCharFormat getFormat(qint32 siteId);
+    static QTextCharFormat getHighlightFormat(qint32 siteId);
     void showToolTip(qint32 siteId, QPoint globalPos);
 
 private slots:
@@ -83,6 +83,9 @@ public slots:
     void recordUserWriter(qint32 siteId,QString& user,bool connection=false);
     void flushFileWriters();
     void setCharFormat(bool checked);
+    void setBold(bool checked) const;
+    void setItalic(bool checked) const;
+    void setUnderline(bool checked) const;
 
 
 signals:

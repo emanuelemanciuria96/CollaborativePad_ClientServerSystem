@@ -45,7 +45,7 @@ void UsersList::addUser(const UserInfo &user) {
     backPainter.drawPixmap(0,0,backgrnd.width(), backgrnd.height(),backgrnd);
     newItem->setBackground(backgrnd);
 
-    if(RemoteCursor::isDarkColor(backColor) < 130)
+    if(RemoteCursor::isDarkColor(backColor))
         newItem->setForeground(QColor("white"));
     else
         newItem->setForeground(QColor("black"));
