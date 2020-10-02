@@ -18,12 +18,12 @@ public:
         user_request,
     }info_t;
 
-    UserInfo(qint32 siteId, info_t type, QString& user_name, QPixmap&  image):
-            Payload(siteId),_type(type),_username(user_name),_image(image){};
+    UserInfo(qint32 siteId, info_t type, QString& user_name, QPixmap&  image, QString& name, QString& email):
+            Payload(siteId),_type(type),_username(user_name),_image(image), _name(name), _email(email){};
     UserInfo(qint32 siteId, info_t type, QString& user_name):
             Payload(siteId),_type(type),_username(user_name){};
     UserInfo(UserInfo&& user) noexcept : _type(user._type),_username(std::move(user._username)),
-        _image(user._image), Payload(user._siteID){};
+        _image(user._image), _name(user._name), _email(user._email),Payload(user._siteID){};
     UserInfo(const UserInfo& user) = default;
     UserInfo& operator=(const UserInfo& user){
         if(this!=&user){
@@ -31,6 +31,8 @@ public:
             _username = user._username;
             _type = user._type;
             _image = user._image;
+            _name = user._name;
+            _email = user._email;
         }
         return *this;
     }
@@ -39,12 +41,15 @@ public:
     info_t getType(){ return _type; }
     QString getUsername() const{ return _username; }
     QPixmap getImage() const { return _image; }
+    const QString &getName() const { return _name; }
+    const QString &getEmail() const { return _email; }
 
 private:
     info_t _type;
     QString _username;
     QPixmap _image;
-
+    QString _name;
+    QString _email;
 };
 
 

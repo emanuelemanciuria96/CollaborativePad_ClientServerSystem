@@ -9,6 +9,7 @@
 
 UsersList::UsersList(QWidget *parent) : QListWidget(parent){
     setIconSize(QSize(35,35));
+    connect(this, &QListWidget::itemDoubleClicked, this, &UsersList::openUserInfo);
 }
 
 
@@ -50,11 +51,19 @@ void UsersList::addUser(const UserInfo &user) {
         newItem->setForeground(QColor("black"));
 
     addItem(newItem);
+
+    struct UserData data;
+    data.image = user.getImage();
+    data.username = user.getUsername();
+    data.name = user.getName();
+    data.email = user.getEmail();
+    map.insert(std::make_pair(newItem, data));
 }
 
 void UsersList::removeUser(const UserInfo &user) {
     auto u = findItems(user.getUsername(),Qt::MatchExactly);
 //    std::cout << "User disconnected: " << u.constFirst()->text().toStdString() << std::endl;
+    map.erase(u.first());
     takeItem(row(u.first()));
 }
 
@@ -67,4 +76,9 @@ QPainterPath UsersList::roundRect(int width, int height) {
     roundRectPath.arcTo(width-height, 0.0, height, height, 270.0, 180.0);
     roundRectPath.closeSubpath();
     return roundRectPath;
+}
+
+void UsersList::openUserInfo(QListWidgetItem *item) {
+    auto user = map[item];
+    emit setUserInfo(user.image, user.username, user.name, user.email);
 }

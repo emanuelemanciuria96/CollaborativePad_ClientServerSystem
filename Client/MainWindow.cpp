@@ -156,6 +156,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(infoWidgetEdit, &InfoWidgetEdit::updateInfo, infoWidget, &InfoWidget::updateInfo);
     connect(infoWidgetEdit, &InfoWidgetEdit::backToInfoWidget, this, [this](){centralWidget->setCurrentWidget(infoWidget);});
     connect(inviteUserWidget, &InviteUserWidget::inviteNumberModified, this, [this](int n){setInviteListIcon(n);});
+    connect(usersList, &UsersList::setUserInfo, this, &MainWindow::setInfoUsersListWidget);
+    connect(infoUsersListWidget, &InfoUsersListWidget::backPressed, this, &MainWindow::setInfoUsersListWidget);
     connect(editor->textEdit, &MyTextEdit::copyAvailable, this,[this](bool b){copyAction->setDisabled(!b);cutAction->setDisabled(!b);});
     connect(QApplication::clipboard(), &QClipboard::dataChanged, this, &MainWindow::clipboardDataChanged);
     connect(editor->textEdit->document(), &QTextDocument::undoAvailable,undoAction, &QAction::setEnabled);
@@ -174,6 +176,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     centralWidget->addWidget(editor);
     centralWidget->addWidget(infoWidget);
     centralWidget->addWidget(infoWidgetEdit);
+    centralWidget->addWidget(infoUsersListWidget);
     centralWidget->addWidget(widgetSignIn);
     centralWidget->addWidget(gridView);
     centralWidget->addWidget(nullWidg);
@@ -534,6 +537,7 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
     editor = new EditorGUI(shEditor, this);
     infoWidget = new InfoWidget(this);
     infoWidgetEdit = new InfoWidgetEdit(this);
+    infoUsersListWidget = new InfoUsersListWidget(this);
     addUserWidget = new AddUserWidget(this);
 }
 
@@ -659,6 +663,25 @@ void MainWindow::setInfoWidget() {
     if(centralWidget->currentWidget() != infoWidget) {
         lastCentral = centralWidget->currentWidget();
         centralWidget->setCurrentWidget(infoWidget);
+        toolBar->hide();
+        dockWidgetUsers->hide();
+        if (lastDock != nullptr)
+            lastDock->hide();
+    } else {
+        centralWidget->setCurrentWidget(lastCentral);
+        toolBar->show();
+        if (lastCentral == editor)
+            dockWidgetUsers->show();
+        if (lastDock != nullptr)
+            lastDock->show();
+    }
+}
+
+void MainWindow::setInfoUsersListWidget(const QPixmap& image, const QString& nickname, const QString& name, const QString& email) {
+    if(centralWidget->currentWidget() != infoUsersListWidget) {
+        infoUsersListWidget->setData(image, nickname, name, email);
+        lastCentral = centralWidget->currentWidget();
+        centralWidget->setCurrentWidget(infoUsersListWidget);
         toolBar->hide();
         dockWidgetUsers->hide();
         if (lastDock != nullptr)

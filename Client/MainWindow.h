@@ -17,6 +17,7 @@
 #include "AddUserWidget.h"
 #include "InviteUserWidget.h"
 #include "UriWidget.h"
+#include "InfoUsersListWidget.h"
 #include <QScrollArea>
 #include "UsersList.h"
 
@@ -68,6 +69,7 @@ private:
     QLabel *numUsers;
     QWidget *lastCentral;
     QDockWidget *lastDock;
+    InfoUsersListWidget *infoUsersListWidget;
     QWidget *nullWidg;
 
     void loginSettings();
@@ -110,6 +112,7 @@ public slots:
     void hideNumUsers();
     void transparentForMouse();
     void setInfoWidget();
+    void setInfoUsersListWidget(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
 };
 
