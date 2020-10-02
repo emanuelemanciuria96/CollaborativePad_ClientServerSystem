@@ -167,6 +167,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(undoAction, &QAction::triggered, editor->textEdit, &QTextEdit::undo);
 
     connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
+    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
+    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
+
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -686,4 +689,16 @@ void MainWindow::setRichTextBar() {
     boldAction->setCheckable(true);
     boldAction->setToolTip("Bold");
     richTextBar->addAction(boldAction);
+
+    italicAction = new QAction();
+    italicAction->setIcon(QIcon("./icons/italic.png"));
+    italicAction->setCheckable(true);
+    italicAction->setToolTip("Bold");
+    richTextBar->addAction(italicAction);
+
+    underlineAction = new QAction();
+    underlineAction->setIcon(QIcon("./icons/underline.png"));
+    underlineAction->setCheckable(true);
+    underlineAction->setToolTip("Bold");
+    richTextBar->addAction(underlineAction);
 }

@@ -136,7 +136,7 @@ void SharedEditor::sendRegisterRequest(QString& user, QString& password, QString
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
-void SharedEditor::localInsert(qint32 index, QString& str, const QTextCharFormat& format) {
+void SharedEditor::localInsert(qint32 index, QString& str, QTextCharFormat format) {
 
     if ( index > _symbols.size() - 2 ){
         throw "fuori dai limiti"; //da implementare classe eccezione
@@ -152,7 +152,7 @@ void SharedEditor::localInsert(qint32 index, QString& str, const QTextCharFormat
         generateNewPosition2(prev, next, newPos);
         prev = newPos;
 
-        Symbol s(value, _siteId, _counter++, newPos);
+        Symbol s(value, _siteId, _counter++, newPos, format);
         syms.push_back(s);
 
         DataPacket packet(_siteId, -1, DataPacket::textTyping);

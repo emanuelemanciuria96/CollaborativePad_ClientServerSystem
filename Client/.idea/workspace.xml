@@ -21,12 +21,21 @@
       <change beforePath="$PROJECT_DIR$/EditorGUI.h" beforeDir="false" afterPath="$PROJECT_DIR$/EditorGUI.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packet/Symbols/Symbol.h" beforeDir="false" afterPath="$PROJECT_DIR$/Packet/Symbols/Symbol.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SharedEditor.h" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects1.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/objects1.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Client_autogen.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/mocs_compilation.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,11 +84,6 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.Client">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Client" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Client" TARGET_NAME="Client" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Client" RUN_TARGET_NAME="Client">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -187,6 +191,10 @@
       <workItem from="1601306332045" duration="377000" />
       <workItem from="1601306860862" duration="1034000" />
       <workItem from="1601454589725" duration="6149000" />
+      <workItem from="1601568398182" duration="163000" />
+      <workItem from="1601568614787" duration="616000" />
+      <workItem from="1601627290414" duration="4402000" />
+      <workItem from="1601632972397" duration="1730000" />
     </task>
     <task id="LOCAL-00001" summary="add sameName dialog in rename slot">
       <created>1600596879145</created>
@@ -470,22 +478,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="479" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1597247491161" />
-    <state width="1493" height="115" key="GridCell.Tab.0.bottom" timestamp="1601462383219">
+    <state width="1493" height="134" key="GridCell.Tab.0.bottom" timestamp="1601634729932">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="115" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601462383219" />
-    <state width="1493" height="115" key="GridCell.Tab.0.center" timestamp="1601462383219">
+    <state width="1493" height="134" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601569317393" />
+    <state width="1493" height="134" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601634729932" />
+    <state width="1493" height="134" key="GridCell.Tab.0.center" timestamp="1601634729932">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="115" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1601462383219" />
-    <state width="1493" height="115" key="GridCell.Tab.0.left" timestamp="1601462383219">
+    <state width="1493" height="134" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601569317393" />
+    <state width="1493" height="134" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1601634729932" />
+    <state width="1493" height="134" key="GridCell.Tab.0.left" timestamp="1601634729932">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="115" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1601462383219" />
-    <state width="1493" height="115" key="GridCell.Tab.0.right" timestamp="1601462383219">
+    <state width="1493" height="134" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601569317393" />
+    <state width="1493" height="134" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1601634729932" />
+    <state width="1493" height="134" key="GridCell.Tab.0.right" timestamp="1601634729932">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="115" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1601462383219" />
+    <state width="1493" height="134" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601569317393" />
+    <state width="1493" height="134" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1601634729932" />
     <state width="1493" height="210" key="GridCell.Tab.1.bottom" timestamp="1601307917542">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -502,13 +514,15 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="210" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1601307917542" />
-    <state x="46" y="109" width="1376" height="694" key="MergeDialog" timestamp="1601306646373">
+    <state x="46" y="109" width="1376" height="694" key="MergeDialog" timestamp="1601568555995">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="46" y="109" key="MergeDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601568555995" />
     <state x="46" y="109" width="1376" height="694" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1601306646373" />
-    <state x="350" y="280" width="879" height="466" key="MultipleFileMergeDialog" timestamp="1601306646384">
+    <state x="350" y="280" width="879" height="466" key="MultipleFileMergeDialog" timestamp="1601568556015">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="350" y="280" key="MultipleFileMergeDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1601568556015" />
     <state x="350" y="280" width="879" height="466" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1601306646384" />
     <state x="277" y="0" key="SettingsEditor" timestamp="1601306992092">
       <screen x="0" y="0" width="1536" height="824" />

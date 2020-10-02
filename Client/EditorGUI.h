@@ -84,6 +84,9 @@ public slots:
     void flushFileWriters();
     void setCharFormat(bool checked);
     void setBold(bool checked) const;
+    void setItalic(bool checked) const;
+    void setUnderline(bool checked) const;
+
 
 signals:
     void clear();

@@ -433,3 +433,15 @@ void EditorGUI::setBold(bool checked) const {
         f.setFontWeight(QFont::Normal);
     textEdit->mergeCurrentCharFormat(f);
 }
+
+void EditorGUI::setItalic(bool checked) const {
+    auto f = QTextCharFormat();
+    f.setFontItalic(checked);
+    textEdit->mergeCurrentCharFormat(f);
+}
+
+void EditorGUI::setUnderline(bool checked) const {
+    auto f = QTextCharFormat();
+    f.setFontUnderline(checked);
+    textEdit->mergeCurrentCharFormat(f);
+}

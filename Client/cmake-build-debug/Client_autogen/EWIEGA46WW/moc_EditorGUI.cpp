@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EditorGUI_t {
-    QByteArrayData data[40];
-    char stringdata0[455];
+    QByteArrayData data[42];
+    char stringdata0[478];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -71,7 +71,9 @@ QT_MOC_LITERAL(35, 397, 10), // "connection"
 QT_MOC_LITERAL(36, 408, 16), // "flushFileWriters"
 QT_MOC_LITERAL(37, 425, 13), // "setCharFormat"
 QT_MOC_LITERAL(38, 439, 7), // "checked"
-QT_MOC_LITERAL(39, 447, 7) // "setBold"
+QT_MOC_LITERAL(39, 447, 7), // "setBold"
+QT_MOC_LITERAL(40, 455, 9), // "setItalic"
+QT_MOC_LITERAL(41, 465, 12) // "setUnderline"
 
     },
     "EditorGUI\0clear\0\0setNumUsers\0n\0userQuery\0"
@@ -86,7 +88,7 @@ QT_MOC_LITERAL(39, 447, 7) // "setBold"
     "filename\0highlightedTip\0globalPos\0"
     "recordUserWriter\0QString&\0user\0"
     "connection\0flushFileWriters\0setCharFormat\0"
-    "checked\0setBold"
+    "checked\0setBold\0setItalic\0setUnderline"
 };
 #undef QT_MOC_LITERAL
 
@@ -96,7 +98,7 @@ static const uint qt_meta_data_EditorGUI[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      22,   14, // methods
+      24,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -104,30 +106,32 @@ static const uint qt_meta_data_EditorGUI[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  124,    2, 0x06 /* Public */,
-       3,    1,  125,    2, 0x06 /* Public */,
-       5,    1,  128,    2, 0x06 /* Public */,
+       1,    0,  134,    2, 0x06 /* Public */,
+       3,    1,  135,    2, 0x06 /* Public */,
+       5,    1,  138,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    3,  131,    2, 0x08 /* Private */,
-      11,    0,  138,    2, 0x08 /* Private */,
-      12,    1,  139,    2, 0x08 /* Private */,
-      14,    0,  142,    2, 0x08 /* Private */,
-      15,    0,  143,    2, 0x08 /* Private */,
-      16,    1,  144,    2, 0x08 /* Private */,
-      19,    4,  147,    2, 0x0a /* Public */,
-      23,    0,  156,    2, 0x0a /* Public */,
-      24,    2,  157,    2, 0x0a /* Public */,
-      25,    1,  162,    2, 0x0a /* Public */,
-      26,    2,  165,    2, 0x0a /* Public */,
-      27,    0,  170,    2, 0x0a /* Public */,
-      28,    1,  171,    2, 0x0a /* Public */,
-      30,    2,  174,    2, 0x0a /* Public */,
-      32,    3,  179,    2, 0x0a /* Public */,
-      32,    2,  186,    2, 0x2a /* Public | MethodCloned */,
-      36,    0,  191,    2, 0x0a /* Public */,
-      37,    1,  192,    2, 0x0a /* Public */,
-      39,    1,  195,    2, 0x0a /* Public */,
+       7,    3,  141,    2, 0x08 /* Private */,
+      11,    0,  148,    2, 0x08 /* Private */,
+      12,    1,  149,    2, 0x08 /* Private */,
+      14,    0,  152,    2, 0x08 /* Private */,
+      15,    0,  153,    2, 0x08 /* Private */,
+      16,    1,  154,    2, 0x08 /* Private */,
+      19,    4,  157,    2, 0x0a /* Public */,
+      23,    0,  166,    2, 0x0a /* Public */,
+      24,    2,  167,    2, 0x0a /* Public */,
+      25,    1,  172,    2, 0x0a /* Public */,
+      26,    2,  175,    2, 0x0a /* Public */,
+      27,    0,  180,    2, 0x0a /* Public */,
+      28,    1,  181,    2, 0x0a /* Public */,
+      30,    2,  184,    2, 0x0a /* Public */,
+      32,    3,  189,    2, 0x0a /* Public */,
+      32,    2,  196,    2, 0x2a /* Public | MethodCloned */,
+      36,    0,  201,    2, 0x0a /* Public */,
+      37,    1,  202,    2, 0x0a /* Public */,
+      39,    1,  205,    2, 0x0a /* Public */,
+      40,    1,  208,    2, 0x0a /* Public */,
+      41,    1,  211,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -152,6 +156,8 @@ static const uint qt_meta_data_EditorGUI[] = {
     QMetaType::Void, QMetaType::Int, 0x80000000 | 33, QMetaType::Bool,    6,   34,   35,
     QMetaType::Void, QMetaType::Int, 0x80000000 | 33,    6,   34,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Bool,   38,
+    QMetaType::Void, QMetaType::Bool,   38,
     QMetaType::Void, QMetaType::Bool,   38,
     QMetaType::Void, QMetaType::Bool,   38,
 
@@ -186,6 +192,8 @@ void EditorGUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 19: _t->flushFileWriters(); break;
         case 20: _t->setCharFormat((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 21: _t->setBold((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 22: _t->setItalic((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 23: _t->setUnderline((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -243,13 +251,13 @@ int EditorGUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 22)
+        if (_id < 24)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 22;
+        _id -= 24;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 22)
+        if (_id < 24)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 22;
+        _id -= 24;
     }
     return _id;
 }

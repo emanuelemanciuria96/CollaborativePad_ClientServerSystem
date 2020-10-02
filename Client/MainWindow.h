@@ -56,6 +56,8 @@ private:
     QAction* copyAction;
     QAction* pasteAction;
     QAction* boldAction;
+    QAction* italicAction;
+    QAction* underlineAction;
 
     QAction* userInfoAction;
     SignInWidget *widgetSignIn;
