@@ -156,7 +156,7 @@ void SharedEditor::localInsert(qint32 index, QString& str, QTextCharFormat forma
 
         DataPacket packet(_siteId, -1, DataPacket::textTyping);
         packet.setPayload(std::make_shared<Message>(Message::insertion, _siteId, s, i+index));
-
+        i++;
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
     }
@@ -310,20 +310,42 @@ qint32 SharedEditor::getIndex(qint32 index, Symbol symbol ) {
 
 
 void SharedEditor::processMessages(StringMessages &strMess) {
-
     std::vector<std::tuple<qint32,bool, QChar,qint32>> vt;
     auto strM=strMess.stringToMessages();
     bool lastErase=false;
+    bool lastInsert=false;
+    std::vector<Symbol> syms;
     qint32 tmpPos=0;
     qint32 numChar=0;
     for( int i=0;i<strM.size();i++ ) {
         auto m=strM[i];
-
         qint32 pos = getIndex(m.getLocalIndex(), m.getSymbol());
 //        std::cout << "insert da siteId " << m.getSymbol().getSymId().getSiteId() << std::endl;
         if(m.getAction()==Message::insertion && !(m.getSymbol()==_symbols[pos])){
-            _symbols.insert(_symbols.begin()+pos+numChar,m.getSymbol());
-            vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(pos,1,m.getSymbol().getValue(),m.getSiteId()));
+            //_symbols.insert(_symbols.begin()+pos+numChar,m.getSymbol());
+            //vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(pos,1,m.getSymbol().getValue(),m.getSiteId()));
+            if(!lastInsert){
+                tmpPos=pos;
+                syms.clear();
+            }
+            numChar++;
+            lastInsert=true;
+            syms.push_back(m.getSymbol());
+            //syms.insert(syms.begin(),m.getSymbol());
+            vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(tmpPos+numChar-1,1,m.getSymbol().getValue(),m.getSiteId()));
+            //_symbols.erase(_symbols.begin()+pos);
+            if(i != strM.size() - 1 ) {
+                if (strM[i + 1].getAction() == Message::removal) {
+                    _symbols.insert(_symbols.begin()+tmpPos,syms.begin(),syms.end());
+                    lastInsert = false;
+                    numChar = 0;
+                } else if (strM[i + 1].getSiteId() == strM[i].getSiteId() &&
+                           strM[i + 1].getLocalIndex() <= strM[i].getLocalIndex()) {
+                    _symbols.insert(_symbols.begin()+tmpPos,syms.begin(),syms.end());
+                    lastInsert = false;
+                    numChar = 0;
+                }
+            }
         }else if(_symbols[pos]==m.getSymbol()){
             if(!lastErase){
                 tmpPos=pos;
@@ -349,7 +371,10 @@ void SharedEditor::processMessages(StringMessages &strMess) {
 
     if(lastErase){
         _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
+    }else if(lastInsert){
+        _symbols.insert(_symbols.begin()+tmpPos,syms.begin(),syms.end());
     }
+
     //Refresh GUI
     if(vt.size()<1){
         return;
