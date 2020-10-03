@@ -321,11 +321,13 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     qint32 numChar=0;
     for( int i=0;i<strM.size();i++ ) {
         auto m=strM[i];
+        //qDebug()<<m.getSymbol().getValue()<<" "<<m.getLocalIndex();
         qint32 pos = getIndex(m.getLocalIndex(), m.getSymbol());
 //        std::cout << "insert da siteId " << m.getSymbol().getSymId().getSiteId() << std::endl;
         if(m.getAction()==Message::insertion && !(m.getSymbol()==_symbols[pos])){
             //_symbols.insert(_symbols.begin()+pos+numChar,m.getSymbol());
             //vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(pos,1,m.getSymbol().getValue(),m.getSiteId()));
+
             if(!lastInsert){
                 tmpPos=pos;
                 syms.clear();
@@ -342,7 +344,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                     lastInsert = false;
                     numChar = 0;
                 } else if (strM[i + 1].getSiteId() == strM[i].getSiteId() &&
-                           strM[i + 1].getLocalIndex() <= strM[i].getLocalIndex()) {
+                           strM[i + 1].getLocalIndex() != strM[i].getLocalIndex()+1) {
                     _symbols.insert(_symbols.begin()+tmpPos,syms.begin(),syms.end());
                     lastInsert = false;
                     numChar = 0;
@@ -362,7 +364,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                     lastErase = false;
                     numChar = 0;
                 } else if (strM[i + 1].getSiteId() == strM[i].getSiteId() &&
-                           strM[i + 1].getLocalIndex() < strM[i].getLocalIndex()) {
+                           strM[i + 1].getLocalIndex() != strM[i].getLocalIndex()) {
                     _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
                     lastErase = false;
                     numChar = 0;
