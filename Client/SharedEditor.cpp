@@ -172,9 +172,11 @@ void SharedEditor::localErase(qint32 index, qint32 num) {
 
     index++;
     auto s = _symbols.begin()+index;
+    int i=0;
     for( ;s<_symbols.begin()+index+num; s++ ) {
         DataPacket packet(_siteId, -1, DataPacket::textTyping);
-        packet.setPayload(std::make_shared<Message>(Message::removal, _siteId, *s, index));
+        packet.setPayload(std::make_shared<Message>(Message::removal, _siteId, *s, i+index));
+        i++;
 
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
