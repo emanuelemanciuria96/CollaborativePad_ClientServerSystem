@@ -321,7 +321,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     strM.push_back(m);
     bool firstErase=true;
     bool firstInsert=true;
-    qDebug()<<this->to_string();
+    //qDebug()<<this->to_string();
     bool nextPosIsCalculated=false;
     qint32 pos;
     qint32 nextPos;
