@@ -50,6 +50,7 @@ private:
     uint nUsers = 0;
     std::map<qint32,QString> file_writers;
     QPoint lastToolTipPos;
+    bool highlightEditor;
 
     void setUpGUI();
     void loadSymbols();
@@ -92,13 +93,13 @@ signals:
     void clear();
     void setNumUsers(int n);
     void userQuery(qint32 siteId);
-
+    void updateOther(int, QString, qint32 siteId, Message::action_t);
 
 public:
     MyTextEdit* textEdit;
-    EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
+    EditorGUI(SharedEditor *model, bool highlight,QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);
-
+    void setHighlightEditor(bool);
 
 
 };

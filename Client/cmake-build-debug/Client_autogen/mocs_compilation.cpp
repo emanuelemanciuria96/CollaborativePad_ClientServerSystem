@@ -3,6 +3,7 @@
 #include "EWIEGA46WW/moc_EditorGUI.cpp"
 #include "EWIEGA46WW/moc_FileSystemGridView.cpp"
 #include "EWIEGA46WW/moc_FileSystemTreeView.cpp"
+#include "EWIEGA46WW/moc_InfoUsersListWidget.cpp"
 #include "EWIEGA46WW/moc_InfoWidget.cpp"
 #include "EWIEGA46WW/moc_InfoWidgetEdit.cpp"
 #include "EWIEGA46WW/moc_InviteUserWidget.cpp"
@@ -16,4 +17,4 @@
 #include "EWIEGA46WW/moc_Socket.cpp"
 #include "EWIEGA46WW/moc_Transceiver.cpp"
 #include "EWIEGA46WW/moc_UriWidget.cpp"
-#include "EWIEGA46WW/moc_UsersListModel.cpp"
+#include "EWIEGA46WW/moc_UsersList.cpp"

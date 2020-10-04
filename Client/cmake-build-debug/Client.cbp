@@ -131,9 +131,6 @@
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/CursorColors.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/CursorNames.h">
-			<Option target="Client"/>
-		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/EditorGUI.cpp">
 			<Option target="Client"/>
 		</Unit>
@@ -153,6 +150,12 @@
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/FileSystemTreeView.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/InfoUsersListWidget.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/InfoUsersListWidget.h">
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/InfoWidget.cpp">
@@ -287,25 +290,19 @@
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UriWidget.h">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/User.h">
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersList.cpp">
 			<Option target="Client"/>
 		</Unit>
-		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersListModel.cpp">
-			<Option target="Client"/>
-		</Unit>
-		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersListModel.h">
-			<Option target="Client"/>
-		</Unit>
-		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersListView.cpp">
-			<Option target="Client"/>
-		</Unit>
-		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersListView.h">
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/UsersList.h">
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/adduserwidget.ui">
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/cmake-build-debug/Client_autogen/mocs_compilation.cpp">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/infouserslistwidget.ui">
 			<Option target="Client"/>
 		</Unit>
 		<Unit filename="C:/Users/Windows/Documents/GitHub/SharedEditor_MalnatiProject/Client/inviteuserwidget.ui">

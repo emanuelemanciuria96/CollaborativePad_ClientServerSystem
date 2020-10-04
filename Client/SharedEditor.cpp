@@ -318,19 +318,19 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     qint32 numChar=0;
     for( int i=0;i<strM.size();i++ ) {
         auto m=strM[i];
-
+        auto sit = m.getSymbol().getSymId().getSiteId();
         qint32 pos = getIndex(m.getLocalIndex(), m.getSymbol());
 //        std::cout << "insert da siteId " << m.getSymbol().getSymId().getSiteId() << std::endl;
         if(m.getAction()==Message::insertion && !(m.getSymbol()==_symbols[pos])){
             _symbols.insert(_symbols.begin()+pos+numChar,m.getSymbol());
-            vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(pos,1,m.getSymbol().getValue(),m.getSiteId()));
+            vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(pos,1,m.getSymbol().getValue(),sit));
         }else if(_symbols[pos]==m.getSymbol()){
             if(!lastErase){
                 tmpPos=pos;
             }
             numChar++;
             lastErase=true;
-            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
+            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),sit));
             //_symbols.erase(_symbols.begin()+pos);
             if(i != strM.size() - 1 ) {
                 if (strM[i + 1].getAction() == Message::insertion) {
@@ -697,16 +697,18 @@ void SharedEditor::submitUri(const QString& file){
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
-QString SharedEditor::to_string() {
+std::tuple<QString,QVector<qint32>> SharedEditor::to_string() {
+    QVector<qint32> siteIdVector;
     QString str;
 
     std::for_each(_symbols.begin()+1,_symbols.end()-1,
-                  [&str](Symbol s){
+                  [&str,&siteIdVector](Symbol s){
                       str += s.getValue();
+                      siteIdVector.append(s.getSymId().getSiteId());
                   });
 
 
-   return str;
+   return std::make_tuple(str,siteIdVector);
 }
 
 

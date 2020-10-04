@@ -34,6 +34,7 @@ private:
     FileSystemTreeView *treeView;
     FileSystemGridView *gridView;
     EditorGUI *editor;
+    EditorGUI *highlightEditor;
     LoginDialog *loginDialog;
     QStatusBar* statusBar;
     QToolBar* toolBar;
@@ -118,6 +119,10 @@ public slots:
     void setInfoWidget();
     void setInfoUsersListWidget(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
+    void recvEditorUpdate(int, QString, qint32 siteId,Message::action_t);
+private slots:
+    void highlight(bool checked);
+
 };
 
 
