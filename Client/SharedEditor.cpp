@@ -156,7 +156,7 @@ void SharedEditor::localInsert(qint32 index, QString& str, QTextCharFormat forma
 
         DataPacket packet(_siteId, -1, DataPacket::textTyping);
         packet.setPayload(std::make_shared<Message>(Message::insertion, _siteId, s, i+index));
-        //i++;
+        i++;
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
     }
@@ -320,6 +320,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     strM.push_back(m);
     bool firstErase=true;
     bool firstInsert=true;
+    //qDebug()<<this->to_string();
     bool nextPosIsCalculated=false;
     qint32 pos;
     qint32 nextPos;
@@ -343,21 +344,24 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             }
             firstInsert=false;
             syms.push_back(m.getSymbol());
-            //qDebug()<<m.getSymbol().getValue()<<" "<<pos;
+            //qDebug()<<m.getSymbol().getValue()<<" "<<m.getLocalIndex()<<" "<<m.getSymbol().getSymId().getCount()<<" "<<pos;
             vt.push_back(std::tuple<qint32, bool, QChar,qint32>(pos, 1, m.getSymbol().getValue(),m.getSiteId()));
             //_symbols.erase(_symbols.begin()+pos);
             if(strM[i+1].getSiteId()==-16 ) {
                 firstInsert = true;
             }else if (strM[i + 1].getAction() == Message::removal) {
                 firstInsert = true;
-            }else if(strM[i + 1].getSiteId() != strM[i].getSiteId()) {
-                firstInsert = true;
-            }else if(strM[i + 1].getLocalIndex() != strM[i].getLocalIndex()) {
-                firstInsert = true;
+            }else {
+                nextPos=getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
+                nextPosIsCalculated=true;
+                if(nextPos!=pos) {
+                    firstInsert=true;
+                }
             }
             if(firstInsert) {
                 _symbols.insert(_symbols.begin()+tmpPos,syms.begin(),syms.end());
-                //qDebug()<<"insert";
+                //qDebug()<<"insert "<<this->to_string();
+                nextPosIsCalculated=false;
             }
 
         }else if(_symbols[pos]==m.getSymbol()){
@@ -402,10 +406,10 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     for(int i=0;i<vt.size()-1;i++) {
         s += std::get<2>(vt[i]);
 
-        // std::cerr << "stringa: " << s.toStdString() << std::endl;
+         //std::cerr << "stringa: " << s.toStdString() <<" "<<std::get<0>(vt[i+1])<<std::endl;
 
         if(std::get<1>(vt[i])==1) {
-            if (std::get<1>(vt[i+1])==1 && std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 1) {
+            if (std::get<1>(vt[i+1])==1 && std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 0) {
             } else {
                 //qDebug()<<"insert "<<s<<" in index "<<firstPos;
                 emit symbolsChanged(firstPos, s, std::get<3>(vt[i]),Message::insertion);
@@ -422,7 +426,6 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             }
         }
     }
-
 }
 
 void SharedEditor::processUserInfo(UserInfo &userInfo) {
