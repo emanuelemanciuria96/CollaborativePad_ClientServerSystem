@@ -316,11 +316,12 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     auto strM=strMess.stringToMessages();
     std::vector<quint32> v;
     Symbol sy('0',-1,-1, v);
-    Message m(Message::insertion,-16,sy,1);
+    Message m(strM[strM.size()-1].getAction()==Message::insertion ?Message::removal:Message::insertion,0,sy,1);
+
     strM.push_back(m);
     bool firstErase=true;
     bool firstInsert=true;
-    //qDebug()<<this->to_string();
+    qDebug()<<this->to_string();
     bool nextPosIsCalculated=false;
     qint32 pos;
     qint32 nextPos;
@@ -347,9 +348,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             //qDebug()<<m.getSymbol().getValue()<<" "<<m.getLocalIndex()<<" "<<m.getSymbol().getSymId().getCount()<<" "<<pos;
             vt.push_back(std::tuple<qint32, bool, QChar,qint32>(pos, 1, m.getSymbol().getValue(),m.getSiteId()));
             //_symbols.erase(_symbols.begin()+pos);
-            if(strM[i+1].getSiteId()==-16 ) {
-                firstInsert = true;
-            }else if (strM[i + 1].getAction() == Message::removal) {
+            if (strM[i + 1].getAction() != Message::insertion) {
                 firstInsert = true;
             }else {
                 nextPos=getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
@@ -373,11 +372,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             //qDebug()<<m.getSymbol().getValue()<<" "<<tmpPos;
             vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
             //_symbols.erase(_symbols.begin()+pos);
-            if(strM[i+1].getSiteId()==-16 ) {
-                firstErase=true;
-            }else if (strM[i + 1].getAction() == Message::insertion) {
-                firstErase=true;
-            }else if(strM[i + 1].getLocalIndex() != strM[i].getLocalIndex()+1) {
+            if (strM[i + 1].getAction() != Message::removal) {
                 firstErase=true;
             }else {
                 nextPos=getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
