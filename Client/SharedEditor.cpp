@@ -351,7 +351,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             if (strM[i + 1].getAction() != Message::insertion) {
                 firstInsert = true;
             }else {
-                nextPos=getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
+                nextPos=getIndex(strM[i + 1].getLocalIndex()-(pos-tmpPos), strM[i + 1].getSymbol());
                 nextPosIsCalculated=true;
                 if(nextPos!=pos) {
                     firstInsert=true;
