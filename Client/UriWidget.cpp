@@ -35,13 +35,11 @@ void UriWidget::uriResultArrived(const QVector<QString> &args) {
     const auto& result = args.first();
     const auto& fileName = args.last();
     if (result == "valid" || result == "invite-existing") {
-        this->close();
         emit setStatusBarText("File "+fileName+" added to the list", 0);
     }
     else if (result == "invalid")
         ui->errorLabel->setText("File not found");
     else if (result == "file-existing") {
-        this->close();
         emit setStatusBarText("File " + fileName + " is already on the list", 0);
     }
 }

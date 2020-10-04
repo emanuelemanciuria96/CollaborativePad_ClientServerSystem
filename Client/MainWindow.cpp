@@ -30,16 +30,24 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
     toolBar = new QToolBar("Toolbar",this);
     centralWidget = new QStackedWidget(this);
+    richTextBar = new QToolBar(this);
 
     //    aggiungo gli elementi alla finestra
     this->setStatusBar(statusBar);
     this->addToolBar(toolBar);
+    addToolBarBreak(Qt::TopToolBarArea);
+    this->addToolBar(richTextBar);
     toolBar->setMovable(false);
     toolBar->setMinimumHeight(45);
     toolBar->setIconSize(QSize(45, 45));
     toolBar->hide();
 
     nullWidg = new QWidget(this);
+    richTextBar->setMovable(false);
+    richTextBar->setIconSize(QSize(25,25));
+    richTextBar->move(toolBar->rect().bottomLeft());
+    richTextBar->hide();
+
     setCentralWidget(centralWidget);
     // tree file system view creation
     treeFileSystemSettings();
@@ -59,7 +67,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
     setToolBar();
     setToolBarGrid();
-
+    setRichTextBar();
     setStyleSheet();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
@@ -168,6 +176,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(redoAction, &QAction::triggered, editor->textEdit, &QTextEdit::redo);
     connect(undoAction, &QAction::triggered, editor->textEdit, &QTextEdit::undo);
 
+    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
+    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
+    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
+
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -198,6 +210,7 @@ void MainWindow::loginFinished() {
     toolBar->show();
     statusBar->show();
     gridView->show();
+
 }
 
 void MainWindow::opnFileGrid(QString &fileName) {
@@ -206,6 +219,7 @@ void MainWindow::opnFileGrid(QString &fileName) {
     setToolBarEditor();
     centralWidget->setCurrentWidget(editor);
     dockWidgetUsers->show();
+    richTextBar->show();
     auto palette = this->palette();
 //    palette.setColor(QPalette::Window,QColor("lightgray"));
     palette.setColor(QPalette::Base,QColor("white"));
@@ -236,6 +250,7 @@ void MainWindow::changeDeleteAction(bool state){
 
 void MainWindow::clsFile() {
     dockWidgetUsers->hide();
+    richTextBar->hide();
     centralWidget->setCurrentWidget(gridView);
     leftDockWidgets[tree]->hide();
     if(gridView->getState()==gridView->getMainFolder()){
@@ -585,8 +600,9 @@ void MainWindow::resizeEvent(QResizeEvent *evt) {
 
 void MainWindow::setStyleSheet() {
     qApp->setStyleSheet("QWidget {font-family: helvetica}"
-                        "QToolBar {background:#F1F1F1}"
-                        "QStatusBar {background-color: #F1F1F1; border-top:1px solid #d2d2d2}");
+                        "QToolBar {background:#F1F1F1; }"
+                        "QStatusBar {background-color: #F1F1F1; border-top:1px solid #d2d2d2}"
+                        "QToolButton {padding:4}");
 
     dockWidgetUsers->titleBarWidget()->setStyleSheet("font:10pt; font-family: helvetica; color:#4F78C3");
     dockWidgetUsers->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8");
@@ -596,11 +612,9 @@ void MainWindow::setStyleSheet() {
     }
 }
 
+
 void MainWindow::setUsersList() {
-//    usersView = new UsersListView(this);
     usersList = new UsersList(this);
-//    usersModel  = new UsersListModel(this);
-//    usersView->setModel(usersModel);
 
     dockWidgetUsers = new QDockWidget(this);
     dockWidgetUsers->setAllowedAreas(Qt::RightDockWidgetArea );
@@ -709,6 +723,7 @@ void MainWindow::openInfoEdit(const QPixmap& image, const QString& nickname, con
     centralWidget->setCurrentWidget(infoWidgetEdit);
 }
 
+
 void MainWindow::hideEditor(QString& fileName) {
      if(centralWidget->currentWidget()!=gridView)
          centralWidget->setCurrentWidget(nullWidg);
@@ -722,4 +737,25 @@ void MainWindow::hideEditor(QString& fileName) {
      spinner->movie()->start();
      this->setCursor(QCursor(Qt::WaitCursor));
 
+}
+
+void MainWindow::setRichTextBar() {
+    //EditorToolbar
+    boldAction = new QAction();
+    boldAction->setIcon(QIcon("./icons/bold.png"));
+    boldAction->setCheckable(true);
+    boldAction->setToolTip("Bold");
+    richTextBar->addAction(boldAction);
+
+    italicAction = new QAction();
+    italicAction->setIcon(QIcon("./icons/italic.png"));
+    italicAction->setCheckable(true);
+    italicAction->setToolTip("Bold");
+    richTextBar->addAction(italicAction);
+
+    underlineAction = new QAction();
+    underlineAction->setIcon(QIcon("./icons/underline.png"));
+    underlineAction->setCheckable(true);
+    underlineAction->setToolTip("Bold");
+    richTextBar->addAction(underlineAction);
 }

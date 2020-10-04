@@ -28,6 +28,7 @@
 #include <algorithm>
 #include <QtCore/QTimer>
 #include <QIcon>
+#include <QTextCharFormat>
 
 class SharedEditor: public QObject {
     Q_OBJECT
@@ -111,7 +112,7 @@ signals:
 
 public:
     explicit SharedEditor(QObject *parent = 0);
-    void localInsert( qint32 index, QString& str );
+    void localInsert( qint32 index, QString& str, QTextCharFormat format);
     void localErase( qint32 index, qint32 num);
     qint32 getSiteId() const;
     void sendCursorPos(qint32 index);

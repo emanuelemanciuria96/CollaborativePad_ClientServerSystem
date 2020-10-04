@@ -37,6 +37,7 @@ private:
     LoginDialog *loginDialog;
     QStatusBar* statusBar;
     QToolBar* toolBar;
+    QToolBar* richTextBar;
     InfoWidget* infoWidget;
     InfoWidgetEdit* infoWidgetEdit;
     QStackedWidget* centralWidget;
@@ -55,8 +56,9 @@ private:
     QAction* cutAction;
     QAction* copyAction;
     QAction* pasteAction;
-    QLabel* spinner;
-
+    QAction* boldAction;
+    QAction* italicAction;
+    QAction* underlineAction;
     QAction* userInfoAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
@@ -72,6 +74,7 @@ private:
     QDockWidget *lastDock;
     InfoUsersListWidget *infoUsersListWidget;
     QWidget *nullWidg;
+    QLabel* spinner;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -90,7 +93,7 @@ private:
     void changeDeleteAction(bool state);
     void showHideLeftDock(dock_type dock);
     void setInviteListIcon(int num=0);
-
+    void setRichTextBar();
     void setUsersList();
     void setMainPalette();
 
