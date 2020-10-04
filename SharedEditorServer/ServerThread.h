@@ -60,6 +60,7 @@ private:
     QString threadId;
     QString operatingFileName;
     qint32 socketSize=0;
+    bool isFileSent;
 
     void recvLoginInfo(DataPacket& packet, QDataStream& in);
     void recvMessage(DataPacket& packet,QDataStream& in);

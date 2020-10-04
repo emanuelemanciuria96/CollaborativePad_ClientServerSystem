@@ -81,7 +81,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(gridView, &FileSystemGridView::renFileRequest,treeView , &FileSystemTreeView::editFileName);
     connect(gridView, &FileSystemGridView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
     connect(shEditor, &SharedEditor::openTextEditor,this, &MainWindow::opnFileGrid);
-    connect(shEditor, &SharedEditor::hideEditor,[this](){ if(centralWidget->currentWidget()!=gridView) centralWidget->setCurrentWidget(nullWidg); });
+    connect(shEditor, &SharedEditor::hideEditor, this, &MainWindow::hideEditor);
     connect(shEditor, &SharedEditor::transparentForMouse,this, &MainWindow::transparentForMouse);
     connect(shEditor, &SharedEditor::fileNameEdited, treeView, &FileSystemTreeView::editFileName);
     connect(shEditor, &SharedEditor::fileDeletion, treeView, &FileSystemTreeView::remoteFileDeletion);
@@ -210,6 +210,11 @@ void MainWindow::opnFileGrid(QString &fileName) {
 //    palette.setColor(QPalette::Window,QColor("lightgray"));
     palette.setColor(QPalette::Base,QColor("white"));
     setPalette(palette);
+
+    this->setCursor(QCursor(Qt::ArrowCursor));
+    statusBar->clearMessage();
+    delete spinner;
+
 }
 
 void MainWindow::changeInviteAction(bool state){
@@ -702,4 +707,19 @@ void MainWindow::openInfoEdit(const QPixmap& image, const QString& nickname, con
     infoWidgetEdit->setEmail(email);
     infoWidgetEdit->setUser(nickname);
     centralWidget->setCurrentWidget(infoWidgetEdit);
+}
+
+void MainWindow::hideEditor(QString& fileName) {
+     if(centralWidget->currentWidget()!=gridView)
+         centralWidget->setCurrentWidget(nullWidg);
+
+     spinner = new QLabel();
+     auto gif = new QMovie("./gifs/ajax-loader.gif");
+     gif->setScaledSize(QSize(20,20));
+     spinner->setMovie(gif);
+     statusBar->addWidget(spinner,3);
+     statusBar->showMessage("    Loading file "+fileName,-1);
+     spinner->movie()->start();
+     this->setCursor(QCursor(Qt::WaitCursor));
+
 }

@@ -28,6 +28,7 @@ ServerThread::ServerThread(qintptr socketDesc, std::shared_ptr<MessageHandler> m
     this->_username = "";
     this->_siteID = -1;
     this->operatingFileName = "";
+    this->isFileSent = false;
 }
 
 void ServerThread::run()
@@ -370,6 +371,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                 msgHandler->submit(&NetworkServer::processOpnCommand, command);
                 sl.unlock();
 
+                isFileSent = false;
                 operatingFileName = fileName;
 
                 auto shr = std::make_shared<UserInfo>(_siteID,UserInfo::conn_broad,_username);
@@ -655,6 +657,8 @@ void ServerThread::sendFileInfo(DataPacket& packet){
 
 void ServerThread::sendUserInfo(DataPacket &packet) {
 
+    if( operatingFileName == "") return;
+
     QDataStream out;
     out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
@@ -663,6 +667,12 @@ void ServerThread::sendUserInfo(DataPacket &packet) {
     QDataStream tmp(&buf);
 
     auto ptr = std::dynamic_pointer_cast<UserInfo>(packet.getPayload());
+
+    // ho bisogno che il file, non solo sia aperto, ma sia anche stato inviato
+    if(ptr->getType() != UserInfo::user_reqest && !isFileSent ) {
+        emit socket->sendMessage(packet);
+        return;
+    }
 
     // quando devo inviare uno UserInfo controllo se è un broadcast o un acknowledgment
     // se è broadcast devo ritornare un ACK
@@ -677,6 +687,7 @@ void ServerThread::sendUserInfo(DataPacket &packet) {
         }
         else
             std::cout<<"Casino pazzesco, errore assolutamente da gestire!"<<std::endl;
+
     }
 
     tmp << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
@@ -739,13 +750,19 @@ void ServerThread::sendFile() {
         sendFileInfo(pkt);
     }
 
+    auto ptr = std::make_shared<StringMessages>(vm, 0, operatingFileName);
+
     for (auto s: _file) {
         Message m(Message::insertion, 0, s, index++);
-        vm.push_back(m);
+        ptr->appendMessage(m);
+        if( ptr->size() >= 200 ){
+            DataPacket pkt( 0 , 0, DataPacket::textTyping, ptr);
+            sendMessage(pkt);
+            std::cout<<" --- sending (2) "<<ptr->size()<<" messages in once"<<std::endl;
+            ptr->clearQueue();
+        }
     }
-
-    while ( !vm.empty() ) {
-        auto ptr = std::make_shared<StringMessages>(vm, 0, operatingFileName);
+    if ( ptr->size()!=0 ) {
         DataPacket pkt( 0 , 0, DataPacket::textTyping, ptr);
         sendMessage(pkt);
         std::cout<<" --- sending (2) "<<ptr->size()<<" messages in once"<<std::endl;
@@ -758,6 +775,8 @@ void ServerThread::sendFile() {
         DataPacket pkt(0,0,DataPacket::file_info,std::make_shared<FileInfo>(FileInfo::eof,0,operatingFileName) );
         sendFileInfo(pkt);
     }
+
+    isFileSent = true;
 
 }
 

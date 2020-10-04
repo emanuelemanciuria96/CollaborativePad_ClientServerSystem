@@ -81,7 +81,7 @@ public slots:
     void obtainUser(qint32 siteId);
 
 signals:
-    void hideEditor();
+    void hideEditor(QString& fileName);
     void openTextEditor(QString &fileName);
     void transparentForMouse();
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);

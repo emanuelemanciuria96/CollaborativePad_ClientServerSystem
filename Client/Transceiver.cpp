@@ -173,6 +173,9 @@ void Transceiver::recvMessage(DataPacket& pkt, QDataStream& in) {
     in>>file;
     stringBytes -= socket->bytesAvailable();
 
+    if( file != openedServerFile)
+        return;
+
     numBytes-=stringBytes;
     while( numBytes > 0 ){
         auto tmp = socket->bytesAvailable();
@@ -373,8 +376,8 @@ void Transceiver::sendCommand(DataPacket& packet){
     buf.open(QBuffer::WriteOnly);
     QDataStream tmp(&buf);
     tmp << (quint32) ptr->getCmd() << ptr->getArgs();
-
     qint32 bytes = fixedBytesWritten + buf.data().size();
+
     switch( ptr->getCmd() ) {
         case Command::cls:
             while (!messages.empty())

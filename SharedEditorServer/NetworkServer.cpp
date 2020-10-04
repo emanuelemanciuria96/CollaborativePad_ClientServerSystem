@@ -118,7 +118,6 @@ void NetworkServer::processClsCommand(Payload &pl) {
 
     files.closeFile(fileName);
 
-
 }
 
 void NetworkServer::processRmCommand(Payload &pl) {

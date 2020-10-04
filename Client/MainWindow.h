@@ -55,6 +55,7 @@ private:
     QAction* cutAction;
     QAction* copyAction;
     QAction* pasteAction;
+    QLabel* spinner;
 
     QAction* userInfoAction;
     SignInWidget *widgetSignIn;
@@ -94,6 +95,7 @@ private:
     void setMainPalette();
 
 public slots:
+    void hideEditor(QString& fileName);
     void clipboardDataChanged()
     {
 #ifndef QT_NO_CLIPBOARD

@@ -554,7 +554,7 @@ void SharedEditor::requireFile(QString& fileName) {
     }
 
     emit transparentForMouse();
-    emit hideEditor();
+    emit hideEditor(fileName);
 
     fileOpened = fileName;
     isFileOpened = false; // da questo momento fino all'arrivo del FileInfo deve stare a false
