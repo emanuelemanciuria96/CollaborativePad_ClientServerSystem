@@ -312,7 +312,7 @@ qint32 SharedEditor::getIndex(qint32 index, Symbol symbol ) {
 void SharedEditor::processMessages(StringMessages &strMess) {
 
     std::vector<std::tuple<qint32,bool, QChar,qint32>> vt;
-    auto strM=strMess.stringToMessages();
+    auto strM=strMess.getQueue();
     bool lastErase=false;
     qint32 tmpPos=0;
     qint32 numChar=0;
@@ -541,7 +541,6 @@ void SharedEditor::requireFile(QString& fileName) {
     }
 
     if( fileOpened == fileName ){
-        emit openTextEditor(fileOpened);
         return;
     }else if(fileOpened != ""){
         QVector<QString> vec = {fileOpened};
@@ -555,6 +554,7 @@ void SharedEditor::requireFile(QString& fileName) {
     }
 
     emit transparentForMouse();
+    emit hideEditor();
 
     fileOpened = fileName;
     isFileOpened = false; // da questo momento fino all'arrivo del FileInfo deve stare a false
@@ -709,12 +709,6 @@ QString SharedEditor::to_string() {
    return str;
 }
 
-
-void SharedEditor::deleteThread() {
-    transceiver->deleteLater();
-    exit(0);
-}
-
 qint32 SharedEditor::getSiteId() const {
     return _siteId;
 }
@@ -769,4 +763,17 @@ void SharedEditor::findCounter() {
             if (_counter < s.getSymId().getCount())
                 _counter = s.getSymId().getCount();
 
+}
+
+SharedEditor::~SharedEditor() {
+    if( transceiver!= nullptr)
+        emit transceiver->getSocket()->terminateThreadOperations();
+    transceiver->wait();
+    transceiver->deleteLater();
+}
+
+void SharedEditor::deleteThread() {
+    transceiver->deleteLater();
+    //TODO: qui si potrebbe inserire una pagina per ritentare la connessione
+    exit(0);
 }

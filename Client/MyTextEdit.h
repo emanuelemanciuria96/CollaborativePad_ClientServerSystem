@@ -19,7 +19,7 @@ private:
     QPalette toolTipPalette;
 
 public:
-    MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget* parent = 0);
+    MyTextEdit(std::shared_ptr<std::vector<RemoteCursor>> remoteCursors, QWidget* parent = 0);
     bool eventFilter(QObject *obj, QEvent *ev) override;
 
 public slots:

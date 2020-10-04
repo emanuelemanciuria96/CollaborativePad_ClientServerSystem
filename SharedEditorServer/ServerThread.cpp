@@ -74,7 +74,7 @@ void ServerThread::recvPacket() {
 
     while(this->socket->bytesAvailable()>0) {
 
-        // std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
+        //std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
         if(this->socketSize==0) {
             in >> bytes;
             this->socketSize = bytes;
@@ -257,22 +257,51 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 
 void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
     qint32 siteId;
-    QString formattedMessages;
+    QVector<Message> msgs;
+    QString file;
     in.setDevice(socket.get());
     in.setVersion(QDataStream::Qt_5_5);
 
-    in >> siteId  >> formattedMessages;
+    in >> siteId ;
 
-    auto strMess = std::make_shared<StringMessages>(formattedMessages,siteId);
-    packet.setPayload(strMess);
+    auto ptr = std::make_shared<StringMessages>(siteId);
+    qint32 numBytes;
+
+    in >> numBytes;
+    auto stringBytes = socket->bytesAvailable();
+    in>>file;
+    stringBytes -= socket->bytesAvailable();
+
+    numBytes-=stringBytes;
+    while( numBytes > 0 ){
+        auto tmp = socket->bytesAvailable();
+        qint32 action;
+        qint32 messSiteId;
+        qint32 localIndx;
+        QChar value;
+        qint32 symSiteId;
+        quint32 counter;
+        QVector<quint32> pos;
+
+        in >> action >> messSiteId >> localIndx >> value >> symSiteId >> counter >> pos;
+
+        auto stdVecPos = pos.toStdVector();
+        Symbol s(value,symSiteId,counter,stdVecPos);
+        Message m((Message::action_t)action,messSiteId,s,localIndx);
+
+        ptr->appendMessage(m);
+        numBytes-=(tmp-socket->bytesAvailable());
+    }
+
+    ptr->setFileName(file);
+    packet.setPayload(ptr);
 
     // std::cout<<" --- number of arrived messages at once "<<strMess->stringToMessages().size()<<std::endl;
 
     //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
     //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
-    if(!_username.isEmpty()) {
-        strMess->setFileToModify(operatingFileName);
-        msgHandler->submit(&NetworkServer::localModification,strMess);
+    if(!_username.isEmpty() ) {
+        msgHandler->submit(&NetworkServer::localModification,ptr);
         _sockets.broadcast(operatingFileName,_siteID,packet);
     }
 
@@ -548,19 +577,29 @@ void ServerThread::sendMessage(DataPacket& packet){
     out.setVersion(QDataStream::Qt_5_5);
 
     QBuffer buf;
-    buf.open(QBuffer::WriteOnly);
+    buf.open(QBuffer::ReadWrite);
     QDataStream tmp(&buf);
 
     auto strMess = std::dynamic_pointer_cast<StringMessages>(packet.getPayload());
-    auto formMess = strMess->getFormattedMessages();
+    auto file = strMess->getFileName();
 
-    //std::cout<<" --- sending "<<strMess->stringToMessages().size()<<" messages in once"<<std::endl;
+    if( file != operatingFileName )
+        return;
 
-    tmp << formMess;
-    qint32 bytes = fixedBytesWritten + buf.data().size();
+    tmp << file;
 
-    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
-        strMess->getSiteId() << strMess->getFormattedMessages();
+    for(auto m : strMess->getQueue()){
+        auto sym = m.getSymbol();
+        tmp<<m.getAction()<<m.getSiteId()<<m.getLocalIndex()
+           <<sym.getValue()<<sym.getSymId().getSiteId()<<sym.getSymId().getCount()
+           <<QVector<quint32>::fromStdVector(sym.getPos());
+    }
+
+    qint32 bytes = fixedBytesWritten + buf.data().size() + 4; // buf.data() aggiunge 4 byte per la dimensione
+    DataPacket pkt(_siteID,0,DataPacket::textTyping,strMess);
+    out << bytes << _siteID << 0 <<(quint32) DataPacket::textTyping <<
+        strMess->getSiteId() << buf.data();
+
     socket->waitForBytesWritten(-1);
 
     std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
@@ -597,12 +636,17 @@ void ServerThread::sendFileInfo(DataPacket& packet){
     out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
 
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+
     auto ptr = std::dynamic_pointer_cast<FileInfo>(packet.getPayload());
 
-    qint32 bytes = fixedBytesWritten + sizeof(quint32);
+    tmp <<(quint32) ptr->getFileInfo() << ptr->getServerFileName();
+    qint32 bytes = fixedBytesWritten + buf.data().size();
 
-    out << bytes<<packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData();
-    out << ptr->getSiteId()<<(quint32) ptr->getFileInfo();
+    out << bytes<<packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData()
+       << ptr->getSiteId()<<(quint32) ptr->getFileInfo() << ptr->getServerFileName();
     socket->waitForBytesWritten(-1);
 
     std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
@@ -691,34 +735,27 @@ void ServerThread::sendFile() {
 
     // comunico al client che sto inviando il file
     {
-        DataPacket pkt( 0,0,DataPacket::file_info, std::make_shared<FileInfo>(FileInfo::start,_siteID) );
+        DataPacket pkt( 0,0,DataPacket::file_info, std::make_shared<FileInfo>(FileInfo::start,_siteID,operatingFileName) );
         sendFileInfo(pkt);
     }
 
     for (auto s: _file) {
         Message m(Message::insertion, 0, s, index++);
-
-        if ( vm.size()+1 >= 1000) {
-            std::cout<<" --- sending (1) "<<vm.size()<<" messages in once"<<std::endl;
-            DataPacket pkt( 0 , 0, DataPacket::textTyping, std::make_shared<StringMessages>(vm, 0) );
-            sendMessage(pkt);
-            std::cout<<" --- sending (2) "<<std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->stringToMessages().size()<<" messages in once"<<std::endl;
-            vm.clear();
-        }
-
         vm.push_back(m);
     }
 
-    if( !vm.empty() ){
-        DataPacket pkt( 0,0,DataPacket::textTyping,std::make_shared<StringMessages>(vm, 0));
+    while ( !vm.empty() ) {
+        auto ptr = std::make_shared<StringMessages>(vm, 0, operatingFileName);
+        DataPacket pkt( 0 , 0, DataPacket::textTyping, ptr);
         sendMessage(pkt);
+        std::cout<<" --- sending (2) "<<ptr->size()<<" messages in once"<<std::endl;
     }
 
     _file.clear();
 
     // comunico al client che è terminato l'invio del file
     {
-        DataPacket pkt(0,0,DataPacket::file_info,std::make_shared<FileInfo>(FileInfo::eof,0) );
+        DataPacket pkt(0,0,DataPacket::file_info,std::make_shared<FileInfo>(FileInfo::eof,0,operatingFileName) );
         sendFileInfo(pkt);
     }
 

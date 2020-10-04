@@ -11,6 +11,7 @@
 #include <QtWidgets/QToolTip>
 
 EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
+    remoteCursors = std::make_shared<std::vector<RemoteCursor>>();
     signalBlocker = false;
     myCursorPosUpdateBlocker = false;
     setModel(model);
@@ -31,7 +32,7 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
 
 void EditorGUI::setUpGUI() {
 //    inizializzo gli elementi
-    textEdit = new MyTextEdit(&remoteCursors, this);
+    textEdit = new MyTextEdit(remoteCursors, this);
     setLayout(new QVBoxLayout(this));
     this->layout()->setContentsMargins(30, 0, 30, 0);
     this->layout()->addWidget(textEdit);
@@ -209,7 +210,7 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::act
 void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos) {
     // aggiorno la posizione degli altri cursori
 
-    for (auto & remoteCursor : remoteCursors) {
+    for (auto & remoteCursor : *remoteCursors) {
         if (remoteCursor.getSiteId() != mySiteId && remoteCursor.getSiteId()>0) {
             if(!remoteCursor.labelName->isHidden())
                 drawLabel(&remoteCursor);
@@ -231,15 +232,15 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     if(siteId < 0)
         return nullptr;
 //    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
-    auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
+    auto it = std::find_if(remoteCursors->begin(), remoteCursors->end(), [siteId](const RemoteCursor &c) {
 //        std::cout << "SiteId: " << c.getSiteId() << std::endl;
         return (c.getSiteId() == siteId);
     });
-    if (it == remoteCursors.end()) {
+    if (it == remoteCursors->end()) {
         auto username = QString();
         username = (siteId>0) ? file_writers.at(siteId) : "me";
-        remoteCursors.emplace_back(textEdit->document(), siteId, username);
-        cursor = &remoteCursors.back();
+        remoteCursors->emplace_back(textEdit->document(), siteId, username);
+        cursor = &remoteCursors->back();
         if(siteId!=0)
             connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
     } else
@@ -248,11 +249,11 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
 }
 
 void EditorGUI::removeCursor(qint32 siteId) {
-    auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
+    auto it = std::find_if(remoteCursors->begin(), remoteCursors->end(), [siteId](const RemoteCursor &c) {
         return (c.getSiteId() == siteId);
     });
-    if (it != remoteCursors.end()) {
-        remoteCursors.erase(it);
+    if (it != remoteCursors->end()) {
+        remoteCursors->erase(it);
         std::cout << "Remove cursor " << siteId << std::endl;
         textEdit->update();
         emit setNumUsers(--nUsers);
@@ -291,7 +292,7 @@ void EditorGUI::deleteAllText() {
     signalBlocker = !signalBlocker;
     emit clear();
     signalBlocker = !signalBlocker;
-    remoteCursors.clear();
+    remoteCursors->clear();
     emit setNumUsers(nUsers=0);
 }
 

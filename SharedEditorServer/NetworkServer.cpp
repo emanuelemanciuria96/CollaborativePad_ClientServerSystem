@@ -72,11 +72,11 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
 void NetworkServer::localModification(Payload &pl) {
     StringMessages& msgs = dynamic_cast<StringMessages&>(pl);
 
-    QString file = msgs.getFileToModify();
+    QString file = msgs.getFileName();
 
     if( file=="") return;
 
-    for (auto msg: msgs.stringToMessages()) {
+    for (auto msg: msgs.getQueue()) {
 
         std::shared_ptr<Message> m = std::make_shared<Message>(msg);
         if (msg.getAction() == Message::insertion) {

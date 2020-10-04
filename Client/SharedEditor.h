@@ -81,6 +81,7 @@ public slots:
     void obtainUser(qint32 siteId);
 
 signals:
+    void hideEditor();
     void openTextEditor(QString &fileName);
     void transparentForMouse();
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
@@ -118,6 +119,7 @@ public:
     bool getHighlighting() const;
     const Symbol fromPosToSymbol(int pos){ return _symbols[pos]; }
     QString to_string();
+    virtual ~SharedEditor();
 
 };
 
