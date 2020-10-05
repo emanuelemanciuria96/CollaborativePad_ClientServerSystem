@@ -48,6 +48,7 @@ private:
     QIcon file_icn;
     QMenu *rightClickMenu = nullptr;
     QString previousName;
+    bool isEditing=false;
 
     void setupRightClickMenu();
     virtual void mousePressEvent(QMouseEvent *ev);
