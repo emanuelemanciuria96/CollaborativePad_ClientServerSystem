@@ -45,6 +45,7 @@ private:
     bool highlighting;
 
     qint32 getIndex(qint32 index, Symbol symbol);
+    qint32 getIndexDichotomous(qint32 index, Symbol symbol);
     void closeFile();
     void findCounter();
 
