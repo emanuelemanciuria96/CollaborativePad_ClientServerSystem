@@ -156,6 +156,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::removeUser, usersList, &UsersList::removeUser);
     connect(shEditor, &SharedEditor::userNameArrived, editor, &EditorGUI::recordUserWriter);
     connect(shEditor, &SharedEditor::flushFileWriters, editor, &EditorGUI::flushFileWriters);
+    connect(shEditor, &SharedEditor::flushFileWriters, usersList, &UsersList::clear);
     connect(addUserWidget, &AddUserWidget::closing, this, &MainWindow::transparentForMouse);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::transparentForMouse);
     connect(gridView, &FileSystemGridView::inviteRequest, this, &MainWindow::transparentForMouse);
@@ -264,7 +265,6 @@ void MainWindow::clsFile() {
         highlightAction->trigger();
         highlightAction->setChecked(false);
     }
-    usersList->clear();
 }
 
 void MainWindow::loginSettings() {

@@ -11,7 +11,7 @@
 #include <QtWidgets/QToolTip>
 
 EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
-    remoteCursors = std::make_shared<std::vector<RemoteCursor>>();
+    remoteCursors = std::make_shared<std::list<RemoteCursor>>();
     signalBlocker = false;
     myCursorPosUpdateBlocker = false;
     setModel(model);
@@ -241,6 +241,8 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
             connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
     } else
         cursor = (&(*it));
+    if (cursor == nullptr)
+        std::cout<<"NULLOOOOOOOOOOOOOOOOOO"<<std::endl;
     return cursor;
 }
 

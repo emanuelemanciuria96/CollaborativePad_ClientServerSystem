@@ -38,7 +38,7 @@ private:
     QString fileName;
     SharedEditor* model;
     bool signalBlocker;
-    std::shared_ptr<std::vector<RemoteCursor>> remoteCursors;
+    std::shared_ptr<std::list<RemoteCursor>> remoteCursors;
     std::queue<QChar> insertQueue;
     qint32 siteIdQueue;
     qint32 posQueue;

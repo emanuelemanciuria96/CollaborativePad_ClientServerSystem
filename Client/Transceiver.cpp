@@ -35,7 +35,7 @@ void Transceiver::run() {
 }
 
 qint32 Transceiver::connectToServer() {
-    socket->connectToHost(QHostAddress::LocalHost, 1234);
+    socket->connectToHost("192.168.1.6", 1234);
     //socket->connectToHost(QHostAddress::LocalHost, 1234);
     if(socket->waitForConnected(1000)) {
         connect(socket, SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);

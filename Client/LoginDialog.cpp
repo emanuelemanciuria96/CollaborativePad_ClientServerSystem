@@ -115,7 +115,7 @@ void LoginDialog::slotLoginError() {
 
 void LoginDialog::keyPressEvent(QKeyEvent *e) {
     QWidget::keyPressEvent(e);
-    if (e->key() == Qt::Key_Enter || Qt::Key_Escape){
+    if (e->key() == Qt::Key_Return){
         slotAcceptLogin();
     }
 }
