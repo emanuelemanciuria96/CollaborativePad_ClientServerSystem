@@ -294,19 +294,12 @@ qint32 SharedEditor::getIndex(qint32 index, Symbol symbol ) {
     if(pos>_symbols.size()-1){
         pos=_symbols.size()-1;
     }
-    if(symbol>_symbols[pos]){
-        for(qint32 i=pos+1;i<_symbols.size();i++){
-            if(symbol < _symbols[i] || symbol == _symbols[i]){
-                return i;
-            }
-        }
-    }else{
-        for(qint32 i=pos-1;i>=0;i--){
-            if(symbol>_symbols[i]){
-                return i+1;
-            }
-        }
-    }
+//    if(symbol>_symbols[pos]){
+//        pos = std::lower_bound(_symbols.begin()+index+1,_symbols.end(),symbol) - _symbols.begin();
+//    }else{
+//        pos = std::lower_bound(_symbols.begin(), _symbols.begin()+index, symbol) - _symbols.begin();
+//    }
+    pos = std::lower_bound(_symbols.begin(),_symbols.end(),symbol) - _symbols.begin();
     return pos;
 }
 
@@ -328,13 +321,17 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     std::vector<Symbol> syms;
     qint32 tmpPos=0;
     qint32 numChar=0;
+    QString str;
     //qDebug()<<this->to_string();
     for( int i=0;i<strM.size()-1;i++ ) {
         auto m=strM[i];
         if(nextPosIsCalculated){
             pos=nextPos;
         }else {
+//            std::cout << "getindex inizio" << std::endl;
             pos = getIndex(m.getLocalIndex(), m.getSymbol());
+//            std::cout << "getindex fine" << std::endl;
+
         }
         nextPosIsCalculated=false;
 //        std::cout << "insert da siteId " << m.getSymbol().getSymId().getSiteId() << std::endl;
@@ -342,23 +339,30 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             if(firstInsert){
                 tmpPos=pos;
                 syms.clear();
+                str.clear();
             }
             firstInsert=false;
             syms.push_back(m.getSymbol());
+            str.append(m.getSymbol().getValue());
             //qDebug()<<m.getSymbol().getValue()<<" "<<m.getLocalIndex()<<" "<<m.getSymbol().getSymId().getCount()<<" "<<pos;
-            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(pos, 1, m.getSymbol().getValue(),m.getSiteId()));
+//            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(pos, 1, m.getSymbol().getValue(),m.getSiteId()));
             //_symbols.erase(_symbols.begin()+pos);
             if (strM[i + 1].getAction() != Message::insertion) {
                 firstInsert = true;
             }else {
+//                std::cout << "getindex inizio" << std::endl;
                 nextPos=getIndex(strM[i + 1].getLocalIndex()-(pos-tmpPos), strM[i + 1].getSymbol());
+//                std::cout << "getindex fine" << std::endl;
                 nextPosIsCalculated=true;
                 if(nextPos!=pos) {
                     firstInsert=true;
                 }
             }
             if(firstInsert) {
+//                std::cout << "insert inizio" << std::endl;
                 _symbols.insert(_symbols.begin()+tmpPos,syms.begin(),syms.end());
+//                std::cout << "insert fine" << std::endl;
+                emit symbolsChanged(tmpPos, str, strMess.getSiteId(),Message::insertion);
                 //qDebug()<<"insert "<<this->to_string();
                 nextPosIsCalculated=false;
             }
@@ -366,23 +370,30 @@ void SharedEditor::processMessages(StringMessages &strMess) {
         }else if(_symbols[pos]==m.getSymbol()){
             if(firstErase){
                 tmpPos=pos;
+                str.clear();
             }
             numChar++;
+            str.append(m.getSymbol().getValue());
             firstErase=false;
             //qDebug()<<m.getSymbol().getValue()<<" "<<tmpPos;
-            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
+//            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
             //_symbols.erase(_symbols.begin()+pos);
             if (strM[i + 1].getAction() != Message::removal) {
                 firstErase=true;
             }else {
+//                std::cout << "getindex inizio" << std::endl;
                 nextPos=getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
+//                std::cout << "getindex fine" << std::endl;
                 nextPosIsCalculated=true;
                 if(nextPos!=pos+1) {
                     firstErase=true;
                 }
             }
             if(firstErase) {
+//                std::cout << "erase inzia di " << numChar << std::endl;
                 _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
+//                std::cout << "erase fine" << std::endl;
+                emit symbolsChanged(tmpPos, str, strMess.getSiteId(), Message::removal);
                 numChar = 0;
                 //qDebug()<<"delete "<<this->to_string();
                 nextPosIsCalculated=false;
@@ -391,36 +402,36 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     }
 
     //Refresh GUI
-    if(vt.size()==0){
-        return;
-    }
-
-    QString s="";
-    qint32 firstPos=std::get<0>(vt[0]);
-    vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(-8,1,2,9));
-    for(int i=0;i<vt.size()-1;i++) {
-        s += std::get<2>(vt[i]);
-
-         //std::cerr << "stringa: " << s.toStdString() <<" "<<std::get<0>(vt[i+1])<<std::endl;
-
-        if(std::get<1>(vt[i])==1) {
-            if (std::get<1>(vt[i+1])==1 && std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 0) {
-            } else {
-                //qDebug()<<"insert "<<s<<" in index "<<firstPos;
-                emit symbolsChanged(firstPos, s, std::get<3>(vt[i]),Message::insertion);
-                s = "";
-                firstPos = std::get<0>(vt[i+1]);
-            }
-        }else {
-            if (std::get<1>(vt[i+1])==0 && std::get<0>(vt[i]) == std::get<0>(vt[i+1])) {
-            } else {
-                //qDebug()<<"remove "<<s<<" in index "<<firstPos+s.size()-1;
-                emit symbolsChanged(firstPos, s, std::get<3>(vt[i]), Message::removal);
-                s = "";
-                firstPos = std::get<0>(vt[i+1]);
-            }
-        }
-    }
+//    if(vt.size()==0){
+//        return;
+//    }
+//
+//    QString s="";
+//    qint32 firstPos=std::get<0>(vt[0]);
+//    vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(-8,1,2,9));
+//    for(int i=0;i<vt.size()-1;i++) {
+//        s += std::get<2>(vt[i]);
+//
+//         //std::cerr << "stringa: " << s.toStdString() <<" "<<std::get<0>(vt[i+1])<<std::endl;
+//
+//        if(std::get<1>(vt[i])==1) {
+//            if (std::get<1>(vt[i+1])==1 && std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 0) {
+//            } else {
+//                //qDebug()<<"insert "<<s<<" in index "<<firstPos;
+//                emit symbolsChanged(firstPos, s, std::get<3>(vt[i]),Message::insertion);
+//                s = "";
+//                firstPos = std::get<0>(vt[i+1]);
+//            }
+//        }else {
+//            if (std::get<1>(vt[i+1])==0 && std::get<0>(vt[i]) == std::get<0>(vt[i+1])) {
+//            } else {
+//                //qDebug()<<"remove "<<s<<" in index "<<firstPos+s.size()-1;
+//                emit symbolsChanged(firstPos, s, std::get<3>(vt[i]), Message::removal);
+//                s = "";
+//                firstPos = std::get<0>(vt[i+1]);
+//            }
+//        }
+//    }
 }
 
 void SharedEditor::processUserInfo(UserInfo &userInfo) {
