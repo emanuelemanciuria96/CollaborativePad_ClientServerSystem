@@ -288,18 +288,43 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
             break;
     }
 }
-
+qint32 SharedEditor::getIndexDichotomous(qint32 index, Symbol symbol){
+    qint32 pos = std::lower_bound(_symbols.begin(),_symbols.end(),symbol) - _symbols.begin();
+    return pos;
+}
 qint32 SharedEditor::getIndex(qint32 index, Symbol symbol ) {
-    qint32 pos= index;//search index
+       qint32 pos= index;//search index
+    int as=0;
     if(pos>_symbols.size()-1){
         pos=_symbols.size()-1;
     }
-//    if(symbol>_symbols[pos]){
-//        pos = std::lower_bound(_symbols.begin()+index+1,_symbols.end(),symbol) - _symbols.begin();
-//    }else{
-//        pos = std::lower_bound(_symbols.begin(), _symbols.begin()+index, symbol) - _symbols.begin();
-//    }
-    pos = std::lower_bound(_symbols.begin(),_symbols.end(),symbol) - _symbols.begin();
+    if(symbol>_symbols[pos]){
+        for(qint32 i=pos+1;i<_symbols.size();i++){
+            as++;
+            if(symbol < _symbols[i] || symbol == _symbols[i]){
+                const std::lock_guard<std::mutex> lock(m);
+                if(as>max){
+                    max=as;
+                }
+                return i;
+            }
+        }
+    }else{
+        for(qint32 i=pos-1;i>=0;i--){
+            as++;
+            if(symbol>_symbols[i]){
+                const std::lock_guard<std::mutex> lock(m);
+                if(as>max){
+                    max=as;
+                }
+                return i+1;
+            }
+        }
+    }
+    const std::lock_guard<std::mutex> lock(m);
+    if(as>max){
+        max=as;
+    }
     return pos;
 }
 
@@ -351,7 +376,11 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                 firstInsert = true;
             }else {
 //                std::cout << "getindex inizio" << std::endl;
-                nextPos=getIndex(strM[i + 1].getLocalIndex()-(pos-tmpPos), strM[i + 1].getSymbol());
+                if(strM.size()>200){
+                    nextPos=getIndexDichotomous(0, strM[i + 1].getSymbol());
+                }else{
+                    nextPos=getIndex(strM[i + 1].getLocalIndex()-(pos-tmpPos), strM[i + 1].getSymbol());
+                }
 //                std::cout << "getindex fine" << std::endl;
                 nextPosIsCalculated=true;
                 if(nextPos!=pos) {
@@ -382,7 +411,11 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                 firstErase=true;
             }else {
 //                std::cout << "getindex inizio" << std::endl;
-                nextPos=getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
+                if(strM.size()>200){
+                    nextPos=getIndexDichotomous(0, strM[i + 1].getSymbol());
+                }else{
+                    nextPos=getIndex(strM[i + 1].getLocalIndex()-(pos-tmpPos), strM[i + 1].getSymbol());
+                }
 //                std::cout << "getindex fine" << std::endl;
                 nextPosIsCalculated=true;
                 if(nextPos!=pos+1) {
