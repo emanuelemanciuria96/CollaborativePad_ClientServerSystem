@@ -294,36 +294,21 @@ qint32 SharedEditor::getIndexDichotomous(qint32 index, Symbol symbol){
 }
 qint32 SharedEditor::getIndex(qint32 index, Symbol symbol ) {
        qint32 pos= index;//search index
-    int as=0;
     if(pos>_symbols.size()-1){
         pos=_symbols.size()-1;
     }
     if(symbol>_symbols[pos]){
         for(qint32 i=pos+1;i<_symbols.size();i++){
-            as++;
             if(symbol < _symbols[i] || symbol == _symbols[i]){
-                const std::lock_guard<std::mutex> lock(m);
-                if(as>max){
-                    max=as;
-                }
                 return i;
             }
         }
     }else{
         for(qint32 i=pos-1;i>=0;i--){
-            as++;
             if(symbol>_symbols[i]){
-                const std::lock_guard<std::mutex> lock(m);
-                if(as>max){
-                    max=as;
-                }
                 return i+1;
             }
         }
-    }
-    const std::lock_guard<std::mutex> lock(m);
-    if(as>max){
-        max=as;
     }
     return pos;
 }
