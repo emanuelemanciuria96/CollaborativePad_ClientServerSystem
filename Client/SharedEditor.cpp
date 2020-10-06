@@ -146,6 +146,8 @@ void SharedEditor::localInsert(qint32 index, QString& str, QTextCharFormat forma
     std::vector<quint32> next = _symbols[index].getPos();
     std::vector<Symbol> syms;
     int i = 0;
+    int numBlock=0;
+    int maxChars=200;
     for(auto value: str) {
         std::vector<quint32> newPos;
         generateNewPosition2(prev, next, newPos);
@@ -155,8 +157,12 @@ void SharedEditor::localInsert(qint32 index, QString& str, QTextCharFormat forma
         syms.push_back(s);
 
         DataPacket packet(_siteId, -1, DataPacket::textTyping);
-        packet.setPayload(std::make_shared<Message>(Message::insertion, _siteId, s, i+index));
+        packet.setPayload(std::make_shared<Message>(Message::insertion, _siteId, s, maxChars*numBlock+index));
         i++;
+        if(i==maxChars){
+            numBlock++;
+            i=0;
+        }
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
     }
@@ -173,17 +179,17 @@ void SharedEditor::localErase(qint32 index, qint32 num) {
     index++;
     auto s = _symbols.begin()+index;
     int i=0;
+    int maxChars=200;
     for( ;s<_symbols.begin()+index+num; s++ ) {
         DataPacket packet(_siteId, -1, DataPacket::textTyping);
         packet.setPayload(std::make_shared<Message>(Message::removal, _siteId, *s, i+index));
         i++;
-
+        i=i%maxChars;
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
     }
 
     _symbols.erase(_symbols.begin()+index,_symbols.begin()+index+num);
-
 }
 
 void SharedEditor::sendCursorPos(qint32 index) {
@@ -334,24 +340,23 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     QString str;
     //qDebug()<<this->to_string();
     for( int i=0;i<strM.size()-1;i++ ) {
-        auto m=strM[i];
-        if(nextPosIsCalculated){
-            pos=nextPos;
-        }else {
+        auto m = strM[i];
+        if (nextPosIsCalculated) {
+            pos = nextPos;
+        } else {
 //            std::cout << "getindex inizio" << std::endl;
             pos = getIndex(m.getLocalIndex(), m.getSymbol());
 //            std::cout << "getindex fine" << std::endl;
-
         }
-        nextPosIsCalculated=false;
+        nextPosIsCalculated = false;
 //        std::cout << "insert da siteId " << m.getSymbol().getSymId().getSiteId() << std::endl;
-        if(m.getAction()==Message::insertion){
-            if(firstInsert){
-                tmpPos=pos;
+        if (m.getAction() == Message::insertion) {
+            if (firstInsert) {
+                tmpPos = pos;
                 syms.clear();
                 str.clear();
             }
-            firstInsert=false;
+            firstInsert = false;
             syms.push_back(m.getSymbol());
             str.append(m.getSymbol().getValue());
             //qDebug()<<m.getSymbol().getValue()<<" "<<m.getLocalIndex()<<" "<<m.getSymbol().getSymId().getCount()<<" "<<pos;
@@ -359,97 +364,53 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             //_symbols.erase(_symbols.begin()+pos);
             if (strM[i + 1].getAction() != Message::insertion) {
                 firstInsert = true;
-            }else {
-//                std::cout << "getindex inizio" << std::endl;
-                if(strM.size()>200){
-                    nextPos=getIndexDichotomous(0, strM[i + 1].getSymbol());
-                }else{
-                    nextPos=getIndex(strM[i + 1].getLocalIndex()-(pos-tmpPos), strM[i + 1].getSymbol());
-                }
+            } else {
+                nextPos = getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
 //                std::cout << "getindex fine" << std::endl;
-                nextPosIsCalculated=true;
-                if(nextPos!=pos) {
-                    firstInsert=true;
+                nextPosIsCalculated = true;
+                if (nextPos != pos) {
+                    firstInsert = true;
                 }
             }
-            if(firstInsert) {
+            if (firstInsert) {
 //                std::cout << "insert inizio" << std::endl;
-                _symbols.insert(_symbols.begin()+tmpPos,syms.begin(),syms.end());
+                _symbols.insert(_symbols.begin() + tmpPos, syms.begin(), syms.end());
 //                std::cout << "insert fine" << std::endl;
-                emit symbolsChanged(tmpPos, str, strMess.getSiteId(),Message::insertion);
+                emit symbolsChanged(tmpPos, str, strMess.getSiteId(), Message::insertion);
                 //qDebug()<<"insert "<<this->to_string();
-                nextPosIsCalculated=false;
+                nextPosIsCalculated = false;
             }
 
-        }else if(_symbols[pos]==m.getSymbol()){
-            if(firstErase){
-                tmpPos=pos;
+        } else if (_symbols[pos] == m.getSymbol()) {
+            if (firstErase) {
+                tmpPos = pos;
                 str.clear();
             }
             numChar++;
             str.append(m.getSymbol().getValue());
-            firstErase=false;
+            firstErase = false;
             //qDebug()<<m.getSymbol().getValue()<<" "<<tmpPos;
 //            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
             //_symbols.erase(_symbols.begin()+pos);
             if (strM[i + 1].getAction() != Message::removal) {
-                firstErase=true;
-            }else {
+                firstErase = true;
+            } else {
 //                std::cout << "getindex inizio" << std::endl;
-                if(strM.size()>200){
-                    nextPos=getIndexDichotomous(0, strM[i + 1].getSymbol());
-                }else{
-                    nextPos=getIndex(strM[i + 1].getLocalIndex()-(pos-tmpPos), strM[i + 1].getSymbol());
-                }
+                nextPos = getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
 //                std::cout << "getindex fine" << std::endl;
-                nextPosIsCalculated=true;
-                if(nextPos!=pos+1) {
-                    firstErase=true;
+                nextPosIsCalculated = true;
+                if (nextPos != pos + 1) {
+                    firstErase = true;
                 }
             }
-            if(firstErase) {
-//                std::cout << "erase inzia di " << numChar << std::endl;
+            if (firstErase) {
                 _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
-//                std::cout << "erase fine" << std::endl;
                 emit symbolsChanged(tmpPos, str, strMess.getSiteId(), Message::removal);
                 numChar = 0;
-                //qDebug()<<"delete "<<this->to_string();
-                nextPosIsCalculated=false;
+                nextPosIsCalculated = false;
             }
         }
     }
-
-    //Refresh GUI
-//    if(vt.size()==0){
-//        return;
-//    }
-//
-//    QString s="";
-//    qint32 firstPos=std::get<0>(vt[0]);
-//    vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(-8,1,2,9));
-//    for(int i=0;i<vt.size()-1;i++) {
-//        s += std::get<2>(vt[i]);
-//
-//         //std::cerr << "stringa: " << s.toStdString() <<" "<<std::get<0>(vt[i+1])<<std::endl;
-//
-//        if(std::get<1>(vt[i])==1) {
-//            if (std::get<1>(vt[i+1])==1 && std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 0) {
-//            } else {
-//                //qDebug()<<"insert "<<s<<" in index "<<firstPos;
-//                emit symbolsChanged(firstPos, s, std::get<3>(vt[i]),Message::insertion);
-//                s = "";
-//                firstPos = std::get<0>(vt[i+1]);
-//            }
-//        }else {
-//            if (std::get<1>(vt[i+1])==0 && std::get<0>(vt[i]) == std::get<0>(vt[i+1])) {
-//            } else {
-//                //qDebug()<<"remove "<<s<<" in index "<<firstPos+s.size()-1;
-//                emit symbolsChanged(firstPos, s, std::get<3>(vt[i]), Message::removal);
-//                s = "";
-//                firstPos = std::get<0>(vt[i+1]);
-//            }
-//        }
-//    }
 }
 
 void SharedEditor::processUserInfo(UserInfo &userInfo) {
