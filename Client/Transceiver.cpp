@@ -17,12 +17,14 @@ Transceiver::Transceiver(qint32 siteID, QObject* parent):_siteID(siteID),QThread
 
 void Transceiver::run() {
 
+    openedFile = "";
     socket = new Socket();
     socket->moveToThread(this);
 
     connectToServer();
 
     connect(socket,&Socket::sendPacket,this,&Transceiver::sendPacket,Qt::QueuedConnection);
+    connect(socket,&Socket::terminateThreadOperations,this,&Transceiver::terminateLastOperations,Qt::QueuedConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
 
     timer = new QTimer();
@@ -33,8 +35,8 @@ void Transceiver::run() {
 }
 
 qint32 Transceiver::connectToServer() {
+    //socket->connectToHost("192.168.1.6", 1234);
     socket->connectToHost(QHostAddress::LocalHost, 1234);
-    //socket->connectToHost(QHostAddress::LocalHost, 1234);
     if(socket->waitForConnected(1000)) {
         connect(socket, SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
         std::cout << "Connected!" << std::endl;
@@ -103,11 +105,12 @@ void Transceiver::recvPacket() {
 
             case (DataPacket::user_info): {
                 recvUserInfo(packet, in);
+                //std::cout<<"entrato nella user info"<<std::endl;
                 break;
             }
 
             default: {
-                std::cout << "Coglione c'e' un errore" << std::endl;
+                std::cout << "Coglione c'e' un errore in tranceiver" << std::endl;
                 break;
             }
         }
@@ -141,9 +144,12 @@ void Transceiver::recvLoginInfo(DataPacket& pkt,QDataStream& in){
 void Transceiver::recvFileInfo(DataPacket& pkt, QDataStream& in){
     qint32 siteId;
     qint32 type;
+    QString serverFileName;
 
-    in>>siteId>>type;
-    pkt.setPayload(std::make_shared<FileInfo>(siteId,(FileInfo::file_info_t)type));
+    in>>siteId>>type>>serverFileName;
+    pkt.setPayload(std::make_shared<FileInfo>(siteId,(FileInfo::file_info_t)type,serverFileName));
+
+    openedServerFile = serverFileName;
 
     emit readyToProcess(pkt);
 
@@ -152,16 +158,49 @@ void Transceiver::recvFileInfo(DataPacket& pkt, QDataStream& in){
 void Transceiver::recvMessage(DataPacket& pkt, QDataStream& in) {
 
     qint32 siteId;
-    QString formattedMessages;
+    QVector<Message> msgs;
+    QString file;
 
     in.setDevice(socket);
     in.setVersion(QDataStream::Qt_5_5);
 
-    in >> siteId >> formattedMessages;
+    in >> siteId;
+    auto ptr = std::make_shared<StringMessages>(siteId);
+    qint32 numBytes;
 
-    pkt.setPayload(std::make_shared<StringMessages>(formattedMessages,siteId));
+    in >> numBytes;
+    auto stringBytes = socket->bytesAvailable();
+    in>>file;
+    stringBytes -= socket->bytesAvailable();
 
-    auto num = std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->stringToMessages().size();
+    if( file != openedServerFile)
+        return;
+
+    numBytes-=stringBytes;
+    while( numBytes > 0 ){
+        auto tmp = socket->bytesAvailable();
+        qint32 action;
+        qint32 messSiteId;
+        qint32 localIndx;
+        QChar value;
+        qint32 symSiteId;
+        quint32 counter;
+        QVector<quint32> pos;
+
+        in >> action >> messSiteId >> localIndx >> value >> symSiteId >> counter >> pos;
+
+        auto stdVecPos = pos.toStdVector();
+        Symbol s(value,symSiteId,counter,stdVecPos);
+        Message m((Message::action_t)action,messSiteId,s,localIndx);
+
+        ptr->appendMessage(m);
+        numBytes-=(tmp-socket->bytesAvailable());
+    }
+
+    ptr->setFileName(file);
+    pkt.setPayload(ptr);
+
+    auto num = std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->size();
     std::cout<<" --- number of arrived messages at once "<<num <<std::endl;
 
     emit readyToProcess(pkt);
@@ -261,21 +300,28 @@ void Transceiver::sendAllMessages() {
     out.setVersion(QDataStream::Qt_5_5);
 
     QBuffer buf;
-    buf.open(QBuffer::WriteOnly);
+    buf.open(QBuffer::ReadWrite);
     QDataStream tmp(&buf);
 
     int num_mess = messages.size();
-
-    auto strMess = std::make_shared<StringMessages>(messages,_siteID);
-
+    auto strMess = std::make_shared<StringMessages>(messages,_siteID,openedServerFile);
     num_mess-=messages.size();
 
-    auto formMess = strMess->getFormattedMessages();
-    tmp << formMess;
-    qint32 bytes = fixedBytesWritten + buf.data().size();
-    DataPacket pkt(_siteID,0,DataPacket::textTyping,strMess);
-    out << bytes << _siteID << 0 <<(quint32) DataPacket::textTyping <<
-         strMess->getSiteId() << formMess;
+    auto file = strMess->getFileName();
+    tmp<<file;
+
+    for(auto m : strMess->getQueue()){
+        auto sym = m.getSymbol();
+        tmp<<m.getAction()<<m.getSiteId()<<m.getLocalIndex()
+           <<sym.getValue()<<sym.getSymId().getSiteId()<<sym.getSymId().getCount()
+           <<QVector<quint32>::fromStdVector(sym.getPos());
+    }
+
+    qint32 bytes = fixedBytesWritten + buf.data().size() + 4; //+4 perche' buf.data() aggiunge numero di bytes
+
+    DataPacket pkt(_siteID, 0,DataPacket::textTyping,strMess);
+    out << bytes << _siteID << pkt.getErrcode() << (quint32)DataPacket::textTyping
+        << strMess->getSiteId() << buf.data();
 
     socket->waitForBytesWritten(-1);
 
@@ -295,7 +341,7 @@ void Transceiver::sendMessage(DataPacket& packet) {
         firstMessage = false;
    }
 
-   messages.push_back(*std::dynamic_pointer_cast<Message>(packet.getPayload()));
+   messages.push_back(*std::static_pointer_cast<Message>(packet.getPayload()));
 
 }
 
@@ -330,11 +376,28 @@ void Transceiver::sendCommand(DataPacket& packet){
     buf.open(QBuffer::WriteOnly);
     QDataStream tmp(&buf);
     tmp << (quint32) ptr->getCmd() << ptr->getArgs();
-
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
-    while(!messages.empty())
-        sendAllMessages();
+    switch( ptr->getCmd() ) {
+        case Command::cls:
+            while (!messages.empty())
+                sendAllMessages();
+            openedFile = "";
+            openedServerFile = "";
+            break;
+        case Command::opn:
+            openedFile = ptr->getArgs().first();
+            break;
+        case Command::rm:
+            if(openedFile==ptr->getArgs().first()) {
+                messages.clear();
+                openedFile = "";
+                openedServerFile = "";
+            }
+            break;
+        default:
+            break;
+    }
 
     out <<bytes<< packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData();
     out << ptr->getSiteId() << (quint32) ptr->getCmd() << ptr->getArgs();
@@ -390,13 +453,19 @@ void Transceiver::sendUserInfo(DataPacket &pkt) {
 }
 
 void Transceiver::disconnected(){
-
     socket->deleteLater();
     timer->deleteLater();
     std::cout<<"Server unavailable!"<<std::endl;
-    exit(0);
+    exit(1);
 }
 
 void Transceiver::rollBack(){
     emit deleteText();
+}
+
+void Transceiver::terminateLastOperations() {
+    while (!messages.empty())
+        sendAllMessages();
+    timer->deleteLater();
+    exit(0);
 }

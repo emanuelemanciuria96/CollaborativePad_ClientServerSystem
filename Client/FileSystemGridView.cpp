@@ -200,18 +200,20 @@ void FileSystemGridView::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 }
 void FileSystemGridView::on_listWidget_itemSelectionChanged(){
     QListWidgetItem *item=ui->listWidget->currentItem();
-    if(item->statusTip()=="file"){
-        emit canDelete(true);//file clicked
-    }else{
-        emit canDelete(false);//folder clicked
-    }
-    if(state!=mainFolder){
-        return;
-    }
-    if(item->statusTip()=="file"){
-        emit canInvite(true);//file clicked
-    }else{
-        emit canInvite(false);//folder clicked
+    if (item != nullptr) {
+        if (item->statusTip() == "file") {
+            emit canDelete(true);//file clicked
+        } else {
+            emit canDelete(false);//folder clicked
+        }
+        if (state != mainFolder) {
+            return;
+        }
+        if (item->statusTip() == "file") {
+            emit canInvite(true);//file clicked
+        } else {
+            emit canInvite(false);//folder clicked
+        }
     }
 }
 

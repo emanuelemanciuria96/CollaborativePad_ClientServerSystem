@@ -82,6 +82,7 @@ void FileSystemTreeView::openCustomMenu(const QPoint &pos) {
     }
     else if( selectedAction->text() == "Rename" ){
         previousName = rightClickedNode->text(0);
+        isEditing = true;
         this->editItem(rightClickedNode,0);
     }
     else if ( selectedAction->text() == "Invite" ) {
@@ -179,6 +180,7 @@ void FileSystemTreeView::insertFile(){
     emit newFileUpdateGrid(vec);
 
     previousName = defaultName;
+    isEditing = true;
     this->editItem(newFile,0);
 
 }
@@ -199,6 +201,8 @@ void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
 }
 
 void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
+
+    isEditing = false;
 
     if( !isRenaming ) return;
 
@@ -322,10 +326,10 @@ void FileSystemTreeView::keyPressEvent(QKeyEvent *ev) {
         }
     }
 
-    if(ev->key() == Qt::Key_Return){
+    if(ev->key() == Qt::Key_Return && !isEditing){
 
         auto items = this->selectedItems();
-        if( items.size() == 1 && previousName!=items.first()->text(0) )
+        if( items.size() == 1 )
             openFile(items.first(),0);
     }
     QTreeView::keyPressEvent(ev);

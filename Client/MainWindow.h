@@ -60,7 +60,6 @@ private:
     QAction* boldAction;
     QAction* italicAction;
     QAction* underlineAction;
-
     QAction* userInfoAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
@@ -76,6 +75,7 @@ private:
     QDockWidget *lastDock;
     InfoUsersListWidget *infoUsersListWidget;
     QWidget *nullWidg;
+    QLabel* spinner;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -99,6 +99,7 @@ private:
     void setMainPalette();
 
 public slots:
+    void hideEditor(QString& fileName);
     void clipboardDataChanged()
     {
 #ifndef QT_NO_CLIPBOARD

@@ -146,6 +146,8 @@ void SharedEditor::localInsert(qint32 index, QString& str, QTextCharFormat forma
     std::vector<quint32> next = _symbols[index].getPos();
     std::vector<Symbol> syms;
     int i = 0;
+    int numBlock=0;
+    int maxChars=200;
     for(auto value: str) {
         std::vector<quint32> newPos;
         generateNewPosition2(prev, next, newPos);
@@ -155,8 +157,12 @@ void SharedEditor::localInsert(qint32 index, QString& str, QTextCharFormat forma
         syms.push_back(s);
 
         DataPacket packet(_siteId, -1, DataPacket::textTyping);
-        packet.setPayload(std::make_shared<Message>(Message::insertion, _siteId, s, i+index));
+        packet.setPayload(std::make_shared<Message>(Message::insertion, _siteId, s, maxChars*numBlock+index));
         i++;
+        if(i==maxChars){
+            numBlock++;
+            i=0;
+        }
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
     }
@@ -173,17 +179,17 @@ void SharedEditor::localErase(qint32 index, qint32 num) {
     index++;
     auto s = _symbols.begin()+index;
     int i=0;
+    int maxChars=200;
     for( ;s<_symbols.begin()+index+num; s++ ) {
         DataPacket packet(_siteId, -1, DataPacket::textTyping);
         packet.setPayload(std::make_shared<Message>(Message::removal, _siteId, *s, i+index));
         i++;
-
+        i=i%maxChars;
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
     }
 
     _symbols.erase(_symbols.begin()+index,_symbols.begin()+index+num);
-
 }
 
 void SharedEditor::sendCursorPos(qint32 index) {
@@ -288,9 +294,12 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
             break;
     }
 }
-
+qint32 SharedEditor::getIndexDichotomous(qint32 index, Symbol symbol){
+    qint32 pos = std::lower_bound(_symbols.begin(),_symbols.end(),symbol) - _symbols.begin();
+    return pos;
+}
 qint32 SharedEditor::getIndex(qint32 index, Symbol symbol ) {
-    qint32 pos= index;//search index
+       qint32 pos= index;//search index
     if(pos>_symbols.size()-1){
         pos=_symbols.size()-1;
     }
@@ -313,7 +322,7 @@ qint32 SharedEditor::getIndex(qint32 index, Symbol symbol ) {
 
 void SharedEditor::processMessages(StringMessages &strMess) {
     std::vector<std::tuple<qint32,bool, QChar,qint32>> vt;
-    auto strM=strMess.stringToMessages();
+    auto strM=strMess.getQueue();
     std::vector<quint32> v;
     Symbol sy('0',-1,-1, v);
     Message m(strM[strM.size()-1].getAction()==Message::insertion ?Message::removal:Message::insertion,0,sy,1);
@@ -328,101 +337,82 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     std::vector<Symbol> syms;
     qint32 tmpPos=0;
     qint32 numChar=0;
+    QString str;
     //qDebug()<<this->getSiteIds();
     for( int i=0;i<strM.size()-1;i++ ) {
-        auto m=strM[i];
-        if(nextPosIsCalculated){
-            pos=nextPos;
-        }else {
+        auto m = strM[i];
+        if (nextPosIsCalculated) {
+            pos = nextPos;
+        } else {
+//            std::cout << "getindex inizio" << std::endl;
             pos = getIndex(m.getLocalIndex(), m.getSymbol());
+//            std::cout << "getindex fine" << std::endl;
         }
-        nextPosIsCalculated=false;
+        nextPosIsCalculated = false;
         auto sit = m.getSymbol().getSymId().getSiteId();
         qint32 pos = getIndex(m.getLocalIndex(), m.getSymbol());
 //        std::cout << "insert da siteId " << m.getSymbol().getSymId().getSiteId() << std::endl;
-        if(m.getAction()==Message::insertion){
-            if(firstInsert){
-                tmpPos=pos;
+        if (m.getAction() == Message::insertion) {
+            if (firstInsert) {
+                tmpPos = pos;
                 syms.clear();
+                str.clear();
             }
-            firstInsert=false;
+            firstInsert = false;
             syms.push_back(m.getSymbol());
+            str.append(m.getSymbol().getValue());
             //qDebug()<<m.getSymbol().getValue()<<" "<<m.getLocalIndex()<<" "<<m.getSymbol().getSymId().getCount()<<" "<<pos;
-            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(pos, 1, m.getSymbol().getValue(),m.getSiteId()));
+//            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(pos, 1, m.getSymbol().getValue(),m.getSiteId()));
             //_symbols.erase(_symbols.begin()+pos);
             if (strM[i + 1].getAction() != Message::insertion) {
                 firstInsert = true;
-            }else {
-                nextPos=getIndex(strM[i + 1].getLocalIndex()-(pos-tmpPos), strM[i + 1].getSymbol());
-                nextPosIsCalculated=true;
-                if(nextPos!=pos) {
-                    firstInsert=true;
+            } else {
+                nextPos = getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
+//                std::cout << "getindex fine" << std::endl;
+                nextPosIsCalculated = true;
+                if (nextPos != pos) {
+                    firstInsert = true;
                 }
             }
-            if(firstInsert) {
-                _symbols.insert(_symbols.begin()+tmpPos,syms.begin(),syms.end());
+            if (firstInsert) {
+//                std::cout << "insert inizio" << std::endl;
+                _symbols.insert(_symbols.begin() + tmpPos, syms.begin(), syms.end());
+//                std::cout << "insert fine" << std::endl;
+                emit symbolsChanged(tmpPos, str, strMess.getSiteId(), Message::insertion);
                 //qDebug()<<"insert "<<this->getSiteIds();
-                nextPosIsCalculated=false;
+                nextPosIsCalculated = false;
             }
-        }else if(_symbols[pos]==m.getSymbol()){
-            if(firstErase){
-                tmpPos=pos;
+        } else if (_symbols[pos] == m.getSymbol()) {
+            if (firstErase) {
+                tmpPos = pos;
+                str.clear();
             }
             numChar++;
-            firstErase=false;
+            str.append(m.getSymbol().getValue());
+            firstErase = false;
             //qDebug()<<m.getSymbol().getValue()<<" "<<tmpPos;
-            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
+//            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
             //_symbols.erase(_symbols.begin()+pos);
             if (strM[i + 1].getAction() != Message::removal) {
-                firstErase=true;
-            }else {
-                nextPos=getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
-                nextPosIsCalculated=true;
-                if(nextPos!=pos+1) {
-                    firstErase=true;
+                firstErase = true;
+            } else {
+//                std::cout << "getindex inizio" << std::endl;
+                nextPos = getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
+//                std::cout << "getindex fine" << std::endl;
+                nextPosIsCalculated = true;
+                if (nextPos != pos + 1) {
+                    firstErase = true;
                 }
             }
-            if(firstErase) {
+            if (firstErase) {
                 _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
+                emit symbolsChanged(tmpPos, str, strMess.getSiteId(), Message::removal);
                 numChar = 0;
                 //qDebug()<<"delete "<<this->getSiteIds();
-                nextPosIsCalculated=false;
+                nextPosIsCalculated = false;
             }
         }
     }
-
-    //Refresh GUI
-    if(vt.size()==0){
-        return;
-    }
-
-    QString s="";
-    qint32 firstPos=std::get<0>(vt[0]);
-    vt.push_back(std::tuple<qint32 ,bool,QChar,qint32>(-8,1,2,9));
-    for(int i=0;i<vt.size()-1;i++) {
-        s += std::get<2>(vt[i]);
-
-         //std::cerr << "stringa: " << s.toStdString() <<" "<<std::get<0>(vt[i+1])<<std::endl;
-
-        if(std::get<1>(vt[i])==1) {
-            if (std::get<1>(vt[i+1])==1 && std::get<0>(vt[i+1]) == std::get<0>(vt[i]) + 0) {
-            } else {
-                //qDebug()<<"insert "<<s<<" in index "<<firstPos;
-                emit symbolsChanged(firstPos, s, std::get<3>(vt[i]),Message::insertion);
-                s = "";
-                firstPos = std::get<0>(vt[i+1]);
-            }
-        }else {
-            if (std::get<1>(vt[i+1])==0 && std::get<0>(vt[i]) == std::get<0>(vt[i+1])) {
-            } else {
-                //qDebug()<<"remove "<<s<<" in index "<<firstPos+s.size()-1;
-                emit symbolsChanged(firstPos, s, std::get<3>(vt[i]), Message::removal);
-                s = "";
-                firstPos = std::get<0>(vt[i+1]);
-            }
-        }
-    }
-//    getSiteIds();/
 }
 
 void SharedEditor::processUserInfo(UserInfo &userInfo) {
@@ -585,7 +575,6 @@ void SharedEditor::requireFile(QString& fileName) {
     }
 
     if( fileOpened == fileName ){
-        emit openTextEditor(fileOpened);
         return;
     }else if(fileOpened != ""){
         QVector<QString> vec = {fileOpened};
@@ -599,6 +588,7 @@ void SharedEditor::requireFile(QString& fileName) {
     }
 
     emit transparentForMouse();
+    emit hideEditor(fileName);
 
     fileOpened = fileName;
     isFileOpened = false; // da questo momento fino all'arrivo del FileInfo deve stare a false
@@ -751,12 +741,6 @@ QVector<qint32> SharedEditor::getSiteIds() {
    return siteIdVector;
 }
 
-
-void SharedEditor::deleteThread() {
-    transceiver->deleteLater();
-    exit(0);
-}
-
 qint32 SharedEditor::getSiteId() const {
     return _siteId;
 }
@@ -815,4 +799,16 @@ void SharedEditor::findCounter() {
 
 bool SharedEditor::isFileOpening() const {
     return fileOpening;
+}
+SharedEditor::~SharedEditor() {
+    if( transceiver!= nullptr)
+        emit transceiver->getSocket()->terminateThreadOperations();
+    transceiver->wait();
+    transceiver->deleteLater();
+}
+
+void SharedEditor::deleteThread() {
+    transceiver->deleteLater();
+    //TODO: qui si potrebbe inserire una pagina per ritentare la connessione
+    exit(0);
 }

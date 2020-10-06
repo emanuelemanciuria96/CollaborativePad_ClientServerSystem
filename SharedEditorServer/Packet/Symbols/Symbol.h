@@ -22,17 +22,17 @@ public:
     Symbol(QChar ch, qint32 id, quint32 cnt,std::vector<quint32> &pos):
         _ch(ch),_symId(id,cnt),_pos(pos){}
 
-    bool operator==(Symbol s){
+    bool operator==(Symbol& s) const {
         return _symId == s._symId && _pos==s._pos;
     }
-    bool operator<(Symbol s){
+    bool operator<(const Symbol s) const {
         return _pos<s._pos || (_pos==s._pos && _symId < s._symId); }
-    bool operator>(Symbol s){
+    bool operator>(Symbol& s) const {
         return _pos>s._pos || (_pos==s._pos && _symId > s._symId); }
-    std::vector<quint32> getPos(){ return _pos; }
-    void setPos(std::vector<quint32>& pos){ _pos = pos; }
-    QChar getValue() { return _ch; }
-    SymId getSymId() { return _symId; }
+    std::vector<quint32> getPos() const { return _pos; }
+    void setPos(std::vector<quint32>& pos) { _pos = pos; }
+    QChar getValue() const { return _ch; }
+    SymId getSymId() const { return _symId; }
 };
 
 

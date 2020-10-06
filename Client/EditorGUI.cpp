@@ -12,6 +12,7 @@
 #include <tuple>
 
 EditorGUI::EditorGUI(SharedEditor *model, bool highlight, QWidget *parent) : QWidget(parent){
+    remoteCursors = std::make_shared<std::list<RemoteCursor>>();
     signalBlocker = false;
     myCursorPosUpdateBlocker = false;
     highlightEditor = highlight;
@@ -33,7 +34,7 @@ EditorGUI::EditorGUI(SharedEditor *model, bool highlight, QWidget *parent) : QWi
 
 void EditorGUI::setUpGUI() {
 //    inizializzo gli elementi
-    textEdit = new MyTextEdit(&remoteCursors, this);
+    textEdit = new MyTextEdit(remoteCursors, this);
     setLayout(new QVBoxLayout(this));
     this->layout()->setContentsMargins(30, 0, 30, 0);
     this->layout()->addWidget(textEdit);
@@ -124,9 +125,6 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
     pos--;
     RemoteCursor *cursor;
 
-//    if(model->isFileOpening())
-//        cursor = getRemoteCursor(0);
-//    else
     cursor = getRemoteCursor(siteId);
 //    std::cout << "Inseriti da siteId: " << siteId << std::endl;
     ///blocco l'invio della posizione del mio cursore quando ricevo modifiche
@@ -172,6 +170,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
 
 //chiamata quando si ricevono modifiche
 void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action) {
+//    std::cout<<"updateSymbols inizio" << std::endl;
     if (action == Message::removal) {
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId, s.size());
@@ -185,12 +184,14 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::act
 //        insertQueue.push(value);
 //        posLastChar = index;
     }
+//    std::cout<<"updateSymbols fine" << std::endl;
+
 }
 
 void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos) {
     // aggiorno la posizione degli altri cursori
 
-    for (auto & remoteCursor : remoteCursors) {
+    for (auto & remoteCursor : *remoteCursors) {
         if (remoteCursor.getSiteId() != mySiteId && remoteCursor.getSiteId()>0) {
             if(!remoteCursor.labelName->isHidden())
                 drawLabel(&remoteCursor);
@@ -212,28 +213,30 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     if(siteId < 0)
         return nullptr;
 //    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
-    auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
+    auto it = std::find_if(remoteCursors->begin(), remoteCursors->end(), [siteId](const RemoteCursor &c) {
 //        std::cout << "SiteId: " << c.getSiteId() << std::endl;
         return (c.getSiteId() == siteId);
     });
-    if (it == remoteCursors.end()) {
+    if (it == remoteCursors->end()) {
         auto username = QString();
         username = (siteId>0 && siteId != model->getSiteId()) ? file_writers.at(siteId) : "me";
-        remoteCursors.emplace_back(textEdit->document(), siteId, username);
-        cursor = &remoteCursors.back();
+        remoteCursors->emplace_back(textEdit->document(), siteId, username);
+        cursor = &remoteCursors->back();
         if(siteId!=0 && siteId!=model->getSiteId())
             connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
     } else
         cursor = (&(*it));
+    if (cursor == nullptr)
+        std::cout<<"NULLOOOOOOOOOOOOOOOOOO"<<std::endl;
     return cursor;
 }
 
 void EditorGUI::removeCursor(qint32 siteId) {
-    auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
+    auto it = std::find_if(remoteCursors->begin(), remoteCursors->end(), [siteId](const RemoteCursor &c) {
         return (c.getSiteId() == siteId);
     });
-    if (it != remoteCursors.end()) {
-        remoteCursors.erase(it);
+    if (it != remoteCursors->end()) {
+        remoteCursors->erase(it);
         std::cout << "Remove cursor " << siteId << std::endl;
         textEdit->update();
         emit setNumUsers(--nUsers);
@@ -272,7 +275,7 @@ void EditorGUI::deleteAllText() {
     signalBlocker = !signalBlocker;
     emit clear();
     signalBlocker = !signalBlocker;
-    remoteCursors.clear();
+    remoteCursors->clear();
     emit setNumUsers(nUsers=0);
 }
 

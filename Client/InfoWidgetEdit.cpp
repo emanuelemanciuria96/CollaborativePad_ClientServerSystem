@@ -38,7 +38,7 @@ void InfoWidgetEdit::openFileDialog() {
         auto imgsize = std::min(image.width(), image.height());
         auto rect = QRect((image.width() - imgsize) / 2,(image.height() - imgsize) / 2, imgsize, imgsize);
         auto crop = image.copy(rect);
-        crop.save("images/temp.jpg", "JPG", 50);
+        crop.save("images/temp.jpg", "JPG", 10);
         QPixmap orig("images/temp.jpg");
         int size = qMax(orig.width(), orig.height());
         QPixmap rounded = QPixmap(size, size);

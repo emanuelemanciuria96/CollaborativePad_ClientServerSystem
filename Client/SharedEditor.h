@@ -46,6 +46,7 @@ private:
     bool fileOpening = false;
 
     qint32 getIndex(qint32 index, Symbol symbol);
+    qint32 getIndexDichotomous(qint32 index, Symbol symbol);
     void closeFile();
     void findCounter();
 
@@ -83,6 +84,7 @@ public slots:
     void obtainUser(qint32 siteId);
 
 signals:
+    void hideEditor(QString& fileName);
     void openTextEditor(QString &fileName);
     void transparentForMouse();
     void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
@@ -121,6 +123,7 @@ public:
     bool isFileOpening() const;
 
     const Symbol fromPosToSymbol(int pos){ return _symbols[pos]; }
+    virtual ~SharedEditor();
     QVector<qint32> getSiteIds();
 
 };

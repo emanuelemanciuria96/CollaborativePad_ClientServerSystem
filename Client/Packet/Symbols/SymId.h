@@ -10,9 +10,9 @@
 class SymId{
 private:
     qint32 _siteId;
-    qint32 _count;
+    quint32 _count;
 public:
-    SymId(qint32 id,qint32 cnt):_siteId(id),_count(cnt){}
+    SymId(qint32 id,quint32 cnt):_siteId(id),_count(cnt){}
     bool operator==(SymId si){
         return _siteId==si._siteId && _count==si._count;}
     //questa comparazione serve dal momento che bisogna che ci sia una

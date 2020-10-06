@@ -18,6 +18,7 @@ public:
 
 signals:
     void sendPacket(DataPacket pkt);
+    void terminateThreadOperations();
 
 };
 

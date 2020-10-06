@@ -72,7 +72,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
-    connect(treeView, &FileSystemTreeView::opnFileRequest,[this](QString& name){ centralWidget->setCurrentWidget(nullWidg); });
     connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
     connect(treeView, &FileSystemTreeView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
     connect(treeView, &FileSystemTreeView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
@@ -90,6 +89,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(gridView, &FileSystemGridView::renFileRequest,treeView , &FileSystemTreeView::editFileName);
     connect(gridView, &FileSystemGridView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
     connect(shEditor, &SharedEditor::openTextEditor,this, &MainWindow::opnFileGrid);
+    connect(shEditor, &SharedEditor::hideEditor, this, &MainWindow::hideEditor);
     connect(shEditor, &SharedEditor::transparentForMouse,this, &MainWindow::transparentForMouse);
     connect(shEditor, &SharedEditor::fileNameEdited, treeView, &FileSystemTreeView::editFileName);
     connect(shEditor, &SharedEditor::fileDeletion, treeView, &FileSystemTreeView::remoteFileDeletion);
@@ -170,6 +170,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::userNameArrived, highlightEditor, &EditorGUI::recordUserWriter);
     connect(shEditor, &SharedEditor::flushFileWriters, editor, &EditorGUI::flushFileWriters);
     connect(shEditor, &SharedEditor::flushFileWriters, highlightEditor, &EditorGUI::flushFileWriters);
+    connect(shEditor, &SharedEditor::flushFileWriters, usersList, &UsersList::clear);
     connect(addUserWidget, &AddUserWidget::closing, this, &MainWindow::transparentForMouse);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::transparentForMouse);
     connect(gridView, &FileSystemGridView::inviteRequest, this, &MainWindow::transparentForMouse);
@@ -256,6 +257,11 @@ void MainWindow::opnFileGrid(QString &fileName) {
 //    palette.setColor(QPalette::Window,QColor("lightgray"));
     palette.setColor(QPalette::Base,QColor("white"));
     setPalette(palette);
+
+    this->setCursor(QCursor(Qt::ArrowCursor));
+    statusBar->clearMessage();
+    delete spinner;
+
 }
 
 void MainWindow::changeInviteAction(bool state){
@@ -291,7 +297,6 @@ void MainWindow::clsFile() {
 //        highlightAction->trigger();
         highlightAction->setChecked(false);
     }
-    usersList->clear();
 }
 
 void MainWindow::loginSettings() {
@@ -749,6 +754,22 @@ void MainWindow::openInfoEdit(const QPixmap& image, const QString& nickname, con
     infoWidgetEdit->setEmail(email);
     infoWidgetEdit->setUser(nickname);
     centralWidget->setCurrentWidget(infoWidgetEdit);
+}
+
+
+void MainWindow::hideEditor(QString& fileName) {
+     if(centralWidget->currentWidget()!=gridView)
+         centralWidget->setCurrentWidget(nullWidg);
+
+     spinner = new QLabel();
+     auto gif = new QMovie("./gifs/ajax-loader.gif");
+     gif->setScaledSize(QSize(20,20));
+     spinner->setMovie(gif);
+     statusBar->addWidget(spinner,3);
+     statusBar->showMessage("    Loading file "+fileName,-1);
+     spinner->movie()->start();
+     this->setCursor(QCursor(Qt::WaitCursor));
+
 }
 
 void MainWindow::setRichTextBar() {

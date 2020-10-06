@@ -14,8 +14,8 @@
 #include <QMenu>
 
 
-MyTextEdit::MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget *parent) : QTextEdit(parent){
-    this->remoteCursors = std::shared_ptr<std::vector<RemoteCursor>>(remoteCursors);
+MyTextEdit::MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors, QWidget *parent) : QTextEdit(parent){
+    this->remoteCursors = remoteCursors;
     this->installEventFilter(this);
     clipboard = QApplication::clipboard();
 
