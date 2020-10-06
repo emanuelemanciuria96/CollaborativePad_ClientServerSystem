@@ -135,7 +135,7 @@ void SharedEditor::sendRegisterRequest(QString& user, QString& password, QString
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
-void SharedEditor::localInsert(qint32 index, QString& str, QTextCharFormat format) {
+void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format) {
 
     if ( index > _symbols.size() - 2 ){
         throw "fuori dai limiti"; //da implementare classe eccezione
@@ -144,30 +144,18 @@ void SharedEditor::localInsert(qint32 index, QString& str, QTextCharFormat forma
 
     std::vector<quint32> prev = _symbols[index - 1].getPos();
     std::vector<quint32> next = _symbols[index].getPos();
-    std::vector<Symbol> syms;
-    int i = 0;
-    int numBlock=0;
-    int maxChars=200;
-    for(auto value: str) {
-        std::vector<quint32> newPos;
-        generateNewPosition2(prev, next, newPos);
-        prev = newPos;
+    std::vector<quint32> newPos;
+    generateNewPosition(prev, next, newPos);
 
-        Symbol s(value, _siteId, _counter++, newPos, format);
-        syms.push_back(s);
+    Symbol s(ch, _siteId, _counter++, newPos, format);
 
-        DataPacket packet(_siteId, -1, DataPacket::textTyping);
-        packet.setPayload(std::make_shared<Message>(Message::insertion, _siteId, s, maxChars*numBlock+index));
-        i++;
-        if(i==maxChars){
-            numBlock++;
-            i=0;
-        }
-        int id = qMetaTypeId<DataPacket>();
-        emit transceiver->getSocket()->sendPacket(packet);
-    }
+    DataPacket packet(_siteId, -1, DataPacket::textTyping);
+    packet.setPayload(std::make_shared<Message>(Message::insertion, _siteId, s, index));
 
-    _symbols.insert(_symbols.begin()+index,syms.begin(),syms.end());
+    int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
+    _symbols.insert(_symbols.begin()+index,s);
 
 }
 

@@ -759,7 +759,7 @@ void ServerThread::sendFile() {
     for (auto s: *_file) {
         Message m(Message::insertion, 0, s, index++);
         ptr->appendMessage(m);
-        if( ptr->size() >= 200 ){
+        if( ptr->size() >= 1000 ){
             DataPacket pkt( 0 , 0, DataPacket::textTyping, ptr);
             sendMessage(pkt);
             std::cout<<" --- sending (2) "<<ptr->size()<<" messages in once"<<std::endl;

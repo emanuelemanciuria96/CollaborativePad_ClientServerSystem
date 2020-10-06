@@ -12,6 +12,7 @@
 #include <QMouseEvent>
 #include <QtGui/QClipboard>
 #include <QMenu>
+#include <QMimeData>
 
 
 MyTextEdit::MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors, QWidget *parent) : QTextEdit(parent){
@@ -100,16 +101,17 @@ void MyTextEdit::contextMenuEvent(QContextMenuEvent *e) {
 }
 
 void MyTextEdit::paste() {
-    std::cout<<"MyTextEdit paste called"<<std::endl;
 
     QTextCursor curs = this->textCursor();
-    if( curs.selectionEnd()==0 || curs.selectionStart()==0 ) {
+    //if( curs.selectionEnd()==0 || curs.selectionStart()==0 ) {
+        auto data = clipboard->mimeData(QClipboard::Clipboard);
         curs.beginEditBlock();
         curs.removeSelectedText();
+        //curs.insertHtml(data->html());
         curs.insertText(clipboard->text(QClipboard::Clipboard));
         curs.endEditBlock();
         return;
-    }
-    QTextEdit::paste();
+    //}
+    //QTextEdit::paste();
 
 }

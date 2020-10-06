@@ -31,7 +31,7 @@ public:
     void setFileName( QString &file ){ _fileName=file;}
 
 private:
-    const int maxDim=200;
+    const int maxDim=1000;
     QString _fileName;
     QVector<Message> _messages;
 

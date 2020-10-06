@@ -101,9 +101,10 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             //std::cout << "Inserimento carattere " << index << std::endl;
             QString str = "";
             for (i = 0; i < charsAdded; i++) {
-                str+=textEdit->document()->characterAt(pos + i);
+                QChar ch = textEdit->document()->characterAt(pos+i);
+                QTextCharFormat format = textEdit->currentCharFormat();
+                model->localInsert(pos+i, ch , format);
             }
-            model->localInsert(pos, str, textEdit->currentCharFormat());
         }
 //        updateRemoteCursors(model->getSiteId(),pos);
     }
