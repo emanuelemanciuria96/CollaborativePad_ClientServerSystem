@@ -209,6 +209,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(editor, &EditorGUI::updateOther, this, &MainWindow::recvEditorUpdate);
     connect(highlightEditor, &EditorGUI::updateOther, this, &MainWindow::recvEditorUpdate);
 
+    connect(shEditor, &SharedEditor::fileLoaded, highlightEditor, &EditorGUI::loadHighlights);
+
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
     this->resize(size.width()*0.7,size.height()*0.7);
@@ -286,7 +288,7 @@ void MainWindow::clsFile() {
     }
     gridView->show();
     if(highlightAction->isChecked()){
-        highlightAction->trigger();
+//        highlightAction->trigger();
         highlightAction->setChecked(false);
     }
     usersList->clear();

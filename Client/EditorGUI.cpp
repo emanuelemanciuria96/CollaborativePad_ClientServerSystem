@@ -65,54 +65,19 @@ void EditorGUI::setUpGUI() {
     connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
 
 //    load("./file.txt");
-//    loadSymbols();
+//    loadHighlights();
 }
 
-
-void EditorGUI::loadSymbols() {
-    signalBlocker = !signalBlocker;
-
-    textEdit->setText(std::get<0>(model->to_string()));
-    if(highlightEditor) {
-        for (auto s : std::get<1>(model->to_string())) {
-            auto i = 0;
-            highlight(i++, s);
+//slot per l'editor con highlight
+void EditorGUI::loadHighlights() {
+//    if(highlightEditor) {
+        auto i = 0;
+        for (auto s : model->getSiteIds()) {
+            highlight(i, s);
+            i++;
         }
-    }
-    signalBlocker = !signalBlocker;
+//    }
 }
-
-/*
-void EditorGUI::setupFileActions() {
-//    QToolBar *tb = addToolBar(tr("File Actions"));
-    QMenu *menu = menuBar()->addMenu(tr("&File"));
-
-    QAction *a = menu->addAction(tr("&New"),this,&EditorGUI::fileNew);
-    a->setPriority(QAction::LowPriority);
-    a->setShortcut(QKeySequence::New);
-//    tb->addAction(a);
-
-    a = menu->addAction(tr("&Open..."), this, &EditorGUI::fileOpen);
-    a->setShortcut(QKeySequence::Open);
-//    tb->addAction(a);
-
-    menu->addSeparator();
-
-    actionSave = menu->addAction(tr("&Save"), this, &EditorGUI::fileSave);
-    actionSave->setShortcut(QKeySequence::Save);
-    actionSave->setEnabled(false);
-//    tb->addAction(actionSave);
-
-    a = menu->addAction(tr("Save &As..."), this, &EditorGUI::fileSaveAs);
-    a->setPriority(QAction::LowPriority);
-    menu->addSeparator();
-
-    a = menu->addAction(tr("&Quit"), this, &EditorGUI::close);
-    a->setShortcut(Qt::CTRL + Qt::Key_Q);
-
-}
-*/
-
 
 void EditorGUI::setCurrentFileName(QString filename) {
     this->fileName = filename;
@@ -159,8 +124,9 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
     pos--;
     RemoteCursor *cursor;
 
-    if(siteId == model->getSiteId() && !highlightEditor)
-        siteId = 0;
+//    if(model->isFileOpening())
+//        cursor = getRemoteCursor(0);
+//    else
     cursor = getRemoteCursor(siteId);
 //    std::cout << "Inseriti da siteId: " << siteId << std::endl;
     ///blocco l'invio della posizione del mio cursore quando ricevo modifiche
@@ -339,15 +305,15 @@ void EditorGUI::enableSendCursorPos() {
 void EditorGUI::highlight(qint32 pos, qint32 siteId) {
 //    std::cout << "highlight " << pos << " siteId " << siteId << std::endl;
     auto cursor = getRemoteCursor(0);
-    auto format = QTextCharFormat();
+//    auto format = QTextCharFormat();
 
-    if (!model->getHighlighting())
-        format = getHighlightFormat(siteId);
-    else
-        format.setBackground(QColor("white"));
+//    if (!model->getHighlighting())
+    auto format = getHighlightFormat(siteId);
+//    else
+//        format.setBackground(QColor("white"));
     signalBlocker = !signalBlocker;
-    cursor->setPosition(pos - 1, QTextCursor::MoveAnchor);
-    cursor->setPosition(pos, QTextCursor::KeepAnchor);
+    cursor->setPosition(pos , QTextCursor::MoveAnchor);
+    cursor->setPosition(pos+1, QTextCursor::KeepAnchor);
     cursor->mergeCharFormat(format);
     signalBlocker = !signalBlocker;
 }
@@ -461,8 +427,4 @@ void EditorGUI::setUnderline(bool checked) const {
     auto f = QTextCharFormat();
     f.setFontUnderline(checked);
     textEdit->mergeCurrentCharFormat(f);
-}
-
-void EditorGUI::setHighlightEditor(bool check) {
-    highlightEditor = check;
 }

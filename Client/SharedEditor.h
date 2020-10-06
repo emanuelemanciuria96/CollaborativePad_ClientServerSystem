@@ -43,6 +43,7 @@ private:
     bool isArrivingFile;
     QString _user;
     bool highlighting;
+    bool fileOpening = false;
 
     qint32 getIndex(qint32 index, Symbol symbol);
     void closeFile();
@@ -108,7 +109,7 @@ signals:
     void userNameArrived(qint32 siteId, QString& user, bool connected=false);
     void flushFileWriters();
     void setCharFormat(bool);
-
+    void fileLoaded();
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QString& str, QTextCharFormat format);
@@ -117,8 +118,10 @@ public:
     void sendCursorPos(qint32 index);
     void highlightSymbols(bool checked);
     bool getHighlighting() const;
+    bool isFileOpening() const;
+
     const Symbol fromPosToSymbol(int pos){ return _symbols[pos]; }
-    std::tuple<QString,QVector<qint32>> to_string();
+    QVector<qint32> getSiteIds();
 
 };
 

@@ -321,14 +321,14 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     strM.push_back(m);
     bool firstErase=true;
     bool firstInsert=true;
-    //qDebug()<<this->to_string();
+    //qDebug()<<this->getSiteIds();
     bool nextPosIsCalculated=false;
     qint32 pos;
     qint32 nextPos;
     std::vector<Symbol> syms;
     qint32 tmpPos=0;
     qint32 numChar=0;
-    //qDebug()<<this->to_string();
+    //qDebug()<<this->getSiteIds();
     for( int i=0;i<strM.size()-1;i++ ) {
         auto m=strM[i];
         if(nextPosIsCalculated){
@@ -348,7 +348,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             firstInsert=false;
             syms.push_back(m.getSymbol());
             //qDebug()<<m.getSymbol().getValue()<<" "<<m.getLocalIndex()<<" "<<m.getSymbol().getSymId().getCount()<<" "<<pos;
-            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(pos, 1, m.getSymbol().getValue(),sit));
+            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(pos, 1, m.getSymbol().getValue(),m.getSiteId()));
             //_symbols.erase(_symbols.begin()+pos);
             if (strM[i + 1].getAction() != Message::insertion) {
                 firstInsert = true;
@@ -361,7 +361,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             }
             if(firstInsert) {
                 _symbols.insert(_symbols.begin()+tmpPos,syms.begin(),syms.end());
-                //qDebug()<<"insert "<<this->to_string();
+                //qDebug()<<"insert "<<this->getSiteIds();
                 nextPosIsCalculated=false;
             }
         }else if(_symbols[pos]==m.getSymbol()){
@@ -371,7 +371,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             numChar++;
             firstErase=false;
             //qDebug()<<m.getSymbol().getValue()<<" "<<tmpPos;
-            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),sit));
+            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
             //_symbols.erase(_symbols.begin()+pos);
             if (strM[i + 1].getAction() != Message::removal) {
                 firstErase=true;
@@ -385,7 +385,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             if(firstErase) {
                 _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
                 numChar = 0;
-                //qDebug()<<"delete "<<this->to_string();
+                //qDebug()<<"delete "<<this->getSiteIds();
                 nextPosIsCalculated=false;
             }
         }
@@ -422,6 +422,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             }
         }
     }
+//    getSiteIds();/
 }
 
 void SharedEditor::processUserInfo(UserInfo &userInfo) {
@@ -451,13 +452,16 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
         case FileInfo::start: {
             emit setNumUsers(0);
             isFileOpened = true;
+            fileOpening = true;
             break;
         }
         case FileInfo::eof: {
             findCounter();
+            fileOpening = false;
             std::cout<<" - counter found: "<<_counter<<std::endl;
             emit openTextEditor(fileOpened);
             emit transparentForMouse();
+            emit fileLoaded();
             break;
         }
     }
@@ -737,18 +741,14 @@ void SharedEditor::submitUri(const QString& file){
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
-std::tuple<QString,QVector<qint32>> SharedEditor::to_string() {
+QVector<qint32> SharedEditor::getSiteIds() {
     QVector<qint32> siteIdVector;
-    QString str;
 
     std::for_each(_symbols.begin()+1,_symbols.end()-1,
-                  [&str,&siteIdVector](Symbol s){
-                      str += s.getValue();
+                  [&siteIdVector](const Symbol& s){
                       siteIdVector.append(s.getSymId().getSiteId());
                   });
-
-
-   return std::make_tuple(str,siteIdVector);
+   return siteIdVector;
 }
 
 
@@ -811,4 +811,8 @@ void SharedEditor::findCounter() {
             if (_counter < s.getSymId().getCount())
                 _counter = s.getSymId().getCount();
 
+}
+
+bool SharedEditor::isFileOpening() const {
+    return fileOpening;
 }

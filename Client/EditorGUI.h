@@ -53,7 +53,6 @@ private:
     bool highlightEditor;
 
     void setUpGUI();
-    void loadSymbols();
     void updateRemoteCursors(qint32 mySiteId, int pos);
     RemoteCursor* getRemoteCursor(qint32 siteId);
     void insertText(qint32 pos, const QString& value, qint32 siteId);
@@ -87,7 +86,7 @@ public slots:
     void setBold(bool checked) const;
     void setItalic(bool checked) const;
     void setUnderline(bool checked) const;
-
+    void loadHighlights();
 
 signals:
     void clear();
