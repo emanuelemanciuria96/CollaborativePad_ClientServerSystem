@@ -394,6 +394,8 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
             if( operatingFileName!="" ) {
                 _sockets.detachSocket(operatingFileName, _siteID);
+                QVector<QString> vec = {operatingFileName};
+                command->setArgs(vec);
                 msgHandler->submit(&NetworkServer::processClsCommand, command);
                 _sockets.broadcast(operatingFileName,_siteID,pkt2);
                 operatingFileName = "";
@@ -670,6 +672,7 @@ void ServerThread::sendUserInfo(DataPacket &packet) {
 
     // ho bisogno che il file, non solo sia aperto, ma sia anche stato inviato
     if(ptr->getType() != UserInfo::user_reqest && !isFileSent ) {
+        std::cout<<" -- sending userInfo back in the queue"<<std::endl;
         emit socket->sendMessage(packet);
         return;
     }
@@ -744,6 +747,7 @@ void ServerThread::sendFile() {
     std::vector<Message> vm;
     int index = 0;
 
+    std::cout<<"inizio ad inviare il file "+operatingFileName.toStdString()<<std::endl;
     // comunico al client che sto inviando il file
     {
         DataPacket pkt( 0,0,DataPacket::file_info, std::make_shared<FileInfo>(FileInfo::start,_siteID,operatingFileName) );
@@ -752,7 +756,7 @@ void ServerThread::sendFile() {
 
     auto ptr = std::make_shared<StringMessages>(vm, 0, operatingFileName);
 
-    for (auto s: _file) {
+    for (auto s: *_file) {
         Message m(Message::insertion, 0, s, index++);
         ptr->appendMessage(m);
         if( ptr->size() >= 200 ){
@@ -768,7 +772,7 @@ void ServerThread::sendFile() {
         std::cout<<" --- sending (2) "<<ptr->size()<<" messages in once"<<std::endl;
     }
 
-    _file.clear();
+    _file.reset();
 
     // comunico al client che è terminato l'invio del file
     {
@@ -791,14 +795,9 @@ void ServerThread::disconnected(){
         auto comm = std::make_shared<Command>(_siteID, Command::cls, vec);
         msgHandler->submit(&NetworkServer::processClsCommand,comm);
 
-        DataPacket pkt1(_siteID, 0, DataPacket::cursorPos);
-        auto symbol = Symbol();
-        pkt1.setPayload(std::make_shared<CursorPosition>(symbol,-1,_siteID));
-
-        DataPacket pkt2(_siteID, 0, DataPacket::user_info);
-        pkt2.setPayload(std::make_shared<UserInfo>(_siteID,UserInfo::disconnect,_username));
-        _sockets.broadcast(operatingFileName,_siteID,pkt1);
-        _sockets.broadcast(operatingFileName,_siteID,pkt2);
+        DataPacket pkt(_siteID, 0, DataPacket::user_info);
+        pkt.setPayload(std::make_shared<UserInfo>(_siteID,UserInfo::disconnect,_username));
+        _sockets.broadcast(operatingFileName,_siteID,pkt);
 
     }
 

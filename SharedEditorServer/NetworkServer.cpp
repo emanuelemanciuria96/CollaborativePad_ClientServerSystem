@@ -77,7 +77,6 @@ void NetworkServer::localModification(Payload &pl) {
     if( file=="") return;
 
     for (auto msg: msgs.getQueue()) {
-
         std::shared_ptr<Message> m = std::make_shared<Message>(msg);
         if (msg.getAction() == Message::insertion) {
             auto s = m->getSymbol();
@@ -87,6 +86,8 @@ void NetworkServer::localModification(Payload &pl) {
             files.rmvSymbolInFile(file,s);
         }
     }
+
+    std::cout<<"modifing file: "<<file.toStdString()<<std::endl;
 }
 
 
@@ -97,13 +98,12 @@ void NetworkServer::processOpnCommand(Payload &pl) {
 
     std::cout<<"opening file: "<<fileName.toStdString()<<std::endl;
 
-    std::vector<Symbol> symbles(files.openFile(fileName));
+    auto symbles = files.openFile(fileName);
 
     auto th = active_threads.find(comm.getSiteId());
     if(th != active_threads.end()){
-        th->second->setFile(std::move(symbles));
+        th->second->setFile(symbles);
         emit th->second->getSocket()->sendFile();
-
         fileOpened.store(true);
     }
 
@@ -116,7 +116,7 @@ void NetworkServer::processClsCommand(Payload &pl) {
 
     std::cout<<"closing file: "<<fileName.toStdString()<<std::endl;
 
-    files.closeFile(fileName);
+    fileOpened.store(files.closeFile(fileName));
 
 }
 
@@ -125,7 +125,7 @@ void NetworkServer::processRmCommand(Payload &pl) {
     Command &comm = dynamic_cast<Command &>(pl);
     QString fileName = comm.getArgs().last();
 
-    files.deleteFile(fileName);
+    fileOpened.store(files.deleteFile(fileName));
 
     std::cout<<"deleting file: "+fileName.toStdString()<<std::endl;
 
@@ -136,10 +136,14 @@ void NetworkServer::processRmCommand(Payload &pl) {
 
 }
 
+void NetworkServer::saveFiles(Payload& pl){
+    std::cout<<"saving files"<<std::endl;
+    files.saveAll();
+}
+
 void NetworkServer::saveAllFiles() {
     if( fileOpened.load() ) {
-        std::cout<<"saving files"<<std::endl;
-        files.saveAll();
+        msgHandler->submit(&NetworkServer::saveFiles,std::make_shared<Payload>(0));
     }
     timer->start(60000);
 }
