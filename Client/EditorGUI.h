@@ -55,7 +55,7 @@ private:
     void loadSymbols();
     void updateRemoteCursors(qint32 mySiteId, int pos);
     RemoteCursor* getRemoteCursor(qint32 siteId);
-    void insertText(qint32 pos, const QString& value, qint32 siteId);
+    void insertText(qint32 pos, const QString& value, qint32 siteId, const QTextCharFormat& format);
     void deleteText(qint32 pos, qint32 siteId,qint32 n);
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
     void drawLabel(RemoteCursor *cursor) const;
@@ -72,7 +72,7 @@ private slots:
     void checkCharFormat(const QTextCharFormat &f);
 
 public slots:
-    void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
+    void updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
     void deleteAllText();
     void updateRemoteCursorPos(qint32 pos, qint32 siteId);
     void removeCursor(qint32 siteId);

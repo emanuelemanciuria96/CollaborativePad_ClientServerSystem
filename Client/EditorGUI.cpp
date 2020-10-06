@@ -21,11 +21,13 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     timer = new QTimer(this);
     curBlockerTimer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &EditorGUI::enableSendCursorPos);
-    connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
+    //connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     connect(textEdit, &MyTextEdit::tipRequest, this,&EditorGUI::highlightedTip);
     connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
-
+    QTextCharFormat format{};
+    format.setFontPointSize(10);
+    textEdit->mergeCurrentCharFormat(format);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
@@ -96,6 +98,11 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
             model->localErase(pos,charsRemoved);
+            if (textEdit->toPlainText().isEmpty()){
+                QTextCharFormat format{};
+                format.setFontPointSize(10);
+                textEdit->mergeCurrentCharFormat(format);
+            }
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
             //std::cout << "Inserimento carattere " << index << std::endl;
@@ -110,7 +117,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     }
 }
 
-void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
+void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, const QTextCharFormat& format) {
     pos--;
     RemoteCursor *cursor;
 
@@ -125,6 +132,7 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
     if(model->getHighlighting())
         cursor->setCharFormat(getHighlightFormat(siteId));
 
+    cursor->mergeCharFormat(format);
     cursor->insertText(value);
     //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
     signalBlocker = !signalBlocker;
@@ -156,13 +164,13 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
 }
 
 //chiamata quando si ricevono modifiche
-void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action) {
+void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action) {
     std::cout<<"updateSymbols inizio" << std::endl;
     if (action == Message::removal) {
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId, s.size());
     } else {
-        insertText(pos, s, siteId);
+        insertText(pos, s, siteId, format);
 //        if(posLastChar<0 || index!=posLastChar+1) {
 //            flushInsertQueue();
 //            posQueue = index;
@@ -213,8 +221,6 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
             connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
     } else
         cursor = (&(*it));
-    if (cursor == nullptr)
-        std::cout<<"NULLOOOOOOOOOOOOOOOOOO"<<std::endl;
     return cursor;
 }
 
@@ -239,7 +245,7 @@ void EditorGUI::flushInsertQueue() {
         s.push_back(insertQueue.front());
         insertQueue.pop();
     }
-    insertText(posQueue, s, siteIdQueue);
+    insertText(posQueue, s, siteIdQueue, QTextCharFormat{});
     posLastChar = -1;
 }
 

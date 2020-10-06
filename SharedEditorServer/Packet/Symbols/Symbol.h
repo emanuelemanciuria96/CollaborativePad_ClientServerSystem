@@ -9,6 +9,7 @@
 #include <vector>
 #include <QtGlobal>
 #include <QChar>
+#include <QtGui/QTextCharFormat>
 #include "SymId.h"
 
 class Symbol {
@@ -16,6 +17,7 @@ private:
     QChar _ch;
     SymId _symId;
     std::vector<quint32> _pos;
+    QTextCharFormat _format;
 
 public:
     Symbol():_ch(),_symId(-1,-1),_pos(0){};
@@ -33,6 +35,8 @@ public:
     void setPos(std::vector<quint32>& pos) { _pos = pos; }
     QChar getValue() const { return _ch; }
     SymId getSymId() const { return _symId; }
+    QTextCharFormat getFormat() {return _format;};
+    void setFormat(QTextCharFormat& format) {_format = format;};
 };
 
 
