@@ -74,38 +74,6 @@ void EditorGUI::loadSymbols() {
     signalBlocker = !signalBlocker;
 }
 
-/*
-void EditorGUI::setupFileActions() {
-//    QToolBar *tb = addToolBar(tr("File Actions"));
-    QMenu *menu = menuBar()->addMenu(tr("&File"));
-
-    QAction *a = menu->addAction(tr("&New"),this,&EditorGUI::fileNew);
-    a->setPriority(QAction::LowPriority);
-    a->setShortcut(QKeySequence::New);
-//    tb->addAction(a);
-
-    a = menu->addAction(tr("&Open..."), this, &EditorGUI::fileOpen);
-    a->setShortcut(QKeySequence::Open);
-//    tb->addAction(a);
-
-    menu->addSeparator();
-
-    actionSave = menu->addAction(tr("&Save"), this, &EditorGUI::fileSave);
-    actionSave->setShortcut(QKeySequence::Save);
-    actionSave->setEnabled(false);
-//    tb->addAction(actionSave);
-
-    a = menu->addAction(tr("Save &As..."), this, &EditorGUI::fileSaveAs);
-    a->setPriority(QAction::LowPriority);
-    menu->addSeparator();
-
-    a = menu->addAction(tr("&Quit"), this, &EditorGUI::close);
-    a->setShortcut(Qt::CTRL + Qt::Key_Q);
-
-}
-*/
-
-
 void EditorGUI::setCurrentFileName(QString filename) {
     this->fileName = filename;
 }
@@ -188,6 +156,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
 
 //chiamata quando si ricevono modifiche
 void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action) {
+    std::cout<<"updateSymbols inizio" << std::endl;
     if (action == Message::removal) {
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId, s.size());
@@ -201,6 +170,8 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::act
 //        insertQueue.push(value);
 //        posLastChar = index;
     }
+    std::cout<<"updateSymbols fine" << std::endl;
+
 }
 
 void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos) {
