@@ -180,6 +180,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
     connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
     connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
+    connect(comboSize, SIGNAL(activated(const QString&)), editor, SLOT(textSize(const QString&)));
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
@@ -758,4 +759,12 @@ void MainWindow::setRichTextBar() {
     underlineAction->setCheckable(true);
     underlineAction->setToolTip("Bold");
     richTextBar->addAction(underlineAction);
+
+    comboSize = new QComboBox();
+    comboSize->setToolTip("Text size");
+    const QList<int> standardSizes = QFontDatabase::standardSizes();
+    for (int size : standardSizes)
+        comboSize->addItem(QString::number(size));
+    comboSize->setCurrentIndex(4);
+    richTextBar->addWidget(comboSize);
 }

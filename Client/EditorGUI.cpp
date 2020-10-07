@@ -25,9 +25,6 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     connect(textEdit, &MyTextEdit::tipRequest, this,&EditorGUI::highlightedTip);
     connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
-    QTextCharFormat format{};
-    format.setFontPointSize(10);
-    textEdit->mergeCurrentCharFormat(format);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
@@ -98,11 +95,6 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
             model->localErase(pos,charsRemoved);
-            if (textEdit->toPlainText().isEmpty()){
-                QTextCharFormat format{};
-                format.setFontPointSize(10);
-                textEdit->mergeCurrentCharFormat(format);
-            }
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
             //std::cout << "Inserimento carattere " << index << std::endl;
@@ -426,4 +418,14 @@ void EditorGUI::setUnderline(bool checked) const {
     auto f = QTextCharFormat();
     f.setFontUnderline(checked);
     textEdit->mergeCurrentCharFormat(f);
+}
+
+void EditorGUI::textSize(const QString &p)
+{
+    qreal pointSize = p.toFloat();
+    if (p.toFloat() > 0) {
+        QTextCharFormat fmt;
+        fmt.setFontPointSize(pointSize);
+        textEdit->mergeCurrentCharFormat(fmt);
+    }
 }

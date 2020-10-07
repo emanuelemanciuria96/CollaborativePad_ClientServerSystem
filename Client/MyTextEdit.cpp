@@ -23,7 +23,9 @@ MyTextEdit::MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors, Q
     setMouseTracking(true);
     installEventFilter(this);
     toolTipPalette = QToolTip::palette();
-
+    auto font = QFont();
+    font.setPointSize(10);
+    this->setFont(font);
 }
 
 void MyTextEdit::paintEvent(QPaintEvent *e) {

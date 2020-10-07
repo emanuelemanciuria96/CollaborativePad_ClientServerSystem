@@ -59,6 +59,8 @@ private:
     QAction* boldAction;
     QAction* italicAction;
     QAction* underlineAction;
+    QComboBox* comboSize;
+    QFontComboBox* comboFont;
     QAction* userInfoAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
@@ -119,6 +121,9 @@ public slots:
     void setInfoWidget();
     void setInfoUsersListWidget(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
+
+signals:
+    void sendComboSizeText(const QString& p);
 };
 
 

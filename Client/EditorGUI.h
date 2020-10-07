@@ -86,7 +86,7 @@ public slots:
     void setBold(bool checked) const;
     void setItalic(bool checked) const;
     void setUnderline(bool checked) const;
-
+    void textSize(const QString &p);
 
 signals:
     void clear();
