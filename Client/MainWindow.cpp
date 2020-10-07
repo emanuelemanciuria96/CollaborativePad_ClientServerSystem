@@ -177,9 +177,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(redoAction, &QAction::triggered, editor->textEdit, &QTextEdit::redo);
     connect(undoAction, &QAction::triggered, editor->textEdit, &QTextEdit::undo);
 
-    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
-    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
-    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
+    connect(boldAction, &QAction::triggered, editor, &EditorGUI::setBold);
+    connect(italicAction, &QAction::triggered, editor, &EditorGUI::setItalic);
+    connect(underlineAction, &QAction::triggered, editor, &EditorGUI::setUnderline);
     connect(textColorAction, &QAction::triggered, editor, &EditorGUI::textColor);
     connect(editor, &EditorGUI::colorChanged, this, &MainWindow::colorChanged);
     connect(editor, &EditorGUI::fontChanged, this, &MainWindow::fontChanged);
