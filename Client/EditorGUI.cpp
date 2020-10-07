@@ -26,8 +26,8 @@ EditorGUI::EditorGUI(SharedEditor *model, bool highlight, QWidget *parent) : QWi
     connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     connect(textEdit, &MyTextEdit::tipRequest, this,&EditorGUI::highlightedTip);
-    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
-
+//    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
+    connect(textEdit, &QTextEdit::selectionChanged, this, &EditorGUI::selectionChanged);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
@@ -85,11 +85,8 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     if (!signalBlocker) {
         myCursorPosUpdateBlocker = true;
         curBlockerTimer->start(500);
-//        auto blocks = textEdit->document()->blockCount();
-//        auto pages = textEdit->document()->pageCount();
-//        std::cout << "Numero blocchi: " << blocks << " Numero pagine: " << pages << std::endl;
-        if(highlightEditor)
-            textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
+//        std::cout << "contents change " << std::endl;
+
         //std::cout << "invio caratteri" << std::endl;
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
@@ -108,8 +105,11 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             }
             model->localInsert(pos, str, textEdit->currentCharFormat());
             emit updateOther(pos+1, str,model->getSiteId(), Message::insertion);
+            if(highlightEditor)
+                highlight(pos,charsAdded, model->getSiteId());
         }
 //        updateRemoteCursors(model->getSiteId(),pos);
+
     }
 }
 
@@ -443,4 +443,28 @@ void EditorGUI::setUnderline(bool checked) const {
     auto f = QTextCharFormat();
     f.setFontUnderline(checked);
     textEdit->mergeCurrentCharFormat(f);
+}
+
+void EditorGUI::selectionChanged() {
+    if(textEdit->textCursor().hasSelection())
+        hasSelection = true;
+    else
+        hasSelection = false;
+//    std::cout << "selection " << hasSelection << std::endl;
+}
+
+void EditorGUI::setHorizontalScrollValue(int value) {
+    textEdit->horizontalScrollBar()->setValue(value);
+}
+
+void EditorGUI::setVerticalScrollValue(int value) {
+    textEdit->verticalScrollBar()->setValue(value);
+}
+
+int EditorGUI::getHorizontalScrollValue() {
+    return textEdit->horizontalScrollBar()->value();
+}
+
+int EditorGUI::getVerticalScrollValue() {
+    return textEdit->verticalScrollBar()->value();
 }

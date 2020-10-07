@@ -795,10 +795,14 @@ void MainWindow::setRichTextBar() {
 
 void MainWindow::highlight(bool checked) {
     if(checked) {
+        highlightEditor->setVerticalScrollValue(editor->getVerticalScrollValue());
+        highlightEditor->setHorizontalScrollValue(editor->getHorizontalScrollValue());
         centralWidget->setCurrentWidget(highlightEditor);
         std::cout << "highlightEditor setted" << std::endl;
     }
     else {
+        editor->setVerticalScrollValue(highlightEditor->getVerticalScrollValue());
+        editor->setHorizontalScrollValue(highlightEditor->getHorizontalScrollValue());
         centralWidget->setCurrentWidget(editor);
         std::cout << "standard Editor setted" << std::endl;
 
@@ -808,6 +812,7 @@ void MainWindow::highlight(bool checked) {
 void MainWindow::recvEditorUpdate(int pos, QString str,qint32 siteId, Message::action_t action) {
     if(centralWidget->currentWidget() == editor) {
         highlightEditor->updateSymbols(pos,str, siteId,action);
+
     }
     else{
         editor->updateSymbols(pos,str,siteId,action);

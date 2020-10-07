@@ -51,6 +51,7 @@ private:
     std::map<qint32,QString> file_writers;
     QPoint lastToolTipPos;
     bool highlightEditor;
+    bool hasSelection = false;
 
     void setUpGUI();
     void updateRemoteCursors(qint32 mySiteId, int pos);
@@ -70,7 +71,7 @@ private slots:
     void handleCursorPosChanged();
     void enableSendCursorPos();
     void checkCharFormat(const QTextCharFormat &f);
-
+    void selectionChanged();
 public slots:
     void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
     void deleteAllText();
@@ -98,9 +99,10 @@ public:
     MyTextEdit* textEdit;
     EditorGUI(SharedEditor *model, bool highlight,QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);
-    void setHighlightEditor(bool);
-
-
+    void setVerticalScrollValue(int);
+    void setHorizontalScrollValue(int);
+    int getVerticalScrollValue();
+    int getHorizontalScrollValue();
 };
 
 
