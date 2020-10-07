@@ -204,7 +204,6 @@ void SharedEditor::sendCursorPos(qint32 index) {
 }
 
 void SharedEditor::process(DataPacket pkt) {
-
     switch (pkt.getTypeOfData()){
         case DataPacket::login :
             processLoginInfo(*std::dynamic_pointer_cast<LoginInfo>(pkt.getPayload()));
@@ -375,9 +374,9 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                 }
             }
             if (firstInsert) {
-//                std::cout << "insert inizio" << std::endl;
+                std::cout << "insert inizio" << std::endl;
                 _symbols.insert(_symbols.begin() + tmpPos, syms.begin(), syms.end());
-//                std::cout << "insert fine" << std::endl;
+                std::cout << "insert fine" << std::endl;
                 emit symbolsChanged(tmpPos, str, strMess.getSiteId(), Message::insertion);
                 //qDebug()<<"insert "<<this->getSiteIds();
                 nextPosIsCalculated = false;
@@ -733,12 +732,14 @@ void SharedEditor::submitUri(const QString& file){
 
 QVector<qint32> SharedEditor::getSiteIds() {
     QVector<qint32> siteIdVector;
-
+    std::cout << "inizio getSiteIDs" << std::endl;
     std::for_each(_symbols.begin()+1,_symbols.end()-1,
                   [&siteIdVector](const Symbol& s){
                       siteIdVector.append(s.getSymId().getSiteId());
                   });
-   return siteIdVector;
+    std::cout << "fine getSiteIDs, dimensione " << siteIdVector.size() << std::endl;
+
+    return siteIdVector;
 }
 
 qint32 SharedEditor::getSiteId() const {

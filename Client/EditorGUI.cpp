@@ -69,16 +69,7 @@ void EditorGUI::setUpGUI() {
 //    loadHighlights();
 }
 
-//slot per l'editor con highlight
-void EditorGUI::loadHighlights() {
-//    if(highlightEditor) {
-        auto i = 0;
-        for (auto s : model->getSiteIds()) {
-            highlight(i, s);
-            i++;
-        }
-//    }
-}
+
 
 void EditorGUI::setCurrentFileName(QString filename) {
     this->fileName = filename;
@@ -97,7 +88,8 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
 //        auto blocks = textEdit->document()->blockCount();
 //        auto pages = textEdit->document()->pageCount();
 //        std::cout << "Numero blocchi: " << blocks << " Numero pagine: " << pages << std::endl;
-
+        if(highlightEditor)
+            textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
         //std::cout << "invio caratteri" << std::endl;
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
@@ -305,18 +297,37 @@ void EditorGUI::enableSendCursorPos() {
     myCursorPosUpdateBlocker = false;
 }
 
-void EditorGUI::highlight(qint32 pos, qint32 siteId) {
-//    std::cout << "highlight " << pos << " siteId " << siteId << std::endl;
-    auto cursor = getRemoteCursor(0);
-//    auto format = QTextCharFormat();
+//slot per l'editor con highlight
+void EditorGUI::loadHighlights() {
+    std::cout<<"inizio highlight" << std::endl;
+    auto i = 0;
+    qint32 lastSiteId = -1;
+    qint32 firstPos;
+    qint32 n = 0;
+    for (auto s : model->getSiteIds()) {
+        if (s == lastSiteId){
+            n++;
+        }
+        else{
+            if(lastSiteId != -1)
+                highlight(firstPos, n, lastSiteId);
+            lastSiteId = s;
+            firstPos = i;
+            n = 1;
+        }
+        i++;
+    }
+    highlight(firstPos,n,lastSiteId);
+}
 
-//    if (!model->getHighlighting())
+void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId) {
+    std::cout << "highlight da " << pos << " a " << pos+n << ", siteId " << siteId << std::endl;
+    auto cursor = getRemoteCursor(0);
     auto format = getHighlightFormat(siteId);
-//    else
-//        format.setBackground(QColor("white"));
+
     signalBlocker = !signalBlocker;
     cursor->setPosition(pos , QTextCursor::MoveAnchor);
-    cursor->setPosition(pos+1, QTextCursor::KeepAnchor);
+    cursor->setPosition(pos+n, QTextCursor::KeepAnchor);
     cursor->mergeCharFormat(format);
     signalBlocker = !signalBlocker;
 }
@@ -407,8 +418,10 @@ void EditorGUI::setCharFormat(bool checked) {
 }
 
 void EditorGUI::checkCharFormat(const QTextCharFormat &f) {
-    if(highlightEditor)
-        textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
+    if(highlightEditor) {
+        if(!textEdit->textCursor().hasSelection())
+            textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
+    }
 }
 
 void EditorGUI::setBold(bool checked) const {
