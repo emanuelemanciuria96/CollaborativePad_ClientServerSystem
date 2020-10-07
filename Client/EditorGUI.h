@@ -56,7 +56,7 @@ private:
     void setUpGUI();
     void updateRemoteCursors(qint32 mySiteId, int pos);
     RemoteCursor* getRemoteCursor(qint32 siteId);
-    void insertText(qint32 pos, const QString& value, qint32 siteId);
+    void insertText(qint32 pos, const QString& value, qint32 siteId, const QTextCharFormat& format);
     void deleteText(qint32 pos, qint32 siteId,qint32 n);
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
     void drawLabel(RemoteCursor *cursor) const;
@@ -73,7 +73,7 @@ private slots:
     void checkCharFormat(const QTextCharFormat &f);
     void selectionChanged();
 public slots:
-    void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
+    void updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
     void deleteAllText();
     void updateRemoteCursorPos(qint32 pos, qint32 siteId);
     void removeCursor(qint32 siteId);
@@ -87,6 +87,10 @@ public slots:
     void setBold(bool checked) const;
     void setItalic(bool checked) const;
     void setUnderline(bool checked) const;
+    void textSize(const QString &p);
+    void textFamily(const QString &p);
+    void textColor();
+    void currentCharFormatChanged(const QTextCharFormat &format);
     void loadHighlights();
 
 signals:
@@ -94,6 +98,8 @@ signals:
     void setNumUsers(int n);
     void userQuery(qint32 siteId);
     void updateOther(int, QString, qint32 siteId, Message::action_t);
+    void colorChanged(const QColor &c);
+    void fontChanged(const QFont &f);
 
 public:
     MyTextEdit* textEdit;

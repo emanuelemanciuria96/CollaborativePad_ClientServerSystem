@@ -9,7 +9,7 @@
 #include <QScrollBar>
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QToolTip>
-#include <tuple>
+#include <QtWidgets/QColorDialog>
 
 EditorGUI::EditorGUI(SharedEditor *model, bool highlight, QWidget *parent) : QWidget(parent){
     remoteCursors = std::make_shared<std::list<RemoteCursor>>();
@@ -23,9 +23,10 @@ EditorGUI::EditorGUI(SharedEditor *model, bool highlight, QWidget *parent) : QWi
     timer = new QTimer(this);
     curBlockerTimer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &EditorGUI::enableSendCursorPos);
-    connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
+    //connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     connect(textEdit, &MyTextEdit::tipRequest, this,&EditorGUI::highlightedTip);
+    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::currentCharFormatChanged);
 //    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
     connect(textEdit, &QTextEdit::selectionChanged, this, &EditorGUI::selectionChanged);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
@@ -46,7 +47,6 @@ void EditorGUI::setUpGUI() {
     textEdit->setLineWrapMode(QTextEdit::FixedPixelWidth);
     textEdit->setLineWrapColumnOrWidth(880);
     textEdit->setMaximumWidth(888);
-//    textEdit->setAlignment(Qt::AlignCenter);
 
     connect(this, SIGNAL(clear()), textEdit, SLOT(clear()));
 
@@ -65,8 +65,6 @@ void EditorGUI::setUpGUI() {
     connect(textEdit->document(), SIGNAL(contentsChange(int, int, int)), this, SLOT(contentsChange(int, int, int)));
     connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
 
-//    load("./file.txt");
-//    loadHighlights();
 }
 
 
@@ -102,7 +100,10 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             QString str = "";
             for (i = 0; i < charsAdded; i++) {
                 QChar ch = textEdit->document()->characterAt(pos+i);
-                QTextCharFormat format = textEdit->currentCharFormat();
+                auto cursor = textEdit->textCursor();
+                cursor.setPosition(pos+i+1);
+                auto format = cursor.charFormat();
+                format.setBackground(QColor("white"));
                 model->localInsert(pos+i, ch , format);
                 str.append(ch);
             }
@@ -112,11 +113,10 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 highlight(pos,charsAdded, model->getSiteId());
         }
 //        updateRemoteCursors(model->getSiteId(),pos);
-
     }
 }
 
-void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
+void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, const QTextCharFormat& format) {
     pos--;
     RemoteCursor *cursor;
 
@@ -128,8 +128,9 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
 
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
+    cursor->setCharFormat(format);
     if(highlightEditor)
-        cursor->setCharFormat(getHighlightFormat(siteId));
+        cursor->mergeCharFormat(getHighlightFormat(siteId));
 
     cursor->insertText(value);
     //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
@@ -164,13 +165,13 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
 }
 
 //chiamata quando si ricevono modifiche
-void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action) {
+void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action) {
 //    std::cout<<"updateSymbols inizio" << std::endl;
     if (action == Message::removal) {
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId, s.size());
     } else {
-        insertText(pos, s, siteId);
+        insertText(pos, s, siteId, format);
 //        if(posLastChar<0 || index!=posLastChar+1) {
 //            flushInsertQueue();
 //            posQueue = index;
@@ -221,8 +222,6 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
             connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
     } else
         cursor = (&(*it));
-    if (cursor == nullptr)
-        std::cout<<"NULLOOOOOOOOOOOOOOOOOO"<<std::endl;
     return cursor;
 }
 
@@ -247,7 +246,7 @@ void EditorGUI::flushInsertQueue() {
         s.push_back(insertQueue.front());
         insertQueue.pop();
     }
-    insertText(posQueue, s, siteIdQueue);
+    insertText(posQueue, s, siteIdQueue, QTextCharFormat{});
     posLastChar = -1;
 }
 
@@ -470,4 +469,38 @@ int EditorGUI::getHorizontalScrollValue() {
 
 int EditorGUI::getVerticalScrollValue() {
     return textEdit->verticalScrollBar()->value();
+}
+
+void EditorGUI::textSize(const QString &p)
+{
+    qreal pointSize = p.toFloat();
+    if (p.toFloat() > 0) {
+        QTextCharFormat fmt;
+        fmt.setFontPointSize(pointSize);
+        textEdit->mergeCurrentCharFormat(fmt);
+    }
+}
+
+void EditorGUI::textFamily(const QString &f)
+{
+    QTextCharFormat fmt;
+    fmt.setFontFamily(f);
+    textEdit->mergeCurrentCharFormat(fmt);
+}
+
+void EditorGUI::textColor()
+{
+    QColor col = QColorDialog::getColor(textEdit->textColor(), this);
+    if (!col.isValid())
+        return;
+    QTextCharFormat fmt;
+    fmt.setForeground(col);
+    textEdit->mergeCurrentCharFormat(fmt);
+    emit colorChanged(col);
+}
+
+void EditorGUI::currentCharFormatChanged(const QTextCharFormat &format)
+{
+    emit fontChanged(format.font());
+    emit colorChanged(format.foreground().color());
 }

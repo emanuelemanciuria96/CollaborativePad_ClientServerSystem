@@ -60,6 +60,9 @@ private:
     QAction* boldAction;
     QAction* italicAction;
     QAction* underlineAction;
+    QComboBox* comboSize;
+    QFontComboBox* comboFont;
+    QAction* textColorAction;
     QAction* userInfoAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
@@ -121,9 +124,13 @@ public slots:
     void setInfoUsersListWidget(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void recvEditorUpdate(int, QString, qint32 siteId,Message::action_t);
+    void colorChanged(const QColor &c);
+    void fontChanged(const QFont &f);
 private slots:
     void highlight(bool checked);
 
+signals:
+    void sendComboSizeText(const QString& p);
 };
 
 
