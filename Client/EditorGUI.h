@@ -50,9 +50,10 @@ private:
     uint nUsers = 0;
     std::map<qint32,QString> file_writers;
     QPoint lastToolTipPos;
+    bool highlightEditor;
+    bool hasSelection = false;
 
     void setUpGUI();
-    void loadSymbols();
     void updateRemoteCursors(qint32 mySiteId, int pos);
     RemoteCursor* getRemoteCursor(qint32 siteId);
     void insertText(qint32 pos, const QString& value, qint32 siteId);
@@ -70,13 +71,13 @@ private slots:
     void handleCursorPosChanged();
     void enableSendCursorPos();
     void checkCharFormat(const QTextCharFormat &f);
-
+    void selectionChanged();
 public slots:
     void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
     void deleteAllText();
     void updateRemoteCursorPos(qint32 pos, qint32 siteId);
     void removeCursor(qint32 siteId);
-    void highlight(qint32 pos, qint32 siteId);
+    void highlight(qint32 pos, qint32 n, qint32 siteId);
     void exportToPdf();
     void setCurrentFileName(QString filename);
     void highlightedTip(int pos,QPoint globalPos);
@@ -86,21 +87,22 @@ public slots:
     void setBold(bool checked) const;
     void setItalic(bool checked) const;
     void setUnderline(bool checked) const;
-
+    void loadHighlights();
 
 signals:
     void clear();
     void setNumUsers(int n);
     void userQuery(qint32 siteId);
-
+    void updateOther(int, QString, qint32 siteId, Message::action_t);
 
 public:
     MyTextEdit* textEdit;
-    EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
+    EditorGUI(SharedEditor *model, bool highlight,QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);
-
-
-
+    void setVerticalScrollValue(int);
+    void setHorizontalScrollValue(int);
+    int getVerticalScrollValue();
+    int getHorizontalScrollValue();
 };
 
 

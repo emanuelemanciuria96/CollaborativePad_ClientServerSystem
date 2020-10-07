@@ -192,7 +192,6 @@ void SharedEditor::sendCursorPos(qint32 index) {
 }
 
 void SharedEditor::process(DataPacket pkt) {
-
     switch (pkt.getTypeOfData()){
         case DataPacket::login :
             processLoginInfo(*std::dynamic_pointer_cast<LoginInfo>(pkt.getPayload()));
@@ -318,7 +317,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     strM.push_back(m);
     bool firstErase=true;
     bool firstInsert=true;
-    //qDebug()<<this->to_string();
+    //qDebug()<<this->getSiteIds();
     bool nextPosIsCalculated=false;
     qint32 pos;
     qint32 nextPos;
@@ -326,7 +325,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     qint32 tmpPos=0;
     qint32 numChar=0;
     QString str;
-    //qDebug()<<this->to_string();
+    //qDebug()<<this->getSiteIds();
     for( int i=0;i<strM.size()-1;i++ ) {
         auto m = strM[i];
         if (nextPosIsCalculated) {
@@ -337,6 +336,8 @@ void SharedEditor::processMessages(StringMessages &strMess) {
 //            std::cout << "getindex fine" << std::endl;
         }
         nextPosIsCalculated = false;
+        auto sit = m.getSymbol().getSymId().getSiteId();
+        qint32 pos = getIndex(m.getLocalIndex(), m.getSymbol());
 //        std::cout << "insert da siteId " << m.getSymbol().getSymId().getSiteId() << std::endl;
         if (m.getAction() == Message::insertion) {
             if (firstInsert) {
@@ -361,14 +362,13 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                 }
             }
             if (firstInsert) {
-//                std::cout << "insert inizio" << std::endl;
+                std::cout << "insert inizio" << std::endl;
                 _symbols.insert(_symbols.begin() + tmpPos, syms.begin(), syms.end());
-//                std::cout << "insert fine" << std::endl;
+                std::cout << "insert fine" << std::endl;
                 emit symbolsChanged(tmpPos, str, strMess.getSiteId(), Message::insertion);
-                //qDebug()<<"insert "<<this->to_string();
+                //qDebug()<<"insert "<<this->getSiteIds();
                 nextPosIsCalculated = false;
             }
-
         } else if (_symbols[pos] == m.getSymbol()) {
             if (firstErase) {
                 tmpPos = pos;
@@ -395,6 +395,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                 _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
                 emit symbolsChanged(tmpPos, str, strMess.getSiteId(), Message::removal);
                 numChar = 0;
+                //qDebug()<<"delete "<<this->getSiteIds();
                 nextPosIsCalculated = false;
             }
         }
@@ -428,13 +429,16 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
         case FileInfo::start: {
             emit setNumUsers(0);
             isFileOpened = true;
+            fileOpening = true;
             break;
         }
         case FileInfo::eof: {
             findCounter();
+            fileOpening = false;
             std::cout<<" - counter found: "<<_counter<<std::endl;
             emit openTextEditor(fileOpened);
             emit transparentForMouse();
+            emit fileLoaded();
             break;
         }
     }
@@ -714,16 +718,16 @@ void SharedEditor::submitUri(const QString& file){
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
-QString SharedEditor::to_string() {
-    QString str;
-
+QVector<qint32> SharedEditor::getSiteIds() {
+    QVector<qint32> siteIdVector;
+    std::cout << "inizio getSiteIDs" << std::endl;
     std::for_each(_symbols.begin()+1,_symbols.end()-1,
-                  [&str](Symbol s){
-                      str += s.getValue();
+                  [&siteIdVector](const Symbol& s){
+                      siteIdVector.append(s.getSymId().getSiteId());
                   });
+    std::cout << "fine getSiteIDs, dimensione " << siteIdVector.size() << std::endl;
 
-
-   return str;
+    return siteIdVector;
 }
 
 qint32 SharedEditor::getSiteId() const {
@@ -782,6 +786,9 @@ void SharedEditor::findCounter() {
 
 }
 
+bool SharedEditor::isFileOpening() const {
+    return fileOpening;
+}
 SharedEditor::~SharedEditor() {
     if( transceiver!= nullptr)
         emit transceiver->getSocket()->terminateThreadOperations();

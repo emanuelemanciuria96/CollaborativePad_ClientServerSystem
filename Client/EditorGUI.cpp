@@ -9,11 +9,13 @@
 #include <QScrollBar>
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QToolTip>
+#include <tuple>
 
-EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
+EditorGUI::EditorGUI(SharedEditor *model, bool highlight, QWidget *parent) : QWidget(parent){
     remoteCursors = std::make_shared<std::list<RemoteCursor>>();
     signalBlocker = false;
     myCursorPosUpdateBlocker = false;
+    highlightEditor = highlight;
     setModel(model);
     setUpGUI();
     setWindowTitle(QCoreApplication::applicationName());
@@ -24,8 +26,8 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     connect(textEdit, &MyTextEdit::tipRequest, this,&EditorGUI::highlightedTip);
-    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
-
+//    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
+    connect(textEdit, &QTextEdit::selectionChanged, this, &EditorGUI::selectionChanged);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
@@ -44,7 +46,7 @@ void EditorGUI::setUpGUI() {
     textEdit->setLineWrapMode(QTextEdit::FixedPixelWidth);
     textEdit->setLineWrapColumnOrWidth(880);
     textEdit->setMaximumWidth(888);
-    textEdit->setAlignment(Qt::AlignCenter);
+//    textEdit->setAlignment(Qt::AlignCenter);
 
     connect(this, SIGNAL(clear()), textEdit, SLOT(clear()));
 
@@ -64,15 +66,10 @@ void EditorGUI::setUpGUI() {
     connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
 
 //    load("./file.txt");
-    loadSymbols();
+//    loadHighlights();
 }
 
 
-void EditorGUI::loadSymbols() {
-    signalBlocker = !signalBlocker;
-    textEdit->setText(model->to_string());
-    signalBlocker = !signalBlocker;
-}
 
 void EditorGUI::setCurrentFileName(QString filename) {
     this->fileName = filename;
@@ -88,14 +85,17 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     if (!signalBlocker) {
         myCursorPosUpdateBlocker = true;
         curBlockerTimer->start(500);
-//        auto blocks = textEdit->document()->blockCount();
-//        auto pages = textEdit->document()->pageCount();
-//        std::cout << "Numero blocchi: " << blocks << " Numero pagine: " << pages << std::endl;
+//        std::cout << "contents change " << std::endl;
 
         //std::cout << "invio caratteri" << std::endl;
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
             model->localErase(pos,charsRemoved);
+            QString str = "";
+            for (i = 0; i < charsRemoved; i++) {
+                str+="x";
+            }
+            emit updateOther(pos+1, str,model->getSiteId(), Message::removal);
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
             //std::cout << "Inserimento carattere " << index << std::endl;
@@ -105,8 +105,13 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 QTextCharFormat format = textEdit->currentCharFormat();
                 model->localInsert(pos+i, ch , format);
             }
+            model->localInsert(pos, str, textEdit->currentCharFormat());
+            emit updateOther(pos+1, str,model->getSiteId(), Message::insertion);
+            if(highlightEditor)
+                highlight(pos,charsAdded, model->getSiteId());
         }
 //        updateRemoteCursors(model->getSiteId(),pos);
+
     }
 }
 
@@ -122,13 +127,14 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
 
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
-    if(model->getHighlighting())
+    if(highlightEditor)
         cursor->setCharFormat(getHighlightFormat(siteId));
 
     cursor->insertText(value);
     //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
     signalBlocker = !signalBlocker;
-    drawLabel(cursor);
+    if(siteId!= model->getSiteId())
+        drawLabel(cursor);
 //    updateRemoteCursors(siteId,index, Message::insertion);
 }
 
@@ -151,13 +157,14 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     cursor->removeSelectedText();
     //std::cout << "Rimosso " << index << std::endl;
     signalBlocker = !signalBlocker;
-    drawLabel(cursor);
+    if(siteId!= model->getSiteId())
+        drawLabel(cursor);
 //    updateRemoteCursors(siteId,index, Message::removal);
 }
 
 //chiamata quando si ricevono modifiche
 void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action) {
-    std::cout<<"updateSymbols inizio" << std::endl;
+//    std::cout<<"updateSymbols inizio" << std::endl;
     if (action == Message::removal) {
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId, s.size());
@@ -171,7 +178,7 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::act
 //        insertQueue.push(value);
 //        posLastChar = index;
     }
-    std::cout<<"updateSymbols fine" << std::endl;
+//    std::cout<<"updateSymbols fine" << std::endl;
 
 }
 
@@ -206,10 +213,10 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     });
     if (it == remoteCursors->end()) {
         auto username = QString();
-        username = (siteId>0) ? file_writers.at(siteId) : "me";
+        username = (siteId>0 && siteId != model->getSiteId()) ? file_writers.at(siteId) : "me";
         remoteCursors->emplace_back(textEdit->document(), siteId, username);
         cursor = &remoteCursors->back();
-        if(siteId!=0)
+        if(siteId!=0 && siteId!=model->getSiteId())
             connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
     } else
         cursor = (&(*it));
@@ -292,18 +299,37 @@ void EditorGUI::enableSendCursorPos() {
     myCursorPosUpdateBlocker = false;
 }
 
-void EditorGUI::highlight(qint32 pos, qint32 siteId) {
-//    std::cout << "highlight " << pos << " siteId " << siteId << std::endl;
-    auto cursor = getRemoteCursor(0);
-    auto format = QTextCharFormat();
+//slot per l'editor con highlight
+void EditorGUI::loadHighlights() {
+    std::cout<<"inizio highlight" << std::endl;
+    auto i = 0;
+    qint32 lastSiteId = -1;
+    qint32 firstPos;
+    qint32 n = 0;
+    for (auto s : model->getSiteIds()) {
+        if (s == lastSiteId){
+            n++;
+        }
+        else{
+            if(lastSiteId != -1)
+                highlight(firstPos, n, lastSiteId);
+            lastSiteId = s;
+            firstPos = i;
+            n = 1;
+        }
+        i++;
+    }
+    highlight(firstPos,n,lastSiteId);
+}
 
-    if (!model->getHighlighting())
-        format = getHighlightFormat(siteId);
-    else
-        format.setBackground(QColor("white"));
+void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId) {
+    std::cout << "highlight da " << pos << " a " << pos+n << ", siteId " << siteId << std::endl;
+    auto cursor = getRemoteCursor(0);
+    auto format = getHighlightFormat(siteId);
+
     signalBlocker = !signalBlocker;
-    cursor->setPosition(pos - 1, QTextCursor::MoveAnchor);
-    cursor->setPosition(pos, QTextCursor::KeepAnchor);
+    cursor->setPosition(pos , QTextCursor::MoveAnchor);
+    cursor->setPosition(pos+n, QTextCursor::KeepAnchor);
     cursor->mergeCharFormat(format);
     signalBlocker = !signalBlocker;
 }
@@ -394,8 +420,10 @@ void EditorGUI::setCharFormat(bool checked) {
 }
 
 void EditorGUI::checkCharFormat(const QTextCharFormat &f) {
-    if(model->getHighlighting())
-        textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
+    if(highlightEditor) {
+        if(!textEdit->textCursor().hasSelection())
+            textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
+    }
 }
 
 void EditorGUI::setBold(bool checked) const {
@@ -417,4 +445,28 @@ void EditorGUI::setUnderline(bool checked) const {
     auto f = QTextCharFormat();
     f.setFontUnderline(checked);
     textEdit->mergeCurrentCharFormat(f);
+}
+
+void EditorGUI::selectionChanged() {
+    if(textEdit->textCursor().hasSelection())
+        hasSelection = true;
+    else
+        hasSelection = false;
+//    std::cout << "selection " << hasSelection << std::endl;
+}
+
+void EditorGUI::setHorizontalScrollValue(int value) {
+    textEdit->horizontalScrollBar()->setValue(value);
+}
+
+void EditorGUI::setVerticalScrollValue(int value) {
+    textEdit->verticalScrollBar()->setValue(value);
+}
+
+int EditorGUI::getHorizontalScrollValue() {
+    return textEdit->horizontalScrollBar()->value();
+}
+
+int EditorGUI::getVerticalScrollValue() {
+    return textEdit->verticalScrollBar()->value();
 }
