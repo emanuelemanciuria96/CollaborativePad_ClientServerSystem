@@ -20,6 +20,9 @@ EditorGUI::EditorGUI(SharedEditor *model, bool highlight, QWidget *parent) : QWi
     setUpGUI();
     setWindowTitle(QCoreApplication::applicationName());
     posLastChar = -1;
+    buffer = new QString();
+    bufferTimer = new QTimer();
+    bufferTimer->setSingleShot(true);
     timer = new QTimer(this);
     curBlockerTimer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &EditorGUI::enableSendCursorPos);
@@ -29,6 +32,7 @@ EditorGUI::EditorGUI(SharedEditor *model, bool highlight, QWidget *parent) : QWi
     connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::currentCharFormatChanged);
 //    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
     connect(textEdit, &QTextEdit::selectionChanged, this, &EditorGUI::selectionChanged);
+    connect(bufferTimer,&QTimer::timeout, this, &EditorGUI::flushBuffer);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
@@ -89,15 +93,14 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
             model->localErase(pos,charsRemoved);
-            QString str = "";
-            for (i = 0; i < charsRemoved; i++) {
-                str+="x";
-            }
-            emit updateOther(pos+1, str,model->getSiteId(), Message::removal);
+//            QString str = "";
+//            for (i = 0; i < charsRemoved; i++) {
+//                str+="x";
+//            }
+            emit updateOther(pos+1, QChar(),model->getSiteId(), QTextCharFormat(), Message::removal);
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
             //std::cout << "Inserimento carattere " << index << std::endl;
-            QString str = "";
             for (i = 0; i < charsAdded; i++) {
                 QChar ch = textEdit->document()->characterAt(pos+i);
                 auto cursor = textEdit->textCursor();
@@ -105,10 +108,10 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 auto format = cursor.charFormat();
                 format.setBackground(QColor("white"));
                 model->localInsert(pos+i, ch , format);
-                str.append(ch);
+                emit updateOther(pos+1, ch,model->getSiteId(), format,Message::insertion);
             }
 //            model->localInsert(pos, str, textEdit->currentCharFormat());
-            emit updateOther(pos+1, str,model->getSiteId(), Message::insertion);
+
             if(highlightEditor)
                 highlight(pos,charsAdded, model->getSiteId());
         }
@@ -182,6 +185,29 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextC
     }
 //    std::cout<<"updateSymbols fine" << std::endl;
 
+}
+
+void EditorGUI::updateFromOtherEditor(qint32 pos, QChar ch, qint32 siteId, const QTextCharFormat &format, Message::action_t action) {
+    if(buffer->isEmpty()){
+        lastAction = action;
+        lastFormat = format;
+        firstPos = pos;
+    }
+    if(lastFormat != format || lastAction != action) {
+        flushBuffer();
+        lastAction = action;
+        lastFormat = format;
+        firstPos = pos;
+    }
+    else{
+        buffer->append(ch);
+        bufferTimer->start(100);
+    }
+}
+
+void EditorGUI::flushBuffer() {
+    updateSymbols(firstPos, *buffer,model->getSiteId(),lastFormat,lastAction);
+    buffer->clear();
 }
 
 void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos) {

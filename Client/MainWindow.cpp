@@ -841,13 +841,12 @@ void MainWindow::highlight(bool checked) {
     }
 }
 
-void MainWindow::recvEditorUpdate(int pos, QString str,qint32 siteId, Message::action_t action) {
+void MainWindow::recvEditorUpdate(int pos, QChar ch,qint32 siteId,const QTextCharFormat& format, Message::action_t action) {
     if(centralWidget->currentWidget() == editor) {
-        highlightEditor->updateSymbols(pos,str, siteId,action);
-
+        highlightEditor->updateFromOtherEditor(pos,ch, siteId,format, action);
     }
     else{
-        editor->updateSymbols(pos,str,siteId,action);
+        editor->updateFromOtherEditor(pos,ch,siteId,format, action);
     }
 
 }
