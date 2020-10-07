@@ -103,7 +103,7 @@ void MyTextEdit::contextMenuEvent(QContextMenuEvent *e) {
 void MyTextEdit::paste() {
 
     QTextCursor curs = this->textCursor();
-    //if( curs.selectionEnd()==0 || curs.selectionStart()==0 ) {
+    if( curs.selectionEnd()==0 || curs.selectionStart()==0 ) {
         auto data = clipboard->mimeData(QClipboard::Clipboard);
         curs.beginEditBlock();
         curs.removeSelectedText();
@@ -111,7 +111,7 @@ void MyTextEdit::paste() {
         curs.insertText(clipboard->text(QClipboard::Clipboard));
         curs.endEditBlock();
         return;
-    //}
-    //QTextEdit::paste();
+    }
+    QTextEdit::paste();
 
 }

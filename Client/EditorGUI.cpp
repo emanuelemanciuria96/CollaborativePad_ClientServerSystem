@@ -109,7 +109,10 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             QString str = "";
             for (i = 0; i < charsAdded; i++) {
                 QChar ch = textEdit->document()->characterAt(pos+i);
-                QTextCharFormat format = textEdit->currentCharFormat();
+                auto cursor = textEdit->textCursor();
+                cursor.setPosition(pos+i+1);
+                auto format = cursor.charFormat();
+                format.setBackground(QColor("white"));
                 model->localInsert(pos+i, ch , format);
             }
         }
@@ -129,10 +132,10 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, cons
 
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
+    cursor->setCharFormat(format);
     if(model->getHighlighting())
-        cursor->setCharFormat(getHighlightFormat(siteId));
+        cursor->mergeCharFormat(getHighlightFormat(siteId));
 
-    cursor->mergeCharFormat(format);
     cursor->insertText(value);
     //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
     signalBlocker = !signalBlocker;
