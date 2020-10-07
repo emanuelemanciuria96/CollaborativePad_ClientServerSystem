@@ -104,8 +104,9 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 QChar ch = textEdit->document()->characterAt(pos+i);
                 QTextCharFormat format = textEdit->currentCharFormat();
                 model->localInsert(pos+i, ch , format);
+                str.append(ch);
             }
-            model->localInsert(pos, str, textEdit->currentCharFormat());
+//            model->localInsert(pos, str, textEdit->currentCharFormat());
             emit updateOther(pos+1, str,model->getSiteId(), Message::insertion);
             if(highlightEditor)
                 highlight(pos,charsAdded, model->getSiteId());
