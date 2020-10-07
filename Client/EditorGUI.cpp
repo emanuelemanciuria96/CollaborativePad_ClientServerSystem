@@ -9,6 +9,7 @@
 #include <QScrollBar>
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QToolTip>
+#include <QtWidgets/QColorDialog>
 
 EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     remoteCursors = std::make_shared<std::list<RemoteCursor>>();
@@ -25,6 +26,7 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     connect(textEdit, &MyTextEdit::tipRequest, this,&EditorGUI::highlightedTip);
     connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
+    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::currentCharFormatChanged);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
@@ -428,4 +430,28 @@ void EditorGUI::textSize(const QString &p)
         fmt.setFontPointSize(pointSize);
         textEdit->mergeCurrentCharFormat(fmt);
     }
+}
+
+void EditorGUI::textFamily(const QString &f)
+{
+    QTextCharFormat fmt;
+    fmt.setFontFamily(f);
+    textEdit->mergeCurrentCharFormat(fmt);
+}
+
+void EditorGUI::textColor()
+{
+    QColor col = QColorDialog::getColor(textEdit->textColor(), this);
+    if (!col.isValid())
+        return;
+    QTextCharFormat fmt;
+    fmt.setForeground(col);
+    textEdit->mergeCurrentCharFormat(fmt);
+    emit colorChanged(col);
+}
+
+void EditorGUI::currentCharFormatChanged(const QTextCharFormat &format)
+{
+    emit fontChanged(format.font());
+    emit colorChanged(format.foreground().color());
 }

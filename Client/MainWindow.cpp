@@ -180,7 +180,11 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
     connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
     connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
+    connect(textColorAction, &QAction::triggered, editor, &EditorGUI::textColor);
+    connect(editor, &EditorGUI::colorChanged, this, &MainWindow::colorChanged);
+    connect(editor, &EditorGUI::fontChanged, this, &MainWindow::fontChanged);
     connect(comboSize, SIGNAL(activated(const QString&)), editor, SLOT(textSize(const QString&)));
+    connect(comboFont, SIGNAL(activated(const QString&)), editor, SLOT(textFamily(const QString&)));
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
@@ -767,4 +771,32 @@ void MainWindow::setRichTextBar() {
         comboSize->addItem(QString::number(size));
     comboSize->setCurrentIndex(4);
     richTextBar->addWidget(comboSize);
+
+    comboFont = new QFontComboBox();
+    comboFont->setToolTip("Text font");
+    comboFont->setEditable(false);
+    richTextBar->addWidget(comboFont);
+
+    textColorAction = new QAction();
+    QPixmap pix(16, 16);
+    pix.fill(Qt::black);
+    textColorAction->setIcon(QIcon(pix));
+    textColorAction->setToolTip("Text color");
+    richTextBar->addAction(textColorAction);
+}
+
+void MainWindow::colorChanged(const QColor &c)
+{
+    QPixmap pix(16, 16);
+    pix.fill(c);
+    textColorAction->setIcon(pix);
+}
+
+void MainWindow::fontChanged(const QFont &f)
+{
+    comboFont->setCurrentIndex(comboFont->findText(QFontInfo(f).family()));
+    comboSize->setCurrentIndex(comboSize->findText(QString::number(f.pointSize())));
+    boldAction->setChecked(f.bold());
+    italicAction->setChecked(f.italic());
+    underlineAction->setChecked(f.underline());
 }

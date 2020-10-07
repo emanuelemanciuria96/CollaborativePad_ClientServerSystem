@@ -87,12 +87,16 @@ public slots:
     void setItalic(bool checked) const;
     void setUnderline(bool checked) const;
     void textSize(const QString &p);
+    void textFamily(const QString &p);
+    void textColor();
+    void currentCharFormatChanged(const QTextCharFormat &format);
 
 signals:
     void clear();
     void setNumUsers(int n);
     void userQuery(qint32 siteId);
-
+    void colorChanged(const QColor &c);
+    void fontChanged(const QFont &f);
 
 public:
     MyTextEdit* textEdit;
