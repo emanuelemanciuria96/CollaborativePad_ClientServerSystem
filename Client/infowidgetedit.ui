@@ -81,19 +81,6 @@
         </property>
        </widget>
       </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item alignment="Qt::AlignHCenter">
        <widget class="QPushButton" name="changeImageButton">
         <property name="sizePolicy">
@@ -104,7 +91,7 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>200</width>
+          <width>150</width>
           <height>0</height>
          </size>
         </property>
@@ -118,6 +105,19 @@
          <string>Change image</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>

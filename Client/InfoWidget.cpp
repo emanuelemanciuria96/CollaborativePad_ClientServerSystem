@@ -25,6 +25,13 @@ InfoWidget::InfoWidget(QWidget *parent)
     ui->imageLabel->setPixmap(rounded);
     connect(ui->editButton, &QPushButton::clicked, this, &InfoWidget::emitOpenInfoEdit);
     connect(ui->backButton, &QPushButton::clicked, this, &InfoWidget::emitBackPressed);
+
+    ui->label_3->setStyleSheet("QLabel{color:#3A70D5; font: 12pt}");
+    ui->label_5->setStyleSheet("QLabel{color:#3A70D5; font: 12pt}");
+    ui->label_7->setStyleSheet("QLabel{color:#3A70D5; font: 12pt}");
+    ui->logoutButton->setStyleSheet("QPushButton {font: 9pt; padding: 8; padding-right:15; padding-left:15; border-style: solid; border-width:1px; "
+                                    "border-color:#D63A3A; background:#D63A3A; color:white}");
+
 }
 
 void InfoWidget::loadData(const QPixmap& orig, const QString& nickname, const QString& name, const QString& email) {
