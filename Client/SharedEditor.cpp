@@ -145,7 +145,7 @@ void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format)
     std::vector<quint32> prev = _symbols[index - 1].getPos();
     std::vector<quint32> next = _symbols[index].getPos();
     std::vector<quint32> newPos;
-    generateNewPosition(prev, next, newPos);
+    generateNewPosition2(prev, next, newPos);
 
     Symbol s(ch, _siteId, _counter++, newPos, format);
 
@@ -167,7 +167,7 @@ void SharedEditor::localErase(qint32 index, qint32 num) {
     index++;
     auto s = _symbols.begin()+index;
     int i=0;
-    int maxChars=200;
+    int maxChars=StringMessages::maxDim;
     for( ;s<_symbols.begin()+index+num; s++ ) {
         DataPacket packet(_siteId, -1, DataPacket::textTyping);
         packet.setPayload(std::make_shared<Message>(Message::removal, _siteId, *s, i+index));
