@@ -635,13 +635,14 @@ void MainWindow::setStyleSheet() {
     qApp->setStyleSheet("QWidget {font-family: helvetica}"
                         "QToolBar {background:#F1F1F1; }"
                         "QStatusBar {background-color: #F1F1F1; border-top:1px solid #d2d2d2}"
-                        "QToolButton {padding:4}");
+                        "QToolButton {padding:4}"
+                        "QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
 
     dockWidgetUsers->titleBarWidget()->setStyleSheet("font:10pt; font-family: helvetica; color:#4F78C3");
     dockWidgetUsers->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8");
     inviteUserWidget->setStyleSheet("padding:0; margin:0;");
     for(auto d : leftDockWidgets) {
-        d->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8;");
+        d->setStyleSheet("QTreeWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
     }
 }
 

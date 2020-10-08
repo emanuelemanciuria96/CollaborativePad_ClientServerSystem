@@ -42,6 +42,9 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
     connect(this, &QWidget::customContextMenuRequested, this, &FileSystemTreeView::openCustomMenu);
     connect(this, &FileSystemTreeView::itemChanged, this, &FileSystemTreeView::renameFile);
 
+//    setStyleSheet("QMenu{background:white; padding:1px}"
+//                  "QMenu::item:selected {color:black; background: blue}"
+//                  "QMenu::item:pressed {background:rgba(100, 100, 100, 255)}");
 }
 
 void FileSystemTreeView::setupRightClickMenu() {
@@ -343,7 +346,7 @@ void FileSystemTreeView::sort() {
         for( ; j<children.size()-i-1; j++){
             if(children[j]->text(1)>children[j+1]->text(1) ||
                 (children[j]->text(1)==children[j+1]->text(1) && children[j]->text(0)>children[j+1]->text(0)) ) {
-                children.swap(j,j+1);
+                children.swapItemsAt(j,j+1);
             }
         }
     }

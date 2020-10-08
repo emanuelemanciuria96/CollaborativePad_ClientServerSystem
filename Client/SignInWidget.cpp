@@ -111,9 +111,9 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     //sezione grafica
     title->setStyleSheet("QLabel {color: black; font: 18pt}");
     auto style = innerWidget->styleSheet();
-    style.append("QWidget{background-color: #FAFAFA;  }"
-                 "QLineEdit{font:9pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray}"
-                 "QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+    style.append("QWidget{background-color: #FAFAFA; }"
+                 "QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background: #3A70D5; color:white}"
+                 "QLineEdit{font:9pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}");
     innerWidget->setStyleSheet(style);
     loadImageButton->setStyleSheet("QPushButton {font: 9pt; padding: 8; padding-right:15; padding-left:15; border-style: solid; border-width:1px; "
                                    "border-color:#3A70D5; background:white; color:#3A70D5}");

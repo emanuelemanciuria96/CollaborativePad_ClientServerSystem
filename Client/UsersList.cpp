@@ -10,12 +10,14 @@
 UsersList::UsersList(QWidget *parent) : QListWidget(parent){
     setIconSize(QSize(35,35));
     connect(this, &QListWidget::itemDoubleClicked, this, &UsersList::openUserInfo);
+    setStyleSheet("QListWidget::item{margin:5px}");
 }
 
 
 void UsersList::addUser(const UserInfo &user) {
     auto newItem = new QListWidgetItem(user.getUsername());
     newItem->setFlags(Qt::ItemIsEnabled);
+    newItem->setSizeHint(QSize(134,40));
     auto orig = QPixmap();
     if(user.getImage().isNull())
         orig = QPixmap("./images/profile.jpg");
