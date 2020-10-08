@@ -283,11 +283,13 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
         qint32 symSiteId;
         quint32 counter;
         QVector<quint32> pos;
+        QTextCharFormat format;
 
-        in >> action >> messSiteId >> localIndx >> value >> symSiteId >> counter >> pos;
+        in >> action >> messSiteId >> localIndx >> value >> symSiteId >> counter >> pos >> format;
 
         auto stdVecPos = pos.toStdVector();
         Symbol s(value,symSiteId,counter,stdVecPos);
+        s.setFormat(format);
         Message m((Message::action_t)action,messSiteId,s,localIndx);
 
         ptr->appendMessage(m);
@@ -596,7 +598,7 @@ void ServerThread::sendMessage(DataPacket& packet){
         auto sym = m.getSymbol();
         tmp<<m.getAction()<<m.getSiteId()<<m.getLocalIndex()
            <<sym.getValue()<<sym.getSymId().getSiteId()<<sym.getSymId().getCount()
-           <<QVector<quint32>::fromStdVector(sym.getPos());
+           <<QVector<quint32>::fromStdVector(sym.getPos())<<sym.getFormat();
     }
 
     qint32 bytes = fixedBytesWritten + buf.data().size() + 4; // buf.data() aggiunge 4 byte per la dimensione

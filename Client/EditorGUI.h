@@ -52,11 +52,16 @@ private:
     QPoint lastToolTipPos;
     bool highlightEditor;
     bool hasSelection = false;
+    QTextCharFormat lastFormat;
+    Message::action_t lastAction;
+    QString *buffer;
+    QTimer *bufferTimer;
+    qint32 firstPos;
 
     void setUpGUI();
     void updateRemoteCursors(qint32 mySiteId, int pos);
     RemoteCursor* getRemoteCursor(qint32 siteId);
-    void insertText(qint32 pos, const QString& value, qint32 siteId);
+    void insertText(qint32 pos, const QString& value, qint32 siteId, const QTextCharFormat& format);
     void deleteText(qint32 pos, qint32 siteId,qint32 n);
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
     void drawLabel(RemoteCursor *cursor) const;
@@ -72,8 +77,9 @@ private slots:
     void enableSendCursorPos();
     void checkCharFormat(const QTextCharFormat &f);
     void selectionChanged();
+    void flushBuffer();
 public slots:
-    void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
+    void updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
     void deleteAllText();
     void updateRemoteCursorPos(qint32 pos, qint32 siteId);
     void removeCursor(qint32 siteId);
@@ -87,13 +93,20 @@ public slots:
     void setBold(bool checked) const;
     void setItalic(bool checked) const;
     void setUnderline(bool checked) const;
+    void textSize(const QString &p);
+    void textFamily(const QString &p);
+    void textColor();
+    void currentCharFormatChanged(const QTextCharFormat &format);
     void loadHighlights();
+    void updateFromOtherEditor(qint32 pos, QChar ch, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
 
 signals:
     void clear();
     void setNumUsers(int n);
     void userQuery(qint32 siteId);
-    void updateOther(int, QString, qint32 siteId, Message::action_t);
+    void updateOther(int, QChar, qint32 siteId,const QTextCharFormat& format, Message::action_t);
+    void colorChanged(const QColor &c);
+    void fontChanged(const QFont &f);
 
 public:
     MyTextEdit* textEdit;

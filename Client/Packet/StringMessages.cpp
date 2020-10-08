@@ -19,9 +19,12 @@ int StringMessages::storeQueue(std::vector<Message> &vm) {
 
     int i = 0;
     auto dim = vm.size();
-    for( ; i<dim && i<maxDim ; i++)
-            _messages.push_back(vm[i]);
+    QTextCharFormat last{};
 
+    for( ; i<dim && i<maxDim && (last==vm[i].getSymbol().getFormat() || last.isEmpty()); i++) {
+        _messages.push_back(vm[i]);
+        last = vm[i].getSymbol().getFormat();
+    }
 
     vm.erase(vm.begin(),vm.begin()+i);
     return i;

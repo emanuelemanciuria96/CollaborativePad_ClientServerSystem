@@ -365,7 +365,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                 std::cout << "insert inizio" << std::endl;
                 _symbols.insert(_symbols.begin() + tmpPos, syms.begin(), syms.end());
                 std::cout << "insert fine" << std::endl;
-                emit symbolsChanged(tmpPos, str, strMess.getSiteId(), Message::insertion);
+                emit symbolsChanged(tmpPos, str, strMess.getSiteId(), syms.front().getFormat(), Message::insertion);
                 //qDebug()<<"insert "<<this->getSiteIds();
                 nextPosIsCalculated = false;
             }
@@ -393,7 +393,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
             }
             if (firstErase) {
                 _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
-                emit symbolsChanged(tmpPos, str, strMess.getSiteId(), Message::removal);
+                emit symbolsChanged(tmpPos, str, strMess.getSiteId(), QTextCharFormat(), Message::removal);
                 numChar = 0;
                 //qDebug()<<"delete "<<this->getSiteIds();
                 nextPosIsCalculated = false;
