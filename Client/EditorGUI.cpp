@@ -317,18 +317,45 @@ void EditorGUI::enableSendCursorPos() {
     myCursorPosUpdateBlocker = false;
 }
 
-void EditorGUI::highlight(qint32 pos, qint32 siteId) {
+void EditorGUI::loadHighlights(bool checked) {
+    std::cout<<"inizio highlight" << std::endl;
+    auto i = 0;
+    qint32 lastSiteId = -1;
+    qint32 firstPos;
+    qint32 n = 0;
+    if(checked) {
+        for (auto s : model->getSiteIds()) {
+            if (s == lastSiteId) {
+                n++;
+            } else {
+                if (lastSiteId != -1)
+                    highlight(firstPos, n, lastSiteId);
+                lastSiteId = s;
+                firstPos = i;
+                n = 1;
+            }
+            i++;
+        }
+        highlight(firstPos,n,lastSiteId);
+    }
+    else{
+        highlight(0,model->getSiteIds().size(),-1);
+    }
+
+}
+
+void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId) {
 //    std::cout << "highlight " << pos << " siteId " << siteId << std::endl;
     auto cursor = getRemoteCursor(0);
     auto format = QTextCharFormat();
 
-    if (!model->getHighlighting())
+    if (siteId != -1)
         format = getHighlightFormat(siteId);
     else
         format.setBackground(QColor("white"));
     signalBlocker = !signalBlocker;
-    cursor->setPosition(pos - 1, QTextCursor::MoveAnchor);
-    cursor->setPosition(pos, QTextCursor::KeepAnchor);
+    cursor->setPosition(pos , QTextCursor::MoveAnchor);
+    cursor->setPosition(pos+n, QTextCursor::KeepAnchor);
     cursor->mergeCharFormat(format);
     signalBlocker = !signalBlocker;
 }

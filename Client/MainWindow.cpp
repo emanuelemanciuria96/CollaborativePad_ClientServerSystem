@@ -103,14 +103,14 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
     connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::startSignIn);
     connect(widgetSignIn, &SignInWidget::backToLogIn, this, &MainWindow::backToLogIn);
-    connect(highlightAction, &QAction::triggered, shEditor, &SharedEditor::highlightSymbols);
+    connect(highlightAction, &QAction::triggered, editor, &EditorGUI::loadHighlights);
     connect(shEditor, &SharedEditor::setCharFormat, editor, &EditorGUI::setCharFormat);
     connect(shEditor, &SharedEditor::returnToGrid, this, &MainWindow::clsFile);
     connect(closeAction, &QAction::triggered, shEditor, &SharedEditor::requireFileClose);
     connect(pdfAction, &QAction::triggered, editor, &EditorGUI::exportToPdf);
     connect(addAction, &QAction::triggered, gridView, &FileSystemGridView::addFile);
     connect(backAction, &QAction::triggered, gridView, &FileSystemGridView::reloadBack);
-    connect(shEditor, &SharedEditor::highlight, editor, &EditorGUI::highlight);
+//    connect(shEditor, &SharedEditor::highlight, editor, &EditorGUI::highlight);
     connect(widgetSignIn, &SignInWidget::registerRequest, shEditor, &SharedEditor::sendRegisterRequest);
     connect(addUserWidget, &AddUserWidget::searchUser, shEditor, &SharedEditor::searchUser);
     connect(shEditor, &SharedEditor::searchUserResult, addUserWidget, &AddUserWidget::searchUserResult);

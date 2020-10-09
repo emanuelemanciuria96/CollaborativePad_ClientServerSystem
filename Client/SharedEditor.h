@@ -116,6 +116,8 @@ public:
     bool getHighlighting() const;
     const Symbol fromPosToSymbol(int pos){ return _symbols[pos]; }
     QString to_string();
+    QVector<qint32> getSiteIds();
+
 
 };
 
