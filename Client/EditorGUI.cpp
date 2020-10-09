@@ -34,6 +34,8 @@ EditorGUI::EditorGUI(SharedEditor *model, bool highlight, QWidget *parent) : QWi
     connect(textEdit, &QTextEdit::selectionChanged, this, &EditorGUI::selectionChanged);
     connect(bufferTimer,&QTimer::timeout, this, &EditorGUI::flushBuffer);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
+    textEdit->setFontFamily("Times New Roman");
+    textEdit->setFontPointSize(12);
 }
 
 
@@ -95,6 +97,10 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             model->localErase(pos,charsRemoved);
             for (i = 0; i < charsRemoved; i++) {
                 emit updateOther(pos+i+1, QChar(),model->getSiteId(), QTextCharFormat(), Message::removal);
+            }
+            if (textEdit->toPlainText().isEmpty()) {
+                textEdit->setFontFamily("Times New Roman");
+                textEdit->setFontPointSize(12);
             }
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
