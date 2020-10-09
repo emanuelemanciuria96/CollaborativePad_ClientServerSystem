@@ -123,11 +123,10 @@ public slots:
     void setInfoWidget();
     void setInfoUsersListWidget(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
-    void recvEditorUpdate(int, QChar, qint32 siteId,const QTextCharFormat& format, Message::action_t);
     void colorChanged(const QColor &c);
     void fontChanged(const QFont &f);
 private slots:
-    void highlight(bool checked);
+//    void highlight(bool checked);
 
 signals:
     void sendComboSizeText(const QString& p);

@@ -438,7 +438,6 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
             std::cout<<" - counter found: "<<_counter<<std::endl;
             emit openTextEditor(fileOpened);
             emit transparentForMouse();
-            emit fileLoaded();
             break;
         }
     }
@@ -749,17 +748,6 @@ bool SharedEditor::getHighlighting() const {
     return highlighting;
 }
 
-QVector<qint32> SharedEditor::getSiteIds() {
-    QVector<qint32> siteIdVector;
-    std::cout << "inizio getSiteIDs" << std::endl;
-    std::for_each(_symbols.begin()+1,_symbols.end()-1,
-                  [&siteIdVector](const Symbol& s){
-                      siteIdVector.append(s.getSymId().getSiteId());
-                  });
-    std::cout << "fine getSiteIDs, dimensione " << siteIdVector.size() << std::endl;
-
-    return siteIdVector;
-}
 
 void SharedEditor::obtainUser(qint32 siteId) {
     QString str = "";

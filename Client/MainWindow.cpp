@@ -146,9 +146,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(inviteListAction, &QAction::triggered, [this](){showHideLeftDock(invitelist);});
     connect(treeShowAction, &QAction::triggered,[this](){showHideLeftDock(tree);});
     connect(editor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
-    connect(highlightEditor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
     connect(editor, &EditorGUI::userQuery,shEditor,&SharedEditor::obtainUser);
-    connect(highlightEditor, &EditorGUI::userQuery,shEditor,&SharedEditor::obtainUser);
     connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
     connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::hideNumUsers);
     connect(shEditor, &SharedEditor::addUser, usersList, &UsersList::addUser);

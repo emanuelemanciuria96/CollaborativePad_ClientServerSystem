@@ -451,21 +451,6 @@ void EditorGUI::selectionChanged() {
 //    std::cout << "selection " << hasSelection << std::endl;
 }
 
-void EditorGUI::setHorizontalScrollValue(int value) {
-    textEdit->horizontalScrollBar()->setValue(value);
-}
-
-void EditorGUI::setVerticalScrollValue(int value) {
-    textEdit->verticalScrollBar()->setValue(value);
-}
-
-int EditorGUI::getHorizontalScrollValue() {
-    return textEdit->horizontalScrollBar()->value();
-}
-
-int EditorGUI::getVerticalScrollValue() {
-    return textEdit->verticalScrollBar()->value();
-}
 
 void EditorGUI::textSize(const QString &p)
 {
