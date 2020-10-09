@@ -327,7 +327,7 @@ void Transceiver::sendAllMessages() {
 
     socket->waitForBytesWritten(-1);
 
-    std::cout<<" --- sending "<<num_mess<<" messages in once"<<std::endl;
+//    std::cout<<" --- sending "<<num_mess<<" messages in once"<<std::endl;
 
     if( !messages.empty() ) {
         timer->start(100);

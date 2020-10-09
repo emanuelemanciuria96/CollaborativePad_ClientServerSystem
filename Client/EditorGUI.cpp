@@ -93,14 +93,12 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
             model->localErase(pos,charsRemoved);
-//            QString str = "";
-//            for (i = 0; i < charsRemoved; i++) {
-//                str+="x";
-//            }
-            emit updateOther(pos+1, QChar(),model->getSiteId(), QTextCharFormat(), Message::removal);
+            for (i = 0; i < charsRemoved; i++) {
+                emit updateOther(pos+i+1, QChar(),model->getSiteId(), QTextCharFormat(), Message::removal);
+            }
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
-            //std::cout << "Inserimento carattere " << index << std::endl;
+            std::cout << "Inserimenti " << charsAdded << std::endl;
             for (i = 0; i < charsAdded; i++) {
                 QChar ch = textEdit->document()->characterAt(pos+i);
                 auto cursor = textEdit->textCursor();
@@ -108,7 +106,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 auto format = cursor.charFormat();
                 format.setBackground(QColor("white"));
                 model->localInsert(pos+i, ch , format);
-                emit updateOther(pos+1, ch,model->getSiteId(), format,Message::insertion);
+                emit updateOther(pos+i+1, ch,model->getSiteId(), format,Message::insertion);
             }
 //            model->localInsert(pos, str, textEdit->currentCharFormat());
 
@@ -124,7 +122,8 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, cons
     RemoteCursor *cursor;
 
     cursor = getRemoteCursor(siteId);
-//    std::cout << "Inseriti da siteId: " << siteId << std::endl;
+    if(highlightEditor)
+        std::cout << "InsertText del editorHighlight " << siteId << std::endl;
     ///blocco l'invio della posizione del mio cursore quando ricevo modifiche
     myCursorPosUpdateBlocker = true;
     curBlockerTimer->start(500);
@@ -188,25 +187,25 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextC
 }
 
 void EditorGUI::updateFromOtherEditor(qint32 pos, QChar ch, qint32 siteId, const QTextCharFormat &format, Message::action_t action) {
-    if(buffer->isEmpty()){
-        lastAction = action;
-        lastFormat = format;
-        firstPos = pos;
-    }
-    if(lastFormat != format || lastAction != action) {
+    if(lastFormat != format || lastAction != action || pos != tmpPos+1) {
         flushBuffer();
+    }
+    if(buffer->isEmpty()) {
         lastAction = action;
         lastFormat = format;
         firstPos = pos;
     }
-    else{
-        buffer->append(ch);
-        bufferTimer->start(100);
-    }
+    buffer->append(ch);
+    tmpPos = pos;
+    bufferTimer->start(500);
+
 }
 
 void EditorGUI::flushBuffer() {
-    updateSymbols(firstPos, *buffer,model->getSiteId(),lastFormat,lastAction);
+    if(!buffer->isEmpty()) {
+        std::cout << "flush buffer " << buffer->size() << " " << lastAction << std::endl;
+        updateSymbols(firstPos, *buffer, model->getSiteId(), lastFormat, lastAction);
+    }
     buffer->clear();
 }
 
