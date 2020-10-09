@@ -193,12 +193,12 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(copyAction, &QAction::triggered, editor->textEdit, &QTextEdit::copy);
     connect(cutAction, &QAction::triggered, editor->textEdit, &QTextEdit::cut);
     connect(redoAction, &QAction::triggered, editor->textEdit, &QTextEdit::redo);
-    connect(undoAction, &QAction::triggered, editor->textEdit, &QTextEdit::undo);
+    connect(undoAction, &QAction::triggered, editor->textEdit, &MyTextEdit::undo);
     connect(pasteAction, &QAction::triggered, highlightEditor->textEdit, &MyTextEdit::paste);
     connect(copyAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::copy);
     connect(cutAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::cut);
     connect(redoAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::redo);
-    connect(undoAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::undo);
+    connect(undoAction, &QAction::triggered, highlightEditor->textEdit, &MyTextEdit::undo);
 
     connect(boldAction, &QAction::triggered, editor, &EditorGUI::setBold);
     connect(italicAction, &QAction::triggered, editor, &EditorGUI::setItalic);

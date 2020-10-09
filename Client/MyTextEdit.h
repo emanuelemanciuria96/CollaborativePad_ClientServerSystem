@@ -30,6 +30,7 @@ protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
 signals:
     void tipRequest(int pos,QPoint globalPos);
+    void isPastingAtFirst();
 
 };
 

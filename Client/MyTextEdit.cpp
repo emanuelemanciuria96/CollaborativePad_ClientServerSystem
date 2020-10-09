@@ -107,11 +107,14 @@ void MyTextEdit::paste() {
     QTextCursor curs = this->textCursor();
     if( curs.selectionEnd()==0 || curs.selectionStart()==0 ) {
         auto data = clipboard->mimeData(QClipboard::Clipboard);
-        curs.beginEditBlock();
+
+        emit isPastingAtFirst();
+
         curs.removeSelectedText();
-        //curs.insertHtml(data->html());
-        curs.insertText(clipboard->text(QClipboard::Clipboard));
-        curs.endEditBlock();
+        curs.insertHtml(data->html());
+
+        document()->clearUndoRedoStacks(QTextDocument::UndoStack);
+
         return;
     }
     QTextEdit::paste();

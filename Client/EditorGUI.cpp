@@ -33,6 +33,7 @@ EditorGUI::EditorGUI(SharedEditor *model, bool highlight, QWidget *parent) : QWi
 //    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
     connect(textEdit, &QTextEdit::selectionChanged, this, &EditorGUI::selectionChanged);
     connect(bufferTimer,&QTimer::timeout, this, &EditorGUI::flushBuffer);
+    connect(textEdit,&MyTextEdit::isPastingAtFirst,[this](){ isPastingAtFirst = true; });
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
@@ -88,6 +89,12 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
         myCursorPosUpdateBlocker = true;
         curBlockerTimer->start(500);
 //        std::cout << "contents change " << std::endl;
+
+        if( isPastingAtFirst && charsAdded > 0){
+            charsAdded-=charsRemoved;
+            charsRemoved = 0;
+            isPastingAtFirst = false;
+        }
 
         //std::cout << "invio caratteri" << std::endl;
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri

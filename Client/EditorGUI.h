@@ -57,6 +57,7 @@ private:
     QString *buffer;
     QTimer *bufferTimer;
     qint32 firstPos;
+    bool isPastingAtFirst = false;
 
     void setUpGUI();
     void updateRemoteCursors(qint32 mySiteId, int pos);
