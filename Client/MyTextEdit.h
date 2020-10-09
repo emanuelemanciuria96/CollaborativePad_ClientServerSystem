@@ -14,13 +14,17 @@
 class MyTextEdit : public QTextEdit{
     Q_OBJECT
 private:
-    std::shared_ptr<std::vector<RemoteCursor>> remoteCursors;
+    std::shared_ptr<std::list<RemoteCursor>> remoteCursors;
     QClipboard *clipboard;
     QPalette toolTipPalette;
 
 public:
-    MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget* parent = 0);
+    MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors, QWidget* parent = 0);
     bool eventFilter(QObject *obj, QEvent *ev) override;
+
+public slots:
+    void paste();
+
 protected:
     void paintEvent(QPaintEvent *e) override;
     void contextMenuEvent(QContextMenuEvent *e) override;

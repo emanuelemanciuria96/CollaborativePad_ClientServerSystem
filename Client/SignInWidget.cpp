@@ -10,6 +10,7 @@
 #include <QtGui/QGuiApplication>
 #include "SignInWidget.h"
 #include <QScreen>
+#include <QtGui/QPainter>
 
 SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     auto innerWidget = new QWidget(this);
@@ -45,7 +46,19 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     errorLabel->setAlignment(Qt::AlignCenter);
 
     imageLabel->setFixedSize(150,150);
-    imageLabel->setPixmap(QPixmap("images/profile.jpg"));
+    QPixmap orig("images/profile.jpg");
+    int sizeR = qMax(orig.width(), orig.height());
+    QPixmap rounded = QPixmap(sizeR, sizeR);
+    rounded.fill(Qt::transparent);
+    QPainterPath path;
+    path.addEllipse(rounded.rect());
+    QPainter painter(&rounded);
+    painter.setClipPath(path);
+    painter.fillRect(rounded.rect(), Qt::black);
+    int x = qAbs(orig.width() - sizeR) / 2;
+    int y = qAbs(orig.height() - sizeR) / 2;
+    painter.drawPixmap(x, y, orig.width(), orig.height(), orig);
+    imageLabel->setPixmap(rounded);
     imageLabel->setScaledContents(true);
 
     buttons->addButton(QDialogButtonBox::Cancel);
@@ -98,9 +111,9 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     //sezione grafica
     title->setStyleSheet("QLabel {color: black; font: 18pt}");
     auto style = innerWidget->styleSheet();
-    style.append("QWidget{background-color: #FAFAFA;  }"
-                 "QLineEdit{font:9pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray}"
-                 "QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+    style.append("QWidget{background-color: #FAFAFA; }"
+                 "QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background: #3A70D5; color:white}"
+                 "QLineEdit{font:9pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}");
     innerWidget->setStyleSheet(style);
     loadImageButton->setStyleSheet("QPushButton {font: 9pt; padding: 8; padding-right:15; padding-left:15; border-style: solid; border-width:1px; "
                                    "border-color:#3A70D5; background:white; color:#3A70D5}");
@@ -126,8 +139,20 @@ void SignInWidget::openFileDialog() {
         auto imgsize = std::min(image.width(), image.height());
         auto rect = QRect((image.width() - imgsize) / 2,(image.height() - imgsize) / 2, imgsize, imgsize);
         auto crop = image.copy(rect);
-        crop.save("images/temp.jpg", "JPG", 50);
-        imageLabel->setPixmap(QPixmap("images/temp.jpg"));
+        crop.save("images/temp.jpg", "JPG", 10);
+        QPixmap orig("images/temp.jpg");
+        int size = qMax(orig.width(), orig.height());
+        QPixmap rounded = QPixmap(size, size);
+        rounded.fill(Qt::transparent);
+        QPainterPath path;
+        path.addEllipse(rounded.rect());
+        QPainter painter(&rounded);
+        painter.setClipPath(path);
+        painter.fillRect(rounded.rect(), Qt::black);
+        int x = qAbs(orig.width() - size) / 2;
+        int y = qAbs(orig.height() - size) / 2;
+        painter.drawPixmap(x, y, orig.width(), orig.height(), orig);
+        imageLabel->setPixmap(rounded);
         QFile::remove("images/temp.jpg");
     }
 }

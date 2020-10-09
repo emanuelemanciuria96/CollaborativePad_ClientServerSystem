@@ -17,6 +17,15 @@ InfoWidgetEdit::InfoWidgetEdit(QWidget *parent)
     connect(ui->changeImageButton, &QPushButton::clicked, this, &InfoWidgetEdit::openFileDialog);
     connect(ui->saveButton, &QPushButton::clicked, this, &InfoWidgetEdit::emitUpdateInfo);
     connect(ui->cancelButton, &QPushButton::clicked, this, &InfoWidgetEdit::closeEdit);
+    ui->label_3->setStyleSheet("QLabel{color:#3A70D5; font: 12pt}");
+    ui->label_5->setStyleSheet("QLabel{color:#3A70D5; font: 12pt}");
+    ui->label_7->setStyleSheet("QLabel{color:#3A70D5; font: 12pt}");
+    ui->changeImageButton->setStyleSheet("QPushButton {font: 9pt; padding: 8; padding-right:15; padding-left:15; border-style: solid; border-width:1px; "
+                                         "border-color:#3A70D5; background:white; color:#3A70D5}");
+    ui->editEmail->setStyleSheet("QLineEdit{font:12pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}");
+    ui->editName->setStyleSheet("QLineEdit{font:12pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}");
+    ui->editUser->setStyleSheet("QLineEdit{font:12pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}");
+
 }
 
 InfoWidgetEdit::~InfoWidgetEdit()
@@ -38,7 +47,7 @@ void InfoWidgetEdit::openFileDialog() {
         auto imgsize = std::min(image.width(), image.height());
         auto rect = QRect((image.width() - imgsize) / 2,(image.height() - imgsize) / 2, imgsize, imgsize);
         auto crop = image.copy(rect);
-        crop.save("images/temp.jpg", "JPG", 50);
+        crop.save("images/temp.jpg", "JPG", 10);
         QPixmap orig("images/temp.jpg");
         int size = qMax(orig.width(), orig.height());
         QPixmap rounded = QPixmap(size, size);

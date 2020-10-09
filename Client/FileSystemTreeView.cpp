@@ -42,6 +42,9 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
     connect(this, &QWidget::customContextMenuRequested, this, &FileSystemTreeView::openCustomMenu);
     connect(this, &FileSystemTreeView::itemChanged, this, &FileSystemTreeView::renameFile);
 
+//    setStyleSheet("QMenu{background:white; padding:1px}"
+//                  "QMenu::item:selected {color:black; background: blue}"
+//                  "QMenu::item:pressed {background:rgba(100, 100, 100, 255)}");
 }
 
 void FileSystemTreeView::setupRightClickMenu() {
@@ -82,6 +85,7 @@ void FileSystemTreeView::openCustomMenu(const QPoint &pos) {
     }
     else if( selectedAction->text() == "Rename" ){
         previousName = rightClickedNode->text(0);
+        isEditing = true;
         this->editItem(rightClickedNode,0);
     }
     else if ( selectedAction->text() == "Invite" ) {
@@ -105,11 +109,14 @@ QTreeWidgetItem* FileSystemTreeView::addChild(QTreeWidgetItem *parent, QString n
     child->setText(0, name);
 
     if( description == "FILE" ) {
+        child->setText(1, "FILE");
         child->setIcon(0, file_icn);
         child->setFlags(child->flags() | Qt::ItemIsEditable );
     }
-    else
+    else {
         child->setIcon(0, dir_close);
+        child->setText(1, "DIR");
+    }
 
     parent->addChild(child);
 
@@ -144,8 +151,7 @@ void FileSystemTreeView::constructFromPaths(const QVector<QString> &paths) {
         }
     }
 
-    this->sortItems(0,Qt::AscendingOrder);
-
+    sort();
 }
 
 bool FileSystemTreeView::isChild(QTreeWidgetItem *parent, QString &name) {
@@ -177,9 +183,8 @@ void FileSystemTreeView::insertFile(){
     emit newFileUpdateGrid(vec);
 
     previousName = defaultName;
+    isEditing = true;
     this->editItem(newFile,0);
-
-    this->sortItems(0,Qt::AscendingOrder);
 
 }
 
@@ -200,6 +205,8 @@ void FileSystemTreeView::openFile(QTreeWidgetItem *item, int column) {
 
 void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
 
+    isEditing = false;
+
     if( !isRenaming ) return;
 
     QString actualName = item->text(0);
@@ -209,6 +216,7 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
         isRenaming = false;
         item->setText(0,previousName);
         isRenaming = true;
+        previousName = "";
         return;
     }
 
@@ -222,8 +230,9 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
     auto node = model.find(previousName);
     model.insert(std::make_pair(actualName, node->second));
     model.erase(node);
+    previousName = "";
 
-    this->sortItems(0,Qt::AscendingOrder);
+    sort();
 
 }
 
@@ -259,9 +268,7 @@ void FileSystemTreeView::removeFile(QTreeWidgetItem *item) {
     emit rmvFileRequest(name);
 }
 
-void FileSystemTreeView::editFileName(QString &oldName, QString &newName) {
-
-    std::cout<<"renamed file from <"<<oldName.toStdString()<<"> to <"<<newName.toStdString()<<">"<<std::endl;
+void FileSystemTreeView::editFileName(const QString &oldName, const QString &newName) {
 
     if(model.empty()) return;
 
@@ -278,6 +285,9 @@ void FileSystemTreeView::editFileName(QString &oldName, QString &newName) {
 
     model.insert(std::make_pair(newName,node->second));
     model.erase(node);
+
+    sort();
+
 }
 
 void FileSystemTreeView::remoteFileDeletion(QString &fileName) {
@@ -304,8 +314,10 @@ FileSystemTreeView::~FileSystemTreeView() {
 
 void FileSystemTreeView::mousePressEvent(QMouseEvent *ev) {
     auto item = this->itemAt(ev->pos());
-    if( item == nullptr)
+    if( item == nullptr) {
         this->clearSelection();
+        previousName="";
+    }
     QTreeView::mousePressEvent(ev);
 }
 
@@ -317,12 +329,34 @@ void FileSystemTreeView::keyPressEvent(QKeyEvent *ev) {
         }
     }
 
-    if(ev->key() == Qt::Key_Return){
+    if(ev->key() == Qt::Key_Return && !isEditing){
 
         auto items = this->selectedItems();
         if( items.size() == 1 )
             openFile(items.first(),0);
     }
     QTreeView::keyPressEvent(ev);
+}
+
+void FileSystemTreeView::sort() {
+    auto children  = root->takeChildren();
+    int i = 0;
+    for( ;i<children.size();i++){
+        int j = 0;
+        for( ; j<children.size()-i-1; j++){
+            if(children[j]->text(1)>children[j+1]->text(1) ||
+                (children[j]->text(1)==children[j+1]->text(1) && children[j]->text(0)>children[j+1]->text(0)) ) {
+                children.swapItemsAt(j,j+1);
+            }
+        }
+    }
+
+    for(auto c: children)
+        if( c->text(1)=="DIR")
+            c->sortChildren(0,Qt::AscendingOrder);
+
+
+    root->insertChildren(0,children);
+
 }
 

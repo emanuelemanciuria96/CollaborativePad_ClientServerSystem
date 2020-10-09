@@ -8,7 +8,7 @@
 #include <QVariant>
 #include "UserInfo.h"
 
-bool UserInfo::obtainImage(QString &connectionId) {
+bool UserInfo::obtainInfo(QString &connectionId) {
     auto db = QSqlDatabase::database(connectionId+"_login");
     db.setDatabaseName("db/login.db");
 
@@ -17,13 +17,16 @@ bool UserInfo::obtainImage(QString &connectionId) {
     }
 
     QSqlQuery query(db);
-    if(!query.exec("SELECT IMAGE FROM LOGIN WHERE USER='"+_username+"'"))
+    if(!query.exec("SELECT IMAGE, NAME, EMAIL FROM LOGIN WHERE USER='"+_username+"'"))
         return false;
 
     db.close();
 
-    if(query.first())
+    if(query.first()) {
         _image = QPixmap(query.value("IMAGE").toString());
+        _name = query.value("NAME").toString();
+        _email = query.value("EMAIL").toString();
+    }
     else
         return false;
 

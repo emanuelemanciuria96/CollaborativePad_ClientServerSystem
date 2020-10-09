@@ -38,6 +38,7 @@ static bool initializeDb()
         query.exec("DELETE FROM LOGIN");
         query.exec("INSERT INTO LOGIN ('USER', 'PASS', 'SITEID', 'IMAGE', 'NAME', 'EMAIL') VALUES ('q', '8a5e1d339fafc39350fd8cf1d7ca7982091c27f6b77f75bd4ddab3df425b4f8c', '1', '', 'Mario Rossi', 'mario.rossi@mail.it');");
         query.exec("INSERT INTO LOGIN ('USER', 'PASS', 'SITEID', 'IMAGE', 'NAME', 'EMAIL') VALUES ('w', 'f1cfdca558ac0c00464ca0f3e265ec6fb32c57caeb106fbfed9f174f6b814642', '2', '', 'Mario Bianchi', 'mario.bianchi@mail.it');");
+        query.exec("INSERT INTO LOGIN ('USER', 'PASS', 'SITEID', 'IMAGE', 'NAME', 'EMAIL') VALUES ('e', '42538602949f370aa331d2c07a1ee7ff26caac9cc676288f94b82eb2188b8465', '3', '', 'Mario Biondi', 'mario.biondi@mail.it');");
         query.exec("SELECT * FROM LOGIN");
 
         std::cout << "Clients in database:" << std::endl;
@@ -74,14 +75,15 @@ static bool initializeDb()
          "FSNAME         TEXT," \
          "INVITE         INT, PRIMARY KEY (SITEID, NAME, OWNER));");
         query.exec("DELETE FROM FILES");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova1', 'q', 'prova1.json', '0');");
-        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova2', 'q', 'prova2.json', '0');");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova3', 'q', 'prova3.json', '0');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova1', 'q', 'prova1.json', '0');");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova4', 'q', 'prova4.json', '0');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('1', 'prova2', 'q', 'prova2.json', '0');");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('2', 'prova1', 'q', 'prova1.json', '1');");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('2', 'prova2', 'q', 'prova2.json', '1');");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('2', 'prova3', 'q', 'prova3.json', '1');");
         query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('2', 'prova4', 'q', 'prova4.json', '1');");
+        query.exec("INSERT INTO FILES ('SITEID', 'NAME', 'OWNER', 'FSNAME', 'INVITE') VALUES ('3', 'prova1', 'q', 'prova1.json', '0');");
         query.exec("SELECT * FROM FILES");
 
         std::cout << "SITEID" << "\t\t\t\t" << "NAME" << "\t\t\t\t" << "OWNER" << "\t\t\t\t" << "FSNAME" << std::endl;

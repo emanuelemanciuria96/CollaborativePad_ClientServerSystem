@@ -17,6 +17,7 @@
 #include "AddUserWidget.h"
 #include "InviteUserWidget.h"
 #include "UriWidget.h"
+#include "InfoUsersListWidget.h"
 #include <QScrollArea>
 #include "UsersList.h"
 
@@ -33,6 +34,7 @@ private:
     FileSystemTreeView *treeView;
     FileSystemGridView *gridView;
     EditorGUI *editor;
+    EditorGUI *highlightEditor;
     LoginDialog *loginDialog;
     QStatusBar* statusBar;
     QToolBar* toolBar;
@@ -58,7 +60,9 @@ private:
     QAction* boldAction;
     QAction* italicAction;
     QAction* underlineAction;
-
+    QComboBox* comboSize;
+    QFontComboBox* comboFont;
+    QAction* textColorAction;
     QAction* userInfoAction;
     SignInWidget *widgetSignIn;
     AddUserWidget* addUserWidget;
@@ -72,6 +76,9 @@ private:
     QLabel *numUsers;
     QWidget *lastCentral;
     QDockWidget *lastDock;
+    InfoUsersListWidget *infoUsersListWidget;
+    QWidget *nullWidg;
+    QLabel* spinner;
 
     void loginSettings();
     void editorSettings(SharedEditor* shEditor);
@@ -95,6 +102,7 @@ private:
     void setMainPalette();
 
 public slots:
+    void hideEditor(QString& fileName);
     void clipboardDataChanged()
     {
 #ifndef QT_NO_CLIPBOARD
@@ -105,7 +113,7 @@ public slots:
     void loginFinished();
     void startSignIn();
     void backToLogIn();
-    void opnFileGrid(QString fileName);
+    void opnFileGrid(QString& fileName);
     void clsFile();
     void openAddUser(const QString& fileName);
     void changeToolbarProfileImage(const QPixmap& image);
@@ -113,7 +121,16 @@ public slots:
     void hideNumUsers();
     void transparentForMouse();
     void setInfoWidget();
+    void setInfoUsersListWidget(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
+    void recvEditorUpdate(int, QChar, qint32 siteId,const QTextCharFormat& format, Message::action_t);
+    void colorChanged(const QColor &c);
+    void fontChanged(const QFont &f);
+private slots:
+    void highlight(bool checked);
+
+signals:
+    void sendComboSizeText(const QString& p);
 };
 
 

@@ -24,5 +24,7 @@ int main(int argc, char **argv) {
         auto* proc = new QProcess();
         proc->start(QCoreApplication::applicationFilePath());
     }
+
+    delete shEditor;
     return returncode;
 }

@@ -43,9 +43,12 @@ private:
     bool isArrivingFile;
     QString _user;
     bool highlighting;
+    bool fileOpening = false;
 
     qint32 getIndex(qint32 index, Symbol symbol);
+    qint32 getIndexDichotomous(qint32 index, Symbol symbol);
     void closeFile();
+    void findCounter();
 
     void processMessages( StringMessages& strMess );
     void processLoginInfo( LoginInfo& logInf );
@@ -81,7 +84,10 @@ public slots:
     void obtainUser(qint32 siteId);
 
 signals:
-    void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, Message::action_t action);
+    void hideEditor(QString& fileName);
+    void openTextEditor(QString &fileName);
+    void transparentForMouse();
+    void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
     void deleteAllText();
     void filePathsArrived(const QVector<QString>& paths);
     void fileNameEdited(QString& oldName, QString& newName);
@@ -108,16 +114,17 @@ signals:
 
 public:
     explicit SharedEditor(QObject *parent = 0);
-    void localInsert( qint32 index, QString& str, QTextCharFormat format);
+    void localInsert( qint32 index, QChar& ch, QTextCharFormat& format);
     void localErase( qint32 index, qint32 num);
     qint32 getSiteId() const;
     void sendCursorPos(qint32 index);
     void highlightSymbols(bool checked);
     bool getHighlighting() const;
-    const Symbol fromPosToSymbol(int pos){ return _symbols[pos]; }
-    QString to_string();
-    QVector<qint32> getSiteIds();
+    bool isFileOpening() const;
 
+    const Symbol fromPosToSymbol(int pos){ return _symbols[pos]; }
+    virtual ~SharedEditor();
+    QVector<qint32> getSiteIds();
 
 };
 

@@ -28,6 +28,7 @@ ServerThread::ServerThread(qintptr socketDesc, std::shared_ptr<MessageHandler> m
     this->_username = "";
     this->_siteID = -1;
     this->operatingFileName = "";
+    this->isFileSent = false;
 }
 
 void ServerThread::run()
@@ -74,7 +75,7 @@ void ServerThread::recvPacket() {
 
     while(this->socket->bytesAvailable()>0) {
 
-        // std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
+        //std::cout<<"--starting number of Available  Bytes: "<<socket->bytesAvailable()<<std::endl;
         if(this->socketSize==0) {
             in >> bytes;
             this->socketSize = bytes;
@@ -257,30 +258,53 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 
 void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
     qint32 siteId;
-    QString formattedMessages;
+    QVector<Message> msgs;
+    QString file;
     in.setDevice(socket.get());
     in.setVersion(QDataStream::Qt_5_5);
 
-    in >> siteId  >> formattedMessages;
+    in >> siteId ;
 
-    auto *strMess = new StringMessages(formattedMessages,siteId);
-    packet.setPayload(std::shared_ptr<StringMessages>(strMess));
+    auto ptr = std::make_shared<StringMessages>(siteId);
+    qint32 numBytes;
+
+    in >> numBytes;
+    auto stringBytes = socket->bytesAvailable();
+    in>>file;
+    stringBytes -= socket->bytesAvailable();
+
+    numBytes-=stringBytes;
+    while( numBytes > 0 ){
+        auto tmp = socket->bytesAvailable();
+        qint32 action;
+        qint32 messSiteId;
+        qint32 localIndx;
+        QChar value;
+        qint32 symSiteId;
+        quint32 counter;
+        QVector<quint32> pos;
+        QTextCharFormat format;
+
+        in >> action >> messSiteId >> localIndx >> value >> symSiteId >> counter >> pos >> format;
+
+        auto stdVecPos = pos.toStdVector();
+        Symbol s(value,symSiteId,counter,stdVecPos);
+        s.setFormat(format);
+        Message m((Message::action_t)action,messSiteId,s,localIndx);
+
+        ptr->appendMessage(m);
+        numBytes-=(tmp-socket->bytesAvailable());
+    }
+
+    ptr->setFileName(file);
+    packet.setPayload(ptr);
 
     // std::cout<<" --- number of arrived messages at once "<<strMess->stringToMessages().size()<<std::endl;
 
     //se l'utente non è loggato non deve poter inviare pacchetti con dentro Message
     //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
-    if(!_username.isEmpty()) {
-
-        for (auto msg: strMess->stringToMessages()) {
-
-            std::shared_ptr<Message> m = std::make_shared<Message>(msg);
-            if (msg.getAction() == Message::insertion) {
-                msgHandler->submit(NetworkServer::localInsert, m);
-            } else {
-                msgHandler->submit(NetworkServer::localErase, m);
-            }
-        }
+    if(!_username.isEmpty() ) {
+        msgHandler->submit(&NetworkServer::localModification,ptr);
         _sockets.broadcast(operatingFileName,_siteID,packet);
     }
 
@@ -349,12 +373,13 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                 msgHandler->submit(&NetworkServer::processOpnCommand, command);
                 sl.unlock();
 
+                isFileSent = false;
                 operatingFileName = fileName;
 
                 auto shr = std::make_shared<UserInfo>(_siteID,UserInfo::conn_broad,_username);
                 DataPacket pkt( 0,0,DataPacket::user_info, shr);
                 std::cout<<"user: "+_username.toStdString()+" appena connesso al file "+fileName.toStdString()<<std::endl;
-                if(shr->obtainImage(threadId))
+                if(shr->obtainInfo(threadId))
                     _sockets.broadcast(fileName,_siteID,pkt);
                 else
                     std::cout<<"Casino pazzesco, errore assolutamente da gestire!"<<std::endl;
@@ -371,6 +396,8 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
             if( operatingFileName!="" ) {
                 _sockets.detachSocket(operatingFileName, _siteID);
+                QVector<QString> vec = {operatingFileName};
+                command->setArgs(vec);
                 msgHandler->submit(&NetworkServer::processClsCommand, command);
                 _sockets.broadcast(operatingFileName,_siteID,pkt2);
                 operatingFileName = "";
@@ -463,8 +490,10 @@ void ServerThread::recvUserInfo(DataPacket &packet, QDataStream &in) {
     qint32 type;
     QString user;
     QPixmap image;
+    QString name;
+    QString email;
 
-    in >> siteId >> type >> user >> image;
+    in >> siteId >> type >> user >> image >> name >> email;
 
     if(type == UserInfo::user_reqest) {
         auto ptr = std::make_shared<UserInfo>(siteId, (UserInfo::info_t) type, user);
@@ -554,19 +583,29 @@ void ServerThread::sendMessage(DataPacket& packet){
     out.setVersion(QDataStream::Qt_5_5);
 
     QBuffer buf;
-    buf.open(QBuffer::WriteOnly);
+    buf.open(QBuffer::ReadWrite);
     QDataStream tmp(&buf);
 
     auto strMess = std::dynamic_pointer_cast<StringMessages>(packet.getPayload());
-    auto formMess = strMess->getFormattedMessages();
+    auto file = strMess->getFileName();
 
-    //std::cout<<" --- sending "<<strMess->stringToMessages().size()<<" messages in once"<<std::endl;
+    if( file != operatingFileName )
+        return;
 
-    tmp << formMess;
-    qint32 bytes = fixedBytesWritten + buf.data().size();
+    tmp << file;
 
-    out << bytes<<packet.getSource() << packet.getErrcode() << packet.getTypeOfData() <<
-        strMess->getSiteId() << strMess->getFormattedMessages();
+    for(auto m : strMess->getQueue()){
+        auto sym = m.getSymbol();
+        tmp<<m.getAction()<<m.getSiteId()<<m.getLocalIndex()
+           <<sym.getValue()<<sym.getSymId().getSiteId()<<sym.getSymId().getCount()
+           <<QVector<quint32>::fromStdVector(sym.getPos())<<sym.getFormat();
+    }
+
+    qint32 bytes = fixedBytesWritten + buf.data().size() + 4; // buf.data() aggiunge 4 byte per la dimensione
+    DataPacket pkt(_siteID,0,DataPacket::textTyping,strMess);
+    out << bytes << _siteID << 0 <<(quint32) DataPacket::textTyping <<
+        strMess->getSiteId() << buf.data();
+
     socket->waitForBytesWritten(-1);
 
     std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
@@ -603,12 +642,17 @@ void ServerThread::sendFileInfo(DataPacket& packet){
     out.setDevice(socket.get());
     out.setVersion(QDataStream::Qt_5_5);
 
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+
     auto ptr = std::dynamic_pointer_cast<FileInfo>(packet.getPayload());
 
-    qint32 bytes = fixedBytesWritten + sizeof(quint32);
+    tmp <<(quint32) ptr->getFileInfo() << ptr->getServerFileName();
+    qint32 bytes = fixedBytesWritten + buf.data().size();
 
-    out << bytes<<packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData();
-    out << ptr->getSiteId()<<(quint32) ptr->getFileInfo();
+    out << bytes<<packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData()
+       << ptr->getSiteId()<<(quint32) ptr->getFileInfo() << ptr->getServerFileName();
     socket->waitForBytesWritten(-1);
 
     std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
@@ -616,6 +660,8 @@ void ServerThread::sendFileInfo(DataPacket& packet){
 }
 
 void ServerThread::sendUserInfo(DataPacket &packet) {
+
+    if( operatingFileName == "") return;
 
     QDataStream out;
     out.setDevice(socket.get());
@@ -626,27 +672,35 @@ void ServerThread::sendUserInfo(DataPacket &packet) {
 
     auto ptr = std::dynamic_pointer_cast<UserInfo>(packet.getPayload());
 
+    // ho bisogno che il file, non solo sia aperto, ma sia anche stato inviato
+    if(ptr->getType() != UserInfo::user_reqest && !isFileSent ) {
+        std::cout<<" -- sending userInfo back in the queue"<<std::endl;
+        emit socket->sendMessage(packet);
+        return;
+    }
+
     // quando devo inviare uno UserInfo controllo se è un broadcast o un acknowledgment
     // se è broadcast devo ritornare un ACK
     if(ptr->getType() == UserInfo::conn_broad){
 
         auto shr = std::make_shared<UserInfo>(_siteID,UserInfo::conn_ack,_username);
         DataPacket pkt( 0,0,DataPacket::user_info, shr);
-        if(shr->obtainImage(threadId)) {
+        if(shr->obtainInfo(threadId)) {
             QVector<qint32> vec;
             vec.push_back(ptr->getSiteId());
             _sockets.broadcast(vec, pkt);
         }
         else
             std::cout<<"Casino pazzesco, errore assolutamente da gestire!"<<std::endl;
+
     }
 
-    tmp << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage();
+    tmp << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
 
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
     out << bytes<<packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData();
-    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
     socket->waitForBytesWritten(-1);
 
 }
@@ -695,38 +749,40 @@ void ServerThread::sendFile() {
     std::vector<Message> vm;
     int index = 0;
 
+    std::cout<<"inizio ad inviare il file "+operatingFileName.toStdString()<<std::endl;
     // comunico al client che sto inviando il file
     {
-        DataPacket pkt( 0,0,DataPacket::file_info, std::make_shared<FileInfo>(FileInfo::start,_siteID) );
+        DataPacket pkt( 0,0,DataPacket::file_info, std::make_shared<FileInfo>(FileInfo::start,_siteID,operatingFileName) );
         sendFileInfo(pkt);
     }
 
-    for (auto s: _file) {
+    auto ptr = std::make_shared<StringMessages>(vm, 0, operatingFileName);
+
+    for (auto s: *_file) {
         Message m(Message::insertion, 0, s, index++);
-
-        if ( vm.size()+1 >= 1000) {
-            std::cout<<" --- sending (1) "<<vm.size()<<" messages in once"<<std::endl;
-            DataPacket pkt( 0 , 0, DataPacket::textTyping, std::make_shared<StringMessages>(vm, 0) );
+        ptr->appendMessage(m);
+        if( ptr->size() >= 1000 ){
+            DataPacket pkt( 0 , 0, DataPacket::textTyping, ptr);
             sendMessage(pkt);
-            std::cout<<" --- sending (2) "<<std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->stringToMessages().size()<<" messages in once"<<std::endl;
-            vm.clear();
+            std::cout<<" --- sending (2) "<<ptr->size()<<" messages in once"<<std::endl;
+            ptr->clearQueue();
         }
-
-        vm.push_back(m);
     }
-
-    if( !vm.empty() ){
-        DataPacket pkt( 0,0,DataPacket::textTyping,std::make_shared<StringMessages>(vm, 0));
+    if ( ptr->size()!=0 ) {
+        DataPacket pkt( 0 , 0, DataPacket::textTyping, ptr);
         sendMessage(pkt);
+        std::cout<<" --- sending (2) "<<ptr->size()<<" messages in once"<<std::endl;
     }
 
-    _file.clear();
+    _file.reset();
 
     // comunico al client che è terminato l'invio del file
     {
-        DataPacket pkt(0,0,DataPacket::file_info,std::make_shared<FileInfo>(FileInfo::eof,0) );
+        DataPacket pkt(0,0,DataPacket::file_info,std::make_shared<FileInfo>(FileInfo::eof,0,operatingFileName) );
         sendFileInfo(pkt);
     }
+
+    isFileSent = true;
 
 }
 
@@ -741,14 +797,9 @@ void ServerThread::disconnected(){
         auto comm = std::make_shared<Command>(_siteID, Command::cls, vec);
         msgHandler->submit(&NetworkServer::processClsCommand,comm);
 
-        DataPacket pkt1(_siteID, 0, DataPacket::cursorPos);
-        auto symbol = Symbol();
-        pkt1.setPayload(std::make_shared<CursorPosition>(symbol,-1,_siteID));
-
-        DataPacket pkt2(_siteID, 0, DataPacket::user_info);
-        pkt2.setPayload(std::make_shared<UserInfo>(_siteID,UserInfo::disconnect,_username));
-        _sockets.broadcast(operatingFileName,_siteID,pkt1);
-        _sockets.broadcast(operatingFileName,_siteID,pkt2);
+        DataPacket pkt(_siteID, 0, DataPacket::user_info);
+        pkt.setPayload(std::make_shared<UserInfo>(_siteID,UserInfo::disconnect,_username));
+        _sockets.broadcast(operatingFileName,_siteID,pkt);
 
     }
 

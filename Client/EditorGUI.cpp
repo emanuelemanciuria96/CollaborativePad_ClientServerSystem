@@ -9,8 +9,10 @@
 #include <QScrollBar>
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QToolTip>
+#include <QtWidgets/QColorDialog>
 
 EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
+    remoteCursors = std::make_shared<std::list<RemoteCursor>>();
     signalBlocker = false;
     myCursorPosUpdateBlocker = false;
     setModel(model);
@@ -20,18 +22,19 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     timer = new QTimer(this);
     curBlockerTimer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &EditorGUI::enableSendCursorPos);
-    connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
+    //connect(timer, &QTimer::timeout, this, &EditorGUI::flushInsertQueue);
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     connect(textEdit, &MyTextEdit::tipRequest, this,&EditorGUI::highlightedTip);
-    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
-
+    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::currentCharFormatChanged);
+//    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
+    connect(textEdit, &QTextEdit::selectionChanged, this, &EditorGUI::selectionChanged);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
 }
 
 
 void EditorGUI::setUpGUI() {
 //    inizializzo gli elementi
-    textEdit = new MyTextEdit(&remoteCursors, this);
+    textEdit = new MyTextEdit(remoteCursors, this);
     setLayout(new QVBoxLayout(this));
     this->layout()->setContentsMargins(30, 0, 30, 0);
     this->layout()->addWidget(textEdit);
@@ -43,7 +46,6 @@ void EditorGUI::setUpGUI() {
     textEdit->setLineWrapMode(QTextEdit::FixedPixelWidth);
     textEdit->setLineWrapColumnOrWidth(880);
     textEdit->setMaximumWidth(888);
-    textEdit->setAlignment(Qt::AlignCenter);
 
     connect(this, SIGNAL(clear()), textEdit, SLOT(clear()));
 
@@ -62,47 +64,8 @@ void EditorGUI::setUpGUI() {
     connect(textEdit->document(), SIGNAL(contentsChange(int, int, int)), this, SLOT(contentsChange(int, int, int)));
     connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
 
-//    load("./file.txt");
-    loadSymbols();
 }
 
-
-void EditorGUI::loadSymbols() {
-    signalBlocker = !signalBlocker;
-    textEdit->setText(model->to_string());
-    signalBlocker = !signalBlocker;
-}
-
-/*
-void EditorGUI::setupFileActions() {
-//    QToolBar *tb = addToolBar(tr("File Actions"));
-    QMenu *menu = menuBar()->addMenu(tr("&File"));
-
-    QAction *a = menu->addAction(tr("&New"),this,&EditorGUI::fileNew);
-    a->setPriority(QAction::LowPriority);
-    a->setShortcut(QKeySequence::New);
-//    tb->addAction(a);
-
-    a = menu->addAction(tr("&Open..."), this, &EditorGUI::fileOpen);
-    a->setShortcut(QKeySequence::Open);
-//    tb->addAction(a);
-
-    menu->addSeparator();
-
-    actionSave = menu->addAction(tr("&Save"), this, &EditorGUI::fileSave);
-    actionSave->setShortcut(QKeySequence::Save);
-    actionSave->setEnabled(false);
-//    tb->addAction(actionSave);
-
-    a = menu->addAction(tr("Save &As..."), this, &EditorGUI::fileSaveAs);
-    a->setPriority(QAction::LowPriority);
-    menu->addSeparator();
-
-    a = menu->addAction(tr("&Quit"), this, &EditorGUI::close);
-    a->setShortcut(Qt::CTRL + Qt::Key_Q);
-
-}
-*/
 
 
 void EditorGUI::setCurrentFileName(QString filename) {
@@ -119,9 +82,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
     if (!signalBlocker) {
         myCursorPosUpdateBlocker = true;
         curBlockerTimer->start(500);
-//        auto blocks = textEdit->document()->blockCount();
-//        auto pages = textEdit->document()->pageCount();
-//        std::cout << "Numero blocchi: " << blocks << " Numero pagine: " << pages << std::endl;
+//        std::cout << "contents change " << std::endl;
 
         //std::cout << "invio caratteri" << std::endl;
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
@@ -129,18 +90,25 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             model->localErase(pos,charsRemoved);
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
-            //std::cout << "Inserimento carattere " << index << std::endl;
-            QString str = "";
+            std::cout << "Inserimenti " << charsAdded << std::endl;
             for (i = 0; i < charsAdded; i++) {
-                str+=textEdit->document()->characterAt(pos + i);
+                QChar ch = textEdit->document()->characterAt(pos+i);
+                auto cursor = textEdit->textCursor();
+                cursor.setPosition(pos+i+1);
+                auto format = cursor.charFormat();
+                format.setBackground(QColor("white"));
+                model->localInsert(pos+i, ch , format);
             }
-            model->localInsert(pos, str, textEdit->currentCharFormat());
+//            model->localInsert(pos, str, textEdit->currentCharFormat());
+
+            if(model->getHighlighting())
+                highlight(pos,charsAdded, model->getSiteId());
         }
 //        updateRemoteCursors(model->getSiteId(),pos);
     }
 }
 
-void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
+void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, const QTextCharFormat& format) {
     pos--;
     RemoteCursor *cursor;
 
@@ -152,8 +120,9 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId) {
 
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
+    cursor->setCharFormat(format);
     if(model->getHighlighting())
-        cursor->setCharFormat(getHighlightFormat(siteId));
+        cursor->mergeCharFormat(getHighlightFormat(siteId));
 
     cursor->insertText(value);
     //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
@@ -186,12 +155,13 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
 }
 
 //chiamata quando si ricevono modifiche
-void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action) {
+void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action) {
+//    std::cout<<"updateSymbols inizio" << std::endl;
     if (action == Message::removal) {
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId, s.size());
     } else {
-        insertText(pos, s, siteId);
+        insertText(pos, s, siteId, format);
 //        if(posLastChar<0 || index!=posLastChar+1) {
 //            flushInsertQueue();
 //            posQueue = index;
@@ -205,7 +175,7 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, Message::act
 void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos) {
     // aggiorno la posizione degli altri cursori
 
-    for (auto & remoteCursor : remoteCursors) {
+    for (auto & remoteCursor : *remoteCursors) {
         if (remoteCursor.getSiteId() != mySiteId && remoteCursor.getSiteId()>0) {
             if(!remoteCursor.labelName->isHidden())
                 drawLabel(&remoteCursor);
@@ -227,16 +197,16 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     if(siteId < 0)
         return nullptr;
 //    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
-    auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
+    auto it = std::find_if(remoteCursors->begin(), remoteCursors->end(), [siteId](const RemoteCursor &c) {
 //        std::cout << "SiteId: " << c.getSiteId() << std::endl;
         return (c.getSiteId() == siteId);
     });
-    if (it == remoteCursors.end()) {
+    if (it == remoteCursors->end()) {
         auto username = QString();
-        username = (siteId>0) ? file_writers.at(siteId) : "me";
-        remoteCursors.emplace_back(textEdit->document(), siteId, username);
-        cursor = &remoteCursors.back();
-        if(siteId!=0)
+        username = (siteId>0 && siteId != model->getSiteId()) ? file_writers.at(siteId) : "me";
+        remoteCursors->emplace_back(textEdit->document(), siteId, username);
+        cursor = &remoteCursors->back();
+        if(siteId!=0 && siteId!=model->getSiteId())
             connect(cursor->labelTimer, &QTimer::timeout, cursor->labelName, &QLabel::hide);
     } else
         cursor = (&(*it));
@@ -244,11 +214,11 @@ RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
 }
 
 void EditorGUI::removeCursor(qint32 siteId) {
-    auto it = std::find_if(remoteCursors.begin(), remoteCursors.end(), [siteId](const RemoteCursor &c) {
+    auto it = std::find_if(remoteCursors->begin(), remoteCursors->end(), [siteId](const RemoteCursor &c) {
         return (c.getSiteId() == siteId);
     });
-    if (it != remoteCursors.end()) {
-        remoteCursors.erase(it);
+    if (it != remoteCursors->end()) {
+        remoteCursors->erase(it);
         std::cout << "Remove cursor " << siteId << std::endl;
         textEdit->update();
         emit setNumUsers(--nUsers);
@@ -264,7 +234,7 @@ void EditorGUI::flushInsertQueue() {
         s.push_back(insertQueue.front());
         insertQueue.pop();
     }
-    insertText(posQueue, s, siteIdQueue);
+    insertText(posQueue, s, siteIdQueue, QTextCharFormat{});
     posLastChar = -1;
 }
 
@@ -287,7 +257,7 @@ void EditorGUI::deleteAllText() {
     signalBlocker = !signalBlocker;
     emit clear();
     signalBlocker = !signalBlocker;
-    remoteCursors.clear();
+    remoteCursors->clear();
     emit setNumUsers(nUsers=0);
 }
 
@@ -385,13 +355,15 @@ void EditorGUI::exportToPdf() {
         else
             defaultName = fileName;
         QString name = QFileDialog::getSaveFileName(this, "Export PDF", defaultName, "*.pdf");
-        if (QFileInfo(name).suffix().isEmpty()) { name.append(".pdf"); }
+        if (!name.isEmpty()) {
+            if (QFileInfo(name).suffix().isEmpty()) { name.append(".pdf"); }
 
-        QPrinter printer(QPrinter::PrinterResolution);
-        printer.setOutputFormat(QPrinter::PdfFormat);
-        printer.setPaperSize(QPrinter::A4);
-        printer.setOutputFileName(name);
-        textEdit->print(&printer);
+            QPrinter printer(QPrinter::PrinterResolution);
+            printer.setOutputFormat(QPrinter::PdfFormat);
+            printer.setPaperSize(QPrinter::A4);
+            printer.setOutputFileName(name);
+            textEdit->print(&printer);
+        }
     }
 }
 
@@ -444,8 +416,10 @@ void EditorGUI::setCharFormat(bool checked) {
 }
 
 void EditorGUI::checkCharFormat(const QTextCharFormat &f) {
-    if(model->getHighlighting())
-        textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
+    if(model->getHighlighting()) {
+        if(!textEdit->textCursor().hasSelection())
+            textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
+    }
 }
 
 void EditorGUI::setBold(bool checked) const {
@@ -467,4 +441,62 @@ void EditorGUI::setUnderline(bool checked) const {
     auto f = QTextCharFormat();
     f.setFontUnderline(checked);
     textEdit->mergeCurrentCharFormat(f);
+}
+
+void EditorGUI::selectionChanged() {
+    if(textEdit->textCursor().hasSelection())
+        hasSelection = true;
+    else
+        hasSelection = false;
+//    std::cout << "selection " << hasSelection << std::endl;
+}
+
+void EditorGUI::setHorizontalScrollValue(int value) {
+    textEdit->horizontalScrollBar()->setValue(value);
+}
+
+void EditorGUI::setVerticalScrollValue(int value) {
+    textEdit->verticalScrollBar()->setValue(value);
+}
+
+int EditorGUI::getHorizontalScrollValue() {
+    return textEdit->horizontalScrollBar()->value();
+}
+
+int EditorGUI::getVerticalScrollValue() {
+    return textEdit->verticalScrollBar()->value();
+}
+
+void EditorGUI::textSize(const QString &p)
+{
+    qreal pointSize = p.toFloat();
+    if (p.toFloat() > 0) {
+        QTextCharFormat fmt;
+        fmt.setFontPointSize(pointSize);
+        textEdit->mergeCurrentCharFormat(fmt);
+    }
+}
+
+void EditorGUI::textFamily(const QString &f)
+{
+    QTextCharFormat fmt;
+    fmt.setFontFamily(f);
+    textEdit->mergeCurrentCharFormat(fmt);
+}
+
+void EditorGUI::textColor()
+{
+    QColor col = QColorDialog::getColor(textEdit->textColor(), this);
+    if (!col.isValid())
+        return;
+    QTextCharFormat fmt;
+    fmt.setForeground(col);
+    textEdit->mergeCurrentCharFormat(fmt);
+    emit colorChanged(col);
+}
+
+void EditorGUI::currentCharFormatChanged(const QTextCharFormat &format)
+{
+    emit fontChanged(format.font());
+    emit colorChanged(format.foreground().color());
 }

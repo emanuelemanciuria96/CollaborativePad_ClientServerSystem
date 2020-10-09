@@ -54,6 +54,8 @@ void AddUserWidget::searchUserResult(LoginInfo::type_t type) {
 void AddUserWidget::emitSubmit() {
     emit submitInvite(file, user);
     this->close();
+    emit closing();
+
 }
 
 void AddUserWidget::setFile(const QString &fileName) {
@@ -65,7 +67,7 @@ void AddUserWidget::closeEvent (QCloseEvent *event){
     ui->userEdit->clear();
     ui->resultLabel->clear();
     ui->submitButton->setDisabled(true);
-    closing();
+    emit closing();
 }
 
 void AddUserWidget::editFileName(QString& oldName, QString& newName) {

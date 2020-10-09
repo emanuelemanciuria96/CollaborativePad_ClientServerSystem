@@ -12,6 +12,7 @@
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
+
 class FileSystemTreeView : public QTreeWidget{
 Q_OBJECT
 public:
@@ -24,7 +25,7 @@ public slots:
     void openFile(QTreeWidgetItem *item, int column);
     void removeFile(QTreeWidgetItem *item);
     void renameFile(QTreeWidgetItem *item, int column);
-    void editFileName(QString &oldName, QString &newName);
+    void editFileName(const QString &oldName,const QString &newName);
     void remoteFileDeletion(QString &fileName);
     void inviteUser(QTreeWidgetItem *item);
 
@@ -47,6 +48,7 @@ private:
     QIcon file_icn;
     QMenu *rightClickMenu = nullptr;
     QString previousName;
+    bool isEditing=false;
 
     void setupRightClickMenu();
     virtual void mousePressEvent(QMouseEvent *ev);
@@ -54,6 +56,7 @@ private:
     void insertFile();
     QTreeWidgetItem* addChild(QTreeWidgetItem *parent, QString name,QString description);
     bool isChild(QTreeWidgetItem *parent, QString &name);
+    void sort();
 
 };
 

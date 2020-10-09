@@ -23,7 +23,10 @@ public:
     info_t getType(){ return _type; }
     QString getUsername(){ return _username; }
     QPixmap getImage(){ return _image; }
-    bool obtainImage(QString& connectionId);
+    const QString &getName() const { return _name; }
+    const QString &getEmail() const { return _email; }
+
+    bool obtainInfo(QString& connectionId);
     bool obtainUser(QString& connectionId);
 
 private:
@@ -31,7 +34,8 @@ private:
     info_t _type;
     QString _username;
     QPixmap _image;
-
+    QString _name;
+    QString _email;
 };
 
 

@@ -12,17 +12,20 @@
 #include <QMouseEvent>
 #include <QtGui/QClipboard>
 #include <QMenu>
+#include <QMimeData>
 
 
-MyTextEdit::MyTextEdit(std::vector<RemoteCursor> *remoteCursors, QWidget *parent) : QTextEdit(parent){
-    this->remoteCursors = std::shared_ptr<std::vector<RemoteCursor>>(remoteCursors);
+MyTextEdit::MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors, QWidget *parent) : QTextEdit(parent){
+    this->remoteCursors = remoteCursors;
     this->installEventFilter(this);
     clipboard = QApplication::clipboard();
 
     setMouseTracking(true);
     installEventFilter(this);
     toolTipPalette = QToolTip::palette();
-
+    auto font = QFont();
+    font.setPointSize(10);
+    this->setFont(font);
 }
 
 void MyTextEdit::paintEvent(QPaintEvent *e) {
@@ -54,11 +57,9 @@ void MyTextEdit::paintEvent(QPaintEvent *e) {
 
 bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
     if( obj==this && ev->type() == QEvent::KeyPress){
-        auto event = dynamic_cast<QKeyEvent*>(ev);
-        QTextCursor curs = this->textCursor();
-        if( (curs.selectionEnd()==0 || curs.selectionStart()==0) && event->matches(QKeySequence::Paste)) {
-            curs.removeSelectedText();
-            curs.insertText(clipboard->text(QClipboard::Clipboard));
+        auto event = static_cast<QKeyEvent*>(ev);
+        if(event->matches(QKeySequence::Paste)) {
+            this->paste();
             return true;
         }
         return false;
@@ -96,10 +97,23 @@ void MyTextEdit::contextMenuEvent(QContextMenuEvent *e) {
     }
 
     menu->actions().at(5)->disconnect();
-    connect(menu->actions().at(5),&QAction::triggered,[this](bool chk = false){
-        auto keyEv = new QKeyEvent(QEvent::KeyPress,86,Qt::ControlModifier,47,86,2);
-        QApplication::postEvent(this, keyEv);});
+    connect(menu->actions().at(5),&QAction::triggered,this, &MyTextEdit::paste);
     menu->exec(e->globalPos());
     delete menu;
 }
 
+void MyTextEdit::paste() {
+
+    QTextCursor curs = this->textCursor();
+    if( curs.selectionEnd()==0 || curs.selectionStart()==0 ) {
+        auto data = clipboard->mimeData(QClipboard::Clipboard);
+        curs.beginEditBlock();
+        curs.removeSelectedText();
+        //curs.insertHtml(data->html());
+        curs.insertText(clipboard->text(QClipboard::Clipboard));
+        curs.endEditBlock();
+        return;
+    }
+    QTextEdit::paste();
+
+}

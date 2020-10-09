@@ -32,11 +32,11 @@ public:
     ~NetworkServer();
     void startServer();
 
-    static void localInsert(Payload &pl);
-    static void localErase(Payload &pl);
+    static void localModification(Payload &pl);
     static void processOpnCommand(Payload &pl);
     static void processClsCommand(Payload &pl);
     static void processRmCommand(Payload &pl);
+    static void saveFiles(Payload &pl);
 
 public slots:
     void deleteThread(QPointer<QThread> th);

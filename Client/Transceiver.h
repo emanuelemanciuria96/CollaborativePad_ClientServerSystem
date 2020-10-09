@@ -34,6 +34,7 @@ public slots:
     void sendPacket(DataPacket pkt);
     void sendAllMessages();
     void disconnected();
+    void terminateLastOperations();
 
 signals:
     void readyToProcess(DataPacket pkt);
@@ -47,6 +48,8 @@ private:
     qintptr socketDescriptor;
     QTimer *timer;
     qint32 socketSize=0;
+    QString openedFile;
+    QString openedServerFile;
 
     qint32 connectToServer();
 

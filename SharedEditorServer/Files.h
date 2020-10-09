@@ -20,20 +20,19 @@ class Files {
 public:
     Files() = default;
     ~Files();
-    std::vector<Symbol> openFile(QString& fileName);
-    void closeFile(QString& fileName);
-    void deleteFile(QString &fileName);
+    std::shared_ptr<std::vector<Symbol>> openFile(QString& fileName);
+    bool closeFile(QString& fileName);
+    bool deleteFile(QString &fileName);
     void addSymbolInFile(QString& fileName, Symbol& sym);
     void rmvSymbolInFile(QString& fileName, Symbol& sym);
     void saveChanges(QString& fileName);
     void saveAll();
 
 private:
-    std::shared_mutex files_mtx;
-    std::map< QString,std::tuple< std::vector<Symbol>,quint32,std::shared_mutex*,bool> > opened_files;
+    std::map< QString,std::tuple< std::map<Symbol,int>,quint32,bool> > opened_files;
 
-    static void saveFileJson(std::string dir,std::vector<Symbol>& symbles);
-    static void loadFileJson(std::string dir,std::vector<Symbol>& symbles);
+    static void saveFileJson(std::string dir,std::map<Symbol,int>& symbles);
+    static void loadFileJson(std::string dir,std::map<Symbol,int>& symbles,std::shared_ptr<std::vector<Symbol>> syms);
     static void QTsaveFileJson(const std::string& dir,std::vector<Symbol> _symbols);
 
 

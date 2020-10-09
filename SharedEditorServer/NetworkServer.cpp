@@ -69,31 +69,25 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
     thread->start();
 }
 
+void NetworkServer::localModification(Payload &pl) {
+    StringMessages& msgs = dynamic_cast<StringMessages&>(pl);
 
-void NetworkServer::localInsert(Payload &pl) {
-    //std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localInsert"<<std::endl;
+    QString file = msgs.getFileName();
 
-    Message& m = dynamic_cast<Message&>(pl);
-    Symbol sym = m.getSymbol();
-    QString fileName = active_threads.find(m.getSiteId())->second->getOperatingFileName();
-    if( fileName != "" ) {
-        files.addSymbolInFile(fileName, sym);
-        //show_file(fileName);
+    if( file=="") return;
+
+    for (auto msg: msgs.getQueue()) {
+        std::shared_ptr<Message> m = std::make_shared<Message>(msg);
+        if (msg.getAction() == Message::insertion) {
+            auto s = m->getSymbol();
+            files.addSymbolInFile(file,s);
+        } else {
+            auto s = m->getSymbol();
+            files.rmvSymbolInFile(file,s);
+        }
     }
 
-}
-
-void NetworkServer::localErase(Payload &pl) {
-    //std::cout<<"thread "<<std::this_thread::get_id()<<" invoked localErase"<<std::endl;
-
-    Message& m = dynamic_cast<Message&>(pl);
-    Symbol sym = m.getSymbol();
-    QString fileName = active_threads.find(m.getSiteId())->second->getOperatingFileName();
-    if( fileName != "" ) {
-        files.rmvSymbolInFile(fileName, sym);
-        //show_file(fileName);
-    }
-
+    std::cout<<"modifing file: "<<file.toStdString()<<std::endl;
 }
 
 
@@ -104,13 +98,12 @@ void NetworkServer::processOpnCommand(Payload &pl) {
 
     std::cout<<"opening file: "<<fileName.toStdString()<<std::endl;
 
-    std::vector<Symbol> symbles(files.openFile(fileName));
+    auto symbles = files.openFile(fileName);
 
     auto th = active_threads.find(comm.getSiteId());
     if(th != active_threads.end()){
-        th->second->setFile(std::move(symbles));
+        th->second->setFile(symbles);
         emit th->second->getSocket()->sendFile();
-
         fileOpened.store(true);
     }
 
@@ -123,8 +116,7 @@ void NetworkServer::processClsCommand(Payload &pl) {
 
     std::cout<<"closing file: "<<fileName.toStdString()<<std::endl;
 
-    files.closeFile(fileName);
-
+    fileOpened.store(files.closeFile(fileName));
 
 }
 
@@ -133,7 +125,7 @@ void NetworkServer::processRmCommand(Payload &pl) {
     Command &comm = dynamic_cast<Command &>(pl);
     QString fileName = comm.getArgs().last();
 
-    files.deleteFile(fileName);
+    fileOpened.store(files.deleteFile(fileName));
 
     std::cout<<"deleting file: "+fileName.toStdString()<<std::endl;
 
@@ -144,10 +136,14 @@ void NetworkServer::processRmCommand(Payload &pl) {
 
 }
 
+void NetworkServer::saveFiles(Payload& pl){
+    std::cout<<"saving files"<<std::endl;
+    files.saveAll();
+}
+
 void NetworkServer::saveAllFiles() {
     if( fileOpened.load() ) {
-        std::cout<<"saving files"<<std::endl;
-        files.saveAll();
+        msgHandler->submit(&NetworkServer::saveFiles,std::make_shared<Payload>(0));
     }
     timer->start(60000);
 }
@@ -184,4 +180,3 @@ NetworkServer::~NetworkServer() {
         emit i.second->getSocket()->disconnected();
     active_threads.clear();
 }
-

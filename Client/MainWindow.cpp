@@ -41,6 +41,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     toolBar->setMinimumHeight(45);
     toolBar->setIconSize(QSize(45, 45));
     toolBar->hide();
+
+    nullWidg = new QWidget(this);
     richTextBar->setMovable(false);
     richTextBar->setIconSize(QSize(25,25));
     richTextBar->move(toolBar->rect().bottomLeft());
@@ -77,7 +79,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(treeView, &FileSystemTreeView::renFileRequest,gridView , &FileSystemGridView::remoteRenameFile);
     connect(treeView, &FileSystemTreeView::rmvFileRequest,gridView , &FileSystemGridView::remoteDeleteFile);
     connect(gridView, &FileSystemGridView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
-    connect(gridView, &FileSystemGridView::opnFileRequest,this, &MainWindow::opnFileGrid);
     connect(gridView, &FileSystemGridView::opnFileRequest,shEditor , &SharedEditor::requireFile);
     connect(gridView, &FileSystemGridView::openFolder,this, &MainWindow::setToolBarFolderGrid);
     connect(gridView, &FileSystemGridView::back,this, &MainWindow::setToolBarGrid);
@@ -87,6 +88,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(gridView, &FileSystemGridView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
     connect(gridView, &FileSystemGridView::renFileRequest,treeView , &FileSystemTreeView::editFileName);
     connect(gridView, &FileSystemGridView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
+    connect(shEditor, &SharedEditor::openTextEditor,this, &MainWindow::opnFileGrid);
+    connect(shEditor, &SharedEditor::hideEditor, this, &MainWindow::hideEditor);
+    connect(shEditor, &SharedEditor::transparentForMouse,this, &MainWindow::transparentForMouse);
     connect(shEditor, &SharedEditor::fileNameEdited, treeView, &FileSystemTreeView::editFileName);
     connect(shEditor, &SharedEditor::fileDeletion, treeView, &FileSystemTreeView::remoteFileDeletion);
     connect(shEditor, &SharedEditor::fileDeletion, gridView, &FileSystemGridView::remoteDeleteFile);
@@ -124,6 +128,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::inviteListArrived, inviteUserWidget, &InviteUserWidget::inviteListArrived);
     connect(inviteUserWidget, &InviteUserWidget::sendInviteAnswer, shEditor, &SharedEditor::sendInviteAnswer);
     connect(shEditor, &SharedEditor::fileNameEdited, inviteUserWidget, &InviteUserWidget::editFileName);
+    connect(shEditor, &SharedEditor::fileNameEdited, gridView, &FileSystemGridView::remoteRenameFile);
     connect(shEditor, &SharedEditor::fileNameEdited, addUserWidget, &AddUserWidget::editFileName);
     connect(shEditor, &SharedEditor::fileDeletion, inviteUserWidget, &InviteUserWidget::processFileDeleted);
     connect(gridView, &FileSystemGridView::rmvFileRequest, treeView, &FileSystemTreeView::remoteFileDeletion);
@@ -141,13 +146,16 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(inviteListAction, &QAction::triggered, [this](){showHideLeftDock(invitelist);});
     connect(treeShowAction, &QAction::triggered,[this](){showHideLeftDock(tree);});
     connect(editor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
+    connect(highlightEditor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
     connect(editor, &EditorGUI::userQuery,shEditor,&SharedEditor::obtainUser);
+    connect(highlightEditor, &EditorGUI::userQuery,shEditor,&SharedEditor::obtainUser);
     connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
     connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::hideNumUsers);
     connect(shEditor, &SharedEditor::addUser, usersList, &UsersList::addUser);
     connect(shEditor, &SharedEditor::removeUser, usersList, &UsersList::removeUser);
     connect(shEditor, &SharedEditor::userNameArrived, editor, &EditorGUI::recordUserWriter);
     connect(shEditor, &SharedEditor::flushFileWriters, editor, &EditorGUI::flushFileWriters);
+    connect(shEditor, &SharedEditor::flushFileWriters, usersList, &UsersList::clear);
     connect(addUserWidget, &AddUserWidget::closing, this, &MainWindow::transparentForMouse);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::transparentForMouse);
     connect(gridView, &FileSystemGridView::inviteRequest, this, &MainWindow::transparentForMouse);
@@ -156,16 +164,25 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(infoWidgetEdit, &InfoWidgetEdit::updateInfo, infoWidget, &InfoWidget::updateInfo);
     connect(infoWidgetEdit, &InfoWidgetEdit::backToInfoWidget, this, [this](){centralWidget->setCurrentWidget(infoWidget);});
     connect(inviteUserWidget, &InviteUserWidget::inviteNumberModified, this, [this](int n){setInviteListIcon(n);});
-
+    connect(usersList, &UsersList::setUserInfo, this, &MainWindow::setInfoUsersListWidget);
+    connect(infoUsersListWidget, &InfoUsersListWidget::backPressed, this, &MainWindow::setInfoUsersListWidget);
     connect(editor->textEdit, &MyTextEdit::copyAvailable, this,[this](bool b){copyAction->setDisabled(!b);cutAction->setDisabled(!b);});
     connect(QApplication::clipboard(), &QClipboard::dataChanged, this, &MainWindow::clipboardDataChanged);
     connect(editor->textEdit->document(), &QTextDocument::undoAvailable,undoAction, &QAction::setEnabled);
     connect(editor->textEdit->document(), &QTextDocument::redoAvailable,redoAction, &QAction::setEnabled);
-    //connect(pasteAction, &QAction::triggered, editor->textEdit, &QTextEdit::paste);
+    connect(pasteAction, &QAction::triggered, editor->textEdit, &MyTextEdit::paste);
     connect(copyAction, &QAction::triggered, editor->textEdit, &QTextEdit::copy);
     connect(cutAction, &QAction::triggered, editor->textEdit, &QTextEdit::cut);
     connect(redoAction, &QAction::triggered, editor->textEdit, &QTextEdit::redo);
     connect(undoAction, &QAction::triggered, editor->textEdit, &QTextEdit::undo);
+    connect(boldAction, &QAction::triggered, editor, &EditorGUI::setBold);
+    connect(italicAction, &QAction::triggered, editor, &EditorGUI::setItalic);
+    connect(underlineAction, &QAction::triggered, editor, &EditorGUI::setUnderline);
+    connect(textColorAction, &QAction::triggered, editor, &EditorGUI::textColor);
+    connect(editor, &EditorGUI::colorChanged, this, &MainWindow::colorChanged);
+    connect(editor, &EditorGUI::fontChanged, this, &MainWindow::fontChanged);
+    connect(comboSize, SIGNAL(activated(const QString&)), editor, SLOT(textSize(const QString&)));
+    connect(comboFont, SIGNAL(activated(const QString&)), editor, SLOT(textFamily(const QString&)));
 
     connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
     connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
@@ -179,8 +196,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     centralWidget->addWidget(editor);
     centralWidget->addWidget(infoWidget);
     centralWidget->addWidget(infoWidgetEdit);
+    centralWidget->addWidget(infoUsersListWidget);
     centralWidget->addWidget(widgetSignIn);
     centralWidget->addWidget(gridView);
+    centralWidget->addWidget(nullWidg);
     setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
     setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
     lastCentral = nullptr;
@@ -202,7 +221,9 @@ void MainWindow::loginFinished() {
 
 }
 
-void MainWindow::opnFileGrid(QString fileName) {
+void MainWindow::opnFileGrid(QString &fileName) {
+    editor->textEdit->document()->clearUndoRedoStacks();
+
     setToolBarEditor();
     centralWidget->setCurrentWidget(editor);
     dockWidgetUsers->show();
@@ -211,6 +232,11 @@ void MainWindow::opnFileGrid(QString fileName) {
 //    palette.setColor(QPalette::Window,QColor("lightgray"));
     palette.setColor(QPalette::Base,QColor("white"));
     setPalette(palette);
+
+    this->setCursor(QCursor(Qt::ArrowCursor));
+    statusBar->clearMessage();
+    delete spinner;
+
 }
 
 void MainWindow::changeInviteAction(bool state){
@@ -243,10 +269,9 @@ void MainWindow::clsFile() {
     }
     gridView->show();
     if(highlightAction->isChecked()){
-        highlightAction->trigger();
+//        highlightAction->trigger();
         highlightAction->setChecked(false);
     }
-    usersList->clear();
 }
 
 void MainWindow::loginSettings() {
@@ -539,6 +564,7 @@ void MainWindow::editorSettings(SharedEditor* shEditor) {
     editor = new EditorGUI(shEditor, this);
     infoWidget = new InfoWidget(this);
     infoWidgetEdit = new InfoWidgetEdit(this);
+    infoUsersListWidget = new InfoUsersListWidget(this);
     addUserWidget = new AddUserWidget(this);
 }
 
@@ -583,13 +609,14 @@ void MainWindow::setStyleSheet() {
     qApp->setStyleSheet("QWidget {font-family: helvetica}"
                         "QToolBar {background:#F1F1F1; }"
                         "QStatusBar {background-color: #F1F1F1; border-top:1px solid #d2d2d2}"
-                        "QToolButton {padding:4}");
+                        "QToolButton {padding:4}"
+                        "QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
 
     dockWidgetUsers->titleBarWidget()->setStyleSheet("font:10pt; font-family: helvetica; color:#4F78C3");
     dockWidgetUsers->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8");
     inviteUserWidget->setStyleSheet("padding:0; margin:0;");
     for(auto d : leftDockWidgets) {
-        d->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8;");
+        d->setStyleSheet("QTreeWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
     }
 }
 
@@ -677,12 +704,47 @@ void MainWindow::setInfoWidget() {
     }
 }
 
+void MainWindow::setInfoUsersListWidget(const QPixmap& image, const QString& nickname, const QString& name, const QString& email) {
+    if(centralWidget->currentWidget() != infoUsersListWidget) {
+        infoUsersListWidget->setData(image, nickname, name, email);
+        lastCentral = centralWidget->currentWidget();
+        centralWidget->setCurrentWidget(infoUsersListWidget);
+        toolBar->hide();
+        dockWidgetUsers->hide();
+        if (lastDock != nullptr)
+            lastDock->hide();
+    } else {
+        centralWidget->setCurrentWidget(lastCentral);
+        toolBar->show();
+        if (lastCentral == editor)
+            dockWidgetUsers->show();
+        if (lastDock != nullptr)
+            lastDock->show();
+    }
+}
+
 void MainWindow::openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email) {
     infoWidgetEdit->setImage(&image);
     infoWidgetEdit->setName(name);
     infoWidgetEdit->setEmail(email);
     infoWidgetEdit->setUser(nickname);
     centralWidget->setCurrentWidget(infoWidgetEdit);
+}
+
+
+void MainWindow::hideEditor(QString& fileName) {
+     if(centralWidget->currentWidget()!=gridView)
+         centralWidget->setCurrentWidget(nullWidg);
+
+     spinner = new QLabel();
+     auto gif = new QMovie("./gifs/ajax-loader.gif");
+     gif->setScaledSize(QSize(20,20));
+     spinner->setMovie(gif);
+     statusBar->addWidget(spinner,3);
+     statusBar->showMessage("    Loading file "+fileName,-1);
+     spinner->movie()->start();
+     this->setCursor(QCursor(Qt::WaitCursor));
+
 }
 
 void MainWindow::setRichTextBar() {
@@ -704,4 +766,41 @@ void MainWindow::setRichTextBar() {
     underlineAction->setCheckable(true);
     underlineAction->setToolTip("Bold");
     richTextBar->addAction(underlineAction);
+
+    comboSize = new QComboBox();
+    comboSize->setToolTip("Text size");
+    const QList<int> standardSizes = QFontDatabase::standardSizes();
+    for (int size : standardSizes)
+        comboSize->addItem(QString::number(size));
+    comboSize->setCurrentIndex(4);
+    richTextBar->addWidget(comboSize);
+
+    comboFont = new QFontComboBox();
+    comboFont->setToolTip("Text font");
+    comboFont->setEditable(false);
+    richTextBar->addWidget(comboFont);
+
+    textColorAction = new QAction();
+    QPixmap pix(16, 16);
+    pix.fill(Qt::black);
+    textColorAction->setIcon(QIcon(pix));
+    textColorAction->setToolTip("Text color");
+    richTextBar->addAction(textColorAction);
+}
+
+void MainWindow::colorChanged(const QColor &c)
+{
+    QPixmap pix(16, 16);
+    pix.fill(c);
+    textColorAction->setIcon(pix);
+}
+
+
+void MainWindow::fontChanged(const QFont &f)
+{
+    comboFont->setCurrentIndex(comboFont->findText(QFontInfo(f).family()));
+    comboSize->setCurrentIndex(comboSize->findText(QString::number(f.pointSize())));
+    boldAction->setChecked(f.bold());
+    italicAction->setChecked(f.italic());
+    underlineAction->setChecked(f.underline());
 }

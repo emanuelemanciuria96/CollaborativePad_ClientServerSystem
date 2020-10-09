@@ -38,7 +38,7 @@ private:
     QString fileName;
     SharedEditor* model;
     bool signalBlocker;
-    std::vector<RemoteCursor> remoteCursors;
+    std::shared_ptr<std::list<RemoteCursor>> remoteCursors;
     std::queue<QChar> insertQueue;
     qint32 siteIdQueue;
     qint32 posQueue;
@@ -50,12 +50,12 @@ private:
     uint nUsers = 0;
     std::map<qint32,QString> file_writers;
     QPoint lastToolTipPos;
+    bool hasSelection = false;
 
     void setUpGUI();
-    void loadSymbols();
     void updateRemoteCursors(qint32 mySiteId, int pos);
     RemoteCursor* getRemoteCursor(qint32 siteId);
-    void insertText(qint32 pos, const QString& value, qint32 siteId);
+    void insertText(qint32 pos, const QString& value, qint32 siteId, const QTextCharFormat& format);
     void deleteText(qint32 pos, qint32 siteId,qint32 n);
     static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
     void drawLabel(RemoteCursor *cursor) const;
@@ -70,9 +70,9 @@ private slots:
     void handleCursorPosChanged();
     void enableSendCursorPos();
     void checkCharFormat(const QTextCharFormat &f);
-
+    void selectionChanged();
 public slots:
-    void updateSymbols(qint32 pos, QString s, qint32 siteId, Message::action_t action);
+    void updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
     void deleteAllText();
     void updateRemoteCursorPos(qint32 pos, qint32 siteId);
     void removeCursor(qint32 siteId);
@@ -87,12 +87,17 @@ public slots:
     void setItalic(bool checked) const;
     void setUnderline(bool checked) const;
     void loadHighlights(bool checked);
+    void textSize(const QString &p);
+    void textFamily(const QString &p);
+    void textColor();
+    void currentCharFormatChanged(const QTextCharFormat &format);
 
 signals:
     void clear();
     void setNumUsers(int n);
     void userQuery(qint32 siteId);
-
+    void colorChanged(const QColor &c);
+    void fontChanged(const QFont &f);
 
 public:
     MyTextEdit* textEdit;

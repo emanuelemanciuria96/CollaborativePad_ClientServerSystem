@@ -7,6 +7,9 @@ InviteUserWidget::InviteUserWidget(QWidget *parent)
     , ui(new Ui::InviteUserWidget)
 {
     ui->setupUi(this);
+    ui->listWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->listWidget->setFocusPolicy(Qt::NoFocus);
+    ui->listWidget->setSelectionMode(QAbstractItemView::NoSelection);
 }
 
 InviteUserWidget::~InviteUserWidget()

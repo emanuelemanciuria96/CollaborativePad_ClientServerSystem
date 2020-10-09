@@ -62,17 +62,18 @@ void LoginDialog::setUpGUI() {
 
     //sezione grafica
     title->setStyleSheet("QLabel {color: black; font: 18pt}");
-//    auto style = innerWidget->styleSheet();
-//    style.append();
-    innerWidget->setStyleSheet("QWidget{background-color: #FAFAFA;}"
-                               "QLineEdit{font:9pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray}");
+    auto style = innerWidget->styleSheet();
+    style.append("QWidget{background-color: #FAFAFA;}"
+                 "QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}"
+                 "QLineEdit{font:9pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}");
+    innerWidget->setStyleSheet(style);
     auto effect = new QGraphicsDropShadowEffect;
     effect->setBlurRadius(30);
     effect->setXOffset(0);
     effect->setYOffset(0);
     effect->setColor(Qt::lightGray);
     innerWidget->setGraphicsEffect(effect);
-    buttons->setStyleSheet("QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+//    buttons->setStyleSheet("QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
 
     //imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
@@ -115,7 +116,7 @@ void LoginDialog::slotLoginError() {
 
 void LoginDialog::keyPressEvent(QKeyEvent *e) {
     QWidget::keyPressEvent(e);
-    if (e->key() == Qt::Key_Enter || Qt::Key_Escape){
+    if (e->key() == Qt::Key_Return){
         slotAcceptLogin();
     }
 }
