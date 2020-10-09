@@ -194,12 +194,11 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(cutAction, &QAction::triggered, editor->textEdit, &QTextEdit::cut);
     connect(redoAction, &QAction::triggered, editor->textEdit, &QTextEdit::redo);
     connect(undoAction, &QAction::triggered, editor->textEdit, &MyTextEdit::undo);
-    connect(pasteAction, &QAction::triggered, highlightEditor->textEdit, &MyTextEdit::paste);
-    connect(copyAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::copy);
-    connect(cutAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::cut);
-    connect(redoAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::redo);
-    connect(undoAction, &QAction::triggered, highlightEditor->textEdit, &MyTextEdit::undo);
-
+//    connect(pasteAction, &QAction::triggered, highlightEditor->textEdit, &MyTextEdit::paste);
+//    connect(copyAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::copy);
+//    connect(cutAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::cut);
+//    connect(redoAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::redo);
+//    connect(undoAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::undo);
     connect(boldAction, &QAction::triggered, editor, &EditorGUI::setBold);
     connect(italicAction, &QAction::triggered, editor, &EditorGUI::setItalic);
     connect(underlineAction, &QAction::triggered, editor, &EditorGUI::setUnderline);
@@ -208,9 +207,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(editor, &EditorGUI::fontChanged, this, &MainWindow::fontChanged);
     connect(comboSize, SIGNAL(activated(const QString&)), editor, SLOT(textSize(const QString&)));
     connect(comboFont, SIGNAL(activated(const QString&)), editor, SLOT(textFamily(const QString&)));
-    connect(boldAction, &QAction::toggled, highlightEditor, &EditorGUI::setBold);
-    connect(italicAction, &QAction::toggled, highlightEditor, &EditorGUI::setItalic);
-    connect(underlineAction, &QAction::toggled, highlightEditor, &EditorGUI::setUnderline);
+//    connect(boldAction, &QAction::toggled, highlightEditor, &EditorGUI::setBold);
+//    connect(italicAction, &QAction::toggled, highlightEditor, &EditorGUI::setItalic);
+//    connect(underlineAction, &QAction::toggled, highlightEditor, &EditorGUI::setUnderline);
 
     connect(editor, &EditorGUI::updateOther, this, &MainWindow::recvEditorUpdate);
     connect(highlightEditor, &EditorGUI::updateOther, this, &MainWindow::recvEditorUpdate);

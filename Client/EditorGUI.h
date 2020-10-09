@@ -58,7 +58,8 @@ private:
     QTimer *bufferTimer;
     qint32 firstPos;
     bool isPastingAtFirst = false;
-
+    qint32 tmpPos;
+    
     void setUpGUI();
     void updateRemoteCursors(qint32 mySiteId, int pos);
     RemoteCursor* getRemoteCursor(qint32 siteId);
