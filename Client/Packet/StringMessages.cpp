@@ -25,11 +25,10 @@ int StringMessages::storeQueue(std::vector<Message> &vm) {
     if( action == Message::removal ){
         for (; i < dim && i < maxDim && vm[i].getAction() == action; i++) {
             _messages.push_back(vm[i]);
-            last = vm[i].getSymbol().getFormat();
         }
     }
     else {
-        for (; i < dim && i < maxDim && (last == vm[i].getSymbol().getFormat() || last.isEmpty()); i++) {
+        for (; i < dim && i < maxDim && vm[i].getAction() == action && (last == vm[i].getSymbol().getFormat() || last.isEmpty()); i++) {
             _messages.push_back(vm[i]);
             last = vm[i].getSymbol().getFormat();
         }
