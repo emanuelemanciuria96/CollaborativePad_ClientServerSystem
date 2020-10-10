@@ -81,9 +81,12 @@ void NetworkServer::localModification(Payload &pl) {
         if (msg.getAction() == Message::insertion) {
             auto s = m->getSymbol();
             files.addSymbolInFile(file,s);
-        } else {
+        } else if(msg.getAction() == Message::removal) {
             auto s = m->getSymbol();
             files.rmvSymbolInFile(file,s);
+        } else{
+            auto s = m->getSymbol();
+            files.modSymbolInFile(file,s);
         }
     }
 

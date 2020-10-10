@@ -116,6 +116,7 @@ public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar& ch, QTextCharFormat& format);
     void localErase( qint32 index, qint32 num);
+    void localModification( qint32 index, QTextCharFormat& format );
     qint32 getSiteId() const;
     void sendCursorPos(qint32 index);
     void highlightSymbols(bool checked);

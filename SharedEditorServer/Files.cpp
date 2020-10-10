@@ -82,6 +82,19 @@ void Files::rmvSymbolInFile(QString& fileName, Symbol& sym){
     }
 }
 
+void Files::modSymbolInFile(QString &fileName, Symbol &sym) {
+
+    auto i = opened_files.find(fileName);
+
+    if(i != opened_files.end()) {
+        auto node = std::get<file>(i->second).extract(sym);
+        if ( !node.empty() ) {
+            node.key() = sym;
+            std::get<file>(i->second).insert(std::move(node));
+        }
+    }
+}
+
 void Files::saveChanges(QString &fileName) {
 
     auto i = opened_files.find(fileName);

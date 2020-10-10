@@ -44,7 +44,7 @@ private:
     qint32 posQueue;
     qint32 posLastChar;
     QTimer* timer;
-    bool selected= false;
+    bool isTextSelected= false;
     bool myCursorPosUpdateBlocker;
     QTimer* curBlockerTimer;
     uint nUsers = 0;
@@ -58,8 +58,9 @@ private:
     QTimer *bufferTimer;
     qint32 firstPos;
     bool isPastingAtFirst = false;
+    static bool isModifying;
     qint32 tmpPos;
-    
+
     void setUpGUI();
     void updateRemoteCursors(qint32 mySiteId, int pos);
     RemoteCursor* getRemoteCursor(qint32 siteId);
@@ -70,11 +71,12 @@ private:
     void keyPressEvent(QKeyEvent *e) override;
     static QTextCharFormat getHighlightFormat(qint32 siteId);
     void showToolTip(qint32 siteId, QPoint globalPos);
+    void textFormatChange(int pos, int charsModified);
 
 private slots:
     void contentsChange(int pos, int charsRemoved, int charsAdded);
     void flushInsertQueue();
-    void setSelected(bool yes){ selected = yes;}
+    void setSelected(bool yes){ isTextSelected = yes;}
     void handleCursorPosChanged();
     void enableSendCursorPos();
     void checkCharFormat(const QTextCharFormat &f);
@@ -92,9 +94,9 @@ public slots:
     void recordUserWriter(qint32 siteId,QString& user,bool connection=false);
     void flushFileWriters();
     void setCharFormat(bool checked);
-    void setBold(bool checked) const;
-    void setItalic(bool checked) const;
-    void setUnderline(bool checked) const;
+    void setBold(bool checked);
+    void setItalic(bool checked);
+    void setUnderline(bool checked);
     void textSize(const QString &p);
     void textFamily(const QString &p);
     void textColor();

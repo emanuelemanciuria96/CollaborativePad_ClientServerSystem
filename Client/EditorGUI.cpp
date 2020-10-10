@@ -11,6 +11,8 @@
 #include <QtWidgets/QToolTip>
 #include <QtWidgets/QColorDialog>
 
+bool EditorGUI::isModifying = false;
+
 EditorGUI::EditorGUI(SharedEditor *model, bool highlight, QWidget *parent) : QWidget(parent){
     remoteCursors = std::make_shared<std::list<RemoteCursor>>();
     signalBlocker = false;
@@ -84,6 +86,12 @@ void EditorGUI::setModel(SharedEditor* _model) {
 
 //chiamata quando si effettuano modifiche sul editor
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
+
+    if( isModifying ){
+        isModifying = false;
+        return;
+    }
+
     int i = 0;
     if (!signalBlocker) {
         myCursorPosUpdateBlocker = true;
@@ -122,6 +130,18 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
         }
 //        updateRemoteCursors(model->getSiteId(),pos);
     }
+}
+
+void EditorGUI::textFormatChange(int pos, int charsModified) {
+
+    int i=0;
+    for(; i<charsModified; i++ ){
+        auto cursor = getRemoteCursor(0);
+        cursor->setPosition(pos+i+1);
+        auto format = cursor->charFormat();
+        model->localModification(pos+i,format);
+    }
+
 }
 
 void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, const QTextCharFormat& format) {
@@ -176,7 +196,15 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
 //chiamata quando si ricevono modifiche
 void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action) {
 //    std::cout<<"updateSymbols inizio" << std::endl;
-    if (action == Message::removal) {
+    if (action == Message::modification){
+        auto curs = getRemoteCursor(0);
+        curs->setPosition(pos);
+        int numChars = s.size();
+        curs->movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,numChars);
+        isModifying = true;
+        curs->mergeCharFormat(format);
+    }
+    else if (action == Message::removal) {
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId, s.size());
     } else {
@@ -404,7 +432,6 @@ void EditorGUI::exportToPdf() {
 }
 
 void EditorGUI::highlightedTip(int pos, QPoint globalPos) {
-    if(!model->getHighlighting()) return;
     auto sym = model->fromPosToSymbol(pos+1);
     qint32 siteId = sym.getSymId().getSiteId();
     auto i = file_writers.find(siteId);
@@ -458,25 +485,53 @@ void EditorGUI::checkCharFormat(const QTextCharFormat &f) {
     }
 }
 
-void EditorGUI::setBold(bool checked) const {
+void EditorGUI::setBold(bool checked) {
     auto f = QTextCharFormat();
     if(checked)
         f.setFontWeight(QFont::Bold);
     else
         f.setFontWeight(QFont::Normal);
+    if(isTextSelected)
+        isModifying = true;
     textEdit->mergeCurrentCharFormat(f);
+    if(isTextSelected){
+        auto curs = textEdit->textCursor();
+        int pos = curs.selectionStart();
+        int numChars = curs.selectionEnd()-pos;
+        textFormatChange(pos,numChars);
+    }
 }
 
-void EditorGUI::setItalic(bool checked) const {
+void EditorGUI::setItalic(bool checked) {
     auto f = QTextCharFormat();
     f.setFontItalic(checked);
+    if(isTextSelected)
+        isModifying = true;
+    if(isTextSelected)
+        isModifying = true;
     textEdit->mergeCurrentCharFormat(f);
+    if(isTextSelected){
+        auto curs = textEdit->textCursor();
+        int pos = curs.selectionStart();
+        int numChars = curs.selectionEnd()-pos;
+        textFormatChange(pos,numChars);
+    }
 }
 
-void EditorGUI::setUnderline(bool checked) const {
+void EditorGUI::setUnderline(bool checked) {
     auto f = QTextCharFormat();
     f.setFontUnderline(checked);
+    if(isTextSelected)
+        isModifying = true;
+    if(isTextSelected)
+        isModifying = true;
     textEdit->mergeCurrentCharFormat(f);
+    if(isTextSelected){
+        auto curs = textEdit->textCursor();
+        int pos = curs.selectionStart();
+        int numChars = curs.selectionEnd()-pos;
+        textFormatChange(pos,numChars);
+    }
 }
 
 void EditorGUI::selectionChanged() {
@@ -509,7 +564,15 @@ void EditorGUI::textSize(const QString &p)
     if (p.toFloat() > 0) {
         QTextCharFormat fmt;
         fmt.setFontPointSize(pointSize);
+        if(isTextSelected)
+            isModifying = true;
         textEdit->mergeCurrentCharFormat(fmt);
+        if(isTextSelected){
+            auto curs = textEdit->textCursor();
+            int pos = curs.selectionStart();
+            int numChars = curs.selectionEnd()-pos;
+            textFormatChange(pos,numChars);
+        }
     }
 }
 
@@ -517,7 +580,15 @@ void EditorGUI::textFamily(const QString &f)
 {
     QTextCharFormat fmt;
     fmt.setFontFamily(f);
+    if(isTextSelected)
+        isModifying = true;
     textEdit->mergeCurrentCharFormat(fmt);
+    if(isTextSelected){
+        auto curs = textEdit->textCursor();
+        int pos = curs.selectionStart();
+        int numChars = curs.selectionEnd()-pos;
+        textFormatChange(pos,numChars);
+    }
 }
 
 void EditorGUI::textColor()
@@ -527,7 +598,16 @@ void EditorGUI::textColor()
         return;
     QTextCharFormat fmt;
     fmt.setForeground(col);
+    if(isTextSelected)
+        isModifying = true;
     textEdit->mergeCurrentCharFormat(fmt);
+    if(isTextSelected){
+        auto curs = textEdit->textCursor();
+        int pos = curs.selectionStart();
+        int numChars = curs.selectionEnd()-pos;
+        textFormatChange(pos,numChars);
+    }
+
     emit colorChanged(col);
 }
 

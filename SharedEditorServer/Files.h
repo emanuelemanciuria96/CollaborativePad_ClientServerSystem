@@ -25,6 +25,7 @@ public:
     bool deleteFile(QString &fileName);
     void addSymbolInFile(QString& fileName, Symbol& sym);
     void rmvSymbolInFile(QString& fileName, Symbol& sym);
+    void modSymbolInFile(QString& fileName, Symbol& sym);
     void saveChanges(QString& fileName);
     void saveAll();
 

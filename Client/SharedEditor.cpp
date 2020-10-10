@@ -180,6 +180,23 @@ void SharedEditor::localErase(qint32 index, qint32 num) {
     _symbols.erase(_symbols.begin()+index,_symbols.begin()+index+num);
 }
 
+void SharedEditor::localModification( qint32 index, QTextCharFormat& format ) {
+    if ( index > _symbols.size() - 2 ){
+        throw "fuori dai limiti"; //da implementare classe eccezione
+    }
+
+    index++;
+    auto s = _symbols[index];
+
+    s.setFormat(format);
+
+    DataPacket packet(_siteId, -1, DataPacket::textTyping);
+    packet.setPayload(std::make_shared<Message>(Message::modification, _siteId, s, index));
+
+    int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+}
+
 void SharedEditor::sendCursorPos(qint32 index) {
 
     if(!isFileOpened) return;
@@ -370,33 +387,43 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                 nextPosIsCalculated = false;
             }
         } else if (_symbols[pos] == m.getSymbol()) {
-            if (firstErase) {
-                tmpPos = pos;
-                str.clear();
-            }
-            numChar++;
-            str.append(m.getSymbol().getValue());
-            firstErase = false;
-            //qDebug()<<m.getSymbol().getValue()<<" "<<tmpPos;
-//            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
-            //_symbols.erase(_symbols.begin()+pos);
-            if (strM[i + 1].getAction() != Message::removal) {
-                firstErase = true;
-            } else {
-//                std::cout << "getindex inizio" << std::endl;
-                nextPos = getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
-//                std::cout << "getindex fine" << std::endl;
-                nextPosIsCalculated = true;
-                if (nextPos != pos + 1) {
-                    firstErase = true;
+
+            if( m.getAction()==Message::modification){
+                auto format = m.getSymbol().getFormat();
+                _symbols[pos].setFormat(format);
+
+                QString str = _symbols[pos].getValue();
+                emit symbolsChanged(pos-1,str,strMess.getSiteId(),format,Message::modification);
+
+            }else {
+                if (firstErase) {
+                    tmpPos = pos;
+                    str.clear();
                 }
-            }
-            if (firstErase) {
-                _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
-                emit symbolsChanged(tmpPos, str, strMess.getSiteId(), QTextCharFormat(), Message::removal);
-                numChar = 0;
-                //qDebug()<<"delete "<<this->getSiteIds();
-                nextPosIsCalculated = false;
+                numChar++;
+                str.append(m.getSymbol().getValue());
+                firstErase = false;
+                //qDebug()<<m.getSymbol().getValue()<<" "<<tmpPos;
+//            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
+                //_symbols.erase(_symbols.begin()+pos);
+                if (strM[i + 1].getAction() != Message::removal) {
+                    firstErase = true;
+                } else {
+//                std::cout << "getindex inizio" << std::endl;
+                    nextPos = getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
+//                std::cout << "getindex fine" << std::endl;
+                    nextPosIsCalculated = true;
+                    if (nextPos != pos + 1) {
+                        firstErase = true;
+                    }
+                }
+                if (firstErase) {
+                    _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
+                    emit symbolsChanged(tmpPos, str, strMess.getSiteId(), QTextCharFormat(), Message::removal);
+                    numChar = 0;
+                    //qDebug()<<"delete "<<this->getSiteIds();
+                    nextPosIsCalculated = false;
+                }
             }
         }
     }
