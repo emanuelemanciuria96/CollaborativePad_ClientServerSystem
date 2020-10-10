@@ -733,20 +733,20 @@ qint32 SharedEditor::getSiteId() const {
     return _siteId;
 }
 
-void SharedEditor::highlightSymbols(bool checked) {
-    for(auto i=0; i<_symbols.size(); i++){
-        auto siteId = _symbols[i].getSymId().getSiteId();
-//        qint32 pos = getIndex(-1,s);
-        if(siteId>0)
-            emit highlight(i, siteId);
-    }
-    highlighting = checked;
-    emit setCharFormat(checked);
-}
-
-bool SharedEditor::getHighlighting() const {
-    return highlighting;
-}
+//void SharedEditor::highlightSymbols(bool checked) {
+//    for(auto i=0; i<_symbols.size(); i++){
+//        auto siteId = _symbols[i].getSymId().getSiteId();
+////        qint32 pos = getIndex(-1,s);
+//        if(siteId>0)
+//            emit highlight(i, siteId);
+//    }
+//    highlighting = checked;
+//    emit setCharFormat(checked);
+//}
+//
+//bool SharedEditor::getHighlighting() const {
+//    return highlighting;
+//}
 
 
 void SharedEditor::obtainUser(qint32 siteId) {

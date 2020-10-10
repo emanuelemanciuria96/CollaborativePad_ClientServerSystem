@@ -96,13 +96,13 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 auto cursor = textEdit->textCursor();
                 cursor.setPosition(pos+i+1);
                 auto format = cursor.charFormat();
-                format.setBackground(QColor("white"));
+//                format.setBackground(QColor("white"));
                 model->localInsert(pos+i, ch , format);
             }
 //            model->localInsert(pos, str, textEdit->currentCharFormat());
 
-            if(model->getHighlighting())
-                highlight(pos,charsAdded, model->getSiteId());
+//            if(highlightIsActive)
+//                highlight(pos,charsAdded, model->getSiteId());
         }
 //        updateRemoteCursors(model->getSiteId(),pos);
     }
@@ -121,7 +121,7 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, cons
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
     cursor->setCharFormat(format);
-    if(model->getHighlighting())
+    if(highlightIsActive)
         cursor->mergeCharFormat(getHighlightFormat(siteId));
 
     cursor->insertText(value);
@@ -189,7 +189,6 @@ void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos) {
         }
     }
 }
-
 
 RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     RemoteCursor *cursor;
@@ -272,6 +271,10 @@ void EditorGUI::handleCursorPosChanged() {
     if (model->getSiteId() != -1 && !myCursorPosUpdateBlocker) {
         model->sendCursorPos(pos);
     }
+    if(highlightIsActive) {
+        textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
+    }
+
 }
 
 void EditorGUI::updateRemoteCursorPos(qint32 pos, qint32 siteId) {
@@ -293,6 +296,7 @@ void EditorGUI::loadHighlights(bool checked) {
     qint32 lastSiteId = -1;
     qint32 firstPos;
     qint32 n = 0;
+    highlightIsActive = checked;
     if(checked) {
         for (auto s : model->getSiteIds()) {
             if (s == lastSiteId) {
@@ -315,7 +319,7 @@ void EditorGUI::loadHighlights(bool checked) {
 }
 
 void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId) {
-//    std::cout << "highlight " << pos << " siteId " << siteId << std::endl;
+//    std::cout << "dentro highlight " << std::endl;
     auto cursor = getRemoteCursor(0);
     auto format = QTextCharFormat();
 
@@ -324,10 +328,14 @@ void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId) {
     else
         format.setBackground(QColor("white"));
     signalBlocker = !signalBlocker;
+//    std::cout << "dentro setPosition " << std::endl;
     cursor->setPosition(pos , QTextCursor::MoveAnchor);
     cursor->setPosition(pos+n, QTextCursor::KeepAnchor);
+//    std::cout << "dentro merge " << std::endl;
     cursor->mergeCharFormat(format);
     signalBlocker = !signalBlocker;
+//    std::cout << "fuori highlight " << std::endl;
+
 }
 
 void EditorGUI::keyPressEvent(QKeyEvent *e) {
@@ -341,7 +349,7 @@ QTextCharFormat EditorGUI::getHighlightFormat(qint32 siteId) {
 
     color.setNamedColor(RemoteCursor::getColor(siteId));
     color.setAlpha(124);
-    format.setBackground(QBrush(color));
+    format.setBackground(color);
 
     return format;
 }
@@ -368,7 +376,7 @@ void EditorGUI::exportToPdf() {
 }
 
 void EditorGUI::highlightedTip(int pos, QPoint globalPos) {
-    if(!model->getHighlighting()) return;
+    if(!highlightIsActive) return;
     auto sym = model->fromPosToSymbol(pos+1);
     qint32 siteId = sym.getSymId().getSiteId();
     auto i = file_writers.find(siteId);
@@ -416,7 +424,7 @@ void EditorGUI::setCharFormat(bool checked) {
 }
 
 void EditorGUI::checkCharFormat(const QTextCharFormat &f) {
-    if(model->getHighlighting()) {
+    if(highlightIsActive) {
         if(!textEdit->textCursor().hasSelection())
             textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
     }

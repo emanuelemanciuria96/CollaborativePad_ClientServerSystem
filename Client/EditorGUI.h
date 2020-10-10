@@ -51,6 +51,7 @@ private:
     std::map<qint32,QString> file_writers;
     QPoint lastToolTipPos;
     bool hasSelection = false;
+    bool highlightIsActive = false;
 
     void setUpGUI();
     void updateRemoteCursors(qint32 mySiteId, int pos);
