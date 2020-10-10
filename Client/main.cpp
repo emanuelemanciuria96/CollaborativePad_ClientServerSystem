@@ -18,13 +18,6 @@ int main(int argc, char **argv) {
     //mainWindow->show();              //inserisci user = ciao e password = suca se vuoi che funzioni tutto
 
     mainWindow.show();
-    auto returncode = app.exec();
-    if (returncode == 1000)
-    {
-        auto* proc = new QProcess();
-        proc->start(QCoreApplication::applicationFilePath());
-    }
-
-    delete shEditor;
-    return returncode;
+    app.exec();
+    return 0;
 }

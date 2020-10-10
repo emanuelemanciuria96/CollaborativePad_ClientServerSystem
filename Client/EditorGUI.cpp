@@ -29,6 +29,8 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
 //    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
     connect(textEdit, &QTextEdit::selectionChanged, this, &EditorGUI::selectionChanged);
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
+    textEdit->setFontFamily("Times New Roman");
+    textEdit->setFontPointSize(12);
 }
 
 
@@ -88,6 +90,10 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
         if (charsRemoved > 0) {  //sono stati cancellati dei caratteri
             //std::cout << "Cancellazione carattere " << index << std::endl;
             model->localErase(pos,charsRemoved);
+            if (textEdit->toPlainText().isEmpty()) {
+                textEdit->setFontFamily("Times New Roman");
+                textEdit->setFontPointSize(12);
+            }
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
             std::cout << "Inserimenti " << charsAdded << std::endl;
@@ -335,7 +341,6 @@ void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId) {
     cursor->mergeCharFormat(format);
     signalBlocker = !signalBlocker;
 //    std::cout << "fuori highlight " << std::endl;
-
 }
 
 void EditorGUI::keyPressEvent(QKeyEvent *e) {

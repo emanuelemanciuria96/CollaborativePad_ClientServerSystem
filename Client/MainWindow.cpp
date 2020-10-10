@@ -770,13 +770,22 @@ void MainWindow::setRichTextBar() {
     const QList<int> standardSizes = QFontDatabase::standardSizes();
     for (int size : standardSizes)
         comboSize->addItem(QString::number(size));
-    comboSize->setCurrentIndex(4);
+    comboSize->setCurrentIndex(6);
     richTextBar->addWidget(comboSize);
 
     comboFont = new QFontComboBox();
     comboFont->setToolTip("Text font");
     comboFont->setEditable(false);
     richTextBar->addWidget(comboFont);
+
+    QStringList list{"Arial","Arial Black","Comic Sans MS", "Courier","Georgia","Impact","Tahoma","Times New Roman","Trebuchet MS","Verdana"};
+    for(int i = 0; i < comboFont->count(); i++) {
+        if(!list.contains(comboFont->itemText(i))){
+            comboFont->removeItem(i);
+            i--;
+        }
+    }
+    comboFont->setCurrentIndex(7);
 
     textColorAction = new QAction();
     QPixmap pix(16, 16);

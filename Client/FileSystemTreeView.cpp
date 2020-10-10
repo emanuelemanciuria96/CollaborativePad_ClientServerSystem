@@ -346,7 +346,7 @@ void FileSystemTreeView::sort() {
         for( ; j<children.size()-i-1; j++){
             if(children[j]->text(1)>children[j+1]->text(1) ||
                 (children[j]->text(1)==children[j+1]->text(1) && children[j]->text(0)>children[j+1]->text(0)) ) {
-                children.swapItemsAt(j,j+1);
+                children.swap(j,j+1);
             }
         }
     }
