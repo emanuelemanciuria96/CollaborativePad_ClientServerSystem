@@ -192,7 +192,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
 void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action) {
 //    std::cout<<"updateSymbols inizio" << std::endl;
     if (action == Message::modification){
-        std::cout<<" -- stringa modificata: "<<s.toStdString()<<std::endl;
+//        std::cout<<" -- stringa modificata: "<<s.toStdString()<<std::endl;
         auto curs = getRemoteCursor(0);
         curs->setPosition(pos-1);
         int numChars = s.size();
@@ -204,7 +204,7 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextC
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId, s.size());
     } else {
-        std::cout<<" -- stringa inserita: "<<s.toStdString()<<std::endl;
+//        std::cout<<" -- stringa inserita: "<<s.toStdString()<<std::endl;
         insertText(pos, s, siteId, format);
 //        if(posLastChar<0 || index!=posLastChar+1) {
 //            flushInsertQueue();
