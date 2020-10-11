@@ -28,7 +28,7 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     connect(textEdit, &QTextEdit::cursorPositionChanged, this,&EditorGUI::handleCursorPosChanged);
     connect(textEdit, &MyTextEdit::tipRequest, this,&EditorGUI::highlightedTip);
     connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::currentCharFormatChanged);
-//    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
+    connect(textEdit, &MyTextEdit::updateLabels, this, &EditorGUI::updateLabels);
     connect(textEdit, &QTextEdit::selectionChanged, this, &EditorGUI::selectionChanged);
     connect(textEdit,&MyTextEdit::isPastingAtFirst,[this](){ isPastingAtFirst = true; });
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
@@ -111,7 +111,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             }
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
-            std::cout << "Inserimenti " << charsAdded << std::endl;
+//            std::cout << "Inserimenti " << charsAdded << std::endl;
             for (i = 0; i < charsAdded; i++) {
                 QChar ch = textEdit->document()->characterAt(pos+i);
                 auto cursor = textEdit->textCursor();
@@ -126,7 +126,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
 //            if(highlightIsActive)
 //                highlight(pos,charsAdded, model->getSiteId());
         }
-        updateRemoteCursors(model->getSiteId(),pos);
+        updateLabels();
     }
 }
 
@@ -162,7 +162,7 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, cons
     //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
     signalBlocker = !signalBlocker;
     drawLabel(cursor);
-//    updateRemoteCursors(siteId,index, Message::insertion);
+//    updateLabels(siteId,index, Message::insertion);
 }
 
 bool EditorGUI::checkSiteId(RemoteCursor &rc, qint32 siteId) {
@@ -185,7 +185,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     //std::cout << "Rimosso " << index << std::endl;
     signalBlocker = !signalBlocker;
     drawLabel(cursor);
-//    updateRemoteCursors(siteId,index, Message::removal);
+//    updateLabels(siteId,index, Message::removal);
 }
 
 //chiamata quando si ricevono modifiche
@@ -216,11 +216,11 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextC
     }
 }
 
-void EditorGUI::updateRemoteCursors(qint32 mySiteId, int pos) {
+void EditorGUI::updateLabels() {
     // aggiorno la posizione degli altri cursori
 
     for (auto & remoteCursor : *remoteCursors) {
-        if (remoteCursor.getSiteId() != mySiteId && remoteCursor.getSiteId()>0) {
+        if (remoteCursor.getSiteId() != model->getSiteId() && remoteCursor.getSiteId()>0) {
             if(!remoteCursor.labelName->isHidden())
                 drawLabel(&remoteCursor);
 //            auto newPosition = it->position();
@@ -467,26 +467,6 @@ void EditorGUI::flushFileWriters() {
     file_writers.clear();
 }
 
-//void EditorGUI::setCharFormat(bool checked) {
-//    if (checked) {
-////        std::cout << "setCharFormat true" << std::endl;
-//        textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
-//    }
-//    else {
-////        std::cout << "setCharFormat false" << std::endl;
-//        auto format = QTextCharFormat();
-//        format.setBackground(QColor("white"));
-//        textEdit->mergeCurrentCharFormat(format);
-//    }
-//}
-
-void EditorGUI::checkCharFormat(const QTextCharFormat &f) {
-    if(highlightIsActive) {
-        if(!textEdit->textCursor().hasSelection())
-            textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
-    }
-}
-
 void EditorGUI::setBold(bool checked) {
     auto f = QTextCharFormat();
     if(checked)
@@ -603,3 +583,5 @@ void EditorGUI::currentCharFormatChanged(const QTextCharFormat &format)
     emit fontChanged(format.font());
     emit colorChanged(format.foreground().color());
 }
+
+
