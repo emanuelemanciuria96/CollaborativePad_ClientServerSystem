@@ -30,7 +30,6 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::currentCharFormatChanged);
 //    connect(textEdit, &QTextEdit::currentCharFormatChanged, this, &EditorGUI::checkCharFormat);
     connect(textEdit, &QTextEdit::selectionChanged, this, &EditorGUI::selectionChanged);
-    connect(bufferTimer,&QTimer::timeout, this, &EditorGUI::flushBuffer);
     connect(textEdit,&MyTextEdit::isPastingAtFirst,[this](){ isPastingAtFirst = true; });
     timer->start(200); //tra 150 e 200 dovrebbe essere ottimale
     textEdit->setFontFamily("Times New Roman");
