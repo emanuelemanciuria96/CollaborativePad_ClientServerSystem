@@ -740,7 +740,9 @@ void MainWindow::hideEditor(QString& fileName) {
      statusBar->showMessage("    Loading file "+fileName,-1);
      spinner->movie()->start();
      this->setCursor(QCursor(Qt::WaitCursor));
-
+     if(highlightAction->isChecked()){
+         highlightAction->setChecked(false);
+     }
 }
 
 void MainWindow::setRichTextBar() {

@@ -1,7 +1,6 @@
 //
 // Created by Windows on 13/08/2020.
 //
-
 #include <QtGui/QPainter>
 #include <iostream>
 #include <QPagedPaintDevice>
@@ -13,7 +12,6 @@
 #include <QtGui/QClipboard>
 #include <QMenu>
 #include <QMimeData>
-
 
 MyTextEdit::MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors, QWidget *parent) : QTextEdit(parent){
     this->remoteCursors = remoteCursors;

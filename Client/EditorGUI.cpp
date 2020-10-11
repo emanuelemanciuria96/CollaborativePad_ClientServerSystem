@@ -95,7 +95,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             }
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
-            std::cout << "Inserimenti " << charsAdded << std::endl;
+//            std::cout << "Inserimenti " << charsAdded << std::endl;
             for (i = 0; i < charsAdded; i++) {
                 QChar ch = textEdit->document()->characterAt(pos+i);
                 auto cursor = textEdit->textCursor();
@@ -488,3 +488,4 @@ void EditorGUI::currentCharFormatChanged(const QTextCharFormat &format)
     emit fontChanged(format.font());
     emit colorChanged(format.foreground().color());
 }
+

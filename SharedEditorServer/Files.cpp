@@ -10,7 +10,6 @@ enum{file,counter,dirty_bit};
 
 
 std::shared_ptr<std::vector<Symbol>> Files::openFile(QString& fileName) {
-
     auto symbles = std::make_shared<std::vector<Symbol>>();
 
     auto i = opened_files.find(fileName);
@@ -23,7 +22,6 @@ std::shared_ptr<std::vector<Symbol>> Files::openFile(QString& fileName) {
         auto i = opened_files.insert( std::make_pair( fileName,std::make_tuple(std::map<Symbol,int>(),1,false) ) ).first;
         loadFileJson(fileName.toStdString(),std::get<file>(i->second),symbles);
     }
-
     return symbles;
 }
 
