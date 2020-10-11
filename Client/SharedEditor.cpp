@@ -335,7 +335,7 @@ void SharedEditor::processMessages1(StringMessages &strMess) {
     switch(act) {
         case Message::insertion: {
 
-            for (; i < dim; i++) {
+            for (; i < dim ;) {
                 std::vector<Symbol> syms;
                 auto m = messages[i];
                 start = getIndex(m.getLocalIndex(), m.getSymbol());
@@ -361,14 +361,17 @@ void SharedEditor::processMessages1(StringMessages &strMess) {
                 start = getIndex(m.getLocalIndex(), m.getSymbol());
                 QString str;
                 Symbol s;
+                int j = 0;
 
-                while ( i < dim && messages[i].getSymbol()==_symbols[start+i] ) {
+                while ( i < dim && messages[i].getSymbol()==_symbols[start+j] ) {
                     s = messages[i++].getSymbol();
                     str += s.getValue();
+                    j++;
                 }
                 if( !str.isEmpty() ) {
                     emit symbolsChanged(start, str, strMess.getSiteId(), format, Message::removal);
-                    _symbols.erase(_symbols.begin() + start, _symbols.begin() + start + i);
+                    _symbols.erase(_symbols.begin() + start, _symbols.begin() + start + j);
+                    i--;
                 }
             }
 
@@ -376,19 +379,21 @@ void SharedEditor::processMessages1(StringMessages &strMess) {
         }
         case Message::modification: {
 
-            for (; i < dim; i++) {
+            for (; i < dim ; i++ ) {
                 auto m = messages[i];
                 start = getIndex(m.getLocalIndex(), m.getSymbol());
-                _symbols[start+i].getFormat().merge(format);
-                auto s = messages[i++].getSymbol();
-                QString str = s.getValue();
+                QString str;
+                int j = 0;
 
-                while (i < dim && messages[i].getSymbol()==_symbols[start+i] ) {
-                    _symbols[start+i].getFormat().merge(format);
-                    s = messages[i++].getSymbol();
-                    str += s.getValue();
+                while (i < dim && messages[i].getSymbol()==_symbols[start+j] ) {
+                    _symbols[start+j].getFormat().merge(format);
+                    str += messages[i++].getSymbol().getValue();
+                    j++;
                 }
-                emit symbolsChanged(start, str, strMess.getSiteId(), format, Message::modification);
+                if( !str.isEmpty()) {
+                    emit symbolsChanged(start, str, strMess.getSiteId(), format, Message::modification);
+                    i--;
+                }
             }
 
             break;
@@ -407,6 +412,7 @@ void SharedEditor::processMessages(StringMessages &strMess) {
     strM.push_back(m);
     bool firstErase=true;
     bool firstInsert=true;
+    bool firstModification=true;
     //qDebug()<<this->getSiteIds();
     bool nextPosIsCalculated=false;
     qint32 pos;
@@ -459,16 +465,8 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                 //qDebug()<<"insert "<<this->getSiteIds();
                 nextPosIsCalculated = false;
             }
-        } else if (_symbols[pos] == m.getSymbol()) {
-
-            if( m.getAction()==Message::modification){
-                auto format = m.getSymbol().getFormat();
-                _symbols[pos].setFormat(format);
-
-                QString str = _symbols[pos].getValue();
-                emit symbolsChanged(pos-1,str,strMess.getSiteId(),format,Message::modification);
-
-            }else {
+        } else if (m.getAction() == Message::insertion) {
+            if (_symbols[pos] == m.getSymbol()) {
                 if (firstErase) {
                     tmpPos = pos;
                     str.clear();
@@ -477,14 +475,14 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                 str.append(m.getSymbol().getValue());
                 firstErase = false;
                 //qDebug()<<m.getSymbol().getValue()<<" "<<tmpPos;
-//            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
+                //            vt.push_back(std::tuple<qint32, bool, QChar,qint32>(tmpPos, 0, m.getSymbol().getValue(),m.getSiteId()));
                 //_symbols.erase(_symbols.begin()+pos);
                 if (strM[i + 1].getAction() != Message::removal) {
                     firstErase = true;
                 } else {
-//                std::cout << "getindex inizio" << std::endl;
+                    //                std::cout << "getindex inizio" << std::endl;
                     nextPos = getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
-//                std::cout << "getindex fine" << std::endl;
+                    //                std::cout << "getindex fine" << std::endl;
                     nextPosIsCalculated = true;
                     if (nextPos != pos + 1) {
                         firstErase = true;
@@ -494,7 +492,45 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                     _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
                     emit symbolsChanged(tmpPos, str, strMess.getSiteId(), QTextCharFormat(), Message::removal);
                     numChar = 0;
-                    //qDebug()<<"delete "<<this->getSiteIds();
+                    nextPosIsCalculated = false;
+                }
+            } else {
+                if (numChar > 0) {
+                    _symbols.erase(_symbols.begin() + tmpPos, _symbols.begin() + tmpPos + numChar);
+                    emit symbolsChanged(tmpPos, str, strMess.getSiteId(), QTextCharFormat(), Message::removal);
+                    numChar = 0;
+                    nextPosIsCalculated = false;
+                }
+            }
+        }else{
+            if (_symbols[pos] == m.getSymbol()) {
+                if (firstModification) {
+                    tmpPos = pos;
+                    str.clear();
+                }
+                numChar++;
+                str.append(m.getSymbol().getValue());
+                firstModification = false;
+                if (strM[i + 1].getAction() != Message::modification) {
+                    firstModification = true;
+                } else {
+                    //                std::cout << "getindex inizio" << std::endl;
+                    nextPos = getIndex(strM[i + 1].getLocalIndex(), strM[i + 1].getSymbol());
+                    //                std::cout << "getindex fine" << std::endl;
+                    nextPosIsCalculated = true;
+                    if (nextPos != pos + 1) {
+                        firstModification = true;
+                    }
+                }
+                if (firstModification) {
+                    //MODIFICA
+                    numChar = 0;
+                    nextPosIsCalculated = false;
+                }
+            }else {
+                if (numChar > 0) {
+                    //MODIFICA
+                    numChar = 0;
                     nextPosIsCalculated = false;
                 }
             }

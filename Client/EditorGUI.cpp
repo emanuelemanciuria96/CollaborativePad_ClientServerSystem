@@ -198,8 +198,9 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
 void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action) {
 //    std::cout<<"updateSymbols inizio" << std::endl;
     if (action == Message::modification){
+        std::cout<<" -- stringa modificata: "<<s.toStdString()<<std::endl;
         auto curs = getRemoteCursor(0);
-        curs->setPosition(pos);
+        curs->setPosition(pos-1);
         int numChars = s.size();
         curs->movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,numChars);
         isModifying = true;
