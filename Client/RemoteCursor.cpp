@@ -32,16 +32,12 @@ QString RemoteCursor::getColor() const {
     return COLORS[num];
 }
 
-QString RemoteCursor::getColor(qint32 siteId) {
+QString RemoteCursor::getColorHex(qint32 siteId) {
     auto num = (siteId*13) % COLORS->size();
     return COLORS[num];
 }
 
 RemoteCursor::~RemoteCursor() {
-//    if (labelTimer == nullptr)
-//        std::cout << "timer null" << std::endl;
-//    else
-//        std::cout << "timer not null" << std::endl;
     labelName->deleteLater();
     labelTimer->deleteLater();
 }

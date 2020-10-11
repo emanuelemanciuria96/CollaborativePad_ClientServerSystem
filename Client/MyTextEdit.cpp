@@ -65,22 +65,20 @@ bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
         return false;
     }
 
-    if(obj == this && ev->type() == QEvent::ToolTip){
-        auto event = dynamic_cast<QHelpEvent*>(ev);
+    if(obj == this && ev->type() == QEvent::ToolTip) {
+        auto event = dynamic_cast<QHelpEvent *>(ev);
         auto pos = event->pos();
         QTextCursor curs = cursorForPosition(pos);
         int posInText = curs.position();
         QTextCursor tmp = curs;
-        tmp.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor);
-        if( !curs.atEnd() && posInText!=0 && tmp.columnNumber() &&
-            curs.columnNumber() && document()->characterAt(posInText).unicode()!=8233 ){
+        tmp.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+        if (!curs.atEnd() && posInText != 0 && tmp.columnNumber() &&
+            curs.columnNumber() && document()->characterAt(posInText).unicode() != 8233) {
 
             emit tipRequest(posInText, event->globalPos());
 
         }
     }
-    else
-        QToolTip::setPalette(toolTipPalette);
     return false;
 }
 

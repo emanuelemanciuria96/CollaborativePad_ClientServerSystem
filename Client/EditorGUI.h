@@ -52,6 +52,7 @@ private:
     QPoint lastToolTipPos;
     bool hasSelection = false;
     bool highlightIsActive = false;
+    QString stylestring;
 
     void setUpGUI();
     void updateRemoteCursors(qint32 mySiteId, int pos);
@@ -83,7 +84,7 @@ public slots:
     void highlightedTip(int pos,QPoint globalPos);
     void recordUserWriter(qint32 siteId,QString& user,bool connection=false);
     void flushFileWriters();
-    void setCharFormat(bool checked);
+//    void setCharFormat(bool checked);
     void setBold(bool checked) const;
     void setItalic(bool checked) const;
     void setUnderline(bool checked) const;

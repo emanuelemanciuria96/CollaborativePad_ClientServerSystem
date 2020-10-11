@@ -51,15 +51,14 @@ void EditorGUI::setUpGUI() {
 
     connect(this, SIGNAL(clear()), textEdit, SLOT(clear()));
 
-    textEdit->setStyleSheet("QTextEdit{border-style:none}"
+    stylestring= "QTextEdit{border-style:none}"
                     "QScrollBar:vertical {background:white; width:8px; margin: 0px 0px 0px 0px;}"
                     "QScrollBar::handle:vertical {background: #ECECEC; border:0px solid lightgray; border-radius:4px;}"
 //                  "QScrollBar::add-line:vertical{height:0px; subcontrol-position: bottom; subcontrol-origin: margin;"
 //                  "QScrollBar::sub-line:vertical {height: 0px width:0px; subcontrol-position: top; subcontrol-origin: margin; "
                     "QScrollBar:horizontal {background:white; height:8px; margin: 0px 0px 0px 0px;}"
-                    "QScrollBar::handle:horizontal {background: #ECECEC; border:0px solid lightgray; border-radius: 4px}"
-                  );
-
+                    "QScrollBar::handle:horizontal {background: #ECECEC; border:0px solid lightgray; border-radius: 4px}";
+    textEdit->setStyleSheet(stylestring);
     textEdit->setFocus();
     setCurrentFileName(QString());
 
@@ -102,7 +101,8 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 auto cursor = textEdit->textCursor();
                 cursor.setPosition(pos+i+1);
                 auto format = cursor.charFormat();
-//                format.setBackground(QColor("white"));
+                if(highlightIsActive)
+                    format.setBackground(QColor("white"));
                 model->localInsert(pos+i, ch , format);
             }
 //            model->localInsert(pos, str, textEdit->currentCharFormat());
@@ -110,7 +110,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
 //            if(highlightIsActive)
 //                highlight(pos,charsAdded, model->getSiteId());
         }
-//        updateRemoteCursors(model->getSiteId(),pos);
+        updateRemoteCursors(model->getSiteId(),pos);
     }
 }
 
@@ -278,7 +278,8 @@ void EditorGUI::handleCursorPosChanged() {
         model->sendCursorPos(pos);
     }
     if(highlightIsActive) {
-        textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
+        if(!textEdit->textCursor().hasSelection())
+            textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
     }
 
 }
@@ -329,10 +330,14 @@ void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId) {
     auto cursor = getRemoteCursor(0);
     auto format = QTextCharFormat();
 
-    if (siteId != -1)
+    if (siteId != -1) {
         format = getHighlightFormat(siteId);
-    else
+        textEdit->mergeCurrentCharFormat(format);
+    }
+    else {
         format.setBackground(QColor("white"));
+        textEdit->mergeCurrentCharFormat(format);
+    }
     signalBlocker = !signalBlocker;
 //    std::cout << "dentro setPosition " << std::endl;
     cursor->setPosition(pos , QTextCursor::MoveAnchor);
@@ -352,7 +357,7 @@ QTextCharFormat EditorGUI::getHighlightFormat(qint32 siteId) {
     auto format = QTextCharFormat();
     auto color = QColor();
 
-    color.setNamedColor(RemoteCursor::getColor(siteId));
+    color.setNamedColor(RemoteCursor::getColorHex(siteId));
     color.setAlpha(124);
     format.setBackground(color);
 
@@ -393,6 +398,20 @@ void EditorGUI::highlightedTip(int pos, QPoint globalPos) {
     }
 }
 
+void EditorGUI::showToolTip(qint32 siteId, QPoint globalPos) {
+    auto textColor = QString();
+    auto color = RemoteCursor::getColorHex(siteId);
+    auto style = stylestring;
+    RemoteCursor::isDarkColor(QColor(color)) ? textColor = "white"  : textColor = "black";
+
+    style.append("QToolTip {color: "+textColor + ";background-color: " + color + "; border: 1px solid darkgray;}");
+    textEdit->setStyleSheet(style);
+//    QToolTip::setPalette(palette);
+    auto name = file_writers.find(siteId)->second;
+    QToolTip::showText(globalPos,name, textEdit);
+//    textEdit->showToolTip(siteId,globalPos,name);
+}
+
 void EditorGUI::recordUserWriter(qint32 siteId, QString& user,bool connection){
     auto i = file_writers.find(siteId);
     if( i == file_writers.end() )
@@ -406,27 +425,18 @@ void EditorGUI::flushFileWriters() {
     file_writers.clear();
 }
 
-void EditorGUI::showToolTip(qint32 siteId, QPoint globalPos) {
-    auto palette = QPalette();
-    palette.setColor(QPalette::ToolTipBase,RemoteCursor::getColor(siteId));
-    QToolTip::setPalette(palette);
-    auto name = file_writers.find(siteId)->second;
-    QToolTip::showText(globalPos,name, textEdit);
-//    textEdit->showToolTip(siteId,globalPos,name);
-}
-
-void EditorGUI::setCharFormat(bool checked) {
-    if (checked) {
-//        std::cout << "setCharFormat true" << std::endl;
-        textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
-    }
-    else {
-//        std::cout << "setCharFormat false" << std::endl;
-        auto format = QTextCharFormat();
-        format.setBackground(QColor("white"));
-        textEdit->mergeCurrentCharFormat(format);
-    }
-}
+//void EditorGUI::setCharFormat(bool checked) {
+//    if (checked) {
+////        std::cout << "setCharFormat true" << std::endl;
+//        textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
+//    }
+//    else {
+////        std::cout << "setCharFormat false" << std::endl;
+//        auto format = QTextCharFormat();
+//        format.setBackground(QColor("white"));
+//        textEdit->mergeCurrentCharFormat(format);
+//    }
+//}
 
 void EditorGUI::checkCharFormat(const QTextCharFormat &f) {
     if(highlightIsActive) {

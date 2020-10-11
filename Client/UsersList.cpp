@@ -37,7 +37,7 @@ void UsersList::addUser(const UserInfo &user) {
     painter.drawPixmap(x, y, orig.width(), orig.height(), orig);
     newItem->setIcon(QIcon(rounded));
 
-    auto backColor = RemoteCursor::getColor(user.getSiteId());
+    auto backColor = RemoteCursor::getColorHex(user.getSiteId());
     QPixmap backgrnd = QPixmap(134,40);
     backgrnd.fill(Qt::transparent);
     QPainter backPainter(&backgrnd);

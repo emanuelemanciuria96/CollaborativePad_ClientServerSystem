@@ -22,7 +22,7 @@ public:
     QPointer<QLabel> labelName;
     QPointer<QTimer> labelTimer;
     QColor color;
-    static QString getColor(qint32 siteId);
+    static QString getColorHex(qint32 siteId);
     RemoteCursor(): QTextCursor(){ _siteId = -1;};
     explicit RemoteCursor(qint32 siteId) : _siteId(siteId), QTextCursor() {};
     RemoteCursor(QTextDocument *document, qint32 siteId, const QString& username);
