@@ -28,9 +28,10 @@ public slots:
 protected:
     void paintEvent(QPaintEvent *e) override;
     void contextMenuEvent(QContextMenuEvent *e) override;
+    void scrollContentsBy(int dx, int dy) override;
 signals:
     void tipRequest(int pos,QPoint globalPos);
-
+    void updateLabels();
 };
 
 

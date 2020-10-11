@@ -55,7 +55,6 @@ private:
     QString stylestring;
 
     void setUpGUI();
-    void updateRemoteCursors(qint32 mySiteId, int pos);
     RemoteCursor* getRemoteCursor(qint32 siteId);
     void insertText(qint32 pos, const QString& value, qint32 siteId, const QTextCharFormat& format);
     void deleteText(qint32 pos, qint32 siteId,qint32 n);
@@ -71,7 +70,6 @@ private slots:
     void setSelected(bool yes){ selected = yes;}
     void handleCursorPosChanged();
     void enableSendCursorPos();
-    void checkCharFormat(const QTextCharFormat &f);
     void selectionChanged();
 public slots:
     void updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
@@ -84,7 +82,6 @@ public slots:
     void highlightedTip(int pos,QPoint globalPos);
     void recordUserWriter(qint32 siteId,QString& user,bool connection=false);
     void flushFileWriters();
-//    void setCharFormat(bool checked);
     void setBold(bool checked) const;
     void setItalic(bool checked) const;
     void setUnderline(bool checked) const;
@@ -93,7 +90,7 @@ public slots:
     void textFamily(const QString &p);
     void textColor();
     void currentCharFormatChanged(const QTextCharFormat &format);
-
+    void updateLabels();
 signals:
     void clear();
     void setNumUsers(int n);

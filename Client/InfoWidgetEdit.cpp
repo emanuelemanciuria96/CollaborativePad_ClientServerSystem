@@ -25,6 +25,8 @@ InfoWidgetEdit::InfoWidgetEdit(QWidget *parent)
     ui->editEmail->setStyleSheet("QLineEdit{font:12pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}");
     ui->editName->setStyleSheet("QLineEdit{font:12pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}");
     ui->editUser->setStyleSheet("QLineEdit{font:12pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}");
+    ui->cancelButton->setStyleSheet("QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+    ui->saveButton->setStyleSheet("QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
 
 }
 

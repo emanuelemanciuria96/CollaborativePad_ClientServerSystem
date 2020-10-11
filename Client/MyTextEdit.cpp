@@ -83,7 +83,6 @@ bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
 }
 
 
-
 void MyTextEdit::contextMenuEvent(QContextMenuEvent *e) {
     auto menu = createStandardContextMenu();
     auto point = e->pos();
@@ -113,5 +112,9 @@ void MyTextEdit::paste() {
         return;
     }
     QTextEdit::paste();
+}
 
+void MyTextEdit::scrollContentsBy(int dx, int dy) {
+    QTextEdit::scrollContentsBy(dx,dy);
+    emit updateLabels();
 }
