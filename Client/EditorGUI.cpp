@@ -102,6 +102,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             charsAdded-=charsRemoved;
             charsRemoved = 0;
             isPastingAtFirst = false;
+            textEdit->document()->clearUndoRedoStacks(QTextDocument::UndoStack);
         }
 
         //std::cout << "invio caratteri" << std::endl;
@@ -208,6 +209,7 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextC
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId, s.size());
     } else {
+        std::cout<<" -- stringa inserita: "<<s.toStdString()<<std::endl;
         insertText(pos, s, siteId, format);
 //        if(posLastChar<0 || index!=posLastChar+1) {
 //            flushInsertQueue();

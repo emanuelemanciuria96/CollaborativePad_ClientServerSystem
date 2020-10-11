@@ -113,8 +113,6 @@ void MyTextEdit::paste() {
         curs.removeSelectedText();
         curs.insertHtml(data->html());
 
-        document()->clearUndoRedoStacks(QTextDocument::UndoStack);
-
         return;
     }
     QTextEdit::paste();

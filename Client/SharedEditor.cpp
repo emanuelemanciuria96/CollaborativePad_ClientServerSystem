@@ -215,7 +215,7 @@ void SharedEditor::process(DataPacket pkt) {
             break;
         case DataPacket::textTyping :
             if(isFileOpened)
-                processMessages(*std::dynamic_pointer_cast<StringMessages>(pkt.getPayload()));
+                processMessages1(*std::dynamic_pointer_cast<StringMessages>(pkt.getPayload()));
             else
                 std::cout<<"arrivati messaggi che non devono essere inviati"<<std::endl;
             break;
@@ -323,6 +323,79 @@ qint32 SharedEditor::getIndex(qint32 index, Symbol symbol ) {
     return pos;
 }
 
+void SharedEditor::processMessages1(StringMessages &strMess) {
+
+    Message::action_t act = strMess.getQueue().front().getAction();
+    qint32 start;
+    auto messages = strMess.getQueue();
+    auto format = messages[0].getSymbol().getFormat();
+    int i = 0;
+    int dim = messages.size();
+
+    switch(act) {
+        case Message::insertion: {
+
+            for (; i < dim; i++) {
+                std::vector<Symbol> syms;
+                auto m = messages[i];
+                start = getIndex(m.getLocalIndex(), m.getSymbol());
+                auto s = messages[i++].getSymbol();
+                QString str = s.getValue();
+                syms.push_back(s);
+
+                while (i < dim && messages[i].getSymbol() < _symbols[start] && s < messages[i].getSymbol()) {
+                    s = messages[i++].getSymbol();
+                    str += s.getValue();
+                    syms.push_back(s);
+                }
+                emit symbolsChanged(start, str, strMess.getSiteId(), format, Message::insertion);
+                _symbols.insert(_symbols.begin() + start, syms.begin(), syms.end());
+            }
+
+            break;
+        }
+        case Message::removal: {
+
+            for (; i < dim; i++) {
+                auto m = messages[i];
+                start = getIndex(m.getLocalIndex(), m.getSymbol());
+                QString str;
+                Symbol s;
+
+                while ( i < dim && messages[i].getSymbol()==_symbols[start+i] ) {
+                    s = messages[i++].getSymbol();
+                    str += s.getValue();
+                }
+                if( !str.isEmpty() ) {
+                    emit symbolsChanged(start, str, strMess.getSiteId(), format, Message::removal);
+                    _symbols.erase(_symbols.begin() + start, _symbols.begin() + start + i);
+                }
+            }
+
+            break;
+        }
+        case Message::modification: {
+
+            for (; i < dim; i++) {
+                auto m = messages[i];
+                start = getIndex(m.getLocalIndex(), m.getSymbol());
+                _symbols[start+i].getFormat().merge(format);
+                auto s = messages[i++].getSymbol();
+                QString str = s.getValue();
+
+                while (i < dim && messages[i].getSymbol()==_symbols[start+i] ) {
+                    _symbols[start+i].getFormat().merge(format);
+                    s = messages[i++].getSymbol();
+                    str += s.getValue();
+                }
+                emit symbolsChanged(start, str, strMess.getSiteId(), format, Message::modification);
+            }
+
+            break;
+        }
+    }
+
+}
 
 void SharedEditor::processMessages(StringMessages &strMess) {
     std::vector<std::tuple<qint32,bool, QChar,qint32>> vt;

@@ -35,7 +35,7 @@ public:
     void setPos(std::vector<quint32>& pos){ _pos = pos; }
     QChar getValue() { return _ch; }
     SymId getSymId() const { return _symId; }
-    QTextCharFormat getFormat() {return _format;};
+    QTextCharFormat& getFormat() {return _format;};
     void setFormat(QTextCharFormat& format) {_format = format;};
 //    Symbol& operator=(const Symbol& s){
 //        if(this != &s){

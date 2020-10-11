@@ -50,6 +50,7 @@ private:
     void closeFile();
     void findCounter();
 
+    void processMessages1( StringMessages& strMess );
     void processMessages( StringMessages& strMess );
     void processLoginInfo( LoginInfo& logInf );
     void processFileInfo( FileInfo& filInf );
