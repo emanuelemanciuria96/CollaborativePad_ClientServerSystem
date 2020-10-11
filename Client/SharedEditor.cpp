@@ -458,9 +458,9 @@ void SharedEditor::processMessages(StringMessages &strMess) {
                 }
             }
             if (firstInsert) {
-                std::cout << "insert inizio" << std::endl;
+//                std::cout << "insert inizio" << std::endl;
                 _symbols.insert(_symbols.begin() + tmpPos, syms.begin(), syms.end());
-                std::cout << "insert fine" << std::endl;
+//                std::cout << "insert fine" << std::endl;
                 emit symbolsChanged(tmpPos, str, strMess.getSiteId(), syms.front().getFormat(), Message::insertion);
                 //qDebug()<<"insert "<<this->getSiteIds();
                 nextPosIsCalculated = false;
@@ -574,7 +574,6 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
             std::cout<<" - counter found: "<<_counter<<std::endl;
             emit openTextEditor(fileOpened);
             emit transparentForMouse();
-            emit fileLoaded();
             break;
         }
     }
@@ -868,21 +867,6 @@ QVector<qint32> SharedEditor::getSiteIds() {
 
 qint32 SharedEditor::getSiteId() const {
     return _siteId;
-}
-
-void SharedEditor::highlightSymbols(bool checked) {
-    for(auto i=0; i<_symbols.size(); i++){
-        auto siteId = _symbols[i].getSymId().getSiteId();
-//        qint32 pos = getIndex(-1,s);
-        if(siteId>0)
-            emit highlight(i, siteId);
-    }
-    highlighting = checked;
-    emit setCharFormat(checked);
-}
-
-bool SharedEditor::getHighlighting() const {
-    return highlighting;
 }
 
 void SharedEditor::obtainUser(qint32 siteId) {

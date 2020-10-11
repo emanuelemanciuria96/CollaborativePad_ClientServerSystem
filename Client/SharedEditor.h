@@ -112,7 +112,7 @@ signals:
     void userNameArrived(qint32 siteId, QString& user, bool connected=false);
     void flushFileWriters();
     void setCharFormat(bool);
-    void fileLoaded();
+
 public:
     explicit SharedEditor(QObject *parent = 0);
     void localInsert( qint32 index, QChar& ch, QTextCharFormat& format);

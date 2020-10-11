@@ -50,16 +50,12 @@ private:
     uint nUsers = 0;
     std::map<qint32,QString> file_writers;
     QPoint lastToolTipPos;
-    bool highlightEditor;
     bool hasSelection = false;
-    QTextCharFormat lastFormat;
-    Message::action_t lastAction;
-    QString *buffer;
-    QTimer *bufferTimer;
-    qint32 firstPos;
     bool isPastingAtFirst = false;
     static bool isModifying;
     qint32 tmpPos;
+    bool highlightIsActive = false;
+    QString stylestring;
 
     void setUpGUI();
     void updateRemoteCursors(qint32 mySiteId, int pos);
@@ -81,7 +77,6 @@ private slots:
     void enableSendCursorPos();
     void checkCharFormat(const QTextCharFormat &f);
     void selectionChanged();
-    void flushBuffer();
 public slots:
     void updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
     void deleteAllText();
@@ -93,33 +88,30 @@ public slots:
     void highlightedTip(int pos,QPoint globalPos);
     void recordUserWriter(qint32 siteId,QString& user,bool connection=false);
     void flushFileWriters();
-    void setCharFormat(bool checked);
+//    void setCharFormat(bool checked);
     void setBold(bool checked);
     void setItalic(bool checked);
     void setUnderline(bool checked);
+    void loadHighlights(bool checked);
     void textSize(const QString &p);
     void textFamily(const QString &p);
     void textColor();
     void currentCharFormatChanged(const QTextCharFormat &format);
-    void loadHighlights();
-    void updateFromOtherEditor(qint32 pos, QChar ch, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
 
 signals:
     void clear();
     void setNumUsers(int n);
     void userQuery(qint32 siteId);
-    void updateOther(int, QChar, qint32 siteId,const QTextCharFormat& format, Message::action_t);
     void colorChanged(const QColor &c);
     void fontChanged(const QFont &f);
 
 public:
     MyTextEdit* textEdit;
-    EditorGUI(SharedEditor *model, bool highlight,QWidget *parent = nullptr);
+    EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);
-    void setVerticalScrollValue(int);
-    void setHorizontalScrollValue(int);
-    int getVerticalScrollValue();
-    int getHorizontalScrollValue();
+
+
+
 };
 
 

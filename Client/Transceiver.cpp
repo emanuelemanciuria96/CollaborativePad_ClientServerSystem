@@ -416,10 +416,7 @@ void Transceiver::sendCursorPos(DataPacket &pkt) {
     QDataStream tmp(&buf);
 
     auto ptr = std::dynamic_pointer_cast<CursorPosition>(pkt.getPayload());
-    auto vector = QVector<quint32>();
-    for (auto p : ptr->getSymbol().getPos()){
-        vector.push_back(p);
-    }
+    auto vector = QVector<quint32>::fromStdVector(ptr->getSymbol().getPos());
 
     tmp << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
         << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex();

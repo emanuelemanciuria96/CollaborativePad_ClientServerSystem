@@ -97,13 +97,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::loginAchieved, this, &MainWindow::loginFinished);
     connect(shEditor, &SharedEditor::loginError, loginDialog, &LoginDialog::slotLoginError);
     connect(shEditor, &SharedEditor::symbolsChanged, editor, &EditorGUI::updateSymbols);
-    connect(shEditor, &SharedEditor::symbolsChanged, highlightEditor, &EditorGUI::updateSymbols);
     connect(shEditor, &SharedEditor::remoteCursorPosChanged, editor, &EditorGUI::updateRemoteCursorPos);
-    connect(shEditor, &SharedEditor::remoteCursorPosChanged, highlightEditor, &EditorGUI::updateRemoteCursorPos);
     connect(shEditor, &SharedEditor::removeCursor, editor, &EditorGUI::removeCursor);
-    connect(shEditor, &SharedEditor::removeCursor, highlightEditor, &EditorGUI::removeCursor);
     connect(shEditor, &SharedEditor::deleteAllText, editor, &EditorGUI::deleteAllText);
-    connect(shEditor, &SharedEditor::deleteAllText, highlightEditor, &EditorGUI::deleteAllText);
     connect(shEditor, &SharedEditor::filePathsArrived, treeView, &FileSystemTreeView::constructFromPaths);
     connect(shEditor, &SharedEditor::filePathsArrived, gridView, &FileSystemGridView::constructFromPaths);
     connect(gridView, &FileSystemGridView::newFileUpdateTree, treeView, &FileSystemTreeView::constructFromPaths);
@@ -111,18 +107,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
     connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::startSignIn);
     connect(widgetSignIn, &SignInWidget::backToLogIn, this, &MainWindow::backToLogIn);
-//    connect(highlightAction, &QAction::triggered, shEditor, &SharedEditor::highlightSymbols);
-    connect(highlightAction, &QAction::triggered, this, &MainWindow::highlight);
-
-    // TODO: cambiare la connect di sotto per l'undo su highlight
-//    connect(highlightAction, &QAction::triggered, [this](bool chacked=false){ editor->textEdit->document()->clearUndoRedoStacks(); });
-    // TODO: ...
-    connect(shEditor, &SharedEditor::setCharFormat, editor, &EditorGUI::setCharFormat);
-    connect(shEditor, &SharedEditor::setCharFormat, highlightEditor, &EditorGUI::setCharFormat);
+    connect(highlightAction, &QAction::triggered, editor, &EditorGUI::loadHighlights);
     connect(shEditor, &SharedEditor::returnToGrid, this, &MainWindow::clsFile);
     connect(closeAction, &QAction::triggered, shEditor, &SharedEditor::requireFileClose);
     connect(pdfAction, &QAction::triggered, editor, &EditorGUI::exportToPdf);
-    connect(pdfAction, &QAction::triggered, highlightEditor, &EditorGUI::exportToPdf);
     connect(addAction, &QAction::triggered, gridView, &FileSystemGridView::addFile);
     connect(backAction, &QAction::triggered, gridView, &FileSystemGridView::reloadBack);
 //    connect(shEditor, &SharedEditor::highlight, editor, &EditorGUI::highlight);
@@ -149,9 +137,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::fsNameArrived, addUserWidget, &AddUserWidget::fsNameArrived);
     connect(addUserWidget, &AddUserWidget::searchFsName, shEditor, &SharedEditor::searchFsName);
     connect(treeView, &FileSystemTreeView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
-    connect(treeView, &FileSystemTreeView::opnFileRequest, highlightEditor, &EditorGUI::setCurrentFileName);
     connect(gridView, &FileSystemGridView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
-    connect(gridView, &FileSystemGridView::opnFileRequest, highlightEditor, &EditorGUI::setCurrentFileName);
     connect(treeView, &FileSystemTreeView::opnFileRequest, gridView, &FileSystemGridView::selectFile);
     connect(userInfoAction, &QAction::triggered, this, &MainWindow::setInfoWidget);
     connect(uriAction, &QAction::triggered, [this](){showHideLeftDock(uri);} );
@@ -159,17 +145,13 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(inviteListAction, &QAction::triggered, [this](){showHideLeftDock(invitelist);});
     connect(treeShowAction, &QAction::triggered,[this](){showHideLeftDock(tree);});
     connect(editor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
-    connect(highlightEditor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
     connect(editor, &EditorGUI::userQuery,shEditor,&SharedEditor::obtainUser);
-    connect(highlightEditor, &EditorGUI::userQuery,shEditor,&SharedEditor::obtainUser);
     connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
     connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::hideNumUsers);
     connect(shEditor, &SharedEditor::addUser, usersList, &UsersList::addUser);
     connect(shEditor, &SharedEditor::removeUser, usersList, &UsersList::removeUser);
     connect(shEditor, &SharedEditor::userNameArrived, editor, &EditorGUI::recordUserWriter);
-    connect(shEditor, &SharedEditor::userNameArrived, highlightEditor, &EditorGUI::recordUserWriter);
     connect(shEditor, &SharedEditor::flushFileWriters, editor, &EditorGUI::flushFileWriters);
-    connect(shEditor, &SharedEditor::flushFileWriters, highlightEditor, &EditorGUI::flushFileWriters);
     connect(shEditor, &SharedEditor::flushFileWriters, usersList, &UsersList::clear);
     connect(addUserWidget, &AddUserWidget::closing, this, &MainWindow::transparentForMouse);
     connect(treeView, &FileSystemTreeView::inviteRequest, this, &MainWindow::transparentForMouse);
@@ -182,23 +164,14 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(usersList, &UsersList::setUserInfo, this, &MainWindow::setInfoUsersListWidget);
     connect(infoUsersListWidget, &InfoUsersListWidget::backPressed, this, &MainWindow::setInfoUsersListWidget);
     connect(editor->textEdit, &MyTextEdit::copyAvailable, this,[this](bool b){copyAction->setDisabled(!b);cutAction->setDisabled(!b);});
-    connect(highlightEditor->textEdit, &MyTextEdit::copyAvailable, this,[this](bool b){copyAction->setDisabled(!b);cutAction->setDisabled(!b);});
-
     connect(QApplication::clipboard(), &QClipboard::dataChanged, this, &MainWindow::clipboardDataChanged);
     connect(editor->textEdit->document(), &QTextDocument::undoAvailable,undoAction, &QAction::setEnabled);
-    connect(highlightEditor->textEdit->document(), &QTextDocument::undoAvailable,undoAction, &QAction::setEnabled);
     connect(editor->textEdit->document(), &QTextDocument::redoAvailable,redoAction, &QAction::setEnabled);
-    connect(highlightEditor->textEdit->document(), &QTextDocument::redoAvailable,redoAction, &QAction::setEnabled);
     connect(pasteAction, &QAction::triggered, editor->textEdit, &MyTextEdit::paste);
     connect(copyAction, &QAction::triggered, editor->textEdit, &QTextEdit::copy);
     connect(cutAction, &QAction::triggered, editor->textEdit, &QTextEdit::cut);
     connect(redoAction, &QAction::triggered, editor->textEdit, &QTextEdit::redo);
     connect(undoAction, &QAction::triggered, editor->textEdit, &MyTextEdit::undo);
-//    connect(pasteAction, &QAction::triggered, highlightEditor->textEdit, &MyTextEdit::paste);
-//    connect(copyAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::copy);
-//    connect(cutAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::cut);
-//    connect(redoAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::redo);
-//    connect(undoAction, &QAction::triggered, highlightEditor->textEdit, &QTextEdit::undo);
     connect(boldAction, &QAction::triggered, editor, &EditorGUI::setBold);
     connect(italicAction, &QAction::triggered, editor, &EditorGUI::setItalic);
     connect(underlineAction, &QAction::triggered, editor, &EditorGUI::setUnderline);
@@ -207,14 +180,10 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(editor, &EditorGUI::fontChanged, this, &MainWindow::fontChanged);
     connect(comboSize, SIGNAL(activated(const QString&)), editor, SLOT(textSize(const QString&)));
     connect(comboFont, SIGNAL(activated(const QString&)), editor, SLOT(textFamily(const QString&)));
-//    connect(boldAction, &QAction::toggled, highlightEditor, &EditorGUI::setBold);
-//    connect(italicAction, &QAction::toggled, highlightEditor, &EditorGUI::setItalic);
-//    connect(underlineAction, &QAction::toggled, highlightEditor, &EditorGUI::setUnderline);
 
-    connect(editor, &EditorGUI::updateOther, this, &MainWindow::recvEditorUpdate);
-    connect(highlightEditor, &EditorGUI::updateOther, this, &MainWindow::recvEditorUpdate);
-
-    connect(shEditor, &SharedEditor::fileLoaded, highlightEditor, &EditorGUI::loadHighlights);
+    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
+    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
+    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
@@ -222,7 +191,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
 
     centralWidget->addWidget(loginDialog);
     centralWidget->addWidget(editor);
-    centralWidget->addWidget(highlightEditor);
     centralWidget->addWidget(infoWidget);
     centralWidget->addWidget(infoWidgetEdit);
     centralWidget->addWidget(infoUsersListWidget);
@@ -590,8 +558,7 @@ void MainWindow::changeToolbarProfileImage(const QPixmap& orig) {
 }
 
 void MainWindow::editorSettings(SharedEditor* shEditor) {
-    editor = new EditorGUI(shEditor, false, this);
-    highlightEditor = new EditorGUI(shEditor, true, this);
+    editor = new EditorGUI(shEditor, this);
     infoWidget = new InfoWidget(this);
     infoWidgetEdit = new InfoWidgetEdit(this);
     infoUsersListWidget = new InfoUsersListWidget(this);
@@ -834,31 +801,7 @@ void MainWindow::colorChanged(const QColor &c)
     textColorAction->setIcon(pix);
 }
 
-void MainWindow::highlight(bool checked) {
-    if(checked) {
-        highlightEditor->setVerticalScrollValue(editor->getVerticalScrollValue());
-        highlightEditor->setHorizontalScrollValue(editor->getHorizontalScrollValue());
-        centralWidget->setCurrentWidget(highlightEditor);
-        std::cout << "highlightEditor setted" << std::endl;
-    }
-    else {
-        editor->setVerticalScrollValue(highlightEditor->getVerticalScrollValue());
-        editor->setHorizontalScrollValue(highlightEditor->getHorizontalScrollValue());
-        centralWidget->setCurrentWidget(editor);
-        std::cout << "standard Editor setted" << std::endl;
 
-    }
-}
-
-void MainWindow::recvEditorUpdate(int pos, QChar ch,qint32 siteId,const QTextCharFormat& format, Message::action_t action) {
-    if(centralWidget->currentWidget() == editor) {
-        highlightEditor->updateFromOtherEditor(pos,ch, siteId,format, action);
-    }
-    else{
-        editor->updateFromOtherEditor(pos,ch,siteId,format, action);
-    }
-
-}
 void MainWindow::fontChanged(const QFont &f)
 {
     comboFont->setCurrentIndex(comboFont->findText(QFontInfo(f).family()));
