@@ -25,6 +25,7 @@ public slots:
     void openUserInfo(QListWidgetItem* item);
 signals:
     void setUserInfo(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
+    void setNumUsers(int n);
 private:
     QPainterPath roundRect(int width, int height);
     std::map<QListWidgetItem*, struct UserData> map;

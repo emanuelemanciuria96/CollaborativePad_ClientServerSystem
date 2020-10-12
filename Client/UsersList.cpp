@@ -60,6 +60,7 @@ void UsersList::addUser(const UserInfo &user) {
     data.name = user.getName();
     data.email = user.getEmail();
     map.insert(std::make_pair(newItem, data));
+    emit setNumUsers(this->count());
 }
 
 void UsersList::removeUser(const UserInfo &user) {
@@ -67,6 +68,7 @@ void UsersList::removeUser(const UserInfo &user) {
 //    std::cout << "User disconnected: " << u.constFirst()->text().toStdString() << std::endl;
     map.erase(u.first());
     takeItem(row(u.first()));
+    emit setNumUsers(this->count());
 }
 
 QPainterPath UsersList::roundRect(int width, int height) {

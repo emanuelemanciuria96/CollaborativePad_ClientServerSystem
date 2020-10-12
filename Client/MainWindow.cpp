@@ -144,9 +144,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(infoWidget, &InfoWidget::imageChanged, this, &MainWindow::changeToolbarProfileImage);
     connect(inviteListAction, &QAction::triggered, [this](){showHideLeftDock(invitelist);});
     connect(treeShowAction, &QAction::triggered,[this](){showHideLeftDock(tree);});
-    connect(editor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
+    connect(usersList, &UsersList::setNumUsers, this, &MainWindow::setNumUsers);
     connect(editor, &EditorGUI::userQuery,shEditor,&SharedEditor::obtainUser);
-    connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
+//    connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
     connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::hideNumUsers);
     connect(shEditor, &SharedEditor::addUser, usersList, &UsersList::addUser);
     connect(shEditor, &SharedEditor::removeUser, usersList, &UsersList::removeUser);
@@ -266,8 +266,8 @@ void MainWindow::clsFile() {
     }
     gridView->show();
     if(highlightAction->isChecked()){
-//        highlightAction->trigger();
         highlightAction->setChecked(false);
+        highlightAction->triggered(false);
     }
 }
 
@@ -742,6 +742,7 @@ void MainWindow::hideEditor(QString& fileName) {
      this->setCursor(QCursor(Qt::WaitCursor));
      if(highlightAction->isChecked()){
          highlightAction->setChecked(false);
+         highlightAction->triggered(false);
      }
 }
 

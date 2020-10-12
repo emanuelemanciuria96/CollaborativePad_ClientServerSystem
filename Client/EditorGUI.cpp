@@ -56,11 +56,11 @@ void EditorGUI::setUpGUI() {
 
     stylestring= "QTextEdit{border-style:none}"
                     "QScrollBar:vertical {background:white; width:8px; margin: 0px 0px 0px 0px;}"
-                    "QScrollBar::handle:vertical {background: #ECECEC; border:0px solid lightgray; border-radius:4px;}"
+                    "QScrollBar::handle:vertical {background: #C3C3C3; border:0px solid lightgray; border-radius:4px;}"
 //                  "QScrollBar::add-line:vertical{height:0px; subcontrol-position: bottom; subcontrol-origin: margin;"
 //                  "QScrollBar::sub-line:vertical {height: 0px width:0px; subcontrol-position: top; subcontrol-origin: margin; "
                     "QScrollBar:horizontal {background:white; height:8px; margin: 0px 0px 0px 0px;}"
-                    "QScrollBar::handle:horizontal {background: #ECECEC; border:0px solid lightgray; border-radius: 4px}";
+                    "QScrollBar::handle:horizontal {background: #C3C3C3; border:0px solid lightgray; border-radius: 4px}";
     textEdit->setStyleSheet(stylestring);
     textEdit->setFocus();
     setCurrentFileName(QString());
@@ -69,8 +69,6 @@ void EditorGUI::setUpGUI() {
     connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
 
 }
-
-
 
 void EditorGUI::setCurrentFileName(QString filename) {
     this->fileName = filename;
@@ -82,7 +80,7 @@ void EditorGUI::setModel(SharedEditor* _model) {
 
 //chiamata quando si effettuano modifiche sul editor
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
-
+    std::cout << "dentro contentsChange" << std::endl;
     if( isModifying ){
         isModifying = false;
         return;
@@ -98,7 +96,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             charsAdded-=charsRemoved;
             charsRemoved = 0;
             isPastingAtFirst = false;
-            textEdit->document()->clearUndoRedoStacks(QTextDocument::UndoStack);
+//            textEdit->document()->clearUndoRedoStacks();
         }
 
         //std::cout << "invio caratteri" << std::endl;
@@ -119,15 +117,16 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 auto format = cursor.charFormat();
                 if(highlightIsActive)
                     format.setBackground(QColor("white"));
+                std::cout << "chiamo localInsert" << std::endl;
                 model->localInsert(pos+i, ch , format);
+                std::cout << "esco localInsert" << std::endl;
             }
-//            model->localInsert(pos, str, textEdit->currentCharFormat());
-
-//            if(highlightIsActive)
-//                highlight(pos,charsAdded, model->getSiteId());
+            if(highlightIsActive)
+                highlight(pos,charsAdded, model->getSiteId(),*getRemoteCursor(0));
         }
         updateLabels();
     }
+    std::cout << "fuori contentsChange" << std::endl;
 }
 
 void EditorGUI::textFormatChange(int pos, int charsModified) {
@@ -264,7 +263,6 @@ void EditorGUI::removeCursor(qint32 siteId) {
         remoteCursors->erase(it);
         std::cout << "Remove cursor " << siteId << std::endl;
         textEdit->update();
-        emit setNumUsers(--nUsers);
     }
 }
 
@@ -301,7 +299,6 @@ void EditorGUI::deleteAllText() {
     emit clear();
     signalBlocker = !signalBlocker;
     remoteCursors->clear();
-    emit setNumUsers(nUsers=0);
 }
 
 void EditorGUI::handleCursorPosChanged() {
@@ -315,10 +312,10 @@ void EditorGUI::handleCursorPosChanged() {
     if (model->getSiteId() != -1 && !myCursorPosUpdateBlocker) {
         model->sendCursorPos(pos);
     }
-    if(highlightIsActive) {
-        if(!textEdit->textCursor().hasSelection())
-            textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
-    }
+//    if(highlightIsActive) {
+//        if(!textEdit->textCursor().hasSelection())
+//            textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
+//    }
 
 }
 
@@ -365,29 +362,28 @@ void EditorGUI::loadHighlights(bool checked) {
     }
     cursor->endEditBlock();
     signalBlocker = !signalBlocker;
-
-
 }
 
 void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId, QTextCursor& cursor) {
-//    std::cout << "dentro highlight " << std::endl;
-    auto format = QTextCharFormat();
+    if(n>0) {
+        std::cout << "dentro highlight " << std::endl;
+        auto format = QTextCharFormat();
 
-    if (siteId != -1) {
-        format = getHighlightFormat(siteId);
-        textEdit->mergeCurrentCharFormat(format);
-    }
-    else {
-        format.setBackground(QColor("white"));
-        textEdit->mergeCurrentCharFormat(format);
-    }
+        if (siteId != -1) {
+            format = getHighlightFormat(siteId);
+            textEdit->mergeCurrentCharFormat(format);
+        } else {
+            format.setBackground(QColor("white"));
+            textEdit->mergeCurrentCharFormat(format);
+        }
 
-//    std::cout << "dentro setPosition " << std::endl;
-    cursor.setPosition(pos , QTextCursor::MoveAnchor);
-    cursor.setPosition(pos+n, QTextCursor::KeepAnchor);
-//    std::cout << "dentro merge " << std::endl;
-    cursor.mergeCharFormat(format);
-//    std::cout << "fuori highlight " << std::endl;
+    std::cout << "dentro setPosition " << std::endl;
+        cursor.setPosition(pos, QTextCursor::MoveAnchor);
+        cursor.setPosition(pos + n, QTextCursor::KeepAnchor);
+    std::cout << "dentro merge " << std::endl;
+        cursor.mergeCharFormat(format);
+    std::cout << "fuori highlight " << std::endl;
+    }
 }
 
 void EditorGUI::keyPressEvent(QKeyEvent *e) {
