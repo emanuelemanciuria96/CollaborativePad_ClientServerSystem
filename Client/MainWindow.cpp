@@ -181,9 +181,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(comboSize, SIGNAL(activated(const QString&)), editor, SLOT(textSize(const QString&)));
     connect(comboFont, SIGNAL(activated(const QString&)), editor, SLOT(textFamily(const QString&)));
 
-    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
-    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
-    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
+//    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
+//    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
+//    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();

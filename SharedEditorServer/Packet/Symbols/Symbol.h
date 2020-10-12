@@ -23,6 +23,8 @@ public:
     Symbol():_ch(),_symId(-1,-1),_pos(0){};
     Symbol(QChar ch, qint32 id, quint32 cnt,std::vector<quint32> &pos):
         _ch(ch),_symId(id,cnt),_pos(pos){}
+    Symbol(QChar ch, qint32 id, quint32 cnt,std::vector<quint32> &pos, QTextCharFormat& frmt):
+            _ch(ch),_symId(id,cnt),_pos(pos),_format(frmt){}
 
     bool operator==(Symbol& s) const {
         return _symId == s._symId && _pos==s._pos;
@@ -35,8 +37,9 @@ public:
     void setPos(std::vector<quint32>& pos) { _pos = pos; }
     QChar getValue() const { return _ch; }
     SymId getSymId() const { return _symId; }
-    QTextCharFormat getFormat() {return _format;};
-    void setFormat(QTextCharFormat& format) {_format = format;};
+    const QTextCharFormat& getFormat() const {return _format; }
+    void setFormat(QTextCharFormat& format) {_format = format; }
+    void mergeFormat(const QTextCharFormat& other) {_format.merge(other); }
 };
 
 

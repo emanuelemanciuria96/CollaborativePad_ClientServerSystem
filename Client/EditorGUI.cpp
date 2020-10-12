@@ -98,7 +98,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             charsAdded-=charsRemoved;
             charsRemoved = 0;
             isPastingAtFirst = false;
-            textEdit->document()->clearUndoRedoStacks(QTextDocument::UndoStack);
+            textEdit->document()->clearUndoRedoStacks();
         }
 
         //std::cout << "invio caratteri" << std::endl;
@@ -111,7 +111,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             }
         }
         if (charsAdded > 0) {  //sono stati aggiunti caratteri
-            std::cout << "Inserimenti " << charsAdded << std::endl;
+//            std::cout << "Inserimenti " << charsAdded << std::endl;
             for (i = 0; i < charsAdded; i++) {
                 QChar ch = textEdit->document()->characterAt(pos+i);
                 auto cursor = textEdit->textCursor();
@@ -151,7 +151,6 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, cons
     ///blocco l'invio della posizione del mio cursore quando ricevo modifiche
     myCursorPosUpdateBlocker = true;
     curBlockerTimer->start(500);
-
     cursor->setPosition(pos, QTextCursor::MoveMode::MoveAnchor);
     signalBlocker = !signalBlocker;
     cursor->setCharFormat(format);
@@ -192,7 +191,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
 void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action) {
 //    std::cout<<"updateSymbols inizio" << std::endl;
     if (action == Message::modification){
-        std::cout<<" -- stringa modificata: "<<s.toStdString()<<std::endl;
+//        std::cout<<" -- stringa modificata: "<<s.toStdString()<<std::endl;
         auto curs = getRemoteCursor(0);
         curs->setPosition(pos-1);
         int numChars = s.size();
@@ -204,7 +203,7 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextC
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId, s.size());
     } else {
-        std::cout<<" -- stringa inserita: "<<s.toStdString()<<std::endl;
+//        std::cout<<" -- stringa inserita: "<<s.toStdString()<<std::endl;
         insertText(pos, s, siteId, format);
 //        if(posLastChar<0 || index!=posLastChar+1) {
 //            flushInsertQueue();
@@ -262,7 +261,7 @@ void EditorGUI::removeCursor(qint32 siteId) {
     });
     if (it != remoteCursors->end()) {
         remoteCursors->erase(it);
-        std::cout << "Remove cursor " << siteId << std::endl;
+        //std::cout << "Remove cursor " << siteId << std::endl;
         textEdit->update();
         emit setNumUsers(--nUsers);
     }
@@ -590,6 +589,7 @@ void EditorGUI::textColor()
         int numChars = curs.selectionEnd()-pos;
         textFormatChange(pos,numChars);
     }
+
 
     emit colorChanged(col);
 }

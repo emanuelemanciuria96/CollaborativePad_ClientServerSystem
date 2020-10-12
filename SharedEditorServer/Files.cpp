@@ -7,7 +7,7 @@
 #include "Files.h"
 
 enum{file,counter,dirty_bit};
-
+QVector<QString> Files::fonts{"Arial","Arial Black","Comic Sans MS", "Courier","Georgia","Impact","Tahoma","Times New Roman","Trebuchet MS","Verdana"};
 
 std::shared_ptr<std::vector<Symbol>> Files::openFile(QString& fileName) {
 
@@ -89,8 +89,9 @@ void Files::modSymbolInFile(QString &fileName, Symbol &sym) {
     if(i != opened_files.end()) {
         auto node = std::get<file>(i->second).extract(sym);
         if ( !node.empty() ) {
-            node.key() = sym;
+            node.key().mergeFormat(sym.getFormat());
             std::get<file>(i->second).insert(std::move(node));
+            std::get<dirty_bit>(i->second) = true;
         }
     }
 }
@@ -147,6 +148,14 @@ void Files::saveFileJson(std::string dir,std::map<Symbol,int>& symbles){//vector
     int index=0;
     for( auto itr: symbles) {
         event[index]["index"] = index;
+        event[index]["font"] = fonts.indexOf(itr.first.getFormat().fontFamily());
+        event[index]["size"] = itr.first.getFormat().fontPointSize();
+        int col = std::stoi( itr.first.getFormat().foreground().color().name().remove(0,1).toStdString(),0,16 );
+        std::cout<<"saving color: "<<col;
+        event[index]["color"] = std::stoi( itr.first.getFormat().foreground().color().name().remove(0,1).toStdString(),0,16 );
+        event[index]["underline"] = itr.first.getFormat().fontUnderline();
+        event[index]["bold"] = itr.first.getFormat().font().bold();
+        event[index]["italic"] = itr.first.getFormat().fontItalic();
         event[index]["char"] = (uint)itr.first.getValue().unicode();
         event[index]["symId"]["siteId"] = itr.first.getSymId().getSiteId();
         event[index]["symId"]["count"] = itr.first.getSymId().getCount();
@@ -177,6 +186,16 @@ void Files::loadFileJson(std::string dir,std::map<Symbol,int>& symbles, std::sha
     reader.parse(file_input, root);
 
     for(int i=0; i<root.size(); i++) {
+        QTextCharFormat frmt;
+        frmt.setFontFamily(fonts[root[i]["font"].asInt()]);
+        frmt.setFontPointSize(root[i]["size"].asFloat());
+        std::stringstream str;
+        str<<std::hex<<root[i]["color"].asUInt();
+        frmt.setForeground(QColor("#"+QString::fromStdString(str.str()) ));
+        frmt.setFontUnderline(root[i]["underline"].asBool());
+        frmt.setFontWeight(root[i]["bold"].asBool()? QFont::Bold : QFont::Normal);
+        frmt.setFontItalic(root[i]["italic"].asBool());
+
         QChar value((short)root[i]["char"].asUInt());
         qint32 _siteId=root[i]["symId"]["siteId"].asUInt64();
         qint32 _counter=root[i]["symId"]["count"].asUInt64();
@@ -185,7 +204,7 @@ void Files::loadFileJson(std::string dir,std::map<Symbol,int>& symbles, std::sha
             qint32 val=root[i]["pos"][j].asUInt64();
             pos.push_back(val);
         }
-        Symbol s(value,_siteId,_counter, pos);
+        Symbol s(value,_siteId,_counter, pos, frmt);
         syms->push_back(s);
         symbles.insert(symbles.end(),std::make_pair(s,0));
     }

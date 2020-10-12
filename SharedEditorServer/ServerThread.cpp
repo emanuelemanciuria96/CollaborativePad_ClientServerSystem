@@ -758,20 +758,24 @@ void ServerThread::sendFile() {
 
     auto ptr = std::make_shared<StringMessages>(vm, 0, operatingFileName);
 
-    for (auto s: *_file) {
-        Message m(Message::insertion, 0, s, index++);
+    QTextCharFormat frmt;
+    if( !_file->empty())
+         frmt = _file->front().getFormat();
+    int i = 0;
+    for ( ; i<_file->size(); i++) {
+        Message m(Message::insertion, 0, (*_file)[i] , index++);
         ptr->appendMessage(m);
-        if( ptr->size() >= 1000 ){
+        if( ptr->size() >= 1000 || (*_file)[i+1].getFormat()!=frmt ){
             DataPacket pkt( 0 , 0, DataPacket::textTyping, ptr);
             sendMessage(pkt);
-            std::cout<<" --- sending (2) "<<ptr->size()<<" messages in once"<<std::endl;
             ptr->clearQueue();
+            if(i+1<_file->size())
+                frmt = (*_file)[i+1].getFormat();
         }
     }
     if ( ptr->size()!=0 ) {
         DataPacket pkt( 0 , 0, DataPacket::textTyping, ptr);
         sendMessage(pkt);
-        std::cout<<" --- sending (2) "<<ptr->size()<<" messages in once"<<std::endl;
     }
 
     _file.reset();
@@ -781,6 +785,7 @@ void ServerThread::sendFile() {
         DataPacket pkt(0,0,DataPacket::file_info,std::make_shared<FileInfo>(FileInfo::eof,0,operatingFileName) );
         sendFileInfo(pkt);
     }
+    std::cout<<"fine invio del file "+operatingFileName.toStdString()<<std::endl;
 
     isFileSent = true;
 

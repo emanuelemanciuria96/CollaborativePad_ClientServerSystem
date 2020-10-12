@@ -31,7 +31,7 @@ public:
 
 private:
     std::map< QString,std::tuple< std::map<Symbol,int>,quint32,bool> > opened_files;
-    QVector<QString> fonts{"Arial","Arial Black","Comic Sans MS", "Courier","Georgia","Impact","Tahoma","Times New Roman","Trebuchet MS","Verdana"};
+    static QVector<QString> fonts;
 
     static void saveFileJson(std::string dir,std::map<Symbol,int>& symbles);
     static void loadFileJson(std::string dir,std::map<Symbol,int>& symbles,std::shared_ptr<std::vector<Symbol>> syms);
