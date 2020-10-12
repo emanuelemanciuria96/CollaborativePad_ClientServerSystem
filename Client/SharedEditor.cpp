@@ -894,7 +894,6 @@ void SharedEditor::closeFile() {
     }
     emit hideNumUsers();
     emit flushFileWriters();
-
 }
 
 void SharedEditor::findCounter() {

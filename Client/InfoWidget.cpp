@@ -31,6 +31,8 @@ InfoWidget::InfoWidget(QWidget *parent)
     ui->label_7->setStyleSheet("QLabel{color:#3A70D5; font: 12pt}");
     ui->logoutButton->setStyleSheet("QPushButton {font: 9pt; padding: 8; padding-right:15; padding-left:15; border-style: solid; border-width:1px; "
                                     "border-color:#D63A3A; background:#D63A3A; color:white}");
+    ui->backButton->setStyleSheet("QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+    ui->editButton->setStyleSheet("QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
 
 }
 
