@@ -48,14 +48,14 @@ void SocketsPool::detachSocket(QString &fileName, qint32 siteId) {
 
 }
 
-void SocketsPool::broadcast(QString& fileName, qint32 siteId, DataPacket& pkt) {
+void SocketsPool::broadcast(QString& fileName, qint32 siteId, DataPacket& pkt, bool self) {
 
     std::shared_lock sl(fskt_mtx);
     auto i = file_sockets.find(fileName);
     if( i != file_sockets.end() ){
         std::shared_lock sl_skts(*std::get<mtx>(i->second) );
         for( auto skt : std::get<sockets>(i->second) ){
-            if( skt.first != siteId ) {
+            if( self || skt.first != siteId  ) {
                 int id = qMetaTypeId<DataPacket>();
                 emit skt.second->sendMessage(pkt);
             }
@@ -88,12 +88,13 @@ void SocketsPool::discardSocket(qint32 siteId) {
 
 }
 
-void SocketsPool::broadcast(QVector<qint32> &siteId_list, DataPacket &pkt) {
+void SocketsPool::sendTo(QVector<qint32> &siteId_list, DataPacket &pkt) {
 
     std::shared_lock sl(skt_mtx);
     for(auto id : siteId_list){
         auto i = online_sockets.find(id);
         if( i != online_sockets.end() ){
+            int id = qMetaTypeId<DataPacket>();
             emit i->second->sendMessage(pkt);
         }else{
             std::cout<<"lo user con site id "<<id<<" non e' registrato"<<std::endl; // il fatto che non sia registrato non ha alcun effetto

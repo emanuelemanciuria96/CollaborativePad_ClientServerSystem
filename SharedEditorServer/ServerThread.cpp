@@ -305,7 +305,10 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
     //però potrebbe e in questo caso l'unico modo per pulire il socket è leggerlo
     if(!_username.isEmpty() ) {
         msgHandler->submit(&NetworkServer::localModification,ptr);
-        _sockets.broadcast(operatingFileName,_siteID,packet);
+        bool self = false;
+        if( ptr->getQueue().front().getAction() == Message::modification)
+            self = true;
+        _sockets.broadcast(operatingFileName,_siteID,packet, self);
     }
 
 }
@@ -325,7 +328,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
             std::unique_lock ul(db_op_mtx);
             auto listId = command->renCommand(threadId);
             if( !listId.empty() ) {
-                _sockets.broadcast(listId,packet);
+                _sockets.sendTo(listId,packet);
                 ul.unlock();
             }
             else
@@ -426,7 +429,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                 payload->lsInviteCommand(threadId);
                 invitePacket.setPayload(payload);
                 QVector<qint32> vector(1, userSiteID);
-                _sockets.broadcast(vector, invitePacket);
+                _sockets.sendTo(vector, invitePacket);
             }
             break;
         }
@@ -447,7 +450,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                 payload->lsInviteCommand(threadId);
                 invitePacket.setPayload(payload);
                 QVector<qint32> vector(1, _siteID);
-                _sockets.broadcast(vector, invitePacket);
+                _sockets.sendTo(vector, invitePacket);
             }
             break;
         }
@@ -688,7 +691,7 @@ void ServerThread::sendUserInfo(DataPacket &packet) {
         if(shr->obtainInfo(threadId)) {
             QVector<qint32> vec;
             vec.push_back(ptr->getSiteId());
-            _sockets.broadcast(vec, pkt);
+            _sockets.sendTo(vec, pkt);
         }
         else
             std::cout<<"Casino pazzesco, errore assolutamente da gestire!"<<std::endl;
@@ -741,7 +744,7 @@ void ServerThread::sendPendentDelete(QString fileName) {
 
     auto i = pendentDeleteList.find(fileName);
     if( i!=pendentDeleteList.end() )
-        _sockets.broadcast(i->second,pkt);
+        _sockets.sendTo(i->second,pkt);
 }
 
 void ServerThread::sendFile() {

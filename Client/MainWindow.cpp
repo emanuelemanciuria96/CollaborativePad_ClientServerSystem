@@ -108,6 +108,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::startSignIn);
     connect(widgetSignIn, &SignInWidget::backToLogIn, this, &MainWindow::backToLogIn);
     connect(highlightAction, &QAction::triggered, editor, &EditorGUI::loadHighlights);
+    connect(highlightAction, &QAction::triggered, [this](){ editor->textEdit->document()->clearUndoRedoStacks(); });
     connect(shEditor, &SharedEditor::returnToGrid, this, &MainWindow::clsFile);
     connect(closeAction, &QAction::triggered, shEditor, &SharedEditor::requireFileClose);
     connect(pdfAction, &QAction::triggered, editor, &EditorGUI::exportToPdf);

@@ -75,8 +75,9 @@ private slots:
     void handleCursorPosChanged();
     void enableSendCursorPos();
     void selectionChanged();
+
 public slots:
-    void updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
+    void updateSymbols(qint32 pos, const QString& s, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
     void deleteAllText();
     void updateRemoteCursorPos(qint32 pos, qint32 siteId);
     void removeCursor(qint32 siteId);

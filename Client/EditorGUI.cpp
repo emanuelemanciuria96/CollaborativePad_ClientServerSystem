@@ -122,8 +122,10 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 std::cout << "esco localInsert" << std::endl;
             }
             if(highlightIsActive)
-                highlight(pos,charsAdded, model->getSiteId(),*getRemoteCursor(0));
+                highlight(pos, charsAdded, model->getSiteId(), *getRemoteCursor(0));
         }
+        if(highlightIsActive)
+            textEdit->document()->clearUndoRedoStacks();
         updateLabels();
     }
     std::cout << "fuori contentsChange" << std::endl;
@@ -187,7 +189,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
 }
 
 //chiamata quando si ricevono modifiche
-void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextCharFormat& format, Message::action_t action) {
+void EditorGUI::updateSymbols(qint32 pos, const QString &s, qint32 siteId, const QTextCharFormat& format, Message::action_t action) {
 //    std::cout<<"updateSymbols inizio" << std::endl;
     if (action == Message::modification){
 //        std::cout<<" -- stringa modificata: "<<s.toStdString()<<std::endl;
@@ -212,6 +214,8 @@ void EditorGUI::updateSymbols(qint32 pos, QString s, qint32 siteId, const QTextC
 //        insertQueue.push(value);
 //        posLastChar = index;
     }
+    if(highlightIsActive)
+        textEdit->document()->clearUndoRedoStacks();
 }
 
 void EditorGUI::updateLabels() {
