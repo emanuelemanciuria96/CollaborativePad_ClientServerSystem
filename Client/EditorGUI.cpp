@@ -118,6 +118,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 auto cursor = textEdit->textCursor();
                 cursor.setPosition(pos+i+1);
                 auto format = cursor.charFormat();
+
                 format.setFontPointSize(format.font().pointSizeF()<=0? format.font().pixelSize() : format.font().pointSizeF());
                 if(fonts.indexOf(format.fontFamily())<0) {
                     format.setFontFamily(fonts[7]);
@@ -125,8 +126,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                     cursor.mergeCharFormat(format);
                 }
 
-                if(highlightIsActive)
-                    format.setBackground(QColor("white"));
+                format.setBackground(QColor("white"));
 //                std::cout << "chiamo localInsert" << std::endl;
                 model->localInsert(pos+i, ch , format);
 //                std::cout << "esco localInsert" << std::endl;

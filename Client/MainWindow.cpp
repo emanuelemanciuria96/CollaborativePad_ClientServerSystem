@@ -695,12 +695,14 @@ void MainWindow::setInfoWidget() {
         lastCentral = centralWidget->currentWidget();
         centralWidget->setCurrentWidget(infoWidget);
         toolBar->hide();
+        richTextBar->hide();
         dockWidgetUsers->hide();
         if (lastDock != nullptr)
             lastDock->hide();
     } else {
         centralWidget->setCurrentWidget(lastCentral);
         toolBar->show();
+        richTextBar->show();
         if (lastCentral == editor)
             dockWidgetUsers->show();
         if (lastDock != nullptr)
@@ -714,12 +716,14 @@ void MainWindow::setInfoUsersListWidget(const QPixmap& image, const QString& nic
         lastCentral = centralWidget->currentWidget();
         centralWidget->setCurrentWidget(infoUsersListWidget);
         toolBar->hide();
+        richTextBar->hide();
         dockWidgetUsers->hide();
         if (lastDock != nullptr)
             lastDock->hide();
     } else {
         centralWidget->setCurrentWidget(lastCentral);
         toolBar->show();
+        richTextBar->show();
         if (lastCentral == editor)
             dockWidgetUsers->show();
         if (lastDock != nullptr)
