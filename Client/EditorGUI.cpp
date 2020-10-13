@@ -96,7 +96,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             charsAdded-=charsRemoved;
             charsRemoved = 0;
             isPastingAtFirst = false;
-//            textEdit->document()->clearUndoRedoStacks();
+            textEdit->document()->clearUndoRedoStacks();
         }
 
         //std::cout << "invio caratteri" << std::endl;
