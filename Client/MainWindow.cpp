@@ -179,6 +179,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(editor, &EditorGUI::fontChanged, this, &MainWindow::fontChanged);
     connect(comboSize, SIGNAL(activated(const QString&)), editor, SLOT(textSize(const QString&)));
     connect(comboFont, SIGNAL(activated(const QString&)), editor, SLOT(textFamily(const QString&)));
+    connect(comboFont, &QFontComboBox::currentFontChanged, [this]{editor->textEdit->setFocus();});
+    connect(comboSize,  QOverload<int>::of(&QComboBox::activated), [this]{editor->textEdit->setFocus();});
 
 //    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
 //    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
@@ -817,3 +819,4 @@ void MainWindow::fontChanged(const QFont &f)
     italicAction->setChecked(f.italic());
     underlineAction->setChecked(f.underline());
 }
+
