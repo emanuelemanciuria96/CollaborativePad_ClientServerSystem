@@ -113,7 +113,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(pdfAction, &QAction::triggered, editor, &EditorGUI::exportToPdf);
     connect(addAction, &QAction::triggered, gridView, &FileSystemGridView::addFile);
     connect(backAction, &QAction::triggered, gridView, &FileSystemGridView::reloadBack);
-//    connect(shEditor, &SharedEditor::highlight, editor, &EditorGUI::highlight);
     connect(widgetSignIn, &SignInWidget::registerRequest, shEditor, &SharedEditor::sendRegisterRequest);
     connect(addUserWidget, &AddUserWidget::searchUser, shEditor, &SharedEditor::searchUser);
     connect(shEditor, &SharedEditor::searchUserResult, addUserWidget, &AddUserWidget::searchUserResult);
@@ -144,7 +143,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(infoWidget, &InfoWidget::imageChanged, this, &MainWindow::changeToolbarProfileImage);
     connect(inviteListAction, &QAction::triggered, [this](){showHideLeftDock(invitelist);});
     connect(treeShowAction, &QAction::triggered,[this](){showHideLeftDock(tree);});
-    connect(editor, &EditorGUI::setNumUsers, this, &MainWindow::setNumUsers);
+    connect(usersList, &UsersList::setNumUsers, this, &MainWindow::setNumUsers);
     connect(editor, &EditorGUI::userQuery,shEditor,&SharedEditor::obtainUser);
     connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
     connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::hideNumUsers);
@@ -266,8 +265,8 @@ void MainWindow::clsFile() {
     }
     gridView->show();
     if(highlightAction->isChecked()){
-//        highlightAction->trigger();
         highlightAction->setChecked(false);
+        highlightAction->triggered(false);
     }
 }
 
@@ -606,14 +605,20 @@ void MainWindow::setStyleSheet() {
     qApp->setStyleSheet("QWidget {font-family: helvetica}"
                         "QToolBar {background:#F1F1F1; }"
                         "QStatusBar {background-color: #F1F1F1; border-top:1px solid #d2d2d2}"
-                        "QToolButton {padding:4}");
+                        "QToolButton {padding:4}"
+                        "QMenu{border:1px solid gray;}");
+//                        "QMenu::item:selected {color:black; background: #93C2FF}"
+//                        "QMenu::item:pressed {background:rgba(100, 100, 100, 124)}");
 
     dockWidgetUsers->titleBarWidget()->setStyleSheet("font:10pt; font-family: helvetica; color:#4F78C3");
     dockWidgetUsers->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8");
     inviteUserWidget->setStyleSheet("padding:0; margin:0;");
-    for(auto d : leftDockWidgets) {
-        d->setStyleSheet("QWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
-    }
+    leftDockWidgets[uri]->setStyleSheet("QDockWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
+    leftDockWidgets[invitelist]->setStyleSheet("QListWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
+    leftDockWidgets[tree]->setStyleSheet("QTreeWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
+//    for(auto d : leftDockWidgets) {
+//        d->setStyleSheet("QWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
+//    }
 }
 
 
@@ -742,6 +747,7 @@ void MainWindow::hideEditor(QString& fileName) {
      this->setCursor(QCursor(Qt::WaitCursor));
      if(highlightAction->isChecked()){
          highlightAction->setChecked(false);
+         highlightAction->triggered(false);
      }
 }
 

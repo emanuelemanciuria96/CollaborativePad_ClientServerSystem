@@ -97,7 +97,6 @@ public slots:
     void updateLabels();
 signals:
     void clear();
-    void setNumUsers(int n);
     void userQuery(qint32 siteId);
     void colorChanged(const QColor &c);
     void fontChanged(const QFont &f);

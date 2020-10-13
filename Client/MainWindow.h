@@ -34,7 +34,6 @@ private:
     FileSystemTreeView *treeView;
     FileSystemGridView *gridView;
     EditorGUI *editor;
-    EditorGUI *highlightEditor;
     LoginDialog *loginDialog;
     QStatusBar* statusBar;
     QToolBar* toolBar;
@@ -125,8 +124,6 @@ public slots:
     void openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void colorChanged(const QColor &c);
     void fontChanged(const QFont &f);
-private slots:
-//    void highlight(bool checked);
 
 signals:
     void sendComboSizeText(const QString& p);

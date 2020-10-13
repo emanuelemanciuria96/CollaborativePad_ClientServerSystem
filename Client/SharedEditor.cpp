@@ -146,6 +146,7 @@ void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format)
     std::vector<quint32> next = _symbols[index].getPos();
     std::vector<quint32> newPos;
     generateNewPosition2(prev, next, newPos);
+    generateNewPosition2(prev, next, newPos);
 
     Symbol s(ch, _siteId, _counter++, newPos, format);
 
@@ -154,8 +155,10 @@ void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format)
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
-
+//    std::cout << "effettuo insert vero" << std::endl;
     _symbols.insert(_symbols.begin()+index,s);
+//    std::cout << "esco insert vero" << std::endl;
+
 
 }
 

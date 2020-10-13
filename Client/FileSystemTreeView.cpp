@@ -42,9 +42,7 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
     connect(this, &QWidget::customContextMenuRequested, this, &FileSystemTreeView::openCustomMenu);
     connect(this, &FileSystemTreeView::itemChanged, this, &FileSystemTreeView::renameFile);
 
-//    setStyleSheet("QMenu{background:white; padding:1px}"
-//                  "QMenu::item:selected {color:black; background: blue}"
-//                  "QMenu::item:pressed {background:rgba(100, 100, 100, 255)}");
+
 }
 
 void FileSystemTreeView::setupRightClickMenu() {
