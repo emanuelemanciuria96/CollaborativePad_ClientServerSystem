@@ -148,9 +148,12 @@ void Files::saveFileJson(std::string dir,std::map<Symbol,int>& symbles){//vector
         event[index]["index"] = index;
         event[index]["font"] = fonts.indexOf(itr.first.getFormat().fontFamily());
         event[index]["size"] = itr.first.getFormat().fontPointSize();
-        int col = std::stoi( itr.first.getFormat().foreground().color().name().remove(0,1).toStdString(),0,16 );
-        std::cout<<"saving color: "<<col;
-        event[index]["color"] = std::stoi( itr.first.getFormat().foreground().color().name().remove(0,1).toStdString(),0,16 );
+        quint32 rgb = itr.first.getFormat().foreground().color().red();
+        rgb<<=8;
+        rgb |= itr.first.getFormat().foreground().color().green();
+        rgb<<=8;
+        rgb |= itr.first.getFormat().foreground().color().blue();
+        event[index]["color"] = rgb;
         event[index]["underline"] = itr.first.getFormat().fontUnderline();
         event[index]["bold"] = itr.first.getFormat().font().bold();
         event[index]["italic"] = itr.first.getFormat().fontItalic();
@@ -187,9 +190,8 @@ void Files::loadFileJson(std::string dir,std::map<Symbol,int>& symbles, std::sha
         QTextCharFormat frmt;
         frmt.setFontFamily(fonts[root[i]["font"].asInt()]);
         frmt.setFontPointSize(root[i]["size"].asFloat());
-        std::stringstream str;
-        str<<std::hex<<root[i]["color"].asUInt();
-        frmt.setForeground(QColor("#"+QString::fromStdString(str.str()) ));
+        quint32 rgb = root[i]["color"].asUInt();
+        frmt.setForeground(QBrush(QColor(rgb)));
         frmt.setFontUnderline(root[i]["underline"].asBool());
         frmt.setFontWeight(root[i]["bold"].asBool()? QFont::Bold : QFont::Normal);
         frmt.setFontItalic(root[i]["italic"].asBool());
