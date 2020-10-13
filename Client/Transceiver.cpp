@@ -397,6 +397,11 @@ void Transceiver::sendCommand(DataPacket& packet){
                 openedServerFile = "";
             }
             break;
+        case Command::ren:
+            if(openedFile==ptr->getArgs().first()) {
+                openedFile = ptr->getArgs().last();
+            }
+            break;
         default:
             break;
     }
