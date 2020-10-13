@@ -30,7 +30,7 @@ public:
     int size(){ return _messages.size(); }
     QString getFileName(){ return _fileName; }
     void setFileName(QString& file){ _fileName=file; }
-    static const int maxDim=200;
+    static const int maxDim=400;
 
 private:
     QString _fileName;

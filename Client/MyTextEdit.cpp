@@ -100,11 +100,10 @@ void MyTextEdit::contextMenuEvent(QContextMenuEvent *e) {
 void MyTextEdit::paste() {
 
     QTextCursor curs = this->textCursor();
+    auto data = clipboard->mimeData(QClipboard::Clipboard);
     if( curs.selectionEnd()==0 || curs.selectionStart()==0 ) {
-        auto data = clipboard->mimeData(QClipboard::Clipboard);
 
         emit isPastingAtFirst();
-
         curs.removeSelectedText();
         curs.insertHtml(data->html());
 

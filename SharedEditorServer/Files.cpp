@@ -147,7 +147,7 @@ void Files::saveFileJson(std::string dir,std::map<Symbol,int>& symbles){//vector
     for( auto itr: symbles) {
         event[index]["index"] = index;
         event[index]["font"] = fonts.indexOf(itr.first.getFormat().fontFamily());
-        event[index]["size"] = itr.first.getFormat().fontPointSize();
+        event[index]["size"] = itr.first.getFormat().font().pointSize();
         quint32 rgb = itr.first.getFormat().foreground().color().red();
         rgb<<=8;
         rgb |= itr.first.getFormat().foreground().color().green();
@@ -188,8 +188,9 @@ void Files::loadFileJson(std::string dir,std::map<Symbol,int>& symbles, std::sha
 
     for(int i=0; i<root.size(); i++) {
         QTextCharFormat frmt;
-        frmt.setFontFamily(fonts[root[i]["font"].asInt()]);
-        frmt.setFontPointSize(root[i]["size"].asFloat());
+        int ind = root[i]["font"].asInt();
+        frmt.setFontFamily(fonts[ ind==-1? 7 : ind ]);
+        frmt.setFontPointSize(root[i]["size"].asInt());
         quint32 rgb = root[i]["color"].asUInt();
         frmt.setForeground(QBrush(QColor(rgb)));
         frmt.setFontUnderline(root[i]["underline"].asBool());
