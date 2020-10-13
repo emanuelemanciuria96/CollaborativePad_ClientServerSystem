@@ -80,7 +80,7 @@ void EditorGUI::setModel(SharedEditor* _model) {
 
 //chiamata quando si effettuano modifiche sul editor
 void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
-    std::cout << "dentro contentsChange" << std::endl;
+//    std::cout << "dentro contentsChange" << std::endl;
     if( isModifying ){
         isModifying = false;
         return;
@@ -115,11 +115,10 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 auto cursor = textEdit->textCursor();
                 cursor.setPosition(pos+i+1);
                 auto format = cursor.charFormat();
-                if(highlightIsActive)
-                    format.setBackground(QColor("white"));
-                std::cout << "chiamo localInsert" << std::endl;
+                format.setBackground(QColor("white"));
+//                std::cout << "chiamo localInsert" << std::endl;
                 model->localInsert(pos+i, ch , format);
-                std::cout << "esco localInsert" << std::endl;
+//                std::cout << "esco localInsert" << std::endl;
             }
             if(highlightIsActive)
                 highlight(pos, charsAdded, model->getSiteId(), *getRemoteCursor(0));
@@ -128,7 +127,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             textEdit->document()->clearUndoRedoStacks();
         updateLabels();
     }
-    std::cout << "fuori contentsChange" << std::endl;
+//    std::cout << "fuori contentsChange" << std::endl;
 }
 
 void EditorGUI::textFormatChange(int pos, int charsModified) {
