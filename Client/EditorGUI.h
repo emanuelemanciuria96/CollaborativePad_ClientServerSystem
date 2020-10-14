@@ -96,6 +96,45 @@ public slots:
     void textColor();
     void currentCharFormatChanged(const QTextCharFormat &format);
     void updateLabels();
+        void setAbsoluteAlignment(int pos, QFlags<Qt::AlignmentFlag> a,bool selection){
+        QString action;
+        if(a==Qt::AlignLeft){
+            action="0";
+        }else if(a==Qt::AlignCenter){
+            action="1";
+        }else if(a==Qt::AlignRight){
+            action="2";
+        }else if(a==Qt::AlignJustify) {
+            action = "3";
+        }
+            alignmentCommand = true;
+        if(!selection) {
+            auto cursor = textEdit->textCursor();
+            int tmpPos = cursor.position();
+            cursor.setPosition(pos);
+            textEdit->setTextCursor(cursor);
+            textEdit->setAlignment(a | Qt::AlignAbsolute);
+            cursor.setPosition(tmpPos);
+            textEdit->setTextCursor(cursor);
+            int indexBlock=textEdit->document()->findBlock(tmpPos).position();
+            model->setAllignment(indexBlock,action);
+        }else{
+            int start=textEdit->textCursor().selectionStart();
+            int end=textEdit->textCursor().selectionEnd();
+            QHash<int, QString> blocks;
+            for(int i=start;i<=end;i++){
+                int indexBlock=textEdit->document()->findBlock(i).position();
+                blocks[indexBlock]=action;
+            }
+            textEdit->setAlignment(a|Qt::AlignAbsolute);
+
+            QHash<int,QString>::const_iterator i = blocks.constBegin();
+            while (i != blocks.constEnd()) {
+                model->setAllignment(i.key(),i.value());
+                ++i;
+            }
+        }
+    }
 signals:
     void clear();
     void userQuery(qint32 siteId);
@@ -106,6 +145,7 @@ public:
     MyTextEdit* textEdit;
     EditorGUI(SharedEditor *model, QWidget *parent = nullptr);
     void setModel(SharedEditor *_model);
+    bool alignmentCommand=false;
 
 
 
