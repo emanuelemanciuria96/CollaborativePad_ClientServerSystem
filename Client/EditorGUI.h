@@ -21,6 +21,7 @@
 #include <QtCore/QTextStream>
 #include <QFileInfo>
 #include <QTextDocument>
+#include <QTextBlock>
 #include <algorithm>
 #include "SharedEditor.h"
 #include "RemoteCursor.h"
