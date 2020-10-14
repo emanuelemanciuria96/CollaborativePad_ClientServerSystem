@@ -88,6 +88,10 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
         isModifying = false;
         return;
     }
+    if(alignmentCommand){
+        alignmentCommand=false;
+        return;
+    }
 
     int i = 0;
     if (!signalBlocker) {
