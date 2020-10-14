@@ -49,6 +49,10 @@ private:
     QAction* inviteAction;
     QAction* treeShowAction;
     QAction* pdfAction;
+    QAction* actionAlignLeft;
+    QAction* actionAlignCenter;
+    QAction* actionAlignRight;
+    QAction* actionAlignJustify;
     QAction* uriAction;
     QAction* inviteListAction;
     QAction* undoAction;
