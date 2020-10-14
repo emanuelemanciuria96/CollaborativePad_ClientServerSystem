@@ -806,6 +806,103 @@ void MainWindow::setRichTextBar() {
     textColorAction->setIcon(QIcon(pix));
     textColorAction->setToolTip("Text color");
     richTextBar->addAction(textColorAction);
+    
+    
+    actionAlignLeft = new QAction(tr("&Left"), this);
+    actionAlignLeft->setIcon(QIcon("./icons/left.png"));
+    actionAlignLeft->setShortcut(Qt::CTRL + Qt::Key_L);
+    actionAlignLeft->setCheckable(true);
+    actionAlignLeft->setPriority(QAction::LowPriority);
+    richTextBar->addAction(actionAlignLeft);
+    connect(actionAlignLeft, &QAction::triggered, this, [this]() {
+        if(!actionAlignLeft->isChecked()){
+            this->actionAlignLeft->setChecked(true);
+            return;
+        }
+        this->actionAlignLeft->setChecked(true);
+            this->actionAlignCenter->setChecked(false);
+            this->actionAlignRight->setChecked(false);
+            this->actionAlignJustify->setChecked(false);
+
+       this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignLeft,copyAction->isEnabled());
+    });
+
+    actionAlignCenter = new QAction(tr("&Center"), this);
+    actionAlignCenter->setIcon(QIcon("./icons/center.png"));
+    actionAlignCenter->setShortcut(Qt::CTRL + Qt::Key_L);
+    actionAlignCenter->setCheckable(true);
+    actionAlignCenter->setPriority(QAction::LowPriority);
+    richTextBar->addAction(actionAlignCenter);
+    connect(actionAlignCenter, &QAction::triggered, this, [this]() {
+        if(!actionAlignCenter->isChecked()){
+            this->actionAlignCenter->setChecked(true);
+            return;
+        }
+        this->actionAlignCenter->setChecked(true);
+        this->actionAlignLeft->setChecked(false);
+        this->actionAlignRight->setChecked(false);
+        this->actionAlignJustify->setChecked(false);
+
+        int index=editor->textEdit->textCursor().position();
+        this->editor->setAbsoluteAlignment(index,Qt::AlignCenter,copyAction->isEnabled());
+
+    });
+
+    actionAlignRight = new QAction(tr("&Right"), this);
+    actionAlignRight->setIcon(QIcon("./icons/right.png"));
+    actionAlignRight->setShortcut(Qt::CTRL + Qt::Key_L);
+    actionAlignRight->setCheckable(true);
+    actionAlignRight->setPriority(QAction::LowPriority);
+    richTextBar->addAction(actionAlignRight);
+    connect(actionAlignRight, &QAction::triggered, this, [this]() {
+        if(!actionAlignRight->isChecked()){
+            this->actionAlignRight->setChecked(true);
+            return;
+        }
+        this->actionAlignRight->setChecked(true);
+            this->actionAlignCenter->setChecked(false);
+            this->actionAlignLeft->setChecked(false);
+            this->actionAlignJustify->setChecked(false);
+
+            this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignRight,copyAction->isEnabled());
+    });
+
+    actionAlignJustify = new QAction(tr("&Justify"), this);
+    actionAlignJustify->setIcon(QIcon("./icons/justify.png"));
+    actionAlignJustify->setShortcut(Qt::CTRL + Qt::Key_L);
+    actionAlignJustify->setCheckable(true);
+    actionAlignJustify->setPriority(QAction::LowPriority);
+    richTextBar->addAction(actionAlignJustify);
+    connect(actionAlignJustify, &QAction::triggered, this, [this]() {
+        if(!actionAlignJustify->isChecked()){
+            this->actionAlignJustify->setChecked(true);
+            return;
+        }
+        this->actionAlignJustify->setChecked(true);
+            this->actionAlignCenter->setChecked(false);
+            this->actionAlignLeft->setChecked(false);
+            this->actionAlignRight->setChecked(false);
+
+        this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignJustify,copyAction->isEnabled());
+
+    });
+
+    connect(editor->textEdit, &QTextEdit::cursorPositionChanged, this, [this]() {
+        auto a = editor->textEdit->alignment();
+        actionAlignLeft->setChecked(false);
+        actionAlignCenter->setChecked(false);
+        actionAlignRight->setChecked(false);
+        actionAlignJustify->setChecked(false);
+        if (a & Qt::AlignLeft)
+            actionAlignLeft->setChecked(true);
+        else if (a & Qt::AlignHCenter)
+            actionAlignCenter->setChecked(true);
+        else if (a & Qt::AlignRight)
+            actionAlignRight->setChecked(true);
+        else if (a & Qt::AlignJustify)
+            actionAlignJustify->setChecked(true);
+
+    });
 }
 
 void MainWindow::colorChanged(const QColor &c)
