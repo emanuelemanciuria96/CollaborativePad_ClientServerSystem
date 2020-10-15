@@ -123,6 +123,11 @@ public:
     void highlightSymbols(bool checked);
     bool getHighlighting() const;
     bool isFileOpening() const;
+    void setAllignment(int pos,QString a){
+        QTextCharFormat f=_symbols[pos].getFormat();
+        f.setToolTip(a);
+        _symbols[pos].setFormat(f);
+    }
 
     const Symbol fromPosToSymbol(int pos){ return _symbols[pos]; }
     virtual ~SharedEditor();
