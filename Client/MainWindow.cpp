@@ -70,6 +70,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     setRichTextBar();
     setStyleSheet();
 
+    connect(shEditor, &SharedEditor::getAligment, editor, &EditorGUI::getAlignment );
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
     connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
@@ -845,7 +846,6 @@ void MainWindow::setRichTextBar() {
 
         int index=editor->textEdit->textCursor().position();
         this->editor->setAbsoluteAlignment(index,Qt::AlignCenter,copyAction->isEnabled());
-
     });
 
     actionAlignRight = new QAction(tr("&Right"), this);
@@ -863,7 +863,6 @@ void MainWindow::setRichTextBar() {
             this->actionAlignCenter->setChecked(false);
             this->actionAlignLeft->setChecked(false);
             this->actionAlignJustify->setChecked(false);
-
             this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignRight,copyAction->isEnabled());
     });
 
@@ -882,9 +881,7 @@ void MainWindow::setRichTextBar() {
             this->actionAlignCenter->setChecked(false);
             this->actionAlignLeft->setChecked(false);
             this->actionAlignRight->setChecked(false);
-
         this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignJustify,copyAction->isEnabled());
-
     });
 
     connect(editor->textEdit, &QTextEdit::cursorPositionChanged, this, [this]() {
@@ -901,7 +898,6 @@ void MainWindow::setRichTextBar() {
             actionAlignRight->setChecked(true);
         else if (a & Qt::AlignJustify)
             actionAlignJustify->setChecked(true);
-
     });
 }
 

@@ -98,17 +98,17 @@ public slots:
     void currentCharFormatChanged(const QTextCharFormat &format);
     void updateLabels();
         void setAbsoluteAlignment(int pos, QFlags<Qt::AlignmentFlag> a,bool selection){
-        QString action;
+            int action;
         if(a==Qt::AlignLeft){
-            action="0";
+            action=0;
         }else if(a==Qt::AlignCenter){
-            action="1";
+            action=1;
         }else if(a==Qt::AlignRight){
-            action="2";
+            action=2;
         }else if(a==Qt::AlignJustify) {
-            action = "3";
+            action = 3;
         }
-            alignmentCommand = true;
+        alignmentCommand = true;
         if(!selection) {
             auto cursor = textEdit->textCursor();
             int tmpPos = cursor.position();
@@ -122,20 +122,31 @@ public slots:
         }else{
             int start=textEdit->textCursor().selectionStart();
             int end=textEdit->textCursor().selectionEnd();
-            QHash<int, QString> blocks;
+            QHash<int, int> blocks;
             for(int i=start;i<=end;i++){
                 int indexBlock=textEdit->document()->findBlock(i).position();
                 blocks[indexBlock]=action;
             }
             textEdit->setAlignment(a|Qt::AlignAbsolute);
 
-            QHash<int,QString>::const_iterator i = blocks.constBegin();
+            QHash<int,int>::const_iterator i = blocks.constBegin();
             while (i != blocks.constEnd()) {
                 model->setAllignment(i.key(),i.value());
                 ++i;
             }
         }
     }
+    void getAlignment(char& val){
+        auto a = textEdit->alignment();
+        if (a & Qt::AlignLeft)
+            val=0;
+        else if (a & Qt::AlignHCenter)
+            val=1;
+        else if (a & Qt::AlignRight)
+            val=2;
+        else if (a & Qt::AlignJustify)
+            val=3;
+        }
 signals:
     void clear();
     void userQuery(qint32 siteId);

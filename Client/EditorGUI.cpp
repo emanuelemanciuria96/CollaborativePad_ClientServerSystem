@@ -129,7 +129,6 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                     cursor.movePosition(QTextCursor::Left,QTextCursor::KeepAnchor,1);
                     cursor.mergeCharFormat(format);
                 }
-
                 format.setBackground(QColor("white"));
 //                std::cout << "chiamo localInsert" << std::endl;
                 model->localInsert(pos+i, ch , format);
@@ -213,6 +212,7 @@ void EditorGUI::updateSymbols(qint32 pos, const QString &s, qint32 siteId, const
         curs->movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,numChars);
         isModifying = true;
         curs->mergeCharFormat(format);
+        qDebug()<<"merge";
     }
     else if (action == Message::removal) {
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda

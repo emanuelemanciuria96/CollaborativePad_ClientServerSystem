@@ -36,5 +36,4 @@ private:
     QString _fileName;
     QVector<Message> _messages;
 };
-
 #endif //SHAREDEDITORSERVER_STRINGMESSAGES_H

@@ -146,10 +146,13 @@ void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format)
     std::vector<quint32> next = _symbols[index].getPos();
     std::vector<quint32> newPos;
     generateNewPosition2(prev, next, newPos);
-    generateNewPosition2(prev, next, newPos);
 
     Symbol s(ch, _siteId, _counter++, newPos, format);
-
+    if(ch.unicode()==8233) {
+        char a;
+        emit getAligment(a);
+        s.setAlignmentType(a);
+    }
     DataPacket packet(_siteId, -1, DataPacket::textTyping);
     packet.setPayload(std::make_shared<Message>(Message::insertion, _siteId, s, index));
 
@@ -327,7 +330,6 @@ qint32 SharedEditor::getIndex(qint32 index, Symbol symbol ) {
 }
 
 void SharedEditor::processMessages1(StringMessages &strMess) {
-
     Message::action_t act = strMess.getQueue().front().getAction();
     qint32 start;
     auto messages = strMess.getQueue();

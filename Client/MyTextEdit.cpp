@@ -17,7 +17,6 @@ MyTextEdit::MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors, Q
     this->remoteCursors = remoteCursors;
     this->installEventFilter(this);
     clipboard = QApplication::clipboard();
-
     setMouseTracking(true);
     installEventFilter(this);
     toolTipPalette = QToolTip::palette();

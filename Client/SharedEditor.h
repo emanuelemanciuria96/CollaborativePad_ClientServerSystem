@@ -32,7 +32,8 @@
 
 class SharedEditor: public QObject {
     Q_OBJECT
-private:
+//private:
+public:
     qint32 _siteId;
     qint32 _counter;
     std::vector<Symbol> _symbols;
@@ -52,6 +53,7 @@ private:
 
     void processMessages1( StringMessages& strMess );
     void processMessages( StringMessages& strMess );
+    void processSingleMessage( Message& m );
     void processLoginInfo( LoginInfo& logInf );
     void processFileInfo( FileInfo& filInf );
     void processUserInfo( UserInfo& userInfo);
@@ -112,6 +114,7 @@ signals:
     void userNameArrived(qint32 siteId, QString& user, bool connected=false);
     void flushFileWriters();
     void setCharFormat(bool);
+    void getAligment(char& a);
 
 public:
     explicit SharedEditor(QObject *parent = 0);
@@ -132,7 +135,15 @@ public:
     const Symbol fromPosToSymbol(int pos){ return _symbols[pos]; }
     virtual ~SharedEditor();
     QVector<qint32> getSiteIds();
-
+    void setAllignment(int pos,int a){
+        QTextCharFormat f;
+        f.setUnderlineStyle((QTextCharFormat::UnderlineStyle)a);
+        _symbols[pos].setFormat(f);
+        DataPacket packet(_siteId, -1, DataPacket::textTyping);
+        packet.setPayload(std::make_shared<Message>(Message::modification, _siteId, _symbols[pos], pos));
+        int id = qMetaTypeId<DataPacket>();
+        emit transceiver->getSocket()->sendPacket(packet);
+    }
 };
 
 
