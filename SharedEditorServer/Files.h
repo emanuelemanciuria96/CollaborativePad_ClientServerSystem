@@ -18,7 +18,7 @@
 
 class Files {
 public:
-    Files() = default;
+    Files();
     ~Files();
     std::shared_ptr<std::vector<Symbol>> openFile(QString& fileName);
     bool closeFile(QString& fileName);
@@ -26,6 +26,7 @@ public:
     void addSymbolInFile(QString& fileName, Symbol& sym);
     void rmvSymbolInFile(QString& fileName, Symbol& sym);
     void modSymbolInFile(QString& fileName, Symbol& sym);
+    void aligSymbolInFile(QString& fileName, Symbol& sym);
     void saveChanges(QString& fileName);
     void saveAll();
 
@@ -35,7 +36,8 @@ private:
 
     static void saveFileJson(std::string dir,std::map<Symbol,int>& symbles);
     static void loadFileJson(std::string dir,std::map<Symbol,int>& symbles,std::shared_ptr<std::vector<Symbol>> syms);
-    static void QTsaveFileJson(const std::string& dir,std::vector<Symbol> _symbols);
+    static void QtSaveFileJson(const std::string& f, std::map<Symbol,int>& symbles);
+    static void QtLoadFileJson(std::string f,std::map<Symbol,int>& symbles,std::shared_ptr<std::vector<Symbol>> syms);
 
 
 };

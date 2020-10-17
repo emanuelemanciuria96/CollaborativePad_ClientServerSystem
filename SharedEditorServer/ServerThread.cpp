@@ -280,16 +280,18 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
         qint32 messSiteId;
         qint32 localIndx;
         QChar value;
+        short alignment;
         qint32 symSiteId;
         quint32 counter;
         QVector<quint32> pos;
         QTextCharFormat format;
 
-        in >> action >> messSiteId >> localIndx >> value >> symSiteId >> counter >> pos >> format;
+        in >> action >> messSiteId >> localIndx >> value >> alignment >> symSiteId >> counter >> pos >> format;
 
         auto stdVecPos = pos.toStdVector();
         Symbol s(value,symSiteId,counter,stdVecPos);
         s.setFormat(format);
+        s.setAlignmentType(alignment);
         Message m((Message::action_t)action,messSiteId,s,localIndx);
 
         ptr->appendMessage(m);
@@ -306,7 +308,7 @@ void ServerThread::recvMessage(DataPacket& packet,QDataStream& in){
     if(!_username.isEmpty() ) {
         msgHandler->submit(&NetworkServer::localModification,ptr);
         bool self = false;
-        if( ptr->getQueue().front().getAction() == Message::modification)
+        if( ptr->getQueue().front().getAction() == Message::modification || ptr->getQueue().front().getAction() == Message::alignment)
             self = true;
         _sockets.broadcast(operatingFileName,_siteID,packet, self);
     }
@@ -600,7 +602,7 @@ void ServerThread::sendMessage(DataPacket& packet){
     for(auto m : strMess->getQueue()){
         auto sym = m.getSymbol();
         tmp<<m.getAction()<<m.getSiteId()<<m.getLocalIndex()
-           <<sym.getValue()<<sym.getSymId().getSiteId()<<sym.getSymId().getCount()
+           <<sym.getValue()<<sym.getAlignmentType()<<sym.getSymId().getSiteId()<<sym.getSymId().getCount()
            <<QVector<quint32>::fromStdVector(sym.getPos())<<sym.getFormat();
     }
 

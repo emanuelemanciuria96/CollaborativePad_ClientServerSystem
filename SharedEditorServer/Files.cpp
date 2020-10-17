@@ -4,10 +4,21 @@
 
 #include <set>
 #include <iostream>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QDir>
 #include "Files.h"
 
 enum{file,counter,dirty_bit};
 QVector<QString> Files::fonts{"Arial","Arial Black","Comic Sans MS", "Courier","Georgia","Impact","Tahoma","Times New Roman","Trebuchet MS","Verdana"};
+
+Files::Files(){
+    QDir dir("./files/");
+    if(!dir.exists()){
+        dir.mkpath("./files/");
+    }
+}
 
 std::shared_ptr<std::vector<Symbol>> Files::openFile(QString& fileName) {
     auto symbles = std::make_shared<std::vector<Symbol>>();
@@ -20,7 +31,7 @@ std::shared_ptr<std::vector<Symbol>> Files::openFile(QString& fileName) {
     }
     else{
         auto i = opened_files.insert( std::make_pair( fileName,std::make_tuple(std::map<Symbol,int>(),1,false) ) ).first;
-        loadFileJson(fileName.toStdString(),std::get<file>(i->second),symbles);
+        QtLoadFileJson(fileName.toStdString(),std::get<file>(i->second),symbles);
     }
     return symbles;
 }
@@ -31,7 +42,7 @@ bool Files::closeFile(QString &fileName) {
     if ( i!=opened_files.end() ){
         if (--std::get<counter>(i->second) == 0) {
             if (std::get<dirty_bit>(i->second))
-                saveFileJson(fileName.toStdString(), std::get<file>(i->second));
+                QtSaveFileJson(fileName.toStdString(), std::get<file>(i->second));
             opened_files.erase(i);
         }
     }
@@ -94,12 +105,26 @@ void Files::modSymbolInFile(QString &fileName, Symbol &sym) {
     }
 }
 
+
+void Files::aligSymbolInFile(QString &fileName, Symbol &sym) {
+    auto i = opened_files.find(fileName);
+
+    if(i != opened_files.end()) {
+        auto node = std::get<file>(i->second).extract(sym);
+        if( !node.empty() ){
+            node.key().setAlignmentType(sym.getAlignmentType());
+            std::get<file>(i->second).insert(std::move(node));
+            std::get<dirty_bit>(i->second) = true;
+        }
+    }
+}
+
 void Files::saveChanges(QString &fileName) {
 
     auto i = opened_files.find(fileName);
     if( !std::get<dirty_bit>(i->second) )
         return;
-    saveFileJson(fileName.toStdString(), std::get<file>(i->second));
+    QtSaveFileJson(fileName.toStdString(), std::get<file>(i->second));
 
 }
 
@@ -108,112 +133,114 @@ void Files::saveAll() {
     for( auto of: opened_files ) {
         if (!std::get<dirty_bit>(of.second))
             continue;
-        saveFileJson(of.first.toStdString(), std::get<file>(of.second));
+        QtSaveFileJson(of.first.toStdString(), std::get<file>(of.second));
     }
 }
 
-/*
-void Files::QTsaveFileJson(const std::string& dir,std::vector<Symbol> _symbols){
-    QJsonArray symbols;
 
-    for(auto& itr:_symbols) {
+void Files::QtSaveFileJson(const std::string& f, std::map<Symbol,int>& symbles){
+    QJsonArray syms;
+
+    for(auto& itr:symbles) {
         QJsonObject symbol;
         QJsonObject symId;
-        symbol["char"] = itr.getValue().toLatin1();
-        symId["siteId"] = itr.getSymId().getSiteId();
-        symId["count"] = itr.getSymId().getCount();
-        symbol["symId"] = symId;
-        QJsonArray pos;
-
-        for(auto i: itr.getPos()){
-            QJsonValue val((qint64)i);
-            pos.append(val);
-        }
-        symbol["pos"]=pos;
-        symbols.append(symbol);
-    }
-    QJsonDocument json(symbols);
-    QFile file(QString::fromStdString(dir));
-    file.open(QIODevice::WriteOnly);
-    file.write(json.toJson());
-}
-*/
-
-void Files::saveFileJson(std::string dir,std::map<Symbol,int>& symbles){//vector<symbol> to json
-    std::ofstream file_id;
-    file_id.open("./files/"+dir);
-    Json::Value event;
-    int index=0;
-    for( auto itr: symbles) {
-        event[index]["index"] = index;
-        event[index]["font"] = fonts.indexOf(itr.first.getFormat().fontFamily());
-        event[index]["size"] = itr.first.getFormat().font().pointSize();
-        quint32 rgb = itr.first.getFormat().foreground().color().red();
+        symbol["char"] = (int)itr.first.getValue().unicode();
+        symbol["font"] = fonts.indexOf(itr.first.getFormat().fontFamily());
+        symbol["size"] = itr.first.getFormat().font().pointSize();
+        int rgb = itr.first.getFormat().foreground().color().red();
         rgb<<=8;
         rgb |= itr.first.getFormat().foreground().color().green();
         rgb<<=8;
         rgb |= itr.first.getFormat().foreground().color().blue();
-        event[index]["color"] = rgb;
-        event[index]["underline"] = itr.first.getFormat().fontUnderline();
-        event[index]["bold"] = itr.first.getFormat().font().bold();
-        event[index]["italic"] = itr.first.getFormat().fontItalic();
-        event[index]["char"] = (uint)itr.first.getValue().unicode();
-        event[index]["symId"]["siteId"] = itr.first.getSymId().getSiteId();
-        event[index]["symId"]["count"] = itr.first.getSymId().getCount();
+        symbol["color"] = rgb;
+        symbol["underline"] = itr.first.getFormat().fontUnderline();
+        symbol["bold"] = itr.first.getFormat().font().bold();
+        symbol["italic"] = itr.first.getFormat().fontItalic();
+        if( itr.second == -1 || itr.first.getValue().unicode() == 8233 )
+            symbol["alignment"] = (int)itr.first.getAlignmentType();
+        else
+            symbol["alignment"] = -1;
 
-        Json::Value vec(Json::arrayValue);
-
-        for(int i=0; i<itr.first.getPos().size();i++){
-            vec.append(Json::Value(itr.first.getPos()[i]));
+        QJsonArray pos;
+        for(auto i: itr.first.getPos()){
+            QJsonValue val((int)i);
+            pos.append(val);
         }
-        event[index]["pos"]=vec;
+        symbol["pos"]=pos;
 
-        index++;
+        symId["siteId"] = itr.first.getSymId().getSiteId();
+        symId["count"] = itr.first.getSymId().getCount();
+        symbol["symId"] = symId;
+
+        syms.append(symbol);
     }
 
-    Json::StyledWriter styledWriter;
-    file_id << styledWriter.write(event);
+    QJsonDocument json(syms);
+    QFile file(QString::fromStdString("./files/"+f));
+    file.open(QIODevice::WriteOnly);
+    file.startTransaction();
+    file.write(json.toJson());
+    file.commitTransaction();
+    file.close();
 
-    file_id.close();
 }
 
+void Files::QtLoadFileJson(std::string f,std::map<Symbol,int>& symbles, std::shared_ptr<std::vector<Symbol>> syms){
 
-void Files::loadFileJson(std::string dir,std::map<Symbol,int>& symbles, std::shared_ptr<std::vector<Symbol>> syms){ //json to vector<symbol>
-
-    std::ifstream file_input;
-    file_input.open("./files/"+dir);
-    Json::Reader reader;
-    Json::Value root;
-    reader.parse(file_input, root);
-
-    for(int i=0; i<root.size(); i++) {
+    QFile file(QString::fromStdString("./files/"+f));
+    if(!file.exists()){
+        std::vector<quint32> v = {0};
         QTextCharFormat frmt;
-        int ind = root[i]["font"].asInt();
-        frmt.setFontFamily(fonts[ ind==-1? 7 : ind ]);
-        frmt.setFontPointSize(root[i]["size"].asInt());
-        quint32 rgb = root[i]["color"].asUInt();
-        frmt.setForeground(QBrush(QColor(rgb)));
-        frmt.setFontUnderline(root[i]["underline"].asBool());
-        frmt.setFontWeight(root[i]["bold"].asBool()? QFont::Bold : QFont::Normal);
-        frmt.setFontItalic(root[i]["italic"].asBool());
-
-        QChar value((short)root[i]["char"].asUInt());
-        qint32 _siteId=root[i]["symId"]["siteId"].asUInt64();
-        qint32 _counter=root[i]["symId"]["count"].asUInt64();
-        std::vector<quint32> pos;
-        for(int j=0;j<root[i]["pos"].size();j++){
-            qint32 val=root[i]["pos"][j].asUInt64();
-            pos.push_back(val);
-        }
-        Symbol s(value,_siteId,_counter, pos, frmt);
+        Symbol s('0',-1,-1,v,frmt,0);
+        symbles.insert(std::make_pair(s, -1));
         syms->push_back(s);
-        symbles.insert(symbles.end(),std::make_pair(s,0));
     }
 
-    file_input.close();
+    file.open(QIODevice::ReadOnly);
+    file.startTransaction();
+    auto arr = file.readAll();
+    file.commitTransaction();
+    file.close();
+
+    QJsonDocument json = QJsonDocument::fromJson(arr);
+    auto symsJson = json.array();
+
+    for(int i=0; i<symsJson.size(); i++){
+        QJsonValue symbol = symsJson[i];
+        QTextCharFormat frmt;
+        short align;
+        std::vector<quint32> pos;
+        qint32 siteId;
+        quint32 counter;
+
+        QChar ch((short)symbol["char"].toInt());
+        int indx = symbol["font"].toInt();
+        frmt.setFontFamily(fonts[ indx<0 ? 7: indx]);
+        frmt.setFontPointSize(symbol["size"].toInt());
+        uint rgb = (uint)symbol["color"].toInt();
+        frmt.setForeground(QBrush(QColor(rgb)));
+        frmt.setFontUnderline(symbol["underline"].toBool());
+        frmt.setFontWeight(symbol["bold"].toBool()? QFont::Bold : QFont::Normal );
+        frmt.setFontItalic(symbol["italic"].toBool());
+        align = (short)symbol["alignment"].toInt();
+        auto jpos = symbol["pos"].toArray();
+
+        for(auto i: jpos)
+            pos.push_back((quint32)i.toInt());
+
+        auto symId = symbol["symId"];
+        siteId = symId["siteId"].toInt();
+        counter = (quint32)symId["count"].toInt();
+
+        Symbol s(ch,siteId,counter,pos,frmt,align);
+        int marker = 0;
+        if( siteId == -1 && counter == -1)
+            marker = -1;
+        symbles.insert(std::make_pair(s,marker));
+        syms->push_back(s);
+    }
 
 }
-
 
 Files::~Files() {
     // anche se successivamente a questo salvataggio ne dovesse essere chiamato qualcun altro

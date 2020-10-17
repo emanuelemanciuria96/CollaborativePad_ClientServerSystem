@@ -18,6 +18,7 @@ private:
     SymId _symId;
     std::vector<quint32> _pos;
     QTextCharFormat _format;
+    short alignmentType;
 
 public:
     Symbol():_ch(),_symId(-1,-1),_pos(0){};
@@ -25,6 +26,8 @@ public:
         _ch(ch),_symId(id,cnt),_pos(pos){}
     Symbol(QChar ch, qint32 id, quint32 cnt,std::vector<quint32> &pos, QTextCharFormat& frmt):
             _ch(ch),_symId(id,cnt),_pos(pos),_format(frmt){}
+    Symbol(QChar ch, qint32 id, quint32 cnt,std::vector<quint32> &pos, QTextCharFormat& frmt, short alignment):
+            _ch(ch),_symId(id,cnt),_pos(pos),_format(frmt),alignmentType(alignment){}
 
     bool operator==(Symbol& s) const {
         return _symId == s._symId && _pos==s._pos;
@@ -40,6 +43,8 @@ public:
     const QTextCharFormat& getFormat() const {return _format; }
     void setFormat(QTextCharFormat& format) {_format = format; }
     void mergeFormat(const QTextCharFormat& other) {_format.merge(other); }
+    void setAlignmentType(short type) {alignmentType=type;};
+    short getAlignmentType() const {return alignmentType;};
 };
 
 

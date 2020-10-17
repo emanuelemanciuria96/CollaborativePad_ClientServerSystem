@@ -114,7 +114,8 @@ signals:
     void userNameArrived(qint32 siteId, QString& user, bool connected=false);
     void flushFileWriters();
     void setCharFormat(bool);
-    void getAligment(char& a);
+    void getAligment(short& a);
+    void remoteAlignment(int pos, Qt::Alignment a );
 
 public:
     explicit SharedEditor(QObject *parent = 0);
@@ -126,24 +127,11 @@ public:
     void highlightSymbols(bool checked);
     bool getHighlighting() const;
     bool isFileOpening() const;
-    void setAllignment(int pos,QString a){
-        QTextCharFormat f=_symbols[pos].getFormat();
-        f.setToolTip(a);
-        _symbols[pos].setFormat(f);
-    }
+    void localAlignment(int pos, char a);
 
     const Symbol fromPosToSymbol(int pos){ return _symbols[pos]; }
     virtual ~SharedEditor();
     QVector<qint32> getSiteIds();
-    void setAllignment(int pos,int a){
-        QTextCharFormat f;
-        f.setUnderlineStyle((QTextCharFormat::UnderlineStyle)a);
-        _symbols[pos].setFormat(f);
-        DataPacket packet(_siteId, -1, DataPacket::textTyping);
-        packet.setPayload(std::make_shared<Message>(Message::modification, _siteId, _symbols[pos], pos));
-        int id = qMetaTypeId<DataPacket>();
-        emit transceiver->getSocket()->sendPacket(packet);
-    }
 };
 
 

@@ -148,11 +148,13 @@ void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format)
     generateNewPosition2(prev, next, newPos);
 
     Symbol s(ch, _siteId, _counter++, newPos, format);
+
     if(ch.unicode()==8233) {
-        char a;
+        short a;
         emit getAligment(a);
         s.setAlignmentType(a);
     }
+
     DataPacket packet(_siteId, -1, DataPacket::textTyping);
     packet.setPayload(std::make_shared<Message>(Message::insertion, _siteId, s, index));
 
@@ -201,6 +203,18 @@ void SharedEditor::localModification( qint32 index, QTextCharFormat& format ) {
 
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
+}
+
+void SharedEditor::localAlignment(int pos, char a) {
+
+    _symbols[pos].setAlignmentType(a);
+
+    DataPacket packet(_siteId, -1, DataPacket::textTyping);
+    packet.setPayload(std::make_shared<Message>(Message::alignment, _siteId, _symbols[pos], pos));
+
+    int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
 }
 
 void SharedEditor::sendCursorPos(qint32 index) {
@@ -340,7 +354,7 @@ void SharedEditor::processMessages1(StringMessages &strMess) {
     switch(act) {
         case Message::insertion: {
 
-            for (; i < dim ;) {
+            for (; i < dim;) {
                 std::vector<Symbol> syms;
                 auto m = messages[i];
                 start = getIndex(m.getLocalIndex(), m.getSymbol());
@@ -348,13 +362,27 @@ void SharedEditor::processMessages1(StringMessages &strMess) {
                 QString str = s.getValue();
                 syms.push_back(s);
 
+                if (start == 0) {
+                    _symbols[0].setAlignmentType(m.getSymbol().getAlignmentType());
+                    emit remoteAlignment(0,(Qt::Alignment)m.getSymbol().getAlignmentType());
+                    continue;
+                }
+
                 while (i < dim && messages[i].getSymbol() < _symbols[start] && s < messages[i].getSymbol()) {
                     s = messages[i++].getSymbol();
                     str += s.getValue();
+
                     syms.push_back(s);
                 }
                 emit symbolsChanged(start, str, strMess.getSiteId(), format, Message::insertion);
                 _symbols.insert(_symbols.begin() + start, syms.begin(), syms.end());
+            }
+
+            for(auto m: messages){
+                if( m.getSymbol().getValue().unicode() == 8233 ) {
+                    int pos = getIndex(m.getLocalIndex(),m.getSymbol());
+                    emit remoteAlignment(pos,(Qt::Alignment)m.getSymbol().getAlignmentType());
+                }
             }
 
             break;
@@ -368,12 +396,12 @@ void SharedEditor::processMessages1(StringMessages &strMess) {
                 Symbol s;
                 int j = 0;
 
-                while ( i < dim && messages[i].getSymbol()==_symbols[start+j] ) {
+                while (i < dim && messages[i].getSymbol() == _symbols[start + j]) {
                     s = messages[i++].getSymbol();
                     str += s.getValue();
                     j++;
                 }
-                if( !str.isEmpty() ) {
+                if (!str.isEmpty()) {
                     emit symbolsChanged(start, str, strMess.getSiteId(), format, Message::removal);
                     _symbols.erase(_symbols.begin() + start, _symbols.begin() + start + j);
                     i--;
@@ -384,20 +412,33 @@ void SharedEditor::processMessages1(StringMessages &strMess) {
         }
         case Message::modification: {
 
-            for (; i < dim ; i++ ) {
+            for (; i < dim; i++) {
+
                 auto m = messages[i];
                 start = getIndex(m.getLocalIndex(), m.getSymbol());
                 QString str;
                 int j = 0;
 
-                while (i < dim && messages[i].getSymbol()==_symbols[start+j] ) {
-                    _symbols[start+j].getFormat().merge(format);
+                while (i < dim && messages[i].getSymbol() == _symbols[start + j]) {
+                    _symbols[start + j].getFormat().merge(format);
                     str += messages[i++].getSymbol().getValue();
                     j++;
                 }
-                if( !str.isEmpty()) {
+                if (!str.isEmpty()) {
                     emit symbolsChanged(start, str, strMess.getSiteId(), format, Message::modification);
                     i--;
+                }
+            }
+
+            break;
+        }
+        case Message::alignment: {
+
+            for (auto m: messages) {
+                int pos = getIndex(m.getLocalIndex(),m.getSymbol());
+                if( _symbols[pos] == m.getSymbol() ) {
+                    _symbols[pos].setAlignmentType(m.getSymbol().getAlignmentType());
+                    emit remoteAlignment(pos,(Qt::Alignment)m.getSymbol().getAlignmentType());
                 }
             }
 

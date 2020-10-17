@@ -232,6 +232,20 @@ void EditorGUI::updateSymbols(qint32 pos, const QString &s, qint32 siteId, const
         textEdit->document()->clearUndoRedoStacks();
 }
 
+void EditorGUI::updateAlignment(int pos, Qt::Alignment a) {
+
+    auto curs = getRemoteCursor(0);
+    curs->setPosition(pos);
+    QTextBlockFormat frmt = curs->blockFormat();
+    frmt.setAlignment(a);
+    alignmentCommand = true;
+    curs->setBlockFormat(frmt);
+
+    textEdit->document()->clearUndoRedoStacks();
+    updateLabels();
+
+}
+
 void EditorGUI::updateLabels() {
     // aggiorno la posizione degli altri cursori
 
@@ -598,4 +612,47 @@ void EditorGUI::currentCharFormatChanged(const QTextCharFormat &format)
     emit colorChanged(format.foreground().color());
 }
 
+void EditorGUI::setAbsoluteAlignment(int pos, QFlags<Qt::AlignmentFlag> a, bool selection) {
+    short action;
+    if( a & Qt::AlignLeft){
+        action = 0;
+    }
+    if( a & Qt::AlignRight){
+        action = 2;
+    }
+    if( a & Qt::AlignHCenter){
+        action = 4;
+    }
+    if( a & Qt::AlignJustify){
+        action = 8;
+    }
 
+    textEdit->document()->clearUndoRedoStacks();
+    alignmentCommand = true;
+    if(!selection) {
+        auto cursor = textEdit->textCursor();
+        int tmpPos = cursor.position();
+        cursor.setPosition(pos);
+        textEdit->setTextCursor(cursor);
+        textEdit->setAlignment(a | Qt::AlignAbsolute);
+        cursor.setPosition(tmpPos);
+        textEdit->setTextCursor(cursor);
+        int indexBlock=textEdit->document()->findBlock(tmpPos).position();
+        model->localAlignment(indexBlock,action);
+    }else{
+        int start=textEdit->textCursor().selectionStart();
+        int end=textEdit->textCursor().selectionEnd();
+        QHash<int, int> blocks;
+        for(int i=start;i<=end;i++){
+            int indexBlock=textEdit->document()->findBlock(i).position();
+            blocks[indexBlock]=action;
+        }
+        textEdit->setAlignment(a|Qt::AlignAbsolute);
+
+        QHash<int,int>::const_iterator i = blocks.constBegin();
+        while (i != blocks.constEnd()) {
+            model->localAlignment(i.key(),i.value());
+            ++i;
+        }
+    }
+}

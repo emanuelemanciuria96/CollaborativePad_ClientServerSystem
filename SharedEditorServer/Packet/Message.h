@@ -14,7 +14,7 @@
 class Message: public Payload {
 
 public:
-    typedef enum {insertion = 1,removal = 2, modification = 3} action_t;
+    typedef enum {insertion = 1,removal = 2, modification = 3, alignment = 4} action_t;
 
     Message():Payload(-1),localIndex(-1),_sym(){}
     Message(action_t action,qint32 siteId,Symbol& sym,qint32 ind):

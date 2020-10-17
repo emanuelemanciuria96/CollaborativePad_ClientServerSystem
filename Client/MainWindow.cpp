@@ -2,7 +2,6 @@
 // Created by utente on 06/08/2020.
 //
 
-#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QDockWidget>
 #include "MainWindow.h"
 
@@ -70,7 +69,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     setRichTextBar();
     setStyleSheet();
 
-    connect(shEditor, &SharedEditor::getAligment, editor, &EditorGUI::getAlignment );
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
     connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
@@ -103,6 +101,8 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::deleteAllText, editor, &EditorGUI::deleteAllText);
     connect(shEditor, &SharedEditor::filePathsArrived, treeView, &FileSystemTreeView::constructFromPaths);
     connect(shEditor, &SharedEditor::filePathsArrived, gridView, &FileSystemGridView::constructFromPaths);
+    connect(shEditor, &SharedEditor::getAligment, editor, &EditorGUI::getAlignment );
+    connect(shEditor, &SharedEditor::remoteAlignment, editor, &EditorGUI::updateAlignment );
     connect(gridView, &FileSystemGridView::newFileUpdateTree, treeView, &FileSystemTreeView::constructFromPaths);
     connect(shEditor, &SharedEditor::userInfoArrived, infoWidget, &InfoWidget::loadData);
     connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
@@ -854,6 +854,7 @@ void MainWindow::setRichTextBar() {
     actionAlignRight->setCheckable(true);
     actionAlignRight->setPriority(QAction::LowPriority);
     richTextBar->addAction(actionAlignRight);
+
     connect(actionAlignRight, &QAction::triggered, this, [this]() {
         if(!actionAlignRight->isChecked()){
             this->actionAlignRight->setChecked(true);
