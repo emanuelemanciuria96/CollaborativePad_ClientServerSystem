@@ -149,7 +149,6 @@ public:
     bool alignmentCommand=false;
 
 
-
 };
 
 

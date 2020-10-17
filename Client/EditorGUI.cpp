@@ -22,7 +22,6 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
     myCursorPosUpdateBlocker = false;
     setModel(model);
     setUpGUI();
-    setWindowTitle(QCoreApplication::applicationName());
     posLastChar = -1;
     timer = new QTimer(this);
     curBlockerTimer = new QTimer(this);
@@ -597,5 +596,4 @@ void EditorGUI::currentCharFormatChanged(const QTextCharFormat &format)
     emit fontChanged(format.font());
     emit colorChanged(format.foreground().color());
 }
-
 

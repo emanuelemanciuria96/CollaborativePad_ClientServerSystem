@@ -48,5 +48,10 @@ void InfoUsersListWidget::setData(const QPixmap &orig, const QString &nickname, 
     ui->nicknameLabel->setText(nickname);
     ui->nameLabel->setText(name);
     ui->emailLabel->setText(email);
+    setStyleSheet("QPushButton {font: 10pt; padding: 8; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+    ui->label_5->setStyleSheet("QLabel{color:#3A70D5; font: 12pt}");
+    ui->label_3->setStyleSheet("QLabel{color:#3A70D5; font: 12pt}");
+    ui->label_7->setStyleSheet("QLabel{color:#3A70D5; font: 12pt}");
+
 }
 

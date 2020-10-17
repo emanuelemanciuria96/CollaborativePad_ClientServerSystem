@@ -25,7 +25,7 @@ FileSystemGridView::FileSystemGridView(QWidget *parent,const QVector<QString> &p
     ui->listWidget->setMovement(QListView::Static);
     ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->listWidget->setIconSize(QSize(130, 130));
-    ui->listWidget->setStyleSheet("padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;");
+    ui->listWidget->setStyleSheet("QListWidget {padding-top: 30px;border-radius: 20px;background-color: rgba(0,0,0,0.1);font: 12pt;}");
     this->constructFromPaths(paths);
 
     this->installEventFilter(this);

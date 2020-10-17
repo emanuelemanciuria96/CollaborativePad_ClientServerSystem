@@ -5,6 +5,7 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QDockWidget>
 #include "MainWindow.h"
+#include "CustomStyle.h"
 
 QVector<QString> msgs = {"tree","invite list", "uri insertion"};
 
@@ -225,6 +226,9 @@ void MainWindow::opnFileGrid(QString &fileName) {
 
     setToolBarEditor();
     centralWidget->setCurrentWidget(editor);
+    auto strings = fileName.split("/");
+    this->setWindowTitle(strings[strings.size()-1]);
+    editor->setWindowTitle(fileName);
     dockWidgetUsers->show();
     richTextBar->show();
     auto palette = this->palette();
@@ -267,6 +271,7 @@ void MainWindow::clsFile() {
         setToolBarFolderGrid(gridView->getState());
     }
     gridView->show();
+    setWindowTitle("Shared Editor");
     if(highlightAction->isChecked()){
         highlightAction->setChecked(false);
         highlightAction->triggered(false);
@@ -605,23 +610,29 @@ void MainWindow::resizeEvent(QResizeEvent *evt) {
 }
 
 void MainWindow::setStyleSheet() {
-    qApp->setStyleSheet("QWidget {font-family: helvetica}"
+    qApp->setStyleSheet("QWidget {font-family: helvetica;}"
                         "QToolBar {background:#F1F1F1; }"
                         "QStatusBar {background-color: #F1F1F1; border-top:1px solid #d2d2d2}"
                         "QToolButton {padding:4}"
+                        "QComboBox {padding:5;}"
                         "QMenu{border:1px solid gray;}");
-//                        "QMenu::item:selected {color:black; background: #93C2FF}"
+    //                        "QMenu::item:selected {color:black; background: #93C2FF}"
 //                        "QMenu::item:pressed {background:rgba(100, 100, 100, 124)}");
 
     dockWidgetUsers->titleBarWidget()->setStyleSheet("font:10pt; font-family: helvetica; color:#4F78C3");
     dockWidgetUsers->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8");
     inviteUserWidget->setStyleSheet("padding:0; margin:0;");
-    leftDockWidgets[uri]->setStyleSheet("QDockWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
+    leftDockWidgets[uri]->setStyleSheet("QDockWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}"
+                                        "QLineEdit{font:10pt; margin-top: 8; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
+                                        "QLabel{color:#3A70D5; font: 10pt;}"
+                                        "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
     leftDockWidgets[invitelist]->setStyleSheet("QListWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
-    leftDockWidgets[tree]->setStyleSheet("QTreeWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
-//    for(auto d : leftDockWidgets) {
-//        d->setStyleSheet("QWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
-//    }
+    leftDockWidgets[tree]->setStyleSheet("QTreeWidget {background: rgba(0,0,0,0.1); border:none; padding:8; outline:none}");
+    addUserWidget->setStyleSheet("QLineEdit{font:10pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
+                                 "QLabel{color:#3A70D5; font: 10pt;}"
+                                 "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+    auto option = QStyleOptionFocusRect();
+    qApp->setStyle(new CustomStyle());
 }
 
 
@@ -778,6 +789,8 @@ void MainWindow::setRichTextBar() {
     underlineAction->setToolTip("Bold");
     richTextBar->addAction(underlineAction);
 
+    richTextBar->addSeparator();
+
     comboSize = new QComboBox();
     comboSize->setToolTip("Text size");
     const QList<int> standardSizes = QFontDatabase::standardSizes();
@@ -790,6 +803,7 @@ void MainWindow::setRichTextBar() {
     comboFont->setToolTip("Text font");
     comboFont->setEditable(false);
     richTextBar->addWidget(comboFont);
+
 
     QStringList list{"Arial","Arial Black","Comic Sans MS", "Courier","Georgia","Impact","Tahoma","Times New Roman","Trebuchet MS","Verdana"};
     for(int i = 0; i < comboFont->count(); i++) {
@@ -806,8 +820,9 @@ void MainWindow::setRichTextBar() {
     textColorAction->setIcon(QIcon(pix));
     textColorAction->setToolTip("Text color");
     richTextBar->addAction(textColorAction);
-    
-    
+
+    richTextBar->addSeparator();
+
     actionAlignLeft = new QAction(tr("&Left"), this);
     actionAlignLeft->setIcon(QIcon("./icons/left.png"));
     actionAlignLeft->setShortcut(Qt::CTRL + Qt::Key_L);
