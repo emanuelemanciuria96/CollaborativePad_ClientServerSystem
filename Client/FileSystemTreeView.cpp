@@ -41,7 +41,9 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
     connect(this, &FileSystemTreeView::itemCollapsed, [this](QTreeWidgetItem *itm){ if(itm == root) root->setExpanded(true);} );
     connect(this, &QWidget::customContextMenuRequested, this, &FileSystemTreeView::openCustomMenu);
     connect(this, &FileSystemTreeView::itemChanged, this, &FileSystemTreeView::renameFile);
-
+    auto p = palette();
+    p.setColor(QPalette::Highlight,Qt::red);
+    setPalette(p);
 
 }
 
