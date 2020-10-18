@@ -125,6 +125,10 @@ SignInWidget::SignInWidget(QWidget *parent) : QWidget(parent){
     innerWidget->setGraphicsEffect(effect);
 }
 
+void SignInWidget::usernameAlreadyExists() {
+    errorLabel->setText("Username already exists");
+}
+
 void SignInWidget::openFileDialog() {
     QStringList fileNames;
     auto fileDialog = new QFileDialog(this);

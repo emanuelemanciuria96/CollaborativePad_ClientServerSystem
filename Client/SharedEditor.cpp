@@ -303,6 +303,7 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
 
         case LoginInfo::signup_error:
             std::cout << "client not signed up!" << std::endl;
+            emit usernameAlreadyExists();
             break;
 
         case LoginInfo::search_user_ok:

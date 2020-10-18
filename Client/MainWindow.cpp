@@ -206,6 +206,7 @@ void MainWindow::constructMainWindowMembers(){
     connect(comboFont, SIGNAL(activated(const QString&)), editor, SLOT(textFamily(const QString&)));
     connect(comboFont, &QFontComboBox::currentFontChanged, [this]{editor->textEdit->setFocus();});
     connect(comboSize,  QOverload<int>::of(&QComboBox::activated), [this]{editor->textEdit->setFocus();});
+    connect(shEditor, &SharedEditor::usernameAlreadyExists, widgetSignIn, &SignInWidget::usernameAlreadyExists);
     connect(actionAlignJustify, &QAction::triggered, this, &MainWindow::setAlignJustifyChecked);
     connect(actionAlignRight, &QAction::triggered, this, &MainWindow::setAlignRightChecked);
     connect(actionAlignCenter, &QAction::triggered, this, &MainWindow::setAlignCenterChecked );
