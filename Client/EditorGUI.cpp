@@ -110,6 +110,9 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             //std::cout << "Cancellazione carattere " << index << std::endl;
             model->localErase(pos,charsRemoved);
             if (textEdit->toPlainText().isEmpty()) {
+                auto curs = textEdit->textCursor();
+                curs.setPosition(0);
+                textEdit->setAlignment(Qt::AlignLeft);
                 textEdit->setFontFamily("Times New Roman");
                 textEdit->setFontPointSize(12);
             }
