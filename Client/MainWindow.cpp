@@ -10,18 +10,54 @@ QVector<QString> msgs = {"tree","invite list", "uri insertion"};
 
 MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent) {
 
+    //statusBar initialize
+    statusBar = new QStatusBar(this);
+    numUsers = new QLabel(statusBar);
+    numUsers->setText("User connected: 0");
+    statusBar->addPermanentWidget(numUsers);
+    numUsers->hide();
+    statusBar->showMessage ("");
+    statusBar->hide();
+
     toolBar = new QToolBar("Toolbar",this);
     setToolBar();
     richTextBar = new QToolBar(this);
     setRichTextBar();
-    setMainPalette();
-    setPalette(mainPalette);
-    setAutoFillBackground(true);
+
     centralWidget = new QStackedWidget(this);
     nullWidg = new QWidget(this);
     spinner = nullptr;
-    constructMainWindowMembers();
+    //    aggiungo gli elementi alla finestra
+    this->setStatusBar(statusBar);
+    this->addToolBar(toolBar);
+    addToolBarBreak(Qt::TopToolBarArea);
+    this->addToolBar(richTextBar);
+    toolBar->setMovable(false);
+    toolBar->setMinimumHeight(45);
+    toolBar->setIconSize(QSize(45, 45));
+    toolBar->hide();
+
+    richTextBar->setMovable(false);
+    richTextBar->setIconSize(QSize(25,25));
+    richTextBar->move(toolBar->rect().bottomLeft());
+    richTextBar->hide();
+    setMainPalette();
+    setPalette(mainPalette);
+    setAutoFillBackground(true);
+
     createLostConnWidget();
+
+    constructMainWindowMembers();
+
+    setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
+
+    //    imposto la grandezza della finestra
+    auto size = QGuiApplication::primaryScreen()->size();
+    this->resize(size.width()*0.7,size.height()*0.7);
+
+    installEventFilter(this);
+
 }
 
 void MainWindow::constructMainWindowMembers(){
@@ -45,6 +81,14 @@ void MainWindow::constructMainWindowMembers(){
     statusBar->showMessage ("");
     statusBar->hide();
 
+    toolBar = new QToolBar("Toolbar",this);
+    setToolBar();
+    richTextBar = new QToolBar(this);
+    setRichTextBar();
+
+    centralWidget = new QStackedWidget(this);
+    nullWidg = new QWidget(this);
+    spinner = nullptr;
     //    aggiungo gli elementi alla finestra
     this->setStatusBar(statusBar);
     this->addToolBar(toolBar);
@@ -59,6 +103,30 @@ void MainWindow::constructMainWindowMembers(){
     richTextBar->setIconSize(QSize(25,25));
     richTextBar->move(toolBar->rect().bottomLeft());
     richTextBar->hide();
+
+    constructMainWindowMembers();
+
+    setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
+
+    //    imposto la grandezza della finestra
+    auto size = QGuiApplication::primaryScreen()->size();
+    this->resize(size.width()*0.7,size.height()*0.7);
+
+    installEventFilter(this);
+
+}
+
+void MainWindow::constructMainWindowMembers(){
+
+    QApplication::setStyle(QStyleFactory::create("window"));
+//    for(auto k : QStyleFactory::keys()){
+//        std::cout << k.toStdString() << std::endl;
+//    }
+
+    shEditor = new SharedEditor(this);
+    bkgnd = QPixmap("./textures/texture_clouds_background.png");
+    setWindowTitle("Shared Editor");
 
     setCentralWidget(centralWidget);
     // tree file system view creation
@@ -195,15 +263,15 @@ void MainWindow::constructMainWindowMembers(){
     connect(comboFont, SIGNAL(activated(const QString&)), editor, SLOT(textFamily(const QString&)));
     connect(comboFont, &QFontComboBox::currentFontChanged, [this]{editor->textEdit->setFocus();});
     connect(comboSize,  QOverload<int>::of(&QComboBox::activated), [this]{editor->textEdit->setFocus();});
+    connect(actionAlignJustify, &QAction::triggered, this, &MainWindow::setAlignJustifyChecked);
+    connect(actionAlignRight, &QAction::triggered, this, &MainWindow::setAlignRightChecked);
+    connect(actionAlignCenter, &QAction::triggered, this, &MainWindow::setAlignCenterChecked );
+    connect(actionAlignLeft, &QAction::triggered, this, &MainWindow::setAlignLeftChecked);
     connect(editor->textEdit, &QTextEdit::cursorPositionChanged, this, &MainWindow::setAlignmentActionChecked);
 
 //    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
 //    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
 //    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
-
-    //    imposto la grandezza della finestra
-    auto size = QGuiApplication::primaryScreen()->size();
-    this->resize(size.width()*0.7,size.height()*0.7);
 
     centralWidget->addWidget(loginDialog);
     centralWidget->addWidget(editor);
@@ -213,8 +281,7 @@ void MainWindow::constructMainWindowMembers(){
     centralWidget->addWidget(widgetSignIn);
     centralWidget->addWidget(gridView);
     centralWidget->addWidget(nullWidg);
-    setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
-    setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
+
     lastCentral = nullptr;
     lastDock = nullptr;
 
@@ -312,6 +379,9 @@ void MainWindow::treeFileSystemSettings() {
     treeView = new FileSystemTreeView(leftDockWidgets[tree]);
     leftDockWidgets[tree]->setWidget(treeView);
 
+    leftDockWidgets[tree]->setMaximumWidth(this->size().width() / 5);
+    leftDockWidgets[tree]->setMinimumWidth(this->size().width() / 5);
+
     this->addDockWidget(Qt::LeftDockWidgetArea,leftDockWidgets[tree]);
     leftDockWidgets[tree]->hide();
 
@@ -327,6 +397,9 @@ void MainWindow::inviteUserListSetup() {
     inviteUserWidget = new InviteUserWidget(this);
     leftDockWidgets[invitelist]->setWidget(inviteUserWidget);
 
+    leftDockWidgets[invitelist]->setMaximumWidth(this->size().width() / 3);
+    leftDockWidgets[invitelist]->setMinimumWidth(this->size().width() / 3);
+
     this->addDockWidget(Qt::LeftDockWidgetArea,leftDockWidgets[invitelist]);
     leftDockWidgets[invitelist]->hide();
 }
@@ -336,6 +409,11 @@ void MainWindow::uriWidgetSetup() {
     leftDockWidgets[uri]->setAllowedAreas(Qt::LeftDockWidgetArea );
     leftDockWidgets[uri]->setFeatures(QDockWidget::DockWidgetClosable);
     leftDockWidgets[uri]->setMouseTracking(true);
+
+    leftDockWidgets[uri]->setMaximumWidth(this->size().width() / 5);
+    leftDockWidgets[uri]->setMinimumWidth(this->size().width() / 5);
+    leftDockWidgets[uri]->setMaximumHeight(this->size().height() / 5);
+    leftDockWidgets[uri]->setMinimumHeight(this->size().height() / 5);
 
     leftDockWidgets[uri]->setTitleBarWidget(new QWidget());
     uriWidget = new UriWidget(this);
@@ -851,18 +929,6 @@ void MainWindow::setRichTextBar() {
     actionAlignLeft->setCheckable(true);
     actionAlignLeft->setPriority(QAction::LowPriority);
     richTextBar->addAction(actionAlignLeft);
-    connect(actionAlignLeft, &QAction::triggered, this, [this]() {
-        if(!actionAlignLeft->isChecked()){
-            this->actionAlignLeft->setChecked(true);
-            return;
-        }
-        this->actionAlignLeft->setChecked(true);
-            this->actionAlignCenter->setChecked(false);
-            this->actionAlignRight->setChecked(false);
-            this->actionAlignJustify->setChecked(false);
-
-       this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignLeft,copyAction->isEnabled());
-    });
 
     actionAlignCenter = new QAction(tr("&Center"), this);
     actionAlignCenter->setIcon(QIcon("./icons/center.png"));
@@ -870,19 +936,6 @@ void MainWindow::setRichTextBar() {
     actionAlignCenter->setCheckable(true);
     actionAlignCenter->setPriority(QAction::LowPriority);
     richTextBar->addAction(actionAlignCenter);
-    connect(actionAlignCenter, &QAction::triggered, this, [this]() {
-        if(!actionAlignCenter->isChecked()){
-            this->actionAlignCenter->setChecked(true);
-            return;
-        }
-        this->actionAlignCenter->setChecked(true);
-        this->actionAlignLeft->setChecked(false);
-        this->actionAlignRight->setChecked(false);
-        this->actionAlignJustify->setChecked(false);
-
-        int index=editor->textEdit->textCursor().position();
-        this->editor->setAbsoluteAlignment(index,Qt::AlignCenter,copyAction->isEnabled());
-    });
 
     actionAlignRight = new QAction(tr("&Right"), this);
     actionAlignRight->setIcon(QIcon("./icons/right.png"));
@@ -891,35 +944,13 @@ void MainWindow::setRichTextBar() {
     actionAlignRight->setPriority(QAction::LowPriority);
     richTextBar->addAction(actionAlignRight);
 
-    connect(actionAlignRight, &QAction::triggered, this, [this]() {
-        if(!actionAlignRight->isChecked()){
-            this->actionAlignRight->setChecked(true);
-            return;
-        }
-        this->actionAlignRight->setChecked(true);
-            this->actionAlignCenter->setChecked(false);
-            this->actionAlignLeft->setChecked(false);
-            this->actionAlignJustify->setChecked(false);
-            this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignRight,copyAction->isEnabled());
-    });
-
     actionAlignJustify = new QAction(tr("&Justify"), this);
     actionAlignJustify->setIcon(QIcon("./icons/justify.png"));
     actionAlignJustify->setShortcut(Qt::CTRL + Qt::Key_L);
     actionAlignJustify->setCheckable(true);
     actionAlignJustify->setPriority(QAction::LowPriority);
     richTextBar->addAction(actionAlignJustify);
-    connect(actionAlignJustify, &QAction::triggered, this, [this]() {
-        if(!actionAlignJustify->isChecked()){
-            this->actionAlignJustify->setChecked(true);
-            return;
-        }
-        this->actionAlignJustify->setChecked(true);
-            this->actionAlignCenter->setChecked(false);
-            this->actionAlignLeft->setChecked(false);
-            this->actionAlignRight->setChecked(false);
-        this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignJustify,copyAction->isEnabled());
-    });
+
 }
 
 void MainWindow::setAlignmentActionChecked() {
@@ -936,6 +967,57 @@ void MainWindow::setAlignmentActionChecked() {
         actionAlignRight->setChecked(true);
     else if (a & Qt::AlignJustify)
         actionAlignJustify->setChecked(true);
+}
+
+void MainWindow::setAlignLeftChecked()  {
+    if(!actionAlignLeft->isChecked()){
+        this->actionAlignLeft->setChecked(true);
+        return;
+    }
+    this->actionAlignLeft->setChecked(true);
+    this->actionAlignCenter->setChecked(false);
+    this->actionAlignRight->setChecked(false);
+    this->actionAlignJustify->setChecked(false);
+
+    this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignLeft,copyAction->isEnabled());
+}
+
+void MainWindow::setAlignCenterChecked() {
+    if(!actionAlignCenter->isChecked()){
+        this->actionAlignCenter->setChecked(true);
+        return;
+    }
+    this->actionAlignCenter->setChecked(true);
+    this->actionAlignLeft->setChecked(false);
+    this->actionAlignRight->setChecked(false);
+    this->actionAlignJustify->setChecked(false);
+
+    int index=editor->textEdit->textCursor().position();
+    this->editor->setAbsoluteAlignment(index,Qt::AlignCenter,copyAction->isEnabled());
+}
+
+void MainWindow::setAlignRightChecked() {
+    if(!actionAlignRight->isChecked()){
+        this->actionAlignRight->setChecked(true);
+        return;
+    }
+    this->actionAlignRight->setChecked(true);
+    this->actionAlignCenter->setChecked(false);
+    this->actionAlignLeft->setChecked(false);
+    this->actionAlignJustify->setChecked(false);
+    this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignRight,copyAction->isEnabled());
+}
+
+void MainWindow::setAlignJustifyChecked() {
+    if(!actionAlignJustify->isChecked()){
+        this->actionAlignJustify->setChecked(true);
+        return;
+    }
+    this->actionAlignJustify->setChecked(true);
+    this->actionAlignCenter->setChecked(false);
+    this->actionAlignLeft->setChecked(false);
+    this->actionAlignRight->setChecked(false);
+    this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignJustify,copyAction->isEnabled());
 }
 
 void MainWindow::colorChanged(const QColor &c)
@@ -955,9 +1037,9 @@ void MainWindow::fontChanged(const QFont &f)
     underlineAction->setChecked(f.underline());
 }
 
-void MainWindow::serverUnavailable(){
+void MainWindow::serverUnavailable() {
 
-    std::cout<<"togliere tutto e mettere una azione per ricaricare tutto";
+    std::cout << "togliere tutto e mettere una azione per ricaricare tutto";
     deleteMainWindowMembers();
     centralWidget->setCurrentWidget(lostConnectionWidget);
 }
@@ -997,14 +1079,23 @@ void MainWindow::deleteMainWindowMembers() {
     addUserWidget = nullptr;
     delete dockWidgetUsers;
     usersList = nullptr;
-    delete statusBar;
     delete spinner;
     spinner = nullptr;
     lastDock = nullptr;
     lastCentral = nullptr;
 
+    for(auto a: toolBar->actions()){
+        a->disconnect();
+    }
+    for(auto a: richTextBar->actions()){
+        a->disconnect();
+    }
+    comboFont->disconnect();
+    comboSize->disconnect();
+
     toolBar->hide();
     richTextBar->hide();
+    statusBar->hide();
 }
 
 void MainWindow::createLostConnWidget() {

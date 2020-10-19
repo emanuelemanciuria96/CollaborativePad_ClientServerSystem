@@ -111,6 +111,10 @@ private:
 public slots:
     void hideEditor(QString& fileName);
     void setAlignmentActionChecked();
+    void setAlignLeftChecked();
+    void setAlignCenterChecked();
+    void setAlignRightChecked();
+    void setAlignJustifyChecked();
     void clipboardDataChanged(){
 #ifndef QT_NO_CLIPBOARD
         if (const QMimeData *md = QApplication::clipboard()->mimeData())
