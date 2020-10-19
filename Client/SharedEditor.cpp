@@ -963,6 +963,6 @@ SharedEditor::~SharedEditor() {
 
 void SharedEditor::deleteThread() {
     transceiver->deleteLater();
-    //TODO: qui si potrebbe inserire una pagina per ritentare la connessione
+    emit serverUnavailable();
     exit(0);
 }

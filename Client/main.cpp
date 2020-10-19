@@ -19,5 +19,6 @@ int main(int argc, char **argv) {
 
     mainWindow.show();
     app.exec();
+    delete shEditor;
     return 0;
 }

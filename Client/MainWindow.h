@@ -128,6 +128,7 @@ public slots:
     void openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void colorChanged(const QColor &c);
     void fontChanged(const QFont &f);
+    void serverUnavailable();
 
 signals:
     void sendComboSizeText(const QString& p);

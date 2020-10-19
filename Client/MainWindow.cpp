@@ -9,6 +9,7 @@
 QVector<QString> msgs = {"tree","invite list", "uri insertion"};
 
 MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(parent) {
+
     QApplication::setStyle(QStyleFactory::create("window"));
 //    for(auto k : QStyleFactory::keys()){
 //        std::cout << k.toStdString() << std::endl;
@@ -102,8 +103,9 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(shEditor, &SharedEditor::deleteAllText, editor, &EditorGUI::deleteAllText);
     connect(shEditor, &SharedEditor::filePathsArrived, treeView, &FileSystemTreeView::constructFromPaths);
     connect(shEditor, &SharedEditor::filePathsArrived, gridView, &FileSystemGridView::constructFromPaths);
-    connect(shEditor, &SharedEditor::getAligment, editor, &EditorGUI::getAlignment );
-    connect(shEditor, &SharedEditor::remoteAlignment, editor, &EditorGUI::updateAlignment );
+    connect(shEditor, &SharedEditor::getAligment, editor, &EditorGUI::getAlignment);
+    connect(shEditor, &SharedEditor::remoteAlignment, editor, &EditorGUI::updateAlignment);
+    connect(shEditor, &SharedEditor::serverUnavailable,this,&MainWindow::serverUnavailable);
     connect(gridView, &FileSystemGridView::newFileUpdateTree, treeView, &FileSystemTreeView::constructFromPaths);
     connect(shEditor, &SharedEditor::userInfoArrived, infoWidget, &InfoWidget::loadData);
     connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
@@ -932,5 +934,11 @@ void MainWindow::fontChanged(const QFont &f)
     boldAction->setChecked(f.bold());
     italicAction->setChecked(f.italic());
     underlineAction->setChecked(f.underline());
+}
+
+void MainWindow::serverUnavailable(){
+
+    std::cout<<"togliere tutto e mettere una azione per ricaricare tutto";
+
 }
 
