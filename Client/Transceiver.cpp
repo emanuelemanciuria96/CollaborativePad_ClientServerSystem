@@ -21,15 +21,17 @@ void Transceiver::run() {
     socket = new Socket();
     socket->moveToThread(this);
 
-    connectToServer();
+    timer = new QTimer();
+    timer->setSingleShot(true);
+    connect(timer,SIGNAL(timeout()),this,SLOT(sendAllMessages()));
+
+    if(connectToServer() < 0)
+        disconnected();
+
 
     connect(socket,&Socket::sendPacket,this,&Transceiver::sendPacket,Qt::QueuedConnection);
     connect(socket,&Socket::terminateThreadOperations,this,&Transceiver::terminateLastOperations,Qt::QueuedConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-
-    timer = new QTimer();
-    timer->setSingleShot(true);
-    connect(timer,SIGNAL(timeout()),this,SLOT(sendAllMessages()));
 
     exec(); //loop degli eventi attivato qui
 }
@@ -173,9 +175,6 @@ void Transceiver::recvMessage(DataPacket& pkt, QDataStream& in) {
     in>>file;
     stringBytes -= socket->bytesAvailable();
 
-    if( file != openedServerFile)
-        return;
-
     numBytes-=stringBytes;
     while( numBytes > 0 ){
         auto tmp = socket->bytesAvailable();
@@ -207,6 +206,8 @@ void Transceiver::recvMessage(DataPacket& pkt, QDataStream& in) {
     auto num = std::dynamic_pointer_cast<StringMessages>(pkt.getPayload())->size();
     std::cout<<" --- number of arrived messages at once "<<num <<std::endl;
 
+    if( file != openedServerFile)
+        return;
     emit readyToProcess(pkt);
 
 }

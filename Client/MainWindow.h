@@ -25,21 +25,22 @@
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
-    MainWindow(SharedEditor* shEditor, QWidget* parent = 0);
+    MainWindow( QWidget* parent = 0);
 
     enum dock_type{tree,invitelist,uri};
 
 private:
-    QVector<QDockWidget*> leftDockWidgets;
-    FileSystemTreeView *treeView;
-    FileSystemGridView *gridView;
-    EditorGUI *editor;
-    LoginDialog *loginDialog;
+    SharedEditor* shEditor; //
+    QVector<QDockWidget*> leftDockWidgets; //
+    FileSystemTreeView *treeView; //
+    FileSystemGridView *gridView; //
+    EditorGUI *editor; //
+    LoginDialog *loginDialog; //
     QStatusBar* statusBar;
     QToolBar* toolBar;
     QToolBar* richTextBar;
-    InfoWidget* infoWidget;
-    InfoWidgetEdit* infoWidgetEdit;
+    InfoWidget* infoWidget; //
+    InfoWidgetEdit* infoWidgetEdit; //
     QStackedWidget* centralWidget;
     QAction* highlightAction;
     QAction* closeAction;
@@ -67,13 +68,13 @@ private:
     QFontComboBox* comboFont;
     QAction* textColorAction;
     QAction* userInfoAction;
-    SignInWidget *widgetSignIn;
-    AddUserWidget* addUserWidget;
-    InviteUserWidget* inviteUserWidget;
-    UriWidget* uriWidget;
+    SignInWidget *widgetSignIn; //
+    AddUserWidget* addUserWidget; //
+    InviteUserWidget* inviteUserWidget; //
+    UriWidget* uriWidget; //
     QPixmap bkgnd;
-    QDockWidget *dockWidgetUsers;
-    UsersList *usersList;
+    QDockWidget *dockWidgetUsers; //
+    UsersList *usersList; //
     QPalette mainPalette;
     QConicalGradient* gradient;
     QLabel *numUsers;
@@ -83,8 +84,10 @@ private:
     QWidget *nullWidg;
     QLabel* spinner;
 
+    void constructMainWindowMembers();
+    void deleteMainWindowMembers();
     void loginSettings();
-    void editorSettings(SharedEditor* shEditor);
+    void editorSettings();
     void treeFileSystemSettings();
     void gridFileSystemSettings();
     void inviteUserListSetup();
@@ -106,8 +109,8 @@ private:
 
 public slots:
     void hideEditor(QString& fileName);
-    void clipboardDataChanged()
-    {
+    void setAlignmentActionChecked();
+    void clipboardDataChanged(){
 #ifndef QT_NO_CLIPBOARD
         if (const QMimeData *md = QApplication::clipboard()->mimeData())
             pasteAction->setEnabled(md->hasText());
@@ -128,6 +131,7 @@ public slots:
     void openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void colorChanged(const QColor &c);
     void fontChanged(const QFont &f);
+    void serverUnavailable();
 
 signals:
     void sendComboSizeText(const QString& p);

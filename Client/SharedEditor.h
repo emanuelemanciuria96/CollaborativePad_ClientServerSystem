@@ -116,6 +116,7 @@ signals:
     void setCharFormat(bool);
     void getAligment(short& a);
     void remoteAlignment(int pos, Qt::Alignment a );
+    void serverUnavailable();
 
 public:
     explicit SharedEditor(QObject *parent = 0);
