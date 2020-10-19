@@ -6,6 +6,7 @@
 #include <QtGui/QPainter>
 #include "UsersList.h"
 #include "RemoteCursor.h"
+#include "MainWindow.h"
 
 UsersList::UsersList(QWidget *parent) : QListWidget(parent){
     setIconSize(QSize(35,35));
@@ -23,18 +24,8 @@ void UsersList::addUser(const UserInfo &user) {
         orig = QPixmap("./images/profile.jpg");
     else
         orig = QPixmap(user.getImage());
-    int size = qMax(orig.width(), orig.height());
 
-    QPixmap rounded = QPixmap(size, size);
-    rounded.fill(Qt::transparent);
-    QPainterPath path;
-    path.addEllipse(rounded.rect());
-    QPainter painter(&rounded);
-    painter.setClipPath(path);
-    painter.fillRect(rounded.rect(), Qt::black);
-    int x = qAbs(orig.width() - size) / 2;
-    int y = qAbs(orig.height() - size) / 2;
-    painter.drawPixmap(x, y, orig.width(), orig.height(), orig);
+    auto rounded = MainWindow::roundImage(orig);
     newItem->setIcon(QIcon(rounded));
 
     auto backColor = RemoteCursor::getColorHex(user.getSiteId());

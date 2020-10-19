@@ -19,12 +19,12 @@ UriWidget::~UriWidget()
 void UriWidget::checkUri() {
     auto input = ui->uriEdit->text();
 
-    if (input.isEmpty() || !input.contains("http://www.sharededitor.com/")){
+    if (input.isEmpty() || !input.contains("http://www.collaborativepad.com/")){
         ui->errorLabel->setText("Please insert a valid URI");
         return;
     }
 
-    emit submitUri(input.replace("http://www.sharededitor.com/", ""));
+    emit submitUri(input.replace("http://www.collaborativepad.com/", ""));
 }
 
 void UriWidget::hideEvent (QHideEvent *event){

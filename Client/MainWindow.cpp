@@ -481,17 +481,7 @@ void MainWindow::setToolBar() {
 
     userInfoAction = new QAction();
     const QPixmap orig = QPixmap("./images/profile.jpg");
-    int size = qMax(orig.width(), orig.height());
-    QPixmap rounded = QPixmap(size, size);
-    rounded.fill(Qt::transparent);
-    QPainterPath path;
-    path.addEllipse(rounded.rect());
-    QPainter painter(&rounded);
-    painter.setClipPath(path);
-    painter.fillRect(rounded.rect(), Qt::black);
-    int x = qAbs(orig.width() - size) / 2;
-    int y = qAbs(orig.height() - size) / 2;
-    painter.drawPixmap(x, y, orig.width(), orig.height(), orig);
+    auto rounded = roundImage(orig);
     userInfoAction->setIcon(QIcon(rounded));
     userInfoAction->setVisible(true);
     userInfoAction->setToolTip("Show or edit user's info");
@@ -590,17 +580,7 @@ void MainWindow::setInviteListIcon(int num) {
 }
 
 void MainWindow::changeToolbarProfileImage(const QPixmap& orig) {
-    int size = qMax(orig.width(), orig.height());
-    QPixmap rounded = QPixmap(size, size);
-    rounded.fill(Qt::transparent);
-    QPainterPath path;
-    path.addEllipse(rounded.rect());
-    QPainter painter(&rounded);
-    painter.setClipPath(path);
-    painter.fillRect(rounded.rect(), Qt::black);
-    int x = qAbs(orig.width() - size) / 2;
-    int y = qAbs(orig.height() - size) / 2;
-    painter.drawPixmap(x, y, orig.width(), orig.height(), orig);
+    auto rounded = roundImage(orig);
     userInfoAction->setIcon(QIcon(rounded));
 }
 
@@ -971,6 +951,21 @@ void MainWindow::fontChanged(const QFont &f)
     boldAction->setChecked(f.bold());
     italicAction->setChecked(f.italic());
     underlineAction->setChecked(f.underline());
+}
+
+QPixmap MainWindow::roundImage(const QPixmap& orig) {
+    int size = qMax(orig.width(), orig.height());
+    QPixmap rounded = QPixmap(size, size);
+    rounded.fill(Qt::transparent);
+    QPainterPath path;
+    path.addEllipse(rounded.rect());
+    QPainter painter(&rounded);
+    painter.setClipPath(path);
+    painter.fillRect(rounded.rect(), Qt::black);
+    int x = qAbs(orig.width() - size) / 2;
+    int y = qAbs(orig.height() - size) / 2;
+    painter.drawPixmap(x, y, orig.width(), orig.height(), orig);
+    return rounded;
 }
 
 void MainWindow::serverUnavailable() {
