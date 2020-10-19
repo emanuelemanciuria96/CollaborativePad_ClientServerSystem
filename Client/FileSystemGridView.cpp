@@ -154,11 +154,11 @@ void FileSystemGridView::constructFromPaths(const QVector<QString> &paths){
     }else {
         tmpName=item->text();
     }
-        if (this->state == this->mainFolder) {
-            reload(this->mainFolder, false);
-        } else {
-            reload(this->state, true);
-        }
+    if (this->state == this->mainFolder) {
+        reload(this->mainFolder, false);
+    } else {
+        reload(this->state, true);
+    }
     if(!error) {
         for (int i = 0; i < ui->listWidget->count(); ++i) {
             QListWidgetItem *item = ui->listWidget->item(i);
@@ -401,8 +401,8 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         bool sameName=false;
         do {
             newNameFile = QInputDialog::getText(0, "Rename file",
-                                                        "Rename " + oldNameFile, QLineEdit::Normal,
-                                                        "", &ok);
+                                                "Rename " + oldNameFile, QLineEdit::Normal,
+                                                "", &ok);
             if (!ok) {
                 return;
             }
