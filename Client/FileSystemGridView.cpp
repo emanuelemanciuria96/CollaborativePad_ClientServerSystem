@@ -224,6 +224,9 @@ void FileSystemGridView::reloadBack(){
 
 void FileSystemGridView::invite(){
     QListWidgetItem *item=ui->listWidget->currentItem();
+    if(item== nullptr){
+        return;
+    }
     if(this->fileSystem.count(item->text())>0){
         emit canInvite(false);
         return;
@@ -233,6 +236,9 @@ void FileSystemGridView::invite(){
 }
 void FileSystemGridView::deleteCurrent(){
     QListWidgetItem *item=ui->listWidget->currentItem();
+    if(item==nullptr){
+        return;
+    }
     deleteFile(this->state+"/"+item->text());
 }
 
@@ -357,7 +363,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         return;
     }
     QListWidgetItem *item=ui->listWidget->currentItem();
-    if(item->text()==""){
+    if(item== nullptr || item->text()==""){
         return;
     }
     if(item->statusTip()=="folder"){
@@ -400,6 +406,11 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
             if (!ok) {
                 return;
             }
+            item=ui->listWidget->currentItem();
+            if(item== nullptr){
+                return;
+            }
+            oldNameFile=item->text();
             if(oldNameFile==newNameFile){
                 return;
             }
@@ -496,6 +507,11 @@ void FileSystemGridView::deleteFile(QString file)
             return;
     }
     int index=0;
+    QListWidgetItem *item=ui->listWidget->currentItem();
+    if(item== nullptr){
+        return;
+    }
+    nameFile=item->text();
     for(auto f:fileSystem[folder]){
         if(f==nameFile){
             fileSystem[folder].removeAt(index);
@@ -541,7 +557,7 @@ void FileSystemGridView::remoteDeleteFile(const QString& file)
     }
     bool error=false;
     QListWidgetItem *item=ui->listWidget->currentItem();
-    QString tmpName;
+    QString tmpName="";
     if(item== nullptr) {
         error=true;
     }else {
@@ -628,6 +644,9 @@ void FileSystemGridView::remoteRenameFile(const QString& oldFile,const QString& 
         reload(this->state, true);
     }
     if(!error) {
+        if(folder==this->state && tmpName==oldNameFile){
+            tmpName=newNameFile;
+        }
         for (int i = 0; i < ui->listWidget->count(); ++i) {
             QListWidgetItem *item = ui->listWidget->item(i);
             if (item->statusTip() == "file" && item->text() == tmpName) {
