@@ -21,6 +21,10 @@ void Transceiver::run() {
     socket = new Socket();
     socket->moveToThread(this);
 
+    timer = new QTimer();
+    timer->setSingleShot(true);
+    connect(timer,SIGNAL(timeout()),this,SLOT(sendAllMessages()));
+
     if(connectToServer() < 0)
         disconnected();
 
@@ -28,10 +32,6 @@ void Transceiver::run() {
     connect(socket,&Socket::sendPacket,this,&Transceiver::sendPacket,Qt::QueuedConnection);
     connect(socket,&Socket::terminateThreadOperations,this,&Transceiver::terminateLastOperations,Qt::QueuedConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-
-    timer = new QTimer();
-    timer->setSingleShot(true);
-    connect(timer,SIGNAL(timeout()),this,SLOT(sendAllMessages()));
 
     exec(); //loop degli eventi attivato qui
 }

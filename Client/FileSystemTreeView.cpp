@@ -304,7 +304,7 @@ void FileSystemTreeView::remoteFileDeletion(QString &fileName) {
 }
 
 void FileSystemTreeView::inviteUser(QTreeWidgetItem *item) {
-        emit inviteRequest(item->text(0));
+    emit inviteRequest(item->text(0));
 }
 
 FileSystemTreeView::~FileSystemTreeView() {

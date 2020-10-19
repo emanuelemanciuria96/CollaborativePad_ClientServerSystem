@@ -8,12 +8,27 @@
 
 QVector<QString> msgs = {"tree","invite list", "uri insertion"};
 
-MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(parent) {
+MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent) {
+
+    toolBar = new QToolBar("Toolbar",this);
+    setToolBar();
+    richTextBar = new QToolBar(this);
+    setRichTextBar();
+    centralWidget = new QStackedWidget(this);
+    nullWidg = new QWidget(this);
+    spinner = nullptr;
+    constructMainWindowMembers();
+
+}
+
+void MainWindow::constructMainWindowMembers(){
 
     QApplication::setStyle(QStyleFactory::create("window"));
 //    for(auto k : QStyleFactory::keys()){
 //        std::cout << k.toStdString() << std::endl;
 //    }
+
+    shEditor = new SharedEditor(this);
     bkgnd = QPixmap("./textures/texture_clouds_background.png");
     setMainPalette();
     setPalette(mainPalette);
@@ -29,10 +44,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     statusBar->showMessage ("");
     statusBar->hide();
 
-    toolBar = new QToolBar("Toolbar",this);
-    centralWidget = new QStackedWidget(this);
-    richTextBar = new QToolBar(this);
-
     //    aggiungo gli elementi alla finestra
     this->setStatusBar(statusBar);
     this->addToolBar(toolBar);
@@ -43,7 +54,6 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     toolBar->setIconSize(QSize(45, 45));
     toolBar->hide();
 
-    nullWidg = new QWidget(this);
     richTextBar->setMovable(false);
     richTextBar->setIconSize(QSize(25,25));
     richTextBar->move(toolBar->rect().bottomLeft());
@@ -57,7 +67,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     // login creation
     loginSettings();
     // editor creation
-    editorSettings(shEditor);
+    editorSettings();
     // invite list creation
     inviteUserListSetup();
     // uri widget creation
@@ -66,9 +76,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     signInWidgetSetup();
     setUsersList();
 
-    setToolBar();
     setToolBarGrid();
-    setRichTextBar();
     setStyleSheet();
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
@@ -186,6 +194,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     connect(comboFont, SIGNAL(activated(const QString&)), editor, SLOT(textFamily(const QString&)));
     connect(comboFont, &QFontComboBox::currentFontChanged, [this]{editor->textEdit->setFocus();});
     connect(comboSize,  QOverload<int>::of(&QComboBox::activated), [this]{editor->textEdit->setFocus();});
+    connect(editor->textEdit, &QTextEdit::cursorPositionChanged, this, &MainWindow::setAlignmentActionChecked);
 
 //    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
 //    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
@@ -207,6 +216,7 @@ MainWindow::MainWindow(SharedEditor* shEditor, QWidget *parent) : QMainWindow(pa
     setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
     lastCentral = nullptr;
     lastDock = nullptr;
+
 }
 
 void MainWindow::transparentForMouse() {
@@ -242,6 +252,7 @@ void MainWindow::opnFileGrid(QString &fileName) {
     this->setCursor(QCursor(Qt::ArrowCursor));
     statusBar->clearMessage();
     delete spinner;
+    spinner = nullptr;
 
 }
 
@@ -567,7 +578,7 @@ void MainWindow::changeToolbarProfileImage(const QPixmap& orig) {
     userInfoAction->setIcon(QIcon(rounded));
 }
 
-void MainWindow::editorSettings(SharedEditor* shEditor) {
+void MainWindow::editorSettings() {
     editor = new EditorGUI(shEditor, this);
     infoWidget = new InfoWidget(this);
     infoWidgetEdit = new InfoWidgetEdit(this);
@@ -901,22 +912,22 @@ void MainWindow::setRichTextBar() {
             this->actionAlignRight->setChecked(false);
         this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignJustify,copyAction->isEnabled());
     });
+}
 
-    connect(editor->textEdit, &QTextEdit::cursorPositionChanged, this, [this]() {
-        auto a = editor->textEdit->alignment();
-        actionAlignLeft->setChecked(false);
-        actionAlignCenter->setChecked(false);
-        actionAlignRight->setChecked(false);
-        actionAlignJustify->setChecked(false);
-        if (a & Qt::AlignLeft)
-            actionAlignLeft->setChecked(true);
-        else if (a & Qt::AlignHCenter)
-            actionAlignCenter->setChecked(true);
-        else if (a & Qt::AlignRight)
-            actionAlignRight->setChecked(true);
-        else if (a & Qt::AlignJustify)
-            actionAlignJustify->setChecked(true);
-    });
+void MainWindow::setAlignmentActionChecked() {
+    auto a = editor->textEdit->alignment();
+    actionAlignLeft->setChecked(false);
+    actionAlignCenter->setChecked(false);
+    actionAlignRight->setChecked(false);
+    actionAlignJustify->setChecked(false);
+    if (a & Qt::AlignLeft)
+        actionAlignLeft->setChecked(true);
+    else if (a & Qt::AlignHCenter)
+        actionAlignCenter->setChecked(true);
+    else if (a & Qt::AlignRight)
+        actionAlignRight->setChecked(true);
+    else if (a & Qt::AlignJustify)
+        actionAlignJustify->setChecked(true);
 }
 
 void MainWindow::colorChanged(const QColor &c)
@@ -939,6 +950,46 @@ void MainWindow::fontChanged(const QFont &f)
 void MainWindow::serverUnavailable(){
 
     std::cout<<"togliere tutto e mettere una azione per ricaricare tutto";
+    deleteMainWindowMembers();
 
 }
 
+void MainWindow::deleteMainWindowMembers() {
+
+    centralWidget->setCurrentWidget(nullWidg);
+
+    delete shEditor;
+    shEditor = nullptr;
+    delete gridView;
+    gridView = nullptr;
+    for(auto dock: leftDockWidgets)
+        delete dock;
+    inviteUserWidget = nullptr;
+    treeView = nullptr;
+    uriWidget = nullptr;
+    leftDockWidgets.clear();
+    delete editor;
+    editor = nullptr;
+    delete loginDialog;
+    loginDialog = nullptr;
+    delete infoWidget;
+    infoWidget = nullptr;
+    delete infoWidgetEdit;
+    infoWidgetEdit = nullptr;
+    delete widgetSignIn;
+    widgetSignIn = nullptr;
+    delete addUserWidget;
+    addUserWidget = nullptr;
+    delete dockWidgetUsers;
+    usersList = nullptr;
+    delete statusBar;
+    delete spinner;
+    spinner = nullptr;
+    lastDock = nullptr;
+    lastCentral = nullptr;
+
+    toolBar->hide();
+    richTextBar->hide();
+
+
+}

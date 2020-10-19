@@ -955,14 +955,14 @@ bool SharedEditor::isFileOpening() const {
     return fileOpening;
 }
 SharedEditor::~SharedEditor() {
-    if( transceiver!= nullptr)
-        emit transceiver->getSocket()->terminateThreadOperations();
+    if( transceiver == nullptr ) return;
+    emit transceiver->getSocket()->terminateThreadOperations();
     transceiver->wait();
     transceiver->deleteLater();
 }
 
 void SharedEditor::deleteThread() {
-    transceiver->deleteLater();
+    delete transceiver;
+    transceiver = nullptr;
     emit serverUnavailable();
-    exit(0);
 }

@@ -8,8 +8,7 @@
 int main(int argc, char **argv) {
 
     QApplication app(argc, argv);
-    auto shEditor = new SharedEditor;  //connessione al server effettuata direttamente nel costruttore
-    MainWindow mainWindow(shEditor);
+    MainWindow mainWindow{};
 
     //loginDialog->exec();
     //if(loginDialog->abort)
@@ -19,6 +18,5 @@ int main(int argc, char **argv) {
 
     mainWindow.show();
     app.exec();
-    delete shEditor;
     return 0;
 }
