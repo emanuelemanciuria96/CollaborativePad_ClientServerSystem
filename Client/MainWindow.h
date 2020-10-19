@@ -20,7 +20,6 @@
 #include "InfoUsersListWidget.h"
 #include <QScrollArea>
 #include "UsersList.h"
-#include "LostConnectionWidget.h"
 
 
 class MainWindow : public QMainWindow {
@@ -106,7 +105,7 @@ private:
     void setInviteListIcon(int num=0);
     void setRichTextBar();
     void setUsersList();
-    void setMainPalette();
+    void setGradient();
     void createLostConnWidget();
 public slots:
     void hideEditor(QString& fileName);

@@ -41,94 +41,36 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent) {
     richTextBar->setIconSize(QSize(25,25));
     richTextBar->move(toolBar->rect().bottomLeft());
     richTextBar->hide();
-    setMainPalette();
-    setPalette(mainPalette);
+    setGradient();
     setAutoFillBackground(true);
 
     createLostConnWidget();
-
-    constructMainWindowMembers();
-
-    setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
-    setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
-
-    //    imposto la grandezza della finestra
-    auto size = QGuiApplication::primaryScreen()->size();
-    this->resize(size.width()*0.7,size.height()*0.7);
-
-    installEventFilter(this);
-
-}
-
-void MainWindow::constructMainWindowMembers(){
-
-    QApplication::setStyle(QStyleFactory::create("window"));
-//    for(auto k : QStyleFactory::keys()){
-//        std::cout << k.toStdString() << std::endl;
-//    }
-
-    shEditor = new SharedEditor(this);
-    bkgnd = QPixmap("./textures/texture_clouds_background.png");
-
-    setWindowTitle("Shared Editor");
-    installEventFilter(this);
-    //statusBar initialize
-    statusBar = new QStatusBar(this);
-    numUsers = new QLabel(statusBar);
-    numUsers->setText("User connected: 0");
-    statusBar->addPermanentWidget(numUsers);
-    numUsers->hide();
-    statusBar->showMessage ("");
-    statusBar->hide();
-
-    toolBar = new QToolBar("Toolbar",this);
-    setToolBar();
-    richTextBar = new QToolBar(this);
-    setRichTextBar();
-
-    centralWidget = new QStackedWidget(this);
-    nullWidg = new QWidget(this);
-    spinner = nullptr;
-    //    aggiungo gli elementi alla finestra
-    this->setStatusBar(statusBar);
-    this->addToolBar(toolBar);
-    addToolBarBreak(Qt::TopToolBarArea);
-    this->addToolBar(richTextBar);
-    toolBar->setMovable(false);
-    toolBar->setMinimumHeight(45);
-    toolBar->setIconSize(QSize(45, 45));
-    toolBar->hide();
-
-    richTextBar->setMovable(false);
-    richTextBar->setIconSize(QSize(25,25));
-    richTextBar->move(toolBar->rect().bottomLeft());
-    richTextBar->hide();
-
-    constructMainWindowMembers();
-
-    setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
-    setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
-
-    //    imposto la grandezza della finestra
-    auto size = QGuiApplication::primaryScreen()->size();
-    this->resize(size.width()*0.7,size.height()*0.7);
-
-    installEventFilter(this);
-
-}
-
-void MainWindow::constructMainWindowMembers(){
-
-    QApplication::setStyle(QStyleFactory::create("window"));
-//    for(auto k : QStyleFactory::keys()){
-//        std::cout << k.toStdString() << std::endl;
-//    }
-
-    shEditor = new SharedEditor(this);
-    bkgnd = QPixmap("./textures/texture_clouds_background.png");
-    setWindowTitle("Shared Editor");
-
     setCentralWidget(centralWidget);
+
+    constructMainWindowMembers();
+
+    setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
+
+    //    imposto la grandezza della finestra
+    auto size = QGuiApplication::primaryScreen()->size();
+    this->resize(size.width()*0.7,size.height()*0.7);
+
+    installEventFilter(this);
+
+}
+
+void MainWindow::constructMainWindowMembers(){
+
+    QApplication::setStyle(QStyleFactory::create("window"));
+//    for(auto k : QStyleFactory::keys()){
+//        std::cout << k.toStdString() << std::endl;
+//    }
+
+    shEditor = new SharedEditor(this);
+    bkgnd = QPixmap("./textures/texture_clouds_background.png");
+    setWindowTitle("Shared Editor");
+
     // tree file system view creation
     treeFileSystemSettings();
     // grid file system view creation
@@ -147,6 +89,7 @@ void MainWindow::constructMainWindowMembers(){
 
     setToolBarGrid();
     setStyleSheet();
+    setPalette(mainPalette);
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
     connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
@@ -689,20 +632,21 @@ void MainWindow::signInWidgetSetup() {
 void MainWindow::resizeEvent(QResizeEvent *evt) {
     QWidget::resizeEvent(evt);
 
-    leftDockWidgets[tree]->setMaximumWidth(this->size().width() / 5);
-    leftDockWidgets[tree]->setMinimumWidth(this->size().width() / 5);
-    leftDockWidgets[invitelist]->setMaximumWidth(this->size().width() / 3);
-    leftDockWidgets[invitelist]->setMinimumWidth(this->size().width() / 3);
-    leftDockWidgets[uri]->setMaximumWidth(this->size().width() / 5);
-    leftDockWidgets[uri]->setMinimumWidth(this->size().width() / 5);
-    leftDockWidgets[uri]->setMaximumHeight(this->size().height() / 5);
-    leftDockWidgets[uri]->setMinimumHeight(this->size().height() / 5);
-
-    auto p = palette();
+    if(!leftDockWidgets.isEmpty()) {
+        leftDockWidgets[tree]->setMaximumWidth(this->size().width() / 5);
+        leftDockWidgets[tree]->setMinimumWidth(this->size().width() / 5);
+        leftDockWidgets[invitelist]->setMaximumWidth(this->size().width() / 3);
+        leftDockWidgets[invitelist]->setMinimumWidth(this->size().width() / 3);
+        leftDockWidgets[uri]->setMaximumWidth(this->size().width() / 5);
+        leftDockWidgets[uri]->setMinimumWidth(this->size().width() / 5);
+        leftDockWidgets[uri]->setMaximumHeight(this->size().height() / 5);
+        leftDockWidgets[uri]->setMinimumHeight(this->size().height() / 5);
+    }
+    mainPalette = palette();
     gradient->setCenter(size().width() / 2, size().height() / 2);
     auto brush = QBrush(*gradient);
-    p.setBrush(QPalette::Window, brush);
-    setPalette(p);
+    mainPalette.setBrush(QPalette::Window, brush);
+    setPalette(mainPalette);
 }
 
 void MainWindow::setStyleSheet() {
@@ -748,14 +692,8 @@ void MainWindow::setUsersList() {
     dockWidgetUsers->hide();
 }
 
-void MainWindow::setMainPalette() {
+void MainWindow::setGradient() {
     mainPalette = QGuiApplication::palette();
-
-//    mainPalette.setColor(QPalette::WindowText,QColor("white"));
-//    mainPalette.setColor(QPalette::Base,QColor("#F1F1F1"));
-//    mainPalette.setColor(QPalette::BrightText,QColor("#FF9800"));
-//    mainPalette.setColor(QPalette::ButtonText,QColor("black"));
-//    mainPalette.setColor(QPalette::Button,QColor("#90e0ef"));
 
     gradient = new QConicalGradient(QPointF(size().width()/2,size().height()/2),45);
     gradient->setColorAt(0, QColor("#E6D0E2")); //rosso
@@ -763,9 +701,6 @@ void MainWindow::setMainPalette() {
     gradient->setColorAt(0.5, QColor("#E6DFD0")); //giallo
     gradient->setColorAt(0.75, QColor("#D0E6D4"));  //verde
     gradient->setColorAt(1, QColor("#E6D0E2"));
-
-//    brush = new QBrush(*gradient);
-//    mainPalette.setBrush(QPalette::Window,*brush);
 }
 
 void MainWindow::setNumUsers(int n) {
@@ -1101,11 +1036,31 @@ void MainWindow::deleteMainWindowMembers() {
 void MainWindow::createLostConnWidget() {
     lostConnectionWidget = new QWidget(this);
     auto button = new QPushButton("Reconnect",this);
+    auto label = new QLabel("The connection has timed out", this);
+    auto imageLabel = new QLabel(this);
+    auto image = QPixmap("./images/icons8-disconnected-80.png");
+    imageLabel->setPixmap(image);
+    lostConnectionWidget->setStyleSheet("QLabel{color:#3A70D5; font: 16pt;}"
+                                        "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
 
     connect(button,&QPushButton::clicked, [this]{constructMainWindowMembers();});
 
     auto layout = new QVBoxLayout(this);
-    layout->addWidget(button,1,Qt::AlignCenter);
-    lostConnectionWidget->setLayout(layout);
+    auto outerLayout = new QVBoxLayout(this);
+    auto hLayout = new QHBoxLayout(this);
+
+    layout->addWidget(label,2,Qt::AlignCenter);
+    layout->addWidget(button,1,Qt::AlignRight);
+
+    hLayout->addStretch(3);
+    hLayout->addWidget(imageLabel,1,Qt::AlignCenter);
+    hLayout->addLayout(layout,1);
+    hLayout->addStretch(3);
+
+    outerLayout->addStretch(2);
+    outerLayout->addLayout(hLayout,1);
+    outerLayout->addStretch(2);
+
+    lostConnectionWidget->setLayout(outerLayout);
     centralWidget->addWidget(lostConnectionWidget);
 }
