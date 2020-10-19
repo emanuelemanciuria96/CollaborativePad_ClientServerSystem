@@ -21,8 +21,8 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
     this->setIndentation(10);
 
     home_dir = QIcon("./icons/directory_icon_opened.png");
-    dir_open = QApplication::style()->standardIcon(QStyle::SP_DirOpenIcon);
-    dir_close = QApplication::style()->standardIcon(QStyle::SP_DirClosedIcon);
+    dir_open = QIcon("./icons/folder_tree.png");
+    dir_close = QIcon("./icons/folder_tree.png");
     file_icn = QIcon("./icons/text_file_icon.png");
 
     setupRightClickMenu();
