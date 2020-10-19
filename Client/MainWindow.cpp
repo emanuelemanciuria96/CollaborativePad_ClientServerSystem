@@ -227,6 +227,7 @@ void MainWindow::opnFileGrid(QString &fileName) {
 
     setToolBarEditor();
     centralWidget->setCurrentWidget(editor);
+    treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
     auto strings = fileName.split("/");
     this->setWindowTitle(strings[strings.size()-1]);
     editor->setWindowTitle(fileName);
@@ -690,14 +691,17 @@ void MainWindow::showHideLeftDock(dock_type dock) {
     if(leftDockWidgets[dock]->isHidden()) {
         for( auto d:leftDockWidgets) d->hide();
         leftDockWidgets[dock]->show();
-        treeShowAction->setToolTip("Hide "+msgs[dock]);
-        treeShowAction->setIcon(QIcon("./icons/hide_left_tree_menu.png"));
+        if(dock == dock_type::tree) {
+            treeShowAction->setToolTip("Hide " + msgs[dock]);
+            treeShowAction->setIcon(QIcon("./icons/hide_left_tree_menu.png"));
+        }
         lastDock = leftDockWidgets[dock];
     }else {
         leftDockWidgets[dock]->hide();
-
-        treeShowAction->setToolTip("Show "+msgs[dock]);
-        treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
+        if(dock == dock_type::tree) {
+            treeShowAction->setToolTip("Show " + msgs[dock]);
+            treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
+        }
         lastDock = nullptr;
     }
 }
@@ -714,9 +718,10 @@ void MainWindow::setInfoWidget() {
     } else {
         centralWidget->setCurrentWidget(lastCentral);
         toolBar->show();
-        richTextBar->show();
-        if (lastCentral == editor)
+        if (lastCentral == editor) {
             dockWidgetUsers->show();
+            richTextBar->show();
+        }
         if (lastDock != nullptr)
             lastDock->show();
     }

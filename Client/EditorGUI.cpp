@@ -65,14 +65,13 @@ void EditorGUI::setUpGUI() {
                     "QScrollBar::handle:horizontal {background: #C3C3C3; border:0px solid lightgray; border-radius: 4px}";
     textEdit->setStyleSheet(stylestring);
     textEdit->setFocus();
-    setCurrentFileName(QString());
 
     connect(textEdit->document(), SIGNAL(contentsChange(int, int, int)), this, SLOT(contentsChange(int, int, int)));
     connect(textEdit, &QTextEdit::copyAvailable, this, &EditorGUI::setSelected);
 
 }
 
-void EditorGUI::setCurrentFileName(QString filename) {
+void EditorGUI::setCurrentFileName(QString& filename) {
     this->fileName = filename;
 }
 

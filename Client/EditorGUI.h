@@ -85,7 +85,7 @@ public slots:
     void removeCursor(qint32 siteId);
     void highlight(qint32 pos, qint32 n, qint32 siteId,QTextCursor& cursor);
     void exportToPdf();
-    void setCurrentFileName(QString filename);
+    void setCurrentFileName(QString& filename);
     void highlightedTip(int pos,QPoint globalPos);
     void recordUserWriter(qint32 siteId,QString& user,bool connection=false);
     void flushFileWriters();

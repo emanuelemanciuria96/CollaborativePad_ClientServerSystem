@@ -26,5 +26,5 @@ add_executable(Client main.cpp Packet/Message.h Packet/Message.cpp SharedEditor.
         FileSystemTreeView.h MyTextEdit.cpp MyTextEdit.h Packet/CursorPosition.cpp Packet/CursorPosition.h CursorColors.h InfoWidget.cpp InfoWidget.h InfoWidgetEdit.cpp InfoWidgetEdit.h
         Packet/FileInfo.cpp Packet/FileInfo.h SignInWidget.cpp SignInWidget.h AddUserWidget.cpp AddUserWidget.h adduserwidget.ui InviteUserWidgetItem.cpp InviteUserWidgetItem.h inviteuserwidgetitem.ui
         InviteUserWidget.cpp InviteUserWidget.h inviteuserwidget.ui uriwidget.ui UriWidget.cpp UriWidget.h InfoUsersListWidget.h InfoUsersListWidget.cpp infouserslistwidget.ui
-        FileSystemGridView.h FileSystemGridView.cpp FileSystemGridView.ui UsersList.cpp UsersList.h CustomStyle.cpp CustomStyle.h)
+        FileSystemGridView.h FileSystemGridView.cpp FileSystemGridView.ui UsersList.cpp UsersList.h CustomStyle.cpp CustomStyle.h LostConnectionWidget.cpp LostConnectionWidget.h)
 target_link_libraries(Client ${LIBRARIES})
