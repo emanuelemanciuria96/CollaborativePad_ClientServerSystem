@@ -20,6 +20,7 @@
 #include "InfoUsersListWidget.h"
 #include <QScrollArea>
 #include "UsersList.h"
+#include "LostConnectionWidget.h"
 
 
 class MainWindow : public QMainWindow {
@@ -83,7 +84,7 @@ private:
     InfoUsersListWidget *infoUsersListWidget;
     QWidget *nullWidg;
     QLabel* spinner;
-
+    QWidget* lostConnectionWidget;
     void constructMainWindowMembers();
     void deleteMainWindowMembers();
     void loginSettings();
@@ -106,7 +107,7 @@ private:
     void setRichTextBar();
     void setUsersList();
     void setMainPalette();
-
+    void createLostConnWidget();
 public slots:
     void hideEditor(QString& fileName);
     void setAlignmentActionChecked();

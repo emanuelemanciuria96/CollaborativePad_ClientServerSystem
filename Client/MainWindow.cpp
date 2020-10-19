@@ -14,11 +14,14 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent) {
     setToolBar();
     richTextBar = new QToolBar(this);
     setRichTextBar();
+    setMainPalette();
+    setPalette(mainPalette);
+    setAutoFillBackground(true);
     centralWidget = new QStackedWidget(this);
     nullWidg = new QWidget(this);
     spinner = nullptr;
     constructMainWindowMembers();
-
+    createLostConnWidget();
 }
 
 void MainWindow::constructMainWindowMembers(){
@@ -30,9 +33,7 @@ void MainWindow::constructMainWindowMembers(){
 
     shEditor = new SharedEditor(this);
     bkgnd = QPixmap("./textures/texture_clouds_background.png");
-    setMainPalette();
-    setPalette(mainPalette);
-    setAutoFillBackground(true);
+
     setWindowTitle("Shared Editor");
     installEventFilter(this);
     //statusBar initialize
@@ -216,6 +217,8 @@ void MainWindow::constructMainWindowMembers(){
     setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
     lastCentral = nullptr;
     lastDock = nullptr;
+
+    centralWidget->setCurrentWidget(loginDialog);
 
 }
 
@@ -956,12 +959,19 @@ void MainWindow::serverUnavailable(){
 
     std::cout<<"togliere tutto e mettere una azione per ricaricare tutto";
     deleteMainWindowMembers();
-
+    centralWidget->setCurrentWidget(lostConnectionWidget);
 }
 
 void MainWindow::deleteMainWindowMembers() {
 
     centralWidget->setCurrentWidget(nullWidg);
+    centralWidget->removeWidget(editor);
+    centralWidget->removeWidget(loginDialog);
+    centralWidget->removeWidget(infoWidget);
+    centralWidget->removeWidget(infoWidgetEdit);
+    centralWidget->removeWidget(infoUsersListWidget);
+    centralWidget->removeWidget(widgetSignIn);
+    centralWidget->removeWidget(gridView);
 
     delete shEditor;
     shEditor = nullptr;
@@ -995,6 +1005,16 @@ void MainWindow::deleteMainWindowMembers() {
 
     toolBar->hide();
     richTextBar->hide();
+}
 
+void MainWindow::createLostConnWidget() {
+    lostConnectionWidget = new QWidget(this);
+    auto button = new QPushButton("Reconnect",this);
 
+    connect(button,&QPushButton::clicked, [this]{constructMainWindowMembers();});
+
+    auto layout = new QVBoxLayout(this);
+    layout->addWidget(button,1,Qt::AlignCenter);
+    lostConnectionWidget->setLayout(layout);
+    centralWidget->addWidget(lostConnectionWidget);
 }
