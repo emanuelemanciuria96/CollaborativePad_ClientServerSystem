@@ -125,12 +125,12 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 auto format = cursor.charFormat();
 
                 format.setFontPointSize(format.font().pointSizeF()<=0? format.font().pixelSize() : format.font().pointSizeF());
+                format.setBackground(QColor("white"));
                 if(fonts.indexOf(format.fontFamily())<0) {
                     format.setFontFamily(fonts[7]);
-                    cursor.movePosition(QTextCursor::Left,QTextCursor::KeepAnchor,1);
-                    cursor.mergeCharFormat(format);
                 }
-                format.setBackground(QColor("white"));
+                cursor.movePosition(QTextCursor::Left,QTextCursor::KeepAnchor,1);
+                cursor.mergeCharFormat(format);
 //                std::cout << "chiamo localInsert" << std::endl;
                 model->localInsert(pos+i, ch , format);
 //                std::cout << "esco localInsert" << std::endl;

@@ -365,20 +365,18 @@ void SharedEditor::processMessages1(StringMessages &strMess) {
 
                 if (start == 0) {
                     _symbols[0].setAlignmentType(m.getSymbol().getAlignmentType());
-                    emit remoteAlignment(0,(Qt::Alignment)m.getSymbol().getAlignmentType());
-                    continue;
-                }
+                    emit remoteAlignment(0, (Qt::Alignment) m.getSymbol().getAlignmentType());
+                } else {
+                    while (i < dim && messages[i].getSymbol() < _symbols[start] && s < messages[i].getSymbol()) {
+                        s = messages[i++].getSymbol();
+                        str += s.getValue();
 
-                while (i < dim && messages[i].getSymbol() < _symbols[start] && s < messages[i].getSymbol()) {
-                    s = messages[i++].getSymbol();
-                    str += s.getValue();
-
-                    syms.push_back(s);
+                        syms.push_back(s);
+                    }
+                    emit symbolsChanged(start, str, strMess.getSiteId(), format, Message::insertion);
+                    _symbols.insert(_symbols.begin() + start, syms.begin(), syms.end());
                 }
-                emit symbolsChanged(start, str, strMess.getSiteId(), format, Message::insertion);
-                _symbols.insert(_symbols.begin() + start, syms.begin(), syms.end());
             }
-
             for(auto m: messages){
                 if( m.getSymbol().getValue().unicode() == 8233 ) {
                     int pos = getIndex(m.getLocalIndex(),m.getSymbol());

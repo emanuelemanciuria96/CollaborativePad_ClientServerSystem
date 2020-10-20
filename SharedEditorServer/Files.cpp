@@ -14,10 +14,7 @@ enum{file,counter,dirty_bit};
 QVector<QString> Files::fonts{"Arial","Arial Black","Comic Sans MS", "Courier","Georgia","Impact","Tahoma","Times New Roman","Trebuchet MS","Verdana"};
 
 Files::Files(){
-    QDir dir("./files/");
-    if(!dir.exists()){
-        dir.mkpath("./files/");
-    }
+    QDir().mkdir("files");
 }
 
 std::shared_ptr<std::vector<Symbol>> Files::openFile(QString& fileName) {
