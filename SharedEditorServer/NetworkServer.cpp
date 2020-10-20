@@ -130,7 +130,6 @@ void NetworkServer::processRmCommand(Payload &pl) {
 
     Command &comm = dynamic_cast<Command &>(pl);
     QString fileName = comm.getArgs().last();
-
     fileOpened.store(files.deleteFile(fileName));
 
     std::cout<<"deleting file: "+fileName.toStdString()<<std::endl;

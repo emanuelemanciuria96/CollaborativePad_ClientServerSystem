@@ -740,8 +740,10 @@ void ServerThread::sendCursorPos(DataPacket &packet) {
 
 void ServerThread::sendPendentDelete(QString fileName) {
 
+    std::cout<<"file deleted: "+fileName.toStdString()<<std::endl;
     DataPacket pkt(_siteID, 0, DataPacket::command);
-    auto comm = std::make_shared<Command>(_siteID,Command::rm,QVector<QString>{fileName});
+    QVector<QString> vec = {fileName};
+    auto comm = std::make_shared<Command>(_siteID,Command::rm, vec);
     pkt.setPayload(comm);
 
     auto i = pendentDeleteList.find(fileName);

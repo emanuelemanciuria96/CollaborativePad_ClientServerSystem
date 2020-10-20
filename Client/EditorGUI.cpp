@@ -200,8 +200,13 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     signalBlocker = !signalBlocker;
     drawLabel(cursor);
     if (textEdit->toPlainText().isEmpty()) {
+        auto curs = textEdit->textCursor();
+        curs.setPosition(0);
+        alignmentCommand = true;
+        textEdit->setAlignment(Qt::AlignLeft);
         textEdit->setFontFamily("Times New Roman");
         textEdit->setFontPointSize(12);
+        updateLabels();
     }
 //    updateLabels(siteId,index, Message::removal);
 }
@@ -222,6 +227,8 @@ void EditorGUI::updateSymbols(qint32 pos, const QString &s, qint32 siteId, const
     else if (action == Message::removal) {
 //        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId, s.size());
+
+
     } else {
 //        std::cout<<" -- stringa inserita: "<<s.toStdString()<<std::endl;
         insertText(pos, s, siteId, format);

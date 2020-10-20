@@ -219,8 +219,6 @@ void Transceiver::recvCommand(DataPacket& pkt, QDataStream &in) {
 
     in >> siteId >> cmd >> args;
 
-    pkt.setPayload( std::make_shared<Command>(siteId,(Command::cmd_t)cmd,std::move(args)));
-
     switch( cmd ){
         case Command::ren:
             if(openedFile==args.first())
@@ -229,10 +227,12 @@ void Transceiver::recvCommand(DataPacket& pkt, QDataStream &in) {
         case Command::rm:
             if( openedFile == args.first())
                 messages.clear();
-                openedFile = "";
-                openedServerFile = "";
+            openedFile = "";
+            openedServerFile = "";
             break;
     }
+
+    pkt.setPayload( std::make_shared<Command>(siteId,(Command::cmd_t)cmd,std::move(args)));
 
     emit readyToProcess(pkt);
 }
