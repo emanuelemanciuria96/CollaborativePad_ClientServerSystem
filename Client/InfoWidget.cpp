@@ -15,6 +15,7 @@ InfoWidget::InfoWidget(QWidget *parent)
     ui->imageLabel->setPixmap(rounded);
     connect(ui->editButton, &QPushButton::clicked, this, &InfoWidget::emitOpenInfoEdit);
     connect(ui->backButton, &QPushButton::clicked, this, &InfoWidget::emitBackPressed);
+    connect(ui->logoutButton, &QPushButton::clicked, this, [this](){emit logout();});
 
     ui->label_3->setStyleSheet("QLabel{color:#3A70D5; font: 12pt}");
     ui->label_5->setStyleSheet("QLabel{color:#3A70D5; font: 12pt}");

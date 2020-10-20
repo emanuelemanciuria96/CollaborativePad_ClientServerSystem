@@ -32,5 +32,6 @@ signals:
     void imageChanged(const QPixmap& image);
     void backPressed();
     void openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
+    void logout();
 };
 #endif // INFOWIDGET_H

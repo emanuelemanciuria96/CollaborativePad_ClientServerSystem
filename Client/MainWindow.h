@@ -109,6 +109,7 @@ private:
     void setGradient();
     void createLostConnWidget();
 public slots:
+    void logout();
     void hideEditor(QString& fileName);
     void setAlignmentActionChecked();
     void setAlignLeftChecked();

@@ -212,7 +212,7 @@ void MainWindow::constructMainWindowMembers(){
     connect(actionAlignCenter, &QAction::triggered, this, &MainWindow::setAlignCenterChecked );
     connect(actionAlignLeft, &QAction::triggered, this, &MainWindow::setAlignLeftChecked);
     connect(editor->textEdit, &QTextEdit::cursorPositionChanged, this, &MainWindow::setAlignmentActionChecked);
-
+    connect(infoWidget, &InfoWidget::logout, this, &MainWindow::logout);
 //    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
 //    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
 //    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
@@ -973,6 +973,11 @@ void MainWindow::serverUnavailable() {
     std::cout << "togliere tutto e mettere una azione per ricaricare tutto";
     deleteMainWindowMembers();
     centralWidget->setCurrentWidget(lostConnectionWidget);
+}
+
+void MainWindow::logout() {
+    deleteMainWindowMembers();
+    constructMainWindowMembers();
 }
 
 void MainWindow::deleteMainWindowMembers() {
