@@ -268,7 +268,6 @@ void MainWindow::opnFileGrid(QString &fileName) {
     statusBar->clearMessage();
     delete spinner;
     spinner = nullptr;
-
 }
 
 void MainWindow::changeInviteAction(bool state){

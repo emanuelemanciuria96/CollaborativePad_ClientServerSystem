@@ -50,6 +50,7 @@ private:
     qint32 socketSize=0;
     QString openedFile;
     QString openedServerFile;
+    bool logout = false;
 
     qint32 connectToServer();
 

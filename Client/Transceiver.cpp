@@ -474,6 +474,8 @@ void Transceiver::sendUserInfo(DataPacket &pkt) {
 }
 
 void Transceiver::disconnected(){
+    if (logout)
+        return;
     socket->deleteLater();
     timer->deleteLater();
     std::cout<<"Server unavailable!"<<std::endl;
@@ -488,6 +490,7 @@ void Transceiver::terminateLastOperations() {
     while (!messages.empty())
         sendAllMessages();
     timer->deleteLater();
+    logout = true;
     socket->deleteLater();
     exit(0);
 }

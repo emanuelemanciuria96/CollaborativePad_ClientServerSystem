@@ -342,6 +342,12 @@ void EditorGUI::deleteAllText() {
     emit clear();
     signalBlocker = !signalBlocker;
     remoteCursors->clear();
+    textEdit->setFontUnderline(false);
+    textEdit->setFontItalic(false);
+    textEdit->setFontWeight(0);
+    textEdit->setTextColor(Qt::black);
+    textEdit->setFontFamily("Times New Roman");
+    textEdit->setFontPointSize(12);
 }
 
 void EditorGUI::handleCursorPosChanged() {
