@@ -135,7 +135,7 @@ void SharedEditor::sendRegisterRequest(QString& user, QString& password, QString
     emit transceiver->getSocket()->sendPacket(packet);
 }
 
-void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format) {
+void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format,  Qt::Alignment align) {
 
     if ( index > _symbols.size() - 2 ){
         throw "fuori dai limiti"; //da implementare classe eccezione
@@ -151,7 +151,18 @@ void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format)
 
     if(ch.unicode()==8233) {
         short a;
-        emit getAligment(a);
+        if( align & Qt::AlignLeft){
+            a = 0;
+        }
+        if( align & Qt::AlignRight){
+            a = 2;
+        }
+        if( align & Qt::AlignHCenter){
+            a = 4;
+        }
+        if( align & Qt::AlignJustify){
+            a = 8;
+        }
         s.setAlignmentType(a);
     }
 

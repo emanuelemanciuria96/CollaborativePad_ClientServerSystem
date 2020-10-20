@@ -99,21 +99,7 @@ public slots:
     void currentCharFormatChanged(const QTextCharFormat &format);
     void updateLabels();
     void setAbsoluteAlignment(int pos, QFlags<Qt::AlignmentFlag> a,bool selection);
-    void getAlignment(short& val){
-        auto a = textEdit->alignment();
-        if( a & Qt::AlignLeft){
-            val = 0;
-        }
-        if( a & Qt::AlignRight){
-            val = 2;
-        }
-        if( a & Qt::AlignHCenter){
-            val = 4;
-        }
-        if( a & Qt::AlignJustify){
-            val = 8;
-        }
-    }
+
 signals:
     void clear();
     void userQuery(qint32 siteId);

@@ -124,7 +124,6 @@ void MainWindow::constructMainWindowMembers(){
     connect(shEditor, &SharedEditor::deleteAllText, editor, &EditorGUI::deleteAllText);
     connect(shEditor, &SharedEditor::filePathsArrived, treeView, &FileSystemTreeView::constructFromPaths);
     connect(shEditor, &SharedEditor::filePathsArrived, gridView, &FileSystemGridView::constructFromPaths);
-    connect(shEditor, &SharedEditor::getAligment, editor, &EditorGUI::getAlignment);
     connect(shEditor, &SharedEditor::remoteAlignment, editor, &EditorGUI::updateAlignment);
     connect(shEditor, &SharedEditor::serverUnavailable,this,&MainWindow::serverUnavailable);
     connect(gridView, &FileSystemGridView::newFileUpdateTree, treeView, &FileSystemTreeView::constructFromPaths);
