@@ -51,6 +51,7 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent) {
 
     setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
     setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
+    connect(QApplication::clipboard(), &QClipboard::dataChanged, this, &MainWindow::clipboardDataChanged);
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
@@ -188,7 +189,6 @@ void MainWindow::constructMainWindowMembers(){
     connect(usersList, &UsersList::setUserInfo, this, &MainWindow::setInfoUsersListWidget);
     connect(infoUsersListWidget, &InfoUsersListWidget::backPressed, this, &MainWindow::setInfoUsersListWidget);
     connect(editor->textEdit, &MyTextEdit::copyAvailable, this,[this](bool b){copyAction->setDisabled(!b);cutAction->setDisabled(!b);});
-    connect(QApplication::clipboard(), &QClipboard::dataChanged, this, &MainWindow::clipboardDataChanged);
     connect(editor->textEdit->document(), &QTextDocument::undoAvailable,undoAction, &QAction::setEnabled);
     connect(editor->textEdit->document(), &QTextDocument::redoAvailable,redoAction, &QAction::setEnabled);
     connect(pasteAction, &QAction::triggered, editor->textEdit, &MyTextEdit::paste);
