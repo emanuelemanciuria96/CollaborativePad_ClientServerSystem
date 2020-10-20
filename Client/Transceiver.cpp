@@ -221,6 +221,19 @@ void Transceiver::recvCommand(DataPacket& pkt, QDataStream &in) {
 
     pkt.setPayload( std::make_shared<Command>(siteId,(Command::cmd_t)cmd,std::move(args)));
 
+    switch( cmd ){
+        case Command::ren:
+            if(openedFile==args.first())
+                openedFile = args.last();
+            break;
+        case Command::rm:
+            if( openedFile == args.first())
+                messages.clear();
+                openedFile = "";
+                openedServerFile = "";
+            break;
+    }
+
     emit readyToProcess(pkt);
 }
 
@@ -424,6 +437,7 @@ void Transceiver::sendCursorPos(DataPacket &pkt) {
     QDataStream tmp(&buf);
 
     auto ptr = std::dynamic_pointer_cast<CursorPosition>(pkt.getPayload());
+    ptr->setFileName(openedServerFile);
     auto vector = QVector<quint32>::fromStdVector(ptr->getSymbol().getPos());
 
     tmp << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()

@@ -1031,6 +1031,9 @@ void MainWindow::deleteMainWindowMembers() {
     toolBar->hide();
     richTextBar->hide();
     statusBar->hide();
+
+    toolBar->setAttribute(Qt::WA_TransparentForMouseEvents,false );
+
 }
 
 void MainWindow::createLostConnWidget() {

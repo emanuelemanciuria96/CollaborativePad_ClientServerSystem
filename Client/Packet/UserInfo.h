@@ -18,6 +18,8 @@ public:
         user_request,
     }info_t;
 
+    UserInfo(qint32 siteId, info_t type, QString& user_name, QPixmap&  image, QString& name, QString& email, QString& fileName):
+            Payload(siteId),_type(type),_username(user_name),_image(image), _name(name), _email(email), _fileName(fileName){};
     UserInfo(qint32 siteId, info_t type, QString& user_name, QPixmap&  image, QString& name, QString& email):
             Payload(siteId),_type(type),_username(user_name),_image(image), _name(name), _email(email){};
     UserInfo(qint32 siteId, info_t type, QString& user_name):
@@ -43,6 +45,8 @@ public:
     QPixmap getImage() const { return _image; }
     const QString &getName() const { return _name; }
     const QString &getEmail() const { return _email; }
+    void setFileName( QString& fileName){ _fileName = fileName; }
+    QString getFileName(){ return _fileName; }
 
 private:
     info_t _type;
@@ -50,6 +54,7 @@ private:
     QPixmap _image;
     QString _name;
     QString _email;
+    QString _fileName;
 };
 
 

@@ -11,10 +11,14 @@
 class CursorPosition : public Payload {
     qint32 index;
     Symbol s;
+    QString _fileName;
 public:
+    CursorPosition(Symbol& _s, qint32 index, qint32 siteID, QString& fileName);
     CursorPosition(Symbol& _s, qint32 index, qint32 siteID);
     qint32 getIndex() const;
     Symbol getSymbol();
+    void setFileName( QString& fileName){ _fileName = fileName; }
+    QString getFileName(){ return _fileName; }
 };
 
 
