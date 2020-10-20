@@ -114,6 +114,13 @@ void LoginDialog::slotLoginError() {
     labelResult->setText("Username or password is incorrect");
 }
 
+void LoginDialog::slotLoginErrorAlreadyConn() {
+    QPalette palette;
+    palette.setColor(QPalette::WindowText, Qt::red);
+    labelResult->setPalette(palette);
+    labelResult->setText("User already connected");
+}
+
 void LoginDialog::keyPressEvent(QKeyEvent *e) {
     QWidget::keyPressEvent(e);
     if (e->key() == Qt::Key_Return){

@@ -47,6 +47,7 @@ public slots:
     void slotAcceptLogin();
     void slotSignIn();
     void slotLoginError();
+    void slotLoginErrorAlreadyConn();
 };
 
 

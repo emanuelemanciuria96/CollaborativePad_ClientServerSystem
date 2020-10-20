@@ -118,6 +118,7 @@ void MainWindow::constructMainWindowMembers(){
     connect(shEditor, &SharedEditor::fileDeletion, gridView, &FileSystemGridView::remoteDeleteFile);
     connect(shEditor, &SharedEditor::loginAchieved, this, &MainWindow::loginFinished);
     connect(shEditor, &SharedEditor::loginError, loginDialog, &LoginDialog::slotLoginError);
+    connect(shEditor, &SharedEditor::loginErrorAlreadyConn, loginDialog, &LoginDialog::slotLoginErrorAlreadyConn);
     connect(shEditor, &SharedEditor::symbolsChanged, editor, &EditorGUI::updateSymbols);
     connect(shEditor, &SharedEditor::remoteCursorPosChanged, editor, &EditorGUI::updateRemoteCursorPos);
     connect(shEditor, &SharedEditor::removeCursor, editor, &EditorGUI::removeCursor);

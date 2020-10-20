@@ -102,6 +102,7 @@ signals:
     void highlight(qint32 pos, qint32 siteId);
     void searchUserResult(LoginInfo::type_t type);
     void loginError();
+    void loginErrorAlreadyConn();
     void inviteListArrived(const QVector<QString> &args);
     void inviteResultArrived(const QString& result);
     void uriResultArrived(const QVector<QString> &args);

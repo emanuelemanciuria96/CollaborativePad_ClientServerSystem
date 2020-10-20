@@ -309,7 +309,7 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
 
         case LoginInfo::login_alconn_error:
             std::cout<<"user already logged error"<<std::endl;
-            emit loginError();
+            emit loginErrorAlreadyConn();
             break;
 
         case LoginInfo::signup_error:
