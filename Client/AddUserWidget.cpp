@@ -92,5 +92,5 @@ void AddUserWidget::inviteResultArrived(const QString &result) {
 }
 
 void AddUserWidget::fsNameArrived(const QString& fsName) {
-    ui->uri->setText("http://www.sharededitor.com/"+fsName);
+    ui->uri->setText("http://www.collaborativepad.com/"+fsName);
 }

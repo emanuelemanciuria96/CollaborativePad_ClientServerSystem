@@ -28,6 +28,7 @@ public:
     MainWindow( QWidget* parent = 0);
 
     enum dock_type{tree,invitelist,uri};
+    static QPixmap roundImage(const QPixmap& orig);
 
 private:
     SharedEditor* shEditor; //

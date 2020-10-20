@@ -28,6 +28,9 @@ private slots:
     void cancel();
     void signIn();
 
+public slots:
+    void usernameAlreadyExists();
+
 signals:
     void backToLogIn();
     void registerRequest(QString& user, QString& password, QString& name, QString& email, QPixmap& image);

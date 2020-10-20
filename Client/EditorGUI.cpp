@@ -199,6 +199,10 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     //std::cout << "Rimosso " << index << std::endl;
     signalBlocker = !signalBlocker;
     drawLabel(cursor);
+    if (textEdit->toPlainText().isEmpty()) {
+        textEdit->setFontFamily("Times New Roman");
+        textEdit->setFontPointSize(12);
+    }
 //    updateLabels(siteId,index, Message::removal);
 }
 
