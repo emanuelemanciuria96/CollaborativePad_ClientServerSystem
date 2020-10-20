@@ -27,15 +27,12 @@ public:
     void rmvSymbolInFile(QString& fileName, Symbol& sym);
     void modSymbolInFile(QString& fileName, Symbol& sym);
     void aligSymbolInFile(QString& fileName, Symbol& sym);
-    void saveChanges(QString& fileName);
     void saveAll();
 
 private:
     std::map< QString,std::tuple< std::map<Symbol,int>,quint32,bool> > opened_files;
     static QVector<QString> fonts;
 
-    static void saveFileJson(std::string dir,std::map<Symbol,int>& symbles);
-    static void loadFileJson(std::string dir,std::map<Symbol,int>& symbles,std::shared_ptr<std::vector<Symbol>> syms);
     static void QtSaveFileJson(const std::string& f, std::map<Symbol,int>& symbles);
     static void QtLoadFileJson(std::string f,std::map<Symbol,int>& symbles,std::shared_ptr<std::vector<Symbol>> syms);
 

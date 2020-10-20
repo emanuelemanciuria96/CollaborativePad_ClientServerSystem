@@ -116,15 +116,6 @@ void Files::aligSymbolInFile(QString &fileName, Symbol &sym) {
     }
 }
 
-void Files::saveChanges(QString &fileName) {
-
-    auto i = opened_files.find(fileName);
-    if( !std::get<dirty_bit>(i->second) )
-        return;
-    QtSaveFileJson(fileName.toStdString(), std::get<file>(i->second));
-
-}
-
 void Files::saveAll() {
 
     for( auto of: opened_files ) {
