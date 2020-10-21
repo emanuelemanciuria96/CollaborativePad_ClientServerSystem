@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     this->resize(size.width() * 0.7, size.height() * 0.7);
 
     installEventFilter(this);
-
+    this->setWindowIcon(QIcon("./icons/app_icon.png"));
 }
 
 void MainWindow::constructMainWindowMembers() {
