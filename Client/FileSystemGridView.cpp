@@ -381,7 +381,6 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
     QPoint globalPos = ui->listWidget->mapToGlobal(pos);
 
     QMenu* myMenu=new QMenu();
-
     myMenu->addAction("Open "+item->text());
     if(this->state==mainFolder){
         myMenu->addAction("Invite");

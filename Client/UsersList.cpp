@@ -11,7 +11,13 @@
 UsersList::UsersList(QWidget *parent) : QListWidget(parent){
     setIconSize(QSize(35,35));
     connect(this, &QListWidget::itemDoubleClicked, this, &UsersList::openUserInfo);
-    setStyleSheet("QListWidget::item{margin:5px}");
+//    setStyleSheet("QScrollBar:vertical {background:white; opacity: 0; width:8px; margin: 0px 0px 0px 0px;}"
+//                "QScrollBar::handle:vertical {background: #C3C3C3; border:0px solid lightgray; border-radius:4px;}"
+//                "QScrollBar::add-line:horizontal {border: 0px solid grey;background: #32CC99;width: 0px;subcontrol-position: right;subcontrol-origin: margin;}"
+//                "QScrollBar::sub-line:horizontal {border: 0px solid grey;background: #32CC99;width: 0px;subcontrol-position: right;subcontrol-origin: margin;}"
+//                "QScrollBar:horizontal {background:white; opacity: 1; height:8px; margin: 0px 0px 0px 0px;}"
+//                "QScrollBar::handle:horizontal {background: black; max-width: 5px; border:1px solid lightgray; border-radius: 4px; width: 8px ;height:8px}");
+    setSpacing(2);
 }
 
 

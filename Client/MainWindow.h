@@ -39,6 +39,7 @@ private:
     LoginDialog *loginDialog; //
     QStatusBar* statusBar;
     QToolBar* toolBar;
+    QToolBar* gridToolBar;
     QToolBar* richTextBar;
     InfoWidget* infoWidget; //
     InfoWidgetEdit* infoWidgetEdit; //
@@ -96,7 +97,7 @@ private:
     void uriWidgetSetup();
     void resizeEvent(QResizeEvent *evt) override;
     void setStyleSheet();
-    void setToolBar();
+    void setToolBars();
     void setToolBarEditor();
     void setToolBarGrid();
     void setToolBarFolderGrid(QString folder);

@@ -20,7 +20,8 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent) {
     statusBar->hide();
 
     toolBar = new QToolBar("Toolbar",this);
-    setToolBar();
+    gridToolBar = new QToolBar(this);
+    setToolBars();
     richTextBar = new QToolBar(this);
     setRichTextBar();
 
@@ -30,12 +31,18 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent) {
     //    aggiungo gli elementi alla finestra
     this->setStatusBar(statusBar);
     this->addToolBar(toolBar);
+    this->addToolBar(gridToolBar);
     addToolBarBreak(Qt::TopToolBarArea);
     this->addToolBar(richTextBar);
     toolBar->setMovable(false);
     toolBar->setMinimumHeight(45);
     toolBar->setIconSize(QSize(45, 45));
     toolBar->hide();
+
+    gridToolBar->setMovable(false);
+    gridToolBar->setMinimumHeight(45);
+    gridToolBar->setIconSize(QSize(45, 45));
+    gridToolBar->hide();
 
     richTextBar->setMovable(false);
     richTextBar->setIconSize(QSize(25,25));
@@ -88,7 +95,7 @@ void MainWindow::constructMainWindowMembers(){
     signInWidgetSetup();
     setUsersList();
 
-    setToolBarGrid();
+//    setToolBarGrid();
     setStyleSheet();
     setPalette(mainPalette);
 
@@ -242,7 +249,7 @@ void MainWindow::transparentForMouse() {
 
 void MainWindow::loginFinished() {
     centralWidget->setCurrentWidget(gridView);
-    toolBar->show();
+    gridToolBar->show();
     statusBar->show();
     gridView->show();
 
@@ -278,6 +285,7 @@ void MainWindow::changeInviteAction(bool state){
         inviteAction->setToolTip("");
     }
 }
+
 void MainWindow::changeDeleteAction(bool state){
     deleteAction->setDisabled(!state);
     if(state){
@@ -372,38 +380,42 @@ void MainWindow::gridFileSystemSettings() {
 //    gridView->setPalette(mainPalette);
 }
 
-void MainWindow::setToolBar() {
+void MainWindow::setToolBars() {
     //EditorToolbar
     backAction = new QAction();
     backAction->setIcon(QIcon("./icons/grid_back_icon.png"));
     backAction->setVisible(false);
     backAction->setToolTip("Back");
-    toolBar->addAction(backAction);
+    gridToolBar->addAction(backAction);
 
     addAction = new QAction();
     addAction->setIcon(QIcon("./icons/add_file_icon.png"));
-    addAction->setVisible(false);
+//    addAction->setVisible(false);
     addAction->setToolTip("New file");
     toolBar->addAction(addAction);
+    gridToolBar->addAction(addAction);
 
     deleteAction = new QAction();
     deleteAction->setIcon(QIcon("./icons/delete_file_icon.png"));
-    deleteAction->setVisible(false);
+//    deleteAction->setVisible(false);
+    deleteAction->setDisabled(true);
     deleteAction->setToolTip("Delete file");
     toolBar->addAction(deleteAction);
+    gridToolBar->addAction(deleteAction);
 
     closeAction = new QAction();
     closeAction->setIcon(QIcon("./icons/close.png"));
-    closeAction->setVisible(false);
+//    closeAction->setVisible(false);
     closeAction->setToolTip("Close file");
     toolBar->addAction(closeAction);
 
     QAction* separator1 = toolBar->addSeparator();
     separator1->setObjectName("separator1");
+    gridToolBar->addSeparator();
 
     treeShowAction = new QAction();
     treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
-    treeShowAction->setVisible(false);
+//    treeShowAction->setVisible(false);
     treeShowAction->setToolTip("Show tree");
     toolBar->addAction(treeShowAction);
 
@@ -412,13 +424,14 @@ void MainWindow::setToolBar() {
     inviteListAction->setVisible(true);
     inviteListAction->setToolTip("Show invites list");
     toolBar->addAction(inviteListAction);
+    gridToolBar->addAction(inviteListAction);
 
     highlightAction=new QAction();
     highlightAction->setCheckable(true);
     highlightAction->setShortcut(QKeySequence::Replace); //equivale a Ctrl+H
     highlightAction->setIcon(QIcon("./icons/highlight.png"));
     highlightAction->setToolTip("Highlight the text entered by different users");
-    highlightAction->setVisible(false);
+//    highlightAction->setVisible(false);
     toolBar->addAction(highlightAction);
 
     uriAction = new QAction();
@@ -426,13 +439,16 @@ void MainWindow::setToolBar() {
     uriAction->setVisible(true);
     uriAction->setToolTip("Add a file inserting a URI");
     toolBar->addAction(uriAction);
+    gridToolBar->addAction(uriAction);
 
     inviteAction = new QAction();
     inviteAction->setIcon(QIcon("./icons/grid_invite_icon.png"));
     toolBar->addAction(inviteAction);
+    gridToolBar->addAction(inviteAction);
 
     QAction* separator2 = toolBar->addSeparator();
-    separator1->setObjectName("separator2");
+    separator2->setObjectName("separator2");
+    gridToolBar->addSeparator();
 
     undoAction = new QAction();
     undoAction->setIcon(QIcon("./icons/undo_icon.png"));
@@ -470,11 +486,11 @@ void MainWindow::setToolBar() {
     toolBar->addAction(pasteAction);
 
     QAction* separator3 = toolBar->addSeparator();
-    separator1->setObjectName("separator3");
+    separator3->setObjectName("separator3");
 
     pdfAction = new QAction();
     pdfAction->setIcon(QIcon("./icons/pdf.png"));
-    pdfAction->setVisible(false);
+//    pdfAction->setVisible(false);
     pdfAction->setToolTip("Save as pdf");
     toolBar->addAction(pdfAction);
 
@@ -487,67 +503,78 @@ void MainWindow::setToolBar() {
     auto *spacerWidget = new QWidget(this);
     spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     spacerWidget->setVisible(true);
+    auto spacerWidget2 = new QWidget(this);
+    spacerWidget2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    spacerWidget2->setVisible(true);
     toolBar->addWidget(spacerWidget);
     toolBar->addAction(userInfoAction);
+    gridToolBar->addWidget(spacerWidget2);
+    gridToolBar->addAction(userInfoAction);
 }
 
 void MainWindow::setToolBarEditor() {
-    backAction->setVisible(false);
+    toolBar->show();
+    gridToolBar->hide();
+//    backAction->setVisible(false);
+//
+//    addAction->setVisible(true);
+//    deleteAction->setVisible(true);
+//    treeShowAction->setVisible(true);
+//    highlightAction->setVisible(true);
+//    closeAction->setVisible(true);
+//    pdfAction->setVisible(true);
+//
+//    undoAction->setVisible(true);
+//    redoAction->setVisible(true);
+//    cutAction->setVisible(true);
+//    copyAction->setVisible(true);
+//    pasteAction->setVisible(true);
 
-    addAction->setVisible(true);
-    deleteAction->setVisible(true);
-    treeShowAction->setVisible(true);
-    highlightAction->setVisible(true);
-    closeAction->setVisible(true);
-    pdfAction->setVisible(true);
-
-    undoAction->setVisible(true);
-    redoAction->setVisible(true);
-    cutAction->setVisible(true);
-    copyAction->setVisible(true);
-    pasteAction->setVisible(true);
 }
 
 void MainWindow::setToolBarGrid() {
     if(centralWidget->currentWidget() != editor) {
-        treeShowAction->setVisible(false);
-        highlightAction->setVisible(false);
-        closeAction->setVisible(false);
-        pdfAction->setVisible(false);
-
+        gridToolBar->show();
+        toolBar->hide();
+//        treeShowAction->setVisible(false);
+//        highlightAction->setVisible(false);
+//        closeAction->setVisible(false);
+//        pdfAction->setVisible(false);
+//
         backAction->setVisible(false);
         addAction->setVisible(true);
-        deleteAction->setVisible(true);
+//        deleteAction->setVisible(true);
         deleteAction->setDisabled(true);
-        inviteAction->setDisabled(true);
+//        inviteAction->setDisabled(true);
+//
+//        undoAction->setVisible(false);
+//        redoAction->setVisible(false);
+//        cutAction->setVisible(false);
+//        copyAction->setVisible(false);
+//        pasteAction->setVisible(false);
 
-        undoAction->setVisible(false);
-        redoAction->setVisible(false);
-        cutAction->setVisible(false);
-        copyAction->setVisible(false);
-        pasteAction->setVisible(false);
     }
 }
 
 void MainWindow::setToolBarFolderGrid(QString folder) {
     if(centralWidget->currentWidget() != editor) {
-        treeShowAction->setVisible(false);
-        highlightAction->setVisible(false);
-        closeAction->setVisible(false);
-        pdfAction->setVisible(false);
+//        treeShowAction->setVisible(false);
+//        highlightAction->setVisible(false);
+//        closeAction->setVisible(false);
+//        pdfAction->setVisible(false);
 
         addAction->setVisible(false);
-        deleteAction->setVisible(true);
-        deleteAction->setDisabled(true);
+//        deleteAction->setVisible(true);
+//        deleteAction->setDisabled(true);
 
         backAction->setVisible(true);
-        inviteAction->setDisabled(true);
-
-        undoAction->setVisible(false);
-        redoAction->setVisible(false);
-        cutAction->setVisible(false);
-        copyAction->setVisible(false);
-        pasteAction->setVisible(false);
+//        inviteAction->setDisabled(true);
+//
+//        undoAction->setVisible(false);
+//        redoAction->setVisible(false);
+//        cutAction->setVisible(false);
+//        copyAction->setVisible(false);
+//        pasteAction->setVisible(false);
     }
 }
 
@@ -662,7 +689,7 @@ void MainWindow::setUsersList() {
     dockWidgetUsers = new QDockWidget(this);
     dockWidgetUsers->setAllowedAreas(Qt::RightDockWidgetArea );
     dockWidgetUsers->setFeatures(QDockWidget::NoDockWidgetFeatures);
-    dockWidgetUsers->setFixedWidth(150);
+    dockWidgetUsers->setFixedWidth(154);
 //    dockWidgetUsers->setMouseTracking(true);
 
     auto l = new QLabel("Users connected");
@@ -720,16 +747,20 @@ void MainWindow::setInfoWidget() {
         lastCentral = centralWidget->currentWidget();
         centralWidget->setCurrentWidget(infoWidget);
         toolBar->hide();
+        gridToolBar->hide();
         richTextBar->hide();
         dockWidgetUsers->hide();
         if (lastDock != nullptr)
             lastDock->hide();
     } else {
         centralWidget->setCurrentWidget(lastCentral);
-        toolBar->show();
         if (lastCentral == editor) {
             dockWidgetUsers->show();
+            toolBar->show();
             richTextBar->show();
+        }
+        else{
+            gridToolBar->show();
         }
         if (lastDock != nullptr)
             lastDock->show();
