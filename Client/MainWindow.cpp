@@ -462,27 +462,6 @@ void MainWindow::setToolBars() {
     redoAction->setToolTip("Redo");
     toolBar->addAction(redoAction);
 
-    cutAction = new QAction();
-    cutAction->setIcon(QIcon("./icons/cut_icon.png"));
-    cutAction->setVisible(true);
-    cutAction->setDisabled(true);
-    cutAction->setToolTip("Cut");
-    toolBar->addAction(cutAction);
-
-    copyAction = new QAction();
-    copyAction->setIcon(QIcon("./icons/copy_icon.png"));
-    copyAction->setVisible(true);
-    copyAction->setDisabled(true);
-    copyAction->setToolTip("Copy");
-    toolBar->addAction(copyAction);
-
-    pasteAction = new QAction();
-    pasteAction->setIcon(QIcon("./icons/paste_icon.png"));
-    pasteAction->setVisible(true);
-    clipboardDataChanged();
-    pasteAction->setToolTip("Paste");
-    toolBar->addAction(pasteAction);
-
     QAction *separator3 = toolBar->addSeparator();
     separator3->setObjectName("separator3");
 
@@ -771,23 +750,48 @@ void MainWindow::hideEditor(QString &fileName) {
 }
 
 void MainWindow::setRichTextBar() {
-    //EditorToolbar
+    cutAction = new QAction();
+    cutAction->setIcon(QIcon("./icons/cut.png"));
+    cutAction->setVisible(true);
+    cutAction->setDisabled(true);
+    cutAction->setToolTip("Cut");
+    richTextBar->addAction(cutAction);
+
+    copyAction = new QAction();
+    copyAction->setIcon(QIcon("./icons/copy.png"));
+    copyAction->setVisible(true);
+    copyAction->setDisabled(true);
+    copyAction->setToolTip("Copy");
+    richTextBar->addAction(copyAction);
+
+    pasteAction = new QAction();
+    pasteAction->setIcon(QIcon("./icons/paste.png"));
+    pasteAction->setVisible(true);
+    clipboardDataChanged();
+    pasteAction->setToolTip("Paste");
+    richTextBar->addAction(pasteAction);
+
+    richTextBar->addSeparator();
+
     boldAction = new QAction();
     boldAction->setIcon(QIcon("./icons/bold.png"));
     boldAction->setCheckable(true);
+    boldAction->setShortcut(Qt::CTRL + Qt::Key_B);
     boldAction->setToolTip("Bold");
     richTextBar->addAction(boldAction);
 
     italicAction = new QAction();
     italicAction->setIcon(QIcon("./icons/italic.png"));
     italicAction->setCheckable(true);
-    italicAction->setToolTip("Bold");
+    italicAction->setShortcut(Qt::CTRL + Qt::Key_I);
+    italicAction->setToolTip("Italic");
     richTextBar->addAction(italicAction);
 
     underlineAction = new QAction();
     underlineAction->setIcon(QIcon("./icons/underline.png"));
     underlineAction->setCheckable(true);
-    underlineAction->setToolTip("Bold");
+    underlineAction->setShortcut(Qt::CTRL + Qt::Key_U);
+    underlineAction->setToolTip("Underline");
     richTextBar->addAction(underlineAction);
 
     richTextBar->addSeparator();
