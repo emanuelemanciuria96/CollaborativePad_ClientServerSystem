@@ -6,9 +6,9 @@
 #include "MainWindow.h"
 #include "CustomStyle.h"
 
-QVector<QString> msgs = {"tree","invite list", "uri insertion"};
+QVector<QString> msgs = {"tree", "invite list", "uri insertion"};
 
-MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent) {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     //statusBar initialize
     statusBar = new QStatusBar(this);
@@ -16,10 +16,10 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent) {
     numUsers->setText("User connected: 0");
     statusBar->addPermanentWidget(numUsers);
     numUsers->hide();
-    statusBar->showMessage ("");
+    statusBar->showMessage("");
     statusBar->hide();
 
-    toolBar = new QToolBar("Toolbar",this);
+    toolBar = new QToolBar("Toolbar", this);
     gridToolBar = new QToolBar(this);
     setToolBars();
     richTextBar = new QToolBar(this);
@@ -45,7 +45,7 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent) {
     gridToolBar->hide();
 
     richTextBar->setMovable(false);
-    richTextBar->setIconSize(QSize(25,25));
+    richTextBar->setIconSize(QSize(25, 25));
     richTextBar->move(toolBar->rect().bottomLeft());
     richTextBar->hide();
     setGradient();
@@ -56,19 +56,19 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent) {
 
     constructMainWindowMembers();
 
-    setCorner(Qt::TopLeftCorner,Qt::LeftDockWidgetArea);
-    setCorner(Qt::TopRightCorner,Qt::RightDockWidgetArea);
+    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
     connect(QApplication::clipboard(), &QClipboard::dataChanged, this, &MainWindow::clipboardDataChanged);
 
     //    imposto la grandezza della finestra
     auto size = QGuiApplication::primaryScreen()->size();
-    this->resize(size.width()*0.7,size.height()*0.7);
+    this->resize(size.width() * 0.7, size.height() * 0.7);
 
     installEventFilter(this);
 
 }
 
-void MainWindow::constructMainWindowMembers(){
+void MainWindow::constructMainWindowMembers() {
 
     QApplication::setStyle(QStyleFactory::create("window"));
 //    for(auto k : QStyleFactory::keys()){
@@ -100,26 +100,26 @@ void MainWindow::constructMainWindowMembers(){
     setPalette(mainPalette);
 
     connect(loginDialog, &LoginDialog::acceptLogin, shEditor, &SharedEditor::loginSlot);
-    connect(treeView, &FileSystemTreeView::opnFileRequest,shEditor , &SharedEditor::requireFile);
-    connect(treeView, &FileSystemTreeView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
-    connect(treeView, &FileSystemTreeView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
-    connect(treeView, &FileSystemTreeView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
+    connect(treeView, &FileSystemTreeView::opnFileRequest, shEditor, &SharedEditor::requireFile);
+    connect(treeView, &FileSystemTreeView::renFileRequest, shEditor, &SharedEditor::requireFileRename);
+    connect(treeView, &FileSystemTreeView::newFileAdded, shEditor, &SharedEditor::requireFileAdd);
+    connect(treeView, &FileSystemTreeView::rmvFileRequest, shEditor, &SharedEditor::requireFileDelete);
     connect(treeView, &FileSystemTreeView::newFileUpdateGrid, gridView, &FileSystemGridView::constructFromPaths);
-    connect(treeView, &FileSystemTreeView::renFileRequest,gridView , &FileSystemGridView::remoteRenameFile);
-    connect(treeView, &FileSystemTreeView::rmvFileRequest,gridView , &FileSystemGridView::remoteDeleteFile);
-    connect(gridView, &FileSystemGridView::rmvFileRequest,shEditor , &SharedEditor::requireFileDelete);
-    connect(gridView, &FileSystemGridView::opnFileRequest,shEditor , &SharedEditor::requireFile);
-    connect(gridView, &FileSystemGridView::openFolder,this, &MainWindow::setToolBarFolderGrid);
-    connect(gridView, &FileSystemGridView::back,this, &MainWindow::setToolBarGrid);
-    connect(gridView, &FileSystemGridView::canInvite,this, &MainWindow::changeInviteAction);
-    connect(treeView, &FileSystemTreeView::canInvite,this, &MainWindow::changeInviteAction);
-    connect(gridView, &FileSystemGridView::canDelete,this, &MainWindow::changeDeleteAction);
-    connect(gridView, &FileSystemGridView::renFileRequest,shEditor , &SharedEditor::requireFileRename);
-    connect(gridView, &FileSystemGridView::renFileRequest,treeView , &FileSystemTreeView::editFileName);
-    connect(gridView, &FileSystemGridView::newFileAdded,shEditor , &SharedEditor::requireFileAdd);
-    connect(shEditor, &SharedEditor::openTextEditor,this, &MainWindow::opnFileGrid);
+    connect(treeView, &FileSystemTreeView::renFileRequest, gridView, &FileSystemGridView::remoteRenameFile);
+    connect(treeView, &FileSystemTreeView::rmvFileRequest, gridView, &FileSystemGridView::remoteDeleteFile);
+    connect(gridView, &FileSystemGridView::rmvFileRequest, shEditor, &SharedEditor::requireFileDelete);
+    connect(gridView, &FileSystemGridView::opnFileRequest, shEditor, &SharedEditor::requireFile);
+    connect(gridView, &FileSystemGridView::openFolder, this, &MainWindow::setToolBarFolderGrid);
+    connect(gridView, &FileSystemGridView::back, this, &MainWindow::setToolBarGrid);
+    connect(gridView, &FileSystemGridView::canInvite, this, &MainWindow::changeInviteAction);
+    connect(treeView, &FileSystemTreeView::canInvite, this, &MainWindow::changeInviteAction);
+    connect(gridView, &FileSystemGridView::canDelete, this, &MainWindow::changeDeleteAction);
+    connect(gridView, &FileSystemGridView::renFileRequest, shEditor, &SharedEditor::requireFileRename);
+    connect(gridView, &FileSystemGridView::renFileRequest, treeView, &FileSystemTreeView::editFileName);
+    connect(gridView, &FileSystemGridView::newFileAdded, shEditor, &SharedEditor::requireFileAdd);
+    connect(shEditor, &SharedEditor::openTextEditor, this, &MainWindow::opnFileGrid);
     connect(shEditor, &SharedEditor::hideEditor, this, &MainWindow::hideEditor);
-    connect(shEditor, &SharedEditor::transparentForMouse,this, &MainWindow::transparentForMouse);
+    connect(shEditor, &SharedEditor::transparentForMouse, this, &MainWindow::transparentForMouse);
     connect(shEditor, &SharedEditor::fileNameEdited, treeView, &FileSystemTreeView::editFileName);
     connect(shEditor, &SharedEditor::fileDeletion, treeView, &FileSystemTreeView::remoteFileDeletion);
     connect(shEditor, &SharedEditor::fileDeletion, gridView, &FileSystemGridView::remoteDeleteFile);
@@ -133,14 +133,14 @@ void MainWindow::constructMainWindowMembers(){
     connect(shEditor, &SharedEditor::filePathsArrived, treeView, &FileSystemTreeView::constructFromPaths);
     connect(shEditor, &SharedEditor::filePathsArrived, gridView, &FileSystemGridView::constructFromPaths);
     connect(shEditor, &SharedEditor::remoteAlignment, editor, &EditorGUI::updateAlignment);
-    connect(shEditor, &SharedEditor::serverUnavailable,this,&MainWindow::serverUnavailable);
+    connect(shEditor, &SharedEditor::serverUnavailable, this, &MainWindow::serverUnavailable);
     connect(gridView, &FileSystemGridView::newFileUpdateTree, treeView, &FileSystemTreeView::constructFromPaths);
     connect(shEditor, &SharedEditor::userInfoArrived, infoWidget, &InfoWidget::loadData);
     connect(infoWidget, &InfoWidget::sendUpdatedInfo, shEditor, &SharedEditor::sendUpdatedInfo);
     connect(loginDialog, &LoginDialog::signIn, this, &MainWindow::startSignIn);
     connect(widgetSignIn, &SignInWidget::backToLogIn, this, &MainWindow::backToLogIn);
     connect(highlightAction, &QAction::triggered, editor, &EditorGUI::loadHighlights);
-    connect(highlightAction, &QAction::triggered, [this](){ editor->textEdit->document()->clearUndoRedoStacks(); });
+    connect(highlightAction, &QAction::triggered, [this]() { editor->textEdit->document()->clearUndoRedoStacks(); });
     connect(shEditor, &SharedEditor::returnToGrid, this, &MainWindow::clsFile);
     connect(closeAction, &QAction::triggered, shEditor, &SharedEditor::requireFileClose);
     connect(pdfAction, &QAction::triggered, editor, &EditorGUI::exportToPdf);
@@ -172,12 +172,12 @@ void MainWindow::constructMainWindowMembers(){
     connect(gridView, &FileSystemGridView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
     connect(treeView, &FileSystemTreeView::opnFileRequest, gridView, &FileSystemGridView::selectFile);
     connect(userInfoAction, &QAction::triggered, this, &MainWindow::setInfoWidget);
-    connect(uriAction, &QAction::triggered, [this](){showHideLeftDock(uri);} );
+    connect(uriAction, &QAction::triggered, [this]() { showHideLeftDock(uri); });
     connect(infoWidget, &InfoWidget::imageChanged, this, &MainWindow::changeToolbarProfileImage);
-    connect(inviteListAction, &QAction::triggered, [this](){showHideLeftDock(invitelist);});
-    connect(treeShowAction, &QAction::triggered,[this](){showHideLeftDock(tree);});
+    connect(inviteListAction, &QAction::triggered, [this]() { showHideLeftDock(invitelist); });
+    connect(treeShowAction, &QAction::triggered, [this]() { showHideLeftDock(tree); });
     connect(usersList, &UsersList::setNumUsers, this, &MainWindow::setNumUsers);
-    connect(editor, &EditorGUI::userQuery,shEditor,&SharedEditor::obtainUser);
+    connect(editor, &EditorGUI::userQuery, shEditor, &SharedEditor::obtainUser);
     connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
     connect(shEditor, &SharedEditor::hideNumUsers, this, &MainWindow::hideNumUsers);
     connect(shEditor, &SharedEditor::addUser, usersList, &UsersList::addUser);
@@ -191,13 +191,17 @@ void MainWindow::constructMainWindowMembers(){
     connect(infoWidget, &InfoWidget::backPressed, this, &MainWindow::setInfoWidget);
     connect(infoWidget, &InfoWidget::openInfoEdit, this, &MainWindow::openInfoEdit);
     connect(infoWidgetEdit, &InfoWidgetEdit::updateInfo, infoWidget, &InfoWidget::updateInfo);
-    connect(infoWidgetEdit, &InfoWidgetEdit::backToInfoWidget, this, [this](){centralWidget->setCurrentWidget(infoWidget);});
-    connect(inviteUserWidget, &InviteUserWidget::inviteNumberModified, this, [this](int n){setInviteListIcon(n);});
+    connect(infoWidgetEdit, &InfoWidgetEdit::backToInfoWidget, this,
+            [this]() { centralWidget->setCurrentWidget(infoWidget); });
+    connect(inviteUserWidget, &InviteUserWidget::inviteNumberModified, this, [this](int n) { setInviteListIcon(n); });
     connect(usersList, &UsersList::setUserInfo, this, &MainWindow::setInfoUsersListWidget);
     connect(infoUsersListWidget, &InfoUsersListWidget::backPressed, this, &MainWindow::setInfoUsersListWidget);
-    connect(editor->textEdit, &MyTextEdit::copyAvailable, this,[this](bool b){copyAction->setDisabled(!b);cutAction->setDisabled(!b);});
-    connect(editor->textEdit->document(), &QTextDocument::undoAvailable,undoAction, &QAction::setEnabled);
-    connect(editor->textEdit->document(), &QTextDocument::redoAvailable,redoAction, &QAction::setEnabled);
+    connect(editor->textEdit, &MyTextEdit::copyAvailable, this, [this](bool b) {
+        copyAction->setDisabled(!b);
+        cutAction->setDisabled(!b);
+    });
+    connect(editor->textEdit->document(), &QTextDocument::undoAvailable, undoAction, &QAction::setEnabled);
+    connect(editor->textEdit->document(), &QTextDocument::redoAvailable, redoAction, &QAction::setEnabled);
     connect(pasteAction, &QAction::triggered, editor->textEdit, &MyTextEdit::paste);
     connect(copyAction, &QAction::triggered, editor->textEdit, &QTextEdit::copy);
     connect(cutAction, &QAction::triggered, editor->textEdit, &QTextEdit::cut);
@@ -211,12 +215,12 @@ void MainWindow::constructMainWindowMembers(){
     connect(editor, &EditorGUI::fontChanged, this, &MainWindow::fontChanged);
     connect(comboSize, SIGNAL(activated(const QString&)), editor, SLOT(textSize(const QString&)));
     connect(comboFont, SIGNAL(activated(const QString&)), editor, SLOT(textFamily(const QString&)));
-    connect(comboFont, &QFontComboBox::currentFontChanged, [this]{editor->textEdit->setFocus();});
-    connect(comboSize,  QOverload<int>::of(&QComboBox::activated), [this]{editor->textEdit->setFocus();});
+    connect(comboFont, &QFontComboBox::currentFontChanged, [this] { editor->textEdit->setFocus(); });
+    connect(comboSize, QOverload<int>::of(&QComboBox::activated), [this] { editor->textEdit->setFocus(); });
     connect(shEditor, &SharedEditor::usernameAlreadyExists, widgetSignIn, &SignInWidget::usernameAlreadyExists);
     connect(actionAlignJustify, &QAction::triggered, this, &MainWindow::setAlignJustifyChecked);
     connect(actionAlignRight, &QAction::triggered, this, &MainWindow::setAlignRightChecked);
-    connect(actionAlignCenter, &QAction::triggered, this, &MainWindow::setAlignCenterChecked );
+    connect(actionAlignCenter, &QAction::triggered, this, &MainWindow::setAlignCenterChecked);
     connect(actionAlignLeft, &QAction::triggered, this, &MainWindow::setAlignLeftChecked);
     connect(editor->textEdit, &QTextEdit::cursorPositionChanged, this, &MainWindow::setAlignmentActionChecked);
     connect(infoWidget, &InfoWidget::logout, this, &MainWindow::logout);
@@ -262,13 +266,13 @@ void MainWindow::opnFileGrid(QString &fileName) {
     centralWidget->setCurrentWidget(editor);
     treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
     auto strings = fileName.split("/");
-    this->setWindowTitle(strings[strings.size()-1]);
+    this->setWindowTitle(strings[strings.size() - 1]);
     editor->setWindowTitle(fileName);
     dockWidgetUsers->show();
     richTextBar->show();
     auto palette = this->palette();
 //    palette.setColor(QPalette::Window,QColor("lightgray"));
-    palette.setColor(QPalette::Base,QColor("white"));
+    palette.setColor(QPalette::Base, QColor("white"));
     setPalette(palette);
 
     this->setCursor(QCursor(Qt::ArrowCursor));
@@ -277,20 +281,20 @@ void MainWindow::opnFileGrid(QString &fileName) {
     spinner = nullptr;
 }
 
-void MainWindow::changeInviteAction(bool state){
+void MainWindow::changeInviteAction(bool state) {
     inviteAction->setDisabled(!state);
-    if(state){
+    if (state) {
         inviteAction->setToolTip("Invite user");
-    }else{
+    } else {
         inviteAction->setToolTip("");
     }
 }
 
-void MainWindow::changeDeleteAction(bool state){
+void MainWindow::changeDeleteAction(bool state) {
     deleteAction->setDisabled(!state);
-    if(state){
+    if (state) {
         deleteAction->setToolTip("Delete file");
-    }else{
+    } else {
         deleteAction->setToolTip("");
     }
 }
@@ -300,15 +304,15 @@ void MainWindow::clsFile() {
     richTextBar->hide();
     centralWidget->setCurrentWidget(gridView);
     leftDockWidgets[tree]->hide();
-    if(gridView->getState()==gridView->getMainFolder()){
+    if (gridView->getState() == gridView->getMainFolder()) {
         setToolBarGrid();
         inviteAction->setDisabled(false);
-    }else{
+    } else {
         setToolBarFolderGrid(gridView->getState());
     }
     gridView->show();
     setWindowTitle("Shared Editor");
-    if(highlightAction->isChecked()){
+    if (highlightAction->isChecked()) {
         highlightAction->setChecked(false);
         highlightAction->triggered(false);
     }
@@ -320,8 +324,8 @@ void MainWindow::loginSettings() {
 
 
 void MainWindow::treeFileSystemSettings() {
-    leftDockWidgets.insert( tree, new QDockWidget(tr("files"),this) );
-    leftDockWidgets[tree]->setAllowedAreas(Qt::LeftDockWidgetArea );
+    leftDockWidgets.insert(tree, new QDockWidget(tr("files"), this));
+    leftDockWidgets[tree]->setAllowedAreas(Qt::LeftDockWidgetArea);
     leftDockWidgets[tree]->setFeatures(QDockWidget::DockWidgetClosable);
     leftDockWidgets[tree]->setMouseTracking(true);
 
@@ -333,14 +337,14 @@ void MainWindow::treeFileSystemSettings() {
     leftDockWidgets[tree]->setMaximumWidth(this->size().width() / 5);
     leftDockWidgets[tree]->setMinimumWidth(this->size().width() / 5);
 
-    this->addDockWidget(Qt::LeftDockWidgetArea,leftDockWidgets[tree]);
+    this->addDockWidget(Qt::LeftDockWidgetArea, leftDockWidgets[tree]);
     leftDockWidgets[tree]->hide();
 
 }
 
 void MainWindow::inviteUserListSetup() {
-    leftDockWidgets.insert(invitelist,new QDockWidget(tr("invite"),this));
-    leftDockWidgets[invitelist]->setAllowedAreas(Qt::LeftDockWidgetArea );
+    leftDockWidgets.insert(invitelist, new QDockWidget(tr("invite"), this));
+    leftDockWidgets[invitelist]->setAllowedAreas(Qt::LeftDockWidgetArea);
     leftDockWidgets[invitelist]->setFeatures(QDockWidget::DockWidgetClosable);
     leftDockWidgets[invitelist]->setMouseTracking(true);
 
@@ -351,13 +355,13 @@ void MainWindow::inviteUserListSetup() {
     leftDockWidgets[invitelist]->setMaximumWidth(this->size().width() / 3);
     leftDockWidgets[invitelist]->setMinimumWidth(this->size().width() / 3);
 
-    this->addDockWidget(Qt::LeftDockWidgetArea,leftDockWidgets[invitelist]);
+    this->addDockWidget(Qt::LeftDockWidgetArea, leftDockWidgets[invitelist]);
     leftDockWidgets[invitelist]->hide();
 }
 
 void MainWindow::uriWidgetSetup() {
-    leftDockWidgets.insert(uri,new QDockWidget(tr("uri"),this));
-    leftDockWidgets[uri]->setAllowedAreas(Qt::LeftDockWidgetArea );
+    leftDockWidgets.insert(uri, new QDockWidget(tr("uri"), this));
+    leftDockWidgets[uri]->setAllowedAreas(Qt::LeftDockWidgetArea);
     leftDockWidgets[uri]->setFeatures(QDockWidget::DockWidgetClosable);
     leftDockWidgets[uri]->setMouseTracking(true);
 
@@ -370,7 +374,7 @@ void MainWindow::uriWidgetSetup() {
     uriWidget = new UriWidget(this);
     leftDockWidgets[uri]->setWidget(uriWidget);
 
-    this->addDockWidget(Qt::LeftDockWidgetArea,leftDockWidgets[uri]);
+    this->addDockWidget(Qt::LeftDockWidgetArea, leftDockWidgets[uri]);
     leftDockWidgets[uri]->hide();
 
 }
@@ -381,7 +385,6 @@ void MainWindow::gridFileSystemSettings() {
 }
 
 void MainWindow::setToolBars() {
-    //EditorToolbar
     backAction = new QAction();
     backAction->setIcon(QIcon("./icons/grid_back_icon.png"));
     backAction->setVisible(false);
@@ -390,14 +393,12 @@ void MainWindow::setToolBars() {
 
     addAction = new QAction();
     addAction->setIcon(QIcon("./icons/add_file_icon.png"));
-//    addAction->setVisible(false);
     addAction->setToolTip("New file");
     toolBar->addAction(addAction);
     gridToolBar->addAction(addAction);
 
     deleteAction = new QAction();
     deleteAction->setIcon(QIcon("./icons/delete_file_icon.png"));
-//    deleteAction->setVisible(false);
     deleteAction->setDisabled(true);
     deleteAction->setToolTip("Delete file");
     toolBar->addAction(deleteAction);
@@ -405,17 +406,15 @@ void MainWindow::setToolBars() {
 
     closeAction = new QAction();
     closeAction->setIcon(QIcon("./icons/close.png"));
-//    closeAction->setVisible(false);
     closeAction->setToolTip("Close file");
     toolBar->addAction(closeAction);
 
-    QAction* separator1 = toolBar->addSeparator();
+    QAction *separator1 = toolBar->addSeparator();
     separator1->setObjectName("separator1");
     gridToolBar->addSeparator();
 
     treeShowAction = new QAction();
     treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
-//    treeShowAction->setVisible(false);
     treeShowAction->setToolTip("Show tree");
     toolBar->addAction(treeShowAction);
 
@@ -426,12 +425,11 @@ void MainWindow::setToolBars() {
     toolBar->addAction(inviteListAction);
     gridToolBar->addAction(inviteListAction);
 
-    highlightAction=new QAction();
+    highlightAction = new QAction();
     highlightAction->setCheckable(true);
     highlightAction->setShortcut(QKeySequence::Replace); //equivale a Ctrl+H
     highlightAction->setIcon(QIcon("./icons/highlight.png"));
     highlightAction->setToolTip("Highlight the text entered by different users");
-//    highlightAction->setVisible(false);
     toolBar->addAction(highlightAction);
 
     uriAction = new QAction();
@@ -446,7 +444,7 @@ void MainWindow::setToolBars() {
     toolBar->addAction(inviteAction);
     gridToolBar->addAction(inviteAction);
 
-    QAction* separator2 = toolBar->addSeparator();
+    QAction *separator2 = toolBar->addSeparator();
     separator2->setObjectName("separator2");
     gridToolBar->addSeparator();
 
@@ -485,12 +483,11 @@ void MainWindow::setToolBars() {
     pasteAction->setToolTip("Paste");
     toolBar->addAction(pasteAction);
 
-    QAction* separator3 = toolBar->addSeparator();
+    QAction *separator3 = toolBar->addSeparator();
     separator3->setObjectName("separator3");
 
     pdfAction = new QAction();
     pdfAction->setIcon(QIcon("./icons/pdf.png"));
-//    pdfAction->setVisible(false);
     pdfAction->setToolTip("Save as pdf");
     toolBar->addAction(pdfAction);
 
@@ -515,73 +512,30 @@ void MainWindow::setToolBars() {
 void MainWindow::setToolBarEditor() {
     toolBar->show();
     gridToolBar->hide();
-//    backAction->setVisible(false);
-//
-//    addAction->setVisible(true);
-//    deleteAction->setVisible(true);
-//    treeShowAction->setVisible(true);
-//    highlightAction->setVisible(true);
-//    closeAction->setVisible(true);
-//    pdfAction->setVisible(true);
-//
-//    undoAction->setVisible(true);
-//    redoAction->setVisible(true);
-//    cutAction->setVisible(true);
-//    copyAction->setVisible(true);
-//    pasteAction->setVisible(true);
-
 }
 
 void MainWindow::setToolBarGrid() {
-    if(centralWidget->currentWidget() != editor) {
+    if (centralWidget->currentWidget() != editor) {
         gridToolBar->show();
         toolBar->hide();
-//        treeShowAction->setVisible(false);
-//        highlightAction->setVisible(false);
-//        closeAction->setVisible(false);
-//        pdfAction->setVisible(false);
-//
+
         backAction->setVisible(false);
         addAction->setVisible(true);
-//        deleteAction->setVisible(true);
         deleteAction->setDisabled(true);
-//        inviteAction->setDisabled(true);
-//
-//        undoAction->setVisible(false);
-//        redoAction->setVisible(false);
-//        cutAction->setVisible(false);
-//        copyAction->setVisible(false);
-//        pasteAction->setVisible(false);
-
     }
 }
 
 void MainWindow::setToolBarFolderGrid(QString folder) {
-    if(centralWidget->currentWidget() != editor) {
-//        treeShowAction->setVisible(false);
-//        highlightAction->setVisible(false);
-//        closeAction->setVisible(false);
-//        pdfAction->setVisible(false);
-
+    if (centralWidget->currentWidget() != editor) {
         addAction->setVisible(false);
-//        deleteAction->setVisible(true);
-//        deleteAction->setDisabled(true);
-
         backAction->setVisible(true);
-//        inviteAction->setDisabled(true);
-//
-//        undoAction->setVisible(false);
-//        redoAction->setVisible(false);
-//        cutAction->setVisible(false);
-//        copyAction->setVisible(false);
-//        pasteAction->setVisible(false);
     }
 }
 
 void MainWindow::setInviteListIcon(int num) {
-    QString path="./icons/invite_list_icon.png";
-    QString path2="./icons/bedge_invite_list_icon.png";
-    if(num<1){
+    QString path = "./icons/invite_list_icon.png";
+    QString path2 = "./icons/bedge_invite_list_icon.png";
+    if (num < 1) {
         inviteListAction->setIcon(QIcon(path));
         return;
     }
@@ -595,17 +549,17 @@ void MainWindow::setInviteListIcon(int num) {
     QFont font = painter.font();
     font.setPointSize(font.pointSize() * 4.5);
     painter.setFont(font);
-    if(num>99) {
+    if (num > 99) {
         painter.drawText(120, 65, QString::number(99));
-    }else if(num>9){
+    } else if (num > 9) {
         painter.drawText(120, 65, QString::number(num));
-    }else{
+    } else {
         painter.drawText(140, 65, QString::number(num));
     }
     inviteListAction->setIcon(QIcon(rounded));
 }
 
-void MainWindow::changeToolbarProfileImage(const QPixmap& orig) {
+void MainWindow::changeToolbarProfileImage(const QPixmap &orig) {
     auto rounded = roundImage(orig);
     userInfoAction->setIcon(QIcon(rounded));
 }
@@ -626,9 +580,9 @@ void MainWindow::backToLogIn() {
     centralWidget->setCurrentWidget(loginDialog);
 }
 
-void MainWindow::openAddUser(const QString& fileName) {
+void MainWindow::openAddUser(const QString &fileName) {
     addUserWidget->setFile(fileName);
-    addUserWidget->setWindowTitle("Invite user to file "+fileName);
+    addUserWidget->setWindowTitle("Invite user to file " + fileName);
     addUserWidget->show();
 }
 
@@ -639,7 +593,7 @@ void MainWindow::signInWidgetSetup() {
 void MainWindow::resizeEvent(QResizeEvent *evt) {
     QWidget::resizeEvent(evt);
 
-    if(!leftDockWidgets.isEmpty()) {
+    if (!leftDockWidgets.isEmpty()) {
         leftDockWidgets[tree]->setMaximumWidth(this->size().width() / 5);
         leftDockWidgets[tree]->setMinimumWidth(this->size().width() / 5);
         leftDockWidgets[invitelist]->setMaximumWidth(this->size().width() / 3);
@@ -663,8 +617,6 @@ void MainWindow::setStyleSheet() {
                         "QToolButton {padding:4}"
                         "QComboBox {padding:5;}"
                         "QMenu{border:1px solid gray;}");
-    //                        "QMenu::item:selected {color:black; background: #93C2FF}"
-//                        "QMenu::item:pressed {background:rgba(100, 100, 100, 124)}");
 
     dockWidgetUsers->titleBarWidget()->setStyleSheet("font:10pt; font-family: helvetica; color:#4F78C3");
     dockWidgetUsers->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8");
@@ -674,10 +626,12 @@ void MainWindow::setStyleSheet() {
                                         "QLabel{color:#3A70D5; font: 10pt;}"
                                         "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
     leftDockWidgets[invitelist]->setStyleSheet("QListWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
-    leftDockWidgets[tree]->setStyleSheet("QTreeWidget {background: rgba(0,0,0,0.1); border:none; padding:8; outline:none}");
-    addUserWidget->setStyleSheet("QLineEdit{font:10pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
-                                 "QLabel{color:#3A70D5; font: 10pt;}"
-                                 "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+    leftDockWidgets[tree]->setStyleSheet(
+            "QTreeWidget {background: rgba(0,0,0,0.1); border:none; padding:8; outline:none}");
+    addUserWidget->setStyleSheet(
+            "QLineEdit{font:10pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
+            "QLabel{color:#3A70D5; font: 10pt;}"
+            "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
     auto option = QStyleOptionFocusRect();
     qApp->setStyle(new CustomStyle());
 }
@@ -687,7 +641,7 @@ void MainWindow::setUsersList() {
     usersList = new UsersList(this);
 
     dockWidgetUsers = new QDockWidget(this);
-    dockWidgetUsers->setAllowedAreas(Qt::RightDockWidgetArea );
+    dockWidgetUsers->setAllowedAreas(Qt::RightDockWidgetArea);
     dockWidgetUsers->setFeatures(QDockWidget::NoDockWidgetFeatures);
     dockWidgetUsers->setFixedWidth(154);
 //    dockWidgetUsers->setMouseTracking(true);
@@ -695,14 +649,14 @@ void MainWindow::setUsersList() {
     auto l = new QLabel("Users connected");
     dockWidgetUsers->setTitleBarWidget(l);
     dockWidgetUsers->setWidget(usersList);
-    this->addDockWidget(Qt::RightDockWidgetArea,dockWidgetUsers);
+    this->addDockWidget(Qt::RightDockWidgetArea, dockWidgetUsers);
     dockWidgetUsers->hide();
 }
 
 void MainWindow::setGradient() {
     mainPalette = QGuiApplication::palette();
 
-    gradient = new QConicalGradient(QPointF(size().width()/2,size().height()/2),45);
+    gradient = new QConicalGradient(QPointF(size().width() / 2, size().height() / 2), 45);
     gradient->setColorAt(0, QColor("#E6D0E2")); //rosso
     gradient->setColorAt(0.25, QColor("#D0D7E6"));  //blu
     gradient->setColorAt(0.5, QColor("#E6DFD0")); //giallo
@@ -714,7 +668,7 @@ void MainWindow::setNumUsers(int n) {
     auto string = QString("Users online: ");
     string.append(QString::number(n));
     numUsers->setText(string);
-    if(numUsers->isHidden())
+    if (numUsers->isHidden())
         numUsers->show();
 }
 
@@ -724,17 +678,17 @@ void MainWindow::hideNumUsers() {
 
 void MainWindow::showHideLeftDock(dock_type dock) {
 
-    if(leftDockWidgets[dock]->isHidden()) {
-        for( auto d:leftDockWidgets) d->hide();
+    if (leftDockWidgets[dock]->isHidden()) {
+        for (auto d:leftDockWidgets) d->hide();
         leftDockWidgets[dock]->show();
-        if(dock == dock_type::tree) {
+        if (dock == dock_type::tree) {
             treeShowAction->setToolTip("Hide " + msgs[dock]);
             treeShowAction->setIcon(QIcon("./icons/hide_left_tree_menu.png"));
         }
         lastDock = leftDockWidgets[dock];
-    }else {
+    } else {
         leftDockWidgets[dock]->hide();
-        if(dock == dock_type::tree) {
+        if (dock == dock_type::tree) {
             treeShowAction->setToolTip("Show " + msgs[dock]);
             treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
         }
@@ -743,7 +697,7 @@ void MainWindow::showHideLeftDock(dock_type dock) {
 }
 
 void MainWindow::setInfoWidget() {
-    if(centralWidget->currentWidget() != infoWidget) {
+    if (centralWidget->currentWidget() != infoWidget) {
         lastCentral = centralWidget->currentWidget();
         centralWidget->setCurrentWidget(infoWidget);
         toolBar->hide();
@@ -758,8 +712,7 @@ void MainWindow::setInfoWidget() {
             dockWidgetUsers->show();
             toolBar->show();
             richTextBar->show();
-        }
-        else{
+        } else {
             gridToolBar->show();
         }
         if (lastDock != nullptr)
@@ -767,8 +720,9 @@ void MainWindow::setInfoWidget() {
     }
 }
 
-void MainWindow::setInfoUsersListWidget(const QPixmap& image, const QString& nickname, const QString& name, const QString& email) {
-    if(centralWidget->currentWidget() != infoUsersListWidget) {
+void MainWindow::setInfoUsersListWidget(const QPixmap &image, const QString &nickname, const QString &name,
+                                        const QString &email) {
+    if (centralWidget->currentWidget() != infoUsersListWidget) {
         infoUsersListWidget->setData(image, nickname, name, email);
         lastCentral = centralWidget->currentWidget();
         centralWidget->setCurrentWidget(infoUsersListWidget);
@@ -788,7 +742,8 @@ void MainWindow::setInfoUsersListWidget(const QPixmap& image, const QString& nic
     }
 }
 
-void MainWindow::openInfoEdit(const QPixmap& image, const QString& nickname, const QString& name, const QString& email) {
+void
+MainWindow::openInfoEdit(const QPixmap &image, const QString &nickname, const QString &name, const QString &email) {
     infoWidgetEdit->setImage(&image);
     infoWidgetEdit->setName(name);
     infoWidgetEdit->setEmail(email);
@@ -797,22 +752,22 @@ void MainWindow::openInfoEdit(const QPixmap& image, const QString& nickname, con
 }
 
 
-void MainWindow::hideEditor(QString& fileName) {
-     if(centralWidget->currentWidget()!=gridView)
-         centralWidget->setCurrentWidget(nullWidg);
+void MainWindow::hideEditor(QString &fileName) {
+    if (centralWidget->currentWidget() != gridView)
+        centralWidget->setCurrentWidget(nullWidg);
 
-     spinner = new QLabel();
-     auto gif = new QMovie("./gifs/ajax-loader.gif");
-     gif->setScaledSize(QSize(20,20));
-     spinner->setMovie(gif);
-     statusBar->addWidget(spinner,3);
-     statusBar->showMessage("    Loading file "+fileName,-1);
-     spinner->movie()->start();
-     this->setCursor(QCursor(Qt::WaitCursor));
-     if(highlightAction->isChecked()){
-         highlightAction->setChecked(false);
-         highlightAction->triggered(false);
-     }
+    spinner = new QLabel();
+    auto gif = new QMovie("./gifs/ajax-loader.gif");
+    gif->setScaledSize(QSize(20, 20));
+    spinner->setMovie(gif);
+    statusBar->addWidget(spinner, 3);
+    statusBar->showMessage("    Loading file " + fileName, -1);
+    spinner->movie()->start();
+    this->setCursor(QCursor(Qt::WaitCursor));
+    if (highlightAction->isChecked()) {
+        highlightAction->setChecked(false);
+        highlightAction->triggered(false);
+    }
 }
 
 void MainWindow::setRichTextBar() {
@@ -851,9 +806,10 @@ void MainWindow::setRichTextBar() {
     richTextBar->addWidget(comboFont);
 
 
-    QStringList list{"Arial","Arial Black","Comic Sans MS", "Courier","Georgia","Impact","Tahoma","Times New Roman","Trebuchet MS","Verdana"};
-    for(int i = 0; i < comboFont->count(); i++) {
-        if(!list.contains(comboFont->itemText(i))){
+    QStringList list{"Arial", "Arial Black", "Comic Sans MS", "Courier", "Georgia", "Impact", "Tahoma",
+                     "Times New Roman", "Trebuchet MS", "Verdana"};
+    for (int i = 0; i < comboFont->count(); i++) {
+        if (!list.contains(comboFont->itemText(i))) {
             comboFont->removeItem(i);
             i--;
         }
@@ -915,8 +871,8 @@ void MainWindow::setAlignmentActionChecked() {
         actionAlignJustify->setChecked(true);
 }
 
-void MainWindow::setAlignLeftChecked()  {
-    if(!actionAlignLeft->isChecked()){
+void MainWindow::setAlignLeftChecked() {
+    if (!actionAlignLeft->isChecked()) {
         this->actionAlignLeft->setChecked(true);
         return;
     }
@@ -925,11 +881,12 @@ void MainWindow::setAlignLeftChecked()  {
     this->actionAlignRight->setChecked(false);
     this->actionAlignJustify->setChecked(false);
 
-    this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignLeft,copyAction->isEnabled());
+    this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(), Qt::AlignLeft,
+                                       copyAction->isEnabled());
 }
 
 void MainWindow::setAlignCenterChecked() {
-    if(!actionAlignCenter->isChecked()){
+    if (!actionAlignCenter->isChecked()) {
         this->actionAlignCenter->setChecked(true);
         return;
     }
@@ -938,12 +895,12 @@ void MainWindow::setAlignCenterChecked() {
     this->actionAlignRight->setChecked(false);
     this->actionAlignJustify->setChecked(false);
 
-    int index=editor->textEdit->textCursor().position();
-    this->editor->setAbsoluteAlignment(index,Qt::AlignCenter,copyAction->isEnabled());
+    int index = editor->textEdit->textCursor().position();
+    this->editor->setAbsoluteAlignment(index, Qt::AlignCenter, copyAction->isEnabled());
 }
 
 void MainWindow::setAlignRightChecked() {
-    if(!actionAlignRight->isChecked()){
+    if (!actionAlignRight->isChecked()) {
         this->actionAlignRight->setChecked(true);
         return;
     }
@@ -951,11 +908,12 @@ void MainWindow::setAlignRightChecked() {
     this->actionAlignCenter->setChecked(false);
     this->actionAlignLeft->setChecked(false);
     this->actionAlignJustify->setChecked(false);
-    this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignRight,copyAction->isEnabled());
+    this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(), Qt::AlignRight,
+                                       copyAction->isEnabled());
 }
 
 void MainWindow::setAlignJustifyChecked() {
-    if(!actionAlignJustify->isChecked()){
+    if (!actionAlignJustify->isChecked()) {
         this->actionAlignJustify->setChecked(true);
         return;
     }
@@ -963,19 +921,18 @@ void MainWindow::setAlignJustifyChecked() {
     this->actionAlignCenter->setChecked(false);
     this->actionAlignLeft->setChecked(false);
     this->actionAlignRight->setChecked(false);
-    this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(),Qt::AlignJustify,copyAction->isEnabled());
+    this->editor->setAbsoluteAlignment(editor->textEdit->textCursor().position(), Qt::AlignJustify,
+                                       copyAction->isEnabled());
 }
 
-void MainWindow::colorChanged(const QColor &c)
-{
+void MainWindow::colorChanged(const QColor &c) {
     QPixmap pix(16, 16);
     pix.fill(c);
     textColorAction->setIcon(pix);
 }
 
 
-void MainWindow::fontChanged(const QFont &f)
-{
+void MainWindow::fontChanged(const QFont &f) {
     comboFont->setCurrentIndex(comboFont->findText(QFontInfo(f).family()));
     comboSize->setCurrentIndex(comboSize->findText(QString::number(f.pointSize())));
     boldAction->setChecked(f.bold());
@@ -983,7 +940,7 @@ void MainWindow::fontChanged(const QFont &f)
     underlineAction->setChecked(f.underline());
 }
 
-QPixmap MainWindow::roundImage(const QPixmap& orig) {
+QPixmap MainWindow::roundImage(const QPixmap &orig) {
     int size = qMax(orig.width(), orig.height());
     QPixmap rounded = QPixmap(size, size);
     rounded.fill(Qt::transparent);
@@ -1025,7 +982,7 @@ void MainWindow::deleteMainWindowMembers() {
     shEditor = nullptr;
     delete gridView;
     gridView = nullptr;
-    for(auto dock: leftDockWidgets)
+    for (auto dock: leftDockWidgets)
         delete dock;
     inviteUserWidget = nullptr;
     treeView = nullptr;
@@ -1050,10 +1007,10 @@ void MainWindow::deleteMainWindowMembers() {
     lastDock = nullptr;
     lastCentral = nullptr;
 
-    for(auto a: toolBar->actions()){
+    for (auto a: toolBar->actions()) {
         a->disconnect();
     }
-    for(auto a: richTextBar->actions()){
+    for (auto a: richTextBar->actions()) {
         a->disconnect();
     }
     comboFont->disconnect();
@@ -1063,13 +1020,13 @@ void MainWindow::deleteMainWindowMembers() {
     richTextBar->hide();
     statusBar->hide();
 
-    toolBar->setAttribute(Qt::WA_TransparentForMouseEvents,false );
+    toolBar->setAttribute(Qt::WA_TransparentForMouseEvents, false);
 
 }
 
 void MainWindow::createLostConnWidget() {
     lostConnectionWidget = new QWidget(this);
-    auto button = new QPushButton("Reconnect",this);
+    auto button = new QPushButton("Reconnect", this);
     auto label = new QLabel("The connection has timed out", this);
     auto imageLabel = new QLabel(this);
     auto image = QPixmap("./images/icons8-disconnected-80.png");
@@ -1077,22 +1034,22 @@ void MainWindow::createLostConnWidget() {
     lostConnectionWidget->setStyleSheet("QLabel{color:#3A70D5; font: 16pt;}"
                                         "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
 
-    connect(button,&QPushButton::clicked, [this]{constructMainWindowMembers();});
+    connect(button, &QPushButton::clicked, [this] { constructMainWindowMembers(); });
 
     auto layout = new QVBoxLayout(this);
     auto outerLayout = new QVBoxLayout(this);
     auto hLayout = new QHBoxLayout(this);
 
-    layout->addWidget(label,2,Qt::AlignCenter);
-    layout->addWidget(button,1,Qt::AlignRight);
+    layout->addWidget(label, 2, Qt::AlignCenter);
+    layout->addWidget(button, 1, Qt::AlignRight);
 
     hLayout->addStretch(3);
-    hLayout->addWidget(imageLabel,1,Qt::AlignCenter);
-    hLayout->addLayout(layout,1);
+    hLayout->addWidget(imageLabel, 1, Qt::AlignCenter);
+    hLayout->addLayout(layout, 1);
     hLayout->addStretch(3);
 
     outerLayout->addStretch(2);
-    outerLayout->addLayout(hLayout,1);
+    outerLayout->addLayout(hLayout, 1);
     outerLayout->addStretch(2);
 
     lostConnectionWidget->setLayout(outerLayout);
