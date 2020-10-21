@@ -391,6 +391,11 @@ void MainWindow::setToolBars() {
     backAction->setToolTip("Back");
     gridToolBar->addAction(backAction);
 
+    closeAction = new QAction();
+    closeAction->setIcon(QIcon("./icons/back.png"));
+    closeAction->setToolTip("Close file");
+    toolBar->addAction(closeAction);
+
     addAction = new QAction();
     addAction->setIcon(QIcon("./icons/add_file_icon.png"));
     addAction->setToolTip("New file");
@@ -404,10 +409,7 @@ void MainWindow::setToolBars() {
     toolBar->addAction(deleteAction);
     gridToolBar->addAction(deleteAction);
 
-    closeAction = new QAction();
-    closeAction->setIcon(QIcon("./icons/close.png"));
-    closeAction->setToolTip("Close file");
-    toolBar->addAction(closeAction);
+
 
     QAction *separator1 = toolBar->addSeparator();
     separator1->setObjectName("separator1");
@@ -593,7 +595,7 @@ void MainWindow::setStyleSheet() {
     qApp->setStyleSheet("QWidget {font-family: helvetica;}"
                         "QToolBar {background:#F1F1F1; }"
                         "QStatusBar {background-color: #F1F1F1; border-top:1px solid #d2d2d2}"
-                        "QToolButton {padding:4}"
+                        "QToolButton {padding:6}"
                         "QComboBox {padding:5;}"
                         "QMenu{border:1px solid gray;}");
 
