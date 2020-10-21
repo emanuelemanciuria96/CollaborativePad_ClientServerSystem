@@ -66,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     installEventFilter(this);
     this->setWindowIcon(QIcon("./icons/app_icon.png"));
+    this->setWindowTitle("CollaborativePad");
 }
 
 void MainWindow::constructMainWindowMembers() {
