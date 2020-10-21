@@ -609,10 +609,10 @@ void MainWindow::setStyleSheet() {
     leftDockWidgets[invitelist]->setStyleSheet("QListWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
     leftDockWidgets[tree]->setStyleSheet(
             "QTreeWidget {background: rgba(0,0,0,0.1); border:none; padding:8; outline:none}");
-    addUserWidget->setStyleSheet(
-            "QLineEdit{font:10pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
-            "QLabel{color:#3A70D5; font: 10pt;}"
-            "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+//    addUserWidget->setStyleSheet(
+//            "QLineEdit{font:10pt; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
+//            "QLabel{color:#3A70D5; font: 10pt;}"
+//            "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
     auto option = QStyleOptionFocusRect();
     qApp->setStyle(new CustomStyle());
 }
