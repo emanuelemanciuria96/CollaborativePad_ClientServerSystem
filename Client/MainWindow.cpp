@@ -225,6 +225,7 @@ void MainWindow::constructMainWindowMembers() {
     connect(editor->textEdit, &QTextEdit::cursorPositionChanged, this, &MainWindow::setAlignmentActionChecked);
     connect(infoWidget, &InfoWidget::logout, this, &MainWindow::logout);
     connect(shEditor, &SharedEditor::updateUserListInfo, usersList, &UsersList::updateUserInfo);
+    connect(shEditor, &SharedEditor::errorArrived, this, &MainWindow::errorArrived);
 //    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
 //    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
 //    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
@@ -1061,4 +1062,8 @@ void MainWindow::createLostConnWidget() {
 
     lostConnectionWidget->setLayout(outerLayout);
     centralWidget->addWidget(lostConnectionWidget);
+}
+
+void MainWindow::errorArrived(const QString &message) {
+    QMessageBox::critical(nullptr, "Server Error", message);
 }

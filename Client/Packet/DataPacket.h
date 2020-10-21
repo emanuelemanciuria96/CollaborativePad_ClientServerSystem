@@ -21,6 +21,7 @@ public:
         file_info = 4,
         cursorPos = 5,
         user_info = 6,
+        error = 7,
     }data_t;
 
     DataPacket();

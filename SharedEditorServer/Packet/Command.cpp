@@ -3,6 +3,7 @@
 //
 
 #include "Command.h"
+#include "../MyExceptions/CommandException.h"
 #include <utility>
 #include <QtCore/QDir>
 #include <QtSql/QSqlDatabase>
@@ -95,7 +96,7 @@ bool Command::srcCommand(QString &connectionId){
 QVector<qint32> Command::renCommand(QString &connectionId) {
 
     if(_args.size() != 2)
-        return QVector<qint32>();
+        throw CommandException("");
 
     QVector<qint32 > listId;
 
@@ -103,13 +104,13 @@ QVector<qint32> Command::renCommand(QString &connectionId) {
     db.setDatabaseName("db/files.db");
 
     if (!db.open())
-        return listId;
+        throw CommandException("");
 
     QSqlQuery query(db);
     auto list1 = _args[0].split("/");
     auto list2 = _args[1].split("/");
     if( list1.size()!=2 || list2.size()!=2 || list1.first() != list2.first() ) {
-        return listId;
+        throw CommandException("");
     }
 
     auto owner = list1.first();
@@ -118,7 +119,7 @@ QVector<qint32> Command::renCommand(QString &connectionId) {
 
     if(!query.exec("SELECT SITEID FROM FILES WHERE NAME='"+nameOld+"' AND OWNER='"+owner+"';")){
         db.close();
-        return QVector<qint32>();
+        throw CommandException("");
     }
 
     while(query.next()){
@@ -130,7 +131,7 @@ QVector<qint32> Command::renCommand(QString &connectionId) {
     if(!query.exec("UPDATE FILES SET NAME='"+nameNew+"' WHERE NAME='"+nameOld+"' AND OWNER='"+owner+"'")){
         db.rollback();
         db.close();
-        return QVector<qint32>();
+        throw CommandException("");
     }
 
 
@@ -201,7 +202,7 @@ bool Command::svCommand(QString& connectionId) { //la rmCommand elimina il file 
 QVector<qint32> Command::rmAllCommand(QString& connectionId) { //la rmAllCommand elimina il file a chiunque
 
     if(_args.size()!=1)
-        return QVector<qint32>();
+        throw CommandException("");
 
     QString fileName = _args.first();
     QVector<qint32> listId{};
@@ -214,12 +215,12 @@ QVector<qint32> Command::rmAllCommand(QString& connectionId) { //la rmAllCommand
     QString name = list.last();
 
     if (!db.open())
-        return listId;
+        throw CommandException("");
 
     QSqlQuery query(db);
     if(!query.exec("SELECT SITEID, FSNAME FROM FILES WHERE NAME='"+name+"' AND OWNER='"+owner+"'")){
         db.close();
-        return QVector<qint32>();
+        throw CommandException("");
     }
 
 
@@ -234,7 +235,7 @@ QVector<qint32> Command::rmAllCommand(QString& connectionId) { //la rmAllCommand
     if(!query.exec("DELETE FROM FILES WHERE NAME='"+name+"' AND OWNER='"+owner+"'")){
         db.rollback();
         db.close();
-        return QVector<qint32>() ;
+        throw CommandException("");
     }
 
 

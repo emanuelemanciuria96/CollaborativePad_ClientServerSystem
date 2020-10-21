@@ -13,6 +13,8 @@
 #include "ServerThread.h"
 #include "NetworkServer.h"
 #include "Packet/LoginInfo.h"
+#include "Packet/ErrorPacket.h"
+#include "MyExceptions/CommandException.h"
 
 
 std::shared_mutex ServerThread::db_op_mtx;
@@ -205,8 +207,12 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                 shr->setName(name);
                 shr->setEmail(email);
                 packet.setPayload(shr);
-                shr->updateInfo(threadId);
-                _sockets.broadcast(operatingFileName, _siteID, packet);
+                if(shr->updateInfo(threadId))
+                    _sockets.broadcast(operatingFileName, _siteID, packet);
+                else {
+                    DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                    sendPacket(pkt);
+                }
             }
             break;
 
@@ -329,14 +335,18 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
     switch(cmd){
         case (Command::ren):{
-            std::unique_lock ul(db_op_mtx);
-            auto listId = command->renCommand(threadId);
-            if( !listId.empty() ) {
-                _sockets.sendTo(listId,packet);
-                ul.unlock();
+            try {
+                std::unique_lock ul(db_op_mtx);
+                auto listId = command->renCommand(threadId);
+                if (!listId.empty()) {
+                    _sockets.sendTo(listId, packet);
+                    ul.unlock();
+                } else
+                    std::cout << "rename command isn't broadcasted" << std::endl;
+            } catch (CommandException e) {
+                DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                sendPacket(pkt);
             }
-            else
-                std::cout << "rename command isn't broadcasted" << std::endl;
             break;
         }
 
@@ -348,30 +358,39 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                 std::unique_lock ul(db_op_mtx);
                 if (command->rmCommand(threadId))
                     ul.unlock();
-                else
+                else {
+                    DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                    sendPacket(pkt);
                     std::cout << "rm command failed!" << std::endl;
+                }
             }
             else{
-                std::unique_lock ul(db_op_mtx);
-                auto listId = command->rmAllCommand(threadId);
-                if (!listId.empty()) {
-                    msgHandler->submit(NetworkServer::processRmCommand,std::make_shared<Command>(*command));
-                    pendentDeleteList.insert(std::make_pair(command->getArgs().first(),std::move(listId)));
-                    ul.unlock();
+                try {
+                    std::unique_lock ul(db_op_mtx);
+                    auto listId = command->rmAllCommand(threadId);
+                    if (!listId.empty()) {
+                        msgHandler->submit(NetworkServer::processRmCommand, std::make_shared<Command>(*command));
+                        pendentDeleteList.insert(std::make_pair(command->getArgs().first(), std::move(listId)));
+                        ul.unlock();
+                    } else
+                        std::cout << "rm command failed!" << std::endl;
+                } catch (CommandException e) {
+                    DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                    sendPacket(pkt);
                 }
-                else
-                    std::cout << "rm command failed!" << std::endl;
             }
             break;
         }
 
         case (Command::sv):{
-            command->svCommand(threadId);
+            if (command->svCommand(threadId)) {
+                DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                sendPacket(pkt);
+            }
             break;
         }
 
         case (Command::opn):{
-
             std::shared_lock sl(db_op_mtx);
             if( command->srcCommand(threadId) ) {
                 QString fileName = command->getArgs().front();
@@ -391,8 +410,11 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                 else
                     std::cout<<"Casino pazzesco, errore assolutamente da gestire!"<<std::endl;
 
-            }else
+            }else {
+                DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                sendPacket(pkt);
                 std::cout << "opn command failed!" << std::endl;
+            }
 
             break;
         }
@@ -417,52 +439,71 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
         case (Command::ls):{
             std::shared_lock sl(db_op_mtx);
-            command->lsCommand(threadId);
-            sendPacket(packet);
+            if (command->lsCommand(threadId)) {
+                sendPacket(packet);
+            } else {
+                DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                sendPacket(pkt);
+            }
             break;
         }
 
-        case (Command::invite):{
+        case (Command::invite): {
             std::unique_lock ul(db_op_mtx);
-            command->inviteCommand(threadId);
-            sendPacket(packet);
-            if (command->getArgs().first() == "ok") {
-                auto userSiteID = command->getArgs().last().toInt();
-                DataPacket invitePacket(userSiteID, 0, DataPacket::command);
-                auto payload = std::make_shared<Command>(userSiteID, Command::lsInvite, QVector<QString>());
-                payload->lsInviteCommand(threadId);
-                invitePacket.setPayload(payload);
-                QVector<qint32> vector(1, userSiteID);
-                _sockets.sendTo(vector, invitePacket);
+            if (command->inviteCommand(threadId)) {
+                sendPacket(packet);
+                if (command->getArgs().first() == "ok") {
+                    auto userSiteID = command->getArgs().last().toInt();
+                    DataPacket invitePacket(userSiteID, 0, DataPacket::command);
+                    auto payload = std::make_shared<Command>(userSiteID, Command::lsInvite, QVector<QString>());
+                    payload->lsInviteCommand(threadId);
+                    invitePacket.setPayload(payload);
+                    QVector<qint32> vector(1, userSiteID);
+                    _sockets.sendTo(vector, invitePacket);
+                }
+            } else {
+                DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                sendPacket(pkt);
             }
             break;
         }
 
         case (Command::ctrlInvite): {
             std::unique_lock ul(db_op_mtx);
-            command->ctrlInviteCommand(threadId);
+            if (!command->ctrlInviteCommand(threadId)) {
+                DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                sendPacket(pkt);
+            }
             break;
         }
 
         case (Command::uri): {
             std::unique_lock ul(db_op_mtx);
-            command->uriCommand(threadId);
-            sendPacket(packet);
-            if (command->getArgs().first() == "invite-existing") {
-                DataPacket invitePacket(_siteID, 0, DataPacket::command);
-                auto payload = std::make_shared<Command>(_siteID, Command::lsInvite, QVector<QString>());
-                payload->lsInviteCommand(threadId);
-                invitePacket.setPayload(payload);
-                QVector<qint32> vector(1, _siteID);
-                _sockets.sendTo(vector, invitePacket);
+            if (command->uriCommand(threadId)) {
+                sendPacket(packet);
+                if (command->getArgs().first() == "invite-existing") {
+                    DataPacket invitePacket(_siteID, 0, DataPacket::command);
+                    auto payload = std::make_shared<Command>(_siteID, Command::lsInvite, QVector<QString>());
+                    payload->lsInviteCommand(threadId);
+                    invitePacket.setPayload(payload);
+                    QVector<qint32> vector(1, _siteID);
+                    _sockets.sendTo(vector, invitePacket);
+                }
+            } else {
+                DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                sendPacket(pkt);
             }
             break;
         }
 
         case (Command::fsName): {
             std::unique_lock ul(db_op_mtx);
-            command->fsNameCommand(threadId);
-            sendPacket(packet);
+            if (command->fsNameCommand(threadId))
+                sendPacket(packet);
+            else {
+                DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                sendPacket(pkt);
+            }
             break;
         }
 
@@ -551,6 +592,11 @@ void ServerThread::sendPacket(DataPacket packet){
 
         case (DataPacket::user_info): {
             sendUserInfo(packet);
+            break;
+        }
+
+        case (DataPacket::error): {
+            sendErrorPacket(packet);
             break;
         }
 
@@ -798,6 +844,27 @@ void ServerThread::sendFile() {
 
     isFileSent = true;
 
+}
+
+void ServerThread::sendErrorPacket(DataPacket& packet) {
+    auto ptr = std::dynamic_pointer_cast<ErrorPacket>(packet.getPayload());
+
+    QDataStream out;
+    out.setDevice(socket.get());
+    out.setVersion(QDataStream::Qt_5_5);
+
+    QBuffer buf;
+    buf.open(QBuffer::WriteOnly);
+    QDataStream tmp(&buf);
+    tmp<< ptr->getMessage();
+
+    qint32 bytes = fixedBytesWritten + buf.data().size();
+
+    out << bytes<<packet.getSource() << packet.getErrcode() << (quint32) packet.getTypeOfData();
+    out << ptr->getSiteId() << ptr->getMessage();
+    socket->waitForBytesWritten(-1);
+
+    std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
 }
 
 void ServerThread::disconnected(){

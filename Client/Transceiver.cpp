@@ -9,6 +9,7 @@
 #include "Transceiver.h"
 #include "Packet/Command.h"
 #include "Packet/UserInfo.h"
+#include "Packet/ErrorPacket.h"
 
 qint32 fixedBytesWritten = sizeof(qint32)+sizeof(qint32)+sizeof(quint32)+sizeof(quint32)+sizeof(qint32);
                         ///      bytes     source        errcode      DataPacket::data_t   siteID
@@ -108,6 +109,11 @@ void Transceiver::recvPacket() {
             case (DataPacket::user_info): {
                 recvUserInfo(packet, in);
                 //std::cout<<"entrato nella user info"<<std::endl;
+                break;
+            }
+
+            case (DataPacket::error): {
+                recvErrorPacket(packet, in);
                 break;
             }
 
@@ -270,6 +276,17 @@ void Transceiver::recvUserInfo(DataPacket &pkt, QDataStream &in) {
 
     emit readyToProcess(pkt);
 
+}
+
+void Transceiver::recvErrorPacket(DataPacket &pkt, QDataStream &in) {
+    qint32 siteId;
+    QString message;
+
+    in >> siteId >> message;
+
+    pkt.setPayload(std::make_shared<ErrorPacket>(siteId, message));
+
+    emit readyToProcess(pkt);
 }
 
 void Transceiver::sendPacket(DataPacket pkt){

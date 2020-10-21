@@ -74,6 +74,7 @@ private:
     void sendCursorPos(DataPacket& packet);
     void sendFileInfo(DataPacket& packet);
     void sendUserInfo(DataPacket& packet);
+    void sendErrorPacket(DataPacket& packet);
 
     void setThreadId();
 

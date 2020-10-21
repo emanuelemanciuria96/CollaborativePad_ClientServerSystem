@@ -69,8 +69,8 @@ private:
     void rollBack();
 
     void recvCommand(DataPacket& pkt,QDataStream& in);
-    void recvCursorPos(DataPacket& packet, QDataStream& in);
-
+    void recvCursorPos(DataPacket& pkt, QDataStream& in);
+    void recvErrorPacket(DataPacket& pkt, QDataStream& in);
 };
 
 

@@ -24,6 +24,7 @@
 #include "Packet/Command.h"
 #include "Packet/CursorPosition.h"
 #include "Packet/UserInfo.h"
+#include "Packet/ErrorPacket.h"
 #include <vector>
 #include <algorithm>
 #include <QtCore/QTimer>
@@ -66,6 +67,7 @@ public:
     void processUriCommand( Command &cmd );
     void processRmCommand(Command &cmd );
     void processCursorPos(CursorPosition& curPos);
+    void processErrorPacket(ErrorPacket& error);
 
 public slots:
     void loginSlot(QString& username, QString& password);
@@ -120,6 +122,7 @@ signals:
     void usernameAlreadyExists();
     void serverUnavailable();
     void updateUserListInfo(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
+    void errorArrived(const QString& message);
 
 public:
     explicit SharedEditor(QObject *parent = 0);

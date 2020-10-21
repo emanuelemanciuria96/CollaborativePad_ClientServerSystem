@@ -139,6 +139,7 @@ public slots:
     void colorChanged(const QColor &c);
     void fontChanged(const QFont &f);
     void serverUnavailable();
+    void errorArrived(const QString& message);
 
 signals:
     void sendComboSizeText(const QString& p);

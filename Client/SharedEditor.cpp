@@ -4,6 +4,7 @@
 
 #include "SharedEditor.h"
 #include "Packet/LoginInfo.h"
+#include "Packet/ErrorPacket.h"
 #include <vector>
 #include <algorithm>
 #include <tuple>
@@ -263,6 +264,9 @@ void SharedEditor::process(DataPacket pkt) {
         case DataPacket::user_info:
             if(isFileOpened)
                 processUserInfo(*std::dynamic_pointer_cast<UserInfo>(pkt.getPayload()) );
+            break;
+        case DataPacket::error:
+                processErrorPacket(*std::dynamic_pointer_cast<ErrorPacket>(pkt.getPayload()));
             break;
         default:
             throw std::exception();
@@ -745,6 +749,10 @@ void SharedEditor::processUriCommand(Command &cmd) {
 
 void SharedEditor::processFsNameCommand(Command &cmd) {
     emit fsNameArrived(cmd.getArgs().first());
+}
+
+void SharedEditor::processErrorPacket(ErrorPacket &error) {
+    emit errorArrived(error.getMessage());
 }
 
 void SharedEditor::clearText(){
