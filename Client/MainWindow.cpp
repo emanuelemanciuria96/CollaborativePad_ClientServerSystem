@@ -224,6 +224,7 @@ void MainWindow::constructMainWindowMembers() {
     connect(actionAlignLeft, &QAction::triggered, this, &MainWindow::setAlignLeftChecked);
     connect(editor->textEdit, &QTextEdit::cursorPositionChanged, this, &MainWindow::setAlignmentActionChecked);
     connect(infoWidget, &InfoWidget::logout, this, &MainWindow::logout);
+    connect(shEditor, &SharedEditor::updateUserListInfo, usersList, &UsersList::updateUserInfo);
 //    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
 //    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
 //    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);

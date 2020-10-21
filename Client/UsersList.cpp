@@ -83,3 +83,24 @@ void UsersList::openUserInfo(QListWidgetItem *item) {
     auto user = map[item];
     emit setUserInfo(user.image, user.username, user.name, user.email);
 }
+
+void UsersList::updateUserInfo(const QPixmap& image, const QString& nickname, const QString& name, const QString& email) {
+    auto item = findItems(nickname,Qt::MatchExactly).first();
+    auto orig = QPixmap();
+
+    if(image.isNull())
+        orig = QPixmap("./images/profile.jpg");
+    else
+        orig = QPixmap(image);
+
+    auto rounded = MainWindow::roundImage(orig);
+    item->setIcon(QIcon(rounded));
+
+    map.erase(item);
+    struct UserData data;
+    data.image = image;
+    data.username = nickname;
+    data.name = name;
+    data.email = email;
+    map.insert(std::make_pair(item, data));
+}

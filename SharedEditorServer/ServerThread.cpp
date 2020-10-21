@@ -199,11 +199,14 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
 
         case LoginInfo::update_info:
             if (!_username.isEmpty()) {
-                auto shr = std::make_shared<LoginInfo>( _siteID, (LoginInfo::type_t)type, "", "");
+                std::unique_lock ul(db_op_mtx);
+                auto shr = std::make_shared<LoginInfo>( _siteID, (LoginInfo::type_t)type, _username, "");
                 shr->setImage(image);
                 shr->setName(name);
                 shr->setEmail(email);
+                packet.setPayload(shr);
                 shr->updateInfo(threadId);
+                _sockets.broadcast(operatingFileName, _siteID, packet);
             }
             break;
 

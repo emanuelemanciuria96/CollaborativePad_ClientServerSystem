@@ -23,6 +23,7 @@ public slots:
     void removeUser(const UserInfo& user);
     void addUser(const UserInfo& user);
     void openUserInfo(QListWidgetItem* item);
+    void updateUserInfo(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
 signals:
     void setUserInfo(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void setNumUsers(int n);

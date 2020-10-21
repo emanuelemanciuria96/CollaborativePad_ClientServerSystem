@@ -119,6 +119,7 @@ signals:
     void remoteAlignment(int pos, Qt::Alignment a );
     void usernameAlreadyExists();
     void serverUnavailable();
+    void updateUserListInfo(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
 
 public:
     explicit SharedEditor(QObject *parent = 0);

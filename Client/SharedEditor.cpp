@@ -325,6 +325,10 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
             emit searchUserResult(LoginInfo::search_user_error);
             break;
 
+        case LoginInfo::update_info:
+            emit updateUserListInfo(logInf.getImage(), logInf.getUser(), logInf.getName(), logInf.getEmail());
+            break;
+
         default:
             std::cout << "errore nella processlogininfo" << std::endl;
             break;

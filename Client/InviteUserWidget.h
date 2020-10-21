@@ -19,6 +19,7 @@ public:
 private:
     Ui::InviteUserWidget *ui;
     QMap<QListWidgetItem*, InviteUserWidgetItem*> map;
+    void setNoInvitesItem();
 
 public slots:
     void inviteListArrived(const QVector<QString> &args);

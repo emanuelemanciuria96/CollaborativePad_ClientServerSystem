@@ -31,6 +31,8 @@ void InviteUserWidget::inviteListArrived(const QVector<QString> &args) {
         map.insert(item, widget);
     }
     emit inviteNumberModified(ui->listWidget->count());
+    if (ui->listWidget->count() == 0)
+        setNoInvitesItem();
 }
 
 void InviteUserWidget::emitSendInviteAnswer(QListWidgetItem* item, const QString &mode, const QString &user, const QString &filename) {
@@ -38,6 +40,8 @@ void InviteUserWidget::emitSendInviteAnswer(QListWidgetItem* item, const QString
     auto row = ui->listWidget->row(item);
     ui->listWidget->takeItem(row);
     emit inviteNumberModified(ui->listWidget->count());
+    if (ui->listWidget->count() == 0)
+        setNoInvitesItem();
 }
 
 void InviteUserWidget::editFileName(QString &oldName, QString &newName) {
@@ -76,5 +80,19 @@ void InviteUserWidget::processFileDeleted(QString &fileName) {
             }
         }
         emit inviteNumberModified(ui->listWidget->count());
+        if (ui->listWidget->count() == 0)
+            setNoInvitesItem();
     }
+}
+
+void InviteUserWidget::setNoInvitesItem() {
+    auto item = new QListWidgetItem(ui->listWidget);
+    item->setText("No invites to display");
+    item->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    item->setTextColor(Qt::darkGray);
+    item->setSizeHint(QSize(100, 100));
+    QFont font;
+    font.setPointSize(16);
+    item->setFont(font);
+    ui->listWidget->addItem(item);
 }
