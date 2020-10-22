@@ -73,12 +73,12 @@ void InviteUserWidget::processFileDeleted(QString &fileName) {
             QListWidgetItem *item = ui->listWidget->item(i);
             auto widget = map[item];
 
-//            if( widget == nullptr ) return;
+            if( widget == nullptr ) return;
 
             if (widget->getUser() == user && widget->getFileName() == file) {
                 auto row = ui->listWidget->row(item);
                 ui->listWidget->takeItem(row);
-                return;
+                break;
             }
         }
         emit inviteNumberModified(ui->listWidget->count());

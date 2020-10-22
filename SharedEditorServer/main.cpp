@@ -10,7 +10,7 @@
 #include "NetworkServer.h"
 #include "database/DBSql.h"
 
-/*static bool initializeDb()
+static bool initializeDb()
 {
     QDir().mkdir("db");
     QDir().mkdir("images");
@@ -101,7 +101,7 @@
 
     QSqlDatabase::removeDatabase("initialize");
     return true;
-}*/
+}
 
 int main(int argc, char **argv) {
     QApplication app(argc, argv);
