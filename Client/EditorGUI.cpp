@@ -162,7 +162,8 @@ void EditorGUI::textFormatChange(int pos, int charsModified) {
 void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, const QTextCharFormat& format) {
     pos--;
     RemoteCursor *cursor;
-
+    if(siteId == model->getSiteId())
+        return;
     cursor = getRemoteCursor(siteId);
 //    std::cout << "Inseriti da siteId: " << siteId << std::endl;
     ///blocco l'invio della posizione del mio cursore quando ricevo modifiche
@@ -188,7 +189,8 @@ bool EditorGUI::checkSiteId(RemoteCursor &rc, qint32 siteId) {
 void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     pos--;
     RemoteCursor *cursor;
-
+    if(siteId == model->getSiteId())
+        return;
     cursor = getRemoteCursor(siteId);
     ///blocco l'invio della posizione del mio cursore quando ricevo modifiche
     myCursorPosUpdateBlocker = true;
@@ -372,6 +374,8 @@ void EditorGUI::handleCursorPosChanged() {
 
 void EditorGUI::updateRemoteCursorPos(qint32 pos, qint32 siteId) {
     std::cout << "draw in " << pos << " siteID: " << siteId << std::endl;
+    if(siteId == model->getSiteId())
+        return;
     auto cursor = getRemoteCursor(siteId);
     cursor->setPosition(pos, QTextCursor::MoveAnchor);
 

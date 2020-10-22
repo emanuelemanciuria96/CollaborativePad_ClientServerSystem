@@ -42,6 +42,8 @@ RemoteCursor::~RemoteCursor() {
     labelTimer->deleteLater();
 }
 
-bool RemoteCursor::isDarkColor(const QColor& back) {
-    return back.value()<130;
+bool RemoteCursor::isDarkColor(const QColor& c) {
+    // brightness  =  sqrt( .241 R^2 + .691 G^2 + .068 B^2 )
+    auto brightness = qSqrt(0.241 * c.red()*c.red() + 0.691 * c.green()* c.green() + 0.068 * c.blue()*c.blue());
+    return brightness<130;
 }
