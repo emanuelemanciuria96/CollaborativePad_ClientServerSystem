@@ -656,3 +656,12 @@ void EditorGUI::setAbsoluteAlignment(int pos, QFlags<Qt::AlignmentFlag> a, bool 
         }
     }
 }
+
+void EditorGUI::setStyleInFirstPosition() {
+    auto cursor = textEdit->textCursor();
+    if (cursor.position() == 0 && cursor.block().text().isEmpty()){
+        textEdit->setFontFamily("Times New Roman");
+        textEdit->setFontPointSize(12);
+    }
+
+}

@@ -228,6 +228,7 @@ void MainWindow::constructMainWindowMembers() {
     connect(infoWidget, &InfoWidget::logout, this, &MainWindow::logout);
     connect(shEditor, &SharedEditor::updateUserListInfo, usersList, &UsersList::updateUserInfo);
     connect(shEditor, &SharedEditor::errorArrived, this, &MainWindow::errorArrived);
+    connect(editor->textEdit, &QTextEdit::cursorPositionChanged, editor, &EditorGUI::setStyleInFirstPosition);
 //    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
 //    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
 //    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);

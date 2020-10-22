@@ -98,6 +98,7 @@ public slots:
     void currentCharFormatChanged(const QTextCharFormat &format);
     void updateLabels();
     void setAbsoluteAlignment(int pos, QFlags<Qt::AlignmentFlag> a,bool selection);
+    void setStyleInFirstPosition();
 
 signals:
     void clear();
