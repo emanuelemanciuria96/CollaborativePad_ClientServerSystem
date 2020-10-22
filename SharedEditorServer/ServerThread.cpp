@@ -343,7 +343,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                     ul.unlock();
                 } else
                     std::cout << "rename command isn't broadcasted" << std::endl;
-            } catch (CommandException e) {
+            } catch (CommandException& e) {
                 auto args = command->getArgs();
                 auto oldName = args.first();
                 auto newName = args.last();
@@ -378,7 +378,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                         ul.unlock();
                     } else
                         std::cout << "rm command failed!" << std::endl;
-                } catch (CommandException e) {
+                } catch (CommandException& e) {
                     DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
                     sendPacket(pkt);
                 }
@@ -387,7 +387,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
         }
 
         case (Command::sv):{
-            if (command->svCommand(threadId)) {
+            if (!command->svCommand(threadId)) {
                 DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
                 sendPacket(pkt);
             }
