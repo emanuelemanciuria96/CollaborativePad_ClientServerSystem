@@ -475,6 +475,13 @@ void SharedEditor::processFileInfo(FileInfo &filInf) {
             emit transparentForMouse();
             break;
         }
+        case FileInfo::err: {
+            fileOpened = "";
+            isFileOpened = false;
+            fileOpening = false;
+            emit transparentForMouse();
+            break;
+        }
     }
 
 }

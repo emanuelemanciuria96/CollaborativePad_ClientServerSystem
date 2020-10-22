@@ -157,7 +157,8 @@ void Transceiver::recvFileInfo(DataPacket& pkt, QDataStream& in){
     in>>siteId>>type>>serverFileName;
     pkt.setPayload(std::make_shared<FileInfo>(siteId,(FileInfo::file_info_t)type,serverFileName));
 
-    openedServerFile = serverFileName;
+    if( type == FileInfo::start)
+        openedServerFile = serverFileName;
 
     emit readyToProcess(pkt);
 

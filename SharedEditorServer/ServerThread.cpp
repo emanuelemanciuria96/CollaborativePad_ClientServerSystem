@@ -410,12 +410,14 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                 std::cout<<"user: "+_username.toStdString()+" appena connesso al file "+fileName.toStdString()<<std::endl;
                 if(shr->obtainInfo(threadId))
                     _sockets.broadcast(fileName,_siteID,pkt);
-                else
-                    std::cout<<"Casino pazzesco, errore assolutamente da gestire!"<<std::endl;
+
 
             }else {
-                DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
-                sendPacket(pkt);
+                auto ptr = std::make_shared<FileInfo>(FileInfo::err,_siteID);
+                DataPacket pkt1(0, -1, DataPacket::file_info, ptr );
+                DataPacket pkt2(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                sendPacket(pkt1);
+                sendPacket(pkt2);
                 std::cout << "opn command failed!" << std::endl;
             }
 
@@ -753,8 +755,7 @@ void ServerThread::sendUserInfo(DataPacket &packet) {
             vec.push_back(ptr->getSiteId());
             _sockets.sendTo(vec, pkt);
         }
-        else
-            std::cout<<"Casino pazzesco, errore assolutamente da gestire!"<<std::endl;
+        else return;
 
     }
 

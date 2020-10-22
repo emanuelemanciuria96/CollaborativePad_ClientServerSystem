@@ -11,7 +11,7 @@
 class FileInfo: public Payload{
 
 public:
-    typedef enum {start = 1, eof = 2} file_info_t;
+    typedef enum {start = 1, eof = 2, err = 3} file_info_t;
 
     FileInfo(file_info_t info, qint32 _siteID):
             file_info(info),Payload(_siteID){}
