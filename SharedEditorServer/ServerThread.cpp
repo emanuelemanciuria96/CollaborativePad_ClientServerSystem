@@ -169,17 +169,16 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                         sendPacket(packet);            //non fa nulla, non risponde con messaggi di errore
 
                         DataPacket pkt(0, 0, DataPacket::command, std::make_shared<Command>(_siteID, Command::ls, QVector<QString>{}) );
-                        {
-                            std::shared_lock sl(db_op_mtx);
-                            std::static_pointer_cast<Command>(pkt.getPayload())->lsCommand(threadId);
-                            _sockets.recordSocket(_siteID, socket);
-                        }
-                        sendPacket(pkt);
-
                         DataPacket cmdPacket(_siteID, 0, DataPacket::command);
                         auto cmdPayload = std::make_shared<Command>(_siteID, Command::lsInvite, QVector<QString>());
                         cmdPacket.setPayload(cmdPayload);
-                        cmdPayload->lsInviteCommand(threadId);
+                        {
+                            std::shared_lock sl(db_op_mtx);
+                            std::static_pointer_cast<Command>(pkt.getPayload())->lsCommand(threadId);
+                            cmdPayload->lsInviteCommand(threadId);
+                            _sockets.recordSocket(_siteID, socket);
+                        }
+                        sendPacket(pkt);
                         sendPacket(cmdPacket);
 
                     } else {

@@ -555,6 +555,7 @@ void SharedEditor::processRenCommand(Command& cmd) {
    auto args = cmd.getArgs();
     auto list1 = args[0].split("/");
     auto list2 = args[1].split("/");
+    std::cout<<"rename di "+list1.last().toStdString()+" "+list2.last().toStdString()<<std::endl;
     if( list1.size()==2 && list1[0]==list2[0]) {
         if( _user == list1[0] )
             emit fileNameEdited(list1.last(),list2.last());
