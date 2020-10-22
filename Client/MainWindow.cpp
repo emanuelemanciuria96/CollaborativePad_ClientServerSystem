@@ -308,8 +308,8 @@ void MainWindow::clsFile() {
     centralWidget->setCurrentWidget(gridView);
     leftDockWidgets[tree]->hide();
     if (gridView->getState() == gridView->getMainFolder()) {
-        setToolBarGrid();
         inviteAction->setDisabled(false);
+        setToolBarGrid();
     } else {
         setToolBarFolderGrid(gridView->getState());
     }
@@ -496,6 +496,10 @@ void MainWindow::setToolBars() {
 void MainWindow::setToolBarEditor() {
     toolBar->show();
     gridToolBar->hide();
+
+    backAction->setVisible(false);
+    addAction->setVisible(true);
+    deleteAction->setDisabled(true);
 }
 
 void MainWindow::setToolBarGrid() {
@@ -511,6 +515,9 @@ void MainWindow::setToolBarGrid() {
 
 void MainWindow::setToolBarFolderGrid(QString folder) {
     if (centralWidget->currentWidget() != editor) {
+        gridToolBar->show();
+        toolBar->hide();
+
         addAction->setVisible(false);
         backAction->setVisible(true);
     }
