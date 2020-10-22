@@ -206,8 +206,8 @@ void MainWindow::constructMainWindowMembers() {
     connect(pasteAction, &QAction::triggered, editor->textEdit, &MyTextEdit::paste);
     connect(copyAction, &QAction::triggered, editor->textEdit, &QTextEdit::copy);
     connect(cutAction, &QAction::triggered, editor->textEdit, &QTextEdit::cut);
-    connect(redoAction, &QAction::triggered, editor->textEdit, &QTextEdit::redo);
-    connect(undoAction, &QAction::triggered, editor->textEdit, &MyTextEdit::undo);
+    //connect(redoAction, &QAction::triggered, editor->textEdit, &QTextEdit::redo);
+    //connect(undoAction, &QAction::triggered, editor->textEdit, &MyTextEdit::undo);
     connect(boldAction, &QAction::triggered, editor, &EditorGUI::setBold);
     connect(italicAction, &QAction::triggered, editor, &EditorGUI::setItalic);
     connect(underlineAction, &QAction::triggered, editor, &EditorGUI::setUnderline);

@@ -55,6 +55,13 @@ void MyTextEdit::paintEvent(QPaintEvent *e) {
 bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
     if( obj==this && ev->type() == QEvent::KeyPress){
         auto event = static_cast<QKeyEvent*>(ev);
+
+        if(event->matches(QKeySequence::Undo))
+            return true;
+
+        if(event->matches(QKeySequence::Redo))
+            return true;
+
         if(event->matches(QKeySequence::Paste)) {
             this->paste();
             return true;
