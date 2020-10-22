@@ -268,6 +268,7 @@ void MainWindow::opnFileGrid(QString &fileName) {
     setToolBarEditor();
     centralWidget->setCurrentWidget(editor);
     treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
+    deleteAction->setDisabled(false);
     auto strings = fileName.split("/");
     this->setWindowTitle(strings[strings.size() - 1]);
     editor->setWindowTitle(fileName);

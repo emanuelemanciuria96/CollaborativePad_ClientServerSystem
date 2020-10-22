@@ -1,19 +1,18 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'Transceiver.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.13.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.3)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include <memory>
 #include "../../../Transceiver.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'Transceiver.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.13.1. It"
+#error "This file was generated using the moc from 5.12.3. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -22,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Transceiver_t {
-    QByteArrayData data[10];
-    char stringdata0[105];
+    QByteArrayData data[11];
+    char stringdata0[129];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,12 +40,14 @@ QT_MOC_LITERAL(5, 43, 10), // "deleteText"
 QT_MOC_LITERAL(6, 54, 10), // "recvPacket"
 QT_MOC_LITERAL(7, 65, 10), // "sendPacket"
 QT_MOC_LITERAL(8, 76, 15), // "sendAllMessages"
-QT_MOC_LITERAL(9, 92, 12) // "disconnected"
+QT_MOC_LITERAL(9, 92, 12), // "disconnected"
+QT_MOC_LITERAL(10, 105, 23) // "terminateLastOperations"
 
     },
     "Transceiver\0readyToProcess\0\0DataPacket\0"
     "pkt\0deleteText\0recvPacket\0sendPacket\0"
-    "sendAllMessages\0disconnected"
+    "sendAllMessages\0disconnected\0"
+    "terminateLastOperations"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,7 +57,7 @@ static const uint qt_meta_data_Transceiver[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -64,14 +65,15 @@ static const uint qt_meta_data_Transceiver[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   44,    2, 0x06 /* Public */,
-       5,    0,   47,    2, 0x06 /* Public */,
+       1,    1,   49,    2, 0x06 /* Public */,
+       5,    0,   52,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    0,   48,    2, 0x0a /* Public */,
-       7,    1,   49,    2, 0x0a /* Public */,
-       8,    0,   52,    2, 0x0a /* Public */,
-       9,    0,   53,    2, 0x0a /* Public */,
+       6,    0,   53,    2, 0x0a /* Public */,
+       7,    1,   54,    2, 0x0a /* Public */,
+       8,    0,   57,    2, 0x0a /* Public */,
+       9,    0,   58,    2, 0x0a /* Public */,
+      10,    0,   59,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -80,6 +82,7 @@ static const uint qt_meta_data_Transceiver[] = {
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -98,6 +101,7 @@ void Transceiver::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 3: _t->sendPacket((*reinterpret_cast< DataPacket(*)>(_a[1]))); break;
         case 4: _t->sendAllMessages(); break;
         case 5: _t->disconnected(); break;
+        case 6: _t->terminateLastOperations(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -166,13 +170,13 @@ int Transceiver::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }
@@ -180,7 +184,7 @@ int Transceiver::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void Transceiver::readyToProcess(DataPacket _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
