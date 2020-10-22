@@ -214,6 +214,7 @@ void Transceiver::recvMessage(DataPacket& pkt, QDataStream& in) {
 
     if( file != openedServerFile)
         return;
+
     emit readyToProcess(pkt);
 
 }
@@ -250,11 +251,15 @@ void Transceiver::recvCursorPos(DataPacket &pkt, QDataStream &in) {
     qint32 symbol_siteId;
     qint32 count;
     QVector<quint32> pos;
+    QString fileName;
 
-    in >> ch >> symbol_siteId >> count >> pos >> index >> siteId;
+    in >> ch >> symbol_siteId >> count >> pos >> index >> siteId >> fileName;
     std::cout << "Dentro recv " << siteId << " pos:" << index << std::endl;
     auto pos_std = pos.toStdVector();
     auto symbol = Symbol(ch,symbol_siteId,count,pos_std);
+
+    if( fileName != openedServerFile )
+        return;
 
     pkt.setPayload(std::make_shared<CursorPosition>(symbol,index,siteId));
 
@@ -269,8 +274,12 @@ void Transceiver::recvUserInfo(DataPacket &pkt, QDataStream &in) {
     QPixmap image;
     QString name;
     QString email;
+    QString fileName;
 
-    in >> siteId >> type >> username >> image >> name >> email;
+    in >> siteId >> type >> fileName >> username >> image >> name >> email;
+
+    if(fileName != openedServerFile )
+        return;
 
     pkt.setPayload(std::make_shared<UserInfo>(siteId,(UserInfo::info_t)type,username,image, name, email));
 
@@ -458,12 +467,12 @@ void Transceiver::sendCursorPos(DataPacket &pkt) {
     auto vector = QVector<quint32>::fromStdVector(ptr->getSymbol().getPos());
 
     tmp << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
-        << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex();
+        << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getFileName();
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
     out << bytes << pkt.getSource() << pkt.getErrcode() << pkt.getTypeOfData()
         << ptr->getSymbol().getValue() << ptr->getSymbol().getSymId().getSiteId()
-        << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() ;
+        << ptr->getSymbol().getSymId().getCount() << vector << ptr->getIndex() << ptr->getSiteId() << ptr->getFileName();
 
     //std::cout << "sending cursor index " << ptr->getSiteId() << " " << ptr->getIndex() << std::endl;
 
@@ -481,12 +490,12 @@ void Transceiver::sendUserInfo(DataPacket &pkt) {
 
     auto ptr = std::dynamic_pointer_cast<UserInfo>(pkt.getPayload());
 
-    tmp << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
+    tmp << (quint32) ptr->getType() << openedServerFile << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
 
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
-    out << bytes<<pkt.getSource() << pkt.getErrcode() << (quint32)pkt.getTypeOfData();
-    out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
+    out << bytes << pkt.getSource() << pkt.getErrcode() << (quint32)pkt.getTypeOfData();
+    out << ptr->getSiteId() << (quint32) ptr->getType() << openedServerFile << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
     socket->waitForBytesWritten(-1);
 }
 

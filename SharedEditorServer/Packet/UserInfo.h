@@ -17,15 +17,16 @@ public:
         user_reqest,
     }info_t;
 
-    UserInfo(qint32 siteId, info_t type, QString& user_name):
-        Payload(siteId),_type(type),_username(user_name){}
+    UserInfo(qint32 siteId, info_t type, QString& user_name, QString& fileName):
+        Payload(siteId),_type(type),_username(user_name),_fileName(fileName){}
     void setType(info_t type){ _type = type; }
     info_t getType(){ return _type; }
     QString getUsername(){ return _username; }
     QPixmap getImage(){ return _image; }
     const QString &getName() const { return _name; }
     const QString &getEmail() const { return _email; }
-
+    void setFileName(QString& fileName){ _fileName = fileName; }
+    const QString &getFileName() const { return _fileName; }
     bool obtainInfo(QString& connectionId);
     bool obtainUser(QString& connectionId);
 
@@ -36,6 +37,7 @@ private:
     QPixmap _image;
     QString _name;
     QString _email;
+    QString _fileName;
 };
 
 

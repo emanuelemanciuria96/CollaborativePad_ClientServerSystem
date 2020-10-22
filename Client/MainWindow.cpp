@@ -78,7 +78,7 @@ void MainWindow::constructMainWindowMembers() {
 
     shEditor = new SharedEditor(this);
     bkgnd = QPixmap("./textures/texture_clouds_background.png");
-    setWindowTitle("Shared Editor");
+    setWindowTitle("CollaborativePad");
 
     // tree file system view creation
     treeFileSystemSettings();
@@ -314,7 +314,7 @@ void MainWindow::clsFile() {
         setToolBarFolderGrid(gridView->getState());
     }
     gridView->show();
-    setWindowTitle("Shared Editor");
+    setWindowTitle("CollaborativePad");
     if (highlightAction->isChecked()) {
         highlightAction->setChecked(false);
         highlightAction->triggered(false);
@@ -1019,17 +1019,23 @@ void MainWindow::deleteMainWindowMembers() {
     for (auto a: toolBar->actions()) {
         a->disconnect();
     }
+    for (auto a: gridToolBar->actions()) {
+        a->disconnect();
+    }
     for (auto a: richTextBar->actions()) {
         a->disconnect();
     }
     comboFont->disconnect();
     comboSize->disconnect();
 
+    gridToolBar->hide();
     toolBar->hide();
     richTextBar->hide();
     statusBar->hide();
 
     toolBar->setAttribute(Qt::WA_TransparentForMouseEvents, false);
+    if( this->cursor() == QCursor(Qt::WaitCursor))
+        this->setCursor(QCursor(Qt::ArrowCursor));
 
 }
 

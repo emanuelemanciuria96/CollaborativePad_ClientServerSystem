@@ -246,10 +246,7 @@ void SharedEditor::process(DataPacket pkt) {
             processLoginInfo(*std::dynamic_pointer_cast<LoginInfo>(pkt.getPayload()));
             break;
         case DataPacket::textTyping :
-            if(isFileOpened)
-                processMessages1(*std::dynamic_pointer_cast<StringMessages>(pkt.getPayload()));
-            else
-                std::cout<<"arrivati messaggi che non devono essere inviati"<<std::endl;
+            processMessages1(*std::dynamic_pointer_cast<StringMessages>(pkt.getPayload()));
             break;
         case DataPacket::command :
             processCommand(*std::dynamic_pointer_cast<Command>(pkt.getPayload()));
@@ -266,7 +263,7 @@ void SharedEditor::process(DataPacket pkt) {
                 processUserInfo(*std::dynamic_pointer_cast<UserInfo>(pkt.getPayload()) );
             break;
         case DataPacket::error:
-                processErrorPacket(*std::dynamic_pointer_cast<ErrorPacket>(pkt.getPayload()));
+            processErrorPacket(*std::dynamic_pointer_cast<ErrorPacket>(pkt.getPayload()));
             break;
         default:
             throw std::exception();
