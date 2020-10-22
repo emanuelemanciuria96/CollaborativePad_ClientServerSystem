@@ -3,12 +3,13 @@
 //
 
 #include <set>
-#include <iostream>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QDir>
 #include "Files.h"
+
+#include <QDebug>
 
 enum{file,counter,dirty_bit};
 QVector<QString> Files::fonts{"Arial","Arial Black","Comic Sans MS", "Courier","Georgia","Impact","Tahoma","Times New Roman","Trebuchet MS","Verdana"};
@@ -184,11 +185,13 @@ void Files::QtLoadFileJson(std::string f,std::map<Symbol,int>& symbles, std::sha
         syms->push_back(s);
     }
 
-    file.open(QIODevice::ReadOnly);
-    file.startTransaction();
-    auto arr = file.readAll();
-    file.commitTransaction();
-    file.close();
+    QByteArray arr;
+    if(file.open(QIODevice::ReadOnly)) {
+        file.startTransaction();
+        arr = file.readAll();
+        file.commitTransaction();
+        file.close();
+    }
 
     QJsonDocument json = QJsonDocument::fromJson(arr);
     auto symsJson = json.array();

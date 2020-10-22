@@ -172,17 +172,16 @@ bool Command::svCommand(QString& connectionId) { //la rmCommand elimina il file 
         return false;
 
     QString fileName = _args.first();
+    auto list = fileName.split("/");
+    QString owner = list.first();
+    QString name = list.last();
 
     using namespace std::chrono;
     auto ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
-    QString serverFileName = connectionId+"_"+_args.first()+"_"+QString::number(ms.count())+".json";
+    QString serverFileName = connectionId+"_"+owner+"_"+name+"_"+QString::number(ms.count())+".json";
 
     QSqlDatabase db = QSqlDatabase::database(connectionId+"_files");
     db.setDatabaseName("db/files.db");
-
-    auto list = _args[0].split("/");
-    QString owner = list.first();
-    QString name = list.last();
 
     if (!db.open())
         return false;

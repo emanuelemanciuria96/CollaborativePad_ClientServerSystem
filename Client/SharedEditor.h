@@ -48,13 +48,10 @@ public:
     bool fileOpening = false;
 
     qint32 getIndex(qint32 index, Symbol symbol);
-    qint32 getIndexDichotomous(qint32 index, Symbol symbol);
     void closeFile();
     void findCounter();
 
-    void processMessages1( StringMessages& strMess );
     void processMessages( StringMessages& strMess );
-    void processSingleMessage( Message& m );
     void processLoginInfo( LoginInfo& logInf );
     void processFileInfo( FileInfo& filInf );
     void processUserInfo( UserInfo& userInfo);
