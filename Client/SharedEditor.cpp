@@ -146,7 +146,10 @@ void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format,
 
     DataPacket packet(_siteId, -1, DataPacket::textTyping);
     packet.setPayload(std::make_shared<Message>(Message::insertion, _siteId, s, index));
-
+    std::vector<Message> v;
+    v.push_back(Message(Message::removal, _siteId, s, index));
+    stackUndo.push_back(v);
+    stackRedo.clear();
     int id = qMetaTypeId<DataPacket>();
     emit transceiver->getSocket()->sendPacket(packet);
 //    std::cout << "effettuo insert vero" << std::endl;
@@ -165,15 +168,18 @@ void SharedEditor::localErase(qint32 index, qint32 num) {
     auto s = _symbols.begin()+index;
     int i=0;
     int maxChars=StringMessages::maxDim;
+    std::vector<Message> v;
     for( ;s<_symbols.begin()+index+num; s++ ) {
         DataPacket packet(_siteId, -1, DataPacket::textTyping);
         packet.setPayload(std::make_shared<Message>(Message::removal, _siteId, *s, i+index));
+        v.push_back(Message(Message::insertion, _siteId, *s, i+index));
         i++;
         i=i%maxChars;
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
     }
 
+    stackUndo.push_back(v);
     _symbols.erase(_symbols.begin()+index,_symbols.begin()+index+num);
 }
 
@@ -830,4 +836,58 @@ void SharedEditor::deleteThread() {
     delete transceiver;
     transceiver = nullptr;
     emit serverUnavailable();
+}
+void SharedEditor::undo() {
+
+    if(stackUndo.size()==0){
+        return;
+    }
+    auto copy=stackUndo.back();
+    for(auto m:copy) {
+        DataPacket packet(_siteId, -1, DataPacket::textTyping);
+        Symbol s=m.getSymbol();
+        packet.setPayload(std::make_shared<Message>(m.getAction(), _siteId, s, m.getLocalIndex()));
+
+        int id = qMetaTypeId<DataPacket>();
+        emit transceiver->getSocket()->sendPacket(packet);
+    }
+    while(!copy.empty()) {
+        auto strMess = StringMessages(copy, _siteId, fileOpened);
+        processMessages(strMess);
+    }
+    std::move(stackUndo.end()-1,stackUndo.end(), std::back_inserter(stackRedo));
+    stackUndo.pop_back();
+    undoredoAction();
+}
+void SharedEditor::redo() {
+    if(stackRedo.size()==0){
+        return;
+    }
+    auto copy=stackRedo.back();
+    Message::action_t act =  stackRedo.back().front().getAction();
+    if(act==Message::insertion){
+        for(auto it = copy.begin(); it != copy.end(); ++it) {
+            it->setAction(Message::removal);
+        }
+    }else{
+        for(auto it = copy.begin(); it != copy.end(); ++it) {
+            it->setAction(Message::insertion);
+        }
+    }
+    for(auto m:copy) {
+        DataPacket packet(_siteId, -1, DataPacket::textTyping);
+        Symbol s=m.getSymbol();
+        packet.setPayload(std::make_shared<Message>(m.getAction(), _siteId, s, m.getLocalIndex()));
+
+        int id = qMetaTypeId<DataPacket>();
+        emit transceiver->getSocket()->sendPacket(packet);
+    }
+    while(!copy.empty()) {
+        auto strMess = StringMessages(copy, _siteId, fileOpened);
+        processMessages(strMess);
+    }
+
+    std::move(stackRedo.end()-1,stackRedo.end(), std::back_inserter(stackUndo));
+    stackRedo.pop_back();
+    undoredoAction();
 }

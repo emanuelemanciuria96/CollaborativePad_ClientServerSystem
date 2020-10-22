@@ -33,8 +33,7 @@
 
 class SharedEditor: public QObject {
     Q_OBJECT
-//private:
-public:
+private:
     qint32 _siteId;
     qint32 _counter;
     std::vector<Symbol> _symbols;
@@ -46,6 +45,8 @@ public:
     QString _user;
     bool highlighting;
     bool fileOpening = false;
+    std::vector<std::vector<Message>> stackUndo;
+    std::vector<std::vector<Message>> stackRedo;
 
     qint32 getIndex(qint32 index, Symbol symbol);
     void closeFile();
@@ -84,6 +85,23 @@ public slots:
     void sendInviteAnswer(const QString& mode, const QString& user, const QString& filename);
     void submitUri(const QString& file);
     void obtainUser(qint32 siteId);
+    void redo();
+    void undo();
+    void undoredoAction(){
+        bool undo=true;
+        bool redo=true;
+        if(stackUndo.size()==0){
+            undo=false;
+        }
+        if(stackRedo.size()==0){
+            redo=false;
+        }
+        emit undoredoActionEnable(undo,redo);
+    }
+    void clearUndoRedo(){
+        stackUndo.clear();
+        stackRedo.clear();
+    }
 
 signals:
     void hideEditor(QString& fileName);
@@ -120,6 +138,7 @@ signals:
     void serverUnavailable();
     void updateUserListInfo(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void errorArrived(const QString& message);
+    void undoredoActionEnable(bool undo,bool redo);
 
 public:
     explicit SharedEditor(QObject *parent = 0);

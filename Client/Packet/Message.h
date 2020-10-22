@@ -21,6 +21,7 @@ public:
     Message(const Message& msg) = default;
     qint32 getSiteId(){ return _siteID; }
     action_t getAction() const{ return _action; }
+    void setAction(action_t a) { _action=a; }
     Symbol getSymbol() const{ return _sym; }
     qint32 getLocalIndex(){ return localIndex; }
 private:

@@ -117,6 +117,10 @@ public slots:
     void setAlignCenterChecked();
     void setAlignRightChecked();
     void setAlignJustifyChecked();
+    void undoredoActionEnable(bool undo,bool redo){
+        undoAction->setEnabled(undo);
+        redoAction->setEnabled(redo);
+    }
     void clipboardDataChanged(){
 #ifndef QT_NO_CLIPBOARD
         if (const QMimeData *md = QApplication::clipboard()->mimeData())

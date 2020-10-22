@@ -134,6 +134,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 cursor.movePosition(QTextCursor::Left,QTextCursor::KeepAnchor,1);
                 cursor.mergeCharFormat(format);
 //                std::cout << "chiamo localInsert" << std::endl;
+
                 model->localInsert(pos+i, ch , format, align);
 //                std::cout << "esco localInsert" << std::endl;
             }
@@ -144,6 +145,7 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             textEdit->document()->clearUndoRedoStacks();
         updateLabels();
     }
+    model->undoredoAction();
 //    std::cout << "fuori contentsChange" << std::endl;
 }
 
