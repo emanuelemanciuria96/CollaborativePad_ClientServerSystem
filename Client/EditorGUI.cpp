@@ -181,11 +181,7 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, cons
     //std::cout << "Inseriti " << value.size() << " caratteri in " << index << std::endl;
     signalBlocker = !signalBlocker;
     drawLabel(cursor);
-//    updateLabels(siteId,index, Message::insertion);
-}
-
-bool EditorGUI::checkSiteId(RemoteCursor &rc, qint32 siteId) {
-    return rc.getSiteId() == siteId;
+    updateLabels();
 }
 
 void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
@@ -231,20 +227,10 @@ void EditorGUI::updateSymbols(qint32 pos, const QString &s, qint32 siteId, const
         qDebug()<<"merge";
     }
     else if (action == Message::removal) {
-//        flushInsertQueue();     //prima della delete inserisco eventuali caratteri in coda
         deleteText(pos, siteId, s.size());
-
-
     } else {
 //        std::cout<<" -- stringa inserita: "<<s.toStdString()<<std::endl;
         insertText(pos, s, siteId, format);
-//        if(posLastChar<0 || index!=posLastChar+1) {
-//            flushInsertQueue();
-//            posQueue = index;
-//            siteIdQueue = siteId;
-//        }
-//        insertQueue.push(value);
-//        posLastChar = index;
     }
     if(highlightIsActive)
         textEdit->document()->clearUndoRedoStacks();
@@ -271,13 +257,6 @@ void EditorGUI::updateLabels() {
         if (remoteCursor.getSiteId() != model->getSiteId() && remoteCursor.getSiteId()>0) {
             if(!remoteCursor.labelName->isHidden())
                 drawLabel(&remoteCursor);
-//            auto newPosition = it->position();
-//            if (newPosition > index) {
-//                if (action == Message::insertion)
-//                    it->setPosition(newPosition + 1, QTextCursor::MoveAnchor);
-//                else
-//                    it->setPosition(newPosition - 1, QTextCursor::MoveAnchor);
-//            }
         }
     }
 }

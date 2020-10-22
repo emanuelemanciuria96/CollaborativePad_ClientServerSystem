@@ -62,7 +62,6 @@ private:
     RemoteCursor* getRemoteCursor(qint32 siteId);
     void insertText(qint32 pos, const QString& value, qint32 siteId, const QTextCharFormat& format);
     void deleteText(qint32 pos, qint32 siteId,qint32 n);
-    static bool checkSiteId(RemoteCursor& rc, qint32 siteId);
     void drawLabel(RemoteCursor *cursor) const;
     void keyPressEvent(QKeyEvent *e) override;
     static QTextCharFormat getHighlightFormat(qint32 siteId);

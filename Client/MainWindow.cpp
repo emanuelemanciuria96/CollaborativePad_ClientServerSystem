@@ -507,7 +507,7 @@ void MainWindow::setToolBarEditor() {
 }
 
 void MainWindow::setToolBarGrid() {
-    if (centralWidget->currentWidget() != editor) {
+    if (centralWidget->currentWidget() != editor && centralWidget->currentWidget() != infoWidget) {
         gridToolBar->show();
         toolBar->hide();
 
