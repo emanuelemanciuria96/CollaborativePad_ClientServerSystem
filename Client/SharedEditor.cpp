@@ -178,8 +178,8 @@ void SharedEditor::localErase(qint32 index, qint32 num) {
         int id = qMetaTypeId<DataPacket>();
         emit transceiver->getSocket()->sendPacket(packet);
     }
-
     stackUndo.push_back(v);
+    stackRedo.clear();
     _symbols.erase(_symbols.begin()+index,_symbols.begin()+index+num);
 }
 
@@ -838,8 +838,7 @@ void SharedEditor::deleteThread() {
     emit serverUnavailable();
 }
 void SharedEditor::undo() {
-
-    if(stackUndo.size()==0){
+    if(stackUndo.empty()){
         return;
     }
     auto copy=stackUndo.back();
@@ -852,7 +851,7 @@ void SharedEditor::undo() {
         emit transceiver->getSocket()->sendPacket(packet);
     }
     while(!copy.empty()) {
-        auto strMess = StringMessages(copy, _siteId, fileOpened);
+        auto strMess = StringMessages(copy, 0, fileOpened);
         processMessages(strMess);
     }
     std::move(stackUndo.end()-1,stackUndo.end(), std::back_inserter(stackRedo));
@@ -860,7 +859,7 @@ void SharedEditor::undo() {
     undoredoAction();
 }
 void SharedEditor::redo() {
-    if(stackRedo.size()==0){
+    if(stackRedo.empty()){
         return;
     }
     auto copy=stackRedo.back();
@@ -883,7 +882,7 @@ void SharedEditor::redo() {
         emit transceiver->getSocket()->sendPacket(packet);
     }
     while(!copy.empty()) {
-        auto strMess = StringMessages(copy, _siteId, fileOpened);
+        auto strMess = StringMessages(copy, 0, fileOpened);
         processMessages(strMess);
     }
 

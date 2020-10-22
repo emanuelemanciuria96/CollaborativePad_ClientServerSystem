@@ -32,8 +32,9 @@ protected:
 signals:
     void tipRequest(int pos,QPoint globalPos);
     void isPastingAtFirst();
-
     void updateLabels();
+    void undo();
+    void redo();
 };
 
 

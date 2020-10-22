@@ -88,15 +88,7 @@ public slots:
     void redo();
     void undo();
     void undoredoAction(){
-        bool undo=true;
-        bool redo=true;
-        if(stackUndo.size()==0){
-            undo=false;
-        }
-        if(stackRedo.size()==0){
-            redo=false;
-        }
-        emit undoredoActionEnable(undo,redo);
+        emit undoredoActionEnable(!stackUndo.empty(),!stackRedo.empty());
     }
     void clearUndoRedo(){
         stackUndo.clear();

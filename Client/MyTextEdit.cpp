@@ -56,12 +56,14 @@ bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
     if( obj==this && ev->type() == QEvent::KeyPress){
         auto event = static_cast<QKeyEvent*>(ev);
 
-        if(event->matches(QKeySequence::Undo))
+        if(event->matches(QKeySequence::Undo)) {
+            emit undo();
             return true;
-
-        if(event->matches(QKeySequence::Redo))
+        }
+        if(event->matches(QKeySequence::Redo)) {
+            emit redo();
             return true;
-
+        }
         if(event->matches(QKeySequence::Paste)) {
             this->paste();
             return true;
