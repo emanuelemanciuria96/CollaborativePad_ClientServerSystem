@@ -55,7 +55,8 @@ void InviteUserWidget::editFileName(QString &oldName, QString &newName) {
             QListWidgetItem *item = ui->listWidget->item(i);
             auto widget = map[item];
 
-            if( widget == nullptr ) return;
+            if(widget == nullptr)
+                return;
 
             if (widget->getUser() == user && widget->getFileName() == oldFileName) {
                 widget->setFileName(newFileName);
