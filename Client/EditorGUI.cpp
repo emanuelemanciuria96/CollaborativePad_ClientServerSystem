@@ -41,7 +41,7 @@ EditorGUI::EditorGUI(SharedEditor *model, QWidget *parent) : QWidget(parent){
 
 void EditorGUI::setUpGUI() {
 //    inizializzo gli elementi
-    textEdit = new MyTextEdit(remoteCursors, this);
+    textEdit = new MyTextEdit(remoteCursors, model,this);
     setLayout(new QVBoxLayout(this));
     this->layout()->setContentsMargins(30, 0, 30, 0);
     this->layout()->addWidget(textEdit);
@@ -164,8 +164,6 @@ void EditorGUI::textFormatChange(int pos, int charsModified) {
 void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, const QTextCharFormat& format) {
     pos--;
     RemoteCursor *cursor;
-    if(siteId == model->getSiteId())
-        return;
     cursor = getRemoteCursor(siteId);
 //    std::cout << "Inseriti da siteId: " << siteId << std::endl;
     ///blocco l'invio della posizione del mio cursore quando ricevo modifiche
@@ -187,8 +185,7 @@ void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, cons
 void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
     pos--;
     RemoteCursor *cursor;
-    if(siteId == model->getSiteId())
-        return;
+
     cursor = getRemoteCursor(siteId);
     ///blocco l'invio della posizione del mio cursore quando ricevo modifiche
     myCursorPosUpdateBlocker = true;
@@ -308,7 +305,7 @@ void EditorGUI::flushInsertQueue() {
 }
 
 void EditorGUI::drawLabel(RemoteCursor *cursor) const{
-    if(cursor->getSiteId() > 0) {
+    if(cursor->getSiteId() > 0 && cursor->getSiteId()!= model->getSiteId()) {
         if (cursor->labelTimer->isActive())
             cursor->labelTimer->stop();
 
@@ -355,8 +352,6 @@ void EditorGUI::handleCursorPosChanged() {
 
 void EditorGUI::updateRemoteCursorPos(qint32 pos, qint32 siteId) {
     std::cout << "draw in " << pos << " siteID: " << siteId << std::endl;
-    if(siteId == model->getSiteId())
-        return;
     auto cursor = getRemoteCursor(siteId);
     cursor->setPosition(pos, QTextCursor::MoveAnchor);
 

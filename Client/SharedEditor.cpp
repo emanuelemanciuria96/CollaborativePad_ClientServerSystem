@@ -851,7 +851,7 @@ void SharedEditor::undo() {
         emit transceiver->getSocket()->sendPacket(packet);
     }
     while(!copy.empty()) {
-        auto strMess = StringMessages(copy, 0, fileOpened);
+        auto strMess = StringMessages(copy, _siteId, fileOpened);
         processMessages(strMess);
     }
     std::move(stackUndo.end()-1,stackUndo.end(), std::back_inserter(stackRedo));
@@ -882,7 +882,7 @@ void SharedEditor::redo() {
         emit transceiver->getSocket()->sendPacket(packet);
     }
     while(!copy.empty()) {
-        auto strMess = StringMessages(copy, 0, fileOpened);
+        auto strMess = StringMessages(copy, _siteId, fileOpened);
         processMessages(strMess);
     }
 

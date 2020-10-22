@@ -13,9 +13,10 @@
 #include <QMenu>
 #include <QMimeData>
 
-MyTextEdit::MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors, QWidget *parent) : QTextEdit(parent){
+MyTextEdit::MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors,SharedEditor* _model, QWidget *parent) : QTextEdit(parent){
     this->remoteCursors = remoteCursors;
     this->installEventFilter(this);
+    this->model = _model;
     clipboard = QApplication::clipboard();
     setMouseTracking(true);
     installEventFilter(this);
@@ -32,7 +33,7 @@ void MyTextEdit::paintEvent(QPaintEvent *e) {
 
 
     for (auto & remoteCursor : *remoteCursors) {
-        if(remoteCursor.getSiteId() > 0) {
+        if(remoteCursor.getSiteId() > 0 && remoteCursor.getSiteId()!= model->getSiteId()) {
             pen.setColor(remoteCursor.color);
             pen.setWidth(2);
             painter.setPen(pen);

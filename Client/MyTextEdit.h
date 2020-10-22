@@ -8,6 +8,7 @@
 
 #include <QtWidgets/QTextEdit>
 #include "RemoteCursor.h"
+#include "SharedEditor.h"
 #include <memory>
 #include <QApplication>
 #include <QEvent>
@@ -17,9 +18,9 @@ private:
     std::shared_ptr<std::list<RemoteCursor>> remoteCursors;
     QClipboard *clipboard;
     QPalette toolTipPalette;
-
+    SharedEditor* model;
 public:
-    MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors, QWidget* parent = 0);
+    MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors,SharedEditor *model, QWidget* parent = 0);
     bool eventFilter(QObject *obj, QEvent *ev) override;
 
 public slots:
