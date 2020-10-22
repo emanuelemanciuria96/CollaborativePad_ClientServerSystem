@@ -112,7 +112,6 @@ void NetworkServer::processOpnCommand(Payload &pl) {
         emit th->second->getSocket()->sendFile();
         fileOpened.store(true);
     }
-
 }
 
 void NetworkServer::processClsCommand(Payload &pl) {

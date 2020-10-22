@@ -75,7 +75,7 @@ void InviteUserWidget::processFileDeleted(QString &fileName) {
         for (int i = 0; i < ui->listWidget->count(); i++) {
             QListWidgetItem *item = ui->listWidget->item(i);
             auto widget = map[item];
-
+            if( widget == nullptr ) return;
             if( widget == nullptr ) return;
 
             if (widget->getUser() == user && widget->getFileName() == file) {

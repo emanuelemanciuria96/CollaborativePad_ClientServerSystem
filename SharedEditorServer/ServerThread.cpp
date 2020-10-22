@@ -765,7 +765,6 @@ void ServerThread::sendUserInfo(DataPacket &packet) {
     out << bytes << packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData()
         << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getFileName() << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
     socket->waitForBytesWritten(-1);
-
 }
 
 void ServerThread::sendCursorPos(DataPacket &packet) {
