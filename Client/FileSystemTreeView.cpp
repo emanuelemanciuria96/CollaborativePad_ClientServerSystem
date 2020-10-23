@@ -52,10 +52,20 @@ void FileSystemTreeView::setupRightClickMenu() {
 
     rightClickMenu = new QMenu(this);
 
+    contextOpenFile= QIcon("./icons/context_open_file");
+    contextDelete= QIcon("./icons/context_delete");
+    contextInvite= QIcon("./icons/context_invite");
+    contextRename= QIcon("./icons/context_rename");
+    contextAddFile= QIcon("./icons/context_add_file");
+
     rightClickMenu->addAction(new QAction("Rename"));
+    rightClickMenu->actions().at(0)->setIcon(contextRename);
     rightClickMenu->addAction(new QAction("Delete"));
+    rightClickMenu->actions().at(1)->setIcon(contextDelete);
     rightClickMenu->addAction(new QAction("Invite"));
+    rightClickMenu->actions().at(2)->setIcon(contextInvite);
     rightClickMenu->addAction(new QAction("New File"));
+    rightClickMenu->actions().at(3)->setIcon(contextAddFile);
 
 }
 

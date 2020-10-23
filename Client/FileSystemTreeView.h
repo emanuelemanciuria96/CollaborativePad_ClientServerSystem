@@ -46,6 +46,11 @@ private:
     QIcon dir_open;
     QIcon dir_close;
     QIcon file_icn;
+    QIcon contextOpenFile;
+    QIcon contextDelete;
+    QIcon contextInvite;
+    QIcon contextRename;
+    QIcon contextAddFile;
     QMenu *rightClickMenu = nullptr;
     QString previousName;
     bool isEditing=false;
