@@ -70,6 +70,7 @@ private:
     QIcon* contextInvite=new QIcon("./icons/context_invite"+this->format);
     QIcon* contextRename=new QIcon("./icons/context_rename"+this->format);
     QIcon* contextAddFile=new QIcon("./icons/context_add_file"+this->format);
+    QIcon* contextOpenFolder=new QIcon("./icons/context_open_folder"+this->format);
 };
 
 #endif // FILESYSTEMGRIDVIEW_H
