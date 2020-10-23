@@ -19,6 +19,8 @@ private:
     QClipboard *clipboard;
     QPalette toolTipPalette;
     SharedEditor* model;
+    bool isUndoEnabled = false;
+    bool isRedoEnabled = false;
 
 public:
     MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors,SharedEditor *model, QWidget* parent = 0);
@@ -26,11 +28,16 @@ public:
 
 public slots:
     void paste();
+    void undoredoActionEnable(bool undo,bool redo){
+        isUndoEnabled = undo;
+        isRedoEnabled = redo;
+    }
 
 protected:
     void paintEvent(QPaintEvent *e) override;
     void contextMenuEvent(QContextMenuEvent *e) override;
     void scrollContentsBy(int dx, int dy) override;
+
 signals:
     void tipRequest(int pos,QPoint globalPos);
     void isPastingAtFirst();

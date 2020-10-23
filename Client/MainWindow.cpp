@@ -211,6 +211,7 @@ void MainWindow::constructMainWindowMembers() {
     connect(redoAction, &QAction::triggered, shEditor,&SharedEditor::redo);
     connect(undoAction, &QAction::triggered, shEditor,&SharedEditor::undo);
     connect(shEditor,&SharedEditor::undoredoActionEnable,this,&MainWindow::undoredoActionEnable);
+    connect(shEditor,&SharedEditor::undoredoActionEnable,editor->textEdit,&MyTextEdit::undoredoActionEnable);
     connect(boldAction, &QAction::triggered, editor, &EditorGUI::setBold);
     connect(italicAction, &QAction::triggered, editor, &EditorGUI::setItalic);
     connect(underlineAction, &QAction::triggered, editor, &EditorGUI::setUnderline);

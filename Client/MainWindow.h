@@ -86,6 +86,7 @@ private:
     QWidget *nullWidg;
     QLabel* spinner;
     QWidget* lostConnectionWidget;
+
     void constructMainWindowMembers();
     void deleteMainWindowMembers();
     void loginSettings();

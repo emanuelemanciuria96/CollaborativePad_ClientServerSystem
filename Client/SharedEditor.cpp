@@ -33,7 +33,7 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
     //creo due delimitatori, servono a gestire l'inserimento
     //in coda, in testa o in mezzo al testo allo stesso
-    //e identico modo! quando faccio il localInsert, pero',
+    //e identico modo, quando faccio il localInsert, pero',
     //devo ricordare di avere 2 valori in piu'
 
     std::vector<quint32> v = {0};
