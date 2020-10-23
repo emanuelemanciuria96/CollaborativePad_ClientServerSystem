@@ -34,10 +34,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     this->addToolBar(gridToolBar);
     addToolBarBreak(Qt::TopToolBarArea);
     this->addToolBar(richTextBar);
+    this->setContextMenuPolicy(Qt::NoContextMenu);
     toolBar->setMovable(false);
     toolBar->setMinimumHeight(45);
     toolBar->setIconSize(QSize(45, 45));
     toolBar->hide();
+
 
     gridToolBar->setMovable(false);
     gridToolBar->setMinimumHeight(45);
@@ -453,6 +455,7 @@ void MainWindow::setToolBars() {
     inviteAction->setIcon(QIcon("./icons/grid_invite_icon.png"));
     toolBar->addAction(inviteAction);
     gridToolBar->addAction(inviteAction);
+    inviteAction->setDisabled(true);
 
     QAction *separator2 = toolBar->addSeparator();
     separator2->setObjectName("separator2");

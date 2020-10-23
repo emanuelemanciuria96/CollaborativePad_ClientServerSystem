@@ -156,6 +156,7 @@ void EditorGUI::textFormatChange(int pos, int charsModified) {
         auto cursor = getRemoteCursor(0);
         cursor->setPosition(pos+i+1);
         auto format = cursor->charFormat();
+        format.setBackground(QBrush("white"));
         model->localModification(pos+i,format);
     }
 
@@ -333,21 +334,11 @@ void EditorGUI::deleteAllText() {
 }
 
 void EditorGUI::handleCursorPosChanged() {
-    qint32 pos;
-//    if(textEdit->textCursor().hasSelection()){
-//        qint32 start = textEdit->textCursor().selectionStart();
-//        qint32 end = textEdit->textCursor().selectionEnd();
-//    }
-    pos = textEdit->textCursor().position();
+    qint32 pos = textEdit->textCursor().position();
 //    std::cout << "cursor index:" << pos << std::endl;
     if (model->getSiteId() != -1 && !myCursorPosUpdateBlocker) {
         model->sendCursorPos(pos);
     }
-//    if(highlightIsActive) {
-//        if(!textEdit->textCursor().hasSelection())
-//            textEdit->mergeCurrentCharFormat(getHighlightFormat(model->getSiteId()));
-//    }
-
 }
 
 void EditorGUI::updateRemoteCursorPos(qint32 pos, qint32 siteId) {
@@ -395,7 +386,7 @@ void EditorGUI::loadHighlights(bool checked) {
     signalBlocker = !signalBlocker;
 }
 
-void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId, QTextCursor& cursor) {
+void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId, QTextCursor& cursor) const {
     if(n>0) {
         std::cout << "dentro highlight " << std::endl;
         auto format = QTextCharFormat();
