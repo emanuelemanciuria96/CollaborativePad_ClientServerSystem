@@ -60,15 +60,16 @@ private:
     void keyPressEvent(QKeyEvent *event) override;
     int count=0;
     bool eventFilter(QObject *target, QEvent *event);
-/*
-    QIcon* textIcon=new QIcon("D:/Desktop/untitled/icons/grid_text_icon"+this->format);
-    QIcon* folderIcon=new QIcon("D:/Desktop/untitled/icons/grid_folder_icon"+this->format);
-    QIcon* backIcon=new QIcon("D:/Desktop/untitled/icons/grid_back_icon"+this->format);
-*/
+
     QIcon* textIcon=new QIcon("./icons/grid_text_icon"+this->format);
     QIcon* folderIcon=new QIcon("./icons/grid_folder_icon"+this->format);
     QIcon* backIcon=new QIcon("./icons/grid_back_icon"+this->format);
 
+    QIcon* contextOpenFile=new QIcon("./icons/context_open_file"+this->format);
+    QIcon* contextDelete=new QIcon("./icons/context_delete"+this->format);
+    QIcon* contextInvite=new QIcon("./icons/context_invite"+this->format);
+    QIcon* contextRename=new QIcon("./icons/context_rename"+this->format);
+    QIcon* contextAddFile=new QIcon("./icons/context_add_file"+this->format);
 };
 
 #endif // FILESYSTEMGRIDVIEW_H
