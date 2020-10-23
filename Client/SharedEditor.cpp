@@ -814,7 +814,6 @@ void SharedEditor::closeFile() {
 }
 
 void SharedEditor::findCounter() {
-
     for(auto s:_symbols)
         if (s.getSymId().getSiteId() == _siteId)
             if (_counter < s.getSymId().getCount())

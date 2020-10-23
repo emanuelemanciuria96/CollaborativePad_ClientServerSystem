@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EditorGUI_t {
-    QByteArrayData data[59];
-    char stringdata0[681];
+    QByteArrayData data[60];
+    char stringdata0[705];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -89,7 +89,8 @@ QT_MOC_LITERAL(54, 586, 24), // "currentCharFormatChanged"
 QT_MOC_LITERAL(55, 611, 12), // "updateLabels"
 QT_MOC_LITERAL(56, 624, 20), // "setAbsoluteAlignment"
 QT_MOC_LITERAL(57, 645, 25), // "QFlags<Qt::AlignmentFlag>"
-QT_MOC_LITERAL(58, 671, 9) // "selection"
+QT_MOC_LITERAL(58, 671, 9), // "selection"
+QT_MOC_LITERAL(59, 681, 23) // "setStyleInFirstPosition"
 
     },
     "EditorGUI\0clear\0\0userQuery\0siteId\0"
@@ -111,7 +112,7 @@ QT_MOC_LITERAL(58, 671, 9) // "selection"
     "textSize\0p\0textFamily\0textColor\0"
     "currentCharFormatChanged\0updateLabels\0"
     "setAbsoluteAlignment\0QFlags<Qt::AlignmentFlag>\0"
-    "selection"
+    "selection\0setStyleInFirstPosition"
 };
 #undef QT_MOC_LITERAL
 
@@ -121,7 +122,7 @@ static const uint qt_meta_data_EditorGUI[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      32,   14, // methods
+      33,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -129,40 +130,41 @@ static const uint qt_meta_data_EditorGUI[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  174,    2, 0x06 /* Public */,
-       3,    1,  175,    2, 0x06 /* Public */,
-       5,    1,  178,    2, 0x06 /* Public */,
-       7,    1,  181,    2, 0x06 /* Public */,
+       1,    0,  179,    2, 0x06 /* Public */,
+       3,    1,  180,    2, 0x06 /* Public */,
+       5,    1,  183,    2, 0x06 /* Public */,
+       7,    1,  186,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    3,  184,    2, 0x08 /* Private */,
-      13,    0,  191,    2, 0x08 /* Private */,
-      14,    1,  192,    2, 0x08 /* Private */,
-      16,    0,  195,    2, 0x08 /* Private */,
-      17,    0,  196,    2, 0x08 /* Private */,
-      18,    0,  197,    2, 0x08 /* Private */,
-      19,    5,  198,    2, 0x0a /* Public */,
-      25,    2,  209,    2, 0x0a /* Public */,
-      28,    0,  214,    2, 0x0a /* Public */,
-      29,    2,  215,    2, 0x0a /* Public */,
-      30,    1,  220,    2, 0x0a /* Public */,
-      31,    4,  223,    2, 0x0a /* Public */,
-      35,    0,  232,    2, 0x0a /* Public */,
-      36,    1,  233,    2, 0x0a /* Public */,
-      39,    2,  236,    2, 0x0a /* Public */,
-      41,    3,  241,    2, 0x0a /* Public */,
-      41,    2,  248,    2, 0x2a /* Public | MethodCloned */,
-      44,    0,  253,    2, 0x0a /* Public */,
-      45,    1,  254,    2, 0x0a /* Public */,
-      47,    1,  257,    2, 0x0a /* Public */,
-      48,    1,  260,    2, 0x0a /* Public */,
-      49,    1,  263,    2, 0x0a /* Public */,
-      50,    1,  266,    2, 0x0a /* Public */,
-      52,    1,  269,    2, 0x0a /* Public */,
-      53,    0,  272,    2, 0x0a /* Public */,
-      54,    1,  273,    2, 0x0a /* Public */,
-      55,    0,  276,    2, 0x0a /* Public */,
-      56,    3,  277,    2, 0x0a /* Public */,
+       9,    3,  189,    2, 0x08 /* Private */,
+      13,    0,  196,    2, 0x08 /* Private */,
+      14,    1,  197,    2, 0x08 /* Private */,
+      16,    0,  200,    2, 0x08 /* Private */,
+      17,    0,  201,    2, 0x08 /* Private */,
+      18,    0,  202,    2, 0x08 /* Private */,
+      19,    5,  203,    2, 0x0a /* Public */,
+      25,    2,  214,    2, 0x0a /* Public */,
+      28,    0,  219,    2, 0x0a /* Public */,
+      29,    2,  220,    2, 0x0a /* Public */,
+      30,    1,  225,    2, 0x0a /* Public */,
+      31,    4,  228,    2, 0x0a /* Public */,
+      35,    0,  237,    2, 0x0a /* Public */,
+      36,    1,  238,    2, 0x0a /* Public */,
+      39,    2,  241,    2, 0x0a /* Public */,
+      41,    3,  246,    2, 0x0a /* Public */,
+      41,    2,  253,    2, 0x2a /* Public | MethodCloned */,
+      44,    0,  258,    2, 0x0a /* Public */,
+      45,    1,  259,    2, 0x0a /* Public */,
+      47,    1,  262,    2, 0x0a /* Public */,
+      48,    1,  265,    2, 0x0a /* Public */,
+      49,    1,  268,    2, 0x0a /* Public */,
+      50,    1,  271,    2, 0x0a /* Public */,
+      52,    1,  274,    2, 0x0a /* Public */,
+      53,    0,  277,    2, 0x0a /* Public */,
+      54,    1,  278,    2, 0x0a /* Public */,
+      55,    0,  281,    2, 0x0a /* Public */,
+      56,    3,  282,    2, 0x0a /* Public */,
+      59,    0,  289,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -199,6 +201,7 @@ static const uint qt_meta_data_EditorGUI[] = {
     QMetaType::Void, 0x80000000 | 21,   22,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int, 0x80000000 | 57, QMetaType::Bool,   10,   27,   58,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -241,6 +244,7 @@ void EditorGUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 29: _t->currentCharFormatChanged((*reinterpret_cast< const QTextCharFormat(*)>(_a[1]))); break;
         case 30: _t->updateLabels(); break;
         case 31: _t->setAbsoluteAlignment((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QFlags<Qt::AlignmentFlag>(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
+        case 32: _t->setStyleInFirstPosition(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -305,13 +309,13 @@ int EditorGUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 32)
+        if (_id < 33)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 32;
+        _id -= 33;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 32)
+        if (_id < 33)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 32;
+        _id -= 33;
     }
     return _id;
 }
