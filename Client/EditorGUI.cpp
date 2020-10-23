@@ -212,7 +212,7 @@ void EditorGUI::deleteText(qint32 pos, qint32 siteId, qint32 n) {
 }
 
 //chiamata quando si ricevono modifiche
-void EditorGUI::updateSymbols(qint32 pos, const QString &s, qint32 siteId, const QTextCharFormat& format, Message::action_t action) {
+void EditorGUI::updateSymbols(qint32 pos, const QString &s, qint32 siteId, QTextCharFormat& format, Message::action_t action) {
 //    std::cout<<"updateSymbols inizio" << std::endl;
     if (action == Message::modification){
 //        std::cout<<" -- stringa modificata: "<<s.toStdString()<<std::endl;
@@ -220,6 +220,9 @@ void EditorGUI::updateSymbols(qint32 pos, const QString &s, qint32 siteId, const
         curs->setPosition(pos-1);
         int numChars = s.size();
         curs->movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,numChars);
+        if( highlightIsActive ){
+            format.clearBackground();
+        }
         isModifying = true;
         curs->mergeCharFormat(format);
         qDebug()<<"merge";

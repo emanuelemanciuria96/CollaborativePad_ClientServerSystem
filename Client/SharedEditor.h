@@ -99,7 +99,7 @@ signals:
     void hideEditor(QString& fileName);
     void openTextEditor(QString &fileName);
     void transparentForMouse();
-    void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
+    void symbolsChanged(qint32 pos, const QString& s, qint32 siteId, QTextCharFormat& format, Message::action_t action);
     void deleteAllText();
     void filePathsArrived(const QVector<QString>& paths);
     void fileNameEdited(QString& oldName, QString& newName);

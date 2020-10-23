@@ -4,6 +4,7 @@
 
 #include "Command.h"
 #include "../MyExceptions/CommandException.h"
+#include "../MyExceptions/RenCommandException.h"
 #include <utility>
 #include <QtCore/QDir>
 #include <QtSql/QSqlDatabase>
@@ -122,11 +123,16 @@ QVector<qint32> Command::renCommand(QString &connectionId) {
         throw CommandException("");
     }
 
+    bool noResult = true;
     while(query.next()){
+        noResult = false;
         qint32 siteId = query.value("SITEID").toInt();
         if(siteId != _siteID)
             listId.push_back(siteId);
     }
+
+    if( noResult )
+        throw RenCommandException("");
 
     if(!query.exec("UPDATE FILES SET NAME='"+nameNew+"' WHERE NAME='"+nameOld+"' AND OWNER='"+owner+"'")){
         db.rollback();

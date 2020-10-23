@@ -77,7 +77,7 @@ private slots:
     void selectionChanged();
 
 public slots:
-    void updateSymbols(qint32 pos, const QString& s, qint32 siteId, const QTextCharFormat& format, Message::action_t action);
+    void updateSymbols(qint32 pos, const QString& s, qint32 siteId, QTextCharFormat& format, Message::action_t action);
     void updateAlignment(int pos, Qt::Alignment a);
     void deleteAllText();
     void updateRemoteCursorPos(qint32 pos, qint32 siteId);

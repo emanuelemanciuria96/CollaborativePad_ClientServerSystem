@@ -15,6 +15,7 @@
 #include "Packet/LoginInfo.h"
 #include "Packet/ErrorPacket.h"
 #include "MyExceptions/CommandException.h"
+#include "MyExceptions/RenCommandException.h"
 
 
 std::shared_mutex ServerThread::db_op_mtx;
@@ -342,13 +343,16 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                     ul.unlock();
                 } else
                     std::cout << "rename command isn't broadcasted" << std::endl;
-            } catch (CommandException& e) {
+            } catch (RenCommandException& e) {
                 auto args = command->getArgs();
                 auto oldName = args.first();
                 auto newName = args.last();
                 QVector<QString> vec = {newName,oldName};
                 command->setArgs(vec);
                 sendPacket(packet);
+            } catch ( CommandException& e) {
+                DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
+                sendPacket(pkt);
             }
             break;
         }
