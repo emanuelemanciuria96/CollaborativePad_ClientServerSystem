@@ -353,7 +353,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         QPoint globalPos = ui->listWidget->mapToGlobal(pos);
         QMenu* myMenu=new QMenu();
 
-        myMenu->addAction("New file");
+        myMenu->addAction("New file")->setIcon(*contextAddFile);
         auto selectedAction = myMenu->exec(globalPos);
         if( selectedAction == nullptr){} // senza questo crasha dopo due right-click consecutivi
         else if( selectedAction->text() == "New file"){
@@ -370,7 +370,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         QPoint globalPos = ui->listWidget->mapToGlobal(pos);
         QMenu* myMenu=new QMenu();
 
-        myMenu->addAction("Open "+item->text());
+        myMenu->addAction("Open "+item->text())->setIcon(*contextOpenFile);
         auto selectedAction = myMenu->exec(globalPos);
         if( selectedAction == nullptr){} // senza questo crasha dopo due right-click consecutivi
         else if( selectedAction->text() == "Open "+item->text() ){
@@ -381,12 +381,12 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
     QPoint globalPos = ui->listWidget->mapToGlobal(pos);
 
     QMenu* myMenu=new QMenu();
-    myMenu->addAction("Open "+item->text());
+    myMenu->addAction("Open "+item->text())->setIcon(*contextOpenFile);
     if(this->state==mainFolder){
-        myMenu->addAction("Invite");
+        myMenu->addAction("Invite")->setIcon(*contextInvite);
     }
-    myMenu->addAction("Rename");
-    myMenu->addAction("Delete");
+    myMenu->addAction("Rename")->setIcon(*contextRename);
+    myMenu->addAction("Delete")->setIcon(*contextDelete);
 
     auto selectedAction = myMenu->exec(globalPos);
     if( selectedAction == nullptr){} // senza questo crasha dopo due right-click consecutivi
