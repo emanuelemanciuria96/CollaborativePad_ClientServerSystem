@@ -311,6 +311,9 @@ void MainWindow::clsFile() {
     shEditor->clearUndoRedo();
     shEditor->undoredoAction();
     dockWidgetUsers->hide();
+    if(treeShowAction->toolTip()[0]=="H"){
+        treeShowAction->trigger();
+    }
     richTextBar->hide();
     centralWidget->setCurrentWidget(gridView);
     leftDockWidgets[tree]->hide();
