@@ -19,6 +19,7 @@ private:
     QClipboard *clipboard;
     QPalette toolTipPalette;
     SharedEditor* model;
+
 public:
     MyTextEdit(std::shared_ptr<std::list<RemoteCursor>> remoteCursors,SharedEditor *model, QWidget* parent = 0);
     bool eventFilter(QObject *obj, QEvent *ev) override;
