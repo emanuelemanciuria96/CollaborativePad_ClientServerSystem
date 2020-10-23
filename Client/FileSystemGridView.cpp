@@ -370,7 +370,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         QPoint globalPos = ui->listWidget->mapToGlobal(pos);
         QMenu* myMenu=new QMenu();
 
-        myMenu->addAction("Open "+item->text())->setIcon(*contextOpenFile);
+        myMenu->addAction("Open "+item->text())->setIcon(*contextOpenFolder);
         auto selectedAction = myMenu->exec(globalPos);
         if( selectedAction == nullptr){} // senza questo crasha dopo due right-click consecutivi
         else if( selectedAction->text() == "Open "+item->text() ){
