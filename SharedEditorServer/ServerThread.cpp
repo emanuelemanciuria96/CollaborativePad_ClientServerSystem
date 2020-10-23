@@ -834,7 +834,7 @@ void ServerThread::sendFile() {
     for ( ; i<_file->size(); i++) {
         Message m(Message::insertion, 0, (*_file)[i] , index++);
         ptr->appendMessage(m);
-        if( ptr->size() >= 1000 || (*_file)[i+1].getFormat()!=frmt ){
+        if( i == _file->size()-1 || ptr->size() >= 1000 || (*_file)[i+1].getFormat()!=frmt ){
             DataPacket pkt( 0 , 0, DataPacket::textTyping, ptr);
             sendMessage(pkt);
             ptr->clearQueue();
