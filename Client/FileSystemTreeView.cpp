@@ -152,6 +152,10 @@ void FileSystemTreeView::constructFromPaths(const QVector<QString> &paths) {
     }
 
     sort();
+    for( int i = 0 ; i<root->childCount(); i++ )
+        if(root->child(i)->text(1) == "DIR")
+            root->child(i)->sortChildren(0,Qt::AscendingOrder);
+
 }
 
 bool FileSystemTreeView::isChild(QTreeWidgetItem *parent, QString &name) {
@@ -212,7 +216,12 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
     QString actualName = item->text(0);
     QRegularExpression expr(R"(^(?!\.)(?!com[0-9]$)(?!con$)(?!lpt[0-9]$)(?!nul$)(?!prn$)[^\|\*\?\\:<>/$"]*[^\.\|\*\?\\:<>/$"]+$)");
 
-    if(!expr.match(actualName).hasMatch() || actualName.length() > 20 || actualName.isEmpty() || model.find(actualName) != model.end()) {
+    auto parent = item->parent();
+    QString path = "";
+    if( parent != root )
+        path += parent->text(0)+"/";
+
+    if(!expr.match(actualName).hasMatch() || actualName.length() > 20 || actualName.isEmpty() || model.find(path+actualName) != model.end()) {
         isRenaming = false;
         item->setText(0,previousName);
         isRenaming = true;
@@ -220,18 +229,19 @@ void FileSystemTreeView::renameFile(QTreeWidgetItem *item, int column) {
         return;
     }
 
-    auto parent = item->parent();
-    if( parent != root ){
-        previousName = parent->text(0)+"/"+previousName;
-        actualName = parent->text(0)+"/"+actualName;
-    }
+    previousName = path+previousName;
+    actualName = path+actualName;
+
     emit renFileRequest(previousName, actualName);
     auto node = model.find(previousName);
     model.insert(std::make_pair(actualName, node->second));
     model.erase(node);
     previousName = "";
 
-    sort();
+    if( parent == root )
+        sort();
+    else
+        parent->sortChildren(0,Qt::AscendingOrder);
 
 }
 
@@ -285,7 +295,10 @@ void FileSystemTreeView::editFileName(const QString &oldName, const QString &new
     model.insert(std::make_pair(newName,node->second));
     model.erase(node);
 
-    sort();
+    if( itm->parent() == root )
+        sort();
+    else
+        itm->parent()->sortChildren(0,Qt::AscendingOrder);
 
 }
 
@@ -349,11 +362,6 @@ void FileSystemTreeView::sort() {
             }
         }
     }
-
-    for(auto c: children)
-        if( c->text(1)=="DIR")
-            c->sortChildren(0,Qt::AscendingOrder);
-
 
     root->insertChildren(0,children);
 
