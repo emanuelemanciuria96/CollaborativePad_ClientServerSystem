@@ -28,6 +28,7 @@ FileSystemTreeView::FileSystemTreeView( QWidget *parent) :QTreeWidget(parent){
     setupRightClickMenu();
 
     root = new QTreeWidgetItem(this);
+    root->setText(0, "My Files");
     this->insertTopLevelItem(0,root);
     root->setIcon(0,home_dir);
     root->setExpanded(true);
