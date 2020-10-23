@@ -107,6 +107,7 @@ void MyTextEdit::contextMenuEvent(QContextMenuEvent *e) {
     menu->actions().at(4)->setIcon(QIcon("./icons/context_copy"));
     menu->actions().at(5)->setIcon(QIcon("./icons/context_paste"));
     menu->actions().at(6)->setIcon(QIcon("./icons/context_eraser"));
+    menu->actions().at(8)->setIcon(QIcon("./icons/context_selectall"));
     menu->actions().at(0)->disconnect();
     connect(menu->actions().at(0),&QAction::triggered,[this](){ emit undo(); });
     menu->actions().at(0)->setEnabled(isUndoEnabled);
