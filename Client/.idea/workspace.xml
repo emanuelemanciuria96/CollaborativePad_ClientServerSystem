@@ -15,13 +15,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="new undo redo">
+    <list default="true" id="fd2a5e09-cf92-4eaa-887c-8315bd53eb82" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SharedEditor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_EditorGUI.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Client_autogen/EWIEGA46WW/moc_SharedEditor.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +80,11 @@
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
@@ -212,7 +214,7 @@
       <workItem from="1603098234894" duration="6161000" />
       <workItem from="1603267080635" duration="1942000" />
       <workItem from="1603355202237" duration="11163000" />
-      <workItem from="1603441486882" duration="1905000" />
+      <workItem from="1603441486882" duration="3731000" />
     </task>
     <task id="LOCAL-00001" summary="add sameName dialog in rename slot">
       <created>1600596879145</created>
@@ -522,14 +524,20 @@
       <option name="project" value="LOCAL" />
       <updated>1603388000784</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="remove contexMenu toolbar">
+      <created>1603443474004</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1603443474004</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix grid inviteButton" />
     <MESSAGE value="fix highlight action" />
     <MESSAGE value="fix caninvite button" />
     <MESSAGE value="rollback highlight button" />
@@ -554,7 +562,8 @@
     <MESSAGE value="fix rename grid" />
     <MESSAGE value="fix grid rename" />
     <MESSAGE value="add undo redo" />
-    <option name="LAST_COMMIT_MESSAGE" value="add undo redo" />
+    <MESSAGE value="remove contexMenu toolbar" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove contexMenu toolbar" />
   </component>
   <component name="WindowStateProjectService">
     <state x="0" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597338903660">
@@ -565,10 +574,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="672" y="165" key="#xdebugger.XInspectDialog/0.0.1536.824@0.0.1536.824" timestamp="1597590313280" />
-    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1603387999415">
+    <state x="317" y="0" key="CommitChangelistDialog2" timestamp="1603443469626">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603386376189" />
+    <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603443469626" />
     <state x="317" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1603387999415" />
     <state width="479" height="438" key="DebuggerActiveHint" timestamp="1597247491161">
       <screen x="0" y="0" width="1536" height="824" />
@@ -578,28 +587,28 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="496" y="108" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1603355919150" />
-    <state width="1481" height="165" key="GridCell.Tab.0.bottom" timestamp="1603443407438">
+    <state width="1481" height="165" key="GridCell.Tab.0.bottom" timestamp="1603445248015">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="165" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603443407438" />
+    <state width="1481" height="165" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603445248015" />
     <state width="1225" height="167" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1280.680@1920.0.1280.680" timestamp="1603014402436" />
     <state width="1481" height="175" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603397267841" />
-    <state width="1481" height="165" key="GridCell.Tab.0.center" timestamp="1603443407438">
+    <state width="1481" height="165" key="GridCell.Tab.0.center" timestamp="1603445248014">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="165" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603443407438" />
+    <state width="1481" height="165" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603445248014" />
     <state width="1225" height="167" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1280.680@1920.0.1280.680" timestamp="1603014402436" />
     <state width="1481" height="175" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603397267840" />
-    <state width="1481" height="165" key="GridCell.Tab.0.left" timestamp="1603443407438">
+    <state width="1481" height="165" key="GridCell.Tab.0.left" timestamp="1603445248014">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="165" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603443407438" />
+    <state width="1481" height="165" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603445248014" />
     <state width="1225" height="167" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1280.680@1920.0.1280.680" timestamp="1603014402436" />
     <state width="1481" height="175" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603397267839" />
-    <state width="1481" height="165" key="GridCell.Tab.0.right" timestamp="1603443407438">
+    <state width="1481" height="165" key="GridCell.Tab.0.right" timestamp="1603445248015">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1481" height="165" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603443407438" />
+    <state width="1481" height="165" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603445248015" />
     <state width="1225" height="167" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1280.680@1920.0.1280.680" timestamp="1603014402436" />
     <state width="1481" height="175" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603397267841" />
     <state width="1481" height="175" key="GridCell.Tab.1.bottom" timestamp="1603397267842">
@@ -641,15 +650,15 @@
     </state>
     <state x="1983" y="0" key="SettingsEditor/0.0.1536.824/1920.0.1280.680@1920.0.1280.680" timestamp="1603012569015" />
     <state x="277" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1603355928914" />
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1603388005238">
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2" timestamp="1603443478286">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603386383516" />
+    <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603443478286" />
     <state x="261" y="80" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1603388005238" />
-    <state x="546" y="307" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603443389395">
+    <state x="546" y="307" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603444170551">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="546" y="307" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603443389395" />
+    <state x="546" y="307" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1603444170550" />
     <state x="2375" y="253" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/1920.0.1280.680@1920.0.1280.680" timestamp="1603012334104" />
     <state x="546" y="307" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1603441572693" />
     <state x="595" y="302" key="git4idea.rebase.GitUnstructuredEditor" timestamp="1603386243291">

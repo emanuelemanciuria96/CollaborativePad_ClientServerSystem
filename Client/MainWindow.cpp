@@ -231,6 +231,7 @@ void MainWindow::constructMainWindowMembers() {
     connect(shEditor, &SharedEditor::updateUserListInfo, usersList, &UsersList::updateUserInfo);
     connect(shEditor, &SharedEditor::errorArrived, this, &MainWindow::errorArrived);
     connect(editor->textEdit, &QTextEdit::cursorPositionChanged, editor, &EditorGUI::setStyleInFirstPosition);
+    connect(uriWidget, &UriWidget::closeUriDock, [this]{leftDockWidgets[uri]->close();});
 //    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
 //    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
 //    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
@@ -311,6 +312,9 @@ void MainWindow::clsFile() {
     shEditor->clearUndoRedo();
     shEditor->undoredoAction();
     dockWidgetUsers->hide();
+    if(treeShowAction->toolTip()[0]=="H"){
+        treeShowAction->trigger();
+    }
     richTextBar->hide();
     centralWidget->setCurrentWidget(gridView);
     leftDockWidgets[tree]->hide();

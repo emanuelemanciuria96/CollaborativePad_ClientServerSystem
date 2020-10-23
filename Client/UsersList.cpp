@@ -104,3 +104,8 @@ void UsersList::updateUserInfo(const QPixmap& image, const QString& nickname, co
     data.email = email;
     map.insert(std::make_pair(item, data));
 }
+
+void UsersList::clear() {
+    QListWidget::clear();
+    map.clear();
+}

@@ -18,7 +18,7 @@ public:
 
 private:
     Ui::UriWidget *ui;
-
+    void keyPressEvent(QKeyEvent *event) override;
 public slots:
     void checkUri();
     void uriResultArrived(const QVector<QString> &args);
@@ -26,5 +26,6 @@ public slots:
 signals:
     void submitUri(const QString& file);
     void setStatusBarText(const QString& text, int timeout);
+    void closeUriDock();
 };
 #endif // URIWIDGET_H

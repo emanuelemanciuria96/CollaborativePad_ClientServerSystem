@@ -1,5 +1,6 @@
 #include "UriWidget.h"
 #include "./ui_uriwidget.h"
+#include <QKeyEvent>
 
 UriWidget::UriWidget(QWidget *parent)
     : QWidget(parent)
@@ -23,8 +24,10 @@ void UriWidget::checkUri() {
         ui->errorLabel->setText("Please insert a valid URI");
         return;
     }
+//    ui->uriEdit->clear();
 
     emit submitUri(input.replace("http://www.collaborativepad.com/", ""));
+    emit closeUriDock();
 }
 
 void UriWidget::hideEvent (QHideEvent *event){
@@ -42,5 +45,12 @@ void UriWidget::uriResultArrived(const QVector<QString> &args) {
         ui->errorLabel->setText("File not found");
     else if (result == "file-existing") {
         emit setStatusBarText("File " + fileName + " is already on the list", 0);
+    }
+}
+
+void UriWidget::keyPressEvent(QKeyEvent *e) {
+    QWidget::keyPressEvent(e);
+    if (e->key() == Qt::Key_Return && (ui->uriEdit->hasFocus() || ui->submitButton->hasFocus())){
+        checkUri();
     }
 }
