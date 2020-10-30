@@ -258,7 +258,8 @@ void MainWindow::transparentForMouse() {
     toolBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     richTextBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     dockWidgetUsers->setAttribute(Qt::WA_TransparentForMouseEvents, var);
-    editor->setAttribute(Qt::WA_TransparentForMouseEvents, var);
+    editor->textEdit->setDisabled(var);
+    this->uriWidget->setDisabled(var);
     gridView->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     treeView->setAttribute(Qt::WA_TransparentForMouseEvents, var);
 }
