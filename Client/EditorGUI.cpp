@@ -389,6 +389,11 @@ void EditorGUI::loadHighlights(bool checked) {
 }
 
 void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId, QTextCursor& cursor) const {
+    if(textEdit->textCursor().hasSelection()){
+        auto newCursor = textEdit->textCursor();
+        newCursor.setPosition(newCursor.position(),QTextCursor::MoveAnchor);
+        textEdit->setTextCursor(newCursor);
+    }
     if(n>0) {
 //        std::cout << "dentro highlight " << std::endl;
         auto format = QTextCharFormat();
