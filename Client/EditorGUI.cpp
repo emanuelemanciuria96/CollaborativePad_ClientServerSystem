@@ -140,8 +140,13 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
             if(highlightIsActive) {
                 highlight(pos, charsAdded, model->getSiteId(), *getRemoteCursor(0));
             }else{
+//                textEdit->selectAll();
                 auto cursor = textEdit->textCursor();
+                int cursPos = cursor.position();
+                cursor.setPosition(pos);
+                cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,pos+charsAdded);
                 this->textEdit->setTextBackgroundColor(Qt::white);
+                cursor.setPosition(cursPos);
                 this->textEdit->setTextCursor(cursor);
             }
         }
