@@ -9,6 +9,7 @@
 
 
 Files NetworkServer::files;
+std::mutex threads_table_mtx;
 std::map<quint32,std::shared_ptr<ServerThread>> NetworkServer::active_threads;
 QString NetworkServer::threadId;
 QTimer *NetworkServer::timer;
@@ -154,7 +155,9 @@ void NetworkServer::saveAllFiles() {
 
 void NetworkServer::recordThread(QPointer<QThread> th) {
     auto thread = dynamic_cast<ServerThread*>(th.data());
-    if( active_threads.find(thread->getSiteID()) != active_threads.end() )
+    std::unique_lock ul(threads_table_mtx);
+    auto i = active_threads.find(thread->getSiteID());
+    if( i != active_threads.end() )
         throw LoginException("User already logged !");
 
     std::shared_ptr<ServerThread> thread_ptr(thread,[](ServerThread *thread){ thread -> deleteLater(); }); // è necessario ridefinire il distruttore per il tipo ServerThread
@@ -163,7 +166,8 @@ void NetworkServer::recordThread(QPointer<QThread> th) {
 
 void NetworkServer::deleteThread(QPointer<QThread> th) {
     auto thread = dynamic_cast<ServerThread*>(th.data());
-    
+
+    std::unique_lock ul(threads_table_mtx);
     auto i = active_threads.find(thread->getSiteID());
     if( i != active_threads.end() )
         active_threads.erase(i);

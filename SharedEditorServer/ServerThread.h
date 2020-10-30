@@ -30,7 +30,7 @@ public:
     void run() override;
     void setFile(std::shared_ptr<std::vector<Symbol>> file) { _file = file; }
     QString getOperatingFileName(){ return operatingFileName; }
-    quint32 getSiteID(){ return _siteID; }
+    qint32 getSiteID(){ return _siteID; }
     QString& getUsername(){ return _username; }
     std::shared_ptr<Socket> getSocket(){ return socket; }
 
