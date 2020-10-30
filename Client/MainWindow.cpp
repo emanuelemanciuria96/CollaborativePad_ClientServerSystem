@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     richTextBar = new QToolBar(this);
     setRichTextBar();
 
-    centralWidget = new QStackedWidget(this);
+    centralWidget = new QStackedWidget();
     nullWidg = new QWidget(this);
     spinner = nullptr;
     //    aggiungo gli elementi alla finestra
@@ -1071,9 +1071,9 @@ void MainWindow::createLostConnWidget() {
 
     connect(button, &QPushButton::clicked, [this] { constructMainWindowMembers(); });
 
-    auto layout = new QVBoxLayout(this);
-    auto outerLayout = new QVBoxLayout(this);
-    auto hLayout = new QHBoxLayout(this);
+    auto layout = new QVBoxLayout();
+    auto outerLayout = new QVBoxLayout();
+    auto hLayout = new QHBoxLayout();
 
     layout->addWidget(label, 2, Qt::AlignCenter);
     layout->addWidget(button, 1, Qt::AlignRight);

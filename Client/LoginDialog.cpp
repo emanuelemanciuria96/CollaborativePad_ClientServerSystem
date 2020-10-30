@@ -14,9 +14,9 @@ LoginDialog::LoginDialog(QWidget *parent) : QWidget(parent){
 
 void LoginDialog::setUpGUI() {
     //imposto il layout
-    auto formGridLayout = new QVBoxLayout(this);
+    auto formGridLayout = new QVBoxLayout();
     auto innerWidget = new QWidget(this);
-    auto containerLayout = new QVBoxLayout(this);
+    auto containerLayout = new QVBoxLayout();
 
     //inizializzo la LineEdit dell'username
     editUsername = new QLineEdit(this);

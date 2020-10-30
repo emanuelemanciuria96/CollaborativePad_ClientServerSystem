@@ -126,20 +126,24 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 auto blockFormat = cursor.blockFormat();
                 auto align = blockFormat.alignment();
                 format.setFontPointSize(format.font().pointSizeF()<=0? format.font().pixelSize() : format.font().pointSizeF());
-                format.setBackground(QColor("white"));
                 if(fonts.indexOf(format.fontFamily())<0) {
                     format.setFontFamily(fonts[7]);
+                    cursor.movePosition(QTextCursor::Left,QTextCursor::KeepAnchor,1);
+                    cursor.setCharFormat(format);
                 }
 
-                cursor.movePosition(QTextCursor::Left,QTextCursor::KeepAnchor,1);
-                cursor.mergeCharFormat(format);
 //                std::cout << "chiamo localInsert" << std::endl;
-
+                format.setBackground(QColor("white"));
                 model->localInsert(pos+i, ch , format, align);
 //                std::cout << "esco localInsert" << std::endl;
             }
-            if(highlightIsActive)
+            if(highlightIsActive) {
                 highlight(pos, charsAdded, model->getSiteId(), *getRemoteCursor(0));
+            }else{
+                auto cursor = textEdit->textCursor();
+                this->textEdit->setTextBackgroundColor(Qt::white);
+                this->textEdit->setTextCursor(cursor);
+            }
         }
         if(highlightIsActive)
             textEdit->document()->clearUndoRedoStacks();
@@ -345,7 +349,7 @@ void EditorGUI::handleCursorPosChanged() {
 }
 
 void EditorGUI::updateRemoteCursorPos(qint32 pos, qint32 siteId) {
-    std::cout << "draw in " << pos << " siteID: " << siteId << std::endl;
+//    std::cout << "draw in " << pos << " siteID: " << siteId << std::endl;
     auto cursor = getRemoteCursor(siteId);
     cursor->setPosition(pos, QTextCursor::MoveAnchor);
 
@@ -358,7 +362,7 @@ void EditorGUI::enableSendCursorPos() {
 }
 
 void EditorGUI::loadHighlights(bool checked) {
-    std::cout<<"inizio highlight" << std::endl;
+//    std::cout<<"inizio highlight" << std::endl;
     auto i = 0;
     qint32 lastSiteId = -1;
     qint32 firstPos;
@@ -390,8 +394,13 @@ void EditorGUI::loadHighlights(bool checked) {
 }
 
 void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId, QTextCursor& cursor) const {
+    if(textEdit->textCursor().hasSelection()){
+        auto newCursor = textEdit->textCursor();
+        newCursor.setPosition(newCursor.position(),QTextCursor::MoveAnchor);
+        textEdit->setTextCursor(newCursor);
+    }
     if(n>0) {
-        std::cout << "dentro highlight " << std::endl;
+//        std::cout << "dentro highlight " << std::endl;
         auto format = QTextCharFormat();
 
         if (siteId != -1) {
@@ -402,12 +411,12 @@ void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId, QTextCursor& curs
             textEdit->mergeCurrentCharFormat(format);
         }
 
-    std::cout << "dentro setPosition " << std::endl;
+//    std::cout << "dentro setPosition " << std::endl;
         cursor.setPosition(pos, QTextCursor::MoveAnchor);
         cursor.setPosition(pos + n, QTextCursor::KeepAnchor);
-    std::cout << "dentro merge " << std::endl;
+//    std::cout << "dentro merge " << std::endl;
         cursor.mergeCharFormat(format);
-    std::cout << "fuori highlight " << std::endl;
+//    std::cout << "fuori highlight " << std::endl;
     }
 }
 
