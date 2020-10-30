@@ -132,9 +132,8 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 }
 
                 cursor.movePosition(QTextCursor::Left,QTextCursor::KeepAnchor,1);
-                cursor.mergeCharFormat(format);
+                cursor.setCharFormat(format);
 //                std::cout << "chiamo localInsert" << std::endl;
-
                 model->localInsert(pos+i, ch , format, align);
 //                std::cout << "esco localInsert" << std::endl;
             }
@@ -345,7 +344,7 @@ void EditorGUI::handleCursorPosChanged() {
 }
 
 void EditorGUI::updateRemoteCursorPos(qint32 pos, qint32 siteId) {
-    std::cout << "draw in " << pos << " siteID: " << siteId << std::endl;
+//    std::cout << "draw in " << pos << " siteID: " << siteId << std::endl;
     auto cursor = getRemoteCursor(siteId);
     cursor->setPosition(pos, QTextCursor::MoveAnchor);
 
@@ -358,7 +357,7 @@ void EditorGUI::enableSendCursorPos() {
 }
 
 void EditorGUI::loadHighlights(bool checked) {
-    std::cout<<"inizio highlight" << std::endl;
+//    std::cout<<"inizio highlight" << std::endl;
     auto i = 0;
     qint32 lastSiteId = -1;
     qint32 firstPos;
@@ -391,7 +390,7 @@ void EditorGUI::loadHighlights(bool checked) {
 
 void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId, QTextCursor& cursor) const {
     if(n>0) {
-        std::cout << "dentro highlight " << std::endl;
+//        std::cout << "dentro highlight " << std::endl;
         auto format = QTextCharFormat();
 
         if (siteId != -1) {
@@ -402,12 +401,12 @@ void EditorGUI::highlight(qint32 pos, qint32 n, qint32 siteId, QTextCursor& curs
             textEdit->mergeCurrentCharFormat(format);
         }
 
-    std::cout << "dentro setPosition " << std::endl;
+//    std::cout << "dentro setPosition " << std::endl;
         cursor.setPosition(pos, QTextCursor::MoveAnchor);
         cursor.setPosition(pos + n, QTextCursor::KeepAnchor);
-    std::cout << "dentro merge " << std::endl;
+//    std::cout << "dentro merge " << std::endl;
         cursor.mergeCharFormat(format);
-    std::cout << "fuori highlight " << std::endl;
+//    std::cout << "fuori highlight " << std::endl;
     }
 }
 

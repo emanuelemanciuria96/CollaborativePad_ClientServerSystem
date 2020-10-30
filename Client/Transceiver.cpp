@@ -255,7 +255,7 @@ void Transceiver::recvCursorPos(DataPacket &pkt, QDataStream &in) {
     QString fileName;
 
     in >> ch >> symbol_siteId >> count >> pos >> index >> siteId >> fileName;
-    std::cout << "Dentro recv " << siteId << " pos:" << index << std::endl;
+//    std::cout << "Dentro recv " << siteId << " pos:" << index << std::endl;
     auto pos_std = pos.toStdVector();
     auto symbol = Symbol(ch,symbol_siteId,count,pos_std);
 
