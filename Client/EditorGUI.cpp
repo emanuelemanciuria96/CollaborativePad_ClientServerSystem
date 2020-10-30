@@ -58,11 +58,11 @@ void EditorGUI::setUpGUI() {
 
     stylestring= "QTextEdit{border-style:none}"
                     "QScrollBar:vertical {background:white; width:8px; margin: 0px 0px 0px 0px;}"
-                    "QScrollBar::handle:vertical {background: #C3C3C3; border:0px solid lightgray; border-radius:4px;}"
+                    "QScrollBar::handle:vertical {background: #C3C3C3; border:0px solid lightgray; border-radius:4px; min-height: 20px;}"
 //                  "QScrollBar::add-line:vertical{height:0px; subcontrol-position: bottom; subcontrol-origin: margin;"
 //                  "QScrollBar::sub-line:vertical {height: 0px width:0px; subcontrol-position: top; subcontrol-origin: margin; "
                     "QScrollBar:horizontal {background:white; height:8px; margin: 0px 0px 0px 0px;}"
-                    "QScrollBar::handle:horizontal {background: #C3C3C3; border:0px solid lightgray; border-radius: 4px}";
+                    "QScrollBar::handle:horizontal {background: #C3C3C3; border:0px solid lightgray; border-radius: 4px; min-height: 20px;}";
     textEdit->setStyleSheet(stylestring);
     textEdit->setFocus();
 
@@ -145,7 +145,9 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 int cursPos = cursor.position();
                 cursor.setPosition(pos);
                 cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,pos+charsAdded);
-                this->textEdit->setTextBackgroundColor(Qt::white);
+                auto format = QTextCharFormat();
+                format.setBackground(Qt::white);
+                cursor.mergeCharFormat(format);
                 cursor.setPosition(cursPos);
                 this->textEdit->setTextCursor(cursor);
             }
