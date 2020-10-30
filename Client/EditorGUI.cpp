@@ -126,19 +126,24 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 auto blockFormat = cursor.blockFormat();
                 auto align = blockFormat.alignment();
                 format.setFontPointSize(format.font().pointSizeF()<=0? format.font().pixelSize() : format.font().pointSizeF());
-                format.setBackground(QColor("white"));
                 if(fonts.indexOf(format.fontFamily())<0) {
                     format.setFontFamily(fonts[7]);
+                    cursor.movePosition(QTextCursor::Left,QTextCursor::KeepAnchor,1);
+                    cursor.setCharFormat(format);
                 }
 
-                cursor.movePosition(QTextCursor::Left,QTextCursor::KeepAnchor,1);
-                cursor.setCharFormat(format);
 //                std::cout << "chiamo localInsert" << std::endl;
+                format.setBackground(QColor("white"));
                 model->localInsert(pos+i, ch , format, align);
 //                std::cout << "esco localInsert" << std::endl;
             }
-            if(highlightIsActive)
+            if(highlightIsActive) {
                 highlight(pos, charsAdded, model->getSiteId(), *getRemoteCursor(0));
+            }else{
+                auto cursor = textEdit->textCursor();
+                this->textEdit->setTextBackgroundColor(Qt::white);
+                this->textEdit->setTextCursor(cursor);
+            }
         }
         if(highlightIsActive)
             textEdit->document()->clearUndoRedoStacks();
