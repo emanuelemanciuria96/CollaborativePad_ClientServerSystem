@@ -264,7 +264,6 @@ void EditorGUI::updateAlignment(int pos, Qt::Alignment a) {
 
 void EditorGUI::updateLabels() {
     // aggiorno la posizione degli altri cursori
-
     for (auto & remoteCursor : *remoteCursors) {
         if (remoteCursor.getSiteId() != model->getSiteId() && remoteCursor.getSiteId()>0) {
             if(!remoteCursor.labelName->isHidden())
@@ -320,15 +319,17 @@ void EditorGUI::flushInsertQueue() {
 }
 
 void EditorGUI::drawLabel(RemoteCursor *cursor) const{
+//    std::cout << "dentro drawLabel ";
     if(cursor->getSiteId() > 0 && cursor->getSiteId()!= model->getSiteId()) {
         if (cursor->labelTimer->isActive())
             cursor->labelTimer->stop();
 
         const QRect curRect = textEdit->cursorRect(*cursor);
-
+//        std::cout << "rect x: " << curRect.x() << std::endl;
         cursor->labelName->setParent(textEdit);
         cursor->labelName->show();
-        cursor->labelName->move( std::min(curRect.left()+3,  int(textEdit->document()->pageSize().width())), curRect.top() -10);
+//        cursor->labelName->move( std::min(curRect.left()+3,  int(textEdit->document()->pageSize().width())), curRect.top() -10);
+        cursor->labelName->move( curRect.left()+3, curRect.top() -10);
         cursor->labelTimer->setParent(textEdit);
         cursor->labelTimer->start(5000);
     }

@@ -44,7 +44,7 @@ void MyTextEdit::paintEvent(QPaintEvent *e) {
         }
     }
 
-    update();
+//    update();
 }
 
 bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){
