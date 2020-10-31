@@ -2,8 +2,6 @@
 // Created by tomma on 20/04/2020.
 //
 
-
-#include <iostream>
 #include "StringMessages.h"
 
 StringMessages::StringMessages(std::vector<Message> &vm, qint32 siteID, QString &file):

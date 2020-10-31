@@ -815,11 +815,9 @@ void SharedEditor::closeFile() {
 
 void SharedEditor::findCounter() {
     for(auto s:_symbols)
-        if (s.getSymId().getSiteId() == _siteId) {
-            std::cout<<"counter: "<<s.getSymId().getCount()<<std::endl;
+        if (s.getSymId().getSiteId() == _siteId)
             if (_counter < s.getSymId().getCount())
                 _counter = s.getSymId().getCount();
-        }
 
 }
 
