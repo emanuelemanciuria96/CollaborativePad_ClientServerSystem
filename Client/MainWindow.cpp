@@ -175,10 +175,16 @@ void MainWindow::constructMainWindowMembers() {
     connect(gridView, &FileSystemGridView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
     connect(treeView, &FileSystemTreeView::opnFileRequest, gridView, &FileSystemGridView::selectFile);
     connect(userInfoAction, &QAction::triggered, this, &MainWindow::setInfoWidget);
-    connect(uriAction, &QAction::triggered, [this]() {showHideLeftDock(uri); });
+    connect(uriAction, &QAction::triggered, [this]() {treeShowAction->setChecked(false);
+                                                            inviteListAction->setChecked(false);
+                                                            showHideLeftDock(uri); });
     connect(infoWidget, &InfoWidget::imageChanged, this, &MainWindow::changeToolbarProfileImage);
-    connect(inviteListAction, &QAction::triggered, [this]() { showHideLeftDock(invitelist); });
-    connect(treeShowAction, &QAction::triggered, [this]() { showHideLeftDock(tree); });
+    connect(inviteListAction, &QAction::triggered, [this]() { uriAction->setChecked(false);
+                                                                    treeShowAction->setChecked(false);
+                                                                    showHideLeftDock(invitelist); });
+    connect(treeShowAction, &QAction::triggered, [this]() { uriAction->setChecked(false);
+                                                                inviteListAction->setChecked(false);
+                                                                showHideLeftDock(tree); });
     connect(usersList, &UsersList::setNumUsers, this, &MainWindow::setNumUsers);
     connect(editor, &EditorGUI::userQuery, shEditor, &SharedEditor::obtainUser);
     connect(shEditor, &SharedEditor::setNumUsers, this, &MainWindow::setNumUsers);
@@ -233,10 +239,6 @@ void MainWindow::constructMainWindowMembers() {
     connect(shEditor, &SharedEditor::errorArrived, this, &MainWindow::errorArrived);
     connect(editor->textEdit, &QTextEdit::cursorPositionChanged, editor, &EditorGUI::setStyleInFirstPosition);
     connect(uriWidget, &UriWidget::closeUriDock, [this]{leftDockWidgets[uri]->close();});
-//    connect(boldAction, &QAction::toggled, editor, &EditorGUI::setBold);
-//    connect(italicAction, &QAction::toggled, editor, &EditorGUI::setItalic);
-//    connect(underlineAction, &QAction::toggled, editor, &EditorGUI::setUnderline);
-
     centralWidget->addWidget(loginDialog);
     centralWidget->addWidget(editor);
     centralWidget->addWidget(infoWidget);
@@ -698,7 +700,9 @@ void MainWindow::hideNumUsers() {
 void MainWindow::showHideLeftDock(dock_type dock) {
     treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
     if (leftDockWidgets[dock]->isHidden()) {
-        for (auto d:leftDockWidgets) d->hide();
+        for (auto d:leftDockWidgets) {
+            d->hide();
+        }
         leftDockWidgets[dock]->show();
         if (dock == dock_type::tree) {
             treeShowAction->setToolTip("Hide " + msgs[dock]);
@@ -1110,4 +1114,11 @@ void MainWindow::createLostConnWidget() {
 
 void MainWindow::errorArrived(const QString &message) {
     QMessageBox::critical(nullptr, "Server Error", message);
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *e) {
+    QWidget::keyPressEvent(e);
+    if (e->key() == Qt::Key_Return && centralWidget->currentWidget() == lostConnectionWidget){
+        constructMainWindowMembers();
+    }
 }

@@ -110,6 +110,7 @@ private:
     void setUsersList();
     void setGradient();
     void createLostConnWidget();
+    void keyPressEvent(QKeyEvent *e) override;
 public slots:
     void logout();
     void hideEditor(QString& fileName);
