@@ -175,7 +175,7 @@ void MainWindow::constructMainWindowMembers() {
     connect(gridView, &FileSystemGridView::opnFileRequest, editor, &EditorGUI::setCurrentFileName);
     connect(treeView, &FileSystemTreeView::opnFileRequest, gridView, &FileSystemGridView::selectFile);
     connect(userInfoAction, &QAction::triggered, this, &MainWindow::setInfoWidget);
-    connect(uriAction, &QAction::triggered, [this]() { showHideLeftDock(uri); });
+    connect(uriAction, &QAction::triggered, [this]() {showHideLeftDock(uri); });
     connect(infoWidget, &InfoWidget::imageChanged, this, &MainWindow::changeToolbarProfileImage);
     connect(inviteListAction, &QAction::triggered, [this]() { showHideLeftDock(invitelist); });
     connect(treeShowAction, &QAction::triggered, [this]() { showHideLeftDock(tree); });
@@ -443,6 +443,7 @@ void MainWindow::setToolBars() {
     gridToolBar->addSeparator();
 
     treeShowAction = new QAction();
+    treeShowAction->setCheckable(true);
     treeShowAction->setIcon(QIcon("./icons/left_tree_menu.png"));
     treeShowAction->setToolTip("Show tree");
     toolBar->addAction(treeShowAction);
@@ -450,6 +451,7 @@ void MainWindow::setToolBars() {
     inviteListAction = new QAction();
     setInviteListIcon();
     inviteListAction->setVisible(true);
+    inviteListAction->setCheckable(true);
     inviteListAction->setToolTip("Show invites list");
     toolBar->addAction(inviteListAction);
     gridToolBar->addAction(inviteListAction);
@@ -464,6 +466,7 @@ void MainWindow::setToolBars() {
     uriAction = new QAction();
     uriAction->setIcon(QIcon("./icons/uri_icon.png"));
     uriAction->setVisible(true);
+    uriAction->setCheckable(true);
     uriAction->setToolTip("Add a file inserting a URI");
     toolBar->addAction(uriAction);
     gridToolBar->addAction(uriAction);
@@ -637,10 +640,10 @@ void MainWindow::setStyleSheet() {
     dockWidgetUsers->titleBarWidget()->setStyleSheet("font:10pt; font-family: helvetica; color:#4F78C3");
     dockWidgetUsers->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8");
     inviteUserWidget->setStyleSheet("padding:0; margin:0;");
-//    leftDockWidgets[uri]->setStyleSheet("UriWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}"
-//                                        "QLineEdit{font:10pt; margin-top: 8; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
-//                                        "QLabel{color:#3A70D5; font: 10pt;}"
-//                                        "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+    leftDockWidgets[uri]->setStyleSheet("UriWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}"
+                                        "QLineEdit{font:10pt; margin-top: 8; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
+                                        "QLabel{color:#3A70D5; font: 10pt;}"
+                                        "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
     leftDockWidgets[invitelist]->setStyleSheet("QListWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
     leftDockWidgets[tree]->setStyleSheet(
             "QTreeWidget {background: rgba(0,0,0,0.1); border:none; padding:8; outline:none}");
