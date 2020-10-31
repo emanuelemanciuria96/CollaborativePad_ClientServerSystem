@@ -255,8 +255,6 @@ void MainWindow::constructMainWindowMembers() {
 
 void MainWindow::transparentForMouse() {
     bool var = !toolBar->testAttribute(Qt::WA_TransparentForMouseEvents);
-    gridToolBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
-    richTextBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     toolBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     gridToolBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     richTextBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
