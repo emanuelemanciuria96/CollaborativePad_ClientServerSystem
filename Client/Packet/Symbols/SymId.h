@@ -24,7 +24,7 @@ public:
         return _siteId<si._siteId || (_siteId==si._siteId && _count<si._count);}
     bool operator>(SymId si){
         return _siteId>si._siteId || (_siteId==si._siteId && _count>si._count);}
-    qint32 getCount() { return _count; }
+    quint32 getCount() { return _count; }
     qint32 getSiteId() { return _siteId; }
 };
 

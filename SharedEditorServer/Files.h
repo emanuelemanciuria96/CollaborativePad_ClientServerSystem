@@ -11,7 +11,6 @@
 #include <vector>
 #include "Packet/Symbols/Symbol.h"
 #include <QtCore/QFile>
-#include "json/json.h"
 #include <fstream>
 #include <shared_mutex>
 

@@ -158,7 +158,7 @@ void Files::QtSaveFileJson(const std::string& f, std::map<Symbol,int>& symbles){
         symbol["pos"]=pos;
 
         symId["siteId"] = itr.first.getSymId().getSiteId();
-        symId["count"] = itr.first.getSymId().getCount();
+        symId["count"] = (int)itr.first.getSymId().getCount();
         symbol["symId"] = symId;
 
         syms.append(symbol);

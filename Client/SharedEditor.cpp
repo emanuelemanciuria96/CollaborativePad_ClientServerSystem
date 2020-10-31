@@ -125,7 +125,7 @@ void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format,
     std::vector<quint32> newPos;
     generateNewPosition(prev, next, newPos);
 
-    Symbol s(ch, _siteId, _counter++, newPos, format);
+    Symbol s(ch, _siteId, ++_counter, newPos, format);
 
     if(ch.unicode()==8233) {
         short a;
@@ -815,9 +815,11 @@ void SharedEditor::closeFile() {
 
 void SharedEditor::findCounter() {
     for(auto s:_symbols)
-        if (s.getSymId().getSiteId() == _siteId)
+        if (s.getSymId().getSiteId() == _siteId) {
+            std::cout<<"counter: "<<s.getSymId().getCount()<<std::endl;
             if (_counter < s.getSymId().getCount())
                 _counter = s.getSymId().getCount();
+        }
 
 }
 

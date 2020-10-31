@@ -10,6 +10,7 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
 #include <QtCore/QJsonDocument>
+#include <sstream>
 #include "ServerThread.h"
 #include "NetworkServer.h"
 #include "Packet/LoginInfo.h"

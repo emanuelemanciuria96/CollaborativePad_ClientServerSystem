@@ -10,7 +10,6 @@
 #include "Payload.h"
 #include <fstream>
 #include <QtGui/QPixmap>
-#include "../json/json.h"
 
 class LoginInfo: public Payload {
 public:

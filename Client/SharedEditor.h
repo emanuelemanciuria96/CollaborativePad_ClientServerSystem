@@ -35,7 +35,7 @@ class SharedEditor: public QObject {
     Q_OBJECT
 private:
     qint32 _siteId;
-    qint32 _counter;
+    quint32 _counter;
     std::vector<Symbol> _symbols;
     Transceiver* transceiver;
     bool isLogged;

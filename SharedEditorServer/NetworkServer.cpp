@@ -5,6 +5,7 @@
 #include <QtSql/QSqlDatabase>
 #include <QApplication>
 #include <QtCore/QBuffer>
+#include <sstream>
 #include "MyExceptions/LoginException.h"
 
 
