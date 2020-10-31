@@ -255,6 +255,8 @@ void MainWindow::constructMainWindowMembers() {
 
 void MainWindow::transparentForMouse() {
     bool var = !toolBar->testAttribute(Qt::WA_TransparentForMouseEvents);
+    gridToolBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
+    richTextBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     toolBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     gridView->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     treeView->setAttribute(Qt::WA_TransparentForMouseEvents, var);
@@ -1053,7 +1055,9 @@ void MainWindow::deleteMainWindowMembers() {
     richTextBar->hide();
     statusBar->hide();
 
-    toolBar->setAttribute(Qt::WA_TransparentForMouseEvents, false);
+    if(toolBar->testAttribute(Qt::WA_TransparentForMouseEvents)){
+        transparentForMouse();
+    }
     if( this->cursor() == QCursor(Qt::WaitCursor))
         this->setCursor(QCursor(Qt::ArrowCursor));
 

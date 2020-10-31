@@ -656,8 +656,8 @@ void ServerThread::sendMessage(DataPacket& packet){
     if( fileName != operatingFileName )
         return;
 
-    if( !isFileSent && strMess->getQueue().first().getAction()!=Message::insertion ){
-        emit socket->sendMessage(packet);
+    if( !isFileSent){
+        sendingQueue.push(packet);
         return;
     }
 
@@ -739,37 +739,36 @@ void ServerThread::sendUserInfo(DataPacket &packet) {
 
     auto ptr = std::dynamic_pointer_cast<UserInfo>(packet.getPayload());
 
-    if( operatingFileName != ptr->getFileName() ) return;
+    if( operatingFileName!=ptr->getFileName() ) return;
 
     // ho bisogno che il file, non solo sia aperto, ma sia anche stato inviato
-    if( !isFileSent  && ptr->getType() != UserInfo::user_reqest ) {
-        // invio userInfo di nuovo nella coda
-        emit socket->sendMessage(packet);
+    if (!isFileSent && ptr->getType() != UserInfo::user_reqest) {
+        // inserisco userInfo nella coda d'attesa
+        sendingQueue.push(packet);
         return;
     }
 
     // quando devo inviare uno UserInfo controllo se è un broadcast o un acknowledgment
     // se è broadcast devo ritornare un ACK
-    if(ptr->getType() == UserInfo::conn_broad){
-
-        auto shr = std::make_shared<UserInfo>(_siteID,UserInfo::conn_ack,_username,operatingFileName);
-        DataPacket pkt( 0,0,DataPacket::user_info, shr);
-        if(shr->obtainInfo(threadId)) {
-            QVector<qint32> vec;
-            vec.push_back(ptr->getSiteId());
-            _sockets.sendTo(vec, pkt);
-        }
-        else return;
-
+    if (ptr->getType() == UserInfo::conn_broad) {
+        auto shr = std::make_shared<UserInfo>(_siteID, UserInfo::conn_ack, _username, operatingFileName);
+        DataPacket pkt(0, 0, DataPacket::user_info, shr);
+        shr->obtainInfo(threadId);
+        QVector<qint32> vec;
+        vec.push_back(ptr->getSiteId());
+        _sockets.sendTo(vec, pkt);
     }
 
-    tmp << (quint32) ptr->getType() << ptr->getFileName()<< ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
+    tmp << (quint32) ptr->getType() << ptr->getFileName() << ptr->getUsername() << ptr->getImage() << ptr->getName()
+    << ptr->getEmail();
 
     qint32 bytes = fixedBytesWritten + buf.data().size();
 
-    out << bytes << packet.getSource() << packet.getErrcode() << (quint32)packet.getTypeOfData()
-        << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getFileName() << ptr->getUsername() << ptr->getImage() << ptr->getName() << ptr->getEmail();
+    out << bytes << packet.getSource() << packet.getErrcode() << (quint32) packet.getTypeOfData()
+    << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getFileName() << ptr->getUsername()
+    << ptr->getImage() << ptr->getName() << ptr->getEmail();
     socket->waitForBytesWritten(-1);
+
 }
 
 void ServerThread::sendCursorPos(DataPacket &packet) {
@@ -821,6 +820,7 @@ void ServerThread::sendFile() {
 
     std::vector<Message> vm;
     int index = 0;
+    isFileSent = true;
 
     std::cout<<"inizio ad inviare il file "+operatingFileName.toStdString()<<std::endl;
     // comunico al client che sto inviando il file
@@ -838,11 +838,11 @@ void ServerThread::sendFile() {
     for ( ; i<_file->size(); i++) {
         Message m(Message::insertion, 0, (*_file)[i] , index++);
         ptr->appendMessage(m);
-        if( i == _file->size()-1 || ptr->size() >= 1000 || (*_file)[i+1].getFormat()!=frmt ){
+        if( i == _file->size()-1 || ptr->size() >= 400 || (*_file)[i+1].getFormat()!=frmt ){
             DataPacket pkt( 0 , 0, DataPacket::textTyping, ptr);
             sendMessage(pkt);
             ptr->clearQueue();
-            if(i+1<_file->size())
+            if(i<_file->size()-1)
                 frmt = (*_file)[i+1].getFormat();
         }
     }
@@ -859,8 +859,16 @@ void ServerThread::sendFile() {
         sendFileInfo(pkt);
     }
     std::cout<<"fine invio del file "+operatingFileName.toStdString()<<std::endl;
+    flushQueue();
+}
 
-    isFileSent = true;
+void ServerThread::flushQueue(){
+
+    while( !sendingQueue.empty() ) {
+        auto pkt = sendingQueue.front();
+        sendingQueue.pop();
+        sendPacket(pkt);
+    }
 
 }
 

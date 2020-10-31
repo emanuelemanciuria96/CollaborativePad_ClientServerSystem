@@ -44,6 +44,7 @@ public slots:
     void sendPacket(DataPacket packet);
     void sendFile();
     void sendPendentDelete(QString fileName);
+    void flushQueue();
     void disconnected();
 
 private:
@@ -61,6 +62,7 @@ private:
     QString operatingFileName;
     qint32 socketSize=0;
     bool isFileSent;
+    std::queue<DataPacket> sendingQueue;
 
     void recvLoginInfo(DataPacket& packet, QDataStream& in);
     void recvMessage(DataPacket& packet,QDataStream& in);
