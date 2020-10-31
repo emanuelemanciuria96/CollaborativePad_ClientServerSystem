@@ -58,11 +58,11 @@ void EditorGUI::setUpGUI() {
 
     stylestring= "QTextEdit{border-style:none}"
                     "QScrollBar:vertical {background:white; width:8px; margin: 0px 0px 0px 0px;}"
-                    "QScrollBar::handle:vertical {background: #C3C3C3; border:0px solid lightgray; border-radius:4px;}"
+                    "QScrollBar::handle:vertical {background: #C3C3C3; border:0px solid lightgray; border-radius:4px; min-height: 20px;}"
 //                  "QScrollBar::add-line:vertical{height:0px; subcontrol-position: bottom; subcontrol-origin: margin;"
 //                  "QScrollBar::sub-line:vertical {height: 0px width:0px; subcontrol-position: top; subcontrol-origin: margin; "
                     "QScrollBar:horizontal {background:white; height:8px; margin: 0px 0px 0px 0px;}"
-                    "QScrollBar::handle:horizontal {background: #C3C3C3; border:0px solid lightgray; border-radius: 4px}";
+                    "QScrollBar::handle:horizontal {background: #C3C3C3; border:0px solid lightgray; border-radius: 4px; min-height: 20px;}";
     textEdit->setStyleSheet(stylestring);
     textEdit->setFocus();
 
@@ -145,7 +145,9 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                 int cursPos = cursor.position();
                 cursor.setPosition(pos);
                 cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,pos+charsAdded);
-                this->textEdit->setTextBackgroundColor(Qt::white);
+                auto format = QTextCharFormat();
+                format.setBackground(Qt::white);
+                cursor.mergeCharFormat(format);
                 cursor.setPosition(cursPos);
                 this->textEdit->setTextCursor(cursor);
             }
@@ -262,7 +264,6 @@ void EditorGUI::updateAlignment(int pos, Qt::Alignment a) {
 
 void EditorGUI::updateLabels() {
     // aggiorno la posizione degli altri cursori
-
     for (auto & remoteCursor : *remoteCursors) {
         if (remoteCursor.getSiteId() != model->getSiteId() && remoteCursor.getSiteId()>0) {
             if(!remoteCursor.labelName->isHidden())
@@ -318,15 +319,17 @@ void EditorGUI::flushInsertQueue() {
 }
 
 void EditorGUI::drawLabel(RemoteCursor *cursor) const{
+//    std::cout << "dentro drawLabel ";
     if(cursor->getSiteId() > 0 && cursor->getSiteId()!= model->getSiteId()) {
         if (cursor->labelTimer->isActive())
             cursor->labelTimer->stop();
 
         const QRect curRect = textEdit->cursorRect(*cursor);
-
+//        std::cout << "rect x: " << curRect.x() << std::endl;
         cursor->labelName->setParent(textEdit);
         cursor->labelName->show();
-        cursor->labelName->move( std::min(curRect.left()+3,  int(textEdit->document()->pageSize().width())), curRect.top() -10);
+//        cursor->labelName->move( std::min(curRect.left()+3,  int(textEdit->document()->pageSize().width())), curRect.top() -10);
+        cursor->labelName->move( curRect.left()+3, curRect.top() -10);
         cursor->labelTimer->setParent(textEdit);
         cursor->labelTimer->start(5000);
     }

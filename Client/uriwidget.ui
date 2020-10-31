@@ -10,6 +10,12 @@
     <height>125</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>371</width>
+    <height>125</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>UriWidget</string>
   </property>

@@ -41,16 +41,10 @@ void MyTextEdit::paintEvent(QPaintEvent *e) {
             const QRect curRect = cursorRect(remoteCursor);
             painter.drawLine(curRect.topLeft(), curRect.bottomLeft());
 
-//            if (remoteCursor.labelTimer->isActive())
-//                remoteCursor.labelTimer->stop();
-
-//            remoteCursor.labelName->setParent(this);
-//            remoteCursor.labelName->show();
-//            remoteCursor.labelName->move(curRect.left() +  70, curRect.top() + 60);
-//            remoteCursor.labelTimer->setParent(this);
-//            remoteCursor.labelTimer->start(5000);
         }
     }
+
+//    update();
 }
 
 bool MyTextEdit::eventFilter(QObject *obj, QEvent *ev){

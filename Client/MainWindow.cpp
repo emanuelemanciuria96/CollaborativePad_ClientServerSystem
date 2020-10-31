@@ -258,6 +258,15 @@ void MainWindow::transparentForMouse() {
     gridToolBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     richTextBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     toolBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
+    gridToolBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
+    richTextBar->setAttribute(Qt::WA_TransparentForMouseEvents, var);
+    dockWidgetUsers->setAttribute(Qt::WA_TransparentForMouseEvents, var);
+    editor->setAttribute(Qt::WA_TransparentForMouseEvents, var);
+    inviteUserWidget->setAttribute(Qt::WA_TransparentForMouseEvents, var);
+    editor->textEdit->setDisabled(true);
+    editor->textEdit->setDisabled(false);
+
+    this->uriWidget->setDisabled(var);
     gridView->setAttribute(Qt::WA_TransparentForMouseEvents, var);
     treeView->setAttribute(Qt::WA_TransparentForMouseEvents, var);
 }
@@ -267,7 +276,6 @@ void MainWindow::loginFinished() {
     gridToolBar->show();
     statusBar->show();
     gridView->show();
-
 }
 
 void MainWindow::opnFileGrid(QString &fileName) {
@@ -389,6 +397,10 @@ void MainWindow::uriWidgetSetup() {
 
     leftDockWidgets[uri]->setTitleBarWidget(new QWidget());
     uriWidget = new UriWidget(this);
+//    uriWidget->setStyleSheet("UriWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}"
+//                             "QLineEdit{font:10pt; margin-top: 8; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
+//                             "QLabel{color:#3A70D5; font: 10pt;}"
+//                             "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
     leftDockWidgets[uri]->setWidget(uriWidget);
 
     this->addDockWidget(Qt::LeftDockWidgetArea, leftDockWidgets[uri]);
@@ -627,10 +639,10 @@ void MainWindow::setStyleSheet() {
     dockWidgetUsers->titleBarWidget()->setStyleSheet("font:10pt; font-family: helvetica; color:#4F78C3");
     dockWidgetUsers->setStyleSheet("background: rgba(0,0,0,0.1); border:none; padding:8");
     inviteUserWidget->setStyleSheet("padding:0; margin:0;");
-    leftDockWidgets[uri]->setStyleSheet("QDockWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}"
-                                        "QLineEdit{font:10pt; margin-top: 8; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
-                                        "QLabel{color:#3A70D5; font: 10pt;}"
-                                        "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
+//    leftDockWidgets[uri]->setStyleSheet("UriWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}"
+//                                        "QLineEdit{font:10pt; margin-top: 8; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
+//                                        "QLabel{color:#3A70D5; font: 10pt;}"
+//                                        "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
     leftDockWidgets[invitelist]->setStyleSheet("QListWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}");
     leftDockWidgets[tree]->setStyleSheet(
             "QTreeWidget {background: rgba(0,0,0,0.1); border:none; padding:8; outline:none}");

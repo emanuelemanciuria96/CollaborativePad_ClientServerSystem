@@ -63,6 +63,11 @@ void UsersList::addUser(const UserInfo &user) {
 void UsersList::removeUser(const UserInfo &user) {
     auto u = findItems(user.getUsername(),Qt::MatchExactly);
 //    std::cout << "User disconnected: " << u.constFirst()->text().toStdString() << std::endl;
+    if(u.isEmpty())
+        return;
+    auto i = map.find(u.first());
+    if(i == map.end())
+        return;
     map.erase(u.first());
     takeItem(row(u.first()));
     emit setNumUsers(this->count());
