@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     richTextBar = new QToolBar(this);
     setRichTextBar();
 
+    this->setMinimumHeight(750);
     centralWidget = new QStackedWidget();
     nullWidg = new QWidget(this);
     spinner = nullptr;
@@ -238,7 +239,8 @@ void MainWindow::constructMainWindowMembers() {
     connect(shEditor, &SharedEditor::updateUserListInfo, usersList, &UsersList::updateUserInfo);
     connect(shEditor, &SharedEditor::errorArrived, this, &MainWindow::errorArrived);
     connect(editor->textEdit, &QTextEdit::cursorPositionChanged, editor, &EditorGUI::setStyleInFirstPosition);
-    connect(uriWidget, &UriWidget::closeUriDock, [this]{leftDockWidgets[uri]->close();});
+    connect(uriWidget, &UriWidget::closeUriDock, [this]{leftDockWidgets[uri]->close();
+                                                            uriAction->setChecked(false);});
     centralWidget->addWidget(loginDialog);
     centralWidget->addWidget(editor);
     centralWidget->addWidget(infoWidget);
@@ -389,20 +391,22 @@ void MainWindow::uriWidgetSetup() {
     leftDockWidgets[uri]->setAllowedAreas(Qt::LeftDockWidgetArea);
     leftDockWidgets[uri]->setFeatures(QDockWidget::DockWidgetClosable);
     leftDockWidgets[uri]->setMouseTracking(true);
-
-    leftDockWidgets[uri]->setMaximumWidth(this->size().width() / 5);
-    leftDockWidgets[uri]->setMinimumWidth(this->size().width() / 5);
-    leftDockWidgets[uri]->setMaximumHeight(this->size().height() / 5);
-    leftDockWidgets[uri]->setMinimumHeight(this->size().height() / 5);
-
     leftDockWidgets[uri]->setTitleBarWidget(new QWidget());
-    uriWidget = new UriWidget(this);
-//    uriWidget->setStyleSheet("UriWidget {background: rgba(0,0,0,0.1); border:none; padding:8;}"
-//                             "QLineEdit{font:10pt; margin-top: 8; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
+    leftDockWidgets[uri]->setFixedHeight(500);
+//    leftDockWidgets[uri]->setMaximumWidth(this->size().width() / 5);
+//    leftDockWidgets[uri]->setMinimumWidth(this->size().width() / 5);
+    leftDockWidgets[uri]->setMaximumHeight(this->size().height());
+    leftDockWidgets[uri]->setMinimumHeight(this->size().height());
+
+//    leftDockWidgets[uri]->setStyleSheet("QDockWidget {background: rgba(0,255,0,0.1); border:none; padding:8;}");
+
+//    uriWidget->setMinimumHeight(600);
+//    uriWidget->setStyleSheet("QLineEdit{font:10pt; margin-top: 8; padding:5; border-style: solid; border-width:1px; border-radius: 8px; border-color:lightgray; background:#FAFAFA}"
 //                             "QLabel{color:#3A70D5; font: 10pt;}"
 //                             "QPushButton {font: 10pt;  padding: 6; padding-right:25; padding-left:25; border-style: none; background:#3A70D5; color:white}");
-    leftDockWidgets[uri]->setWidget(uriWidget);
 
+    uriWidget = new UriWidget(this);
+    leftDockWidgets[uri]->setWidget(uriWidget);
     this->addDockWidget(Qt::LeftDockWidgetArea, leftDockWidgets[uri]);
     leftDockWidgets[uri]->hide();
 
