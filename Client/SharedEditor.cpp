@@ -249,8 +249,7 @@ void SharedEditor::process(DataPacket pkt) {
         case DataPacket::error:
             processErrorPacket(*std::dynamic_pointer_cast<ErrorPacket>(pkt.getPayload()));
             break;
-        default:
-            throw std::exception();
+
     }
 
     auto m = std::dynamic_pointer_cast<Message>(pkt.getPayload());
@@ -314,9 +313,6 @@ void SharedEditor::processLoginInfo(LoginInfo &logInf) {
             emit updateUserListInfo(logInf.getImage(), logInf.getUser(), logInf.getName(), logInf.getEmail());
             break;
 
-        default:
-            std::cout << "errore nella processlogininfo" << std::endl;
-            break;
     }
 }
 
@@ -530,8 +526,6 @@ void SharedEditor::processCommand(Command& cmd){
             break;
         }
 
-        default:
-            std::cout << "Errore nel Command" << std::endl;
     }
 }
 
