@@ -244,9 +244,10 @@ void FileSystemGridView::deleteCurrent(){
 
 void FileSystemGridView::addFile(){
     bool ok;
-    QInputDialog d();
+    QMessageBox msgBox1;
+    msgBox1.setWindowIcon(*contextAddFile);
 
-    QString newNameFile = QInputDialog::getText(nullptr, "New file",
+    QString newNameFile = QInputDialog::getText(&msgBox1, "New file",
                                                 "Add new file", QLineEdit::Normal,
                                                 "", &ok);
     if(!ok){
@@ -258,6 +259,7 @@ void FileSystemGridView::addFile(){
         QMessageBox msgBox;
         msgBox.setWindowTitle("Rename file");
         msgBox.setText("Invalid name.");
+        msgBox.setWindowIcon(*contextAddFile);
         msgBox.setStandardButtons(QMessageBox::Ok );
         msgBox.exec();
         return;
@@ -265,6 +267,7 @@ void FileSystemGridView::addFile(){
     for(auto file:fileSystem[this->mainFolder]){
         if(file==newNameFile){
             QMessageBox msgBox;
+            msgBox.setWindowIcon(*contextAddFile);
             msgBox.setWindowTitle("New File");
             msgBox.setText("This name already exists.");
             msgBox.setStandardButtons(QMessageBox::Ok );
@@ -276,6 +279,7 @@ void FileSystemGridView::addFile(){
     if(newNameFile.size()==0){
         QMessageBox msgBox;
         msgBox.setWindowTitle("New File");
+        msgBox.setWindowIcon(*contextAddFile);
         msgBox.setText("Empty name. No files have been added.");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
@@ -284,6 +288,7 @@ void FileSystemGridView::addFile(){
     }
     QMessageBox msgBox;
     msgBox.setWindowTitle("New File");
+    msgBox.setWindowIcon(*contextAddFile);
     msgBox.setText("Do you want to create a new file named "+newNameFile+"?");
     msgBox.setStandardButtons(QMessageBox::Ok  | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Ok);
