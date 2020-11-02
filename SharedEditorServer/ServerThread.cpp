@@ -375,10 +375,10 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                     std::unique_lock ul(db_op_mtx);
                     auto listId = command->rmAllCommand(threadId);
                     if (!listId.empty()) {
-                        msgHandler->submit(NetworkServer::processRmCommand, std::make_shared<Command>(*command));
                         pendentDeleteList.insert(std::make_pair(command->getArgs().first(), std::move(listId)));
-                        ul.unlock();
                     }
+                    msgHandler->submit(NetworkServer::processRmCommand, std::make_shared<Command>(*command));
+
                 } catch (CommandException& e) {
                     DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
                     sendPacket(pkt);
