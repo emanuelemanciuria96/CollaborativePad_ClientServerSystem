@@ -234,6 +234,7 @@ void EditorGUI::updateSymbols(qint32 pos, const QString &s, qint32 siteId, QText
         isModifying = true;
         curs->mergeCharFormat(format);
         qDebug()<<"merge";
+        updateLabels();
     }
     else if (action == Message::removal) {
         deleteText(pos, siteId, s.size());
