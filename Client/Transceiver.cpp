@@ -39,8 +39,8 @@ void Transceiver::run() {
 }
 
 qint32 Transceiver::connectToServer() {
-    socket->connectToHost("5.95.186.15", 1234);
-    //socket->connectToHost(QHostAddress::LocalHost, 1234);
+//    socket->connectToHost("5.95.186.15", 1234);
+    socket->connectToHost(QHostAddress::LocalHost, 1234);
     if(socket->waitForConnected(1000)) {
         connect(socket, SIGNAL(readyRead()), this, SLOT(recvPacket()), Qt::DirectConnection);
         std::cout << "Connected!" << std::endl;
@@ -329,7 +329,6 @@ void Transceiver::sendPacket(DataPacket pkt){
             sendUserInfo(pkt);
             break;
         }
-
     }
 
 }

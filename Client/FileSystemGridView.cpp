@@ -399,7 +399,9 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         QString newNameFile;
         bool sameName=false;
         do {
-            newNameFile = QInputDialog::getText(0, "Rename file",
+            QMessageBox msgBox;
+            msgBox.setWindowIcon(*contextRename);
+            newNameFile = QInputDialog::getText(&msgBox, "Rename file",
                                                 "Rename " + oldNameFile, QLineEdit::Normal,
                                                 "", &ok);
             if (!ok) {
@@ -417,6 +419,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
                 QListWidgetItem *item = ui->listWidget->item(i);
                 if (item->text() == newNameFile) {
                     QMessageBox msgBox;
+                    msgBox.setWindowIcon(*contextRename);
                     msgBox.setWindowTitle("Rename file");
                     msgBox.setText("A file with this name already exists.");
                     msgBox.setStandardButtons(QMessageBox::Ok);
@@ -428,6 +431,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         }while(sameName);
         if(newNameFile.size()==0){
             QMessageBox msgBox;
+            msgBox.setWindowIcon(*contextRename);
             msgBox.setWindowTitle("Rename file");
             msgBox.setText("Empty name.");
             msgBox.setStandardButtons(QMessageBox::Ok );
@@ -439,6 +443,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
 
         if(!expr.match(newNameFile).hasMatch() || newNameFile.length() > 20) {
             QMessageBox msgBox;
+            msgBox.setWindowIcon(*contextRename);
             msgBox.setWindowTitle("Rename file");
             msgBox.setText("Invalid name.");
             msgBox.setStandardButtons(QMessageBox::Ok );
@@ -447,6 +452,7 @@ void FileSystemGridView::on_listWidget_customContextMenuRequested(const QPoint &
         }
 
         QMessageBox msgBox;
+        msgBox.setWindowIcon(*contextRename);
         msgBox.setWindowTitle("Rename file");
         msgBox.setText("Do you want to rename "+oldNameFile+" with "+newNameFile+"?");
         msgBox.setStandardButtons(QMessageBox::Ok  | QMessageBox::Cancel);
@@ -491,6 +497,7 @@ void FileSystemGridView::deleteFile(QString file)
     QString nameFile=file.split("/")[1];
     QString folder=file.split("/")[0];
     QMessageBox msgBox;
+    msgBox.setWindowIcon(*contextDelete);
     msgBox.setWindowTitle("Delete file");
     msgBox.setText("Do you want to delete "+nameFile+"?");
     msgBox.setStandardButtons(QMessageBox::Ok  | QMessageBox::Cancel);

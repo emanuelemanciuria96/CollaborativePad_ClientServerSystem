@@ -7,8 +7,8 @@ UriWidget::UriWidget(QWidget *parent)
     , ui(new Ui::UriWidget)
 {
     ui->setupUi(this);
-    ui->uriEdit->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    this->setMinimumHeight(500);
+//    ui->uriEdit->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+//    this->setMinimumHeight(500);
     this->setWindowFlag(Qt::WindowStaysOnTopHint);
     connect(ui->submitButton, &QPushButton::clicked, this, &UriWidget::checkUri);
 }

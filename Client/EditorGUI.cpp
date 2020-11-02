@@ -274,7 +274,6 @@ void EditorGUI::updateLabels() {
 
 RemoteCursor *EditorGUI::getRemoteCursor(qint32 siteId) {
     RemoteCursor *cursor;
-    /// da gestire con una eccezione
     if(siteId < 0)
         return nullptr;
 //    std::cout << "Lista siteId dei cursori remoti:" << std::endl;
