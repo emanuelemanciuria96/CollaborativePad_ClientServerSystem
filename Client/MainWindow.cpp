@@ -235,6 +235,9 @@ void MainWindow::constructMainWindowMembers() {
     connect(actionAlignLeft, &QAction::triggered, this, &MainWindow::setAlignLeftChecked);
     connect(editor->textEdit, &QTextEdit::cursorPositionChanged, this, &MainWindow::setAlignmentActionChecked);
     connect(infoWidget, &InfoWidget::logout, this, &MainWindow::logout);
+    connect(shEditor, &SharedEditor::logout, this, &MainWindow::logout);
+    connect(shEditor, &SharedEditor::logout, this, &MainWindow::socketError);
+    connect(shEditor, &SharedEditor::warning, this, &MainWindow::warningArrived);
     connect(shEditor, &SharedEditor::updateUserListInfo, usersList, &UsersList::updateUserInfo);
     connect(shEditor, &SharedEditor::errorArrived, this, &MainWindow::errorArrived);
     connect(editor->textEdit, &QTextEdit::cursorPositionChanged, editor, &EditorGUI::setStyleInFirstPosition);
@@ -1072,9 +1075,10 @@ void MainWindow::deleteMainWindowMembers() {
     richTextBar->hide();
     statusBar->hide();
 
-    if(toolBar->testAttribute(Qt::WA_TransparentForMouseEvents)){
-        transparentForMouse();
-    }
+    toolBar->setAttribute(Qt::WA_TransparentForMouseEvents, false);
+    gridToolBar->setAttribute(Qt::WA_TransparentForMouseEvents, false);
+    richTextBar->setAttribute(Qt::WA_TransparentForMouseEvents, false);
+
     if( this->cursor() == QCursor(Qt::WaitCursor))
         this->setCursor(QCursor(Qt::ArrowCursor));
 
@@ -1113,7 +1117,7 @@ void MainWindow::createLostConnWidget() {
 }
 
 void MainWindow::errorArrived(const QString &message) {
-    QMessageBox::critical(nullptr, "Server Error", message);
+    QMessageBox::critical(this, "Server Error", message);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *e) {
@@ -1121,4 +1125,14 @@ void MainWindow::keyPressEvent(QKeyEvent *e) {
     if (e->key() == Qt::Key_Return && centralWidget->currentWidget() == lostConnectionWidget){
         constructMainWindowMembers();
     }
+}
+
+void MainWindow::socketError() {
+    QMessageBox::critical(this, "Socket Error", "A fatal error in data "
+                                                   "reception occurred!\n"
+                                                   "Disconnection was needed");
+}
+
+void MainWindow::warningArrived(const QString &message) {
+    QMessageBox::warning(this, "Warning!", message);
 }

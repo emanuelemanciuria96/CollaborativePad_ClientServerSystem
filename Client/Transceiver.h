@@ -38,6 +38,7 @@ public slots:
 
 signals:
     void readyToProcess(DataPacket pkt);
+    void leaveConnection();
     void deleteText();
 
 private:

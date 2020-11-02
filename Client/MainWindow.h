@@ -146,6 +146,8 @@ public slots:
     void fontChanged(const QFont &f);
     void serverUnavailable();
     void errorArrived(const QString& message);
+    void socketError();
+    void warningArrived(const QString& message);
 
 signals:
     void sendComboSizeText(const QString& p);

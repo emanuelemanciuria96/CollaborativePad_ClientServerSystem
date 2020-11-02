@@ -38,11 +38,7 @@ void SocketsPool::detachSocket(QString &fileName, qint32 siteId) {
                 file_sockets.erase(i);
             }
         }
-        else
-            std::cout<<"qui non si dovrebbe mai arrivare! detachSocket"<<std::endl;
     }
-    else
-        std::cout<<"qui non si dovrebbe mai arrivare! detachSocket"<<std::endl;
 
     delete tmp;
 
@@ -61,8 +57,7 @@ void SocketsPool::broadcast(QString& fileName, qint32 siteId, DataPacket& pkt, b
             }
         }
     }
-    else
-        std::cout<<"il broadcast non e' avvenuto"<<std::endl;
+
 
 }
 
@@ -72,8 +67,6 @@ void SocketsPool::recordSocket(qint32 siteId, std::shared_ptr<Socket> skt) {
     auto i = online_sockets.find(siteId);
     if( i == online_sockets.end() )
         online_sockets.insert( std::make_pair(siteId,skt) );
-    else
-        std::cout<<"socket già registrato! "<<std::endl;
 
 }
 
@@ -83,8 +76,6 @@ void SocketsPool::discardSocket(qint32 siteId) {
     auto i = online_sockets.find(siteId);
     if( i != online_sockets.end() )
         online_sockets.erase(i);
-    else
-        std::cout<<"socket mai registrato! "<<std::endl;
 
 }
 

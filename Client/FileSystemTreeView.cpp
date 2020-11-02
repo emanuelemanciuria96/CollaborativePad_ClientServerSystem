@@ -294,7 +294,6 @@ void FileSystemTreeView::editFileName(const QString &oldName, const QString &new
 
     auto node = model.find(oldName);
     if( node == model.end() ){
-        std::cout<<" ---Il file che si sta rinominando da remoto non è presente!!!";
         return;
     }
 

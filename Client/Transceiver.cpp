@@ -6,6 +6,7 @@
 #include <QtCore/QDataStream>
 #include <QtCore/QIODevice>
 #include <QtCore/QBuffer>
+#include <QtWidgets/QMessageBox>
 #include "Transceiver.h"
 #include "Packet/Command.h"
 #include "Packet/UserInfo.h"
@@ -118,7 +119,7 @@ void Transceiver::recvPacket() {
             }
 
             default: {
-                std::cout << "Coglione c'e' un errore in tranceiver" << std::endl;
+                emit leaveConnection();
                 break;
             }
         }
@@ -297,6 +298,8 @@ void Transceiver::recvErrorPacket(DataPacket &pkt, QDataStream &in) {
     pkt.setPayload(std::make_shared<ErrorPacket>(siteId, message));
 
     emit readyToProcess(pkt);
+    if(pkt.getErrcode() == -600)
+        disconnected();
 }
 
 void Transceiver::sendPacket(DataPacket pkt){
@@ -327,9 +330,6 @@ void Transceiver::sendPacket(DataPacket pkt){
             break;
         }
 
-        default: {
-            std::cout<<"Coglione c'è un errore"<<std::endl;
-        }
     }
 
 }

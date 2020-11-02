@@ -7,10 +7,10 @@
 #include "Packet/ErrorPacket.h"
 #include <vector>
 #include <algorithm>
-#include <tuple>
 #include <string>
 #include <QtCore/QCryptographicHash>
 #include <QtCore/QFile>
+#include <QtWidgets/QMessageBox>
 
 SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
 
@@ -28,6 +28,7 @@ SharedEditor::SharedEditor(QObject *parent):QObject(parent) {
     connect(transceiver,SIGNAL(finished()),this,SLOT(deleteThread()));
     connect(transceiver,&Transceiver::readyToProcess,this,&SharedEditor::process,Qt::QueuedConnection);
     connect(transceiver,&Transceiver::deleteText,this,&SharedEditor::clearText,Qt::QueuedConnection);
+    connect(transceiver,&Transceiver::leaveConnection,this, &SharedEditor::socketError, Qt::QueuedConnection);
 
     transceiver->start();
 
@@ -550,6 +551,8 @@ void SharedEditor::processRmCommand(Command &cmd) {
     auto args = cmd.getArgs();
 
     if(fileOpened == args.first() ) {
+        emit warning(QString("The file:\n "+
+                     fileOpened+"\nhas been deleted by the owner"));
         emit returnToGrid();
         closeFile();
     }
@@ -824,18 +827,7 @@ void SharedEditor::findCounter() {
 bool SharedEditor::isFileOpening() const {
     return fileOpening;
 }
-SharedEditor::~SharedEditor() {
-    if( transceiver == nullptr ) return;
-    emit transceiver->getSocket()->terminateThreadOperations();
-    transceiver->wait();
-    transceiver->deleteLater();
-}
 
-void SharedEditor::deleteThread() {
-    delete transceiver;
-    transceiver = nullptr;
-    emit serverUnavailable();
-}
 void SharedEditor::undo() {
     if(stackUndo.empty()){
         return;
@@ -888,4 +880,17 @@ void SharedEditor::redo() {
     std::move(stackRedo.end()-1,stackRedo.end(), std::back_inserter(stackUndo));
     stackRedo.pop_back();
     undoredoAction();
+}
+
+void SharedEditor::deleteThread() {
+    delete transceiver;
+    transceiver = nullptr;
+    emit serverUnavailable();
+}
+
+SharedEditor::~SharedEditor() {
+    if( transceiver == nullptr ) return;
+    emit transceiver->getSocket()->terminateThreadOperations();
+    transceiver->wait();
+    transceiver->deleteLater();
 }

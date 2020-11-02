@@ -52,7 +52,7 @@ void NetworkServer::incomingConnection(qintptr socketDesc)
 {
 
     qDebug() << "Client connected!";
-    std::cout<<"NetworkServer::incomingConnection line 30, thread "<<std::this_thread::get_id()<<std::endl;
+//    std::cout<<"NetworkServer::incomingConnection line 30, thread "<<std::this_thread::get_id()<<std::endl;
     qDebug()<< "Creating Thread";
 
     ServerThread *thread = new ServerThread(socketDesc,msgHandler);
@@ -95,7 +95,7 @@ void NetworkServer::localModification(Payload &pl) {
         }
     }
 
-    std::cout<<"modifing file: "<<file.toStdString()<<std::endl;
+//    std::cout<<"modifing file: "<<file.toStdString()<<std::endl;
 }
 
 

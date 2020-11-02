@@ -38,7 +38,7 @@ ServerThread::ServerThread(qintptr socketDesc, std::shared_ptr<MessageHandler> m
 void ServerThread::run()
 {
 
-    std::cout<<"ServerThread::run line 27, thread "<<std::this_thread::get_id()<<std::endl;
+    //std::cout<<"ServerThread::run line 27, thread "<<std::this_thread::get_id()<<std::endl;
 
     socket = std::shared_ptr<Socket>(new Socket());
     socket->moveToThread(this);
@@ -120,14 +120,15 @@ void ServerThread::recvPacket() {
             }
 
             default: {
-                std::cout << "il dato in arrivo è corrotto, necessario un riallineamento dei dati" << std::endl;
-                packet.setErrcode(-1);
-                packet.setSource(-1);
-                packet.setTypeOfData(DataPacket::textTyping);
-                packet.setPayload(std::make_shared<StringMessages>(_siteID));
+//                std::cout << "il dato in arrivo è corrotto, necessario un riallineamento dei dati" << std::endl;
+                packet.setErrcode(-600);
+                packet.setSource(0);
+                packet.setTypeOfData(DataPacket::error);
+                packet.setPayload(std::make_shared<ErrorPacket>(0,QString("A fatal error was detected in data sending!\n"
+                                                                                 "Disconnection from server was needed ")));
 
                 socket->readAll();
-                sendMessage(packet);
+                sendErrorPacket(packet);
             }
                 break;
         }
@@ -167,8 +168,8 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                         emit recordThread(th);
 
                         std::cout << "client " + user.toStdString() + " successfully logged!"
-                                  << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
-                        sendPacket(packet);            //non fa nulla, non risponde con messaggi di errore
+                                  << std::endl;
+                        sendPacket(packet);
 
                         DataPacket pkt(0, 0, DataPacket::command, std::make_shared<Command>(_siteID, Command::ls, QVector<QString>{}) );
                         DataPacket cmdPacket(_siteID, 0, DataPacket::command);
@@ -227,8 +228,8 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
                 if (shr->signup(threadId)) {
                     _siteID = shr->getSiteId();
                     _username = user;
-                    std::cout << "client "+user.toStdString()+" successfully signed up!" << std::endl;        //ATTUALMENTE se l'utente cerca di loggarsi ma è già loggato, il server
-                    sendPacket(packet);                                                                   //non fa nulla, non risponde con messaggi di errore
+                    std::cout << "client "+user.toStdString()+" successfully signed up!" << std::endl;
+                    sendPacket(packet);
 
                     DataPacket pkt(0, 0, DataPacket::command,  std::make_shared<Command>(_siteID, Command::ls, QVector<QString>{}) );
                     {
@@ -258,9 +259,7 @@ void ServerThread::recvLoginInfo(DataPacket& packet, QDataStream& in) {
             }
             break;
 
-        default:
-            std::cout << "errore nella recvlogininfo" << std::endl;
-            break;
+
 
     }
 }
@@ -380,8 +379,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                         msgHandler->submit(NetworkServer::processRmCommand, std::make_shared<Command>(*command));
                         pendentDeleteList.insert(std::make_pair(command->getArgs().first(), std::move(listId)));
                         ul.unlock();
-                    } else
-                        std::cout << "rm command failed!" << std::endl;
+                    }
                 } catch (CommandException& e) {
                     DataPacket pkt(0, 0, DataPacket::error,  std::make_shared<ErrorPacket>(_siteID, QString("The server encountered an internal error or misconfiguration and was unable to complete your request, please retry later.")));
                     sendPacket(pkt);
@@ -412,7 +410,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
 
                 auto shr = std::make_shared<UserInfo>(_siteID,UserInfo::conn_broad,_username,operatingFileName);
                 DataPacket pkt( 0,0,DataPacket::user_info, shr);
-                std::cout<<"user: "+_username.toStdString()+" appena connesso al file "+fileName.toStdString()<<std::endl;
+//                std::cout<<"user: "+_username.toStdString()+" appena connesso al file "+fileName.toStdString()<<std::endl;
                 if(shr->obtainInfo(threadId))
                     _sockets.broadcast(fileName,_siteID,pkt);
 
@@ -441,8 +439,7 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
                 _sockets.broadcast(operatingFileName,_siteID,pkt);
                 operatingFileName = "";
 
-            }else
-                std::cout << "cls command failed! Maybe the file has been deleted" << std::endl;
+            }
 
             break;
         }
@@ -517,8 +514,6 @@ void ServerThread::recvCommand(DataPacket &packet, QDataStream &in) {
             break;
         }
 
-        default:
-            std::cout << "Coglione errore nel Command" << std::endl;
     }
 }
 
@@ -561,7 +556,7 @@ void ServerThread::recvUserInfo(DataPacket &packet, QDataStream &in) {
 
         ptr->obtainUser(threadId);
 
-        std::cout<<"obtained user: "<<ptr->getUsername().toStdString()<<" from siteId: "<<ptr->getSiteId()<<std::endl;
+//        std::cout<<"obtained user: "<<ptr->getUsername().toStdString()<<" from siteId: "<<ptr->getSiteId()<<std::endl;
 
         sendPacket(packet);
     }
@@ -612,9 +607,6 @@ void ServerThread::sendPacket(DataPacket packet){
             break;
         }
 
-        default: {
-            std::cout<<"Coglione c'è un errore"<<std::endl;
-        }
     }
 }
 
@@ -637,7 +629,7 @@ void ServerThread::sendLoginInfo(DataPacket &packet) {
     out << ptr->getSiteId() << (quint32) ptr->getType() << ptr->getUser() << ptr->getPassword() << ptr->getName() << ptr->getImage() << ptr->getEmail();
     socket->waitForBytesWritten(-1);
 
-    std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
+//    std::cout<<"-- sending "<<bytes<<" Bytes"<<std::endl;
 
 }
 

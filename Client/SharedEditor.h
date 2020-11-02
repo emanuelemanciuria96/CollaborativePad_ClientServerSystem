@@ -94,6 +94,9 @@ public slots:
         stackUndo.clear();
         stackRedo.clear();
     }
+    void socketError(){
+        emit logout();
+    }
 
 signals:
     void hideEditor(QString& fileName);
@@ -131,6 +134,8 @@ signals:
     void updateUserListInfo(const QPixmap& image, const QString& nickname, const QString& name, const QString& email);
     void errorArrived(const QString& message);
     void undoredoActionEnable(bool undo,bool redo);
+    void logout();
+    void warning(const QString& msg);
 
 public:
     explicit SharedEditor(QObject *parent = 0);
@@ -139,8 +144,6 @@ public:
     void localModification( qint32 index, QTextCharFormat& format );
     qint32 getSiteId() const;
     void sendCursorPos(qint32 index);
-    void highlightSymbols(bool checked);
-    bool getHighlighting() const;
     bool isFileOpening() const;
     void localAlignment(int pos, char a);
 
