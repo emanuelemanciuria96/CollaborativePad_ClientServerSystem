@@ -132,10 +132,8 @@ void EditorGUI::contentsChange(int pos, int charsRemoved, int charsAdded) {
                     cursor.setCharFormat(format);
                 }
 
-//                std::cout << "chiamo localInsert" << std::endl;
                 format.setBackground(QColor("white"));
                 model->localInsert(pos+i, ch , format, align);
-//                std::cout << "esco localInsert" << std::endl;
             }
             if(highlightIsActive) {
                 highlight(pos, charsAdded, model->getSiteId(), *getRemoteCursor(0));
@@ -170,7 +168,6 @@ void EditorGUI::textFormatChange(int pos, int charsModified) {
         format.setBackground(QBrush("white"));
         model->localModification(pos+i,format);
     }
-
 }
 
 void EditorGUI::insertText(qint32 pos, const QString &value, qint32 siteId, const QTextCharFormat& format) {

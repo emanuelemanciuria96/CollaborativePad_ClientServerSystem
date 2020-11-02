@@ -25,7 +25,6 @@ qint32 fixedBytesWritten = sizeof(qint32)+sizeof(qint32)+sizeof(quint32)+sizeof(
 ///                                bytes     source        errcode      DataPacket::data_t   siteID
 
 
-
 ServerThread::ServerThread(qintptr socketDesc, std::shared_ptr<MessageHandler> msgHandler,QObject *parent):QThread(parent){
     this->socketDescriptor = socketDesc;
     this->msgHandler = msgHandler;

@@ -117,7 +117,7 @@ void SharedEditor::sendRegisterRequest(QString& user, QString& password, QString
 void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format,  Qt::Alignment align) {
 
     if ( index > _symbols.size() - 2 ){
-        throw "fuori dai limiti"; //da implementare classe eccezione
+        errorInLocalModifications();
     }
     index++;
 
@@ -161,8 +161,9 @@ void SharedEditor::localInsert(qint32 index, QChar& ch, QTextCharFormat& format,
 }
 
 void SharedEditor::localErase(qint32 index, qint32 num) {
+
     if ( index > _symbols.size() - 2 ){
-        throw "fuori dai limiti"; //da implementare classe eccezione
+        errorInLocalModifications();
     }
 
     index++;
@@ -185,8 +186,9 @@ void SharedEditor::localErase(qint32 index, qint32 num) {
 }
 
 void SharedEditor::localModification( qint32 index, QTextCharFormat& format ) {
+
     if ( index > _symbols.size() - 2 ){
-        throw "fuori dai limiti"; //da implementare classe eccezione
+        errorInLocalModifications();
     }
 
     index++;
@@ -874,6 +876,25 @@ void SharedEditor::redo() {
     std::move(stackRedo.end()-1,stackRedo.end(), std::back_inserter(stackUndo));
     stackRedo.pop_back();
     undoredoAction();
+}
+
+void SharedEditor::errorInLocalModifications() {
+    emit warning(QString("Something went wrong!\n"
+                         "Please wait for file reloading"));
+    QVector<QString> vec = {fileOpened};
+    auto cmd = std::make_shared<Command>(_siteId,Command::cls,vec);
+    DataPacket packet(_siteId,0,DataPacket::command);
+    packet.setPayload(cmd);
+
+    closeFile();
+    int id = qMetaTypeId<DataPacket>();
+    emit transceiver->getSocket()->sendPacket(packet);
+
+    QString actualFile = fileOpened;
+    fileOpened = "";
+
+    requireFile(actualFile);
+
 }
 
 void SharedEditor::deleteThread() {

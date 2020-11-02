@@ -66,6 +66,7 @@ private:
     void processRmCommand(Command &cmd );
     void processCursorPos(CursorPosition& curPos);
     void processErrorPacket(ErrorPacket& error);
+    void errorInLocalModifications();
 
 public slots:
     void loginSlot(QString& username, QString& password);
