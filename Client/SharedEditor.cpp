@@ -530,7 +530,7 @@ void SharedEditor::processCommand(Command& cmd){
         }
 
         default:
-            std::cout << "Coglione errore nel Command" << std::endl;
+            std::cout << "Errore nel Command" << std::endl;
     }
 }
 

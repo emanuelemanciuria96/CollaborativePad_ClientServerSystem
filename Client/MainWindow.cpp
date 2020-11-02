@@ -1009,7 +1009,6 @@ QPixmap MainWindow::roundImage(const QPixmap &orig) {
 
 void MainWindow::serverUnavailable() {
 
-    std::cout << "togliere tutto e mettere una azione per ricaricare tutto";
     deleteMainWindowMembers();
     centralWidget->setCurrentWidget(lostConnectionWidget);
 }
